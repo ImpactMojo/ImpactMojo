@@ -89,10 +89,10 @@
             'organization': [
                 'Everything in Professional',
                 'Team dashboard & progress analytics',
-                'Bulk user management',
+                'Invite members by email',
                 'Custom learning paths',
-                'Dedicated account manager',
-                'Branded certificates & invoice billing'
+                'Priority support by email',
+                'Invoice billing, arranged by email'
             ]
         },
         

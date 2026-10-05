@@ -455,9 +455,9 @@ Advanced tools and products for researchers and practitioners: 30 in all, includ
 | 3 | Field Notes from a Development Economist | Professional | Behind-the-scenes analysis of real programs and trade-offs | [Open](https://impactmojo-field-notes-pro.netlify.app/) |
 | 4 | Qualitative Research Studio | Professional | AI-assisted thematic coding and memo generation (free to use, a paid plan to export) | [Premium](/premium.html) |
 | 5 | Statistical Code Converter Pro | Professional | Translate code between R, Stata, SPSS & Python with regression diagnostics and power analysis (free to use, a paid plan to export) | [Premium](/premium.html) |
-| 6 | DevData Practice | Professional | 36 dataset generators with 840k+ rows of realistic development data | [Open](https://impactmojo-devdata-pro.netlify.app/) |
+| 6 | DevData Practice | Free | 36 dataset generators with 840k+ rows of realistic development data | [Open](https://impactmojo-devdata-pro.netlify.app/) |
 | 7 | VaniScribe: AI Transcription | Professional | Transcribe interviews in 10+ South Asian languages | [Premium](/premium.html) |
-| 8 | Visualization Cookbook | Professional | Question-driven chart recipes with production-ready Python code | [Open](https://impactmojo-devdata-pro.netlify.app/charts.html) |
+| 8 | Visualization Cookbook | Free to browse, Professional to copy code | Question-driven chart recipes with production-ready Python code | [Open](https://impactmojo-devdata-pro.netlify.app/charts.html) |
 | 9 | DevEconomics Toolkit | Professional | 11 interactive Shiny apps for impact evaluation and program design | [Open](https://impactmojo-devecon-toolkit.netlify.app/) |
 
 ---

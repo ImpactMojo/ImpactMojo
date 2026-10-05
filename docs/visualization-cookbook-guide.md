@@ -4,9 +4,9 @@
 
 The Visualization Cookbook is a **question-driven chart selection tool** with production-ready Python code. Instead of browsing chart galleries and guessing which chart type suits your data, you answer a simple question, "What story does my data tell?", and get the right chart with working code you can copy and use immediately.
 
-It includes **14 chart types** covering the most common data stories in development work.
+It includes **63 chart recipes** covering the most common data stories in development work.
 
-**Access:** Part of DevData Practice (Professional tier), [Open Visualization Cookbook](https://impactmojo-devdata-pro.netlify.app/charts.html)
+**Access:** Free to browse. Copying the code needs a Professional plan. [Open the Visualization Cookbook](/premium-tools/viz-cookbook.html)
 
 ---
 

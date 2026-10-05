@@ -10,7 +10,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Fixed
 
-- **The Pro Studio guide and FAQ misdescribed the plans (#1134).** The guide listed only Practitioner and Professional. It now describes all four levels: Explorer, Practitioner, Professional and the Team Plan at ₹1,499 per user per month, with organisation accounts arranged by email. The FAQ answer and its structured data no longer call DevData Practice or the Advisory Board Professional-only.
+- **The Pro Studio guide and FAQ misdescribed the plans (#1134).** The guide listed only Practitioner and Professional. It now describes all four levels: Explorer, Practitioner, Professional and the Team Plan at ₹1,499 per user per month, with organisation accounts arranged by email. The FAQ answer and its structured data no longer call DevData Practice or the Advisory Board Professional-only. The Team Plan description was checked against the code and the database: branded and bulk certificates, GST invoicing, bulk user management, time-on-task and filtering by team or project are not built, so they are no longer promised. The team dashboard, custom learning paths and the 15 live case challenges are built and are described as they work. The README and tool guides no longer call DevData Practice or the Visualization Cookbook Professional-only.
 
 ### For Learners
 
