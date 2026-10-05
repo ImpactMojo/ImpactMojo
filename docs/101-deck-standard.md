@@ -26,13 +26,15 @@ Every deck has ~100 slides and ~102 SVG figures, so the shell is uniform and
 the *content* varies **3.4×**. `sel-basics` gives a reader 67 words a slide;
 `inequality-basics` gives 227. Both present as a hundred-slide course.
 
+The table above was measured on 2026-08-22 by splitting raw markup, where every `&mdash;` counted as a word. Re-measured on real words after the em dashes came out of the copy, the dense group runs 136 to 227 and the floor is 130, still inside the gap.
+
 The cliff between 81 and 140 is two generations of deck, not a spectrum. That
 is what makes a floor defensible: it is not an aesthetic preference, it is the
 line the newer decks already clear and the older ones do not approach.
 
 ## The bar
 
-### 1. Density — **≥140 words per slide**
+### 1. Density — **≥130 words per slide**
 
 Roughly 14,000 words across a 100-slide deck. This is the floor the twelve
 dense decks already meet, not an aspiration.

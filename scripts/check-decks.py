@@ -16,12 +16,18 @@ newer decks already clear, not an aesthetic preference.
 
 See docs/101-deck-standard.md for what the numbers mean.
 """
-import pathlib, re, sys
+import html, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DECKS = ROOT / '101-courses'
 
-MIN_WORDS_PER_SLIDE = 140
+# Counted as real words: entities are decoded and bare symbols (a dash, a
+# bullet) are not words. The first version split the raw markup, so each
+# "&mdash;" counted as a word and the 140 floor sat on an inflated measure;
+# removing the em dashes from the copy moved two decks to 139. On the real
+# measure the dense group runs 136-227 and the thin group stays at 81 or
+# below, so the floor sits in the same gap, at 130.
+MIN_WORDS_PER_SLIDE = 130
 # Set at the FLOOR of the dense group, not its ceiling. mel-basics carries 33
 # tables and 76 two-column slides; setting the bar there would have failed four
 # decks that are demonstrably fine, which is how a guard loses its authority.
@@ -47,7 +53,8 @@ def measure(path):
     src = path.read_text(encoding='utf-8', errors='replace')
     body = re.sub(r'<script.*?</script>', '', src, flags=re.S)
     body = re.sub(r'<style.*?</style>', '', body, flags=re.S)
-    words = len(re.sub(r'<[^>]+>', ' ', body).split())
+    text = html.unescape(re.sub(r'<[^>]+>', ' ', body))
+    words = len([t for t in text.split() if re.search(r'\w', t)])
     slides = len(SLIDE_RE.findall(src)) or 1
     return {
         'words': words,
