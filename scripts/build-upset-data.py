@@ -80,9 +80,9 @@ N5, N4 = 0, 1        # index into the pair, per nfhs.html:631
 # legible, and the page says so.
 DEPRIVATION = [
     ("stunting",   72, "Child stunting",        "ge", 30,
-     "30% or more of under-fives stunted — the WHO “very high” prevalence threshold"),
+     "30% or more of under-fives stunted: the WHO “very high” prevalence threshold"),
     ("anaemia",    83, "Women anaemic",         "ge", 40,
-     "40% or more of women aged 15–49 anaemic — a “severe public health problem” by WHO's classification"),
+     "40% or more of women aged 15–49 anaemic: a “severe public health problem” by WHO's classification"),
     ("fuel",        9, "No clean cooking fuel", "lt", 50,
      "fewer than half of households cooking with clean fuel"),
     ("sanitation",  8, "No safe sanitation",    "lt", 50,
@@ -194,7 +194,7 @@ def build():
         "_boundaries": d["meta"]["geometry"],
         "_built_by": "scripts/build-upset-data.py",
         "_generated": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-        "_note": ("Value pairs in the source are [NFHS-5, NFHS-4] — later round "
+        "_note": ("Value pairs in the source are [NFHS-5, NFHS-4], later round "
                   "first. The build asserts this before using it."),
         "deprivation": {
             "round": "NFHS-5 (2019-21)",

@@ -146,7 +146,7 @@ def build():
     wb = openpyxl.load_workbook(BOOK, data_only=True, read_only=True)
     doc = {
         'meta': {
-            'title': 'Union Budget of India — Budget at a Glance',
+            'title': 'Union Budget of India: Budget at a Glance',
             'unit': '₹ crore',
             'source': {
                 'name': 'Budget at a Glance, Union Budget 2026-27',

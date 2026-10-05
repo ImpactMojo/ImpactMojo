@@ -74,7 +74,7 @@ def render(guide_stem, cases):
     if rows:
         body = (
             '<p>The judgments below are the ones that changed what this law requires in '
-            'practice. Summaries are editorial orientation, not legal advice &mdash; the '
+            'practice. Summaries are editorial orientation, not legal advice; the '
             'linked judgment is what is authoritative.</p>' + ''.join(rows))
     else:
         # Say what the docket holds, not what the courts have done. This used to
