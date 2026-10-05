@@ -7,53 +7,123 @@
 
   // "" "" "" Reuse (or define) minimal KB so we can answer course/lab questions crisply "" "" "" 
   const COURSES = (window.__MOJINI_COURSES__) || [
-    { t:'Development Economics 101', u:'/101-courses/dev-economics.html', o:'Poverty, inequality, growth; India/South Asia.'},
-    { t:'Law and Constitution 101',   u:'/101-courses/ind-constitution.html', o:'Constitutional principles, rights, institutions.'},
-    { t:'Climate Science 101',        u:'/101-courses/climate-essentials.html', o:'Climate systems, evidence, risk; adaptation/resilience.'},
-    { t:'Pedagogy and Education 101', u:'/101-courses/edu-pedagogy.html', o:'Learning science + practice in Indian systems.'},
-    { t:'Public Health 101',          u:'/101-courses/pub-health-basics.html', o:'Epidemiology, health systems, field implementation.'},
-    { t:'Livelihoods 101',            u:'/101-courses/livelihood-basics.html', o:'Labour markets, enterprise, programme design.'},
-    { t:'Gender Studies',             u:'/courses/gender/', o:'Frameworks, intersectionality, implications.'},
-    { t:"Womens' Economic Empowerment 101", u:'/101-courses/wee-studies.html', o:'Approaches, metrics, programme design.'},
-    { t:'Research Ethics 101',        u:'/101-courses/research-ethics.html', o:'Consent, dignity, data protection in research.'},
-    { t:'Behaviour Change Communication Programming 101', u:'/101-courses/bcc-comms.html', o:'Designing and testing BCC.'},
-    { t:'Advocacy and Communications 101', u:'/101-courses/advocacy-basics.html', o:'Strategy, messaging, coalitions.'},
-    { t:'Monitoring, Evaluation, Accountability and Learning 101', u:'/101-courses/mel-basics.html', o:'Indicators, learning loops for implementers.'},
-    { t:'Visual Ethnography 101',     u:'/101-courses/visual-eth.html', o:'Photo/video methods; ethical storytelling.'},
-    { t:'Political Economy 101',      u:'/101-courses/pol-economy.html', o:'Institutions, incentives, power.'},
-    { t:'Poverty and Inequality 101', u:'/101-courses/inequality-basics.html', o:'Measures, drivers, interpretation.'},
-    { t:'Data Visualisation 101',     u:'/101-courses/data-lit.html', o:'Clear, ethical charts and dashboards.'},
-    { t:'Mixed Methods Research 101', u:'/101-courses/qual-methods.html', o:'Integrating qual + quant rigorously.'},
-    { t:'Impact Evaluation Design 101', u:'/101-courses/econometrics-101.html', o:'RCT to quasi-experimental choices.'},
-    { t:'Fundraising 101',            u:'/101-courses/fundraising-basics.html', o:'HNI, institutional, grassroots basics.'},
-    { t:'Programme Design Principles 101', u:'/101-courses/community-dev.html', o:'Problem framing -> ToC, delivery, risk.'},
-    { t:'Environmental Justice 101',  u:'/101-courses/env-justice.html', o:'Justice-centred climate/environment action.'},
-    { t:'Digital Governance 101',     u:'/101-courses/digital-ethics.html', o:'Platforms, data governance, service delivery.'},
-    { t:'Nutrition, Food Systems & Culture 101', u:'/101-courses/care-economy-101.html', o:'Nutrition security, culture, markets.'},
-    { t:'Social Research Ethics & Consent 101', u:'/101-courses/SRHR-basics.html', o:'Operationalising consent and dignity.'},
-    { t:'Language & History of Languages 101', u:'/101-courses/post-truth-101.html', o:'Language change, identity, policy.'},
-    { t:'Caste 101',                  u:'/101-courses/social-margins.html', o:'Caste, discrimination, remedies.'},
-    { t:'Humanitarian vs Development Work 101', u:'/101-courses/decolonize-dev.html', o:'Goals, timelines, accountability.'},
-    { t:"Gandhi's Political Thought",      u:'/courses/gandhi/', o:'Swaraj, Satyagraha, Trusteeship, Gram Swaraj; 13 modules + interactive lexicon.'},
-    { t:"Understanding Development Economics", u:'/courses/devecon/', o:'Poverty, growth, capabilities; 13 modules + 63-term lexicon.'},
-    { t:"Seeing Data: Visualization for Impact", u:'/courses/dataviz/', o:'Tufte principles to dashboards; 13 modules + chart chooser.'},
-    { t:"AI for Impact: Data Monitoring & Evaluation", u:'/courses/devai/', o:'ML, NLP, computer vision for development; 13 modules.'},
-    { t:"MEL for Development", u:'/courses/mel/', o:'Theory of change to adaptive learning; 13 modules + 65-term lexicon.'},
-    { t:"Politics of Aspiration", u:'/courses/poa/', o:'RTI, NREGA, rights architecture; 13 modules + 60-term lexicon.'},
-    { t:"Media for Development", u:'/courses/media/', o:'Ethical storytelling, humanitarian comms, participatory media, data journalism; 12 modules + 65-term lexicon.'}
+    { t:"Causal Inference for Development: Designs, Estimators & Judgement", u:"/courses/causal/", o:"A free, design-based course in causal inference for development."},
+    { t:"Seeing Data: Visualization for Impact", u:"/courses/dataviz/", o:"A flagship course on data visualization for development professionals."},
+    { t:"AI for Impact: Data Monitoring & Evaluation in Development", u:"/courses/devai/", o:"Learn when and how to use AI tools in development M&E: from data collection and computer vision to algorithmic targeting and ethical frameworks."},
+    { t:"Understanding Development: An Economics Perspective", u:"/courses/devecon/", o:"A comprehensive, free course exploring poverty, growth, and economic transformation in developing nations."},
+    { t:"Sustainability, ESG & Corporate Responsibility for Development Practice", u:"/courses/esg/", o:"A practitioner's flagship on corporate money and corporate conduct in India."},
+    { t:"Gandhi's Political Thought: Philosophy for Praxis", u:"/courses/gandhi/", o:"A comprehensive journey through Gandhi's political thought: from Swaraj and Satyagraha to Gram Swaraj and Trusteeship."},
+    { t:"Gender Studies: Feminisms, Power & Social Change", u:"/courses/gender/", o:"A flagship course on feminist theory, gender & power, care work, law, movements, and development practice: with deep South Asian focus."},
+    { t:"Gender-Sensitive Monitoring, Evaluation & Learning", u:"/courses/gender-mel/", o:"A practitioner's flagship on measuring gender rather than counting women."},
+    { t:"Designing What Works: Development Interventions from Model to Scale", u:"/courses/intervention/", o:"A free flagship on development intervention and programme design."},
+    { t:"Constitution & Law for Development Practice", u:"/courses/law/", o:"A practitioner's guide to constitutional law and rights-based frameworks across South Asia."},
+    { t:"Livelihoods in India: Rural, Urban, and Skills", u:"/courses/livelihoods/", o:"Comprehensive flagship on Indian livelihoods: rural (NRLM, SHGs, agriculture), urban (informal work, gig economy, vendors), and skills (Skill India, FLFPR)."},
+    { t:"Media for Development: Communicating Impact", u:"/courses/media/", o:"A rigorous, free course on development communication, ethical storytelling, and media impact."},
+    { t:"The Evidence Question: Monitoring, Evaluation & Learning for Practice", u:"/courses/mel/", o:"A comprehensive, free course on MEL systems for development professionals."},
+    { t:"Nothing About Us Without Us: Disability, Justice & Development", u:"/courses/nothing-about-us/", o:"A comprehensive, free course on disability, justice and development for practitioners in South Asia."},
+    { t:"Nonviolence in Practice: Communication, Resistance & Repair", u:"/courses/nvc-rj/", o:"A flagship course on three canonical traditions of applied nonviolence (Marshall Rosenberg's Nonviolent Communication (NVC), Haim Omer's Non-Violent Resistance / New..."},
+    { t:"Politics of Aspiration: Rights, Insurance & Social Mobility in South Asia", u:"/courses/poa/", o:"How India's rights-based architecture (RTI, NREGA, Food Security, Forest Rights) creates enabling conditions for poor households to imagine and pursue better futures."},
+    { t:"Public Choice: Decisions, Incentives & Institutions", u:"/courses/pubchoice/", o:"A flagship course on the mechanics of collective decision-making: voting rules, rent-seeking, bureaucracy, commons governance, and institutional design."},
+    { t:"Public Policy: Process, Design & Governance in India", u:"/courses/pubpol/", o:"A comprehensive free course on public policy, fiscal federalism, regulatory governance, and Indian development."},
+    { t:"Social-Emotional Learning for Development Practice", u:"/courses/sel/", o:"How social-emotional competencies shape effective development practice."},
+    { t:"Social Movements & Protests: Theory and South Asian Practice", u:"/courses/social-movements/", o:"A rigorous, South Asia-first flagship on how social movements form, act, and change society, movement theory (Tilly, Tarrow, Sharp, Chenoweth) grounded in South Asian..."},
+    { t:"Power BI for Practitioners: A Free Hands-On Course", u:"/courses/powerBI/powerbi.html", o:"A free, hands-on Power BI flagship for South Asian development practitioners."},
+    { t:"Sexual Health 101", u:"/101-courses/SRHR-basics.html", o:"Sexual Health 101, a free, rights-based foundational course on sexual and reproductive health and rights (SRHR) for development and health practitioners in South..."},
+    { t:"Academic Writing & Publishing 101", u:"/101-courses/academic-writing.html", o:"Academic Writing & Publishing 101: a free foundational course for researchers and practitioners in South Asia."},
+    { t:"Advocacy Basics 101", u:"/101-courses/advocacy-basics.html", o:"Advocacy Basics 101, a free foundational course for development and civil-society practitioners in South Asia: how to analyse power, frame an issue, map stakeholders,..."},
+    { t:"Behaviour Change Communication 101", u:"/101-courses/bcc-comms.html", o:"Behaviour Change Communication 101: a free foundational course for development and public-health communicators in South Asia."},
+    { t:"Bivariate Analysis 101", u:"/101-courses/bi-analysis.html", o:"Bivariate Analysis 101: a free foundational course for development practitioners and researchers in South Asia."},
+    { t:"Care Economy 101", u:"/101-courses/care-economy-101.html", o:"Care Economy 101: a free foundational course for development practitioners and policy folk in South Asia."},
+    { t:"Child Development 101", u:"/101-courses/child-development.html", o:"Child Development 101, a free foundational course on early childhood development for health and development practitioners in South Asia: the first 1,000 days, domains..."},
+    { t:"Climate Essentials 101", u:"/101-courses/climate-essentials.html", o:"Climate Essentials 101: free development education from ImpactMojo."},
+    { t:"Community Development 101", u:"/101-courses/community-dev.html", o:"Community Development 101: a free foundational course for development practitioners in South Asia."},
+    { t:"Cost Effectiveness 101", u:"/101-courses/cost-effectiveness.html", o:"Cost Effectiveness 101: a free foundational course for development practitioners and funders in South Asia."},
+    { t:"CSR & ESG 101", u:"/101-courses/csr-esg.html", o:"Corporate social responsibility and ESG for India: Section 135 of the Companies Act 2013, Schedule VII, the two per cent, unspent-money rules, CSR-1, impact..."},
+    { t:"Data Feminism 101", u:"/101-courses/data-feminism.html", o:"Data Feminism 101: a free foundational course for development practitioners and researchers in South Asia."},
+    { t:"Data Literacy 101", u:"/101-courses/data-lit.html", o:"Data Literacy 101: a free foundational course for development practitioners in South Asia."},
+    { t:"Data Protection & the DPDP Act 101", u:"/101-courses/data-protection-dpdp.html", o:"Data Literacy 101: a free foundational course for development practitioners in South Asia."},
+    { t:"Data Visualization 101", u:"/101-courses/data-viz.html", o:"Data Visualization 101 - a free foundational course for development practitioners in South Asia."},
+    { t:"Decolonial Development 101", u:"/101-courses/decolonize-dev.html", o:"Decolonial Development 101: a free foundational course for practitioners, researchers and students in the Global South and South Asia."},
+    { t:"Global Development Governance 101", u:"/101-courses/dev-architecture.html", o:"Global Development Governance 101: a free foundational course for development practitioners in South Asia."},
+    { t:"Development Economics 101", u:"/101-courses/dev-economics.html", o:"Development Economics 101: free development education from ImpactMojo."},
+    { t:"Development Finance 101", u:"/101-courses/development-finance.html", o:"Development Finance 101 - a free foundational course for practitioners in South Asia."},
+    { t:"Digital Ethics 101", u:"/101-courses/digital-ethics.html", o:"Digital Ethics 101, a free foundational course for development practitioners in South Asia on deploying digital technology responsibly: data privacy and the DPDP Act,..."},
+    { t:"Disability Inclusion 101", u:"/101-courses/disability-inclusion.html", o:"Data Literacy 101: a free foundational course for development practitioners in South Asia."},
+    { t:"Econometrics 101", u:"/101-courses/econometrics-101.html", o:"Econometrics 101: a free foundational course for development practitioners and researchers in South Asia."},
+    { t:"Exploratory Data Analysis 101", u:"/101-courses/eda-hhs.html", o:"Exploratory Data Analysis 101: a free foundational course for development practitioners in South Asia."},
+    { t:"Education and Pedagogy 101", u:"/101-courses/edu-pedagogy.html", o:"Education and Pedagogy 101: a free foundational course for educators and education-programme staff in South Asia."},
+    { t:"English for Development 101", u:"/101-courses/eng-dev.html", o:"English for Development 101, a free, practical communication course for NGO staff, researchers and grant writers across South Asia working in English as a second or..."},
+    { t:"Environmental Justice 101", u:"/101-courses/env-justice.html", o:"Environmental Justice 101: a free foundational course for development and environment practitioners in South Asia."},
+    { t:"Feminist Research 101", u:"/101-courses/feminist-research.html", o:"Feminist Research 101: a free foundational course for development researchers and practitioners in South Asia."},
+    { t:"Fundraising Basics 101", u:"/101-courses/fundraising-basics.html", o:"Fundraising Basics 101: a free foundational course for NGO and nonprofit staff in India and South Asia."},
+    { t:"GenAI for Practitioners 101", u:"/101-courses/genai-practitioners.html", o:"Data Literacy 101: a free foundational course for development practitioners in South Asia."},
+    { t:"Gender Mainstreaming 101", u:"/101-courses/gender-mainstreaming.html", o:"Gender Mainstreaming 101, a free foundational course for development practitioners and programme managers in South Asia: from the Beijing Platform and ECOSOC..."},
+    { t:"Impact Evaluation 101", u:"/101-courses/impact-eval.html", o:"Impact Evaluation 101, a free foundational course for development programme and MEL practitioners in South Asia on designing, commissioning and using credible impact..."},
+    { t:"Indian Constitution 101", u:"/101-courses/ind-constitution.html", o:"Indian Constitution 101: a free foundational course on the making, structure and living practice of the Constitution of India, for development practitioners, students..."},
+    { t:"Inequality Basics 101", u:"/101-courses/inequality-basics.html", o:"Inequality Basics 101: free development education from ImpactMojo."},
+    { t:"Item Response Theory 101", u:"/101-courses/irt-basics.html", o:"Item Response Theory 101: a free foundational course for development M&E and assessment practitioners in South Asia."},
+    { t:"Logframe 101", u:"/101-courses/logframe-101.html", o:"Logframe 101 - a free foundational course for development practitioners in South Asia."},
+    { t:"Maternal Health 101", u:"/101-courses/maternal-health.html", o:"Maternal Health 101, a free foundational course for development and public-health practitioners in South Asia: why mothers die, the three delays, the continuum of..."},
+    { t:"MEL Basics 101", u:"/101-courses/mel-basics.html", o:"MEL Basics 101: free development education from ImpactMojo."},
+    { t:"Mixed Methods 101", u:"/101-courses/mixed-methods.html", o:"Mixed Methods 101, a free foundational course for development researchers and MEL practitioners in South Asia on intentionally combining quantitative and qualitative..."},
+    { t:"Multivariate Analysis 101", u:"/101-courses/multivariate-basics.html", o:"Multivariate Analysis 101: a free foundational course for development practitioners and analysts in South Asia."},
+    { t:"Observation to Insight 101", u:"/101-courses/obs2insight.html", o:"Observation to Insight 101: a free foundational course for development practitioners in South Asia."},
+    { t:"Political Economy 101", u:"/101-courses/pol-economy.html", o:"Political Economy 101: a free foundational course for development practitioners and analysts in South Asia."},
+    { t:"Post-Truth Politics 101", u:"/101-courses/post-truth-101.html", o:"Post-Truth Politics 101, a free foundational course for development practitioners, communicators and citizens in South Asia on why emotion, identity and falsehood..."},
+    { t:"Public Health 101", u:"/101-courses/pub-health-basics.html", o:"Public Health 101, a free foundational course for development and health practitioners in South Asia: population health and prevention, social determinants,..."},
+    { t:"Public Finance & Budgeting 101", u:"/101-courses/public-finance-budgeting.html", o:"Public Finance & Budgeting 101: fiscal architecture, budget cycles, taxation, and intergovernmental transfers in South Asia."},
+    { t:"Qualitative Analysis Software 101", u:"/101-courses/qda-software.html", o:"Qualitative Analysis Software 101: a free foundational course on NVivo, MAXQDA, ATLAS.ti and the free tools Taguette and QualCoder."},
+    { t:"Qualitative Methods 101", u:"/101-courses/qual-methods.html", o:"Qualitative Methods 101: a free foundational course for development practitioners and researchers in South Asia."},
+    { t:"Research Ethics 101", u:"/101-courses/research-ethics.html", o:"Research Ethics 101: a free foundational course for development practitioners and researchers in South Asia."},
+    { t:"Safeguarding & PSEA 101", u:"/101-courses/safeguarding-psea.html", o:"Data Literacy 101: a free foundational course for development practitioners in South Asia."},
+    { t:"SEL Basics 101", u:"/101-courses/sel-basics.html", o:"SEL Basics 101: a free foundational course for educators and education-programme staff in South Asia."},
+    { t:"Structural Equation Modelling 101", u:"/101-courses/sem.html", o:"Structural Equation Modelling 101: a free foundational course for applied social researchers in South Asia."},
+    { t:"Social Margins 101", u:"/101-courses/social-margins.html", o:"Social Margins 101: identity, structure, intersectionality, and inequality in South Asia."},
+    { t:"Statistics Without Code 101", u:"/101-courses/stats-without-code.html", o:"Statistics Without Code 101: a free foundational course on jamovi and JASP, the free point-and-click statistics tools built on R."},
+    { t:"Survey Design 101", u:"/101-courses/survey-design.html", o:"Survey Design 101: a free foundational course for development and MEL practitioners running field surveys in South Asia."},
+    { t:"Systematic Reviews & Evidence Synthesis 101", u:"/101-courses/systematic-reviews.html", o:"Systematic Reviews & Evidence Synthesis 101: a free foundational course for development researchers and practitioners in South Asia."},
+    { t:"Time Series Analysis 101", u:"/101-courses/time-series.html", o:"Time Series Analysis 101: a free foundational course for applied researchers in South Asia."},
+    { t:"Theory of Change 101", u:"/101-courses/toc-workbench.html", o:"Theory of Change 101, a free, practical course for development practitioners in programme design and M&E across South Asia: build a causal map from activities to..."},
+    { t:"Visual Ethnography 101", u:"/101-courses/visual-eth.html", o:"Visual Ethnography 101: a free foundational course for development researchers and communicators in South Asia."},
+    { t:"Women's Economic Empowerment 101", u:"/101-courses/wee-studies.html", o:"Women's Economic Empowerment 101, a free foundational course for gender and development practitioners in South Asia: resources, agency and achievements; the unpaid..."},
+    { t:"Work, Labour & Livelihoods 101", u:"/101-courses/work-labour-livelihoods.html", o:"Work, Labour & Livelihoods 101: informality, the gig economy, agrarian labour, decent work, and labour rights frameworks across South Asia."}
   ];
   const LABS = (window.__MOJINI_LABS__) || [
-    { t:'Risk Assessment and Mitigation Lab',  u:'/Labs/risk-mitigation-lab.html' },
-    { t:'Resource Mobilisation and Sustainability Lab', u:'/Labs/resource-sustainability-lab.html' },
-    { t:'Policy and Advocacy Lab',             u:'/Labs/policy-advocacy-lab.html' },
-    { t:'Partnership and Collaboration Lab',   u:'/Labs/impact-partnerships-lab.html' },
-    { t:'MLE Framework Workbench',             u:'/Labs/mel-design-lab.html' },
-    { t:'MLE Framework Builder Lab',           u:'/Labs/mel-plan-lab.html' },
-    { t:'Community Engagement Lab',            u:'/Labs/community-lab.html' },
-    { t:'Impact Storytelling Lab',             u:'/Labs/storytelling-lab.html' },
-    { t:'Innovation and Design Thinking Lab',  u:'/Labs/design-thinking-lab.html' },
-    { t:'Gender Studies Lab',                  u:'/Labs/gender-studies-lab.html' },
-    { t:'TOC Lab',                             u:'/Labs/toc-lab.html' }
+    { t:"Before We Fall Apart: Group Conflict-Preparedness Studio", u:"/Labs/before-we-fall-apart-lab.html" },
+    { t:"Budget & Fiscal Analysis Studio", u:"/Labs/budget-fiscal-lab.html" },
+    { t:"Climate Risk & Adaptation Studio", u:"/Labs/climate-adaptation-lab.html" },
+    { t:"Community Engagement Studio", u:"/Labs/community-lab.html" },
+    { t:"Conflict-Sensitive Programming Studio", u:"/Labs/conflict-sensitive-lab.html" },
+    { t:"Data Feminism & Intersectional Analysis Studio", u:"/Labs/data-feminism-lab.html" },
+    { t:"Design Thinking Studio", u:"/Labs/design-thinking-lab.html" },
+    { t:"Disability-Inclusive MEL Studio", u:"/Labs/disability-inclusive-mel-lab.html" },
+    { t:"Digital Public Infrastructure Studio", u:"/Labs/dpi-lab.html" },
+    { t:"Ethics & Research Integrity Studio", u:"/Labs/ethics-research-lab.html" },
+    { t:"Gender Analysis Studio", u:"/Labs/gender-studies-lab.html" },
+    { t:"Grant Writing & Proposal Studio", u:"/Labs/grant-writing-lab.html" },
+    { t:"Impact Evaluation Designer", u:"/Labs/impact-evaluation-lab.html" },
+    { t:"Impact Partnerships Studio", u:"/Labs/impact-partnerships-lab.html" },
+    { t:"Livelihoods & Value-Chain Studio", u:"/Labs/livelihoods-value-chain-lab.html" },
+    { t:"LogFrame Builder", u:"/Labs/logframe-builder-lab.html" },
+    { t:"MEL Studio", u:"/Labs/mel-lab.html" },
+    { t:"MEL Rosetta Lab: translate between MEL frameworks", u:"/Labs/mel-rosetta-lab.html" },
+    { t:"NVC & Mediation Practice", u:"/Labs/nvc-mediation-lab.html" },
+    { t:"Participatory Methods Studio", u:"/Labs/participatory-methods-lab.html" },
+    { t:"Policy Advocacy Studio", u:"/Labs/policy-advocacy-lab.html" },
+    { t:"Policy Analysis Studio: Structured Tools for Policy Reasoning", u:"/Labs/policy-analysis-lab.html" },
+    { t:"Policy Brief Writing Studio", u:"/Labs/policy-brief-lab.html" },
+    { t:"RCT Readiness Diagnostic", u:"/Labs/rct-readiness-lab.html" },
+    { t:"Resource Sustainability Studio", u:"/Labs/resource-sustainability-lab.html" },
+    { t:"Risk & Mitigation Studio", u:"/Labs/risk-mitigation-lab.html" },
+    { t:"Sampling Basics: A Plain-Language Primer", u:"/Labs/sampling-basics-lab.html" },
+    { t:"Sampling Design Studio", u:"/Labs/sampling-design-lab.html" },
+    { t:"Stakeholder Mapping & Power Analysis Studio", u:"/Labs/stakeholder-mapping-lab.html" },
+    { t:"Impact Storytelling Studio", u:"/Labs/storytelling-lab.html" },
+    { t:"Survey Design Studio", u:"/Labs/survey-design-lab.html" },
+    { t:"Systems Thinking & Complexity Studio", u:"/Labs/systems-thinking-lab.html" },
+    { t:"Teacher Evidence Studio: What Actually Works for Teacher Effectiveness", u:"/Labs/teacher-evidence-lab.html" },
+    { t:"Theory of Change Studio", u:"/Labs/toc-lab.html" },
+    { t:"Why City Boundaries Lie", u:"/Labs/urban-boundaries-lab.html" }
   ];
   // expose once for other scripts if needed
   window.__MOJINI_COURSES__ = COURSES;
@@ -82,83 +152,25 @@
   const FAQ = [
     // Credentials / Certificates / Accreditation
     { re: /(certificate|certification)s?\b/i,
-      a: "We don't issue formal certificates. ImpactMojo focuses on **skills and credentials** you can demonstrate via real work and portfolio artefacts." },
+      a: "Every signed-up learner gets a free certificate of completion for each course they finish. It appears in your account and has an ID that anyone can check on our verification page. Practitioner members and above can also download it as a PDF and show it in a portfolio. It marks completion, not accreditation." },
     { re: /\bcredential(s)?\b|\bbadge(s)?\b|\bportfolio\b/i,
-      a: "Our credentials are skill signals based on doing work: labs, projects, and artefacts you can show. They're designed to be more meaningful than a generic certificate." },
+      a: "Beyond the certificate, the work you make in labs and Practice Packs is yours to show: a Theory of Change, a sampling design, a policy brief." },
     { re: /\baccredit(ed|ation)|academic credit|university|ugc\b/i,
       a: "ImpactMojo is not an accredited degree program and doesn't offer academic credit. It's a practitioner-focused learning platform." },
 
     // Premium / Pricing
     { re: /\bpremium\b(?!.*(what|include|benefit|price))/i,
-      a: "Premium offers two tiers. **Practitioner** includes RQ Builder Pro, TOC Workbench Pro, certificates, and community access. **Professional** adds Qualitative Research Lab, Statistical Code Converter Pro, VaniScribe AI Transcription (10+ South Asian languages), DevData Practice (36 generators, 840k+ rows), Visualization Cookbook (14 chart types), and the DevEconomics Toolkit (11 Shiny apps). Field Notes from a Dev Economist is free for everyone. Visit the Premium page for details." },
+      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds Qualitative Insights Lab Pro, Statistical Code Converter Pro, VaniScribe AI transcription, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. Field Notes from a Dev Economist is free. See the Premium page for current prices." },
     { re: /\b(what('| i)?s|about).+premium|\bpremium\b.+(include|cover|benefit)/i,
-      a: "**Practitioner Tier** includes RQ Builder Pro, TOC Workbench Pro, completion certificates, and community access. **Professional Tier** adds Qual Research Lab, Code Converter Pro, VaniScribe AI Transcription, DevData Practice datasets, Visualization Cookbook, and the DevEconomics Toolkit with 11 interactive Shiny apps. Field Notes from a Dev Economist is free for all tiers. See the Premium page for current pricing." },
+      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds Qualitative Insights Lab Pro, Statistical Code Converter Pro, VaniScribe AI transcription, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. Field Notes from a Dev Economist is free. See the Premium page for current prices." },
     { re: /\b(price|cost|fee|paid|free).+premium|\bpremium.+(price|cost|fee)/i,
-      a: "Premium has two tiers: **Practitioner** and **Professional**. Pricing and full details are on the live Premium page. All 21 flagship courses, 101-level courses, labs, and games remain **free** forever." },
+      a: "Premium has two plans: **Practitioner** (₹399 a month) and **Professional** (₹999 a month). The Premium page lists what each includes. The courses, labs and games are free." },
 
     // Courses (catalog, objectives, level, format)
     { re: /\b(list|show|see).+course(s)?\b|^\s*courses?\s*$/i,
       a: () => `Here are our core courses:\n\n${listCourses()}` },
     { re: /(which|what)\s+course(s)?\s+(do you have|are available)/i,
       a: () => `We currently offer:\n\n${listCourses()}` },
-    { re: /(objective|about|overview|syllabus).+development economics|dev(\s|-)?econ/i,
-      a: () => {
-        const c = byTitle(COURSES, "Development Economics 101");
-        return c ? `${c.t}: ${c.o}\n${c.u}` : "Development Economics 101 covers poverty, inequality and growth; see the course page for details.";
-      }},
-    { re: /(objective|about|overview|syllabus).+law/i,
-      a: () => { const c = byTitle(COURSES,"Law and Constitution 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+climate/i,
-      a: () => { const c = byTitle(COURSES,"Climate Science 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(pedagogy|education)/i,
-      a: () => { const c = byTitle(COURSES,"Pedagogy and Education 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(public health|health)/i,
-      a: () => { const c = byTitle(COURSES,"Public Health 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+livelihood/i,
-      a: () => { const c = byTitle(COURSES,"Livelihoods 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+gender/i,
-      a: () => { const c = byTitle(COURSES,"Gender Studies 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(WEE|women)/i,
-      a: () => { const c = byTitle(COURSES,"Womens' Economic Empowerment 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(ethics|research ethics)/i,
-      a: () => { const c = byTitle(COURSES,"Research Ethics 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(bcc|behaviour|behavior)/i,
-      a: () => { const c = byTitle(COURSES,"Behaviour Change Communication Programming 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+advocacy/i,
-      a: () => { const c = byTitle(COURSES,"Advocacy and Communications 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(monitoring|evaluation|meal)\b/i,
-      a: () => { const c = byTitle(COURSES,"Monitoring, Evaluation, Accountability and Learning 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+ethnograph/i,
-      a: () => { const c = byTitle(COURSES,"Visual Ethnography 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(political economy|pol.?econ)/i,
-      a: () => { const c = byTitle(COURSES,"Political Economy 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(poverty|inequality)/i,
-      a: () => { const c = byTitle(COURSES,"Poverty and Inequality 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(data vis|datavis|visuali[sz]ation)/i,
-      a: () => { const c = byTitle(COURSES,"Data Visualisation 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(mixed methods|mmr)/i,
-      a: () => { const c = byTitle(COURSES,"Mixed Methods Research 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(impact eval|evaluation design)/i,
-      a: () => { const c = byTitle(COURSES,"Impact Evaluation Design 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+fundraising/i,
-      a: () => { const c = byTitle(COURSES,"Fundraising 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+programme design/i,
-      a: () => { const c = byTitle(COURSES,"Programme Design Principles 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(environmental justice|env\.?justice)/i,
-      a: () => { const c = byTitle(COURSES,"Environmental Justice 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(digital gov|governance)/i,
-      a: () => { const c = byTitle(COURSES,"Digital Governance 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(nutrition|food)/i,
-      a: () => { const c = byTitle(COURSES,"Nutrition, Food Systems & Culture 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(social research ethics|consent)/i,
-      a: () => { const c = byTitle(COURSES,"Social Research Ethics & Consent 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(language|history of languages)/i,
-      a: () => { const c = byTitle(COURSES,"Language & History of Languages 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+caste/i,
-      a: () => { const c = byTitle(COURSES,"Caste 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-    { re: /(objective|about|overview|syllabus).+(humanitarian|development work)/i,
-      a: () => { const c = byTitle(COURSES,"Humanitarian vs Development Work 101"); return `${c.t}: ${c.o}\n${c.u}`; } },
-
     { re: /(beginner|new to this|where to start)/i,
       a: "Start with any **101** course. They're beginner-friendly and focus on practical understanding." },
     { re: /(advanced|deeper|next step)/i,
@@ -196,8 +208,8 @@
     { re: /\bmobile|phone|tablet|responsive\b/i,
       a: "ImpactMojo works on modern browsers across desktop and mobile. For the best experience, keep your browser up to date." },
     { re: /\blanguage(s)?\b|hindi|translation/i,
-      a: "Content is primarily in **English**. Additional language options may be added over time." },
-    { re: /privacy|data|gdpr/i,
+      a: "Content is in **English**. The home, About and Books pages and the site menus can be switched into Hindi, Bengali, Marathi, Tamil and Telugu, but those translations are produced by machine and may contain errors. Course content is in English only." },
+    { re: /\bprivacy\b|\bgdpr\b|\bdpdp\b|data protection|\bmy data\b/i,
       a: "We respect your privacy. Feedback is used to improve ImpactMojo. Please refer to the site's Privacy/Terms pages for details." },
     { re: /(support|help|contact|reach|email)/i,
       a: "For support, use this chat's **Report Bug** or **Feature Request** options. We'll follow up using the info you provide." },
@@ -206,11 +218,11 @@
 
     // Services: Dojos, Workshops, Coaching
     { re: /\bdojo(s)?\b/i,
-      a: "**Dojos** are practice-based skill sessions: 90-minute cohort workshops that build practitioner skills through doing. Topics include pre-mortems, stakeholder mapping, cost-effectiveness analysis, and 32+ other techniques. ₹1,500 per session in Delhi, Bangalore, or online. Check the **Dojos** page under Services." },
+      a: "**Dojos** are practice-based skill sessions: 90-minute cohort workshops that build practitioner skills through doing. There are 56 sessions in the series. ₹1,500 per session in Delhi, Bangalore, or online. Check the **Dojos** page under Services." },
     { re: /\bworkshop(s)?\b/i,
-      a: "We offer **Workshops** like the Three-Day MEAL Intensive and Theory of Change Design Sprint. For organizations, we provide custom training on any ImpactMojo topic. Check the **Workshops** page under Services." },
+      a: "We run intensive three-day **Workshops** for NGOs and development teams, with cohort pricing from ₹12,000 for up to 6 participants. The **Workshops** page under Services has the topics, dates and booking form." },
     { re: /\bcoaching\b/i,
-      a: "**Coaching** includes one-on-one sessions with Dr. Varna (career counseling, research design) and Vandana (social media strategy). Check the **Coaching** page under Services to book a session." },
+      a: "**Coaching** is one-on-one or group sessions. The **Coaching** page under Services lists the coaches, topics and how to book." },
     { re: /(service|what do you offer|training|consulting)/i,
       a: "ImpactMojo offers **Courses** (self-paced learning), **Labs** (hands-on tools), **Coaching** (1:1 sessions), **Workshops** (group training), and **Dojos** (practice-based skill sessions). Explore the Services menu!" },
 
@@ -236,19 +248,19 @@
 
     // ImpactLex
     { re: /impactlex|glossary|dictionary|terminology|acronym/i,
-      a: "**ImpactLex** is our searchable glossary with 500+ development terms, acronyms, formulas, and case studies. Features 'Finance Word of the Day'. Visit: https://on-web.link/ImpactLex" },
+      a: "**ImpactLex** is our searchable glossary with more than 490 development terms, acronyms, formulas, and case studies. Features 'Finance Word of the Day'. Visit: https://on-web.link/ImpactLex" },
 
     // FieldCases Library
     { re: /fieldcases|case.?stud|evidence.*library|cited.*research|country.*studies|dev.*case/i,
-      a: "**FieldCases** is our free, searchable library of 200 cited development case studies from 117 countries. Covers financial inclusion, health, education, governance, and more across 10 topics and 7 regions. Every claim is grounded in published research. Browse it at: https://varnasr.github.io/dev-case-studies/" },
+      a: "**FieldCases** is our free, searchable library of more than 200 cited development case studies, each with its sources listed. Browse it at: https://varnasr.github.io/dev-case-studies/" },
 
     // Development Discourses
     { re: /dev.*discourse|discourse|open.?access.*paper|research.*paper|grey.*lit|academic.*library|curated.*library|research.*library/i,
-      a: "**Development Discourses** is a curated open-access library of 500+ research papers, books, and grey literature on development, social impact, and public policy. Searchable by topic, type, author, and keyword. Covers MEL, gender justice, climate resilience, data governance, public health, livelihoods, and more. Prioritizes open-access resources so you can read, cite, and share without paywalls. Explore it at: https://on-web.link/DevDiscourses" },
+      a: "**Development Discourses** is a curated open-access library of more than 600 research papers, books and grey literature on development and public policy, sorted by topic. Every resource is open access, so you can read and cite it without a paywall. Explore it at: https://on-web.link/DevDiscourses" },
 
     // DevData Practice
     { re: /devdata|dataset|data.*practice|realistic.*data|household.*survey|rct.*data/i,
-      a: "**DevData Practice** is our premium resource with 36 realistic dataset generators producing 840k+ rows of development economics data. Covers household surveys, RCTs, health, education, agriculture, gender, climate, WASH, humanitarian, IRT psychometrics, and more. Includes practice exercises. Visit: https://impactmojo-devdata-pro.netlify.app/" },
+      a: "**DevData Practice** is free to use. It has 36 dataset generators that produce more than 840,000 synthetic rows in the style of household surveys, trials and labour force surveys, for practising analysis. None of it is real survey data. Open it at /premium-tools/devdata-practice.html" },
     // Constitution & Law
     { re: /constitution|law.*course|pil|article.*21|fundamental.*right|basic.*structure|rights.*based/i,
       a: "**Constitution & Law for Development Practice** is our flagship course on rights, institutions and justice in South Asia. 13 modules covering the Indian Constitution, fundamental rights, PIL, Article 21, reservations, rights-based legislation, criminal justice, environmental law, digital rights, and comparative constitutional systems. Visit: /courses/law/" },
@@ -260,7 +272,7 @@
       a: "**VaniScribe** is our premium AI transcription tool for development researchers. Transcribe field interviews, FGDs, and KIIs in Hindi, Tamil, Bengali, and 10+ South Asian languages using Sarvam AI. Features speaker diarization, auto-timestamping, and export to structured formats for qualitative analysis. Visit: /premium.html" },
     // Visualization Cookbook
     { re: /viz.*cookbook|visualization.*cookbook|chart.*recipe|chart.*type|python.*chart|data.*viz.*code/i,
-      a: "The **Visualization Cookbook** is a premium resource with 14 chart types and production-ready Python code. Question-driven: pick the story your data tells (comparison, distribution, relationship, composition, time series, spatial) and get the right chart with code. Part of DevData Practice. Visit: https://impactmojo-devdata-pro.netlify.app/charts.html" },
+      a: "The **Visualization Cookbook** has 63 chart recipes with Python code, organised by the question you are asking of your data (comparison, distribution, relationship, composition, time series, spatial). Browsing is free. Copying the code needs a Professional plan. Open it at /premium-tools/viz-cookbook.html" },
     { re: /deveconomics.*toolkit|shiny.*app|rct.*power|did.*simulator|rdd.*explorer|synthetic.*control|gini.*tool|mpi.*explorer|logframe|wdi.*dashboard|poverty.*line.*analysis|cost.*benefit.*tool/i,
       a: "**DevEconomics Toolkit** is our premium collection of 11 interactive Shiny apps for development economics. Includes RCT power calculator, DiD simulator, RDD explorer, synthetic control visualizer, Gini and Lorenz curve tool, MPI explorer, poverty line analysis, Theory of Change visualizer, cost-benefit analysis tool, LogFrame builder, and WDI dashboard. Visit: https://impactmojo-devecon-toolkit.netlify.app/" }
   ];
@@ -274,12 +286,15 @@
     COURSES.forEach(c => {
       const title = norm(c.t);
       let score = 0;
-      title.split(/\s+/).forEach(tok => { if (tok && s.includes(tok)) score++; });
+      title.split(/[^a-z0-9]+/).forEach(tok => { if (tok.length > 2 && !['and','the','for','with','from'].includes(tok) && s.includes(tok)) score++; });
       if (score > bestScore) { bestScore = score; best = c; }
     });
     if (best && bestScore >= 2) return `${best.t}: ${best.o}\n${best.u}`;
     return null;
   }
+
+  // Whatever answerer was installed before this file; captured now because the next block replaces it.
+  const __prevAnswer = window.mojiniAnswer;
 
   // Main answerer: bank -> dynamic course objective -> (optional) existing mojiniAnswer -> fallback null
   function answerFromFAQ(userText){
@@ -296,8 +311,8 @@
     if (dyn) return dyn;
 
     // 3) If an earlier global answerer exists, let it try next (keeps compatibility)
-    if (typeof window.mojiniAnswer === "function") {
-      const maybe = window.mojiniAnswer(text);
+    if (typeof __prevAnswer === "function") {
+      const maybe = __prevAnswer(text);
       if (maybe) return maybe;
     }
     return null;

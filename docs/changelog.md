@@ -11,6 +11,10 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 ### Fixed
 
 - **Wrong counts, unsupported claims and invented ratings on the four pages (#1132).** The home page said the Law Docket holds 61 judgments (109), Deep Dives 22 (25), the Data Room 12 and 13 explorers (19) and Libraries 9 (18). The FAQ and its hidden structured data said 19 flagship, 51 foundational and 70 courses (21, 59 and 80). The newsletter promise, the certificate descriptions, the tool descriptions and a bio line were corrected to match the code. The 17 star ratings on the Premium tools were removed because no review data exists behind them. "IT Act 2000 compliant" was removed from the footer because no policy makes that claim.
+- **Premium FAQ refund promise contradicted the refund policy (#1132).** It promised a full refund within 7 days, no questions asked. It now states the refund policy: no refund for a partial month on monthly plans, a prorated refund within 30 days on annual plans. The same 7-day promise on the assessed-certificate page was replaced with a pointer to the policy.
+- **DevData Practice and the Visualization Cookbook were listed as Professional features (#1132).** DevData Practice has no gate and is free; the Cookbook is free to browse and needs Professional only to copy code. Both pages now say so.
+- **Mojini answered from out-of-date lists (#1132).** It said ImpactMojo issues no certificates, listed 35 of 80 courses and 11 labs under older titles, and described the Cookbook as 14 chart types. Its course list is now built from the 80 course pages, its lab list from the labs, and its certificate, Premium, language, DevData, workshop and coaching answers match the site. A lookup that returned nothing for "Gender Studies 101" could throw an error; the per-course handlers that caused it are replaced by one matcher.
+- **The reading companion count was 172 against 171 pages (#1132).** The canonical count in `data/counts.json` now matches the number of companion pages, and every page that stated it was updated.
 
 ## v10.318.0 — October 5, 2026 (Law Docket and Law Guides checked against sources)
 
