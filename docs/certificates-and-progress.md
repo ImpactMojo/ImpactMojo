@@ -25,7 +25,7 @@ Your personal dashboard shows a summary of your activity across all courses, lab
 As you work through ImpactMojo content, you can save items for later:
 
 - **Bookmarks.** Save any course module, handout, case study, or DevDiscourses paper to your bookmarks. Access them from your dashboard.
-- **Notes.** Add personal notes to any module. These are private — only you can see them. Use them to capture thoughts, connect ideas to your work, or note questions to follow up on.
+- **Notes.** Add personal notes to any module. These are private: only you can see them. Use them to capture thoughts, connect ideas to your work, or note questions to follow up on.
 - **Reading lists.** Create themed reading lists from the DevDiscourses library (500+ papers and books). Useful for building a syllabus or preparing for a research project.
 
 All of these features require a free account.
@@ -40,19 +40,19 @@ A flagship course is marked as complete when you have:
 
 Foundational courses are marked complete when you have read through all sections.
 
-Completion is tracked automatically — there is no "submit" button. The platform records your progress as you go.
+Completion is tracked automatically: there is no "submit" button. The platform records your progress as you go.
 
 ## Certificates
 
 When you complete a flagship course, you earn a digital certificate.
 
-> **Important: ImpactMojo is not a university, accredited institution, or government-recognised credentialing body.** Our certificates are **micro-credentials that certify course completion only**. They confirm that you worked through the modules and quizzes — nothing more.
+> **Important: ImpactMojo is not a university, accredited institution, or government-recognised credentialing body.** Our certificates are **micro-credentials that certify course completion only**. They confirm that you worked through the modules and quizzes: nothing more.
 >
 > **What our certificates do NOT do:**
 >
 > - They do not guarantee employment, internships, or acquisition of skills.
 > - They are not equivalent to university degrees, diplomas, or academic credit.
-> - They cannot be stored, transferred, or counted as credits in any government digital credential system — including DigiLocker, APAAR, Aadhaar-linked systems, ABC (Academic Bank of Credits), or any national/international equivalents.
+> - They cannot be stored, transferred, or counted as credits in any government digital credential system: including DigiLocker, APAAR, Aadhaar-linked systems, ABC (Academic Bank of Credits), or any national/international equivalents.
 > - They do not qualify as National Skills Qualifications Framework (NSQF) or National Skills Information Management (NSIM) credentials.
 > - They are not recognised by UGC, AICTE, or any regulatory body.
 >
@@ -77,20 +77,20 @@ When you complete a flagship course, you earn a digital certificate.
 
 ImpactMojo certificates use the W3C Open Badges 3.0 standard. Here is what that means in plain language:
 
-**Open Badges** are digital credentials — like a certificate, but smarter. Instead of a PDF that anyone could fake, an Open Badge is a verifiable digital file that contains information about what you earned, who issued it, and when.
+**Open Badges** are digital credentials: like a certificate, but smarter. Instead of a PDF that anyone could fake, an Open Badge is a verifiable digital file that contains information about what you earned, who issued it, and when.
 
 **Why this matters for you:**
 
 - **Verifiable.** Anyone can check that your certificate is real by visiting the verification URL. No need to contact ImpactMojo to confirm.
 - **Portable.** You own your badge. Add it to your LinkedIn profile, email signature, CV, or any platform that supports Open Badges.
 - **Standardized.** W3C Open Badges 3.0 is an international standard maintained by the World Wide Web Consortium (the same organization that sets standards for the web itself). Your credential is recognized by platforms and employers worldwide.
-- **Machine-readable.** The badge contains structured data that systems can read automatically — useful for organizations tracking staff credentials.
+- **Machine-readable.** The badge contains structured data that systems can read automatically: useful for organizations tracking staff credentials.
 
 Think of it like the difference between a handwritten receipt and a bank-verified digital transaction. Both say you completed something, but one is independently verifiable.
 
 ## Certificate Verification
 
-Every ImpactMojo certificate has a unique verification URL. Anyone — an employer, a university, a grant committee — can visit that URL to confirm:
+Every ImpactMojo certificate has a unique verification URL. Anyone (an employer, a university, a grant committee) can visit that URL to confirm:
 
 - The certificate is genuine and was issued by ImpactMojo.
 - The name on the certificate matches.
@@ -106,7 +106,7 @@ If you are managing a team at an NGO, think tank, or university program, the Org
 **Team dashboards show:**
 
 - Which courses each team member has started and completed
-- Progress across the team — how many people have finished a given course or track
+- Progress across the team: how many people have finished a given course or track
 - Certificate records for all team members
 - Time spent on the platform
 
@@ -131,12 +131,12 @@ A learning path is a curated sequence of courses, labs, and games designed aroun
 
 **ImpactMojo's 6 built-in learning tracks:**
 
-1. **MEL & Research** — Monitoring, evaluation, qualitative and quantitative methods
-2. **Economics & Policy** — Development economics, political economy, fundraising
-3. **Gender & Equity** — Gender studies, women's economic empowerment, care economy, data feminism
-4. **Governance & Society** — Constitution, decolonization, community development
-5. **Health & Wellbeing** — Public health, climate, social-emotional learning, livelihoods
-6. **Communication & Data** — Data literacy, visual ethnography, behavior change communication, advocacy
+1. **MEL & Research**: Monitoring, evaluation, qualitative and quantitative methods
+2. **Economics & Policy**: Development economics, political economy, fundraising
+3. **Gender & Equity**: Gender studies, women's economic empowerment, care economy, data feminism
+4. **Governance & Society**: Constitution, decolonization, community development
+5. **Health & Wellbeing**: Public health, climate, social-emotional learning, livelihoods
+6. **Communication & Data**: Data literacy, visual ethnography, behavior change communication, advocacy
 
 Each track recommends a sequence of flagship courses, foundational courses, labs, and games that build on each other.
 
@@ -152,4 +152,4 @@ Custom paths can include any combination of courses, modules, labs, games, and h
 
 **For individual learners:**
 
-You do not need to follow a predefined track. Browse the course catalog, bookmark what interests you, and build your own journey. The learning tracks are suggestions — starting points that help if you are not sure where to begin.
+You do not need to follow a predefined track. Browse the course catalog, bookmark what interests you, and build your own journey. The learning tracks are suggestions: starting points that help if you are not sure where to begin.

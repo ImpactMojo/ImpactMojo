@@ -2,9 +2,9 @@
 
 ## What Is the BCT Repository?
 
-The ImpactMojo BCT Repository is a **free, searchable collection of 200+ Behaviour Change Techniques** — combining the internationally recognised BCT Taxonomy v1 (93 core techniques) with 100+ additional techniques contextualised for South Asian development practice.
+The ImpactMojo BCT Repository is a **free, searchable collection of 200+ Behaviour Change Techniques**: combining the internationally recognised BCT Taxonomy v1 (93 core techniques) with 100+ additional techniques contextualised for South Asian development practice.
 
-If you design health programmes, WASH interventions, education campaigns, or any work that aims to change people's behaviour, this repository helps you find the right techniques backed by evidence — and use their standardised IDs in your proposals and logframes.
+If you design health programmes, WASH interventions, education campaigns, or any work that aims to change people's behaviour, this repository helps you find the right techniques backed by evidence, and use their standardised IDs in your proposals and logframes.
 
 ---
 
@@ -12,7 +12,7 @@ If you design health programmes, WASH interventions, education campaigns, or any
 
 A **Behaviour Change Technique (BCT)** is a specific, replicable component of an intervention designed to change behaviour. Instead of vaguely saying "we'll raise awareness," a BCT gives you a precise technique with a definition, evidence base, and taxonomy ID.
 
-**Example:** BCT 1.1 "Goal Setting (behaviour)" — the person sets a specific behavioural goal (e.g., "I will wash hands before every meal"). This is a technique you can name, measure, and replicate.
+**Example:** BCT 1.1 "Goal Setting (behaviour)", the person sets a specific behavioural goal (e.g., "I will wash hands before every meal"). This is a technique you can name, measure, and replicate.
 
 Using standardised BCTs in your programme design makes interventions more precise, evaluable, and comparable across studies.
 
@@ -37,9 +37,9 @@ Techniques are organised by domain so you can find what's relevant to your secto
 
 Every technique is tagged with an evidence rating:
 
-- **Strong** — Supported by multiple rigorous studies (RCTs, systematic reviews)
-- **Moderate** — Supported by observational studies or limited experimental evidence
-- **Emerging** — Promising but with limited formal evaluation
+- **Strong**: Supported by multiple rigorous studies (RCTs, systematic reviews)
+- **Moderate**: Supported by observational studies or limited experimental evidence
+- **Emerging**: Promising but with limited formal evaluation
 
 When designing interventions, prioritise techniques with Strong evidence. Use Emerging techniques where no Strong alternatives exist, and plan to evaluate them.
 
@@ -49,21 +49,21 @@ When designing interventions, prioritise techniques with Strong evidence. Use Em
 
 ### Search and Filtering
 
-The repository has a full-text search with fuzzy matching — type a keyword, technique name, sector, or programme type and get ranked results. You can also filter by:
+The repository has a full-text search with fuzzy matching: type a keyword, technique name, sector, or programme type and get ranked results. You can also filter by:
 
-- **Category** — Health, Education, WASH, Gender, Livelihoods, Governance
-- **Evidence level** — Strong, Moderate, Emerging
-- **Keyword** — any term in the technique name or definition
+- **Category**: Health, Education, WASH, Gender, Livelihoods, Governance
+- **Evidence level**: Strong, Moderate, Emerging
+- **Keyword**: any term in the technique name or definition
 
 ### Technique Cards
 
 Each technique displays as a card showing:
 
-- **Taxonomy ID** (e.g., BCT 1.1) — the standardised identifier
-- **Name** — what the technique is called
-- **Definition** — precisely what the technique involves
-- **Evidence level** — colour-coded badge
-- **Category tags** — which sectors it applies to
+- **Taxonomy ID** (e.g., BCT 1.1): the standardised identifier
+- **Name**: what the technique is called
+- **Definition**: precisely what the technique involves
+- **Evidence level**: colour-coded badge
+- **Category tags**, which sectors it applies to
 
 Click any card for an expanded view with related techniques and cross-links.
 
@@ -92,7 +92,7 @@ Use the repository as a reference when teaching intervention design. Have studen
 
 - **Pre-read:** Assign participants to browse a specific category before the session
 - **Activity:** Give teams a case study and have them select 3–5 BCTs for their intervention design
-- **Discussion:** Compare team selections — why did different groups choose different techniques?
+- **Discussion:** Compare team selections, why did different groups choose different techniques?
 
 ### In Proposal Writing
 
@@ -107,16 +107,16 @@ BCTs map directly to the "activities" and "mechanisms" layers of a Theory of Cha
 ## Getting Started
 
 1. **Visit the BCT Repository** at [impactmojo.in/bct-repository.html](https://www.impactmojo.in/bct-repository.html)
-2. **Browse by category** — start with your sector (Health, Education, WASH, etc.)
-3. **Filter by evidence level** — begin with Strong evidence techniques
-4. **Search by keyword** — try terms like "self-monitoring," "social support," or "incentive"
-5. **Bookmark useful techniques** — build a collection for your programme area
+2. **Browse by category**: start with your sector (Health, Education, WASH, etc.)
+3. **Filter by evidence level**: begin with Strong evidence techniques
+4. **Search by keyword**: try terms like "self-monitoring," "social support," or "incentive"
+5. **Bookmark useful techniques**: build a collection for your programme area
 
 ---
 
 ## Tips
 
 - **Combine complementary techniques.** Effective behaviour change interventions typically use 3–7 BCTs together, not just one.
-- **Check evidence in your context.** A technique with Strong evidence globally may have limited evidence in South Asian settings — the repository flags this where relevant.
+- **Check evidence in your context.** A technique with Strong evidence globally may have limited evidence in South Asian settings: the repository flags this where relevant.
 - **Use taxonomy IDs consistently.** When writing proposals, M&E plans, or research papers, always include the BCT ID alongside the name for clarity and comparability.
-- **Start with the familiar.** If you already do "awareness campaigns," search for what BCTs those campaigns actually use — you may find you're already applying techniques like BCT 5.1 "Information about health consequences" without naming them.
+- **Start with the familiar.** If you already do "awareness campaigns," search for what BCTs those campaigns actually use: you may find you're already applying techniques like BCT 5.1 "Information about health consequences" without naming them.

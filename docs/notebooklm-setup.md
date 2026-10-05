@@ -11,7 +11,7 @@ playwright install chromium
 
 ## Authentication
 
-One-time setup — opens a browser for Google OAuth:
+One-time setup, opens a browser for Google OAuth:
 
 ```bash
 notebooklm login
@@ -57,7 +57,7 @@ notebooklm audio <notebook-id>           # Generate audio overview
 
 ## Registry
 
-`data/notebooklm-registry.json` maps course slugs to notebook IDs. This is the single source of truth for automation — notebook IDs are also embedded in course HTML pages but the registry is what scripts read.
+`data/notebooklm-registry.json` maps course slugs to notebook IDs. This is the single source of truth for automation: notebook IDs are also embedded in course HTML pages but the registry is what scripts read.
 
 ## Course notebooks
 
@@ -77,10 +77,10 @@ notebooklm audio <notebook-id>           # Generate audio overview
 
 ## Limitations
 
-- **Unofficial API** — uses undocumented Google APIs that may break without notice
-- **Interactive auth** — `notebooklm login` requires a browser, cannot run in CI/headless
-- **Per-machine credentials** — auth tokens are stored locally, not in the repo
-- **Rate limits** — Google may throttle requests; avoid rapid-fire operations
+- **Unofficial API**: uses undocumented Google APIs that may break without notice
+- **Interactive auth**, `notebooklm login` requires a browser, cannot run in CI/headless
+- **Per-machine credentials**: auth tokens are stored locally, not in the repo
+- **Rate limits**: Google may throttle requests; avoid rapid-fire operations
 
 ## Study-companion kit (prompts + source packs)
 

@@ -84,7 +84,7 @@ const PANEL = {
     provider: "groq",
     model: "meta-llama/llama-4-scout-17b-16e-instruct",
     persona:
-      "You are a Field Practitioner who has implemented programmes on the ground in South Asia. You speak to operational reality — staffing, last-mile delivery, community trust, what actually happens versus what the design assumes. You respect evidence but insist it survive contact with the field.",
+      "You are a Field Practitioner who has implemented programmes on the ground in South Asia. You speak to operational reality: staffing, last-mile delivery, community trust, what actually happens versus what the design assumes. You respect evidence but insist it survive contact with the field.",
   },
   behavioral: {
     name: "Behavioural Scientist",
@@ -92,7 +92,7 @@ const PANEL = {
     provider: "groq",
     model: "llama-3.1-8b-instant",
     persona:
-      "You are a Behavioural Scientist. You focus on why people do or don't take up an intervention — friction, defaults, salience, social norms, trust — and how design choices change behaviour. You bring concrete behavioural mechanisms, not just 'add a nudge'.",
+      "You are a Behavioural Scientist. You focus on why people do or don't take up an intervention (friction, defaults, salience, social norms, trust) and how design choices change behaviour. You bring concrete behavioural mechanisms, not just 'add a nudge'.",
   },
   critic: {
     name: "Critic / Equity Lens",
@@ -100,12 +100,12 @@ const PANEL = {
     provider: "groq",
     model: "openai/gpt-oss-120b",
     persona:
-      "You are the panel's Critic, arguing from a power and equity lens. You ask who is excluded, who bears the cost, whose voice is missing, and what could go wrong. You challenge the other advisors' assumptions directly but in good faith — you are a sharp critic, not a cynic.",
+      "You are the panel's Critic, arguing from a power and equity lens. You ask who is excluded, who bears the cost, whose voice is missing, and what could go wrong. You challenge the other advisors' assumptions directly but in good faith: you are a sharp critic, not a cynic.",
   },
 };
 
 const SHARED_RULES =
-  "This is a panel discussion for a development-education audience. Stay strictly on the development-sector topic at hand. Keep your contribution to 2–4 sentences: make ONE substantive point, and where natural, explicitly build on or push back against a specific advisor by name. Do not repeat what others already said. No headings, no bullet lists, no preamble like 'As the X...' — just speak. If the topic is off-topic, harmful, or not a genuine development question, briefly decline and steer back.";
+  "This is a panel discussion for a development-education audience. Stay strictly on the development-sector topic at hand. Keep your contribution to 2–4 sentences: make ONE substantive point, and where natural, explicitly build on or push back against a specific advisor by name. Do not repeat what others already said. No headings, no bullet lists, no preamble like 'As the X...': just speak. If the topic is off-topic, harmful, or not a genuine development question, briefly decline and steer back.";
 
 // ---- Providers (server-side keys only) ----------------------------------
 // Some open models leak chain-of-thought as <think>…</think> inside content;
@@ -204,12 +204,12 @@ async function authorize(req) {
     const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
       headers: { Authorization: `Bearer ${token}`, apikey: SERVICE_KEY },
     });
-    if (!r.ok) return { ok: false, status: 401, error: "session expired — sign in again" };
+    if (!r.ok) return { ok: false, status: 401, error: "session expired: sign in again" };
     const u = await r.json();
     uid = u?.id;
     if (!uid) return { ok: false, status: 401, error: "invalid session" };
   } catch {
-    return { ok: false, status: 502, error: "auth check failed — try again" };
+    return { ok: false, status: 502, error: "auth check failed: try again" };
   }
 
   // 2) Look up tier / status / grants
@@ -232,7 +232,7 @@ async function authorize(req) {
     }
     return { ok: true, uid };
   } catch {
-    return { ok: false, status: 502, error: "entitlement check failed — try again" };
+    return { ok: false, status: 502, error: "entitlement check failed: try again" };
   }
 }
 
@@ -278,7 +278,7 @@ export default async (req) => {
   if (steer && steer.length > MAX_STEER) return json({ error: "steer too long" }, 400);
 
   const quota = await checkQuota(auth.uid);
-  if (!quota.ok) return json({ error: "daily limit reached — please come back tomorrow" }, 429);
+  if (!quota.ok) return json({ error: "daily limit reached: please come back tomorrow" }, 429);
 
   // Build the discussion context for this persona's turn.
   const history = transcript.length
@@ -295,14 +295,14 @@ export default async (req) => {
   }
 
   const steerLine = steer && steer.trim()
-    ? `\n\nThe user has added a point to steer the discussion — address it directly:\n"${steer.trim()}"`
+    ? `\n\nThe user has added a point to steer the discussion, address it directly:\n"${steer.trim()}"`
     : "";
 
   const system = `${advisor.persona}\n\n${SHARED_RULES}`;
   const user = `TOPIC FOR THE PANEL:\n${topic.trim()}\n\nDISCUSSION SO FAR:\n${history}${steerLine}\n\n${task}`;
 
   const { text, model } = await runProvider(advisor.provider, advisor.model, system, user);
-  if (!text) return json({ error: "advisor unavailable — try again" }, 502);
+  if (!text) return json({ error: "advisor unavailable: try again" }, 502);
 
   return json({ name: advisor.name, lens: advisor.lens, text, model });
 };

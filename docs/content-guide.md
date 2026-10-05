@@ -25,12 +25,12 @@ This page documents how educational content is structured in ImpactMojo, for con
 
 Content is organized into 6 tracks:
 
-1. **MEL & Research** — Monitoring, evaluation, qualitative/quantitative methods
-2. **Economics & Policy** — Development economics, political economy, fundraising
-3. **Gender & Equity** — Gender studies, WEE, care economy, data feminism
-4. **Governance & Society** — Constitution, decolonization, community development
-5. **Health & Wellbeing** — Public health, climate, SEL, livelihoods
-6. **Communication & Data** — Data literacy, visual ethnography, BCC, advocacy
+1. **MEL & Research**: Monitoring, evaluation, qualitative/quantitative methods
+2. **Economics & Policy**: Development economics, political economy, fundraising
+3. **Gender & Equity**: Gender studies, WEE, care economy, data feminism
+4. **Governance & Society**: Constitution, decolonization, community development
+5. **Health & Wellbeing**: Public health, climate, SEL, livelihoods
+6. **Communication & Data**: Data literacy, visual ethnography, BCC, advocacy
 
 ## Flagship Course Structure
 
@@ -38,10 +38,10 @@ Each flagship course follows a consistent structure:
 
 - **13 modules** (approximately)
 - **Lexicon** of 50–65 key terms
-- **South Asian context** — examples from India, Bangladesh, Nepal, Sri Lanka
-- **Case studies** — real development programs and evaluations
-- **Reflection prompts** — for practitioners to connect to their work
-- **Further reading** — curated from DevDiscourses
+- **South Asian context**: examples from India, Bangladesh, Nepal, Sri Lanka
+- **Case studies**: real development programs and evaluations
+- **Reflection prompts**: for practitioners to connect to their work
+- **Further reading**: curated from DevDiscourses
 
 ### Example: MEL for Development
 ```
@@ -61,16 +61,16 @@ Labs are HTML/JS workbenches that let practitioners apply concepts. Each lab:
 - Has a guided workflow (step-by-step)
 - Produces an output (framework, plan, analysis)
 - Can export results (PDF/PNG in premium versions)
-- Requires no server — runs entirely in the browser
+- Requires no server: runs entirely in the browser
 
 ## Learning Games
 
 Games are economics simulations built as single HTML pages:
 
-- **Self-contained** — each game is one HTML file
-- **Data-driven** — real economic parameters where possible
-- **Debriefable** — designed for classroom or workshop use
-- **Mobile-friendly** — responsive layouts
+- **Self-contained**: each game is one HTML file
+- **Data-driven**: real economic parameters where possible
+- **Debriefable**: designed for classroom or workshop use
+- **Mobile-friendly**: responsive layouts
 
 ## Adding New Content
 
@@ -113,18 +113,18 @@ Translation contributions are welcome. See [Contributing](Contributing) for guid
 
 ## How to Write a Deep Dive
 
-Deep Dives are curated annotated reading lists. Each list is an editorial artifact with a named curator's voice, not a neutral bibliography — closer to a long-form essay-as-syllabus than to a stand-alone references page.
+Deep Dives are curated annotated reading lists. Each list is an editorial artifact with a named curator's voice, not a neutral bibliography: closer to a long-form essay-as-syllabus than to a stand-alone references page.
 
 ### Anatomy of a Deep Dive
 
-1. **Hero** — title, one-line tagline, topic chip, count of readings.
-2. **Curator card** — name, role, 2–3 sentence bio. Mark as `Editor's Pick` (in-house) or `Invited Curator`.
-3. **Editor's Note** — 2–4 paragraph framing essay in the curator's voice. This is the substance; the list is the receipt.
-4. **3–6 themed sections** — e.g. "Foundations", "Recent Debates", "Voices from the Field". Don't make a flat list.
-5. **Reading items** — for each: a type badge (📘 Book / 📄 Paper / 🎙 Podcast / 🎬 Film / 📊 Dataset / 📰 Article / 🌐 Web), a full citation with outbound link, and a 2–4 sentence annotation that says why the work matters and how it fits the syllabus.
-6. **Related ImpactMojo content** — cross-link 2–4 courses, labs, games, or reading companions.
-7. **Suggested citation** — APA-style citation block.
-8. **Contribute CTA** — link to the pitch form.
+1. **Hero**: title, one-line tagline, topic chip, count of readings.
+2. **Curator card**: name, role, 2–3 sentence bio. Mark as `Editor's Pick` (in-house) or `Invited Curator`.
+3. **Editor's Note**: 2–4 paragraph framing essay in the curator's voice. This is the substance; the list is the receipt.
+4. **3–6 themed sections**: e.g. "Foundations", "Recent Debates", "Voices from the Field". Don't make a flat list.
+5. **Reading items**, for each: a type badge (📘 Book / 📄 Paper / 🎙 Podcast / 🎬 Film / 📊 Dataset / 📰 Article / 🌐 Web), a full citation with outbound link, and a 2–4 sentence annotation that says why the work matters and how it fits the syllabus.
+6. **Related ImpactMojo content**: cross-link 2–4 courses, labs, games, or reading companions.
+7. **Suggested citation**: APA-style citation block.
+8. **Contribute CTA**: link to the pitch form.
 
 ### Files to create / update
 
@@ -136,7 +136,7 @@ To add a new Deep Dive:
 4. Add a `<url>` entry to `/sitemap.xml`.
 5. Add a card to `catalog.html` `allContent` array (`type: 'deep-dive'`, pick a track).
 6. (Optional) Feature on the homepage by editing the Deep Dives section in `/index.html` if it's flagship-quality.
-7. Update count text everywhere — grep for `(5 Deep Dives|5 readings)` and bump the number.
+7. Update count text everywhere: grep for `(5 Deep Dives|5 readings)` and bump the number.
 
 ### Editorial guidelines
 
@@ -144,4 +144,4 @@ To add a new Deep Dive:
 - **Mixed media is encouraged.** A good Deep Dive has at least one podcast, one dataset, and one practitioner-facing source alongside the academic core.
 - **Annotate, don't summarise.** Two to four sentences. Why this work, why now, who should read it.
 - **Cross-link generously.** Use the "Related ImpactMojo Content" block to send readers to courses, labs, and reading companions that build on the list.
-- **Stay in scope.** Each Deep Dive is one coherent topic — don't try to cover a whole field.
+- **Stay in scope.** Each Deep Dive is one coherent topic: don't try to cover a whole field.

@@ -85,8 +85,8 @@ typo, because that is almost always what it is.
 
 ## Related
 
-- [Fundamentals](https://www.impactmojo.in/fundamentals/) — the diagrams development
+- [Fundamentals](https://www.impactmojo.in/fundamentals/), the diagrams development
   work already uses, with the Indian evidence behind them. Frameworks you apply,
   where this library holds positions people hold.
-- [Development Discourses](https://varnasr.github.io/development-discourses/) — the
+- [Development Discourses](https://varnasr.github.io/development-discourses/), the
   open-access reading library each theory page points into.

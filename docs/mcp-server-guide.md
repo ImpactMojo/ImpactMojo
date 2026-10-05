@@ -4,7 +4,7 @@ ImpactMojo has a **Model Context Protocol (MCP) server** that lets any AI assist
 
 ## What is MCP?
 
-[Model Context Protocol](https://modelcontextprotocol.io/) is an open standard that lets AI assistants connect to external data sources and tools. Think of it as a USB port for AI — plug in the ImpactMojo MCP server, and your AI assistant can search our courses, BCTs, Dataverse, climate data, and more.
+[Model Context Protocol](https://modelcontextprotocol.io/) is an open standard that lets AI assistants connect to external data sources and tools. Think of it as a USB port for AI: plug in the ImpactMojo MCP server, and your AI assistant can search our courses, BCTs, Dataverse, climate data, and more.
 
 ## Available Tools (11)
 
@@ -84,7 +84,7 @@ npx @modelcontextprotocol/inspector node dist/index.js
 Once connected, ask your AI assistant:
 
 - "Search ImpactMojo for gender equity content"
-- "Look up BCT001 — what's the South Asian context?"
+- "Look up BCT001: what's the South Asian context?"
 - "Find BCTs related to nutrition with strong evidence"
 - "What tools does the Dataverse have for climate data?"
 - "List all practice challenges for the MEL track"

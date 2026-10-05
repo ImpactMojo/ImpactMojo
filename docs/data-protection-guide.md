@@ -1,4 +1,4 @@
-# Data Protection — In Plain Language
+# Data Protection. In Plain Language
 
 This is a plain-language summary of ImpactMojo's data protection practices. The full document is at [impactmojo.in/data-protection.html](https://www.impactmojo.in/data-protection.html).
 
@@ -12,7 +12,7 @@ ImpactMojo is aligned with India's **Digital Personal Data Protection Act 2023**
 
 ## What the DPDPA Means for You
 
-The DPDPA is India's data protection law — it gives you rights over your personal data and sets rules for how organisations like ImpactMojo handle it.
+The DPDPA is India's data protection law: it gives you rights over your personal data and sets rules for how organisations like ImpactMojo handle it.
 
 **Your rights under the DPDPA:**
 
@@ -47,7 +47,7 @@ The DPDPA is India's data protection law — it gives you rights over your perso
 - Regular security reviews
 
 **Organisational measures:**
-- Minimal data collection — we only collect what we actually need
+- Minimal data collection: we only collect what we actually need
 - Access limited to team members who need it
 - No sharing with third parties for marketing
 
@@ -57,10 +57,10 @@ The DPDPA is India's data protection law — it gives you rights over your perso
 
 ## Data Retention
 
-- **Account data** — kept as long as your account is active. Deleted when you request account deletion.
-- **Analytics data** — anonymous and aggregated. Not tied to your identity.
-- **Contact form submissions** — kept for as long as needed to respond and follow up.
-- **Payment records** — kept as required by Indian tax and financial regulations.
+- **Account data**: kept as long as your account is active. Deleted when you request account deletion.
+- **Analytics data**: anonymous and aggregated. Not tied to your identity.
+- **Contact form submissions**: kept for as long as needed to respond and follow up.
+- **Payment records**: kept as required by Indian tax and financial regulations.
 
 ---
 
@@ -95,7 +95,7 @@ If your organisation uses ImpactMojo's Organization tier and manages team accoun
 
 - You are the **data fiduciary** for your team members' data
 - ImpactMojo acts as a **data processor** on your behalf
-- Team dashboards show progress data only — not personal notes or bookmarks
+- Team dashboards show progress data only, not personal notes or bookmarks
 - We can provide a Data Processing Agreement (DPA) on request
 
 ---

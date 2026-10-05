@@ -1,4 +1,4 @@
-# Privacy Policy — In Plain Language
+# Privacy Policy. In Plain Language
 
 This is a plain-language summary of ImpactMojo's privacy policy. The full legal document is at [impactmojo.in/privacy-policy.html](https://www.impactmojo.in/privacy-policy.html).
 
@@ -13,14 +13,14 @@ We collect very little data. We don't sell it. We don't use it for advertising. 
 ## What We Collect
 
 ### Information you give us voluntarily
-- **Name and email** — when you create an account
-- **Organisation** — if you tell us where you work (optional)
-- **Feedback and messages** — when you contact us or fill in a form
+- **Name and email**: when you create an account
+- **Organisation**: if you tell us where you work (optional)
+- **Feedback and messages**: when you contact us or fill in a form
 
 ### Information collected automatically
-- **Browser type and operating system** — so we can make the site work well across devices
-- **Pages visited and time spent** — so we can understand which content is most useful
-- **IP address** — anonymised; we don't track your physical location
+- **Browser type and operating system**, so we can make the site work well across devices
+- **Pages visited and time spent**, so we can understand which content is most useful
+- **IP address**: anonymised; we don't track your physical location
 
 ---
 
@@ -48,8 +48,8 @@ We collect very little data. We don't sell it. We don't use it for advertising. 
 ## Cookies and Analytics
 
 We use:
-- **Theme preference cookies** — to remember if you chose dark mode
-- **Google Analytics** — to understand overall usage patterns (how many people visit, which pages are popular). This data is anonymous.
+- **Theme preference cookies**: to remember if you chose dark mode
+- **Google Analytics**: to understand overall usage patterns (how many people visit, which pages are popular). This data is anonymous.
 
 If you want to opt out of Google Analytics, install the [Google Analytics Opt-out Browser Add-on](https://tools.google.com/dlpage/gaoptout).
 
@@ -70,11 +70,11 @@ We use three external services:
 ## Your Rights
 
 You have the right to:
-- **See your data** — ask us what information we hold about you
-- **Correct it** — if something's wrong, tell us and we'll fix it
-- **Delete it** — ask us to remove your account and data
-- **Opt out** — unsubscribe from emails at any time
-- **Complain** — lodge a complaint with data protection authorities if you believe we've mishandled your data
+- **See your data**: ask us what information we hold about you
+- **Correct it**: if something's wrong, tell us and we'll fix it
+- **Delete it**: ask us to remove your account and data
+- **Opt out**: unsubscribe from emails at any time
+- **Complain**: lodge a complaint with data protection authorities if you believe we've mishandled your data
 
 To exercise any of these rights, email [hello@impactmojo.in](mailto:hello@impactmojo.in).
 
@@ -90,7 +90,7 @@ ImpactMojo is designed for adult professionals and university students. We don't
 
 ImpactMojo is aligned with India's **Digital Personal Data Protection Act 2023** (DPDPA). We implement appropriate technical and organisational measures to protect your data.
 
-No system is 100% secure — we're honest about that. But we take reasonable steps to protect what we collect.
+No system is 100% secure: we're honest about that. But we take reasonable steps to protect what we collect.
 
 ---
 

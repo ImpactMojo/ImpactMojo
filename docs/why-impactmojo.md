@@ -1,6 +1,6 @@
 # Why ImpactMojo
 
-A guide for anyone evaluating ImpactMojo — whether you're an NGO training lead deciding where to send your team, a university lecturer looking for course materials, or a funder assessing capacity-building partners.
+A guide for anyone evaluating ImpactMojo: whether you're an NGO training lead deciding where to send your team, a university lecturer looking for course materials, or a funder assessing capacity-building partners.
 
 ---
 
@@ -8,16 +8,16 @@ A guide for anyone evaluating ImpactMojo — whether you're an NGO training lead
 
 Development professionals in South Asia face a training gap:
 
-- **University curricula lag practice** — graduates learn theory but not the MEL frameworks, data tools, and policy analysis skills employers need.
-- **Quality training is expensive** — a 3-day MEAL workshop from international providers costs $500–$2,000 per person. Most grassroots NGOs cannot afford this.
-- **Content is Western-centric** — the dominant platforms (Coursera, edX) teach development from a Global North perspective with Global North case studies.
-- **No single platform covers the full stack** — organizations patch together content from a dozen sources, losing coherence and creating gaps.
+- **University curricula lag practice**: graduates learn theory but not the MEL frameworks, data tools, and policy analysis skills employers need.
+- **Quality training is expensive**: a 3-day MEAL workshop from international providers costs $500–$2,000 per person. Most grassroots NGOs cannot afford this.
+- **Content is Western-centric**: the dominant platforms (Coursera, edX) teach development from a Global North perspective with Global North case studies.
+- **No single platform covers the full stack**: organizations patch together content from a dozen sources, losing coherence and creating gaps.
 
 ## What ImpactMojo Does Differently
 
 ### 1. Genuinely free, not freemium
 
-80 courses, 135 games, 35 labs, 90 handouts, 335 data tools, 500+ curated papers — all free. No login wall, no trial period, no feature gating. The free tier is the real product.
+80 courses, 135 games, 35 labs, 90 handouts, 335 data tools, 500+ curated papers: all free. No login wall, no trial period, no feature gating. The free tier is the real product.
 
 Premium tools exist for advanced practitioners (qualitative analysis, AI transcription, code conversion) and sustain the platform, but 95% of the content is free forever.
 
@@ -70,7 +70,7 @@ Content is designed by Dr. Varna Sri Raman, a development economist with field e
 | **University lecturers** | Course supplements, classroom games, student assignments |
 | **Students** | Free courses to build development sector skills before entering the workforce |
 | **Consultants / researchers** | Premium tools (VaniScribe, Code Converter, Qual Insights) for fieldwork |
-| **Funders / donors** | Capacity-building partner for grantees — scalable, low-cost, measurable |
+| **Funders / donors** | Capacity-building partner for grantees: scalable, low-cost, measurable |
 
 ---
 
@@ -84,16 +84,16 @@ Content is designed by Dr. Varna Sri Raman, a development economist with field e
 - **6 Indian languages** vs. English-only
 
 ### vs. International training providers (CLEAR, IPDET, J-PAL MicroMasters)
-- **No cost barrier** — J-PAL MicroMasters costs $1,350; ImpactMojo covers similar ground for free
-- **Broader scope** — ImpactMojo covers policy, gender, governance, and health alongside MEL/data
-- **Always available** — no cohort schedules or application processes
-- **South Asian focus** — not a global program with token regional examples
+- **No cost barrier**: J-PAL MicroMasters costs $1,350; ImpactMojo covers similar ground for free
+- **Broader scope**: ImpactMojo covers policy, gender, governance, and health alongside MEL/data
+- **Always available**: no cohort schedules or application processes
+- **South Asian focus**, not a global program with token regional examples
 
 ### vs. In-house NGO training
-- **Consistent quality** — pre-built, tested content vs. ad-hoc slide decks
-- **Scales to any team size** — from 1 intern to 500 field staff
-- **Saves facilitator prep time** — handouts, games, and labs are ready to use
-- **Measurable** — track completion and progress with the Team Dashboard
+- **Consistent quality**: pre-built, tested content vs. ad-hoc slide decks
+- **Scales to any team size**: from 1 intern to 500 field staff
+- **Saves facilitator prep time**: handouts, games, and labs are ready to use
+- **Measurable**: track completion and progress with the Team Dashboard
 
 ---
 
@@ -104,14 +104,14 @@ ImpactMojo offers a high-leverage investment in capacity building:
 - **Cost per learner**: Effectively zero for the free tier. Organization tier at ₹1,499/user/month is a fraction of traditional training costs.
 - **Reach**: Content is accessible to anyone with an internet connection and a browser. No app downloads, no special hardware.
 - **Measurability**: The Organization tier provides dashboards showing course completion, skill progression, and team engagement.
-- **Sustainability**: The platform generates revenue through premium tools, workshops, coaching, and organizational memberships — reducing dependency on grant funding.
+- **Sustainability**: The platform generates revenue through premium tools, workshops, coaching, and organizational memberships, reducing dependency on grant funding.
 
 ### Partnership opportunities
 
-- **Co-branded training programs** — customize learning paths for your grantees or staff
-- **Content collaboration** — contribute case studies, translate content, or co-develop courses
-- **Research partnerships** — use ImpactMojo data to study capacity-building outcomes
-- **Bulk licensing** — Organization tier with dedicated support for large teams
+- **Co-branded training programs**: customize learning paths for your grantees or staff
+- **Content collaboration**: contribute case studies, translate content, or co-develop courses
+- **Research partnerships**: use ImpactMojo data to study capacity-building outcomes
+- **Bulk licensing**: Organization tier with dedicated support for large teams
 
 Contact: [hello@impactmojo.in](mailto:hello@impactmojo.in)
 

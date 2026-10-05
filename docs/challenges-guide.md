@@ -17,7 +17,7 @@ ImpactMojo offers **15 challenges across 6 learning tracks**, ranging from Begin
 | Redesign a Flawed Logframe | Intermediate | HealthBridge Foundation |
 | Stress-Test an Impact Claim | Intermediate | JalSeva Trust |
 
-**What you do:** Diagnose problems in a real logframe — weak indicators, missing assumptions, confused outcome levels — and redesign it using SMART criteria and proper causal logic. Or audit a "43% reduction" impact claim for threats to validity and design a feasible identification strategy for the next evaluation round.
+**What you do:** Diagnose problems in a real logframe (weak indicators, missing assumptions, confused outcome levels) and redesign it using SMART criteria and proper causal logic. Or audit a "43% reduction" impact claim for threats to validity and design a feasible identification strategy for the next evaluation round.
 
 ### Data & Technology
 
@@ -47,13 +47,13 @@ ImpactMojo offers **15 challenges across 6 learning tracks**, ranging from Begin
 |-----------|-----------|---------|
 | Conduct a GESI Audit of a Livelihood Programme | Intermediate | Grameen Shakti |
 
-**What you do:** Analyse a livelihood programme for gender and inclusion gaps — who participates, who benefits, what barriers exist — and redesign indicators to capture equity dimensions.
+**What you do:** Analyse a livelihood programme for gender and inclusion gaps (who participates, who benefits, what barriers exist) and redesign indicators to capture equity dimensions.
 
 ### Philosophy, Law & Governance
 
 | Challenge | Difficulty | Partner |
 |-----------|-----------|---------|
-| Apply Gandhian Strategy to a Contemporary Social Movement | Beginner | — |
+| Apply Gandhian Strategy to a Contemporary Social Movement | Beginner |: |
 | Draft an RTI Strategy for an Accountability Campaign | Intermediate | Jan Sarokar (Citizens' Group) |
 
 **What you do:** Apply political philosophy frameworks to real social movements, or design a Right to Information strategy for a citizen accountability campaign.
@@ -73,12 +73,12 @@ ImpactMojo offers **15 challenges across 6 learning tracks**, ranging from Begin
 
 Each challenge includes:
 
-1. **Case context** — 3–4 paragraphs describing a realistic scenario with specific problems to diagnose
-2. **Learning outcomes** — 4 specific skills you'll practise
-3. **Submission template** — a structured format for your deliverable
-4. **Resources** — partner documents, data files, and reference materials
-5. **Rubric** — 5–7 weighted criteria for evaluation
-6. **Time estimate** — typically 90 minutes
+1. **Case context**: 3–4 paragraphs describing a realistic scenario with specific problems to diagnose
+2. **Learning outcomes**: 4 specific skills you'll practise
+3. **Submission template**: a structured format for your deliverable
+4. **Resources**: partner documents, data files, and reference materials
+5. **Rubric**: 5–7 weighted criteria for evaluation
+6. **Time estimate**: typically 90 minutes
 
 You can save drafts as you work. Completed submissions go through peer feedback and earn badges for your ImpactMojo portfolio.
 
@@ -97,11 +97,11 @@ You can save drafts as you work. Completed submissions go through peer feedback 
 
 ### As Capstone Assessments
 
-Challenges are ideal end-of-course assignments. After teaching MEL concepts, assign the logframe redesign challenge. After a data course, assign the dashboard critique. The rubric is already built — you can use or adapt it.
+Challenges are ideal end-of-course assignments. After teaching MEL concepts, assign the logframe redesign challenge. After a data course, assign the dashboard critique. The rubric is already built: you can use or adapt it.
 
 ### As Group Exercises
 
-Give a challenge to teams of 3–4 participants. Each team produces a joint submission and presents their approach. Different teams will make different choices — the comparison creates rich discussion.
+Give a challenge to teams of 3–4 participants. Each team produces a joint submission and presents their approach. Different teams will make different choices: the comparison creates rich discussion.
 
 ### For Portfolio Building
 
@@ -116,15 +116,15 @@ Because challenges use real partner organisations and real scenarios, they demon
 ## Getting Started
 
 1. **Browse challenges** at [impactmojo.in/challenges.html](https://www.impactmojo.in/challenges.html)
-2. **Start with a Beginner challenge** — the Gandhian Strategy or Conflict Resolution challenges are accessible entry points
-3. **Read the full case context** before starting — understanding the scenario is half the work
-4. **Use the rubric** to self-assess before submitting — it tells you exactly what evaluators look for
+2. **Start with a Beginner challenge**: the Gandhian Strategy or Conflict Resolution challenges are accessible entry points
+3. **Read the full case context** before starting: understanding the scenario is half the work
+4. **Use the rubric** to self-assess before submitting: it tells you exactly what evaluators look for
 
 ---
 
 ## Tips
 
 - **These are real cases, not textbook exercises.** The scenarios come from actual partner organisations. Treat the work with the same rigour you'd bring to a consulting engagement.
-- **There's no single right answer.** The rubric evaluates your reasoning, evidence use, and communication — not whether you reached a specific conclusion.
+- **There's no single right answer.** The rubric evaluates your reasoning, evidence use, and communication, not whether you reached a specific conclusion.
 - **Combine with courses and labs.** A natural learning path is: course (concepts) → lab (practice building) → challenge (authentic application).
-- **Peer feedback is valuable.** Submit your work and engage with feedback — seeing how others approached the same problem is one of the most effective ways to learn.
+- **Peer feedback is valuable.** Submit your work and engage with feedback: seeing how others approached the same problem is one of the most effective ways to learn.

@@ -31,16 +31,16 @@ const FILES = {
   "Theory of Change Canvas": "ImpactMojo-Theory-of-Change-Canvas.docx",
   "Results Framework & Indicator Bank": "ImpactMojo-Results-Framework-Indicator-Bank.zip",
   "Data Management & Consent Pack": "ImpactMojo-Data-Management-Consent-Pack.docx",
-  "Commissioning Research — Workbook": "ImpactMojo-Commissioning-Workbook.docx",
-  "Introduction to MEL — Trainer Deck": "ImpactMojo-Intro-to-MEL-Deck.pptx",
-  "Theory of Change — Trainer Deck": "ImpactMojo-Theory-of-Change-Trainer-Deck.pptx",
-  "MEL from Scratch — 90-Day Workbook": "ImpactMojo-MEL-from-Scratch-Workbook.docx",
-  "Theory of Change — Workshop Workbook": "ImpactMojo-Theory-of-Change-Workshop-Workbook.docx",
+  "Commissioning Research: Workbook": "ImpactMojo-Commissioning-Workbook.docx",
+  "Introduction to MEL: Trainer Deck": "ImpactMojo-Intro-to-MEL-Deck.pptx",
+  "Theory of Change: Trainer Deck": "ImpactMojo-Theory-of-Change-Trainer-Deck.pptx",
+  "MEL from Scratch: 90-Day Workbook": "ImpactMojo-MEL-from-Scratch-Workbook.docx",
+  "Theory of Change: Workshop Workbook": "ImpactMojo-Theory-of-Change-Workshop-Workbook.docx",
   "Survey Design Workbook": "ImpactMojo-Survey-Design-Workbook.docx",
-  "Sampling & Sample Size — Refresher": "ImpactMojo-Refresher-Sampling.pdf",
-  "Causal Designs — Refresher": "ImpactMojo-Refresher-Causal-Designs.pdf",
-  "OECD-DAC Criteria — Refresher": "ImpactMojo-Refresher-OECD-DAC.pdf",
-  "Quant vs Qual vs Mixed — Refresher": "ImpactMojo-Refresher-Quant-Qual-Mixed.pdf",
+  "Sampling & Sample Size: Refresher": "ImpactMojo-Refresher-Sampling.pdf",
+  "Causal Designs: Refresher": "ImpactMojo-Refresher-Causal-Designs.pdf",
+  "OECD-DAC Criteria: Refresher": "ImpactMojo-Refresher-OECD-DAC.pdf",
+  "Quant vs Qual vs Mixed: Refresher": "ImpactMojo-Refresher-Quant-Qual-Mixed.pdf",
   "MEL & Statistics Formulae Poster": "ImpactMojo-Poster-MEL-Statistics-Formulae.pdf",
   "Econometrics Formulae Poster": "ImpactMojo-Poster-Econometrics-Formulae.pdf",
   "Field Data-Collection Readiness Checklist": "ImpactMojo-Checklist-Field-Readiness.pdf",
@@ -50,29 +50,29 @@ const FILES = {
   "Programme Unit Economics & Pricing Calculator": "ImpactMojo-Calculator-Unit-Economics-Pricing.zip",
   "Evaluation Essentials Kit": "ImpactMojo-Evaluation-Essentials-Kit.zip",
   // Flagship Course Notes (PDF) — ₹350 each
-  "Gandhi's Political Thought: Philosophy for Praxis — Course Notes": "ImpactMojo-Notes-gandhi.pdf",
-  "Understanding Development: An Economics Perspective — Course Notes": "ImpactMojo-Notes-devecon.pdf",
-  "Seeing Data: Visualization for Impact — Course Notes": "ImpactMojo-Notes-dataviz.pdf",
-  "AI for Impact: Data Monitoring & Evaluation — Course Notes": "ImpactMojo-Notes-devai.pdf",
-  "MEL for Development: Monitoring, Evaluation & Learning — Course Notes": "ImpactMojo-Notes-mel.pdf",
-  "Politics of Aspiration: Rights, Insurance & Social Mobility — Course Notes": "ImpactMojo-Notes-poa.pdf",
-  "Media for Development: Communication, Power & Practice — Course Notes": "ImpactMojo-Notes-media.pdf",
-  "Social-Emotional Learning for Development — Course Notes": "ImpactMojo-Notes-sel.pdf",
-  "Constitution & Law for Development Practice — Course Notes": "ImpactMojo-Notes-law.pdf",
-  "Public Policy: Process, Design & Governance — Course Notes": "ImpactMojo-Notes-pubpol.pdf",
-  "Gender Studies: Feminisms, Power & Social Change — Course Notes": "ImpactMojo-Notes-gender.pdf",
-  "Public Choice: Decisions, Incentives & Institutions — Course Notes": "ImpactMojo-Notes-pubchoice.pdf",
-  "Livelihoods in India: Rural, Urban & Skills — Course Notes": "ImpactMojo-Notes-livelihoods.pdf",
-  "Power BI for Practitioners — Course Notes": "ImpactMojo-Notes-powerBI.pdf",
-  "Causal Inference for Development — Course Notes": "ImpactMojo-Notes-causal.pdf",
-  "Designing What Works: Development Interventions from Model to Scale — Course Notes": "ImpactMojo-Notes-intervention.pdf",
-  "Nonviolence in Practice: NVC, NVR & Restorative Justice — Course Notes": "ImpactMojo-Notes-nvc-rj.pdf",
-  "Nothing About Us Without Us: Disability, Justice & Development — Course Notes": "ImpactMojo-Notes-nothing-about-us.pdf",
+  "Gandhi's Political Thought: Philosophy for Praxis, Course Notes": "ImpactMojo-Notes-gandhi.pdf",
+  "Understanding Development: An Economics Perspective, Course Notes": "ImpactMojo-Notes-devecon.pdf",
+  "Seeing Data: Visualization for Impact, Course Notes": "ImpactMojo-Notes-dataviz.pdf",
+  "AI for Impact: Data Monitoring & Evaluation, Course Notes": "ImpactMojo-Notes-devai.pdf",
+  "MEL for Development: Monitoring, Evaluation & Learning, Course Notes": "ImpactMojo-Notes-mel.pdf",
+  "Politics of Aspiration: Rights, Insurance & Social Mobility, Course Notes": "ImpactMojo-Notes-poa.pdf",
+  "Media for Development: Communication, Power & Practice, Course Notes": "ImpactMojo-Notes-media.pdf",
+  "Social-Emotional Learning for Development: Course Notes": "ImpactMojo-Notes-sel.pdf",
+  "Constitution & Law for Development Practice: Course Notes": "ImpactMojo-Notes-law.pdf",
+  "Public Policy: Process, Design & Governance, Course Notes": "ImpactMojo-Notes-pubpol.pdf",
+  "Gender Studies: Feminisms, Power & Social Change, Course Notes": "ImpactMojo-Notes-gender.pdf",
+  "Public Choice: Decisions, Incentives & Institutions, Course Notes": "ImpactMojo-Notes-pubchoice.pdf",
+  "Livelihoods in India: Rural, Urban & Skills, Course Notes": "ImpactMojo-Notes-livelihoods.pdf",
+  "Power BI for Practitioners: Course Notes": "ImpactMojo-Notes-powerBI.pdf",
+  "Causal Inference for Development: Course Notes": "ImpactMojo-Notes-causal.pdf",
+  "Designing What Works: Development Interventions from Model to Scale, Course Notes": "ImpactMojo-Notes-intervention.pdf",
+  "Nonviolence in Practice: NVC, NVR & Restorative Justice, Course Notes": "ImpactMojo-Notes-nvc-rj.pdf",
+  "Nothing About Us Without Us: Disability, Justice & Development, Course Notes": "ImpactMojo-Notes-nothing-about-us.pdf",
   // Assessment Series — 500-MCQ question banks with answer keys (PDF)
-  "MEL Assessment — 500-Question Bank": "assessments/mel-500-assessment.pdf",
-  "Data & Technology Assessment — 500-Question Bank": "assessments/data-tech-500-assessment.pdf",
-  "Policy & Economics Assessment — 500-Question Bank": "assessments/policy-econ-500-assessment.pdf",
-  "AI for M&E Assessment — 500-Question Bank": "assessments/ai-for-me-500-assessment.pdf",
+  "MEL Assessment: 500-Question Bank": "assessments/mel-500-assessment.pdf",
+  "Data & Technology Assessment: 500-Question Bank": "assessments/data-tech-500-assessment.pdf",
+  "Policy & Economics Assessment: 500-Question Bank": "assessments/policy-econ-500-assessment.pdf",
+  "AI for M&E Assessment: 500-Question Bank": "assessments/ai-for-me-500-assessment.pdf",
 };
 
 const looksLikeEmail = (v) => typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
@@ -125,27 +125,27 @@ export const handler = async (event) => {
     const description = (data.course_description || "").trim();
 
     if (looksLikeEmail(email)) {
-      await sendMail(email, "Your ImpactMojo instructor kit — on its way",
+      await sendMail(email, "Your ImpactMojo instructor kit: on its way",
         `<p>${name ? "Hi " + esc(name) + "," : "Hello,"}</p>
          <p>Thanks for asking for an instructor kit${course ? ` for <strong>${esc(course)}</strong>` : ""}. This is an automatic receipt so you know it arrived.</p>
-         <p>We map these by hand against your syllabus rather than sending a standard pack, so it takes <strong>up to five working days</strong>. It will come from hello@impactmojo.in — worth checking your spam folder.</p>
+         <p>We map these by hand against your syllabus rather than sending a standard pack, so it takes <strong>up to five working days</strong>. It will come from hello@impactmojo.in: worth checking your spam folder.</p>
          <p>Nothing is gated in the meantime. Everything is already free to browse:</p>
          <ul>
-           <li><a href="${SITE}/catalog.html">The full catalog</a> — every course, lab, game and handout</li>
-           <li><a href="${SITE}/courses/">Flagship courses</a> — ~13 modules each, with auto-graded self-checks</li>
-           <li><a href="${SITE}/Labs/">Studios</a> — browser workbenches whose outputs work as gradeable assignments</li>
-           <li><a href="${SITE}/teach.html">Teaching with ImpactMojo</a> — licensing in plain language</li>
+           <li><a href="${SITE}/catalog.html">The full catalog</a> (every course, lab, game and handout</li>
+           <li><a href="${SITE}/courses/">Flagship courses</a>) ~13 modules each, with auto-graded self-checks</li>
+           <li><a href="${SITE}/Labs/">Studios</a>, browser workbenches whose outputs work as gradeable assignments</li>
+           <li><a href="${SITE}/teach.html">Teaching with ImpactMojo</a>, licensing in plain language</li>
          </ul>
          <p>All of it is CC BY-NC-ND 4.0: use it in your classroom with a credit line. You can charge for your facilitation, not for the materials.</p>
-         <p>— ImpactMojo</p>`);
+         <p>: ImpactMojo</p>`);
     }
 
     await sendMail(ADMIN_EMAIL, `Instructor kit request: ${course || "(course not given)"}`,
-      `<p><strong>${esc(name) || "(no name)"}</strong>${institution ? " — " + esc(institution) : ""}<br>
+      `<p><strong>${esc(name) || "(no name)"}</strong>${institution ? ", " + esc(institution) : ""}<br>
        ${esc(email)}</p>
-       <p><strong>Course:</strong> ${esc(course) || "—"}<br>
-       <strong>Level:</strong> ${esc(level) || "—"}</p>
-       <p><strong>Describes it as:</strong><br>${esc(description).replace(/\n/g, "<br>") || "—"}</p>
+       <p><strong>Course:</strong> ${esc(course) || ", "}<br>
+       <strong>Level:</strong> ${esc(level) || " ("}</p>
+       <p><strong>Describes it as:</strong><br>${esc(description).replace(/\n/g, "<br>") || ") "}</p>
        <p style="font-size:12px;color:#94A3B8">An acknowledgement has already gone to the requester promising a mapped kit within five working days.</p>`);
     return { statusCode: 200 };
   }
@@ -165,7 +165,7 @@ export const handler = async (event) => {
   const sig = sign([type, email, key]);
   const url = `${SITE}/api/confirm?type=${type}&email=${encodeURIComponent(email)}&key=${encodeURIComponent(key)}&sig=${sig}`;
   const html = `<p><strong>${label}</strong></p>
-    <p>From: ${email}<br>UPI reference quoted: <strong>${upiRef || "—"}</strong></p>
+    <p>From: ${email}<br>UPI reference quoted: <strong>${upiRef || ", "}</strong></p>
     <p>Check this payment landed in your UPI app, then:</p>
     <p style="margin:22px 0"><a href="${url}" style="display:inline-block;background:#16A34A;color:#fff;text-decoration:none;padding:14px 26px;border-radius:8px;font-weight:700;font-family:Inter,Arial;font-size:15px">✓ Confirm &amp; deliver</a></p>
     <p style="font-size:12px;color:#94A3B8">Clicking ${type === "product" ? "emails the file to the buyer" : "activates the subscription"}. Ignore if the payment didn't arrive.</p>

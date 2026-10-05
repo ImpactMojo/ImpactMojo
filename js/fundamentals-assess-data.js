@@ -45,7 +45,7 @@ window.FUNDAMENTALS_ASSESS = (function () {
       options: [
         { band: "margin", label: "Scheduled Caste or Scheduled Tribe" },
         { band: "middle", label: "Other Backward Class, including Extremely Backward Class" },
-        { band: "power",  label: "None of these — recorded as 'General' or 'Others'" }
+        { band: "power",  label: "None of these: recorded as 'General' or 'Others'" }
       ]
     },
     {
@@ -54,7 +54,7 @@ window.FUNDAMENTALS_ASSESS = (function () {
       options: [
         { band: "power",  label: "Yes, and I am a man" },
         { band: "middle", label: "Yes, and I am a woman" },
-        { band: "margin", label: "No — I am transgender, non-binary or intersex" }
+        { band: "margin", label: "No. I am transgender, non-binary or intersex" }
       ]
     },
     {
@@ -99,23 +99,23 @@ window.FUNDAMENTALS_ASSESS = (function () {
       help: "India records disability at about 2.2% of the population against a global estimate nearer 16%, so a great many people who would answer yes here have no certificate.",
       options: [
         { band: "power",  label: "No" },
-        { band: "middle", label: "Yes — mild, undiagnosed or without a certificate" },
-        { band: "margin", label: "Yes — severe, multiple, or significant neurodivergence" }
+        { band: "middle", label: "Yes: mild, undiagnosed or without a certificate" },
+        { band: "margin", label: "Yes: severe, multiple, or significant neurodivergence" }
       ]
     },
     {
       axis: "body",
-      q: "Thinking about skin colour, build and how conventionally gendered your appearance reads — how are you usually treated?",
+      q: "Thinking about skin colour, build and how conventionally gendered your appearance reads: how are you usually treated?",
       help: "This is the one question here about how others read you rather than about a category you belong to.",
       options: [
         { band: "power",  label: "As fair-skinned and conventionally presenting" },
-        { band: "middle", label: "Unremarkably — I am not usually singled out either way" },
+        { band: "middle", label: "Unremarkably. I am not usually singled out either way" },
         { band: "margin", label: "As dark-skinned, visibly different, disabled or gender-nonconforming" }
       ]
     },
     {
       axis: "language",
-      q: "Which languages can you conduct official business in — a bank, a hospital, a government office?",
+      q: "Which languages can you conduct official business in: a bank, a hospital, a government office?",
       options: [
         { band: "power",  label: "English, and the language of my state" },
         { band: "middle", label: "One Scheduled language only" },
@@ -137,7 +137,7 @@ window.FUNDAMENTALS_ASSESS = (function () {
       options: [
         { band: "power",  label: "In a metro, as a local, with citizenship never in question" },
         { band: "middle", label: "In a rural area, or as a migrant from another state" },
-        { band: "margin", label: "In Kashmir, the North-East or the islands — or I am not a citizen" }
+        { band: "margin", label: "In Kashmir, the North-East or the islands, or I am not a citizen" }
       ]
     },
     {

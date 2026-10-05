@@ -844,11 +844,11 @@ function removeTripwire(i) {
 /* ===== TAB 4: RUPTURE -> REPAIR PROTOCOL ===== */
 var PROTOCOL_FIELDS = ['pauseSignal', 'nameHarm', 'cooldown', 'facilitator', 'repairSteps', 'thirdParty'];
 var PROTOCOL_DEFAULTS = {
-    pauseSignal: "Anyone can say “I need a pause” or raise a flat hand — we stop the conversation, no questions asked, no need to explain.",
+    pauseSignal: "Anyone can say “I need a pause” or raise a flat hand, we stop the conversation, no questions asked, no need to explain.",
     nameHarm: "“Something landed hard for me and I want to name it: when ___ happened, the impact on me was ___. I'm telling you because I want us to repair it.”",
-    cooldown: "We take at least an hour (a full night for bigger ruptures). Whoever called the pause names when they're ready to come back — and we come back within a week, not never.",
-    facilitator: "A named third person we all trust holds space — someone without a stake in the outcome. We rotate this so it isn't always the same person carrying it.",
-    repairSteps: "1) Acknowledge impact (not just intent).  2) Make meaning together — what need went unmet?  3) Make amends — one concrete action.  4) Change — what we'll each do differently next time.",
+    cooldown: "We take at least an hour (a full night for bigger ruptures). Whoever called the pause names when they're ready to come back (and we come back within a week, not never.",
+    facilitator: "A named third person we all trust holds space) someone without a stake in the outcome. We rotate this so it isn't always the same person carrying it.",
+    repairSteps: "1) Acknowledge impact (not just intent).  2) Make meaning together: what need went unmet?  3) Make amends: one concrete action.  4) Change, what we'll each do differently next time.",
     thirdParty: "If two conversations haven't shifted things, if anyone's safety is at stake, or if a power difference makes it unsafe to speak freely, we bring in our accountability pods or an outside facilitator."
 };
 function protoValue(f) {
@@ -879,10 +879,10 @@ function renderPods() {
             '<div class="row-head"><span class="row-num">Person ' + (i + 1) + '</span>' + delBtn + '</div>' +
             '<label class="field-label" for="pod_m_' + i + '">Name / who this is</label>' +
             '<input type="text" id="pod_m_' + i + '" placeholder="e.g., Ayesha" value="' + escapeHTML(p.member) + '" oninput="updatePod(' + i + ', \'member\', this.value)">' +
-            '<label class="field-label" for="pod_a_' + i + '">Accountability pod &mdash; who they call when they\'ve caused harm</label>' +
+            '<label class="field-label" for="pod_a_' + i + '">Accountability pod, who they call when they\'ve caused harm</label>' +
             '<div class="field-help">The people who care enough to tell them the truth and stay with them while they make repair.</div>' +
             '<input type="text" id="pod_a_' + i + '" placeholder="e.g., Ravi, and my sister Meera" value="' + escapeHTML(p.accountability) + '" oninput="updatePod(' + i + ', \'accountability\', this.value)">' +
-            '<label class="field-label" for="pod_s_' + i + '">Support pod &mdash; who supports them when they\'ve been harmed</label>' +
+            '<label class="field-label" for="pod_s_' + i + '">Support pod, who supports them when they\'ve been harmed</label>' +
             '<div class="field-help">The people who help them feel steady, resourced and less alone.</div>' +
             '<input type="text" id="pod_s_' + i + '" placeholder="e.g., Nadia, and my mentor Rahul" value="' + escapeHTML(p.support) + '" oninput="updatePod(' + i + ', \'support\', this.value)">' +
             '</div>';
@@ -925,7 +925,7 @@ function renderCharter() {
     var html = '';
     html += '<div class="charter-head">';
     html += '<h3>Before We Fall Apart</h3>';
-    html += '<div class="meta">Our Relational Charter' + (title ? ' — ' + escapeHTML(title) : '') + (g.date ? ' · ' + escapeHTML(prettyDate(g.date)) : '') + '</div>';
+    html += '<div class="meta">Our Relational Charter' + (title ? ', ' + escapeHTML(title) : '') + (g.date ? ' · ' + escapeHTML(prettyDate(g.date)) : '') + '</div>';
     html += '</div>';
 
     // Agreements
@@ -960,13 +960,13 @@ function renderCharter() {
     var pods = state.pods.filter(function(p) { return (p.member || '').trim() || (p.accountability || '').trim() || (p.support || '').trim(); });
     if (pods.length) {
         pods.forEach(function(p) {
-            html += '<p class="cx"><strong>' + escapeHTML((p.member || '').trim() || 'Someone') + '</strong> &mdash; ' +
-                'accountability pod: ' + escapeHTML((p.accountability || '').trim() || '—') + '; ' +
-                'support pod: ' + escapeHTML((p.support || '').trim() || '—') + '</p>';
+            html += '<p class="cx"><strong>' + escapeHTML((p.member || '').trim() || 'Someone') + '</strong>: ' +
+                'accountability pod: ' + escapeHTML((p.accountability || '').trim() || ', ') + '; ' +
+                'support pod: ' + escapeHTML((p.support || '').trim() || ', ') + '</p>';
         });
     } else { html += '<p class="empty-note">No pods mapped yet.</p>'; }
 
-    html += '<p class="cx" style="margin-top:1.25rem;color:var(--text-muted);font-size:0.82rem;">Written in calm weather, to be used when things get hard. A living document — revisit it together every few months.</p>';
+    html += '<p class="cx" style="margin-top:1.25rem;color:var(--text-muted);font-size:0.82rem;">Written in calm weather, to be used when things get hard. A living document: revisit it together every few months.</p>';
 
     document.getElementById('charterOutput').innerHTML = html;
 }
@@ -981,7 +981,7 @@ function saveAll() {
 function buildCharterText() {
     var L = [];
     var g = state.group;
-    L.push('BEFORE WE FALL APART — OUR RELATIONAL CHARTER');
+    L.push('BEFORE WE FALL APART (OUR RELATIONAL CHARTER');
     L.push('==================================================');
     if ((g.name || '').trim()) L.push('Group: ' + g.name.trim());
     if (g.date) L.push('Date agreed: ' + prettyDate(g.date));
@@ -1019,14 +1019,14 @@ function buildCharterText() {
     if (pods.length) {
         pods.forEach(function(p) {
             L.push('  • ' + ((p.member || '').trim() || 'Someone'));
-            L.push('      Accountability pod (when I cause harm): ' + ((p.accountability || '').trim() || '—'));
-            L.push('      Support pod (when I am harmed):         ' + ((p.support || '').trim() || '—'));
+            L.push('      Accountability pod (when I cause harm): ' + ((p.accountability || '').trim() || ') '));
+            L.push('      Support pod (when I am harmed):         ' + ((p.support || '').trim() || ' ('));
         });
     } else { L.push('  (none mapped)'); }
     L.push('');
     L.push('--------------------------------------------------');
     L.push('Written in calm weather, to be used when things get hard.');
-    L.push('A living document — revisit it together every few months.');
+    L.push('A living document) revisit it together every few months.');
     L.push('');
     L.push('Built with ImpactMojo\'s "Before We Fall Apart" studio, the capstone');
     L.push('practicum for Nonviolence in Practice: Communication, Resistance & Repair.');

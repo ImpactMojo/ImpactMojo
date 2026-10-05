@@ -1,8 +1,8 @@
-# AI Game Agents — MiroFish-Inspired Opponents
+# AI Game Agents: MiroFish-Inspired Opponents
 
 ## Overview
 
-ImpactMojo's games feature **AI-powered opponents** inspired by [MiroFish](https://github.com/666ghj/MiroFish), an open-source swarm intelligence engine. Instead of simple rule-based payoff calculations, games feature AI agents with distinct personalities, memories, and adaptive strategies — all grounded in South Asian development contexts.
+ImpactMojo's games feature **AI-powered opponents** inspired by [MiroFish](https://github.com/666ghj/MiroFish), an open-source swarm intelligence engine. Instead of simple rule-based payoff calculations, games feature AI agents with distinct personalities, memories, and adaptive strategies: all grounded in South Asian development contexts.
 
 Each game is also enriched with **Indian folk art story illustrations** in six traditional styles (Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) that provide narrative context and adapt to player choices. See the [Games Guide](games-guide.md) for details on the art styles.
 
@@ -32,11 +32,11 @@ Each game is also enriched with **Indian folk art story illustrations** in six t
 
 | File | Purpose |
 |------|---------|
-| `data/game-agents.json` | Agent personas — names, backstories, personality weights, strategy hints |
-| `supabase/functions/game-agent/index.ts` | Edge Function — prompt builder, LLM caller, fallback engine |
-| `js/game-agents.js` | Client library — games include this to get agent decisions |
-| `js/state-manager.js` | State — `gameSession` and `gameHistory` for tracking AI game sessions |
-| `catalog_data.json` | Metadata — `ai_agents` field on each game entry |
+| `data/game-agents.json` | Agent personas: names, backstories, personality weights, strategy hints |
+| `supabase/functions/game-agent/index.ts` | Edge Function: prompt builder, LLM caller, fallback engine |
+| `js/game-agents.js` | Client library: games include this to get agent decisions |
+| `js/state-manager.js` | State, `gameSession` and `gameHistory` for tracking AI game sessions |
+| `catalog_data.json` | Metadata, `ai_agents` field on each game entry |
 
 ## Agent Personas
 

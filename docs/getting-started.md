@@ -1,14 +1,14 @@
 # Getting Started
 
-This guide will walk you through your first experience with ImpactMojo — from your first visit to using the platform in a workshop or classroom. No technical background needed.
+This guide will walk you through your first experience with ImpactMojo: from your first visit to using the platform in a workshop or classroom. No technical background needed.
 
 ---
 
 ## Your First Visit
 
-1. **Open [impactmojo.in](https://www.impactmojo.in)** in any browser — Chrome, Firefox, Safari, or Edge on your phone, tablet, or computer
+1. **Open [impactmojo.in](https://www.impactmojo.in)** in any browser, Chrome, Firefox, Safari, or Edge on your phone, tablet, or computer
 2. **Explore the homepage.** You'll see an overview of what's available: courses, games, labs, and resources. Scroll through to get a sense of the platform.
-3. **Browse the course catalog.** Click on "Courses" or "Catalog" to see all 80 courses — 21 flagship courses with deep, multi-module content, and 59 foundational courses on focused topics.
+3. **Browse the course catalog.** Click on "Courses" or "Catalog" to see all 80 courses: 21 flagship courses with deep, multi-module content, and 59 foundational courses on focused topics.
 4. **Open any course and start reading.** No login, no signup, no payment. The content is right there.
 
 That's it. You're learning.
@@ -17,18 +17,18 @@ That's it. You're learning.
 
 ## Creating an Account (Optional)
 
-You don't need an account to access free content. But creating one — which is also free — gives you:
+You don't need an account to access free content. But creating one, which is also free, gives you:
 
-- **Progress tracking** — the platform remembers where you left off in each course
-- **Bookmarks** — save courses, case studies, or papers you want to return to
-- **Notes** — jot down thoughts and reflections as you learn
-- **Certificates** — earn verifiable certificates when you complete courses (requires Practitioner tier)
-- **Community access** — join discussions with other development professionals
+- **Progress tracking**: the platform remembers where you left off in each course
+- **Bookmarks**: save courses, case studies, or papers you want to return to
+- **Notes**: jot down thoughts and reflections as you learn
+- **Certificates**: earn verifiable certificates when you complete courses (requires Practitioner tier)
+- **Community access**: join discussions with other development professionals
 
 **To create an account:**
 1. Click **Sign Up** in the top navigation
 2. Enter your email address, or sign in with Google
-3. You'll receive a verification email — click the link to activate your account
+3. You'll receive a verification email: click the link to activate your account
 4. That's it. Your Explorer account is ready.
 
 ---
@@ -46,7 +46,7 @@ ImpactMojo organizes content into **6 learning tracks**. Choosing a track helps 
 | **Health & Wellbeing** | Public health professionals, climate practitioners |
 | **Communication & Data** | Communications officers, data analysts, advocacy teams |
 
-You're not locked into one track — browse freely across all of them. But if you're not sure where to start, pick the track closest to your current role.
+You're not locked into one track: browse freely across all of them. But if you're not sure where to start, pick the track closest to your current role.
 
 ---
 
@@ -81,12 +81,12 @@ While reading a course module, use the notes feature to capture your reflections
 
 ## Setting Up a Learning Path
 
-A learning path is a structured sequence of courses and resources designed around a goal — whether that's "become confident in M&E" or "prepare my team for a gender audit."
+A learning path is a structured sequence of courses and resources designed around a goal: whether that's "become confident in M&E" or "prepare my team for a gender audit."
 
 ### For yourself
 1. Browse the tracks and identify 3-5 courses that match your learning goal
 2. Start with a foundational course to build your base, then move to a flagship course for depth
-3. Pair courses with relevant labs — for example, take the Theory of Change course alongside the Theory of Change Builder lab
+3. Pair courses with relevant labs: for example, take the Theory of Change course alongside the Theory of Change Builder lab
 
 ### For your team
 1. Identify the skills your team needs (e.g., "Our team needs stronger data collection skills")
@@ -107,10 +107,10 @@ ImpactMojo is designed to be a teaching tool, not just a self-study platform. He
 - Identify which **lab or game** you'll use during the session
 
 ### During the workshop
-- **Run a simulation game** to kick off the day — it surfaces assumptions and gets people talking. Allow 20-30 minutes for play, then 15-20 minutes for debriefing
-- **Walk through a lab together** — project it on screen and build a theory of change, research question, or evaluation framework as a group exercise
-- **Reference ImpactLex** when participants ask "what does that term mean?" — have it open on a phone or tablet as a live glossary
-- Use **case studies** as discussion material — "Here's how a similar programme was evaluated in Bangladesh. What would you have done differently?"
+- **Run a simulation game** to kick off the day: it surfaces assumptions and gets people talking. Allow 20-30 minutes for play, then 15-20 minutes for debriefing
+- **Walk through a lab together**: project it on screen and build a theory of change, research question, or evaluation framework as a group exercise
+- **Reference ImpactLex** when participants ask "what does that term mean?": have it open on a phone or tablet as a live glossary
+- Use **case studies** as discussion material: "Here's how a similar programme was evaluated in Bangladesh. What would you have done differently?"
 
 ### After the workshop
 - Share links to **follow-up courses** for participants who want to go deeper
@@ -119,19 +119,19 @@ ImpactMojo is designed to be a teaching tool, not just a self-study platform. He
 
 ### Practical tips
 - The platform works on phones, so participants don't need laptops
-- Games and labs run in the browser — no installation or special software needed
+- Games and labs run in the browser: no installation or special software needed
 - If internet is unreliable at your venue, have participants load the materials beforehand (see "Accessing Content Offline" below)
 
 ---
 
 ## Accessing Content Offline
 
-ImpactMojo is built as a **Progressive Web App (PWA)**, which means it can work without an internet connection — important if you're running a workshop in a rural area or your office has unreliable connectivity.
+ImpactMojo is built as a **Progressive Web App (PWA)**, which means it can work without an internet connection: important if you're running a workshop in a rural area or your office has unreliable connectivity.
 
 ### How to set it up
 1. Visit [impactmojo.in](https://www.impactmojo.in) while you have internet access
 2. Your browser will automatically cache the core platform pages
-3. On your phone, you can **add it to your home screen** — tap the "Add to Home Screen" option in your browser menu. It will look and feel like a regular app.
+3. On your phone, you can **add it to your home screen**: tap the "Add to Home Screen" option in your browser menu. It will look and feel like a regular app.
 4. Courses, handouts, and ImpactLex will be available offline after you've loaded them once
 
 ### What works offline
@@ -165,7 +165,7 @@ ImpactMojo is free to use, and the free tier is genuinely substantial. Here's wh
 **Who it's for:** NGO staff and early-career professionals who want to document their learning with certificates, or who need to export their lab work as deliverables. If you're building a theory of change in the lab and need to put it in a report, this is the tier that lets you do that.
 
 ### Professional (₹999/month or ₹9,990/year)
-**What you get:** Everything in Practitioner, plus: advanced professional tools — Qual Lab Pro for qualitative analysis, VaniScribe AI for transcription, DevData Practice, DevEconomics Toolkit, Code Converter, Visualization Cookbook, and priority access to coaching.
+**What you get:** Everything in Practitioner, plus: advanced professional tools, Qual Lab Pro for qualitative analysis, VaniScribe AI for transcription, DevData Practice, DevEconomics Toolkit, Code Converter, Visualization Cookbook, and priority access to coaching.
 
 **Who it's for:** Researchers, M&E specialists, and consultants who need professional-grade tools. If qualitative coding, data analysis, or economic modelling is part of your regular work, these tools will save you significant time.
 
@@ -175,8 +175,8 @@ ImpactMojo is free to use, and the free tier is genuinely substantial. Here's wh
 **Who it's for:** NGOs, think tanks, and development agencies that want to invest in their team's skills systematically. The team dashboard lets you see learning progress across your organization, and custom training means the content can be tailored to your programme areas.
 
 ### A note on affordability
-- **Annual plans save you 2 months** — pay for 10 months, get 12
-- **Sliding scale pricing** is available for coaching and workshops — if your organization has limited resources, reach out and we'll find a way to make it work
+- **Annual plans save you 2 months**: pay for 10 months, get 12
+- **Sliding scale pricing** is available for coaching and workshops: if your organization has limited resources, reach out and we'll find a way to make it work
 - **The free tier is not a teaser.** It's a complete, useful learning platform. Premium exists for professionals who need additional tools for their work.
 
 ---
@@ -186,12 +186,12 @@ ImpactMojo is free to use, and the free tier is genuinely substantial. Here's wh
 Now that you know how to navigate the platform, here are some good starting points:
 
 - **If you're new to M&E:** Start with the *MEL for Development* flagship course
-- **If you want a quick skill:** Try a foundational course — they're focused and can be completed in a few hours
+- **If you want a quick skill:** Try a foundational course, they're focused and can be completed in a few hours
 - **If you're preparing a workshop:** Browse the games and labs for interactive activities
-- **If you want historical context:** Explore the six visual timelines — citation-backed histories of development thinking, Indian policy and rights, climate policy, MEL methods, and gender and work in India
-- **If you want structured practice:** Work through a practice pack — 18 realistic exercises like building an MEL system from scratch, designing a survey instrument, or costing a programme
-- **If you want to test yourself:** Take on a Live Case Challenge — every flagship course has a matching real-world case with a two-document packet and a professional deliverable to produce
-- **If you like learning visually:** Browse the Research to Action poster album — seven series of shareable posters that each distil a research, evaluation, or policy idea into one page
+- **If you want historical context:** Explore the six visual timelines, citation-backed histories of development thinking, Indian policy and rights, climate policy, MEL methods, and gender and work in India
+- **If you want structured practice:** Work through a practice pack, 18 realistic exercises like building an MEL system from scratch, designing a survey instrument, or costing a programme
+- **If you want to test yourself:** Take on a Live Case Challenge, every flagship course has a matching real-world case with a two-document packet and a professional deliverable to produce
+- **If you like learning visually:** Browse the Research to Action poster album, seven series of shareable posters that each distil a research, evaluation, or policy idea into one page
 - **If you need a specific resource:** Press Ctrl+K and search for it
 - **If you want to see everything:** Read the [Platform Overview](platform-overview.md) for a detailed guide to every content type
 

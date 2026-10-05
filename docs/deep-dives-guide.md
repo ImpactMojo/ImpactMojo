@@ -2,15 +2,15 @@
 
 ## What Are Deep Dives?
 
-Deep Dives are **curated, annotated reading guides** — themed bibliographies with a clear editorial point of view, assembled by named scholars and practitioners. Each one is a working syllabus: 11–32 readings organised into sections that build an argument, with annotations explaining why each reading earns its place and how the pieces talk to each other.
+Deep Dives are **curated, annotated reading guides**: themed bibliographies with a clear editorial point of view, assembled by named scholars and practitioners. Each one is a working syllabus: 11–32 readings organised into sections that build an argument, with annotations explaining why each reading earns its place and how the pieces talk to each other.
 
 ImpactMojo offers **25 Deep Dives** spanning political economy, evaluation methods, climate, gender, health, education, and technology. All are **free, browser-based, and require no login**.
 
 ### How a Deep Dive Differs from a Course or a Reading Companion
 
-- **A course** teaches concepts through structured lessons and exercises — you are taught.
-- **A Reading Companion** guides you through one book in depth — one author's argument, unpacked.
-- **A Deep Dive** curates the literature on one question — many authors, sequenced and annotated, so you can read your way to your own view. It is closer to a seminar syllabus than a lesson.
+- **A course** teaches concepts through structured lessons and exercises: you are taught.
+- **A Reading Companion** guides you through one book in depth: one author's argument, unpacked.
+- **A Deep Dive** curates the literature on one question: many authors, sequenced and annotated, so you can read your way to your own view. It is closer to a seminar syllabus than a lesson.
 
 ---
 
@@ -49,12 +49,12 @@ Browse all Deep Dives at [/DeepDives/](/DeepDives/).
 
 Each Deep Dive includes:
 
-1. **An editorial framing** — a tagline and introduction stating the question and the curator's point of view (e.g. "Why do so few Indian women work for pay — and why did participation fall as the economy boomed?")
-2. **A named curator** — Editor's Picks by the series editor, House Picks by the ImpactMojo team, and editorial curations with practitioner input
-3. **Sectioned readings** — typically 4–5 sections that move from foundations to evidence to critiques to practice (e.g. "The Rise of the Randomistas" → "The 2019 Nobel and Its Reception" → "The Methodological Critique" → "The Political-Economy Critique")
-4. **Annotations** — each reading carries a note on what it argues and why it is on the list
+1. **An editorial framing**: a tagline and introduction stating the question and the curator's point of view (e.g. "Why do so few Indian women work for pay, and why did participation fall as the economy boomed?")
+2. **A named curator**: Editor's Picks by the series editor, House Picks by the ImpactMojo team, and editorial curations with practitioner input
+3. **Sectioned readings**: typically 4–5 sections that move from foundations to evidence to critiques to practice (e.g. "The Rise of the Randomistas" → "The 2019 Nobel and Its Reception" → "The Methodological Critique" → "The Political-Economy Critique")
+4. **Annotations**: each reading carries a note on what it argues and why it is on the list
 
-Deep Dives are living documents — new lists are added and existing ones updated as the literature moves.
+Deep Dives are living documents: new lists are added and existing ones updated as the literature moves.
 
 ---
 
@@ -62,7 +62,7 @@ Deep Dives are living documents — new lists are added and existing ones update
 
 ### As Seminar Syllabi
 
-A Deep Dive is a ready-made reading course. Assign one section per week — Randomista Economics and Its Critics maps cleanly onto a four-week methods seminar, and the SEL Evaluation in India list (32 readings across 7 sections) can anchor a full term.
+A Deep Dive is a ready-made reading course. Assign one section per week: Randomista Economics and Its Critics maps cleanly onto a four-week methods seminar, and the SEL Evaluation in India list (32 readings across 7 sections) can anchor a full term.
 
 ### As Journal-Club Sequences
 
@@ -70,7 +70,7 @@ Run a journal club through a Deep Dive in order: one reading per session, with t
 
 ### For Supervised Self-Study
 
-Point research assistants, new staff, or thesis students at the Deep Dive closest to their topic. The curation does the hardest part of independent study — deciding what to read first and what can wait — while keeping them in dialogue with the critiques.
+Point research assistants, new staff, or thesis students at the Deep Dive closest to their topic. The curation does the hardest part of independent study, deciding what to read first and what can wait, while keeping them in dialogue with the critiques.
 
 ### To Pair with Courses and Timelines
 
@@ -81,15 +81,15 @@ Courses teach the concepts; Deep Dives supply the primary literature. A MEL cour
 ## Getting Started
 
 1. **Browse the collection** at [/DeepDives/](/DeepDives/) and pick the question closest to your work
-2. **Read the framing first** — the tagline and introduction tell you the curator's angle before you commit
-3. **Follow the section order** — the lists are sequenced deliberately; foundations before critiques
-4. **Start small** — most lists are 11–15 readings; one section is a realistic fortnight of reading
+2. **Read the framing first**: the tagline and introduction tell you the curator's angle before you commit
+3. **Follow the section order**: the lists are sequenced deliberately; foundations before critiques
+4. **Start small**: most lists are 11–15 readings; one section is a realistic fortnight of reading
 
 ---
 
 ## Tips
 
-- **These are syllabi with a point of view, not neutral bibliographies.** Every list makes an argument through its selection and sequence — reading against the curation is part of the exercise.
+- **These are syllabi with a point of view, not neutral bibliographies.** Every list makes an argument through its selection and sequence: reading against the curation is part of the exercise.
 - **The critique sections are not optional.** Most Deep Dives end with the pushback (methodological, political, or both); skipping it means getting half the debate.
 - **Use them to update your own syllabi.** Even if you teach from your own reading list, the Deep Dives flag recent additions to each literature worth folding in.
 - **Combine with Reading Companions.** When a Deep Dive reading is a full book with an ImpactMojo Reading Companion, use the companion to decide whether the whole book merits your seminar's time.

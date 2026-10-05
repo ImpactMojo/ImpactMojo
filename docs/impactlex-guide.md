@@ -2,11 +2,11 @@
 
 ## What Is ImpactLex?
 
-ImpactLex is ImpactMojo's **searchable glossary of development terms** — acronyms, concepts, formulas, frameworks, case studies, and institutions that development professionals encounter daily.
+ImpactLex is ImpactMojo's **searchable glossary of development terms**: acronyms, concepts, formulas, frameworks, case studies, and institutions that development professionals encounter daily.
 
-It lives at [impactmojo.in/impactlex](https://www.impactmojo.in/impactlex/), installs as a Progressive Web App (PWA) for offline use, and draws on the same term pool as the 21 flagship ImpactMojo course lexicons — so what you learn in the MEL course shows up consistently wherever that term appears.
+It lives at [impactmojo.in/impactlex](https://www.impactmojo.in/impactlex/), installs as a Progressive Web App (PWA) for offline use, and draws on the same term pool as the 21 flagship ImpactMojo course lexicons, so what you learn in the MEL course shows up consistently wherever that term appears.
 
-**Access:** Free — [Open ImpactLex](https://www.impactmojo.in/impactlex/)
+**Access:** Free, [Open ImpactLex](https://www.impactmojo.in/impactlex/)
 
 ---
 
@@ -29,14 +29,14 @@ Each entry is written for practitioners, not academics. Definitions explain not 
 ## Features
 
 - **Instant search** across terms, acronyms, aliases, definitions
-- **Category filters** — browse by acronym, concept, formula, framework, method, or institution
-- **Course filters** — see only terms used in MEL, Gender, DataViz, DevAI, DevEcon, Gandhi, Law, PoA, PubPol, or SEL
-- **Term of the Day** — rotating featured term to build vocabulary over time
-- **Cross-references** — click a related term to jump, no re-searching
-- **Bookmarks** — save favourites in your browser; syncs to your account when you log in
-- **Offline access** — install as a PWA on mobile for field use without internet
-- **Deep-linkable terms** — every term has its own URL (`/impactlex/term.html?id=theory-of-change`), shareable and search-indexed
-- **Community contributions** — suggest new terms or corrections; reviewed before publishing
+- **Category filters**: browse by acronym, concept, formula, framework, method, or institution
+- **Course filters**: see only terms used in MEL, Gender, DataViz, DevAI, DevEcon, Gandhi, Law, PoA, PubPol, or SEL
+- **Term of the Day**: rotating featured term to build vocabulary over time
+- **Cross-references**: click a related term to jump, no re-searching
+- **Bookmarks**: save favourites in your browser; syncs to your account when you log in
+- **Offline access**: install as a PWA on mobile for field use without internet
+- **Deep-linkable terms**: every term has its own URL (`/impactlex/term.html?id=theory-of-change`), shareable and search-indexed
+- **Community contributions**: suggest new terms or corrections; reviewed before publishing
 
 ---
 
@@ -44,7 +44,7 @@ Each entry is written for practitioners, not academics. Definitions explain not 
 
 ### As a workshop reference
 
-Project ImpactLex during sessions so participants can look up unfamiliar terms in real time. Development jargon is a real barrier — having a searchable reference reduces the "I don't want to ask what that means" problem.
+Project ImpactLex during sessions so participants can look up unfamiliar terms in real time. Development jargon is a real barrier: having a searchable reference reduces the "I don't want to ask what that means" problem.
 
 ### As a study aid
 
@@ -52,11 +52,11 @@ Ask participants to learn 5–10 new terms per week. The contextual definitions 
 
 ### Alongside courses
 
-Each ImpactMojo flagship course has its own interactive lexicon. ImpactLex is the cross-cutting view — the same term pool, filtered by course when you want that, unified when you don't. If you're studying MEL, use the course lexicon or filter ImpactLex to `MEL`. If you're writing a proposal that spans MEL + Gender + Public Policy, use ImpactLex directly.
+Each ImpactMojo flagship course has its own interactive lexicon. ImpactLex is the cross-cutting view: the same term pool, filtered by course when you want that, unified when you don't. If you're studying MEL, use the course lexicon or filter ImpactLex to `MEL`. If you're writing a proposal that spans MEL + Gender + Public Policy, use ImpactLex directly.
 
 ### For report writing
 
-When participants are writing proposals or reports, ImpactLex helps them use terminology correctly. Misusing terms like "output" vs. "outcome" or "monitoring" vs. "evaluation" is common — ImpactLex provides clear definitions with practitioner context.
+When participants are writing proposals or reports, ImpactLex helps them use terminology correctly. Misusing terms like "output" vs. "outcome" or "monitoring" vs. "evaluation" is common: ImpactLex provides clear definitions with practitioner context.
 
 ---
 
@@ -68,7 +68,7 @@ We especially welcome:
 - South Asian schemes, institutions, and acronyms that don't exist elsewhere
 - Practitioner-flagged cases where donor language differs from field reality
 - Formulas with worked examples
-- Contested terms — if "resilience" or "empowerment" means different things to different funders, we want to explain that
+- Contested terms: if "resilience" or "empowerment" means different things to different funders, we want to explain that
 
 ---
 
@@ -82,7 +82,7 @@ Source: `/impactlex/` in the [ImpactMojo repo](https://github.com/ImpactMojo/Imp
 
 ## Tips
 
-- **Install the PWA** for offline access — especially useful for field-based staff.
-- **Deep-link specific terms** — every entry has a shareable URL, good for WhatsApp handoffs and workshop handouts.
-- **Combine filters** — e.g., "category: method" + "course: MEL" to focus on evaluation methods only.
+- **Install the PWA** for offline access: especially useful for field-based staff.
+- **Deep-link specific terms**: every entry has a shareable URL, good for WhatsApp handoffs and workshop handouts.
+- **Combine filters**, e.g., "category: method" + "course: MEL" to focus on evaluation methods only.
 - **Can't find a term?** Submit it. The glossary grows from practitioner use, not desk research.

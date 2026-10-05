@@ -535,7 +535,7 @@
         var card = document.createElement('div');
         card.className = 'item-card border-'+L.key;
         card.innerHTML =
-          '<div class="item-label">'+esc(L.label)+' '+(i+1)+' &mdash; '+esc(item.summary)+'</div>'+
+          '<div class="item-label">'+esc(L.label)+' '+(i+1)+': '+esc(item.summary)+'</div>'+
           '<textarea placeholder="'+esc(placeholder)+'">'+esc(item[field])+'</textarea>';
         var ta = card.querySelector('textarea');
         ta.addEventListener('input', function(){ state.levels[L.key][i][field] = ta.value; save(); refreshDone(); });
@@ -544,7 +544,7 @@
       host.appendChild(group);
     });
     if(!host.children.length){
-      host.innerHTML = '<p class="empty-hint">Add some outcomes, outputs, or activities in Step 2 first &mdash; then come back here.</p>';
+      host.innerHTML = '<p class="empty-hint">Add some outcomes, outputs, or activities in Step 2 first, then come back here.</p>';
     }
   }
 
@@ -584,7 +584,7 @@
   // ---- Export / Import ----
   function toMarkdown(){
     var out = [];
-    out.push('# LogFrame — ' + (state.project || 'Untitled project'));
+    out.push('# LogFrame, ' + (state.project || 'Untitled project'));
     out.push('');
     if(state.problem){ out.push('**Problem:** ' + state.problem); out.push(''); }
     out.push('| Results chain | Indicators | Means of verification | Assumptions |');
@@ -592,12 +592,12 @@
     LEVELS.forEach(function(L){
       state.levels[L.key].forEach(function(item){
         if(!(item.summary.trim()||item.indicators.trim()||item.mov.trim()||item.assumptions.trim())) return;
-        function cell(s){ var l = lines(s); return l.length ? l.join('<br>') : '—'; }
-        out.push('| **'+L.label+':** '+(item.summary.replace(/\n/g,' ')||'—')+' | '+cell(item.indicators)+' | '+cell(item.mov)+' | '+cell(item.assumptions)+' |');
+        function cell(s){ var l = lines(s); return l.length ? l.join('<br>') : ' ('; }
+        out.push('| **'+L.label+':** '+(item.summary.replace(/\n/g,' ')||') ')+' | '+cell(item.indicators)+' | '+cell(item.mov)+' | '+cell(item.assumptions)+' |');
       });
     });
     out.push('');
-    out.push('_Built with the ImpactMojo LogFrame Builder — impactmojo.in_');
+    out.push('_Built with the ImpactMojo LogFrame Builder, impactmojo.in_');
     return out.join('\n');
   }
   function download(filename, text, mime){
@@ -627,14 +627,14 @@
     var carriedAssumptions = [];
     nodes.forEach(function(n){
       if(n.type === 'assumption'){
-        var a = (n.title||'').trim(); if(n.desc && n.desc.trim()) a += (a?' — ':'') + n.desc.trim();
+        var a = (n.title||'').trim(); if(n.desc && n.desc.trim()) a += (a?', ':'') + n.desc.trim();
         if(a) carriedAssumptions.push(a);
         return;
       }
       var lvl = map[n.type];
       if(!lvl) return;
       var it = blankItem((n.title||'').trim());
-      if(n.desc && n.desc.trim()) it.summary = (it.summary ? it.summary + ' — ' : '') + n.desc.trim();
+      if(n.desc && n.desc.trim()) it.summary = (it.summary ? it.summary + ', ' : '') + n.desc.trim();
       if(n.indicator && n.indicator.trim()) it.indicators = n.indicator.trim();
       next[lvl].push(it);
     });
@@ -743,7 +743,7 @@
       var md = toMarkdown();
       if(navigator.clipboard && navigator.clipboard.writeText){
         navigator.clipboard.writeText(md).then(function(){ toast('LogFrame copied as a Markdown table.'); },
-          function(){ download(slug()+'.md', md, 'text/markdown'); toast('Clipboard blocked — downloaded as .md instead.'); });
+          function(){ download(slug()+'.md', md, 'text/markdown'); toast('Clipboard blocked: downloaded as .md instead.'); });
       } else { download(slug()+'.md', md, 'text/markdown'); toast('Downloaded as Markdown.'); }
     });
     document.getElementById('btnExportJson').addEventListener('click', function(){

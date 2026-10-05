@@ -833,11 +833,11 @@ body {
                 load(tab);
             });
         });
-        load('community'); // default tab — works logged-out
+        load('community'); // default tab, works logged-out
     }
 
     // ---------- init ----------
-    // NOTE: we do NOT use AuthGate.protect() — that hard-redirects anonymous
+    // NOTE: we do NOT use AuthGate.protect(), that hard-redirects anonymous
     // visitors, but the community impact view must render for everyone.
     // Instead we wait for auth to resolve, then gate only the log / my-outcomes
     // tabs on currentUser.
@@ -851,7 +851,7 @@ body {
         }
         if (window.ImpactMojoAuth && window.ImpactMojoAuth.waitForAuthReady) {
             window.ImpactMojoAuth.waitForAuthReady().then(ready).catch(ready);
-            // Safety net in case auth never resolves — still show the public view.
+            // Safety net in case auth never resolves, still show the public view.
             setTimeout(function() { if (overlay && overlay.style.display !== 'none') ready(); }, 5000);
         } else {
             ready();

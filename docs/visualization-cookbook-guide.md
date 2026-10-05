@@ -2,22 +2,22 @@
 
 ## What Is the Visualization Cookbook?
 
-The Visualization Cookbook is a **question-driven chart selection tool** with production-ready Python code. Instead of browsing chart galleries and guessing which chart type suits your data, you answer a simple question — "What story does my data tell?" — and get the right chart with working code you can copy and use immediately.
+The Visualization Cookbook is a **question-driven chart selection tool** with production-ready Python code. Instead of browsing chart galleries and guessing which chart type suits your data, you answer a simple question, "What story does my data tell?", and get the right chart with working code you can copy and use immediately.
 
 It includes **14 chart types** covering the most common data stories in development work.
 
-**Access:** Part of DevData Practice (Professional tier) — [Open Visualization Cookbook](https://impactmojo-devdata-pro.netlify.app/charts.html)
+**Access:** Part of DevData Practice (Professional tier), [Open Visualization Cookbook](https://impactmojo-devdata-pro.netlify.app/charts.html)
 
 ---
 
 ## The Problem This Solves
 
-Development professionals produce reports, proposals, and presentations full of data — but the charts are often the weakest part. Common problems:
+Development professionals produce reports, proposals, and presentations full of data, but the charts are often the weakest part. Common problems:
 
-- **Wrong chart type** — using a pie chart when a bar chart would be clearer, or a line chart when you're not showing time
-- **Cluttered visuals** — too many colours, labels, or data points on one chart
-- **Starting from scratch** — spending hours in Excel or trying to learn Python just to make one good chart
-- **Inconsistent quality** — every team member produces charts that look different
+- **Wrong chart type**: using a pie chart when a bar chart would be clearer, or a line chart when you're not showing time
+- **Cluttered visuals**: too many colours, labels, or data points on one chart
+- **Starting from scratch**: spending hours in Excel or trying to learn Python just to make one good chart
+- **Inconsistent quality**: every team member produces charts that look different
 
 The Visualization Cookbook solves these by asking you one question first: **What is your data trying to say?**
 
@@ -42,12 +42,12 @@ Every chart answers one of six types of questions:
 
 Based on your data story, the Cookbook recommends one or more chart types and shows you:
 - A **sample chart** so you can see what it looks like
-- **When to use it** — and when not to
+- **When to use it**, and when not to
 - **Production-ready Python code** using matplotlib and seaborn (standard data science libraries)
 
 ### Step 3: Adapt the Code
 
-Copy the Python code, replace the sample data with your own, and run it. The chart is publication-ready — proper labels, clean formatting, and professional styling.
+Copy the Python code, replace the sample data with your own, and run it. The chart is publication-ready: proper labels, clean formatting, and professional styling.
 
 ---
 
@@ -76,7 +76,7 @@ Copy the Python code, replace the sample data with your own, and run it. The cha
 
 **Not necessarily.** The Cookbook is most useful if you can run Python code (or have a colleague who can), but even without coding knowledge:
 
-- **The chart selection guidance is valuable on its own.** Knowing which chart type to use is half the battle — you can then create it in Excel, Google Sheets, or any tool you're comfortable with.
+- **The chart selection guidance is valuable on its own.** Knowing which chart type to use is half the battle: you can then create it in Excel, Google Sheets, or any tool you're comfortable with.
 - **The code is annotated.** Comments explain what each line does, so someone with basic Python skills can modify it.
 - **ImpactMojo's Data & Technology courses teach the basics.** If you want to learn Python for data visualization, start with the Data Visualization foundational course.
 
@@ -100,4 +100,4 @@ Even if participants won't write code, the Cookbook teaches them to read charts 
 - **Start with the data story, not the chart type.** "I want to make a pie chart" is the wrong starting point. "I want to show what proportion of our budget goes to each programme" is the right one.
 - **Less is more.** The best charts communicate one thing clearly. If your chart needs a paragraph of explanation, simplify it.
 - **Use the Cookbook alongside the Handout on data visualization.** The handout covers principles; the Cookbook provides implementation.
-- **Python code works in Google Colab.** If you don't have Python installed, paste the code into [Google Colab](https://colab.research.google.com) — it's free and runs in your browser.
+- **Python code works in Google Colab.** If you don't have Python installed, paste the code into [Google Colab](https://colab.research.google.com), it's free and runs in your browser.

@@ -20,7 +20,7 @@ failure visible instead of invisible.
 ## The two things that must be true of every entry
 
 **It is sourced.** Every entry links to the judgment. `verified` records the
-date, the source checked against, and the specific things checked — the case
+date, the source checked against, and the specific things checked: the case
 name, the decision year, and named terms confirmed present in the judgment text.
 
 **Its status is stated.** `status` is mandatory and constrained:
@@ -53,7 +53,7 @@ rather than published.
 
 Six were dropped on that check. Five were later found by searching for them
 properly rather than re-running the same query, and are now in the docket; the
-sixth — the right-to-food litigation — turned out to have been dropped on an
+sixth, the right-to-food litigation, turned out to have been dropped on an
 assertion of mine that was simply wrong (I required the phrase "Public
 Distribution" in an order about ICDS). One drop is worth keeping in mind for
 the opposite reason: a search for *Consumer Education & Research Centre v.
@@ -80,13 +80,13 @@ line.
 The right-to-food litigation sat in `excluded` while two of its orders were
 live on the same page, because the note was written when the docket had neither
 and nobody moved it when they went in. `scripts/check-judgments.py` now fails
-when an `excluded` entry names a petition number the docket publishes — matched
+when an `excluded` entry names a petition number the docket publishes: matched
 on the citation number (`196 of 2001` ≡ `196/2001`) rather than party names,
 since "Union of India" is one side of most of this file.
 
 **What is verified is identity, not interpretation.** That a case exists, has
-this name and this date, and contains these terms — checked. That the summary
-correctly characterises what the case means — editorial. Do not describe this
+this name and this date, and contains these terms: checked. That the summary
+correctly characterises what the case means: editorial. Do not describe this
 dataset as verified case law.
 
 ## Adding an entry
@@ -105,6 +105,6 @@ and district and trial courts are absent from the underlying corpus entirely.
 
 ## Related
 
-- `law-guides/development-law-docket.html` — the page
-- `data/dataverse.json` — Open India Law, the corpus this draws on
-- `.claude/rules/testing.md` — the other guards and what each exists because of
+- `law-guides/development-law-docket.html`, the page
+- `data/dataverse.json`, Open India Law, the corpus this draws on
+- `.claude/rules/testing.md`, the other guards and what each exists because of

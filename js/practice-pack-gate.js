@@ -157,21 +157,21 @@
         '<button class="pp-gate-close" aria-label="Close">&times;</button>' +
         '<div class="pp-gate-head">' +
           '<span class="pp-gate-badge">' + LOCK_SVG + 'Free preview complete</span>' +
-          '<h3>Keep going — finish the pack</h3>' +
+          '<h3>Keep going: finish the pack</h3>' +
           '<p>You\'ve worked through the first ' + CFG.freeModules + ' modules. The remaining modules and your auto-built <strong>' + esc(CFG.artefact) + '</strong> are part of ImpactMojo Premium.</p>' +
         '</div>' +
         '<div class="pp-gate-body">' +
           '<a class="pp-offer primary" href="/premium.html#detail-practitioner">' +
             '<div class="pp-offer-row"><span class="pp-offer-name">All 18 Practice Packs</span><span class="pp-offer-price">' + esc(CFG.tierPrice) + '</span></div>' +
-            '<p class="pp-offer-desc">Practitioner membership — every pack, plus Research Question Builder Pro, ToC Workbench Pro &amp; certificates.</p>' +
+            '<p class="pp-offer-desc">Practitioner membership: every pack, plus Research Question Builder Pro, ToC Workbench Pro &amp; certificates.</p>' +
           '</a>' +
           '<a class="pp-offer" href="/premium.html?pack=' + encodeURIComponent(CFG.slug) + '#payment">' +
             '<div class="pp-offer-row"><span class="pp-offer-name">Just this pack</span><span class="pp-offer-price">' + esc(CFG.price) + '</span></div>' +
-            '<p class="pp-offer-desc">One-time access to <strong>' + esc(CFG.title) + '</strong> — all modules and the capstone builder.</p>' +
+            '<p class="pp-offer-desc">One-time access to <strong>' + esc(CFG.title) + '</strong>: all modules and the capstone builder.</p>' +
           '</a>' +
           '<a class="pp-offer" href="/contact.html?topic=PracticePackReview&pack=' + encodeURIComponent(CFG.slug) + '">' +
             '<div class="pp-offer-row"><span class="pp-offer-name">Add a 1:1 expert review</span><span class="pp-offer-price">' + esc(CFG.review) + '</span></div>' +
-            '<p class="pp-offer-desc">Optional — we review your finished ' + esc(CFG.artefact) + ' and send written feedback.</p>' +
+            '<p class="pp-offer-desc">Optional: we review your finished ' + esc(CFG.artefact) + ' and send written feedback.</p>' +
           '</a>' +
         '</div>' +
         '<div class="pp-gate-foot"><a href="/login.html?redirect=' + redirect + '">Already a member? Log in &rarr;</a></div>' +

@@ -10,11 +10,11 @@ All book summaries are **free, browser-based, and require no login**. They are s
 
 ### What Makes Them Different
 
-- **Chapter-by-chapter navigation** — work through a book at your own pace, one chapter at a time, with a clear table of contents and progress tracking
-- **Interactive elements** — exercises, reflection prompts, and concept checks embedded throughout each chapter summary
-- **Practitioner takeaways** — every chapter ends with concrete implications for development practice, not just academic analysis
-- **AI-powered Q&A** — ask questions about the book's content using the built-in Gemini-powered chat, and get contextual answers grounded in the text
-- **Completely free and open access** — no paywall, no login, no institutional subscription required
+- **Chapter-by-chapter navigation**: work through a book at your own pace, one chapter at a time, with a clear table of contents and progress tracking
+- **Interactive elements**: exercises, reflection prompts, and concept checks embedded throughout each chapter summary
+- **Practitioner takeaways**: every chapter ends with concrete implications for development practice, not just academic analysis
+- **AI-powered Q&A**: ask questions about the book's content using the built-in Gemini-powered chat, and get contextual answers grounded in the text
+- **Completely free and open access**: no paywall, no login, no institutional subscription required
 
 ---
 
@@ -57,7 +57,7 @@ Each companion includes a built-in AI assistant powered by Google Gemini. You ca
 
 ### Practitioner-Focused Takeaways
 
-At the end of each chapter, you'll find a "For Practitioners" section that translates academic insights into actionable implications. These takeaways are written for people designing programmes, writing policy briefs, or managing development projects — not just studying for exams.
+At the end of each chapter, you'll find a "For Practitioners" section that translates academic insights into actionable implications. These takeaways are written for people designing programmes, writing policy briefs, or managing development projects, not just studying for exams.
 
 ---
 
@@ -72,7 +72,7 @@ Book companions work well as structured reading aids alongside the original text
 2. Students review the companion's summary and key concepts (15 minutes)
 3. In-class discussion using the companion's reflection questions (20 minutes)
 4. Students use the AI chat to explore questions that came up in discussion (10 minutes)
-5. Wrap up with the practitioner takeaways — how would this apply in the field? (15 minutes)
+5. Wrap up with the practitioner takeaways: how would this apply in the field? (15 minutes)
 
 ### Suggested Reading Sequences
 
@@ -102,7 +102,7 @@ Have a development text that would benefit from an interactive companion? We wel
 
 ## Related Resources
 
-- **[Courses](/courses/)** — structured learning paths across 21 flagship and 59 foundational development topics
-- **[Games](/Games/)** — interactive simulations that teach development concepts through play
-- **[Labs](/courses/)** — browser-based coding and data labs for hands-on practice
-- **[Handouts](/Handouts/)** — 400+ quick-reference guides across all development tracks
+- **[Courses](/courses/)**: structured learning paths across 21 flagship and 59 foundational development topics
+- **[Games](/Games/)**: interactive simulations that teach development concepts through play
+- **[Labs](/courses/)**: browser-based coding and data labs for hands-on practice
+- **[Handouts](/Handouts/)**: 400+ quick-reference guides across all development tracks

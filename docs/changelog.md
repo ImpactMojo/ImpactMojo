@@ -4,6 +4,10 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ## v10.318.0 — October 5, 2026 (Law Docket and Law Guides checked against sources)
 
+### Changed
+
+- **Em dashes removed site-wide.** About 56,000 em dashes came out of page copy, titles, meta descriptions, JSON-LD, the data files that feed pages, the Book Summary companions, the JavaScript data files, the emails the site sends and the docs. Each was replaced with a colon, a comma, a full stop or a pipe according to the sentence. Quoted text in the Book Summaries was left as written. A new check, `scripts/check-no-em-dashes.py`, keeps them out of reader-facing text. The 101 deck density check now counts real words, because the old count treated each dash as a word.
+
 ### Fixed
 
 - **Holdings, statuses and legal detail on the Development Law Docket and five Law Guides were wrong in places (#1129).** Every docket entry was rechecked against the judgment text and later law: holdings that ran wider than the operative order were narrowed, and ten entries changed status (for example Lalita Kumari, Prakash Singh and M.C. Mehta are now marked modified, and Unni Krishnan and S.P. Gupta partly overruled). The CSR, FCRA, POSH, RTI and child protection guides were corrected against statute, rule and notification text and rewritten in plainer language. Claims that could not be confirmed from a primary source were removed.

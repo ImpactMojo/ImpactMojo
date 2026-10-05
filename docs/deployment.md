@@ -46,8 +46,8 @@ Each premium tool is a separate Netlify site with a JWT auth-gate edge function.
 1. **Create site** on Netlify (manual deploy or linked repo)
 
 2. **Set environment variables** in Netlify dashboard → Site settings → Environment variables:
-   - `RESOURCE_TOKEN_SECRET` — same HMAC key used in Supabase Edge Function (set as "Secret", Production context)
-   - `RESOURCE_ID` — unique slug for this site (not secret, all contexts)
+   - `RESOURCE_TOKEN_SECRET`, same HMAC key used in Supabase Edge Function (set as "Secret", Production context)
+   - `RESOURCE_ID`, unique slug for this site (not secret, all contexts)
 
 3. **Deploy with edge function:**
    - Include `netlify.toml` in the site root
@@ -58,10 +58,10 @@ Each premium tool is a separate Netlify site with a JWT auth-gate edge function.
 
 | Site | RESOURCE_ID |
 |------|-------------|
-| *(private — see Netlify dashboard)* | `rq-builder` |
-| *(private — see Netlify dashboard)* | `code-convert-pro` |
-| *(private — see Netlify dashboard)* | `qual-insights` |
-| *(private — see Netlify dashboard)* | `vaniscribe` |
+| *(private: see Netlify dashboard)* | `rq-builder` |
+| *(private: see Netlify dashboard)* | `code-convert-pro` |
+| *(private: see Netlify dashboard)* | `qual-insights` |
+| *(private: see Netlify dashboard)* | `vaniscribe` |
 
 ### Generating a New HMAC Secret
 

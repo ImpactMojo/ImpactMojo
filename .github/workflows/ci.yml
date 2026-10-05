@@ -499,6 +499,19 @@ jobs:
       - name: Check ImpactLex states its provenance
         run: python3 scripts/check-impactlex.py
 
+  no-em-dashes:
+    name: No em dashes in reader-facing text
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # The house style bans the em dash in copy. About 56,000 were removed on
+      # 2026-10-05; this keeps them out. It reads text nodes, titles, meta
+      # content and JSON-LD on every page, and ignores inline JavaScript.
+      - name: Check
+        run: python3 scripts/check-no-em-dashes.py
+
   viewport:
     name: Viewport meta guard
     runs-on: ubuntu-latest

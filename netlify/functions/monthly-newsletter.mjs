@@ -239,9 +239,9 @@ export function composeBody(name, lede, sections, counts) {
 /** Name the best thing in the issue instead of the month. */
 export function buildSubject(items, month) {
   const lead = items.find((i) => i.resolved) || items[0];
-  if (!lead) return `What's new on ImpactMojo — ${month}`;
+  if (!lead) return `What's new on ImpactMojo: ${month}`;
   const t = lead.title.length > 58 ? lead.title.slice(0, 55).replace(/\s+\S*$/, "") + "…" : lead.title;
-  return items.length > 1 ? `${t} — and ${items.length - 1} more from ImpactMojo` : t;
+  return items.length > 1 ? `${t}, and ${items.length - 1} more from ImpactMojo` : t;
 }
 
 function monthName(d = new Date()) {
@@ -258,7 +258,7 @@ async function getJson(url) {
 
 export default async () => {
   if (!SERVICE_KEY) {
-    console.log("[newsletter] SUPABASE_SERVICE_ROLE_KEY not set — skipping");
+    console.log("[newsletter] SUPABASE_SERVICE_ROLE_KEY not set: skipping");
     return new Response(JSON.stringify({ error: "Missing service key" }), { status: 500 });
   }
 
@@ -278,7 +278,7 @@ export default async () => {
   if (!items.length) {
     // Better to send nothing than to send the generic filler the previous
     // version fell back to; a quiet month is not worth an email.
-    console.log("[newsletter] nothing new in the window — not sending");
+    console.log("[newsletter] nothing new in the window, not sending");
     return new Response(JSON.stringify({ message: "No new items; newsletter skipped" }), {
       headers: { "Content-Type": "application/json" },
     });
