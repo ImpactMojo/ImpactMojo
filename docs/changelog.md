@@ -8,8 +8,14 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **A request form in the team dashboard.** Under Settings, "Request from our team" lets an organisation ask for branded certificates (with the course, the evidence of completion and an optional logo), a GST invoice (with the payment reference, amount and billing state) or a named contact and onboarding call. Our team handles each by hand and replies by email.
 
+- **Assign learning paths to members.** Each path in the team dashboard has an Assign button: pick members, add an optional due date, and unassign later. Paths show how many members hold them.
+- **Import team members from a CSV.** Columns: email, and optionally team and role. People without an account yet are listed so you can ask them to sign up and import again.
+- **Team labels.** Give each member a team or project label, filter the members table and the progress analytics by it. This needs a small database column (`supabase/migrations/20261005_organization_members_team.sql`); the dashboard works without it and shows the team features once it exists.
+- **Active days.** The progress leaderboard shows, for each member, the days in the last 30 on which their course progress was updated. It is a lower bound and it does not measure time spent.
+
 ### Changed
 
+- **The team dashboard no longer lists removed members, and its progress CSV quotes every field**, so a name with a comma no longer shifts the columns.
 - **The Team Plan page, FAQ and dashboard say what is on request.** Branded certificates, GST invoices and a named contact are described as requests handled by our team, not as automatic features.
 
 ### For Learners

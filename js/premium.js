@@ -89,7 +89,7 @@
             'organization': [
                 'Everything in Professional',
                 'Team dashboard & progress analytics',
-                'Invite members by email',
+                'Add members by email or CSV, with team labels',
                 'Custom learning paths',
                 'A named contact, on request',
                 'Branded certificates and GST invoices, on request'
