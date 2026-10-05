@@ -2,6 +2,20 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.322.0 — October 5, 2026 (Safer passwords)
+
+### Added
+
+- **Passwords are checked against known data breaches.** When you create an account or set a new password, the site checks it against the Have I Been Pwned list of leaked passwords and asks for a different one if it is on it. Only the first five characters of a scrambled copy of the password leave your browser, never the password. If you sign in with a password that is already in a breach, you see a one-line notice asking you to change it.
+
+### Changed
+
+- **Passwords must be at least 12 characters.** A few random words make a good one. The old rule of mixed character types is gone, because length and breach checks protect accounts better.
+
+### For Learners
+
+- **Stronger account passwords.** New passwords need 12 characters and are checked against known breaches.
+
 ## v10.321.0 — October 5, 2026 (Team requests)
 
 ### Added

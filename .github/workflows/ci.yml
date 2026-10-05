@@ -602,6 +602,26 @@ jobs:
       - name: Check deck density and the rewrite backlog
         run: python3 scripts/check-decks.py
 
+  password-check:
+    name: Breached-password check
+    runs-on: ubuntu-latest
+    # Without this a hung step inherits GitHub's 360-minute default and the
+    # job neither passes nor fails -- which reads as "still running".
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      # Supabase's leaked-password protection is a Pro-plan setting, so the site
+      # checks the Have I Been Pwned range API in the browser. Two properties are
+      # invisible when they break: the password must never leave the browser, and
+      # a failed lookup must never block a sign-up. Runs against a stubbed fetch,
+      # so it needs no network.
+      - name: Check the breached-password lookup and its wiring
+        run: node scripts/test-password-check.mjs
+
   studio-submit:
     name: Studio submissions and gradebook CSV
     runs-on: ubuntu-latest

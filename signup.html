@@ -1941,7 +1941,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
                                 <div class="strength-bar" id="str3"></div>
                                 <div class="strength-bar" id="str4"></div>
                             </div>
-                            <div class="strength-text" id="strengthText">Use 8+ characters with letters and numbers</div>
+                            <div class="strength-text" id="strengthText">Use at least 12 characters. A few random words work well</div>
                         </div>
 
                         <div class="form-group">
@@ -2172,13 +2172,13 @@ document.getElementById('password').addEventListener('input', function() {
     bars.forEach(bar => bar.className = 'strength-bar');
 
     if (password.length === 0) {
-        strengthText.textContent = 'Use 8+ characters with letters and numbers';
+        strengthText.textContent = 'Use at least 12 characters. A few random words work well';
         return;
     }
 
     let strength = 0;
-    if (password.length >= 8) strength++;
     if (password.length >= 12) strength++;
+    if (password.length >= 16) strength++;
     if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
     if (/[0-9]/.test(password)) strength++;
     if (/[^a-zA-Z0-9]/.test(password)) strength++;
@@ -2243,8 +2243,8 @@ function validateStep1() {
         return false;
     }
 
-    if (password.length < 8) {
-        showAlert('Password must be at least 8 characters long.');
+    if (password.length < 12) {
+        showAlert('Password must be at least 12 characters long. A few random words make a good one.');
         document.getElementById('password').focus();
         return false;
     }
