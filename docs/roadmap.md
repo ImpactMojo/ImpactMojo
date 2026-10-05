@@ -105,7 +105,7 @@ What shipped in earlier releases. The counts in these entries are as they stood 
 
 ### v10.9.0: March 2026
 - Sitewide design audit: 242 pages updated with ImpactMojo fonts, 3-mode theme toggle, paper plane SVG, sticky topbar, and footer
-- Full mobile responsiveness across all BookSummaries, Games, Handouts, Blog, Courses, Labs, Templates, and Premium Tools
+- Full mobile responsiveness across all BookSummaries, Games, Handouts, Blog, Courses, Labs, Templates, and Pro Studio tools
 - GitBook documentation link added to footer across all pages
 
 ### v10.1.0: March 2026

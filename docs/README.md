@@ -8,7 +8,7 @@ Welcome to the ImpactMojo knowledge base: for educators, practitioners, contribu
 
 ImpactMojo is a free learning platform for people working in international development, social impact, and public policy. It provides rigorous, practical educational content (courses, games, labs, handouts, case studies, and data tools) designed specifically for NGOs, impact practitioners, researchers, and students across South Asia.
 
-Everything on the platform is free to use. No login required, no paywall, no trial period. Premium tools and professional services exist for those who need advanced capabilities.
+Everything on the platform is free to use. No login required, no paywall, no trial period. Pro Studio tools and professional services exist for those who need advanced capabilities.
 
 ## Start Here
 

@@ -159,13 +159,13 @@
     { re: /\baccredit(ed|ation)|academic credit|university|ugc\b/i,
       a: "ImpactMojo is not an accredited degree program and doesn't offer academic credit. It's a practitioner-focused learning platform." },
 
-    // Premium / Pricing
-    { re: /\bpremium\b(?!.*(what|include|benefit|price))/i,
-      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds export from the Qualitative Insights Lab and Statistical Code Converter, the VaniScribe Colab notebook, hosted models for the Advisory Board, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. The Advisory Board is free to try with your own AI provider key, and Professional adds ImpactMojo's hosted models. Field Notes from a Dev Economist is free. See the Premium page for current prices." },
-    { re: /\b(what('| i)?s|about).+premium|\bpremium\b.+(include|cover|benefit)/i,
-      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds export from the Qualitative Insights Lab and Statistical Code Converter, the VaniScribe Colab notebook, hosted models for the Advisory Board, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. The Advisory Board is free to try with your own AI provider key, and Professional adds ImpactMojo's hosted models. Field Notes from a Dev Economist is free. See the Premium page for current prices." },
-    { re: /\b(price|cost|fee|paid|free).+premium|\bpremium.+(price|cost|fee)/i,
-      a: "Premium has two plans: **Practitioner** (₹399 a month) and **Professional** (₹999 a month). The Premium page lists what each includes. The courses, labs and games are free." },
+    // Membership / pricing
+    { re: /\b(premium|membership|plans?)\b(?!.*(what|include|benefit|price))/i,
+      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds export from the Qualitative Insights Lab and Statistical Code Converter, the VaniScribe Colab notebook, hosted models for the Advisory Board, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. The Advisory Board is free to try with your own AI provider key, and Professional adds ImpactMojo's hosted models. Field Notes from a Dev Economist is free. The Team Plan (₹1,499 per user per month) gives every member Professional access and adds a team dashboard, custom learning paths and invoice billing arranged by email. See the Membership page for current prices." },
+    { re: /\b(what('| i)?s|about|are).+(premium|membership|plans?)\b|\b(premium|membership|plans?)\b.+(include|cover|benefit)/i,
+      a: "**Practitioner** (₹399 a month) opens all 18 Practice Packs in full, the Research Question Builder Pro and Theory of Change Workbench Pro, and certificates with PDF download. **Professional** (₹999 a month) adds export from the Qualitative Insights Lab and Statistical Code Converter, the VaniScribe Colab notebook, hosted models for the Advisory Board, copying code from the Visualization Cookbook, the DevEconomics Toolkit, and priority coaching. DevData Practice is free to use. The Advisory Board is free to try with your own AI provider key, and Professional adds ImpactMojo's hosted models. Field Notes from a Dev Economist is free. The Team Plan (₹1,499 per user per month) gives every member Professional access and adds a team dashboard, custom learning paths and invoice billing arranged by email. See the Membership page for current prices." },
+    { re: /\b(price|cost|fee|paid|free).+(premium|membership|plans?)\b|\b(premium|membership|plans?)\b.+(price|cost|fee)/i,
+      a: "Membership has two paid plans for individuals: **Practitioner** (₹399 a month) and **Professional** (₹999 a month). The Membership page lists what each includes, and there is a Team plan for organisations. The courses, labs and games are free." },
 
     // Courses (catalog, objectives, level, format)
     { re: /\b(list|show|see).+course(s)?\b|^\s*courses?\s*$/i,
@@ -175,7 +175,7 @@
     { re: /(beginner|new to this|where to start)/i,
       a: "Start with any **101** course. They're beginner-friendly and focus on practical understanding." },
     { re: /(advanced|deeper|next step)/i,
-      a: "For deeper work, explore **labs** and **Premium** deeper-dives." },
+      a: "For deeper work, explore **labs** and **Pro Studio** tools." },
     { re: /(duration|time|how long).+course/i,
       a: "Most courses are **self-paced**. Time varies by learner: check each course page for modules and suggested pace." },
     { re: /\blive\b.+(class|session|cohort)/i,
@@ -275,7 +275,7 @@
     { re: /viz.*cookbook|visualization.*cookbook|chart.*recipe|chart.*type|python.*chart|data.*viz.*code/i,
       a: "The **Visualization Cookbook** has 63 chart recipes with Python code, organised by the question you are asking of your data (comparison, distribution, relationship, composition, time series, spatial). Browsing is free. Copying the code needs a Professional plan. Open it at /premium-tools/viz-cookbook.html" },
     { re: /deveconomics.*toolkit|shiny.*app|rct.*power|did.*simulator|rdd.*explorer|synthetic.*control|gini.*tool|mpi.*explorer|logframe|wdi.*dashboard|poverty.*line.*analysis|cost.*benefit.*tool/i,
-      a: "**DevEconomics Toolkit** is our premium collection of 11 interactive Shiny apps for development economics. Includes RCT power calculator, DiD simulator, RDD explorer, synthetic control visualizer, Gini and Lorenz curve tool, MPI explorer, poverty line analysis, Theory of Change visualizer, cost-benefit analysis tool, LogFrame builder, and WDI dashboard. Visit: https://impactmojo-devecon-toolkit.netlify.app/" }
+      a: "**DevEconomics Toolkit** is our collection of 11 interactive Shiny apps for development economics. Includes RCT power calculator, DiD simulator, RDD explorer, synthetic control visualizer, Gini and Lorenz curve tool, MPI explorer, poverty line analysis, Theory of Change visualizer, cost-benefit analysis tool, LogFrame builder, and WDI dashboard. Visit: https://impactmojo-devecon-toolkit.netlify.app/" }
   ];
 
   // Dynamic course objective matcher (covers "What's the objective of X?"  without listing all regexes)

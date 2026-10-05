@@ -115,8 +115,8 @@ Structured, outcome-focused paths that combine courses, games, and practice into
 |------|-------|-------------|
 | **Explorer** | Free | All courses, games, studios, DevDiscourses, Telegram channel |
 | **Practitioner** | ₹399/mo · ₹3,990/yr | Advanced ToC Studio, PDF/PNG export, certificates, full community |
-| **Professional** | ₹999/mo · ₹9,990/yr | + Qual Studio, VaniScribe AI, DevData Practice, DevEconomics Toolkit, Code Converter, priority coaching |
-| **Organization** | ₹1,499/user/mo | + Team dashboards, bulk licensing, dedicated support, team training packages, cohort management |
+| **Professional** | ₹999/mo · ₹9,990/yr | + Qual Insights Lab and Code Converter export, VaniScribe notebook, hosted Advisory Board models, Viz Cookbook code copying, DevEconomics Toolkit, priority coaching |
+| **Organization** | ₹1,499/user/mo | + Team dashboard, custom learning paths, training packages and cohorts, invoice billing arranged by email (called the Team Plan on the site) |
 
 #### Premium Tools
 
@@ -130,8 +130,8 @@ Available to Practitioner and Professional tier subscribers:
 | **Code Convert Pro** | Professional | Translate scripts between Stata, R, Python, SPSS |
 | **Qual Insights Studio Pro** | Professional | AI-assisted qualitative analysis for transcripts |
 | **VaniScribe AI** | Professional | Transcription in 10+ South Asian languages |
-| **DevData Practice** | Professional | 36 dataset generators, 840K+ rows modeled on DHS/NFHS/ASER |
-| **Visualization Cookbook** | Professional | 14 chart types with question-driven recipes |
+| **DevData Practice** | Free | 36 dataset generators, 840K+ rows modeled on DHS/NFHS/ASER |
+| **Visualization Cookbook** | Free to browse, Professional to copy code | 63 chart recipes organised by the question you are asking |
 | **DevEconomics Toolkit** | Professional | 11 interactive Shiny apps for development econometrics |
 
 ---

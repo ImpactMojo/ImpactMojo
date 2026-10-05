@@ -58,7 +58,7 @@ Every pack follows the same structure, so you know what you are getting before y
 | Tier | Access |
 |------|--------|
 | Free (no login) | First 2 modules of every pack, with auto-save |
-| Premium (₹399/mo) | All 18 packs in full: modules 3–4 and the capstone builder |
+| Practitioner (₹399/mo) | All 18 packs in full: modules 3–4 and the capstone builder |
 | Single pack (₹299) | One full pack, one-time purchase |
 
 ---

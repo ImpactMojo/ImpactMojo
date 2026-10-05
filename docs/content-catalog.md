@@ -444,20 +444,20 @@ Downloadable reference sheets organized by learning track. Browse all at [Handou
 
 ---
 
-## Premium Tools & Products (30 products)
+## Pro Studio tools & Products (30 products)
 
 Advanced tools and products for researchers and practitioners: 30 in all, including two professional Excel calculators (₹12,000 / ₹15,000) and the Evaluation Essentials Kit (₹2,499). A selection is listed below; see the [Premium page](/premium.html) for the full range.
 
 | # | Tool | Tier | Description | Link |
 |---|------|------|-------------|------|
-| 1 | RQ Builder Pro | Practitioner | Guided research question builder with PICO/SPIDER framing (free to use, Premium to export) | [Premium](/premium.html) |
+| 1 | RQ Builder Pro | Practitioner | Guided research question builder with PICO/SPIDER framing (free to use, a paid plan to export) | [Premium](/premium.html) |
 | 2 | TOC Workbench Pro | Practitioner | Advanced ToC building with assumption mapping and PDF/PNG export | [Premium](/premium.html) |
 | 3 | Field Notes from a Development Economist | Professional | Behind-the-scenes analysis of real programs and trade-offs | [Open](https://impactmojo-field-notes-pro.netlify.app/) |
-| 4 | Qualitative Research Studio | Professional | AI-assisted thematic coding and memo generation (free to use, Premium to export) | [Premium](/premium.html) |
-| 5 | Statistical Code Converter Pro | Professional | Translate code between R, Stata, SPSS & Python with regression diagnostics and power analysis (free to use, Premium to export) | [Premium](/premium.html) |
-| 6 | DevData Practice | Professional | 36 dataset generators with 840k+ rows of realistic development data | [Open](https://impactmojo-devdata-pro.netlify.app/) |
+| 4 | Qualitative Research Studio | Professional | AI-assisted thematic coding and memo generation (free to use, a paid plan to export) | [Premium](/premium.html) |
+| 5 | Statistical Code Converter Pro | Professional | Translate code between R, Stata, SPSS & Python with regression diagnostics and power analysis (free to use, a paid plan to export) | [Premium](/premium.html) |
+| 6 | DevData Practice | Free | 36 dataset generators with 840k+ rows of realistic development data | [Open](https://impactmojo-devdata-pro.netlify.app/) |
 | 7 | VaniScribe: AI Transcription | Professional | Transcribe interviews in 10+ South Asian languages | [Premium](/premium.html) |
-| 8 | Visualization Cookbook | Professional | Question-driven chart recipes with production-ready Python code | [Open](https://impactmojo-devdata-pro.netlify.app/charts.html) |
+| 8 | Visualization Cookbook | Free to browse, Professional to copy code | Question-driven chart recipes with production-ready Python code | [Open](https://impactmojo-devdata-pro.netlify.app/charts.html) |
 | 9 | DevEconomics Toolkit | Professional | 11 interactive Shiny apps for impact evaluation and program design | [Open](https://impactmojo-devecon-toolkit.netlify.app/) |
 
 ---
@@ -497,7 +497,7 @@ Advanced tools and products for researchers and practitioners: 30 in all, includ
 | Live Case Challenges | 15 |
 | Research to Action | 7 series, 70 posters |
 | Blog posts | 32 |
-| Premium products | 30 |
+| Paid products | 30 |
 | Handout pages | 84 |
 | Dataverse entries | 296 |
 | FieldCases | 200 (117 countries) |

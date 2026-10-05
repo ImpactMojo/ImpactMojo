@@ -89,10 +89,10 @@
             'organization': [
                 'Everything in Professional',
                 'Team dashboard & progress analytics',
-                'Bulk user management',
+                'Invite members by email',
                 'Custom learning paths',
-                'Dedicated account manager',
-                'Branded certificates & invoice billing'
+                'Priority support by email',
+                'Invoice billing, arranged by email'
             ]
         },
         
@@ -470,7 +470,7 @@
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                             </svg>
                         </div>
-                        <h2 class="premium-upgrade-title">Unlock Premium Content</h2>
+                        <h2 class="premium-upgrade-title">Unlock paid content</h2>
                         <p class="premium-upgrade-subtitle">Upgrade to access advanced tools, courses, and exclusive features</p>
                     </div>
                     

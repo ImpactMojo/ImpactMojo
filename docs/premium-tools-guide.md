@@ -6,7 +6,7 @@ Pro Studio is ImpactMojo's set of 13 browser tools for research and evaluation w
 
 Most of them are free to use. What costs money is narrow: exporting your work from the seven builders, copying code out of the Visualization Cookbook, copying notes out of Field Notes, running the Advisory Board on ImpactMojo's own AI models, and downloading the VaniScribe Colab notebook. Everything else, including the analysis you do on screen, is free.
 
-The paid plans are Practitioner (₹399 a month or ₹3,990 a year) and Professional (₹999 a month or ₹9,990 a year, which is two months free). A Team plan is ₹1,499 per user per month. The [Premium page](/premium.html) lists what each plan includes and is the place to check current prices.
+Membership has four levels. Explorer is free. Practitioner is ₹399 a month or ₹3,990 a year. Professional is ₹999 a month or ₹9,990 a year, which is two months free. The Team Plan is ₹1,499 per user per month: every member gets Professional access, and the plan adds a team dashboard, custom learning paths and invoice billing arranged by email. Organisation accounts hold a set number of seats and an administrator, and are arranged by writing to [hello@impactmojo.in](mailto:hello@impactmojo.in). The [Membership page](/premium.html) lists what each plan includes and is the place to check current prices.
 
 ## The 13 tools
 

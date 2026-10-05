@@ -188,7 +188,7 @@
       '<div class="im-sc-right">' +
         '<button class="im-sc-btn im-sc-search" type="button" aria-label="Search the site">' + I.search + '<span class="im-sc-label">Search</span></button>' +
         '<button class="im-sc-btn im-sc-lang" type="button" aria-label="Language">' + I.globe + '<span class="im-sc-label">Language</span></button>' +
-        '<a class="im-sc-btn im-sc-prem" href="' + SITE + '/premium.html" aria-label="Premium">' + I.star + '<span class="im-sc-label">Premium</span></a>' +
+        '<a class="im-sc-btn im-sc-prem" href="' + SITE + '/premium.html" aria-label="Membership">' + I.star + '<span class="im-sc-label">Membership</span></a>' +
         '<a class="im-sc-btn" href="' + SITE + '/about.html" aria-label="About">' + I.info + '<span class="im-sc-label">About</span></a>' +
         '<div class="im-sc-theme" role="group" aria-label="Theme">' +
           '<button class="im-sc-tbtn" data-m="system" title="System" aria-label="System theme">' + I.sys + '</button>' +
@@ -220,7 +220,7 @@
           '<a href="' + SITE + '/dojos.html">Dojos &amp; Practice</a>' +
           '<a href="' + SITE + '/blog.html">Blog</a></div>' +
         '<div class="im-sc-foot-col"><h3>ImpactMojo</h3>' +
-          '<a href="' + SITE + '/about.html">About</a><a href="' + SITE + '/premium.html">Premium</a>' +
+          '<a href="' + SITE + '/about.html">About</a><a href="' + SITE + '/premium.html">Membership</a>' +
           '<a href="' + SITE + '/community.html">Community</a><a href="https://github.com/ImpactMojo/ImpactMojo">GitHub</a></div>' +
       '</div>' +
       '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free Forever &middot; &copy; ImpactMojo</span>' +

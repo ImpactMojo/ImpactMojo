@@ -46,7 +46,7 @@ All courses, games, labs, handouts, and resources on the free tier are permanent
 
 ---
 
-## Premium Membership Refunds
+## Membership refunds
 
 ### Monthly plans
 - Cancel anytime: your access continues until the end of the current billing period

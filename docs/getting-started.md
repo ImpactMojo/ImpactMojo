@@ -177,7 +177,7 @@ ImpactMojo is free to use, and the free tier is genuinely substantial. Here's wh
 ### A note on affordability
 - **Annual plans save you 2 months**: pay for 10 months, get 12
 - **Sliding scale pricing** is available for coaching and workshops: if your organization has limited resources, reach out and we'll find a way to make it work
-- **The free tier is not a teaser.** It's a complete, useful learning platform. Premium exists for professionals who need additional tools for their work.
+- **The free tier is not a teaser.** It's a complete, useful learning platform. Paid plans exist for professionals who need additional tools for their work.
 
 ---
 

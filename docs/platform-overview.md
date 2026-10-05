@@ -304,13 +304,13 @@ Switch languages from the platform interface. This makes ImpactMojo usable for t
 
 ---
 
-## What's Free vs. Premium?
+## What's free and what needs a paid plan?
 
 The vast majority of ImpactMojo is **completely free**: this is a genuine commitment, not a marketing strategy. All 81 courses, 135 games, 35 studios, handouts, ImpactLex, case studies, DevDiscourses, and Dataverse are available at no cost.
 
-Premium memberships (starting at ₹399/month) unlock additional tools, PDF/PNG export from studios, certificates, and priority access to coaching and workshops.
+Paid memberships (starting at ₹399/month) unlock additional tools, PDF/PNG export from studios, certificates, and priority access to coaching and workshops.
 
-For full details on tiers and pricing, see [Premium & Memberships](premium.md).
+For full details on tiers and pricing, see [Memberships & services](premium.md).
 
 
 ## Programs: Build Circles & the AI for M&E Certificate Track
