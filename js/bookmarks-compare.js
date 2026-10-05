@@ -1653,7 +1653,7 @@ IMX.injectCardButtons = function() {
             if (num.startsWith('C')) type = 'Course';
             else if (num.startsWith('L')) type = 'Lab';
             else if (num.startsWith('G')) type = 'Game';
-            else if (num.startsWith('P')) type = 'Premium';
+            else if (num.startsWith('P')) type = 'Pro Studio';
         }
         
         // Create unique ID

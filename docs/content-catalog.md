@@ -1,10 +1,10 @@
 # Content Catalog
 
-Complete catalog of all ImpactMojo learning resources with direct links. Everything listed here is **free and open access** unless marked as Premium.
+Complete catalog of all ImpactMojo learning resources with direct links. Everything listed here is **free and open access** unless the entry says a paid plan is needed.
 
 ---
 
-## Flagship Courses (16)
+## Flagship Courses (21)
 
 Deep, multi-module courses with 8–16 modules each, interactive lexicons, South Asian case studies, and AI study companions.
 
@@ -25,12 +25,18 @@ Deep, multi-module courses with 8–16 modules each, interactive lexicons, South
 | 13 | Livelihoods in India: Rural, Urban & Skills | Policy & Economics | 3 | – | [Open](/courses/livelihoods/) |
 | 14 | Power BI for Practitioners | Data & Technology | 8 | 68 terms | [Open](/courses/powerBI/powerbi.html) |
 | 15 | Causal Inference for Development | MEL & Research | 13 | 65 terms | [Open](/courses/causal/) |
+| 16 | Sustainability, ESG & Corporate Responsibility for Development Practice | Policy & Economics | – | yes | [Open](/courses/esg/) |
+| 17 | Gender-Sensitive Monitoring, Evaluation & Learning | MEL & Research | – | yes | [Open](/courses/gender-mel/) |
+| 18 | Designing What Works: Development Interventions from Model to Scale | Policy & Economics | – | yes | [Open](/courses/intervention/) |
+| 19 | Nothing About Us Without Us: Disability, Justice & Development | Gender & Equity | – | yes | [Open](/courses/nothing-about-us/) |
+| 20 | Nonviolence in Practice: Communication, Resistance & Repair | Health & Communication | – | yes | [Open](/courses/nvc-rj/) |
+| 21 | Social Movements & Protests: Theory and South Asian Practice | Philosophy & Governance | – | yes | [Open](/courses/social-movements/) |
 
 ---
 
-## BookSummaries (163)
+## Reading companions (171)
 
-Interactive reading companions under Specials: deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. See the [Reading Companions Guide](book-summaries-guide.md) for full details.
+Interactive reading companions: deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. The list below shows 52 of the 171; the full set is on the Book Summaries page. See the [Reading Companions Guide](book-summaries-guide.md) for full details.
 
 | # | Reading Companion | Link |
 |---|----------------|------|
@@ -92,7 +98,7 @@ Interactive reading companions under Specials: deep, chapter-by-chapter explorat
 
 ---
 
-## Foundational Courses (47)
+## Foundational Courses (60)
 
 Single-page courses covering essential development topics: all self-hosted native HTML slide decks (~100 slides each). All free, no login required.
 
@@ -129,6 +135,9 @@ Single-page courses covering essential development topics: all self-hosted nativ
 | Item Response Theory 101 | [Open](/101-courses/irt-basics.html) |
 | Multivariate Analysis 101 | [Open](/101-courses/multivariate-basics.html) |
 | Observation to Insight 101 | [Open](/101-courses/obs2insight.html) |
+| GenAI for Practitioners 101 | [Open](/101-courses/genai-practitioners.html) |
+| Data Protection & the DPDP Act 101 | [Open](/101-courses/data-protection-dpdp.html) |
+| R & Python for Development: a South Asia 101 | [Open](/101-courses/r-python-dev.html) |
 
 ### Policy & Economics
 
@@ -145,6 +154,8 @@ Single-page courses covering essential development topics: all self-hosted nativ
 | Climate Essentials 101 | [Open](/101-courses/climate-essentials.html) |
 | Inequality Basics 101 | [Open](/101-courses/inequality-basics.html) |
 | Decolonial Development 101 | [Open](/101-courses/decolonize-dev.html) |
+| CSR & ESG 101 | [Open](/101-courses/csr-esg.html) |
+| Development Finance 101 | [Open](/101-courses/development-finance.html) |
 
 ### Gender & Equity
 
@@ -155,6 +166,8 @@ Single-page courses covering essential development topics: all self-hosted nativ
 | Women's Economic Empowerment 101 | [Open](/101-courses/wee-studies.html) |
 | Social Margins 101 | [Open](/101-courses/social-margins.html) |
 | Data Feminism 101 | [Open](/101-courses/data-feminism.html) |
+| Safeguarding & PSEA 101 | [Open](/101-courses/safeguarding-psea.html) |
+| Disability Inclusion 101 | [Open](/101-courses/disability-inclusion.html) |
 
 ### Health & Communication
 
@@ -181,7 +194,7 @@ Single-page courses covering essential development topics: all self-hosted nativ
 
 ---
 
-## Interactive Studios (28)
+## Interactive Studios (35)
 
 Hands-on workbenches where you build, design, and practice real skills.
 
@@ -213,6 +226,15 @@ Hands-on workbenches where you build, design, and practice real skills.
 | 25 | Stakeholder Mapping & Power Analysis Studio | Governance & Digital | [Open](/Labs/stakeholder-mapping-lab.html) |
 | 26 | Survey Design Studio | Research & Methods | [Open](/Labs/survey-design-lab.html) |
 | 27 | Systems Thinking & Complexity Studio | Research & Methods | [Open](/Labs/systems-thinking-lab.html) |
+| 27 | Before We Fall Apart: Group Conflict-Preparedness Studio | Philosophy & Governance | [Open](/Labs/before-we-fall-apart-lab.html) |
+| 28 | Disability-Inclusive MEL Studio | MEL | [Open](/Labs/disability-inclusive-mel-lab.html) |
+| 29 | Impact Evaluation Designer | MEL | [Open](/Labs/impact-evaluation-lab.html) |
+| 30 | Livelihoods & Value-Chain Studio | Policy & Economics | [Open](/Labs/livelihoods-value-chain-lab.html) |
+| 31 | LogFrame Builder | MEL | [Open](/Labs/logframe-builder-lab.html) |
+| 32 | MEL Rosetta Lab | MEL | [Open](/Labs/mel-rosetta-lab.html) |
+| 33 | NVC & Mediation Practice | Philosophy & Governance | [Open](/Labs/nvc-mediation-lab.html) |
+| 34 | RCT Readiness Diagnostic | MEL | [Open](/Labs/rct-readiness-lab.html) |
+| 35 | Why City Boundaries Lie | Policy & Economics | [Open](/Labs/urban-boundaries-lab.html) |
 
 ---
 
@@ -317,7 +339,7 @@ Real-world case challenges with 2-document case packets and assessment rubrics: 
 
 ---
 
-## Deep Dives (21)
+## Deep Dives (25)
 
 Curated, fully web-cited reading lists on the debates that shape development practice.
 
@@ -344,6 +366,10 @@ Curated, fully web-cited reading lists on the debates that shape development pra
 | 19 | Climate Migration in South Asia | [Open](/DeepDives/climate-migration-south-asia.html) |
 | 20 | AI and Development | [Open](/DeepDives/ai-and-development.html) |
 | 21 | Platform & Gig Work in India | [Open](/DeepDives/platform-gig-work-india.html) |
+| 22 | The Political Economy of Development Finance | [Open](/DeepDives/development-finance-infrastructure.html) |
+| 23 | Farm Animal Welfare in India | [Open](/DeepDives/farm-animal-welfare-india.html) |
+| 24 | Rural Non-Farm Enterprise in India | [Open](/DeepDives/rural-non-farm-enterprise-india.html) |
+| 25 | Water, Sanitation, and the Behaviour Gap | [Open](/DeepDives/water-sanitation-behaviour-gap.html) |
 
 ---
 
@@ -363,7 +389,7 @@ Shareable poster series that turn research and evaluation concepts into visual e
 
 ---
 
-## Handouts (84 HTML pages)
+## Handouts (90 HTML pages)
 
 Downloadable reference sheets organized by learning track. Browse all at [Handouts Index](/Handouts/index.html).
 
@@ -444,21 +470,25 @@ Downloadable reference sheets organized by learning track. Browse all at [Handou
 
 ---
 
-## Pro Studio tools & Products (30 products)
+## Pro Studio tools & products
 
-Advanced tools and products for researchers and practitioners: 30 in all, including two professional Excel calculators (₹12,000 / ₹15,000) and the Evaluation Essentials Kit (₹2,499). A selection is listed below; see the [Premium page](/premium.html) for the full range.
+Thirteen browser tools for research and evaluation work. Seven builders are free to use and need a paid plan to export. Four reference tools are free to open, and two AI tools run on your own API key. See the [Pro Studio guide](premium-tools-guide.md) for what each one does and what needs a paid plan.
 
-| # | Tool | Tier | Description | Link |
-|---|------|------|-------------|------|
-| 1 | RQ Builder Pro | Practitioner | Guided research question builder with PICO/SPIDER framing (free to use, a paid plan to export) | [Premium](/premium.html) |
-| 2 | TOC Workbench Pro | Practitioner | Advanced ToC building with assumption mapping and PDF/PNG export | [Premium](/premium.html) |
-| 3 | Field Notes from a Development Economist | Professional | Behind-the-scenes analysis of real programs and trade-offs | [Open](https://impactmojo-field-notes-pro.netlify.app/) |
-| 4 | Qualitative Research Studio | Professional | AI-assisted thematic coding and memo generation (free to use, a paid plan to export) | [Premium](/premium.html) |
-| 5 | Statistical Code Converter Pro | Professional | Translate code between R, Stata, SPSS & Python with regression diagnostics and power analysis (free to use, a paid plan to export) | [Premium](/premium.html) |
-| 6 | DevData Practice | Free | 36 dataset generators with 840k+ rows of realistic development data | [Open](https://impactmojo-devdata-pro.netlify.app/) |
-| 7 | VaniScribe: AI Transcription | Professional | Transcribe interviews in 10+ South Asian languages | [Premium](/premium.html) |
-| 8 | Visualization Cookbook | Free to browse, Professional to copy code | Question-driven chart recipes with production-ready Python code | [Open](https://impactmojo-devdata-pro.netlify.app/charts.html) |
-| 9 | DevEconomics Toolkit | Professional | 11 interactive Shiny apps for impact evaluation and program design | [Open](https://impactmojo-devecon-toolkit.netlify.app/) |
+| # | Tool | What needs a paid plan | Link |
+|---|------|------------------------|------|
+| 1 | Research Question Builder | Export | [Open](/premium-tools/rq-builder.html) |
+| 2 | ToR Builder | Export | [Open](/premium-tools/tor-builder.html) |
+| 3 | Logframe Builder | Export | [Open](/premium-tools/logframe-pro.html) |
+| 4 | Empathy Mapping | Export | [Open](/premium-tools/empathy-pro.html) |
+| 5 | AI Strategy Canvas | Export | [Open](/premium-tools/ai-canvas-pro.html) |
+| 6 | Statistical Code Converter | Export | [Open](/premium-tools/code-converter-pro.html) |
+| 7 | Qualitative Insights Lab | Export | [Open](/premium-tools/qual-insights-lab.html) |
+| 8 | Chart Selector | Nothing | [Open](/premium-tools/chart-selector-pro.html) |
+| 9 | DevData Practice | Nothing | [Open](/premium-tools/devdata-practice.html) |
+| 10 | Visualization Cookbook | Copying the code (Professional) | [Open](/premium-tools/viz-cookbook.html) |
+| 11 | Field Notes | Copying a note (Professional) | [Open](/premium-tools/field-notes.html) |
+| 12 | Advisory Board | Hosted models (Professional); free with your own API key | [Open](/premium-tools/advisory-board-pro.html) |
+| 13 | VaniScribe | The Colab notebook (Professional); the browser transcriber is free with your own Sarvam key | [Open](/premium-tools/vaniscribe.html) |
 
 ---
 
@@ -466,7 +496,7 @@ Advanced tools and products for researchers and practitioners: 30 in all, includ
 
 | Resource | Description | Access |
 |----------|-------------|--------|
-| **ImpactLex** | 390 development terms dictionary (PWA, hosted on ImpactMojo) | Free: [Browse](/impactlex/) |
+| **ImpactLex** | 494 development terms dictionary (PWA, hosted on ImpactMojo) | Free: [Browse](/impactlex/) |
 | **FieldCases** | 200 curated development cases from 117 countries | Free |
 | **NudgeKit** | 203 behaviour change techniques (BCTs) with South Asian context | Free: [Browse](/bct-repository) |
 | **Dataverse** | 335 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
@@ -486,23 +516,23 @@ Advanced tools and products for researchers and practitioners: 30 in all, includ
 
 | Category | Count |
 |----------|-------|
-| Flagship courses | 16 |
-| Foundational courses | 47 |
-| Interactive studios | 28 |
+| Flagship courses | 21 |
+| Foundational courses | 60 |
+| Interactive studios | 35 |
 | Game Library | 135 (18 simulations + 117 puzzles) |
-| BookSummaries | 55 |
-| Deep Dives | 20 |
+| Reading companions | 171 |
+| Deep Dives | 25 |
 | Timelines | 6 (113 nodes, 44 eras) |
 | Practice packs | 18 |
 | Live Case Challenges | 15 |
 | Research to Action | 7 series, 70 posters |
-| Blog posts | 32 |
-| Paid products | 30 |
-| Handout pages | 84 |
-| Dataverse entries | 296 |
+| Blog posts | 42 |
+| Pro Studio tools | 13 |
+| Handout pages | 90 |
+| Dataverse entries | 335 |
 | FieldCases | 200 (117 countries) |
 | DevDiscourses entries | 500+ |
-| ImpactLex terms | 390 |
+| ImpactLex terms | 494 |
 | NudgeKit BCTs | 203 |
 | NotebookLM study companions | 12 |
 | Languages supported | 6 (English, Hindi, Tamil, Bengali, Telugu, Marathi) |

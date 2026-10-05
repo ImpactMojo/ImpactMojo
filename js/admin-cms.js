@@ -114,7 +114,7 @@
         { key: 'title', label: 'Title', type: 'text' },
         { key: 'description', label: 'Description', type: 'textarea' },
         { key: 'category', label: 'Category', type: 'text' },
-        { key: 'type', label: 'Type', type: 'select', options: ['Free', 'Premium'] },
+        { key: 'type', label: 'Type', type: 'select', options: ['Free', 'Pro Studio'] },
         { key: 'link', label: 'Link', type: 'text' }
       ]
     },
