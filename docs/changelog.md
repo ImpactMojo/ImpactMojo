@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.319.0 — October 5, 2026 (Plain-language pass, part 1)
+
+### Changed
+
+- **Home, About, Premium and FAQ rewritten in plainer language.** Each page was checked claim by claim against the code and primary sources before the wording changed. Banned filler words, negative-parallelism sentences and heading Title Case are gone.
+
+### Fixed
+
+- **Wrong counts, unsupported claims and invented ratings on the four pages (#1132).** The home page said the Law Docket holds 61 judgments (109), Deep Dives 22 (25), the Data Room 12 and 13 explorers (19) and Libraries 9 (18). The FAQ and its hidden structured data said 19 flagship, 51 foundational and 70 courses (21, 59 and 80). The newsletter promise, the certificate descriptions, the tool descriptions and a bio line were corrected to match the code. The 17 star ratings on the Premium tools were removed because no review data exists behind them. "IT Act 2000 compliant" was removed from the footer because no policy makes that claim.
+
 ## v10.318.0 — October 5, 2026 (Law Docket and Law Guides checked against sources)
 
 ### Changed
