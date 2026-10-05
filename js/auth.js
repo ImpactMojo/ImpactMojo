@@ -110,6 +110,72 @@ const STORAGE_KEYS = (typeof window.IMState !== 'undefined')
 // =====================================================
 // AUTH STATE MANAGEMENT
 // =====================================================
+// ---------------------------------------------------------------------------
+// Breached-password check (Have I Been Pwned "Pwned Passwords" range API).
+//
+// Supabase's own leaked-password protection is a Pro-plan setting. This does the same job in
+// the browser: only the first five characters of the password's SHA-1 hash are sent (k-anonymity),
+// never the password. Responses are padded so their size does not reveal the match.
+//
+// Returns the number of times the password appears in known breaches, or null when it could not
+// be checked (offline, blocked, HIBP down). A failed check must never block a sign-up, so callers
+// treat null as "not known to be breached". This runs in the browser, so someone who calls the
+// Supabase Auth API directly bypasses it; the length rules in Supabase Auth still apply to them.
+// ---------------------------------------------------------------------------
+async function imxPwnedCount(password) {
+    try {
+        if (!password || !window.crypto || !window.crypto.subtle) return null;
+        var bytes = new TextEncoder().encode(password);
+        var digest = await window.crypto.subtle.digest('SHA-1', bytes);
+        var hex = Array.from(new Uint8Array(digest)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('').toUpperCase();
+        var prefix = hex.slice(0, 5), suffix = hex.slice(5);
+        var ctrl = new AbortController();
+        var timer = setTimeout(function () { ctrl.abort(); }, 4000);
+        var res = await fetch('https://api.pwnedpasswords.com/range/' + prefix, { headers: { 'Add-Padding': 'true' }, signal: ctrl.signal });
+        clearTimeout(timer);
+        if (!res.ok) return null;
+        var lines = (await res.text()).split('\n');
+        for (var i = 0; i < lines.length; i++) {
+            var parts = lines[i].trim().split(':');
+            if (parts[0] === suffix) return parseInt(parts[1], 10) || 0;
+        }
+        return 0;
+    } catch (e) {
+        return null;
+    }
+}
+window.imxPwnedCount = imxPwnedCount;
+
+var IMX_PWNED_MESSAGE = 'That password appears in a known data breach, so attackers already have it. Please choose a different one.';
+
+// After a sign-in with a breached password, ask the user (once a week at most) to change it.
+function imxShowPwnedNotice() {
+    try {
+        var until = parseInt(localStorage.getItem('imx-pwned-notice-until') || '0', 10);
+        if (Date.now() < until || document.getElementById('imxPwnedNotice')) return;
+    } catch (e) { /* storage blocked: show it */ }
+    var bar = document.createElement('div');
+    bar.id = 'imxPwnedNotice';
+    bar.setAttribute('role', 'status');
+    bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:100000;background:#1e293b;color:#fff;padding:0.9rem 1rem;display:flex;gap:0.75rem;align-items:center;justify-content:center;flex-wrap:wrap;font:500 0.9rem/1.4 Inter,system-ui,sans-serif;';
+    var msg = document.createElement('span');
+    msg.textContent = 'The password you just used appears in a known data breach. Please choose a new one.';
+    var go = document.createElement('a');
+    go.href = '/forgot-password.html';
+    go.textContent = 'Change password';
+    go.style.cssText = 'background:#0369A1;color:#fff;padding:0.4rem 0.9rem;border-radius:6px;text-decoration:none;font-weight:600;';
+    var no = document.createElement('button');
+    no.type = 'button';
+    no.textContent = 'Not now';
+    no.style.cssText = 'background:transparent;color:#fff;border:1px solid #fff;padding:0.4rem 0.9rem;border-radius:6px;cursor:pointer;font:inherit;';
+    no.onclick = function () {
+        try { localStorage.setItem('imx-pwned-notice-until', String(Date.now() + 7 * 86400000)); } catch (e) { /* ignore */ }
+        bar.remove();
+    };
+    bar.appendChild(msg); bar.appendChild(go); bar.appendChild(no);
+    document.body.appendChild(bar);
+}
+
 const ImpactMojoAuth = {
     user: null,
     profile: null,
@@ -825,6 +891,9 @@ const ImpactMojoAuth = {
     // Sign up with email and password
     async signUp(email, password, fullName = '') {
         try {
+            if ((await imxPwnedCount(password)) > 0) {
+                return { success: false, message: IMX_PWNED_MESSAGE, error: new Error('pwned_password') };
+            }
             const { data, error } = await supabaseClient.auth.signUp({
                 email: email,
                 password: password,
@@ -879,6 +948,10 @@ const ImpactMojoAuth = {
             this.syncAll().catch(function (e) {
                 console.error('Post-login sync failed:', e);
             });
+
+            // Check the password in the background. People who set a password before this check
+            // existed get a one-line nudge to change it; nobody is locked out.
+            imxPwnedCount(password).then(function (n) { if (n > 0) imxShowPwnedNotice(); });
 
             return {
                 success: true,
@@ -1027,6 +1100,9 @@ const ImpactMojoAuth = {
     // Update password (when user has reset token)
     async updatePassword(newPassword) {
         try {
+            if ((await imxPwnedCount(newPassword)) > 0) {
+                return { success: false, message: IMX_PWNED_MESSAGE, error: new Error('pwned_password') };
+            }
             const { data, error } = await supabaseClient.auth.updateUser({
                 password: newPassword
             });
