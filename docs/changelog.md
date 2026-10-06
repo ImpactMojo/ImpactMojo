@@ -2,6 +2,17 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.334.0 — October 6, 2026 (DPDP Act commencement dates)
+
+### Changed
+
+- **The DPDP Act's dates are now right across the site.** The Act comes into force in stages under the notification of 13 November 2025 (G.S.R. 843(E)). The Data Protection Board and the amendment to the RTI Act took effect that day; the consent-manager provisions apply from 13 November 2026; all the duties of data fiduciaries, the rights of data principals, the children's-data rules, the research exemption in section 17(2)(b) and the penalties apply from 13 May 2027. Several pages said or implied the duties already applied. Data Protection & the DPDP Act 101 (34 slides), twelve other 101 decks, three Code Studio courses, three Labs, the law guides and lexicon, the annotated DPDP product, a blog post and ImpactMojo's own data protection page now give the dates, and keep the advice to prepare now.
+- **One wrong date fixed.** The DPDP Rules were notified on 13 November 2025, not 14 November.
+
+### For Learners
+
+- **Data protection dates.** Every page that explains India's data protection law now says which duties apply today and which start on 13 May 2027.
+
 ## v10.333.0 — October 6, 2026 (owner decisions, part 1)
 
 ### Changed
