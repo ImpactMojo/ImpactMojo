@@ -1486,8 +1486,9 @@ SLIDES_C = [
                card("249", "Clean Street Food Hubs certified", "cyan", "PIB, 9 July 2025")]),
         hbox("Eat Right India addresses the second half of the double burden: food "
              "safety, fats, sugar and salt. It matters most for urban and richer groups, "
-             "where NFHS-5 found overweight among women at 33% in urban areas and 39% in "
-             "the richest quintile. Child undernutrition programmes rarely touch it; a "
+             "where NFHS-6 (2023-24) found 42.8% of urban women aged 15-49 overweight or obese, "
+             "against 25.5% of rural women; NFHS-5, the latest round with a wealth breakdown, "
+             "put it at 39% in the richest quintile. Child undernutrition programmes rarely touch it; a "
              "double-duty plan needs both.", "amber"),
     ], compact=True),
 
@@ -1605,8 +1606,8 @@ SLIDES_C = [
         body("Sources: Luby et al., Lancet Global Health, 2018; Null et al., Lancet Global "
              "Health, 2018; Humphrey et al., Lancet Global Health, 2019. In Bangladesh, "
              "sanitation, handwashing and nutrition reduced diarrhoea while water treatment "
-             "did not; in Kenya no intervention reduced diarrhoea. Combining WASH with "
-             "nutrition added nothing to growth beyond nutrition alone in all three.",
+             "did not; in Kenya no intervention reduced diarrhoea. In none of the three did "
+             "combining WASH with nutrition improve growth significantly beyond nutrition alone.",
              sm=True),
         hbox("These trials tested household-level, elementary WASH: improved latrines, "
              "handwashing stations, chlorine. They did not test what Spears' work points "

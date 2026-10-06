@@ -1087,7 +1087,8 @@ S07 = [
               "change or ignore than law.")),
         body("Attempted suicide is no offence in Nepal. The National Penal (Code) Act, 2017 "
              "punishes only abetment, under section 185: up to five years and a fine of up to "
-             "Rs 50,000. Source: the Act, English translation of the Nepal Law Commission text.",
+             "Rs 50,000. Source: Muluki Aparadh Samhita 2074, s185, official Nepali text published by the "
+             "Nepal Law Commission (lawcommission.gov.np).",
              sm=True),
     ], compact=True),
 

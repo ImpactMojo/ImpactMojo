@@ -1012,7 +1012,11 @@ DECK = {
                   "four-year-olds is a direct risk to NEP's foundational stage.", sm=True),
                 B("NISHTHA, the in-service training programme launched in 2019 under Samagra "
                   "Shiksha, had trained 43% of targeted teachers and 49% of targeted school "
-                  "heads by January 2026 (PRS).", sm=True)]),
+                  "heads by January 2026 (PRS).", sm=True),
+                B("In <em>Anjuman Ishaat-e-Taleem Trust</em> (1 September 2025) the Supreme Court "
+                  "held the TET binding on teachers recruited before the RTE Act: those with more than five years "
+                  "to retire must pass it within two years or leave service; those with less may "
+                  "stay without it but cannot be promoted (paras 216-217).", sm=True)]),
             H("amber", "Source: " + PRS + ". Ministry spending on teacher training fell from "
               "Rs 599 crore in 2019-20 to Rs 96 crore in 2022-23."),
         ]),
@@ -1359,8 +1363,9 @@ DECK = {
               "follow-up, rarely changes daily teaching."),
             TC([P("cyan", "NIPUN Bharat",
                   "India's National Mission on Foundational Literacy and Numeracy, launched in "
-                  "2021, aims for every child to read and do basic arithmetic by Grade 3, with "
-                  "the target year now 2026-27. It sets learning targets, designs materials and "
+                  "2021, aimed for every child to read and do basic arithmetic by Grade 3, with "
+                  "2026-27 as the target year; Ministry replies since December 2025 say the end "
+                  "of Grade 2. It sets learning targets, designs materials and "
                   "funds teacher training.")],
                [P("green", "Vidya Pravesh",
                   "A three-month school preparation module proposed in NEP 2020 and launched in "

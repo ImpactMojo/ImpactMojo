@@ -886,7 +886,8 @@ S06 = [
              "the test of proportionality (Bombay High Court, final judgment of 26 September 2024, "
              "quoting his opinion). The Union's appeal was listed in the Supreme Court on 10 March "
              "2026, which issued notice and declined to stay the High Court's judgment (Internet "
-             "Freedom Foundation, 11 March 2026). Check its current status before relying on it.",
+             "Freedom Foundation, 11 March 2026; the notice was also reported by India Today, 10 "
+             "March 2026). Check its current status before relying on it.",
              sm=True),
     ], compact=True),
 
