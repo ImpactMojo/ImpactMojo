@@ -2,6 +2,17 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.329.0 — October 6, 2026 (101 decks accuracy pass, part 4)
+
+### Changed
+
+- **Four more 101 decks were checked against their sources:** Research Ethics, Safeguarding and PSEA, Social and Emotional Learning, and Structural Equation Modelling. The Declaration of Helsinki timeline, the UN Secretary-General's Bulletin section reference, the Durlak et al. (2011) finding on who delivers programmes, and several worked numbers were corrected, and the head metadata of the Safeguarding deck now describes that deck.
+- **Development Economics:** the 1990 top-1% income share on the stat card now reads 10.5%.
+
+### For Learners
+
+- **Corrected 101 decks.** Citations, worked examples and figures in four more decks were rechecked against their sources.
+
 ## v10.328.0 — October 6, 2026 (101 decks accuracy pass, part 3)
 
 ### Changed
