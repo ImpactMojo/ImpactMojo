@@ -2,6 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.340.0 — October 6, 2026 (public health handout resource list)
+
+### Changed
+
+- **EcoHealth Alliance removed from the public health handout's One Health resources.** The US Department of Health and Human Services debarred the organisation from federal funding in 2025, so it no longer belongs on a list of recommended sources.
+
 ## v10.339.0 — October 6, 2026 (numbers in translations)
 
 ### Fixed
