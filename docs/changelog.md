@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.330.0 — October 6, 2026 (101 decks accuracy pass, part 5)
+
+### Changed
+
+- **Nine more 101 decks were checked against their sources:** Social Margins, Statistics Without Code, Survey Design, Systematic Reviews, Time Series, Theory of Change Workbench, Visual Ethnography, Women's Economic Empowerment and Work, Labour and Livelihoods. Dates, statistics, statute references and worked examples were corrected, slide counts now match the files, and the statistical bases in the Time Series deck reflect the 2026 revisions.
+
+### For Learners
+
+- **Corrected 101 decks.** Citations, dates and figures in nine more decks were rechecked against their sources.
+
 ## v10.329.0 — October 6, 2026 (101 decks accuracy pass, part 4)
 
 ### Changed
