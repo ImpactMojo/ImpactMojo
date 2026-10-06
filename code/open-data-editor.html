@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Open Data Editor: Checking a Dataset Before You Share It | ImpactMojo</title>
+    <meta name="description" content="A free guided course in the Open Knowledge Foundation&#x27;s Open Data Editor for development practitioners in South Asia: install it, open a CSV, read its error report, fix errors, add metadata and Table Schema rules, export a clean file, and know what it can and cannot do.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/open-data-editor.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Open Data Editor: Checking a Dataset Before You Share It">
+<meta property="og:description" content="A free guided course in the Open Knowledge Foundation&#x27;s Open Data Editor for development practitioners in South Asia: install it, open a CSV, read its error report, fix errors, add metadata and Table Schema rules, export a clean file, and know what it can and cannot do.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/open-data-editor.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Open Data Editor: Checking a Dataset Before You Share It">
+<meta name="twitter:description" content="A free guided course in the Open Knowledge Foundation&#x27;s Open Data Editor for development practitioners in South Asia: install it, open a CSV, read its error report, fix errors, add metadata and Table Schema rules, export a clean file, and know what it can and cannot do.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Open Data Editor: Checking a Dataset Before You Share It", "description": "A free guided course in the Open Knowledge Foundation's Open Data Editor for development practitioners in South Asia: install it, open a CSV, read its error report, fix errors, add metadata and Table Schema rules, export a clean file, and know what it can and cannot do.", "url": "https://www.impactmojo.in/code/open-data-editor.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Guided tool course</div>
+        <h1>Open Data Editor: checking a dataset before you share it</h1>
+        <p>Before a survey file or MIS extract goes to a partner, a portal or a funder, check that its structure holds: one name per column, the same number of cells in every row, numbers where numbers belong, and the rules you promised (unique IDs, allowed values). Open Data Editor does these checks without code, on your own computer. Python cells on this page run the same checks so you can see what each error means.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>Open Data Editor is a desktop application.</strong> It does not run on this page. The steps tell you what to click and what to look for; this page does not show Open Data Editor screens, because it cannot produce them. The Python cells run equivalent checks here with pandas and Python's csv module, so you can see each kind of error on a small file. The first Python run downloads the engine once (about 10&nbsp;MB).</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> What it is</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> Install</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> Open a file</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> Errors</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Fix</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> Metadata</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Export</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 7</div>
+<h2>What Open Data Editor is, and its status</h2>
+<p>Open Data Editor (ODE) is made by the Open Knowledge Foundation (OKFN). Its documentation describes it as "a free, open-source tool designed to help nonprofits, data journalists, activists, and public servants detect errors in their datasets", for people who work with tables in Excel, Google Sheets or CSV and do not write code. It checks files against the rules of the Frictionless framework, an open standard for describing tables, and the OKFN page says the Digital Public Goods Alliance has recognised it as a digital public good since 2025.</p>
+<div class="info-box"><strong>Version and status, checked 6 October 2026.</strong> The latest release on <a href="https://github.com/okfn/opendataeditor/releases" rel="noopener" target="_blank" style="color:var(--accent-color)">ODE's GitHub releases page</a> is <strong>v1.8.0</strong>, published 17 September 2026; the previous one, v1.7.1, came out on 23 October 2025. The user guide at <a href="https://opendataeditor.okfn.org/" rel="noopener" target="_blank" style="color:var(--accent-color)">opendataeditor.okfn.org</a> is headed "Open Data Editor 1.5.1 documentation", so it trails the software by several releases: if a button on your screen differs from these steps, trust your screen. The repository README still titles the project "Open Data Editor (beta)". The source code is under the <strong>MIT licence</strong> and the application is free.</div>
+<h3>What it does well</h3>
+<ul><li>Finds structural errors as soon as you open a file: missing or duplicate column names, empty rows, rows with too few or too many cells, and cells of the wrong type.</li><li>Checks rules you add as metadata: a column must be filled in, unique, one of a list of values, within a range, or match a pattern.</li><li>Lets you fix cells in a grid and re-check, then export the file, or an Excel workbook listing every error.</li><li>Works locally. Its documentation calls it local-first, and the optional AI assistant uses a model downloaded to your computer; the documentation says no data is sent to the cloud.</li></ul>
+<h3>What it is not</h3>
+<p>It is not a cleaning tool in the OpenRefine sense: it shows you that <em>Purnea</em> and <em>Purnia</em> both appear only if you have told it which values are allowed, and it does not cluster or bulk-merge them. Use <a href="/code/openrefine.html" style="color:var(--accent-color)">OpenRefine</a> to clean, and Open Data Editor to check the result before it leaves your hands.</p>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: Install &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 7</div>
+<h2>Download and install</h2>
+<p>The <a href="https://opendataeditor.okfn.org/user-guide/downloading-ode.html" rel="noopener" target="_blank" style="color:var(--accent-color)">download guide</a> offers one file per system, from the <a href="https://okfn.org/en/projects/open-data-editor/" rel="noopener" target="_blank" style="color:var(--accent-color)">OKFN project page</a> or from GitHub releases:</p>
+<ul><li><strong>Windows:</strong> the most recent EXE file.</li><li><strong>macOS:</strong> the most recent DMG file.</li><li><strong>Linux:</strong> an AppImage (any distribution) or a DEB file (Ubuntu and Debian).</li></ul>
+<ol class="guide-steps"><li>Windows: download the EXE. If the browser warns about the download, choose to keep it (the guide shows a "Continue download" prompt). Double-click it. If Windows shows a security window, click <strong>More info</strong>, then <strong>Run anyway</strong>.</li><li>macOS: open the DMG. If macOS shows a security message, the guide says to click the question mark in it, follow the link in the first section, and change the setting that allows the app to run.</li><li>Linux AppImage: make the file executable (in a terminal, <code class="inline">chmod +x</code> followed by the file name), then double-click it.</li><li>Ubuntu or Debian DEB: double-click it, or install it from a terminal with the command below.</li></ol>
+<div class="syntax-label">Terminal (Debian or Ubuntu), from the ODE install guide</div><pre class="syntax-block"># Replace &lt;version&gt; with the version you downloaded
+sudo dpkg -i opendataeditor-linux-&lt;version&gt;.deb</pre>
+<div class="info-box"><strong>On a modest laptop.</strong> The checks themselves are light. The optional AI assistant is not: the GitHub README says its default model, Apertus 8B (Apache 2.0 licence), "requires at least 6GB of video memory", and the model is a separate download that ODE offers the first time you press the AI button. Skip it on a machine without a graphics card; nothing else depends on it.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Open a file &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 7</div>
+<h2>Open a CSV</h2>
+<p>Download the two course files: <a href="/code/data/households.csv" download style="color:var(--accent-color)">households.csv</a> (240 households) and <a href="/code/data/districts.csv" download style="color:var(--accent-color)">districts.csv</a> (10 districts). <span class="illustrative-tag">Illustrative data, invented for teaching</span> The district names are real places; every number is made up.</p>
+<ol class="guide-steps"><li>Open Open Data Editor and click <strong>Upload your data</strong> (in the centre of the start screen, or at the top left of the sidebar).</li><li>Under <strong>From your computer</strong>, choose <strong>Add one or more Excel or csv files</strong> and select <code class="inline">households.csv</code>. To check a whole folder of files, use <strong>Add one or more folders</strong>.</li><li>The file appears in the sidebar. Click it: ODE validates it and shows it in the grid.</li></ol>
+<div class="info-box"><strong>ODE works on a copy.</strong> The upload guide says ODE does not change your original file: it copies it into the application's own folder. Right-click the file in the sidebar and choose <strong>Open Location</strong> to see where the copy lives. Your edits go to that copy, so export it when you are done (module 7).</div>
+<h3>Tables published online</h3>
+<p>Under <strong>Add External Data</strong> you can paste the address of a table on an open data portal, a Google Sheet or a GitHub repository. For a Google Sheet, the guide says the sheet must be published to the web and you should paste its normal address, the one ending in <code class="inline">/edit</code>. The guide marks the published <code class="inline">pubhtml</code> address as the wrong one to use.</p>
+<h3>Prepare the file before you open it</h3>
+<ul><li>One header row of column names, starting in the first row. Remove titles, notes, logos and totals above or beside the table; the guide warns that these produce many errors.</li><li>No merged cells.</li><li>Decimals written with a full stop. The guide warns that a comma as decimal separator makes the number column read as text.</li></ul>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: Errors &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 7</div>
+<h2>The errors it reports</h2>
+<p>A file with problems gets a <strong>red dot</strong> beside its name in the sidebar, and problem cells are shaded red in the grid. Click <strong>Errors Report</strong> at the top left of the grid for the full list. The <a href="https://opendataeditor.okfn.org/user-guide/full-list-of-table-errors-detected.html" rel="noopener" target="_blank" style="color:var(--accent-color)">full list of errors</a> names seven it finds without any metadata:</p>
+<ul><li><strong>Header missing (Blank Label)</strong>: the header row is empty.</li><li><strong>Column name missing</strong>: one or more columns have no name.</li><li><strong>Duplicate column name</strong>: two columns share a name.</li><li><strong>Empty row</strong>: a row with no values.</li><li><strong>Missing cell</strong>: a row has fewer cells than the header.</li><li><strong>Extra cell</strong>: a row has more cells than the header.</li><li><strong>Wrong data type</strong>: a cell does not fit the column's type, such as text in a column of numbers. The guide notes ODE can only infer the intended type when enough cells in the column already have it.</li></ul>
+<p>The cell below builds a small broken file with five of those problems, checks it with a short function written for this course (not ODE's own code), and then checks the real <code class="inline">households.csv</code>.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import csv, io
+
+def check_table(text):
+    &quot;&quot;&quot;Report the structural errors Open Data Editor&#x27;s guide lists, in its own words.&quot;&quot;&quot;
+    rows = list(csv.reader(io.StringIO(text)))
+    header, data = rows[0], rows[1:]
+    errors = []
+    if all(h.strip() == &quot;&quot; for h in header):
+        errors.append((&quot;Header missing (Blank Label)&quot;, 1, None))
+    for c, h in enumerate(header, 1):
+        if h.strip() == &quot;&quot;:
+            errors.append((&quot;Column name missing&quot;, 1, c))
+        elif [x.strip() for x in header].count(h.strip()) &gt; 1:
+            errors.append((&quot;Duplicate column name: &quot; + h, 1, c))
+    for r, row in enumerate(data, 2):
+        if all(x.strip() == &quot;&quot; for x in row):
+            errors.append((&quot;Empty row&quot;, r, None))
+        elif len(row) &lt; len(header):
+            errors.append((&quot;Missing cell&quot;, r, len(row) + 1))
+        elif len(row) &gt; len(header):
+            errors.append((&quot;Extra cell&quot;, r, len(header) + 1))
+    # Wrong data type: a column that is mostly whole numbers, with a cell that is not
+    for c in range(len(header)):
+        vals = [(r, row[c]) for r, row in enumerate(data, 2) if c &lt; len(row) and row[c].strip() != &quot;&quot;]
+        ints = [v for _, v in vals if v.strip().lstrip(&quot;-&quot;).isdigit()]
+        if vals and len(ints) &gt;= 0.8 * len(vals):
+            for r, v in vals:
+                if not v.strip().lstrip(&quot;-&quot;).isdigit():
+                    errors.append((&quot;Wrong data type: &quot; + repr(v), r, c + 1))
+    return errors
+
+BROKEN = &quot;&quot;&quot;hh_id,district,area,,monthly_pc_exp,area
+1,Rewa,Urban,4,3210,Urban
+2,Rewa,Rural,6,2230,Rural
+,,,,,
+3,Rewa,Rural,3,1670
+4,Rewa,Rural,5,2100,Rural,yes
+5,Rewa,Rural,4,&quot;2,080&quot;,Rural
+6,Rewa,Rural,7,3140,Rural
+&quot;&quot;&quot;
+for err, row, col in check_table(BROKEN):
+    print(f&quot;row {row}&quot;, f&quot;col {col}&quot; if col else &quot;     &quot;, err)
+
+print()
+with open(&quot;households.csv&quot;) as f:
+    found = check_table(f.read())
+print(&quot;households.csv:&quot;, len(found), &quot;errors&quot;)</textarea></div>
+<p>The broken file produces seven errors: column 4 has no name, <code class="inline">area</code> appears twice (columns 3 and 6), row 4 is empty, row 5 is missing a cell, row 6 has an extra one, and in row 7 <code class="inline">"2,080"</code> is text in a column of whole numbers. <code class="inline">households.csv</code> has 0 errors. To see the same file in ODE, copy the eight lines between the triple quotes into a text editor, save them as <code class="inline">broken.csv</code> and upload it: its Errors Report should point to the same rows and columns.</p>
+<div class="info-box"><strong>Exercise.</strong> In the cell, delete the line <code class="inline">,,,,,</code> and run again. Which error disappears, and which row numbers move?</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Fix &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 7</div>
+<h2>Fix errors and re-check</h2>
+<p>For a handful of bad cells, fix them in ODE's grid, following the <a href="https://opendataeditor.okfn.org/user-guide/editing-errors-in-tables.html" rel="noopener" target="_blank" style="color:var(--accent-color)">editing guide</a>:</p>
+<ol class="guide-steps"><li>Find the red cell (the Errors Report lists its row and column).</li><li>Double-click it and type the corrected value.</li><li>Click elsewhere in the table to accept the change.</li><li>Click <strong>Save changes</strong>, which becomes active when there are unsaved edits. ODE re-validates and updates the Errors Report.</li></ol>
+<h3>Know when to stop editing by hand</h3>
+<ul><li><strong>Structural errors</strong> (missing or extra cells, a blank or duplicate column name) usually come from how the file was exported: a stray comma inside an unquoted text field, a notes column, two tables in one sheet. Fix the export and export again; patching rows by hand leaves the cause in place for next month.</li><li><strong>Many wrong-type cells in one column</strong> ("2,080", "NA", "not asked") are a cleaning job. Do it in OpenRefine or in code, where the step is recorded and can be repeated.</li><li><strong>A wrong value that is the right type</strong>, such as a household size of 0, passes every check in module 4. Only a rule catches it, which is what module 6 adds.</li></ul>
+<div class="info-box warning"><strong>Do not invent a value to clear an error.</strong> If an expenditure cell says "not asked", the honest fix is an empty cell (missing). Do not type a zero or the column mean. A clean report on a file with made-up values is worse than a report with errors.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: Metadata &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 7</div>
+<h2>Metadata and rules</h2>
+<p>Metadata is the description that travels with the file: a title, what each column means, its type, and the rules its values must follow. In ODE, select a file and click any cell of the header row to open the <strong>Metadata</strong> window; edit, then click <strong>Save changes</strong>, which re-validates the file.</p>
+<p>The rules follow the <a href="https://datapackage.org/standard/table-schema/" rel="noopener" target="_blank" style="color:var(--accent-color)">Table Schema standard</a>. ODE's error guide says it supports these field constraints: <code class="inline">required</code>, <code class="inline">enum</code> (a list of allowed values), <code class="inline">minimum</code>, <code class="inline">maximum</code>, <code class="inline">minLength</code>, <code class="inline">maxLength</code> and <code class="inline">pattern</code>, plus <code class="inline">unique</code>, a primary key and foreign keys. With them it can report seven more errors: extra, missing and incorrect column names against the schema, and primary key, foreign key, unique and constraint errors.</p>
+<p>The cell below writes rules of that kind for the household file and applies them, first to <code class="inline">households.csv</code> and then to a copy with five mistakes typed in.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+districts = pd.read_csv(&quot;districts.csv&quot;)
+
+# Rules of the kind you set in a Table Schema: required, unique, enum, minimum, maximum, foreign key
+def check_rules(df):
+    out = []
+    dup = df[&quot;hh_id&quot;][df[&quot;hh_id&quot;].duplicated()]
+    out += [(&quot;Primary key error: hh_id not unique&quot;, v) for v in dup]
+    bad = df.loc[~df[&quot;district&quot;].isin(districts[&quot;district&quot;]), &quot;district&quot;]
+    out += [(&quot;Foreign key error: district not in districts.csv&quot;, v) for v in bad]
+    bad = df.loc[~df[&quot;area&quot;].isin([&quot;Rural&quot;, &quot;Urban&quot;]), &quot;area&quot;]
+    out += [(&quot;Constraint error: area not in [Rural, Urban]&quot;, v) for v in bad]
+    bad = df.loc[(df[&quot;hh_size&quot;] &lt; 1) | (df[&quot;hh_size&quot;] &gt; 20), &quot;hh_size&quot;]
+    out += [(&quot;Constraint error: hh_size outside 1 to 20&quot;, v) for v in bad]
+    bad = df.loc[df[&quot;monthly_pc_exp&quot;].isna(), &quot;hh_id&quot;]
+    out += [(&quot;Constraint error: monthly_pc_exp is required&quot;, f&quot;hh_id {v}&quot;) for v in bad]
+    return out
+
+print(&quot;households.csv:&quot;, len(check_rules(hh)), &quot;rule errors&quot;)
+
+# A copy with four mistakes typed in by hand
+bad = hh.copy()
+bad.loc[5, &quot;hh_id&quot;] = 5                  # row 6 reuses hh_id 5
+bad.loc[30, &quot;district&quot;] = &quot;Gaya &quot;        # trailing space
+bad.loc[31, &quot;area&quot;] = &quot;rural&quot;            # lower case
+bad.loc[40, &quot;hh_size&quot;] = 0
+bad.loc[41, &quot;monthly_pc_exp&quot;] = None
+for rule, value in check_rules(bad):
+    print(rule, &quot;-&gt;&quot;, repr(value))</textarea></div>
+<p>The real file breaks no rule. The copy breaks all five, and each one is a mistake that no structural check sees: a repeated ID, <em>Gaya</em> with a trailing space (not in <code class="inline">districts.csv</code>), <em>rural</em> in lower case, a household of 0 people, and a blank expenditure.</p>
+<h3>The rules as a Table Schema</h3>
+<p>Written in the standard's JSON form, the same rules look like this. A partner with any Frictionless tool can check your file against it.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import json
+import pandas as pd
+districts = pd.read_csv(&quot;districts.csv&quot;)
+
+schema = {
+    &quot;fields&quot;: [
+        {&quot;name&quot;: &quot;hh_id&quot;, &quot;type&quot;: &quot;integer&quot;, &quot;constraints&quot;: {&quot;required&quot;: True, &quot;unique&quot;: True}},
+        {&quot;name&quot;: &quot;district&quot;, &quot;type&quot;: &quot;string&quot;,
+         &quot;constraints&quot;: {&quot;required&quot;: True, &quot;enum&quot;: sorted(districts[&quot;district&quot;])}},
+        {&quot;name&quot;: &quot;area&quot;, &quot;type&quot;: &quot;string&quot;, &quot;constraints&quot;: {&quot;enum&quot;: [&quot;Rural&quot;, &quot;Urban&quot;]}},
+        {&quot;name&quot;: &quot;hh_size&quot;, &quot;type&quot;: &quot;integer&quot;, &quot;constraints&quot;: {&quot;minimum&quot;: 1, &quot;maximum&quot;: 20}},
+        {&quot;name&quot;: &quot;monthly_pc_exp&quot;, &quot;type&quot;: &quot;number&quot;, &quot;title&quot;: &quot;Monthly per capita expenditure (Rs)&quot;,
+         &quot;constraints&quot;: {&quot;required&quot;: True, &quot;minimum&quot;: 0}},
+    ],
+    &quot;primaryKey&quot;: [&quot;hh_id&quot;],
+    &quot;missingValues&quot;: [&quot;&quot;],
+}
+text = json.dumps(schema, indent=2)
+print(text)
+with open(&quot;households.schema.json&quot;, &quot;w&quot;) as f:
+    f.write(text)
+print(len(schema[&quot;fields&quot;]), &quot;fields written to households.schema.json&quot;)</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> In the rules cell, change <code class="inline">&gt; 20</code> to <code class="inline">&gt; 6</code> and run. The real file now fails on every household of 7 or 8 people. Those households are real; the rule was wrong. Set limits from what is possible in the population; the largest value in one file is a poor guide.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Export &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 7</div>
+<h2>Export, share and publish</h2>
+<p>Click <strong>Export</strong> at the top right of the grid. The <a href="https://opendataeditor.okfn.org/user-guide/exporting-your-data.html" rel="noopener" target="_blank" style="color:var(--accent-color)">export guide</a> lists two options:</p>
+<ul><li><strong>Download file</strong>: the table as CSV.</li><li><strong>Download file with errors</strong>: an Excel workbook with three sheets. <em>Data</em> is the table with errors painted red, <em>Errors Description</em> lists each error with its row and column, and <em>Blank Rows</em> holds the rows that had no values. Send this to the person who produced the file: it tells them exactly what to fix.</li></ul>
+<h3>Publishing</h3>
+<p>The README describes ODE as an application to "explore, validate and publish data", but the current user guide (checked 6 October 2026) has no section on publishing to a data portal: its last step is export. So publish the exported CSV through your portal's own upload page (a CKAN portal, Zenodo, your organisation's repository), and attach the data dictionary and the schema. If your installed version shows a publish option, check its destination before you use it.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+
+# A one-line-per-column data dictionary to send with the file
+dd = pd.DataFrame({
+    &quot;column&quot;: hh.columns,
+    &quot;type&quot;: [str(t) for t in hh.dtypes],
+    &quot;missing&quot;: hh.isna().sum().values,
+    &quot;distinct&quot;: hh.nunique().values,
+    &quot;example&quot;: [hh[c].iloc[0] for c in hh.columns],
+})
+print(dd.to_string(index=False))
+dd.to_csv(&quot;households_dictionary.csv&quot;, index=False)</textarea></div>
+<p>The dictionary has one row per column of the household file (13 rows), with each column's type, its count of missing values (0 in this file), how many distinct values it holds and an example. Save it next to the CSV.</p>
+<h3>A checklist before the file leaves your computer</h3>
+<ul><li>The Errors Report is empty, or every remaining error is explained in a note.</li><li>No column holds names, phone numbers, Aadhaar numbers, exact addresses or GPS points unless sharing them is allowed. India's Digital Personal Data Protection Act 2023 governs personal data in digital form; check your consent notice and data-sharing agreement before you share.</li><li>Small cells are safe: a table of caste by village with 1 or 2 households in a cell can identify families even without names.</li><li>The data dictionary and the schema go with the file, along with who collected it, when, and the licence you are publishing under.</li></ul>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/openrefine.html" style="color:var(--text-primary)">OpenRefine: cleaning messy survey and MIS data</a></h4><p>Clean the file first: facets, clustering and a replayable recipe.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/qgis.html" style="color:var(--text-primary)">QGIS: maps for development data</a></h4><p>Put the checked district file on a map.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/pandas.html" style="color:var(--text-primary)">pandas for development data</a></h4><p>Write checks like these as code you can run on every new export.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-protection-dpdp.html" style="color:var(--text-primary)">Data Protection and the DPDP Act</a></h4><p>What you may share, with whom, and on what basis.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-lit.html" style="color:var(--text-primary)">Data Literacy 101</a></h4><p>Why a well-described table is worth more than a large one.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=3b5d57ac" defer></script>
+</body>
+</html>

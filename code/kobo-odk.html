@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>KoboToolbox and ODK: Building Survey Forms with XLSForm | ImpactMojo</title>
+    <meta name="description" content="A free guided course in KoboToolbox, ODK Collect and ODK Central for development practitioners in South Asia: the XLSForm survey, choices and settings sheets, skip logic, constraints, cascading selects, repeat groups, Hindi labels, offline collection, data download, encryption, the DPDP Act 2023, and pilot testing.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/kobo-odk.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="KoboToolbox and ODK: Building Survey Forms with XLSForm">
+<meta property="og:description" content="A free guided course in KoboToolbox, ODK Collect and ODK Central for development practitioners in South Asia: the XLSForm survey, choices and settings sheets, skip logic, constraints, cascading selects, repeat groups, Hindi labels, offline collection, data download, encryption, the DPDP Act 2023, and pilot testing.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/kobo-odk.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KoboToolbox and ODK: Building Survey Forms with XLSForm">
+<meta name="twitter:description" content="A free guided course in KoboToolbox, ODK Collect and ODK Central for development practitioners in South Asia: the XLSForm survey, choices and settings sheets, skip logic, constraints, cascading selects, repeat groups, Hindi labels, offline collection, data download, encryption, the DPDP Act 2023, and pilot testing.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "KoboToolbox and ODK: Building Survey Forms with XLSForm", "description": "A free guided course in KoboToolbox, ODK Collect and ODK Central for development practitioners in South Asia: the XLSForm survey, choices and settings sheets, skip logic, constraints, cascading selects, repeat groups, Hindi labels, offline collection, data download, encryption, the DPDP Act 2023, and pilot testing.", "url": "https://www.impactmojo.in/code/kobo-odk.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Guided tool course</div>
+        <h1>KoboToolbox and ODK: building survey forms with XLSForm</h1>
+        <p>Write a household survey once, as a spreadsheet, and run it on Android phones with no network: skip logic, range checks, Hindi and English labels, a household roster. KoboToolbox and ODK both read the same XLSForm standard. Python cells on this page check a form for common mistakes and check a downloaded dataset against the form's rules.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>KoboToolbox and ODK do not run on this page.</strong> You build forms in a spreadsheet, upload them to a server and collect on a phone. The grey boxes are XLSForm sheets for you to type into Excel or Google Sheets, laid out in columns as they would appear there. This page shows no screenshots of either tool, because it cannot produce them. The Python cells check a form definition and a downloaded file, and run here. The first Python run downloads the engine once (about 10&nbsp;MB).</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> Tools</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> XLSForm</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> Logic</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> Languages</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Collect</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> Protection</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Pilot</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 7</div>
+<h2>KoboToolbox, ODK Collect and ODK Central</h2>
+<p>Most household surveys in South Asian programmes are now collected on Android phones. Two families of free tools dominate, and they are closely related.</p>
+<ul><li><strong>ODK</strong> is open source software. <a href="https://docs.getodk.org/getting-started/" rel="noopener" target="_blank" style="color:var(--accent-color)">Its documentation</a> describes three parts: <strong>ODK Collect</strong>, an Android app that fills forms offline and sends them when a connection is found; <strong>ODK Central</strong>, the server where you upload forms, manage users and download submissions; and <strong>Web Forms</strong>, for filling a form in a browser. The Collect source code is published under the Apache License 2.0.</li><li><strong>KoboToolbox</strong> is a hosted service run by Kobo, a nonprofit. Its own Android app, <strong>KoboCollect</strong>, is described in the <a href="https://support.kobotoolbox.org/glossary.html" rel="noopener" target="_blank" style="color:var(--accent-color)">KoboToolbox glossary</a> as the app "used for mobile data collection, allowing enumerators to download forms, complete them offline, and submit data when connected". KoboToolbox also has a point-and-click Formbuilder.</li><li><strong>XLSForm</strong> is the shared language. The <a href="https://xlsform.org/en/" rel="noopener" target="_blank" style="color:var(--accent-color)">XLSForm reference</a> defines a form as an Excel workbook with a survey sheet, a choices sheet and a settings sheet. KoboToolbox and ODK Central both accept the same file, so a form you write here works on either.</li></ul>
+<h3>What it costs, checked 6 October 2026</h3>
+<ul><li><strong>KoboToolbox Community plan: free</strong> for organisations in its Nonprofit category, which the <a href="https://www.kobotoolbox.org/pricing/" rel="noopener" target="_blank" style="color:var(--accent-color)">pricing page</a> says "includes nonprofits, government agencies, UN organizations, and educational institutions". It allows 5,000 submissions a month and 1 GB of file storage, with unlimited projects and data collectors. Private companies, for-profit organisations and personal use fall in the Other category, where the same plan is listed at US$99 a month (US$88 a month billed yearly) and a smaller Starter plan at US$25 a month.</li><li><strong>ODK</strong>: the <a href="https://getodk.org/" rel="noopener" target="_blank" style="color:var(--accent-color)">ODK home page</a> says "ODK is open-source software. If you're technical, you can self-host and self-support it for free." Its paid hosting, ODK Cloud, lists a Standard plan at US$199 a month (the figure shown with yearly billing; the page says paying yearly saves up to 20%) with 10,000 submissions a month, and says data can be stored in the US, the EU or India.</li></ul>
+<h3>Which KoboToolbox server</h3>
+<p>KoboToolbox runs two public servers with the same features. The <a href="https://support.kobotoolbox.org/creating_account.html" rel="noopener" target="_blank" style="color:var(--accent-color)">account guide</a> (updated 3 October 2026) calls the <strong>Global server</strong> (<code class="inline">kf.kobotoolbox.org</code>) the one "used by most KoboToolbox users"; the glossary says it is hosted in the United States. The <strong>European Union server</strong> (<code class="inline">eu.kobotoolbox.org</code>) is "hosted in Ireland". Projects cannot be moved between them, so choose before you build.</p>
+<div class="info-box"><strong>The "humanitarian server".</strong> Older manuals and trainers refer to <code class="inline">kobo.humanitarianresponse.info</code>, the KoboToolbox server owned by UN OCHA. Kobo <a href="https://community.kobotoolbox.org/t/transfer-of-the-former-ocha-server-to-kobo/44668" rel="noopener" target="_blank" style="color:var(--accent-color)">announced on 1 September 2023</a> that it had taken full responsibility for that server, which became the European Union server at <code class="inline">eu.kobotoolbox.org</code>. The old addresses forwarded until 29 February 2024. If an old form or phone still points at a humanitarianresponse.info address, change it to the EU server's addresses.</div>
+<div class="info-box"><strong>Exercise.</strong> Before you open an account, write down three things for your project: whether your organisation is a nonprofit, government agency or university (which decides the free plan); roughly how many submissions a month you expect at peak; and whether your donor or ethics committee says where the data must be stored (which decides the server).</div>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: XLSForm &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 7</div>
+<h2>The three sheets of an XLSForm</h2>
+<p>An XLSForm is an ordinary .xlsx workbook. Each row of the <strong>survey</strong> sheet is one question; each row of the <strong>choices</strong> sheet is one answer option; the <strong>settings</strong> sheet names and versions the form. Formatting, colours and column order are ignored, so you can shade and freeze rows to make the sheet readable.</p>
+<h3>The survey sheet</h3>
+<p>Three columns are required: <code class="inline">type</code>, <code class="inline">name</code> and <code class="inline">label</code>. The grey box shows the form this course uses. Each column below is explained in the next module.</p>
+<div class="syntax-label">XLSForm: survey sheet</div><pre class="syntax-block">sheet: survey
+type                   name               label                                              relevant                    constraint              constraint_message              required  choice_filter
+select_one state       state              State                                                                                                                               yes
+select_one district    district           District                                                                                                                            yes       state=${state}
+select_one area        area               Is this household rural or urban?                                                                                                   yes
+integer                hh_size            How many people usually live in this household?                                 . &gt;= 1 and . &lt;= 30      Enter a number from 1 to 30     yes
+decimal                land_acres         How many acres of land does the household own?    ${area} = &#x27;rural&#x27;           . &gt;= 0 and . &lt;= 100     Enter 0 to 100 acres            yes
+select_one yes_no      has_bank_account   Does anyone in the household have a bank account?                                                                                   yes
+select_one yes_no      received_transfer  Did the household receive a cash transfer in the last 12 months?                                                                    yes
+integer                transfer_amount    How much did the household receive in total (Rs)? ${received_transfer} = &#x27;yes&#x27;  . &gt; 0               Enter an amount above zero      yes</pre>
+<ul><li><code class="inline">type</code>: <code class="inline">integer</code>, <code class="inline">decimal</code>, <code class="inline">text</code>, <code class="inline">date</code>, <code class="inline">geopoint</code>, <code class="inline">note</code> (shows text, takes no answer), <code class="inline">select_one listname</code> and <code class="inline">select_multiple listname</code>.</li><li><code class="inline">name</code>: the variable name in your data. The XLSForm reference says names must be unique, must start with a letter or the <code class="inline">_</code> character, may contain only letters, digits, hyphens, <code class="inline">_</code> and periods, and are case-sensitive.</li><li><code class="inline">label</code>: the question exactly as the enumerator reads it. <code class="inline">hint</code> adds smaller guidance text under it.</li></ul>
+<h3>The choices sheet</h3>
+<p>Three required columns: <code class="inline">list_name</code>, <code class="inline">name</code> and <code class="inline">label</code>. The word after <code class="inline">select_one</code> in the survey sheet must match a <code class="inline">list_name</code> exactly. The <code class="inline">name</code> column is what is saved in the data, so keep it short, lower case and free of spaces; the reference warns that choice names for <code class="inline">select_multiple</code> must not contain spaces, because a space separates the selected answers.</p>
+<div class="syntax-label">XLSForm: choices sheet</div><pre class="syntax-block">sheet: choices
+list_name   name        label       state
+state       bihar       Bihar
+state       kerala      Kerala
+district    gaya        Gaya        bihar
+district    purnia      Purnia      bihar
+district    kozhikode   Kozhikode   kerala
+district    wayanad     Wayanad     kerala
+area        rural       Rural
+area        urban       Urban
+yes_no      yes         Yes
+yes_no      no          No</pre>
+<h3>The settings sheet</h3>
+<p>Optional, but the reference recommends <code class="inline">form_title</code>, <code class="inline">form_id</code> and <code class="inline">version</code> at minimum. A common convention for <code class="inline">version</code> is <code class="inline">yyyymmddrr</code>: <code class="inline">2026100601</code> is the first revision of 6 October 2026. Change it every time you change the form, so you can tell which version produced each submission. <code class="inline">instance_name</code> builds a readable name for each submission from its answers.</p>
+<div class="syntax-label">XLSForm: settings sheet</div><pre class="syntax-block">sheet: settings
+form_title                      form_id            version       instance_name
+Household baseline 2026         hh_baseline_2026   2026100601    concat(${district}, &#x27;-&#x27;, ${hh_size})</pre>
+<h3>Check a form before you upload it</h3>
+<p>The cell below holds the same survey and choices sheets as CSV text and checks four mistakes that are easy to make by hand: duplicate or invalid names, a select pointing at a list that does not exist, a <code class="inline">${name}</code> that refers to a question not yet asked, and a skip rule comparing a select with a choice name it does not have.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd, io
+
+survey = pd.read_csv(io.StringIO(&quot;&quot;&quot;type,name,label,hint,relevant,constraint,constraint_message,required,choice_filter
+select_one state,state,State,,,,,yes,
+select_one district,district,District,,,,,yes,state=${state}
+select_one area,area,Is this household rural or urban?,,,,,yes,
+integer,hh_size,How many people usually live in this household?,Count everyone who ate from the same kitchen last night,,. &gt;= 1 and . &lt;= 30,Enter a number from 1 to 30,yes,
+decimal,land_acres,How many acres of land does the household own?,,${area} = &#x27;rural&#x27;,. &gt;= 0 and . &lt;= 100,Enter 0 to 100 acres,yes,
+select_one yes_no,has_bank_account,Does anyone in the household have a bank account?,,,,,yes,
+select_one yes_no,received_transfer,Did the household receive a cash transfer in the last 12 months?,,,,,yes,
+integer,transfer_amount,How much did the household receive in total (Rs)?,,${received_transfer} = &#x27;yes&#x27;,. &gt; 0,Enter an amount above zero,yes,
+&quot;&quot;&quot;), keep_default_na=False)
+
+choices = pd.read_csv(io.StringIO(&quot;&quot;&quot;list_name,name,label,state
+state,bihar,Bihar,
+state,kerala,Kerala,
+district,gaya,Gaya,bihar
+district,purnia,Purnia,bihar
+district,kozhikode,Kozhikode,kerala
+district,wayanad,Wayanad,kerala
+area,rural,Rural,
+area,urban,Urban,
+yes_no,yes,Yes,
+yes_no,no,No,
+&quot;&quot;&quot;), keep_default_na=False)
+import re
+
+problems = []
+names = list(survey[&quot;name&quot;])
+
+# 1. Names: unique, start with a letter or _, then letters, digits, - _ .
+for n in names:
+    if names.count(n) &gt; 1:
+        problems.append(f&quot;duplicate name: {n}&quot;)
+    if not re.fullmatch(r&quot;[A-Za-z_][A-Za-z0-9_.-]*&quot;, n):
+        problems.append(f&quot;invalid name: {n!r}&quot;)
+
+# 2. Every select_one or select_multiple list exists in choices
+lists = set(choices[&quot;list_name&quot;])
+for t in survey[&quot;type&quot;]:
+    parts = t.split()
+    if parts[0] in (&quot;select_one&quot;, &quot;select_multiple&quot;) and parts[1] not in lists:
+        problems.append(f&quot;no choice list called {parts[1]}&quot;)
+
+# 3. Every ${name} refers to a question asked earlier in the form
+for i, row in survey.iterrows():
+    for col in (&quot;relevant&quot;, &quot;constraint&quot;, &quot;choice_filter&quot;):
+        for ref in re.findall(r&quot;\$\{(\w+)\}&quot;, row[col]):
+            if ref not in names[:i]:
+                problems.append(f&quot;{row[&#x27;name&#x27;]}: {col} refers to {ref}, which is not asked before it&quot;)
+
+# 4. A value compared in relevant must be a choice name in that question&#x27;s list
+qlist = {r[&quot;name&quot;]: r[&quot;type&quot;].split()[1] for _, r in survey.iterrows() if r[&quot;type&quot;].startswith(&quot;select&quot;)}
+for _, row in survey.iterrows():
+    for ref, val in re.findall(r&quot;\$\{(\w+)\}\s*=\s*&#x27;([^&#x27;]*)&#x27;&quot;, row[&quot;relevant&quot;]):
+        ok = set(choices.loc[choices[&quot;list_name&quot;] == qlist.get(ref, &quot;&quot;), &quot;name&quot;])
+        if val not in ok:
+            problems.append(f&quot;{row[&#x27;name&#x27;]}: relevant compares {ref} with &#x27;{val}&#x27;, but its choices are {sorted(ok)}&quot;)
+
+print(len(survey), &quot;questions,&quot;, len(choices), &quot;choices,&quot;, len(lists), &quot;choice lists&quot;)
+print(&quot;\n&quot;.join(problems) if problems else &quot;No problems found&quot;)</textarea></div>
+<p>The form has 8 questions, 10 choices in 4 lists, and the check reports no problems.</p>
+<div class="info-box"><strong>Exercise.</strong> In the survey text, change <code class="inline">${area} = 'rural'</code> to <code class="inline">${area} = 'Rural'</code> and run again. The check reports that <code class="inline">area</code>'s choices are <code class="inline">['rural', 'urban']</code>. The capital R is the label; the data holds the name. This mistake hides a question from every enumerator and raises no error on the phone. Then change <code class="inline">hh_size</code> in the first column of its row to <code class="inline">hh size</code> and see what the name check says.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Logic &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 7</div>
+<h2>Skip logic, constraints and calculations</h2>
+<p>These columns are where a form stops entry errors before they reach your data. Every expression refers to an earlier answer as <code class="inline">${name}</code>.</p>
+<ul><li><code class="inline">relevant</code>: show the question only when the expression is true. <code class="inline">${area} = 'rural'</code> asks about land only in rural households.</li><li><code class="inline">constraint</code>: reject an answer unless the expression is true. The dot stands for the answer being entered: <code class="inline">. >= 1 and . <= 30</code>.</li><li><code class="inline">constraint_message</code>: what the enumerator sees when the constraint fails. Write it as an instruction ("Enter a number from 1 to 30").</li><li><code class="inline">required</code>: <code class="inline">yes</code> stops the enumerator moving on without an answer. <code class="inline">required_message</code> customises the warning.</li><li><code class="inline">choice_filter</code>: narrows a choice list using an earlier answer. Add a column (here <code class="inline">state</code>) to the choices sheet, then <code class="inline">state=${state}</code> on the district question shows only districts of the chosen state. The XLSForm reference calls these cascading selects.</li><li><code class="inline">calculation</code>, with type <code class="inline">calculate</code>: computes a value from earlier answers. The reference notes that a calculation with no label and no hint is hidden.</li></ul>
+<div class="syntax-label">XLSForm: a calculation shown back to the enumerator</div><pre class="syntax-block">sheet: survey
+type          name          label                                         calculation
+integer       hh_size       How many people usually live here?
+integer       monthly_exp   Total household spending last month (Rs)?
+calculate     pc_exp                                                      ${monthly_exp} div ${hh_size}
+note          pc_note       Spending per person: ${pc_exp} rupees. Is that right?</pre>
+<p>Showing a derived figure in a <code class="inline">note</code> is one of the cheapest checks you can add: an enumerator who sees "Spending per person: 23 rupees" knows something was typed wrong. In ODK expressions, <code class="inline">div</code> is division.</p>
+<h3>Repeat groups: one set of questions per household member</h3>
+<p>Wrap questions between <code class="inline">begin repeat</code> and <code class="inline">end repeat</code> rows to ask them once per member, plot or child. <code class="inline">repeat_count</code> fixes the number of repeats; the XLSForm reference shows it set from an earlier answer, so the roster opens exactly <code class="inline">${hh_size}</code> times. <code class="inline">begin group</code> and <code class="inline">end group</code> group questions on one screen without repeating them.</p>
+<div class="syntax-label">XLSForm: a household roster</div><pre class="syntax-block">sheet: survey (a household roster)
+type               name           label                               repeat_count   relevant               constraint
+integer            hh_size        How many people usually live here?                                        . &gt;= 1 and . &lt;= 30
+begin repeat       member         Household member                    ${hh_size}
+text               member_name    First name of this member
+integer            age            Age in completed years                                                    . &gt;= 0 and . &lt;= 110
+select_one yes_no  in_school      Is this member attending school?                   ${age} &gt;= 5 and ${age} &lt;= 17
+end repeat</pre>
+<div class="info-box warning"><strong>A roster is a second table.</strong> When you download data from a form with a repeat, the members arrive in their own table, linked to the household. KoboToolbox's export guide recommends the XLS format when collecting repeat group data, because the repeat goes to its own sheet. Plan the analysis join before fieldwork.</div>
+<h3>Run the same rules on the data you download</h3>
+<p>Constraints catch errors at entry, but not every error: a form version without the constraint, an answer edited on the server, a submission sent twice. The cell applies the form's rules to <a href="/code/data/households.csv" download style="color:var(--accent-color)">households.csv</a> (illustrative data, invented for teaching: 240 households in ten real district names, with made-up answers). It then plants five entry errors and one duplicate submission in a practice copy and runs the same check.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+
+def check(df):
+    &quot;&quot;&quot;Apply the form&#x27;s constraints and skip logic to a downloaded file. One row per problem.&quot;&quot;&quot;
+    rules = {
+        &quot;hh_size outside 1 to 30&quot;:        ~df[&quot;hh_size&quot;].between(1, 30),
+        &quot;land_acres outside 0 to 100&quot;:    ~df[&quot;land_acres&quot;].between(0, 100),
+        &quot;urban household with land&quot;:      (df[&quot;area&quot;] == &quot;Urban&quot;) &amp; (df[&quot;land_acres&quot;] &gt; 0),
+        &quot;has_bank_account not Yes/No&quot;:    ~df[&quot;has_bank_account&quot;].isin([&quot;Yes&quot;, &quot;No&quot;]),
+        &quot;received_transfer not Yes/No&quot;:   ~df[&quot;received_transfer&quot;].isin([&quot;Yes&quot;, &quot;No&quot;]),
+        &quot;hh_id appears more than once&quot;:   df[&quot;hh_id&quot;].duplicated(keep=False),
+    }
+    out = [pd.DataFrame({&quot;hh_id&quot;: df.loc[m, &quot;hh_id&quot;], &quot;problem&quot;: name}) for name, m in rules.items()]
+    return pd.concat(out, ignore_index=True)
+
+hh = pd.read_csv(&quot;households.csv&quot;)
+print(&quot;households.csv:&quot;, len(hh), &quot;rows,&quot;, len(check(hh)), &quot;problems&quot;)
+
+# A practice copy with five entry errors planted in it
+bad = hh.copy()
+bad.loc[bad[&quot;hh_id&quot;] == 12, &quot;hh_size&quot;] = 0
+bad.loc[bad[&quot;hh_id&quot;] == 57, &quot;hh_size&quot;] = 44
+bad.loc[bad[&quot;hh_id&quot;] == 88, &quot;land_acres&quot;] = -2
+bad.loc[bad[&quot;hh_id&quot;] == 101, &quot;received_transfer&quot;] = &quot;Y&quot;
+first_urban = bad.loc[bad[&quot;area&quot;] == &quot;Urban&quot;, &quot;hh_id&quot;].iloc[0]
+bad.loc[bad[&quot;hh_id&quot;] == first_urban, &quot;land_acres&quot;] = 2.0
+bad = pd.concat([bad, bad[bad[&quot;hh_id&quot;] == 200]], ignore_index=True)   # one submission sent twice
+
+problems = check(bad)
+print(&quot;practice copy:&quot;, len(bad), &quot;rows,&quot;, len(problems), &quot;problems&quot;)
+print(problems.sort_values(&quot;hh_id&quot;).to_string(index=False))</textarea></div>
+<p>The original file has 240 rows and 0 problems. The practice copy has 241 rows and 7 problems: the two out-of-range household sizes, the negative land, the urban household reporting land, the <code class="inline">Y</code> that should be <code class="inline">Yes</code>, and household 200 listed twice (one row per copy).</p>
+<div class="info-box"><strong>Exercise.</strong> Add a rule that flags <code class="inline">monthly_pc_exp</code> above Rs 15,000 as "check with the enumerator". Write it as <code class="inline">"pc_exp above 15000": df["monthly_pc_exp"] > 15000,</code> inside <code class="inline">rules</code> and run again. A flag to check is different from an error: a large value can be true. Look at how many households it flags in the original file before you decide on the cut-off.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: Languages &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 7</div>
+<h2>Hindi and English in one form</h2>
+<p>One form can carry every language your enumerators use. The XLSForm reference names each language column <code class="inline">label::language (code)</code>. The <a href="https://docs.getodk.org/form-language/" rel="noopener" target="_blank" style="color:var(--accent-color)">ODK form language guide</a> explains: "Each language column adds two colons and the language name, followed by the two letter language code in parentheses", for example <code class="inline">label::English (en)</code>. For Hindi the code is <code class="inline">hi</code>, so the column is <code class="inline">label::Hindi (hi)</code>; Bengali is <code class="inline">bn</code>, Tamil <code class="inline">ta</code>, Telugu <code class="inline">te</code>, Marathi <code class="inline">mr</code>, Urdu <code class="inline">ur</code>.</p>
+<div class="syntax-label">XLSForm: two languages</div><pre class="syntax-block">sheet: survey
+type                 name          label::English (en)                               label::Hindi (hi)
+integer              hh_size       How many people usually live in this household?   इस परिवार में आमतौर पर कितने लोग रहते हैं?
+select_one yes_no    has_bank      Does anyone in the household have a bank account? क्या परिवार में किसी का बैंक खाता है?
+
+sheet: choices
+list_name   name   label::English (en)   label::Hindi (hi)
+yes_no      yes    Yes                   हाँ
+yes_no      no     No                    नहीं
+
+sheet: settings
+form_title                form_id            version       default_language
+Household baseline 2026   hh_baseline_2026   2026100601    Hindi (hi)</pre>
+<ul><li>The same suffix works on <code class="inline">hint</code>, <code class="inline">constraint_message</code>, <code class="inline">required_message</code> and media columns, and on the choices sheet's <code class="inline">label</code>.</li><li><code class="inline">default_language</code> on the settings sheet sets the language the form opens in. Without it, the ODK guide says the form opens in the first language defined.</li><li><strong>There is no fallback language.</strong> The ODK guide warns that if a column has language versions, a plain <code class="inline">label</code> column is treated as a separate language and listed as <em>Default</em> in the language menu. Translate every column or none.</li><li>In KoboToolbox, <code class="inline">form_title</code> cannot take a language suffix; the <a href="https://support.kobotoolbox.org/xlsform_with_kobotoolbox.html" rel="noopener" target="_blank" style="color:var(--accent-color)">XLSForm guide</a> says translating it produces an error.</li></ul>
+<p>A translation added by hand is easy to leave half-finished: someone adds a question in English during the pilot and forgets the Hindi. The cell finds every row with English text and no Hindi.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd, io
+
+survey = pd.read_csv(io.StringIO(&quot;&quot;&quot;type,name,label::English (en),label::Hindi (hi),constraint,constraint_message::English (en),constraint_message::Hindi (hi)
+select_one district,district,District,जिला,,,
+integer,hh_size,How many people usually live in this household?,इस परिवार में आमतौर पर कितने लोग रहते हैं?,. &gt;= 1 and . &lt;= 30,Enter a number from 1 to 30,1 से 30 के बीच कोई संख्या लिखें
+select_one yes_no,has_bank_account,Does anyone in the household have a bank account?,क्या परिवार में किसी का बैंक खाता है?,,,
+select_one yes_no,shg_member,Is anyone in the household a member of a self-help group?,,,,
+&quot;&quot;&quot;), keep_default_na=False)
+
+choices = pd.read_csv(io.StringIO(&quot;&quot;&quot;list_name,name,label::English (en),label::Hindi (hi)
+yes_no,yes,Yes,हाँ
+yes_no,no,No,नहीं
+&quot;&quot;&quot;), keep_default_na=False)
+
+# Every English column needs its Hindi partner, filled in on every row that has English text
+for sheet_name, sheet in [(&quot;survey&quot;, survey), (&quot;choices&quot;, choices)]:
+    for col in [c for c in sheet.columns if c.endswith(&quot;::English (en)&quot;)]:
+        hi = col.replace(&quot;English (en)&quot;, &quot;Hindi (hi)&quot;)
+        if hi not in sheet.columns:
+            print(f&quot;{sheet_name}: no column {hi}&quot;)
+            continue
+        gaps = sheet[(sheet[col] != &quot;&quot;) &amp; (sheet[hi] == &quot;&quot;)]
+        for _, r in gaps.iterrows():
+            print(f&quot;{sheet_name}: row &#x27;{r[&#x27;name&#x27;]}&#x27; has {col} but no Hindi&quot;)
+    plain = [c for c in sheet.columns if c in (&quot;label&quot;, &quot;hint&quot;, &quot;constraint_message&quot;)]
+    if plain:
+        print(f&quot;{sheet_name}: column(s) {plain} have no language, so they appear as a separate &#x27;Default&#x27; language&quot;)
+print(&quot;check finished&quot;)</textarea></div>
+<p>It reports one gap: the <code class="inline">shg_member</code> question has an English label and no Hindi. The <code class="inline">hh_size</code> row passes because both its label and its constraint message are translated.</p>
+<div class="info-box"><strong>Exercise.</strong> Fill in a Hindi label for <code class="inline">shg_member</code> (between the two commas after the English text) and run again. Then rename the column <code class="inline">label::Hindi (hi)</code> in the choices text to <code class="inline">label::Hindi</code> and see what the check says. Have a fluent speaker who did not write the translation read every label aloud during the pilot; a check like this one finds missing text and cannot judge whether the Hindi is right.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Collect &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 7</div>
+<h2>Deploy, collect offline and download</h2>
+<h3>Upload and deploy in KoboToolbox</h3>
+<ol class="guide-steps"><li>On the Projects page, select <strong>NEW</strong>, then <strong>Upload an XLSForm</strong>, and choose your .xlsx file (from the <a href="https://support.kobotoolbox.org/xlsform_with_kobotoolbox.html" rel="noopener" target="_blank" style="color:var(--accent-color)">KoboToolbox XLSForm guide</a>, updated 28 August 2026).</li><li>Enter the project details and click <strong>Create project</strong>.</li><li>Click <strong>Preview</strong> and fill the form yourself, trying wrong answers on purpose to see each constraint message.</li><li>Deploy the form. To change it later, open the <strong>FORM</strong> page, click <strong>Replace form</strong>, upload the new .xlsx and redeploy. Raise <code class="inline">version</code> first.</li></ol>
+<h3>Set up phones</h3>
+<ol class="guide-steps"><li>Install KoboCollect from the Google Play Store. The <a href="https://support.kobotoolbox.org/kobocollect_on_android_latest.html" rel="noopener" target="_blank" style="color:var(--accent-color)">setup guide</a> (updated 23 April 2026) says newer versions require Android 8.0 or higher; older phones can install the last version that supports them.</li><li>Enter the server URL, which differs from the login address: <code class="inline">https://kc.kobotoolbox.org/</code> for the Global server and <code class="inline">https://kc-eu.kobotoolbox.org/</code> for the EU server. The project's FORM tab also shows it under <em>Collect data</em>.</li><li>Enter the enumerator's username and password. Once one phone is set up, its QR code configures the rest of the team's phones with the same settings.</li><li>Select <strong>Download form</strong> and tick the form. ODK Collect uses the same menu; it is on <a href="https://play.google.com/store/apps/details?id=org.odk.collect.android" rel="noopener" target="_blank" style="color:var(--accent-color)">Google Play</a> too.</li></ol>
+<h3>Collecting with no network</h3>
+<p>Once the blank form is on the phone, no connection is needed to fill it. The <a href="https://docs.getodk.org/collect-forms/" rel="noopener" target="_blank" style="color:var(--accent-color)">ODK Collect guide</a> explains the cycle: a form saved part-way is a draft; tapping <strong>Finalize</strong> at the end locks it; finalized forms wait in <strong>Ready to send</strong> until the phone is online, then go to the server. Ask enumerators to sync every evening they have signal, so a lost phone loses one day's work at most.</p>
+<h3>Download the data</h3>
+<ol class="guide-steps"><li>Open the project and go to <strong>DATA &gt; Downloads</strong> (<a href="https://support.kobotoolbox.org/export_download.html" rel="noopener" target="_blank" style="color:var(--accent-color)">export guide</a>, updated 6 May 2026).</li><li>Choose the type: XLS (recommended when the form has repeats), CSV, SPSS Labels, GeoJSON, GPS coordinates (KML) or media attachments (ZIP).</li><li>Choose the value and header format. <strong>Labels</strong> is the default: question text as headers and choice labels as values. <strong>XML values and headers</strong> gives the <code class="inline">name</code> columns and choice names. Pick XML values for analysis: question text makes poor column names, and labels change between languages.</li><li>Click <strong>EXPORT</strong>, then <strong>DOWNLOAD</strong> when the file appears in the list.</li></ol>
+<h3>A daily check by field team</h3>
+<p>During fieldwork, download every day and compare teams. Large differences between teams working in similar areas are often a training problem. The cell joins <a href="/code/data/households.csv" download style="color:var(--accent-color)">households.csv</a> to districts.csv (both invented for teaching) to get each household's field team.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+d = pd.read_csv(&quot;districts.csv&quot;)
+m = hh.merge(d, on=&quot;district&quot;, how=&quot;left&quot;, validate=&quot;many_to_one&quot;)
+print(&quot;rows after the join:&quot;, len(m), &quot; unmatched districts:&quot;, m[&quot;field_team&quot;].isna().sum())
+
+# A daily check by field team: how many interviews, and do the answers look alike?
+m[&quot;transfer&quot;] = (m[&quot;received_transfer&quot;] == &quot;Yes&quot;).astype(int)
+m[&quot;bank&quot;] = (m[&quot;has_bank_account&quot;] == &quot;Yes&quot;).astype(int)
+by_team = m.groupby(&quot;field_team&quot;).agg(
+    interviews=(&quot;hh_id&quot;, &quot;size&quot;),
+    districts=(&quot;district&quot;, &quot;nunique&quot;),
+    mean_hh_size=(&quot;hh_size&quot;, &quot;mean&quot;),
+    pct_bank=(&quot;bank&quot;, &quot;mean&quot;),
+    pct_transfer=(&quot;transfer&quot;, &quot;mean&quot;),
+)
+by_team[[&quot;pct_bank&quot;, &quot;pct_transfer&quot;]] *= 100
+print(by_team.round(1))</textarea></div>
+<p>All 240 rows join, with no unmatched districts. Team A covers four districts and 96 interviews; Teams B and C cover three districts and 72 interviews each. Read the three percentages side by side: here the bank account share runs from 84.4% to 88.9% across teams and the transfer share from 33.3% to 41.7%. In real fieldwork, a gap far wider than this deserves a phone call to the supervisor.</p>
+<div class="info-box"><strong>Exercise.</strong> Change <code class="inline">groupby("field_team")</code> to <code class="inline">groupby(["field_team", "area"])</code> and run again. Teams cover different mixes of rural and urban households, and a difference that disappears within area was a difference in where they worked.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: Protection &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 7</div>
+<h2>Data protection: encryption, access and the DPDP Act</h2>
+<p>A household survey holds names, phone numbers, locations, caste and income. Three layers protect it: who can see submissions, whether the server can read them, and what the law requires of you.</p>
+<h3>Who can see submissions</h3>
+<p>In KoboToolbox, open the project's <strong>SETTINGS</strong> page and select <strong>Sharing</strong>. The <a href="https://support.kobotoolbox.org/managing_permissions.html" rel="noopener" target="_blank" style="color:var(--accent-color)">permissions guide</a> lists separate permissions to view the form, edit the form, view, add, edit, validate and delete submissions, and manage the project. Enumerators need <em>Add submissions</em> only. Permissions can also be limited by row, so a district coordinator sees only submissions from their own enumerators.</p>
+<h3>Encrypted forms</h3>
+<p>The XLSForm reference says encryption keeps finalized records private while they are "stored on the device and server as well as during transport", and that encrypted records "are completely inaccessible to anyone not possessing the private key". You make a key pair, put the public key in the form and keep the private key.</p>
+<div class="syntax-label">Terminal: make a key pair (OpenSSL)</div><pre class="syntax-block"># From the ODK documentation on encrypted forms. Run in a terminal (macOS, Linux)
+# or after installing OpenSSL on Windows.
+openssl genpkey -out MyPrivateKey.pem -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:2048
+openssl rsa -in MyPrivateKey.pem -pubout -out MyPublicKey.pem
+# Paste the text of MyPublicKey.pem, without the BEGIN and END lines and without line breaks,
+# into the public_key column. Keep MyPrivateKey.pem off shared drives and out of email.</pre>
+<div class="syntax-label">XLSForm: settings sheet for an encrypted KoboToolbox form</div><pre class="syntax-block">sheet: settings
+form_title                form_id            version      submission_url                             public_key
+Household baseline 2026   hh_baseline_2026   2026100602   https://kc.kobotoolbox.org/submission      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA... (your whole key on one line)</pre>
+<ul><li>KoboToolbox's <a href="https://support.kobotoolbox.org/encrypting_forms.html" rel="noopener" target="_blank" style="color:var(--accent-color)">encryption guide</a> (updated 22 July 2026) gives <code class="inline">https://kc.kobotoolbox.org/submission</code> as the <code class="inline">submission_url</code> for the Global server and the kc-eu address for the EU server.</li><li>After deployment, anything that reads the data inside KoboToolbox stops working, including the map view and exports. You download and decrypt on your own computer with ODK Briefcase and the private key.</li><li>ODK Central can manage encryption for a project; the <a href="https://docs.getodk.org/encrypted-forms/" rel="noopener" target="_blank" style="color:var(--accent-color)">ODK encryption guide</a> says Central's managed option lets you download a decrypted file without another tool.</li><li>Lose the private key and the data is gone. Keep two copies, offline, with named custodians.</li></ul>
+<h3>The DPDP Act 2023</h3>
+<p>India's <a href="https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf" rel="noopener" target="_blank" style="color:var(--accent-color)">Digital Personal Data Protection Act, 2023</a> (published 11 August 2023) applies to digital personal data, and a phone survey is digital from the first answer. The organisation that decides why and how the data is processed is the Data Fiduciary; the respondent is the Data Principal. Sections that matter for a survey:</p>
+<ul><li><strong>Section 5</strong>: a request for consent must come with or after a notice telling the respondent what personal data is collected and why, and how to exercise their rights.</li><li><strong>Section 6(1)</strong>: consent must be "free, specific, informed, unconditional and unambiguous with a clear affirmative action", limited to the data necessary for the stated purpose. Put the notice and a consent question at the start of the form and end the form if the answer is no (a <code class="inline">relevant</code> on every later group does this).</li><li><strong>Section 8(5)</strong>: the Data Fiduciary must take "reasonable security safeguards to prevent personal data breach", including for processing done on its behalf by a Data Processor such as a survey firm or a hosting service. The Schedule to the Act sets a penalty for breaching this duty that may extend to Rs 250 crore.</li><li><strong>Section 17(2)(b)</strong>: the Act's provisions do not apply to processing "necessary for research, archiving or statistical purposes if the personal data is not to be used to take any decision specific to a Data Principal and such processing is carried on in accordance with such standards as may be prescribed".</li></ul>
+<div class="info-box warning"><strong>The research exemption has conditions.</strong> The <a href="https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf" rel="noopener" target="_blank" style="color:var(--accent-color)">DPDP Rules, 2025</a> (G.S.R. 846(E), 13 November 2025) set those standards in rule 16 and the Second Schedule: processing must be lawful, limited to the data necessary, made reasonably accurate, kept only as long as needed, protected by reasonable security safeguards, and someone must be accountable for it. Rule 1(4) says rules 3 and 5 to 16 come into force eighteen months after publication. A baseline used to select beneficiaries is a decision specific to a person and falls outside the exemption. Ask your organisation's data protection lead, and see the <a href="/101-courses/data-protection-dpdp.html" rel="noopener" target="_blank" style="color:var(--accent-color)">Data Protection and the DPDP Act deck</a>.</div>
+<h3>Share a file without identities</h3>
+<p>Before you share data with an analyst, replace the identifier with a code only the data manager can reverse, and coarsen exact values that could identify a household. The cell does both on <a href="/code/data/households.csv" download style="color:var(--accent-color)">households.csv</a> (invented data) with a keyed hash.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd, hmac, hashlib
+hh = pd.read_csv(&quot;households.csv&quot;)
+
+# Keep this key out of the dataset, out of email and out of any Git repository.
+KEY = b&quot;replace-with-a-long-random-key-kept-by-the-data-manager&quot;
+
+def code(x):
+    return hmac.new(KEY, str(x).encode(), hashlib.sha256).hexdigest()[:10]
+
+share = hh.copy()
+share.insert(0, &quot;pid&quot;, share[&quot;hh_id&quot;].map(code))
+key_table = share[[&quot;pid&quot;, &quot;hh_id&quot;]]          # stays with the data manager, encrypted
+share = share.drop(columns=[&quot;hh_id&quot;])
+share[&quot;land_band&quot;] = pd.cut(share[&quot;land_acres&quot;], [-0.01, 0, 1, 2.5, 100],
+                            labels=[&quot;none&quot;, &quot;up to 1&quot;, &quot;1 to 2.5&quot;, &quot;over 2.5&quot;])
+share = share.drop(columns=[&quot;land_acres&quot;])
+
+print(share.head(5).to_string(index=False))
+print()
+print(&quot;columns shared:&quot;, list(share.columns))
+print(&quot;pids unique:&quot;, share[&quot;pid&quot;].is_unique, &quot; rows:&quot;, len(share))</textarea></div>
+<p>The shared file keeps all 240 rows with a 10-character <code class="inline">pid</code> in place of <code class="inline">hh_id</code>, every pid is unique, and land is reported in four bands. The key table linking pid to hh_id stays with the data manager.</p>
+<div class="info-box"><strong>Exercise.</strong> Change one character of <code class="inline">KEY</code> and run again: every pid changes. That is why the key must be kept, and kept apart from the data. A keyed code makes the file pseudonymous; a village name, a household size and a caste together can still point to one family, so check small groups before you publish anything.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Pilot &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 7</div>
+<h2>Pilot testing a form</h2>
+<p>Every form has errors that only show up when a real enumerator asks a real respondent. A pilot finds them while they are still cheap to fix.</p>
+<ol class="guide-steps"><li><strong>Desk test.</strong> Fill the form yourself in Preview, once with ordinary answers and once trying to break every constraint. Check that each skip opens and closes when it should.</li><li><strong>Phone test.</strong> Install the form on the cheapest phone your team will use, switch on airplane mode, fill five forms, then sync. This tests offline storage, the screen size and the Hindi font on that phone.</li><li><strong>Field pilot.</strong> Interview 15 to 30 households outside the sample, in each language. Note every question respondents ask to have repeated, and every answer that did not fit the choices.</li><li><strong>Check the data.</strong> Download the pilot submissions as XML values and run your checks (module 3) on them. A constraint that never fires may be too loose; one that fires often may be wrong, or the question may be unclear.</li><li><strong>Fix and version.</strong> Change the form, raise <code class="inline">version</code>, replace the form, delete the pilot submissions or mark them, and record each change and its reason in a change log.</li></ol>
+<h3>What to look for in pilot data</h3>
+<ul><li>Many answers of "other": the choice list is missing a common answer.</li><li>Answers piling up at the edge of a constraint (exactly 30 members, exactly 100 acres): the limit is probably wrong or enumerators are using it to get past the screen.</li><li>A question skipped far more or less often than you expected: check the <code class="inline">relevant</code> expression and the choice names it compares.</li><li>Interview length by enumerator: the XLSForm metadata types <code class="inline">start</code> and <code class="inline">end</code> record the start and end date and time of the survey; add them as rows in the survey sheet if your form does not have them.</li></ul>
+<div class="info-box"><strong>Exercise.</strong> Take the survey sheet from module 2 and add three rows at the top: <code class="inline">start</code>, <code class="inline">end</code> and a consent question <code class="inline">select_one yes_no</code> named <code class="inline">consent</code>. Wrap the rest of the form in <code class="inline">begin group</code> and <code class="inline">end group</code> rows with <code class="inline">${consent} = 'yes'</code> in the group's <code class="inline">relevant</code>. Upload it to KoboToolbox and test that answering no ends the interview.</div>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/spreadsheets.html" style="color:var(--text-primary)">Spreadsheets for M&amp;E</a></h4><p>Build indicator tables from the data you downloaded.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/pandas.html" style="color:var(--text-primary)">pandas for development data</a></h4><p>Clean, check and summarise survey exports in Python.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/openrefine.html" style="color:var(--text-primary)">OpenRefine</a></h4><p>Fix district and village names typed five different ways.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/survey-design.html" style="color:var(--text-primary)">Survey Design 101</a></h4><p>Questions, sampling and piloting before you build the form.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-protection-dpdp.html" style="color:var(--text-primary)">Data Protection and the DPDP Act</a></h4><p>What the law asks of you when you collect personal data.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=3b5d57ac" defer></script>
+</body>
+</html>

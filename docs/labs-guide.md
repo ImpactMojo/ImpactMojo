@@ -70,7 +70,7 @@ All studios are **free, browser-based, and require no login**.
 |-----|---------------|------|
 | **Why City Boundaries Lie** | Data literacy on administrative vs economic city boundaries: an interactive boundary-toggle map, India's Census urban-undercount explained, a 2-of-3 satellite-rule classifier, and an exportable boundary-decision note, with a handoff to Development Data Studio's open Global Urban Boundaries dataset | [Open](/Labs/urban-boundaries-lab.html) |
 
-> **R & Python for Development** used to sit here. It is a seven-module course and now lives in the 101 series: [open it](/101-courses/r-python-dev.html).
+> **R & Python for Development** used to sit here. It is a seven-module course with live code and now lives in [Code Studio](/code/r-python.html).
 
 > The **Indian Data Navigator**, a guided field-guide to India's major public datasets, now lives in the [Dataverse](/dataverse-india.html), not Studios, since it's a guide to data sources rather than a build-something workbench.
 

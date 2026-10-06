@@ -137,7 +137,7 @@ Single-page courses covering essential development topics: all self-hosted nativ
 | Observation to Insight 101 | [Open](/101-courses/obs2insight.html) |
 | GenAI for Practitioners 101 | [Open](/101-courses/genai-practitioners.html) |
 | Data Protection & the DPDP Act 101 | [Open](/101-courses/data-protection-dpdp.html) |
-| R & Python for Development: a South Asia 101 | [Open](/101-courses/r-python-dev.html) |
+| R & Python for Development: a South Asia 101 | [Open](/code/r-python.html) |
 
 ### Policy & Economics
 

@@ -2,6 +2,27 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.332.0 — October 6, 2026 (Code Studio)
+
+### Added
+
+- **Code Studio at `/code/`.** Fourteen hands-on courses for development data work. R, Python, SQL, tidyverse and pandas run in the browser through WebR, Pyodide and SQLite, with nothing to install; Shiny apps open in Posit's Shinylive editor. Guided courses cover Stata, SPSS, jamovi and JASP, OpenRefine, Open Data Editor, QGIS, KoboToolbox and ODK, spreadsheets for M&E, and Git with Quarto. Every runnable cell was run in a browser before publishing, and the guided courses show commands without invented output. A shared illustrative household dataset (invented, labelled as such) lets learners check their own answers.
+
+### Changed
+
+- **R & Python for Development moved into Code Studio** (`/code/r-python.html`, text unchanged; the old address redirects). It leaves the 101 series, so the series now counts 59 foundational courses and the platform 80 courses.
+- **Digital Ethics 101.** Aadhaar figures now come from UIDAI (145.32 crore numbers generated as of 28 September 2026); the legal position is stated from the Aadhaar Act (enrolment optional under s3, required for Consolidated Fund subsidies under s7, which the Supreme Court upheld in 2018, and no refusal of service for declining under s4(6)); the Principles for Digital Development use their 2024 wording.
+- **Research Ethics 101 and Survey Design 101** state the DPDP Act's narrow research exemption (s17(2)(b)) and its two conditions.
+- **Public Finance & Budgeting 101** no longer asserts when Pillar Two applies in India; it points to the latest Finance Act.
+
+### Fixed
+
+- **Inequality Basics 101 had no slide controls and its script stopped on load (#1148).** The controls are back and all 104 slides are reachable.
+
+### For Learners
+
+- **Code Studio.** Run R, Python and SQL in your browser, and follow guided courses for Stata, SPSS, QGIS, KoboToolbox and more.
+
 ## v10.331.0 — October 6, 2026 (101 decks accuracy pass, part 6)
 
 ### Changed

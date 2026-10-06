@@ -74,7 +74,7 @@
     { t:"Public Finance & Budgeting 101", u:"/101-courses/public-finance-budgeting.html", o:"Public Finance & Budgeting 101: fiscal architecture, budget cycles, taxation, and intergovernmental transfers in South Asia."},
     { t:"Qualitative Analysis Software 101", u:"/101-courses/qda-software.html", o:"Qualitative Analysis Software 101: a free foundational course on NVivo, MAXQDA, ATLAS.ti and the free tools Taguette and QualCoder."},
     { t:"Qualitative Methods 101", u:"/101-courses/qual-methods.html", o:"Qualitative Methods 101: a free foundational course for development practitioners and researchers in South Asia."},
-    { t:"R & Python for Development: a South Asia 101", u:"/101-courses/r-python-dev.html", o:"Learn R and Python from absolute zero for development-sector data work in South Asia: run real code live in your browser, no installation."},
+    { t:"R & Python for Development: a South Asia 101", u:"/code/r-python.html", o:"Learn R and Python from absolute zero for development-sector data work in South Asia: run real code live in your browser, no installation."},
     { t:"Research Ethics 101", u:"/101-courses/research-ethics.html", o:"Research Ethics 101: a free foundational course for development practitioners and researchers in South Asia."},
     { t:"Safeguarding & PSEA 101", u:"/101-courses/safeguarding-psea.html", o:"Data Literacy 101: a free foundational course for development practitioners in South Asia."},
     { t:"SEL Basics 101", u:"/101-courses/sel-basics.html", o:"SEL Basics 101: a free foundational course for educators and education-programme staff in South Asia."},
@@ -237,7 +237,7 @@
 
     // Flagship count
     { re: /how many.*course|flagship|all.*course/i,
-      a: () => "We have **21 flagship courses** and **60 foundational courses**, 81 in all. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
+      a: () => "We have **21 flagship courses** and **59 foundational courses**, 81 in all. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
 
     // PoA specific
     { re: /poa|politics.*aspiration|nrega|rti|nfsa|forest.*right/i,

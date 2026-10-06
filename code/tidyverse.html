@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Tidyverse for Development Data | ImpactMojo</title>
+    <meta name="description" content="Learn R&#x27;s tidyverse for development data: readr, dplyr verbs, joins, tidyr reshaping, factors, survey weights and ggplot2, on a 240-household illustrative survey. Runs in your browser, nothing to install.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/tidyverse.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Tidyverse for Development Data">
+<meta property="og:description" content="Learn R&#x27;s tidyverse for development data: readr, dplyr verbs, joins, tidyr reshaping, factors, survey weights and ggplot2, on a 240-household illustrative survey. Runs in your browser, nothing to install.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/tidyverse.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tidyverse for Development Data">
+<meta name="twitter:description" content="Learn R&#x27;s tidyverse for development data: readr, dplyr verbs, joins, tidyr reshaping, factors, survey weights and ggplot2, on a 240-household illustrative survey. Runs in your browser, nothing to install.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Tidyverse for Development Data", "description": "Learn R's tidyverse for development data: readr, dplyr verbs, joins, tidyr reshaping, factors, survey weights and ggplot2, on a 240-household illustrative survey. Runs in your browser, nothing to install.", "url": "https://www.impactmojo.in/code/tidyverse.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Runs in your browser</div>
+        <h1>Tidyverse for development data</h1>
+        <p>Clean, join, reshape, weight and chart household survey data with R's tidyverse: readr, dplyr, tidyr and ggplot2, running live in your browser. For people who have finished the basics in <a href="/code/r-python.html" style="color:var(--accent-color)">R &amp; Python for Development</a>.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>How the live code works.</strong> Your first Run downloads WebR (R for the browser, about 7&nbsp;MB) and then each package a cell asks for: readr and dplyr first, tidyr and ggplot2 when you reach them. Give the first click of each module up to a minute on a slow connection; after that it is quick. Two files are already in the working folder: <code class="inline">households.csv</code> and <code class="inline">districts.csv</code>. Both are illustrative data, invented for teaching. The district names are real places, but no number here describes them.</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> Tibbles</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> dplyr verbs</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> Summaries</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> Joins</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Reshape</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> Factors</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Weights</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">8</span> ggplot2</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">9</span> Pipeline</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 9</div>
+<h2>Reading data into a tibble</h2>
+<p>The tidyverse is a family of R packages that share one way of working: every dataset is a table with one row per observation and one column per variable, and every function takes that table as its first argument. This course uses four of them. <strong>readr</strong> reads files, <strong>dplyr</strong> transforms tables, <strong>tidyr</strong> reshapes them and <strong>ggplot2</strong> draws them. We load each one by name instead of the <code class="inline">tidyverse</code> meta-package, which would pull in about thirty packages you do not need here.</p>
+<p>The data is a household survey of 240 households across 10 districts in four states. <span class="illustrative-tag">Illustrative data, invented for teaching</span> <code class="inline">read_csv()</code> from readr reads it into a <strong>tibble</strong>, the tidyverse version of a data frame.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">library(readr)
+hh &lt;- read_csv(&quot;households.csv&quot;)
+hh</textarea></div>
+<p>A tibble prints only the first 10 rows and as many columns as fit, then tells you what it left out: here 230 more rows and 5 more variables. Under each column name is its type: <code class="inline">&lt;dbl&gt;</code> for numbers and <code class="inline">&lt;chr&gt;</code> for text. Printing a 50,000-row NFHS extract this way is safe; printing it as a base R data frame floods the console.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+glimpse(hh)</textarea></div>
+<p><code class="inline">glimpse()</code> turns the table on its side: one line per column, with its type and first few values. It is the fastest way to see every variable in a wide file. Here it confirms 240 rows and 13 columns, and that the four yes/no indicators were read as text.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+nrow(hh)
+ncol(hh)
+class(hh)
+hh |&gt; distinct(district)</textarea></div>
+<p>The class line shows that a tibble is still a <code class="inline">data.frame</code>, so base R functions you already know keep working. <code class="inline">distinct()</code> lists the 10 districts.</p>
+<div class="info-box"><strong>Try it.</strong> Change <code class="inline">"households.csv"</code> to <code class="inline">"districts.csv"</code> in the first cell and run it. How many rows and columns does the district table have?</div>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: dplyr verbs &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 9</div>
+<h2>Filter, select, arrange and mutate</h2>
+<p>dplyr gives you one verb per job. <code class="inline">filter()</code> keeps rows, <code class="inline">select()</code> keeps columns, <code class="inline">arrange()</code> sorts and <code class="inline">mutate()</code> adds columns. The pipe <code class="inline">|&gt;</code> passes the table on the left into the function on the right, so a chain reads top to bottom as a list of steps.</p>
+<p>Rural households headed by a woman, poorest first:</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+hh |&gt;
+  filter(area == &quot;Rural&quot;, head_gender == &quot;Female&quot;) |&gt;
+  select(hh_id, district, caste, hh_size, monthly_pc_exp) |&gt;
+  arrange(monthly_pc_exp)</textarea></div>
+<p>Two conditions separated by a comma inside <code class="inline">filter()</code> must both be true. 26 households pass, and the poorest, in Gaya, spends &#8377;880 per person per month.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+hh |&gt;
+  mutate(annual_pc_exp = monthly_pc_exp * 12,
+         hh_monthly_exp = monthly_pc_exp * hh_size,
+         below_2000 = monthly_pc_exp &lt; 2000) |&gt;
+  select(hh_id, district, monthly_pc_exp, annual_pc_exp, hh_monthly_exp, below_2000) |&gt;
+  head(8)</textarea></div>
+<p><code class="inline">mutate()</code> computes new columns from existing ones, row by row. <code class="inline">below_2000</code> is a logical column (TRUE or FALSE), which is how you build a flag for a threshold such as a poverty line. Household 7 has one member, so its household total equals its per-person figure.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+hh |&gt;
+  filter(district %in% c(&quot;Gaya&quot;, &quot;Purnia&quot;, &quot;Patna&quot;),
+         between(head_edu_years, 0, 5)) |&gt;
+  select(hh_id, district, head_edu_years, monthly_pc_exp) |&gt;
+  arrange(desc(monthly_pc_exp))</textarea></div>
+<p><code class="inline">%in%</code> matches any value in a list, and <code class="inline">between()</code> is shorthand for <code class="inline">x &gt;= 0 &amp; x &lt;= 5</code>. The three Bihar districts have 41 households whose head had five years of schooling or fewer. <code class="inline">desc()</code> sorts from largest down.</p>
+<div class="info-box"><strong>Try it.</strong> Filter for urban households in Kozhikode and Wayanad with more than 10 years of schooling. Then add a column <code class="inline">big_hh</code> that is TRUE when <code class="inline">hh_size &gt;= 6</code>.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Summaries &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 9</div>
+<h2>Group, summarise and count</h2>
+<p><code class="inline">count()</code> is the quickest table of frequencies. Give it two columns for a cross-tab in long form.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+hh |&gt; count(caste)
+hh |&gt; count(area, caste)</textarea></div>
+<p>OBC households are the largest group (108 of 240), and 20 are ST, of whom only 5 are urban.</p>
+<p><code class="inline">group_by()</code> splits the table and <code class="inline">summarise()</code> reduces each piece to one row. Every function inside <code class="inline">summarise()</code> must return one number per group. A share is the mean of a TRUE/FALSE condition, so <code class="inline">100 * mean(has_toilet == "Yes")</code> is a percentage.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+hh |&gt;
+  group_by(district) |&gt;
+  summarise(n = n(),
+            mean_exp = mean(monthly_pc_exp),
+            median_exp = median(monthly_pc_exp),
+            pct_toilet = 100 * mean(has_toilet == &quot;Yes&quot;)) |&gt;
+  arrange(desc(median_exp))</textarea></div>
+<p>Look at Udaipur: a mean of &#8377;3,611 and a median of &#8377;2,795. A few high-spending households pull the mean up, which is normal for consumption and income data. Report the median for a typical household. Kozhikode has the highest median, &#8377;6,080, and Rewa the lowest toilet coverage, 50 per cent.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+hh |&gt;
+  group_by(caste, head_gender) |&gt;
+  summarise(n = n(),
+            median_exp = median(monthly_pc_exp),
+            .groups = &quot;drop&quot;)</textarea></div>
+<p><code class="inline">.groups = "drop"</code> removes the grouping after summarising, so the next step does not quietly run within groups. Check the <code class="inline">n</code> column before reading any median: the SC female-headed cell holds 2 households, so its median of &#8377;4,240 says almost nothing. In a real report you would suppress or flag cells that small.</p>
+<div class="info-box"><strong>Try it.</strong> Group by <code class="inline">district, area</code> instead, and add <code class="inline">pct_bank</code> for bank accounts. Which district has the widest rural-urban gap in median spending?</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: Joins &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 9</div>
+<h2>Joining households to districts</h2>
+<p>Survey files rarely carry every variable you need. Here the household file has the district name, and a separate district file has the state, region, programme phase and field team. A <strong>join</strong> matches rows on a shared key.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+districts &lt;- read_csv(&quot;districts.csv&quot;, show_col_types = FALSE)
+districts
+hh_d &lt;- hh |&gt; left_join(districts, by = &quot;district&quot;)
+hh_d |&gt; count(state, district)</textarea></div>
+<p><code class="inline">left_join()</code> keeps every household and adds the district columns where the names match. Each district appears once in <code class="inline">districts.csv</code>, so every household gets exactly one match and the row count stays at 240.</p>
+<p>Joins fail silently when keys are spelt differently. Purnia is often written Purnea. Watch what happens when the district file uses the other spelling:</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+districts &lt;- read_csv(&quot;districts.csv&quot;, show_col_types = FALSE)
+# a misspelt district name, the kind you meet in real files
+bad &lt;- districts |&gt; mutate(district = if_else(district == &quot;Purnia&quot;, &quot;Purnea&quot;, district))
+hh |&gt; anti_join(bad, by = &quot;district&quot;) |&gt; count(district)
+joined &lt;- hh |&gt; left_join(bad, by = &quot;district&quot;)
+sum(is.na(joined$state))</textarea></div>
+<p><code class="inline">anti_join()</code> returns the rows that found no partner: all 24 Purnia households. After a left join those households are still there, but with <code class="inline">NA</code> for state, so every state total would be quietly short. Run an <code class="inline">anti_join()</code> after every join; it should return zero rows.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+districts &lt;- read_csv(&quot;districts.csv&quot;, show_col_types = FALSE)
+hh |&gt;
+  left_join(districts, by = &quot;district&quot;) |&gt;
+  group_by(state, programme_phase) |&gt;
+  summarise(households = n(),
+            pct_transfer = round(100 * mean(received_transfer == &quot;Yes&quot;), 1),
+            .groups = &quot;drop&quot;)</textarea></div>
+<p>With the join done you can summarise at any level the district table offers. Kerala has rows for phases 1 and 3 only, because none of its districts is in phase 2. A missing row is a fact about the design, worth a footnote in a report.</p>
+<div class="info-box"><strong>Try it.</strong> Change the grouping to <code class="inline">field_team</code> and compute the share of SHG members for each team.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Reshape &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 9</div>
+<h2>Reshaping indicator tables with tidyr</h2>
+<p>The four yes/no indicators sit in four columns. That is <strong>wide</strong> form. To summarise all four with one line of code, turn them into <strong>long</strong> form: one row per household per indicator. <code class="inline">pivot_longer()</code> does this.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,tidyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(tidyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+long &lt;- hh |&gt;
+  select(hh_id, district, has_toilet, has_bank_account, shg_member, received_transfer) |&gt;
+  pivot_longer(c(has_toilet, has_bank_account, shg_member, received_transfer),
+               names_to = &quot;indicator&quot;, values_to = &quot;answer&quot;)
+nrow(long)
+head(long, 8)
+long |&gt;
+  group_by(district, indicator) |&gt;
+  summarise(pct_yes = round(100 * mean(answer == &quot;Yes&quot;)), .groups = &quot;drop&quot;)</textarea></div>
+<p>240 households times 4 indicators gives 960 rows. Each row now holds a household, an indicator name and its answer, so a single <code class="inline">group_by(district, indicator)</code> computes every share at once: 40 rows, one per district per indicator.</p>
+<p>Reports want the opposite shape: districts down the side, indicators across the top. <code class="inline">pivot_wider()</code> spreads the long table back out.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,tidyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(tidyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+hh |&gt;
+  pivot_longer(c(has_toilet, has_bank_account, shg_member, received_transfer),
+               names_to = &quot;indicator&quot;, values_to = &quot;answer&quot;) |&gt;
+  group_by(district, indicator) |&gt;
+  summarise(pct_yes = round(100 * mean(answer == &quot;Yes&quot;)), .groups = &quot;drop&quot;) |&gt;
+  pivot_wider(names_from = indicator, values_from = pct_yes)</textarea></div>
+<p>This is the standard indicator table. Rewa has 92 per cent of households with a bank account and 50 per cent with a toilet, and the lowest SHG membership, 4 per cent. Long form is for computing and charting, wide form is for reading.</p>
+<div class="info-box"><strong>Try it.</strong> Add <code class="inline">head_gender</code> next to <code class="inline">district</code> in <code class="inline">group_by()</code> and run the second cell again. The wide table gets one row per district per gender.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: Factors &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 9</div>
+<h2>Factors, bands and labels</h2>
+<p>Text columns sort alphabetically, which puts General before SC and ST. A <strong>factor</strong> stores a fixed set of categories in the order you choose, and that order carries through to tables and charts.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+hh |&gt; count(caste)
+hh2 &lt;- hh |&gt; mutate(caste = factor(caste, levels = c(&quot;SC&quot;, &quot;ST&quot;, &quot;OBC&quot;, &quot;General&quot;)))
+hh2 |&gt; count(caste)
+levels(hh2$caste)</textarea></div>
+<p>The second count follows the order in <code class="inline">levels</code>. Choose an order that means something for the reader, such as a fixed order used across all your tables, or ranked by the indicator.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+hh |&gt;
+  mutate(edu_band = cut(head_edu_years,
+                        breaks = c(-Inf, 0, 5, 10, Inf),
+                        labels = c(&quot;No schooling&quot;, &quot;1-5 years&quot;, &quot;6-10 years&quot;, &quot;Over 10 years&quot;))) |&gt;
+  count(edu_band)</textarea></div>
+<p><code class="inline">cut()</code> turns a number into bands. The breaks are the edges: <code class="inline">(-Inf, 0]</code> is no schooling, <code class="inline">(0, 5]</code> is one to five years, and so on. 36 heads had no schooling and 25 had more than 10 years. Always check that the bands cover every value; a value outside every break becomes <code class="inline">NA</code>.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+yn &lt;- c(&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;shg_member&quot;, &quot;received_transfer&quot;)
+hh |&gt;
+  mutate(across(all_of(yn), \(x) x == &quot;Yes&quot;),
+         area = case_when(area == &quot;Rural&quot; ~ &quot;Rural household&quot;,
+                          area == &quot;Urban&quot; ~ &quot;Urban household&quot;)) |&gt;
+  group_by(area) |&gt;
+  summarise(across(all_of(yn), \(x) round(100 * mean(x))))</textarea></div>
+<p><code class="inline">across()</code> applies the same function to several columns at once: first to turn each Yes/No into TRUE/FALSE, then to compute four shares in one <code class="inline">summarise()</code>. <code class="inline">case_when()</code> rewrites values by rule and is how you replace codes with readable labels. Here 63 per cent of rural households and 92 per cent of urban households have a toilet.</p>
+<div class="info-box"><strong>Try it.</strong> Recode <code class="inline">land_acres</code> into bands (landless, under 1 acre, 1 to 2.5 acres, over 2.5 acres) with <code class="inline">cut()</code> and count each band.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Weights &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 9</div>
+<h2>Weighted summaries and survey weights</h2>
+<p>Most large surveys do not give every household the same chance of selection. A household drawn with probability 1 in 500 stands for 500 households in the population, so its <strong>design weight</strong> is 500. Unweighted means describe the sample; weighted means estimate the population.</p>
+<p>Our illustrative file has no weight column, so we invent a design for teaching: rural households drawn 1 in 500 and urban households 1 in 1,000. Urban households are under-sampled, so each one carries a weight of 1,000.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+# Illustrative design: rural households drawn 1 in 500, urban 1 in 1,000
+hh &lt;- hh |&gt; mutate(prob = if_else(area == &quot;Rural&quot;, 1/500, 1/1000),
+                   weight = 1 / prob)
+hh |&gt; count(area, weight)
+hh |&gt;
+  summarise(unweighted = mean(monthly_pc_exp),
+            weighted = weighted.mean(monthly_pc_exp, weight),
+            pct_toilet_unw = 100 * mean(has_toilet == &quot;Yes&quot;),
+            pct_toilet_w = 100 * weighted.mean(has_toilet == &quot;Yes&quot;, weight))</textarea></div>
+<p>The weighted mean spending, &#8377;3,857, is higher than the unweighted &#8377;3,401, and toilet coverage rises from 72.5 to 77.2 per cent, because urban households (which spend more and more often have toilets) now count for twice as much. Same data, different question answered.</p>
+<h3>NFHS weights</h3>
+<p>The DHS Program lists NFHS-5 (2019-21) as India's Standard DHS survey. The DHS Program's <a href="https://dhsprogram.com/data/Guide-to-DHS-Statistics/Analyzing_DHS_Data.htm" rel="noopener" target="_blank" style="color:var(--accent-color)">Guide to DHS Statistics</a> (checked October 2026) explains that the women's weight <code class="inline">v005</code> is stored without its decimal point and must be divided by 1,000,000 before use. Three made-up rows show the step:</p>
+<div class="code-cell" data-lang="r" data-pkgs="dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages(library(dplyr))
+# Three made-up rows shaped like an NFHS women&#x27;s file
+women &lt;- tibble(caseid = c(&quot;A1&quot;, &quot;A2&quot;, &quot;A3&quot;),
+                v005 = c(1234567, 876543, 2045110),
+                anaemic = c(1, 0, 1))
+women |&gt;
+  mutate(wt = v005 / 1000000) |&gt;
+  summarise(unweighted = mean(anaemic),
+            weighted = weighted.mean(anaemic, wt))</textarea></div>
+<p>Dividing by a constant does not change a weighted mean, so <code class="inline">weighted.mean(anaemic, v005)</code> gives the same 0.789. The division matters when you sum weights to estimate a count of women.</p>
+<div class="info-box warning"><strong>Weights fix the estimate; they do not fix the standard error.</strong> <code class="inline">weighted.mean()</code> gives the right point estimate but knows nothing about clusters and strata, so any confidence interval built from it will be too narrow. For standard errors use the <a href="https://cran.r-project.org/package=survey" rel="noopener" target="_blank" style="color:var(--accent-color)">survey package</a> by Thomas Lumley (version 4.5 on CRAN as of October 2026): declare the design once with <code class="inline">svydesign(ids = ~psu, strata = ~strata, weights = ~wt, data = df)</code>, then use <code class="inline">svymean()</code> and <code class="inline">svyby()</code>.</div>
+<div class="info-box"><strong>Try it.</strong> Change the urban weight to 500 so both areas match, and run the weights cell again. The weighted and unweighted results should now agree.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="7">Next: ggplot2 &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="7" role="tabpanel">
+<div class="eyebrow">Module 8 of 9</div>
+<h2>Charts with ggplot2</h2>
+<p>ggplot2 builds a chart in layers: the data, an <code class="inline">aes()</code> mapping that says which column goes on which axis, and a <code class="inline">geom</code> that says how to draw it. Add layers with <code class="inline">+</code>. The first run of this module downloads ggplot2 and its dependencies, so give it a minute.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,ggplot2"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(ggplot2)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+by_caste &lt;- hh |&gt;
+  group_by(caste) |&gt;
+  summarise(median_exp = median(monthly_pc_exp))
+ggplot(by_caste, aes(x = caste, y = median_exp)) +
+  geom_col(fill = &quot;#0369A1&quot;) +
+  labs(title = &quot;Median monthly per-capita expenditure by caste&quot;,
+       subtitle = &quot;Illustrative data, 240 households&quot;,
+       x = NULL, y = &quot;Rupees per person per month&quot;) +
+  theme_minimal()</textarea></div>
+<p><code class="inline">geom_col()</code> draws bars from values you computed. Bars always start at zero in ggplot2, which is right: a bar's length is its value.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,ggplot2"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(ggplot2)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+ggplot(hh, aes(x = head_edu_years, y = monthly_pc_exp, colour = area)) +
+  geom_point(alpha = 0.7) +
+  scale_y_log10() +
+  labs(title = &quot;Head&#x27;s schooling and household spending&quot;,
+       x = &quot;Years of schooling, household head&quot;,
+       y = &quot;Rupees per person per month (log scale)&quot;) +
+  theme_minimal()</textarea></div>
+<p>Each point is a household. Spending is skewed, so a log scale spreads out the crowded lower end; say so in the axis label, as here, because a reader will otherwise read the gaps as equal.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,ggplot2"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(ggplot2)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+districts &lt;- read_csv(&quot;districts.csv&quot;, show_col_types = FALSE)
+hh |&gt;
+  left_join(districts, by = &quot;district&quot;) |&gt;
+  group_by(state, district, area) |&gt;
+  summarise(pct_toilet = 100 * mean(has_toilet == &quot;Yes&quot;), .groups = &quot;drop&quot;) |&gt;
+  ggplot(aes(x = area, y = pct_toilet)) +
+  geom_col(fill = &quot;#047857&quot;) +
+  facet_wrap(~ district, nrow = 2) +
+  labs(title = &quot;Households with a toilet, by district and area&quot;,
+       x = NULL, y = &quot;Per cent of households&quot;) +
+  theme_minimal()</textarea></div>
+<p><code class="inline">facet_wrap(~ district)</code> draws one small panel per district on a shared scale, so the panels can be compared at a glance. Avoid <code class="inline">scales = "free_y"</code> when readers will compare panels: it gives each panel its own axis, and a short bar in one panel can stand for a larger value than a tall bar in another. Kozhikode shows no rural bar because the value is zero: none of its 3 rural households has a toilet. Three households are far too few to report a percentage for.</p>
+<h3>Honest axes</h3>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,ggplot2"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(ggplot2)})
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+by_area &lt;- hh |&gt; group_by(area) |&gt; summarise(median_exp = median(monthly_pc_exp))
+by_area
+p &lt;- ggplot(by_area, aes(x = area, y = median_exp)) + geom_col(fill = &quot;#0369A1&quot;) +
+  theme_minimal() + labs(x = NULL, y = &quot;Rupees per person per month&quot;)
+# 1. Misleading: the bars start at 2,000
+print(p + coord_cartesian(ylim = c(2000, 5000)) + ggtitle(&quot;Axis starts at 2,000&quot;))
+# 2. Honest: the bars start at zero
+print(p + ggtitle(&quot;Axis starts at zero&quot;))</textarea></div>
+<p>The median is &#8377;2,380 for rural and &#8377;4,515 for urban households, so urban spending is about 1.9 times rural. In the first chart the axis starts at 2,000 and the urban bar looks more than six times as tall. The second chart, from zero, shows the real ratio. For bar charts, start at zero. See <a href="/101-courses/data-viz.html" style="color:var(--accent-color)">Data Visualization 101</a> for more.</p>
+<div class="info-box"><strong>Try it.</strong> In the facet chart, swap <code class="inline">x = area</code> for <code class="inline">x = caste</code> and add <code class="inline">caste</code> to <code class="inline">group_by()</code>. Which districts have caste groups with very few households?</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="6">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="8">Next: Pipeline &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="8" role="tabpanel">
+<div class="eyebrow">Module 9 of 9</div>
+<h2>A reproducible pipeline</h2>
+<p>Put the whole analysis in one script that runs from the raw files to the final table with no hand edits. Anyone with the files can then reproduce every number, including you in six months.</p>
+<div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,tidyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(tidyr)})
+# 1. Read
+hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
+districts &lt;- read_csv(&quot;districts.csv&quot;, show_col_types = FALSE)
+
+# 2. Check the join before trusting it
+stopifnot(nrow(anti_join(hh, districts, by = &quot;district&quot;)) == 0)
+
+# 3. Derive: illustrative weights and logical indicators
+yn &lt;- c(&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;shg_member&quot;, &quot;received_transfer&quot;)
+clean &lt;- hh |&gt;
+  left_join(districts, by = &quot;district&quot;) |&gt;
+  mutate(weight = if_else(area == &quot;Rural&quot;, 500, 1000),
+         across(all_of(yn), \(x) x == &quot;Yes&quot;))
+
+# 4. Summarise: one row per state, weighted per cent
+table_out &lt;- clean |&gt;
+  pivot_longer(all_of(yn), names_to = &quot;indicator&quot;, values_to = &quot;yes&quot;) |&gt;
+  group_by(state, indicator) |&gt;
+  summarise(pct = round(100 * weighted.mean(yes, weight), 1), .groups = &quot;drop&quot;) |&gt;
+  pivot_wider(names_from = indicator, values_from = pct)
+table_out
+
+# 5. Save, then read back to prove the file is right
+write_csv(table_out, &quot;state_indicators.csv&quot;)
+read_csv(&quot;state_indicators.csv&quot;, show_col_types = FALSE) |&gt; nrow()</textarea></div>
+<p>The script reads both files, stops with an error if any household fails to match a district, builds the weights and indicators, and writes a four-row state table: Bihar 80.9 per cent toilet coverage, Kerala 82.2, Madhya Pradesh 72.9 and Rajasthan 71.7 (weighted, on illustrative data). It then reads the file back and confirms 4 rows.</p>
+<ul><li><code class="inline">stopifnot()</code> turns a silent problem into a loud one. Add a check after every join and every filter you depend on.</li><li>Keep raw files read-only. Write outputs to new files, as <code class="inline">write_csv()</code> does here.</li><li>Keep names, phone numbers and other identifiers out of files you share. <a href="/101-courses/data-protection-dpdp.html" style="color:var(--accent-color)">Data Protection &amp; the DPDP Act 101</a> covers what India's Digital Personal Data Protection Act, 2023 asks of survey teams.</li><li>On your own laptop, save the script as a <code class="inline">.R</code> file inside an RStudio project, or write it up in Quarto so the text and numbers come from the same run.</li></ul>
+<div class="info-box"><strong>Try it.</strong> Add <code class="inline">region</code> to the <code class="inline">group_by()</code> in step 4, then change the output file name. Run it and check the row count printed at the end.</div>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/pandas.html" style="color:var(--text-primary)">pandas for Development Data</a></h4><p>The same analysis on the same files, in Python.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/r-python.html" style="color:var(--text-primary)">R &amp; Python for Development</a></h4><p>Back to the basics, side by side in both languages.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/eda-hhs.html" style="color:var(--text-primary)">Exploratory Data Analysis 101</a></h4><p>What to look for in a household survey before you model it.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/survey-design.html" style="color:var(--text-primary)">Survey Design 101</a></h4><p>Where sampling weights come from.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-viz.html" style="color:var(--text-primary)">Data Visualization 101</a></h4><p>Design principles for the charts you can now draw.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="7">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=3b5d57ac" defer></script>
+</body>
+</html>

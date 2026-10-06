@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>SQL for Development Data | ImpactMojo</title>
+    <meta name="description" content="Learn SQL from zero for development data in South Asia, with SQLite running live in your browser: SELECT, WHERE, GROUP BY, CASE, joins, CTEs, window functions and NULLs, on illustrative household and district tables.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/sql.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="SQL for Development Data">
+<meta property="og:description" content="Learn SQL from zero for development data in South Asia, with SQLite running live in your browser: SELECT, WHERE, GROUP BY, CASE, joins, CTEs, window functions and NULLs, on illustrative household and district tables.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/sql.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQL for Development Data">
+<meta name="twitter:description" content="Learn SQL from zero for development data in South Asia, with SQLite running live in your browser: SELECT, WHERE, GROUP BY, CASE, joins, CTEs, window functions and NULLs, on illustrative household and district tables.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "SQL for Development Data", "description": "Learn SQL from zero for development data in South Asia, with SQLite running live in your browser: SELECT, WHERE, GROUP BY, CASE, joins, CTEs, window functions and NULLs, on illustrative household and district tables.", "url": "https://www.impactmojo.in/code/sql.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts,survey">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Runs in your browser</div>
+        <h1>SQL for Development Data</h1>
+        <p>Learn SQL from zero on household and district tables, with SQLite running in your browser. Select, filter, summarise, recode, join, and use window functions, then apply them to the kind of export a scheme MIS gives you.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>How the live SQL works.</strong> Your first Run downloads SQLite (compiled to WebAssembly by the sql.js project, under 1&nbsp;MB) and loads three small tables: <code class="inline">households</code> (240 rows), <code class="inline">districts</code> (10 rows) and <code class="inline">survey</code> (16 rows). Every query runs on your own machine, and nothing you type is sent anywhere. Reload the page to get the tables back as they started.</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> First query</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> Filter and sort</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> Summarise</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> Recode</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Joins</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> CTEs</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Window functions</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">8</span> NULLs</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">9</span> MIS data</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 9</div>
+<h2>Your first query</h2>
+<p>SQL (Structured Query Language) is how you ask questions of data held in tables. Most government and NGO systems keep their records in a database: a scheme's beneficiary register, a survey platform's server, a district MIS. SQL is the common language for reading them.</p>
+<p>This course runs <strong>SQLite</strong>, a small database engine that lives in a single file and here runs inside your browser. The core of SQL is shared across databases, so what you learn transfers to PostgreSQL, MySQL and SQL Server. Where SQLite behaves differently, the course says so in a box marked <em>Other databases</em>.</p>
+<h3>Three tables</h3>
+<p><code class="inline">households</code> has 240 households across 10 districts, with caste, the head's gender and education, household size, monthly per-capita expenditure (in rupees), land, and Yes/No columns for a toilet, a bank account, self-help group membership and a cash transfer. <code class="inline">districts</code> has one row per district with its state, region, programme phase and field team. <code class="inline">survey</code> is a 16-person sample from three districts. <span class="illustrative-tag">Illustrative data</span> All three tables are invented for teaching. The district names are real places, but no number in these tables describes them.</p>
+<p>Click <strong>Run</strong>. The star means every column; <code class="inline">LIMIT 5</code> keeps the first five rows.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT * FROM households LIMIT 5;</textarea></div>
+<p>Name the columns you want instead of using the star. Each column is separated by a comma, and the statement ends with a semicolon.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT hh_id, district, caste, monthly_pc_exp
+FROM households
+LIMIT 8;</textarea></div>
+<p>Which version of SQLite is this? Ask it.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT sqlite_version();</textarea></div>
+<div class="info-box"><strong>Other databases.</strong> <code class="inline">LIMIT</code> works in SQLite, PostgreSQL and MySQL. SQL Server writes <code class="inline">SELECT TOP 5 *</code> instead, and the SQL standard form is <code class="inline">FETCH FIRST 5 ROWS ONLY</code>.</div>
+<p><strong>Try it:</strong> in the second cell, add <code class="inline">hh_size</code> and <code class="inline">land_acres</code> to the column list and run again. Then change the table to <code class="inline">districts</code> and select every column.</p>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: Filter and sort &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 9</div>
+<h2>Filter with WHERE, sort with ORDER BY</h2>
+<p><code class="inline">WHERE</code> keeps the rows that meet a condition. Text values go in single quotes and must match exactly, including capital letters.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT hh_id, district, caste, monthly_pc_exp
+FROM households
+WHERE district = &#x27;Gaya&#x27; AND area = &#x27;Rural&#x27;;</textarea></div>
+<p>Combine conditions with <code class="inline">AND</code> and <code class="inline">OR</code>, use <code class="inline">IN</code> for a list of values and <code class="inline">BETWEEN</code> for a range (both ends included). Brackets make the order of a mixed AND/OR explicit.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT hh_id, district, caste, head_gender, monthly_pc_exp
+FROM households
+WHERE caste IN (&#x27;SC&#x27;, &#x27;ST&#x27;)
+  AND head_gender = &#x27;Female&#x27;
+  AND monthly_pc_exp BETWEEN 1000 AND 3000;</textarea></div>
+<h3>Sort and keep the top rows</h3>
+<p><code class="inline">ORDER BY</code> sorts, ascending by default; add <code class="inline">DESC</code> for largest first. With <code class="inline">LIMIT</code> this gives you the poorest or richest households in a few words.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT hh_id, district, caste, hh_size, monthly_pc_exp
+FROM households
+ORDER BY monthly_pc_exp ASC
+LIMIT 10;</textarea></div>
+<p><code class="inline">LIKE</code> matches patterns: <code class="inline">%</code> stands for any run of characters. Here, every district whose name starts with P.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT * FROM districts WHERE district LIKE &#x27;P%&#x27;;</textarea></div>
+<div class="info-box"><strong>Other databases.</strong> SQLite's <code class="inline">LIKE</code> ignores case for English letters, so <code class="inline">'p%'</code> also matches Patna. PostgreSQL's <code class="inline">LIKE</code> is case-sensitive; it has <code class="inline">ILIKE</code> for the case-insensitive version.</div>
+<p><strong>Try it:</strong> change the third query to list the ten <em>highest</em>-spending households, then add <code class="inline">WHERE area = 'Rural'</code> before the <code class="inline">ORDER BY</code>.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Summarise &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 9</div>
+<h2>Aggregates, GROUP BY and HAVING</h2>
+<p>Aggregate functions collapse many rows into one number: <code class="inline">COUNT</code>, <code class="inline">SUM</code>, <code class="inline">AVG</code>, <code class="inline">MIN</code>, <code class="inline">MAX</code>. <code class="inline">AS</code> gives the result a name, and <code class="inline">ROUND(x, 0)</code> trims the decimals.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT COUNT(*)                     AS households,
+       ROUND(AVG(monthly_pc_exp), 0) AS mean_pc_exp,
+       MIN(monthly_pc_exp)           AS lowest,
+       MAX(monthly_pc_exp)           AS highest
+FROM households;</textarea></div>
+<h3>One row per group</h3>
+<p><code class="inline">GROUP BY</code> runs the aggregate separately for each value of a column. This is disaggregation, the same split you would make in a pivot table.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT caste,
+       COUNT(*)                      AS households,
+       ROUND(AVG(monthly_pc_exp), 0) AS mean_pc_exp
+FROM households
+GROUP BY caste
+ORDER BY mean_pc_exp DESC;</textarea></div>
+<p>In this invented table, SC households average 2,356 rupees and General households 3,771. The overall mean of 3,401 in the first query hides that gap.</p>
+<p>A share is an average of a 0/1 column. In SQLite a comparison such as <code class="inline">has_toilet = 'Yes'</code> returns 1 or 0, so its average is the proportion of households with a toilet.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT district,
+       COUNT(*) AS households,
+       ROUND(100.0 * AVG(has_toilet = &#x27;Yes&#x27;), 1)       AS pct_toilet,
+       ROUND(100.0 * AVG(has_bank_account = &#x27;Yes&#x27;), 1) AS pct_bank
+FROM households
+GROUP BY district
+ORDER BY pct_toilet;</textarea></div>
+<div class="info-box"><strong>Other databases.</strong> PostgreSQL will not average a true/false value directly. Write <code class="inline">AVG(CASE WHEN has_toilet = 'Yes' THEN 1.0 ELSE 0 END)</code>, which works everywhere, including here. Also watch integer division: in PostgreSQL and SQL Server <code class="inline">7 / 2</code> is 3. Multiplying by <code class="inline">100.0</code> first keeps the decimals.</div>
+<h3>Filter groups with HAVING</h3>
+<p><code class="inline">WHERE</code> filters rows before grouping; <code class="inline">HAVING</code> filters the groups after. This query groups by district and caste, then keeps only the cells with at least 5 households, a habit worth keeping before you report any small-group average.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT district, caste,
+       COUNT(*) AS households,
+       ROUND(AVG(monthly_pc_exp), 0) AS mean_pc_exp
+FROM households
+WHERE area = &#x27;Rural&#x27;
+GROUP BY district, caste
+HAVING COUNT(*) &gt;= 5
+ORDER BY district, mean_pc_exp;</textarea></div>
+<p><strong>Try it:</strong> in the second query, change <code class="inline">caste</code> to <code class="inline">head_gender</code> in both places and run again. In the last query, raise the threshold to 8 and see which cells drop out.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: Recode &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 9</div>
+<h2>Recoding with CASE</h2>
+<p><code class="inline">CASE</code> turns values into categories. SQL checks each <code class="inline">WHEN</code> in order and stops at the first one that is true, so put the narrowest band first or order the cut-offs from low to high.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT hh_id, monthly_pc_exp,
+       CASE
+         WHEN monthly_pc_exp &lt; 1500 THEN &#x27;1 below 1,500&#x27;
+         WHEN monthly_pc_exp &lt; 3000 THEN &#x27;2 1,500 to 2,999&#x27;
+         WHEN monthly_pc_exp &lt; 6000 THEN &#x27;3 3,000 to 5,999&#x27;
+         ELSE &#x27;4 6,000 and above&#x27;
+       END AS exp_band
+FROM households
+LIMIT 10;</textarea></div>
+<p>The bands are invented for teaching. In real work, cut-offs come from a stated source, such as a poverty line for a named year and sector. The number at the start of each label makes the bands sort in order.</p>
+<h3>Group by the new category</h3>
+<p>You can group by the <code class="inline">CASE</code> expression itself. SQLite also lets you group by the alias, <code class="inline">exp_band</code>, which saves repeating it.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT CASE
+         WHEN monthly_pc_exp &lt; 1500 THEN &#x27;1 below 1,500&#x27;
+         WHEN monthly_pc_exp &lt; 3000 THEN &#x27;2 1,500 to 2,999&#x27;
+         WHEN monthly_pc_exp &lt; 6000 THEN &#x27;3 3,000 to 5,999&#x27;
+         ELSE &#x27;4 6,000 and above&#x27;
+       END AS exp_band,
+       COUNT(*) AS households,
+       ROUND(100.0 * AVG(received_transfer = &#x27;Yes&#x27;), 1) AS pct_transfer
+FROM households
+GROUP BY exp_band
+ORDER BY exp_band;</textarea></div>
+<div class="info-box"><strong>Other databases.</strong> Grouping by an alias works in SQLite, PostgreSQL and MySQL. SQL Server and Oracle reject it; repeat the whole <code class="inline">CASE</code> in the <code class="inline">GROUP BY</code>, or compute it in a CTE (module 6).</div>
+<h3>Recode land into the agricultural census classes</h3>
+<p>The Agriculture Census groups operational holdings into five size classes: marginal (below 1 hectare), small (1 to 2), semi-medium (2 to 4), medium (4 to 10) and large (10 and above), as the Ministry of Agriculture and Farmers Welfare set out in a <a href="https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1562687" rel="noopener" target="_blank" style="color:var(--accent-color)">PIB release of 5 February 2019</a>. The table records land in acres, and one acre is about 0.405 hectares, so the query converts first. The last three classes are merged because so few households here hold that much.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT CASE
+         WHEN land_acres = 0 THEN &#x27;0 landless&#x27;
+         WHEN land_acres * 0.4047 &lt; 1 THEN &#x27;1 marginal (under 1 ha)&#x27;
+         WHEN land_acres * 0.4047 &lt; 2 THEN &#x27;2 small (1 to 2 ha)&#x27;
+         ELSE &#x27;3 larger (2 ha and above)&#x27;
+       END AS land_class,
+       COUNT(*) AS households
+FROM households
+WHERE area = &#x27;Rural&#x27;
+GROUP BY land_class
+ORDER BY land_class;</textarea></div>
+<p><strong>Try it:</strong> add a fourth column to the second query, <code class="inline">ROUND(100.0 * AVG(caste IN ('SC','ST')), 1) AS pct_sc_st</code>, and run again. Then move the first cut-off from 1,500 to 2,000 in all three places you need to.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Joins &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 9</div>
+<h2>Joining households to districts</h2>
+<p>The <code class="inline">households</code> table knows each household's district but not its state or field team. Those live in <code class="inline">districts</code>, one row per district. A <strong>join</strong> brings them together on the column they share.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT h.hh_id, h.district, d.state, d.field_team, h.monthly_pc_exp
+FROM households AS h
+JOIN districts AS d ON h.district = d.district
+LIMIT 8;</textarea></div>
+<p><code class="inline">h</code> and <code class="inline">d</code> are short names (aliases) for the tables, so <code class="inline">h.district</code> means the district column of households. Once joined, you can group by any column from either table.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT d.state,
+       COUNT(*) AS households,
+       ROUND(AVG(h.monthly_pc_exp), 0) AS mean_pc_exp,
+       ROUND(100.0 * AVG(h.has_toilet = &#x27;Yes&#x27;), 1) AS pct_toilet
+FROM households AS h
+JOIN districts AS d ON h.district = d.district
+GROUP BY d.state
+ORDER BY mean_pc_exp DESC;</textarea></div>
+<h3>Inner join against left join</h3>
+<p>A plain <code class="inline">JOIN</code> is an <strong>inner join</strong>: it keeps only rows that find a match on both sides. A <strong>left join</strong> keeps every row of the left-hand table, and fills the right-hand columns with NULL where there is no match.</p>
+<p>Every household's district appears in <code class="inline">districts</code>, so the joins above lose nothing. The 16-person <code class="inline">survey</code> is different: it covers only three districts. Count survey respondents per district with an inner join first.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT d.district, d.state, COUNT(s.id) AS respondents
+FROM districts AS d
+JOIN survey AS s ON s.district = d.district
+GROUP BY d.district, d.state
+ORDER BY d.district;</textarea></div>
+<p>Three rows: the inner join has silently dropped the seven districts the survey never reached. Now the same query with <code class="inline">LEFT JOIN</code>.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT d.district, d.state, COUNT(s.id) AS respondents
+FROM districts AS d
+LEFT JOIN survey AS s ON s.district = d.district
+GROUP BY d.district, d.state
+ORDER BY respondents DESC, d.district;</textarea></div>
+<p>All ten districts appear, and the seven without a respondent show 0. For a coverage report that difference is the whole point: an inner join would make the gaps disappear.</p>
+<div class="info-box warning"><strong>Count the right thing.</strong> <code class="inline">COUNT(s.id)</code> counts only rows where the survey id is not NULL, which is why unmatched districts show 0. <code class="inline">COUNT(*)</code> counts rows, and would show 1 for each of them, because the left join keeps one row of NULLs for every unmatched district. Change it and run again to see.</div>
+<p><strong>Try it:</strong> add <code class="inline">d.programme_phase</code> to the last query (in the SELECT and the GROUP BY). Then, in the state query, group by <code class="inline">d.field_team</code> instead.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: CTEs &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 9</div>
+<h2>Subqueries and CTEs</h2>
+<p>A <strong>subquery</strong> is a query inside another query. This one finds households spending more than the overall mean: the inner query computes the mean once, and the outer query uses it as a number.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT COUNT(*) AS above_mean
+FROM households
+WHERE monthly_pc_exp &gt; (SELECT AVG(monthly_pc_exp) FROM households);</textarea></div>
+<p>A subquery can also stand in for a table. Here the inner query builds district means, and the outer query keeps the districts above 3,000.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT *
+FROM (
+  SELECT district, ROUND(AVG(monthly_pc_exp), 0) AS mean_pc_exp
+  FROM households
+  GROUP BY district
+) AS dm
+WHERE mean_pc_exp &gt; 3000
+ORDER BY mean_pc_exp DESC;</textarea></div>
+<h3>WITH: name each step</h3>
+<p>Nested brackets get hard to read after two levels. A <strong>common table expression</strong> (CTE), written with <code class="inline">WITH</code>, names each step and lets the next step use it, top to bottom. This query compares each district's mean with its state's mean.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">WITH district_means AS (
+  SELECT district, AVG(monthly_pc_exp) AS d_mean, COUNT(*) AS n
+  FROM households
+  GROUP BY district
+),
+state_means AS (
+  SELECT d.state, AVG(h.monthly_pc_exp) AS s_mean
+  FROM households AS h
+  JOIN districts AS d ON h.district = d.district
+  GROUP BY d.state
+)
+SELECT dm.district, d.state, dm.n,
+       ROUND(dm.d_mean, 0) AS district_mean,
+       ROUND(sm.s_mean, 0) AS state_mean,
+       ROUND(dm.d_mean - sm.s_mean, 0) AS gap
+FROM district_means AS dm
+JOIN districts AS d ON dm.district = d.district
+JOIN state_means AS sm ON sm.state = d.state
+ORDER BY d.state, gap DESC;</textarea></div>
+<p>Each CTE can be run on its own while you build the query: copy the inside of <code class="inline">district_means</code> into a fresh SELECT to check it before you rely on it. That habit catches most join mistakes early.</p>
+<p><strong>Try it:</strong> in the CTE query, add <code class="inline">WHERE area = 'Rural'</code> to both CTEs, so the comparison is rural households only. Remember that the second CTE needs <code class="inline">h.area</code>.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Window functions &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 9</div>
+<h2>Window functions: rank and compare within groups</h2>
+<p><code class="inline">GROUP BY</code> collapses each group to one row. A <strong>window function</strong> computes across a group but keeps every row. The group is set by <code class="inline">OVER (PARTITION BY ...)</code>. SQLite has supported window functions since version 3.25 (2018); the version check in module 1 shows the one running here.</p>
+<h3>Each household against its district mean</h3>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT hh_id, district, monthly_pc_exp,
+       ROUND(AVG(monthly_pc_exp) OVER (PARTITION BY district), 0) AS district_mean,
+       ROUND(monthly_pc_exp - AVG(monthly_pc_exp) OVER (PARTITION BY district), 0) AS gap
+FROM households
+ORDER BY district, hh_id
+LIMIT 12;</textarea></div>
+<h3>Number the rows within each group</h3>
+<p><code class="inline">ROW_NUMBER()</code> numbers rows 1, 2, 3 within each partition, in the order you give. Wrap it in a CTE and keep numbers 1 to 3 to get the three lowest-spending households in every district: a common first step when drawing a list for a field visit.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">WITH ranked AS (
+  SELECT hh_id, district, caste, monthly_pc_exp,
+         ROW_NUMBER() OVER (PARTITION BY district ORDER BY monthly_pc_exp) AS rn
+  FROM households
+)
+SELECT district, rn, hh_id, caste, monthly_pc_exp
+FROM ranked
+WHERE rn &lt;= 3
+ORDER BY district, rn;</textarea></div>
+<p>Look at Indore: households 59 and 62 both spend 1,640 but get numbers 1 and 2. <code class="inline">ROW_NUMBER()</code> breaks ties in an order you did not choose, and it can change between runs or databases. Add a second sort key, <code class="inline">ORDER BY monthly_pc_exp, hh_id</code>, to make the list repeatable.</p>
+<h3>RANK and ties</h3>
+<p><code class="inline">RANK()</code> gives tied values the same rank and then skips; <code class="inline">ROW_NUMBER()</code> never ties. Here the districts are ranked by the share of households with a bank account, computed in a CTE first.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">WITH d AS (
+  SELECT district,
+         ROUND(100.0 * AVG(has_bank_account = &#x27;Yes&#x27;), 1) AS pct_bank
+  FROM households
+  GROUP BY district
+)
+SELECT district, pct_bank,
+       RANK()       OVER (ORDER BY pct_bank DESC) AS rnk,
+       ROW_NUMBER() OVER (ORDER BY pct_bank DESC) AS row_num
+FROM d
+ORDER BY rnk, district;</textarea></div>
+<p>Barmer, Kozhikode, Patna and Rewa all have 91.7 per cent, so all four get rank 1 and the next district, Gaya, gets rank 5. <code class="inline">DENSE_RANK()</code> does the same without skipping; add it as a third column and compare.</p>
+<p><strong>Try it:</strong> in the ROW_NUMBER query, add <code class="inline">DESC</code> after <code class="inline">monthly_pc_exp</code> inside <code class="inline">OVER (...)</code> to list the three highest spenders instead. Then partition by <code class="inline">caste</code>.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="7">Next: NULLs &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="7" role="tabpanel">
+<div class="eyebrow">Module 8 of 9</div>
+<h2>Missing values: NULL</h2>
+<p>NULL means <em>unknown</em> or <em>not recorded</em>. SQL keeps it apart from zero and from an empty string, and it follows its own rules. The three teaching tables have no missing values, so this cell makes a small table that does: a follow-up visit log where some visits recorded no expenditure. The table is invented.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">DROP TABLE IF EXISTS followup;
+CREATE TEMP TABLE followup (hh_id INTEGER, visit_month TEXT, pc_exp_followup INTEGER);
+INSERT INTO followup VALUES
+  (1, &#x27;2026-06&#x27;, 3400),
+  (2, &#x27;2026-06&#x27;, NULL),
+  (3, &#x27;2026-06&#x27;, 2900),
+  (4, &#x27;2026-06&#x27;, NULL),
+  (5, &#x27;2026-06&#x27;, 0);
+SELECT * FROM followup;</textarea></div>
+<h3>Counting and averaging skip NULL</h3>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT COUNT(*)               AS visits,
+       COUNT(pc_exp_followup) AS recorded,
+       AVG(pc_exp_followup)   AS mean_recorded,
+       SUM(pc_exp_followup) / COUNT(*) AS mean_if_missing_were_zero
+FROM followup;</textarea></div>
+<p><code class="inline">AVG</code> divides by the 3 recorded values and leaves out the 2 visits with nothing recorded. That is usually what you want, but say so when you report it: "mean of 3 households with a recorded value". Treating a missing value as zero, as the last column does, pulls the mean down without any evidence that those households spent nothing.</p>
+<h3>Test for NULL with IS NULL</h3>
+<p>Any comparison with NULL gives NULL, which <code class="inline">WHERE</code> treats as false. So <code class="inline">= NULL</code> matches nothing. Run this and compare the two counts.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT
+  (SELECT COUNT(*) FROM followup WHERE pc_exp_followup = NULL)  AS with_equals,
+  (SELECT COUNT(*) FROM followup WHERE pc_exp_followup IS NULL) AS with_is_null;</textarea></div>
+<h3>COALESCE and NULLIF</h3>
+<p><code class="inline">COALESCE(a, b)</code> returns the first value that is not NULL, which is useful for labels. <code class="inline">NULLIF(x, 0)</code> turns a zero into NULL, which protects a division from a zero denominator.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT hh_id,
+       COALESCE(CAST(pc_exp_followup AS TEXT), &#x27;not recorded&#x27;) AS shown,
+       ROUND(1000.0 / NULLIF(pc_exp_followup, 0), 3) AS per_1000
+FROM followup;</textarea></div>
+<div class="info-box"><strong>Other databases.</strong> SQLite returns NULL when you divide by zero. PostgreSQL and SQL Server stop with an error instead, which is why <code class="inline">NULLIF(x, 0)</code> is worth writing every time.</div>
+<p>Left joins create NULLs too, as module 5 showed. To find households in the follow-up log that match nothing in <code class="inline">households</code>, or the other way round, join and keep the rows where the right-hand key <code class="inline">IS NULL</code>. The next module uses exactly that.</p>
+<p><strong>Try it:</strong> add a row with <code class="inline">INSERT INTO followup VALUES (6, '2026-06', NULL);</code> at the top of the second cell, run it, and check which counts change.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="6">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="8">Next: MIS data &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="8" role="tabpanel">
+<div class="eyebrow">Module 9 of 9</div>
+<h2>Working with an MIS export</h2>
+<p>Scheme and programme MIS systems hold records as rows: one per beneficiary, per payment, per visit or per month. When you download an export, you get a table, and the questions you ask of it are the ones in this course: how many, where, how much, who is missing, which rows repeat.</p>
+<p>The cell below builds a small export from the households table. Every value in it is invented, including the amount and the month, and its columns are chosen for teaching: they do not copy any real portal's layout. Run it first; it reports how many rows it made (93).</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">-- Build an invented MIS-style export from the households table.
+-- Run this cell first; the table lasts until you reload the page.
+DROP TABLE IF EXISTS mis_payments;
+CREATE TEMP TABLE mis_payments (
+  payment_id   INTEGER,
+  beneficiary_id INTEGER,  -- the household&#x27;s id in the programme register
+  district     TEXT,
+  month        TEXT,       -- YYYY-MM, stored as text
+  amount       REAL,
+  status       TEXT
+);
+-- One credited payment for most households that reported a transfer
+INSERT INTO mis_payments
+SELECT hh_id * 10, hh_id, district, &#x27;2026-04&#x27;, 500, &#x27;Credited&#x27;
+FROM households
+WHERE received_transfer = &#x27;Yes&#x27; AND hh_id % 9 &lt;&gt; 0;
+-- A few failed payments, and one row entered twice
+INSERT INTO mis_payments
+SELECT hh_id * 10 + 1, hh_id, district, &#x27;2026-04&#x27;, 500, &#x27;Failed&#x27;
+FROM households
+WHERE received_transfer = &#x27;No&#x27; AND hh_id % 13 = 0;
+INSERT INTO mis_payments
+SELECT payment_id, beneficiary_id, district, month, amount, status
+FROM mis_payments
+WHERE beneficiary_id = (SELECT MIN(beneficiary_id) FROM mis_payments);
+SELECT COUNT(*) AS rows_in_export FROM mis_payments;</textarea></div>
+<h3>Check for duplicates before you count anything</h3>
+<p>A payment entered twice inflates every total built on it. Group by the id and keep the groups that appear more than once.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT payment_id, beneficiary_id, COUNT(*) AS copies
+FROM mis_payments
+GROUP BY payment_id, beneficiary_id
+HAVING COUNT(*) &gt; 1;</textarea></div>
+<p>One payment, number 30 for beneficiary 3, appears twice.</p>
+<h3>Totals by district and status</h3>
+<p>Count distinct beneficiaries as well as rows, so a duplicate cannot pass as an extra person.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT district, status,
+       COUNT(*) AS payment_rows,
+       COUNT(DISTINCT beneficiary_id) AS beneficiaries,
+       SUM(amount) AS amount
+FROM mis_payments
+GROUP BY district, status
+ORDER BY district, status;</textarea></div>
+<p>Rewa shows 11 credited rows but 10 beneficiaries, and 5,500 rupees where the true figure is 5,000. That is the duplicate from the last query. Drop it with <code class="inline">SELECT DISTINCT</code> in a CTE, or sum over distinct payment ids, before any total leaves your hands.</p>
+<h3>Reconcile the export with the survey</h3>
+<p>Households that told the survey they received a transfer, but have no credited payment in the export, are the cases to follow up. A left join from the survey side, keeping rows where the MIS side is NULL, finds them. This pattern is often called an <em>anti-join</em>.</p>
+<div class="code-cell" data-lang="sql"><textarea class="code-input" spellcheck="false" aria-label="SQL code editor">SELECT h.district, COUNT(*) AS reported_but_not_in_mis
+FROM households AS h
+LEFT JOIN mis_payments AS m
+  ON m.beneficiary_id = h.hh_id AND m.status = &#x27;Credited&#x27;
+WHERE h.received_transfer = &#x27;Yes&#x27;
+  AND m.beneficiary_id IS NULL
+GROUP BY h.district
+ORDER BY reported_but_not_in_mis DESC;</textarea></div>
+<p>A gap here has several possible causes, and the query cannot tell them apart: the survey answer may be wrong, the payment may sit in a month outside the export, or the household may be missing from the register. The query tells you where to look.</p>
+<div class="info-box warning"><strong>Real MIS data is personal data.</strong> A beneficiary export usually carries names, phone numbers, bank details or ID numbers. Work with the fewest columns you need, replace identifiers with a study id before analysis, and check your obligations under the Digital Personal Data Protection Act, 2023. The <a href="/101-courses/data-protection-dpdp.html" style="color:var(--accent-color)">Data Protection &amp; the DPDP Act</a> deck covers them.</div>
+<p><strong>Try it:</strong> change the reconciliation to count households that said <em>No</em> to a transfer but do have a credited payment. You need to flip the survey condition and change <code class="inline">IS NULL</code> to <code class="inline">IS NOT NULL</code>.</p>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/shiny.html" style="color:var(--text-primary)">Shiny Dashboards for Development Data</a></h4><p>Put a summary like the ones above into an interactive dashboard, in R or Python.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/r-python.html" style="color:var(--text-primary)">R &amp; Python for Development</a></h4><p>Do the same grouping and joining with data frames, and add charts and regression.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-lit.html" style="color:var(--text-primary)">Data Literacy 101</a></h4><p>Reading numbers critically before you query them.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/eda-hhs.html" style="color:var(--text-primary)">Exploratory Data Analysis 101</a></h4><p>What to look for first in a household survey.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-protection-dpdp.html" style="color:var(--text-primary)">Data Protection &amp; the DPDP Act 101</a></h4><p>Handling beneficiary and survey records lawfully.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="7">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=3b5d57ac" defer></script>
+</body>
+</html>

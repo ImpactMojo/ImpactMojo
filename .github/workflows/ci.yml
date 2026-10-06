@@ -585,6 +585,22 @@ jobs:
         # which had overstated every older year by 2-6%.
         run: python3 scripts/build-budget-history.py --check
 
+  code-studio:
+    name: Code Studio pages match their specs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # /code/ is generated from scripts/code-studio/specs/. A page edited by
+      # hand, or a spec edited without a rebuild, ships a page that disagrees
+      # with its source; and the teaching datasets must stay what the
+      # generator writes, because the lessons quote their results.
+      - name: Pages are current
+        run: python3 scripts/build-code-studio.py --check
+      - name: Datasets are current
+        run: python3 scripts/code-studio/make-data.py --check
+
   decks:
     name: 101 deck density
     runs-on: ubuntu-latest
