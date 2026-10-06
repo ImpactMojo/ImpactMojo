@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.339.0 — October 6, 2026 (numbers in translations)
+
+### Fixed
+
+- **Translated pages now give the same numbers as the English.** Every translated string in the Hindi, Bengali, Marathi, Tamil and Telugu page dictionaries was compared with its English source for the numbers it carries. Of 403 differences, 205 were the same quantity written in words or in lakh and crore and were left alone; 198 were corrected. Among them: review counts and reading counts that had been dropped, user and player counts that had changed (1.2K players shown as 2,300 in Hindi, 340 users as 34 in Tamil), "117 puzzles" given as 135, "101" course titles rendered as "1", "10001", "fifty-one" or "introduction", course codes such as L8 and C12 translated as words (L8 became "lame" in Hindi), a Black (1948) citation given as 1918 in Marathi, and "NEP 2020" rendered in Telugu as "Narendra Modi scheme". No English text changed (#1157).
+
+### For Learners
+
+- **Translations you can trust on the numbers.** Courses and the home page in Hindi, Bengali, Marathi, Tamil and Telugu now show the same figures as the English pages.
+
 ## v10.338.0 — October 6, 2026 (practice packs fact-checked)
 
 ### Changed
