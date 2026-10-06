@@ -67,7 +67,7 @@ window.RESULTSCHAIN = (function () {
   var programmes = [
     {
       id: "mgnrega", name: "MGNREGA", since: "2005", colour: "#b45309",
-      what: "A legal guarantee of a hundred days of wage employment a year to any rural household whose adults will do unskilled manual work.",
+      what: "A legal guarantee of a hundred days of wage employment a year to any rural household whose adults will do unskilled manual work. The Act was repealed from 1 July 2026 and replaced by the Viksit Bharat G RAM G Act 2025, which raises the guarantee to 125 days.",
       chain: {
         inputs: { state: "continuous", instrument: "Union Budget and the scheme's own fund release records",
           detail: "Allocation and state-wise release are published and revised in public through the year.",
