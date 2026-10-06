@@ -37,6 +37,10 @@ SECTIONS = [
   ("impact-eval","Impact Evaluation 101","si_Check_circle","cyan","Attribution, counterfactuals & rigorous evaluation."),
   ("mixed-methods","Mixed Methods 101","si_Arrow_right","amber","Combining quantitative & qualitative research."),
   ("survey-design","Survey Design 101","si_Fact_check","cyan","Questionnaires, sampling & fieldwork quality."),
+  ("research-methods","Research Methods 101","si_Fact_check","cyan","From an answerable question to design, data & write-up."),
+  ("quant-methods","Quantitative Methods 101","si_Bar_chart","indigo","Weights, sampling error, regression & power, read with care."),
+  ("causal-inference","Causal Inference 101","si_Target","indigo","Counterfactuals, selection bias & the designs that answer them."),
+  ("participatory-methods","Participatory Methods 101","si_Chat","amber","PRA, social audits, Photovoice & who holds the pen."),
  ]),
  ("Gender & Social", "Gender, care, learning and the social fabric.", [
   ("data-feminism","Data Feminism 101","si_Heart","red","Power & data through a feminist lens."),
@@ -48,11 +52,20 @@ SECTIONS = [
   ("feminist-research","Feminist Research 101","si_Flare","red","Power, reflexivity & voice in research."),
   ("gender-mainstreaming","Gender Mainstreaming 101","si_Target","indigo","Integrating gender across the programme cycle."),
   ("wee-studies","Women's Economic Empowerment 101","si_Briefcase","red","Resources, agency & achievements."),
+  ("gender-dev","Gender & Development 101","si_Heart","red","Gender needs, bargaining, work, care & representation."),
+  ("caste-studies","Caste Studies 101","si_Activity","red","Caste as a structure of inequality, from jati to reservations."),
+  ("inclusive-education","Inclusive Education 101","si_Book","green","Disability, caste, language & the inclusive classroom."),
+  ("education-policy","Education Policy 101","si_Book","cyan","RTE, NEP 2020, learning data & what works in schools."),
+  ("fln","Foundational Literacy & Numeracy 101","si_Book","amber","How children learn to read & count, and how to teach them."),
  ]),
  ("Health & Childhood", "Public health, maternal care and early childhood.", [
   ("pub-health-basics","Public Health 101","si_Activity","green","Population health, epidemiology & UHC."),
   ("maternal-health","Maternal Health 101","si_Heart","red","Safe pregnancy, birth & the continuum of care."),
   ("child-development","Child Development 101","si_Heart","green","Early childhood development & the first 1,000 days."),
+  ("child-rights","Child Rights 101","si_Heart","amber","The UNCRC, the JJ Act, POCSO, RTE & child participation."),
+  ("mental-health","Mental Health 101","si_Heart","indigo","Burden, law, task sharing & measurement in South Asia."),
+  ("nutrition","Nutrition 101","si_Leaf","green","Stunting, anaemia, NFHS data & the food schemes."),
+  ("social-determinants-health","Social Determinants of Health 101","si_Activity","cyan","How wealth, caste, gender & place shape health."),
  ]),
  ("Governance & Economy", "The state, institutions and resources.", [
   ("ind-constitution","Indian Constitution 101","si_Flag","cyan","Rights, federalism, the judiciary & the basic structure."),
@@ -63,6 +76,11 @@ SECTIONS = [
   ("toc-workbench","Theory of Change 101","si_Target","cyan","Causal maps from activity to impact."),
   ("advocacy-basics","Advocacy Basics 101","si_Flag","red","Influencing policy, power & norms."),
   ("bcc-comms","Behaviour Change Communication 101","si_Chat","green","From awareness to action."),
+  ("programme-design","Programme Design 101","si_Target","cyan","Problem trees to budgets, targeting & plans for scale."),
+  ("human-rights","Human Rights 101","si_Flag","red","The UDHR, the treaty bodies, Article 21 & rights in programmes."),
+  ("governance-accountability","Governance & Accountability 101","si_Check_circle","cyan","RTI, social audits, the CAG & what improves services."),
+  ("public-policy-101","Public Policy 101","si_Flag","indigo","How policy is made in India, and how it is carried out."),
+  ("aid-philanthropy","Aid & Philanthropy 101","si_Wallet","amber","ODA, CSR, the FCRA & how to read a funder."),
  ]),
  ("Critical & Digital", "Power, ethics, environment and the digital world.", [
   ("decolonize-dev","Decolonial Development 101","si_Globe_detailed","red","Decolonising development thought & practice."),
@@ -70,6 +88,8 @@ SECTIONS = [
   ("env-justice","Environmental Justice 101","si_Leaf","green","The unequal distribution of environmental harm."),
   ("post-truth-101","Post-Truth Politics 101","si_Info","amber","Mis/disinformation, bias & resilience."),
   ("visual-eth","Visual Ethnography 101","si_Library_books","indigo","Studying culture through images."),
+  ("media-comms","Media & Communications 101","si_Info","amber","Press law, platforms, op-eds & working with journalists."),
+  ("digital-rights-ai","Digital Rights & AI 101","si_Lock","indigo","Shutdowns, surveillance, DPI & AI in welfare."),
  ]),
 ]
 

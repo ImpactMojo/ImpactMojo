@@ -1935,7 +1935,7 @@ DECK = {
                   ["Campbell Collaboration and 3ie methods guides", "Standards and templates for development reviews; the quasi-experimental risk-of-bias tool", "Free at campbellcollaboration.org and 3ieimpact.org"],
                   ["Donthu et al. 2021, <em>Journal of Business Research</em> 133:285", "Guidelines for a bibliometric analysis", "Journal article"],
                   ["Cochrane Interactive Learning; Campbell's online course", "Structured courses with exercises", "Cochrane's is paid, with free access in some low- and middle-income countries; Campbell's is free"],
-                  ["ImpactMojo", "Survey Design 101, Impact Evaluation 101 and Research Methods 101 in this series cover the primary studies these reviews synthesise", "impactmojo.in/101-courses/"]]},
+                  ["ImpactMojo", "Survey Design 101, Impact Evaluation 101 and <a href="/101-courses/research-methods.html" style="color:inherit;text-decoration:underline">Research Methods 101</a> in this series cover the primary studies these reviews synthesise", "impactmojo.in/101-courses/"]]},
          ]},
 
         {"type": "content", "label": "Summary", "title": "What to remember",

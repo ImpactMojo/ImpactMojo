@@ -11,6 +11,7 @@ Appends with the file's 2-space indentation without reflowing existing entries.
 
 Usage:  python3 scripts/deck-builder/sync_search_index.py
 """
+import html
 import importlib.util
 import json
 import re
@@ -41,6 +42,16 @@ DECKS = [
     ("gender_mainstreaming","gender-mainstreaming"), ("impact_eval","impact-eval"),
     ("maternal_health","maternal-health"), ("mixed_methods","mixed-methods"),
     ("survey_design","survey-design"),
+    ("research_methods", "research-methods"), ("quant_methods", "quant-methods"),
+    ("causal_inference", "causal-inference"), ("programme_design", "programme-design"),
+    ("participatory_methods", "participatory-methods"), ("gender_dev", "gender-dev"),
+    ("caste_studies", "caste-studies"), ("human_rights", "human-rights"),
+    ("child_rights", "child-rights"), ("governance_accountability", "governance-accountability"),
+    ("public_policy", "public-policy-101"), ("aid_philanthropy", "aid-philanthropy"),
+    ("inclusive_education", "inclusive-education"), ("education_policy", "education-policy"),
+    ("fln", "fln"), ("mental_health", "mental-health"), ("nutrition", "nutrition"),
+    ("social_determinants_health", "social-determinants-health"),
+    ("media_comms", "media-comms"), ("digital_rights_ai", "digital-rights-ai"),
 ]
 
 STOP = {"and", "the", "for", "of", "to", "in", "a", "an", "101", "amp"}
@@ -66,7 +77,7 @@ def make_tags(title):
 
 def short_desc(deck):
     # Trim the spec description to a single clean sentence-ish blurb.
-    d = re.sub(r"\s+", " ", deck["description"]).strip()
+    d = re.sub(r"\s+", " ", html.unescape(deck["description"])).strip()
     return d
 
 
@@ -80,7 +91,7 @@ def build_entries():
         deck = load_deck(module)
         out.append({
             "id": f"101-{slug.lower()}",
-            "title": deck["title"],
+            "title": html.unescape(deck["title"]),
             "description": short_desc(deck),
             "url": f"/101-courses/{slug}.html",
             "tags": make_tags(deck["title"]),
