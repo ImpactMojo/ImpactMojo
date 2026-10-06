@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.338.0 — October 6, 2026 (practice packs fact-checked)
+
+### Changed
+
+- **All 18 practice packs checked against their sources.** Corrections include Matthew Kraft's effect-size benchmarks (below 0.05 SD small, 0.05 to below 0.20 medium, 0.20 or more large), which two packs had misstated; the Teaching at the Right Level evidence as reported in Banerjee et al. (2016), with Rukmini Banerji's 2021 Yidan Prize; the PARAKH Rashtriya Sarvekshan 2024 as the successor to the National Achievement Survey; NFHS-6 women's participation in household decisions (85.1% in Bihar, where a pack had 32%); the NCD share of deaths (63%, WHO country profile); PM-KISAN's 21st instalment (about 9 crore farmers, November 2025); ASHA pay as set out in a Lok Sabha answer of 24 July 2026; and current prices for KoboToolbox, CommCare and AppSheet. A ToR budget that summed to Rs 13,67,400 had stated Rs 14,67,400, and sample-size and attrition arithmetic was redone where it did not add up. Worked examples that attached invented findings to real organisations or schemes are now labelled illustrative or use unnamed composite cases, and instruments and surveys that do not exist were removed. NP-NCD replaces its former name, NPCDCS, and MGNREGA examples note its repeal from 1 July 2026.
+
+### For Learners
+
+- **Practice packs you can rely on.** Every practice pack has been checked against the studies, surveys and official figures it uses, and invented examples are marked as illustrative.
+
 ## v10.337.0 — October 6, 2026 (handouts fact-checked)
 
 ### Changed
