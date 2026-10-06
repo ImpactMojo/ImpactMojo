@@ -345,11 +345,11 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
         <div class="article-content">
 <h2>The day we discovered our website was lying to us</h2>
 <p>On 7 April 2026 we merged a continuous integration fix to ImpactMojo, a correction to how our accessibility workflows read their own results. We expected nothing visible to happen. Instead, the fix uncovered <strong>393 accessibility violations</strong> on the 13 pages our pa11y-ci scanner tests, hidden in plain sight since the audits were set up.</p>
-<p>Every pull request before that fix, including the nine merged in the session before it, had been silently passing accessibility checks. Every dashboard said "all green." Every commit said "tests passing." But the underlying tools (axe-core and pa11y-ci, two widely used open-source accessibility scanners) were producing failure reports that the workflow was misreading as successes. The bug was an exit-code check: <code>$?</code> after a piped command captures the exit code of the last command in the pipe (in our case, <code>tee</code>, which always returns zero), not the upstream command we cared about. The fix was <code>${PIPESTATUS[0]}</code>.</p>
+<p>Every pull request before that fix, including the nine merged in the session before it, had been silently passing accessibility checks. Every dashboard said "all green." Every commit said "tests passing." But the underlying tools (axe-core and pa11y-ci, the two industry-standard accessibility scanners) were producing failure reports that the workflow was misreading as successes. The bug was an exit-code check: <code>$?</code> after a piped command captures the exit code of the last command in the pipe (in our case, <code>tee</code>, which always returns zero), not the upstream command we cared about. The fix was <code>${PIPESTATUS[0]}</code>.</p>
 <p>A change of a few characters exposed hundreds of hidden errors. This is the story of what we found, what we fixed, and what we learned about the gap between "technically accessible" and "actually accessible."</p>
 
 <h2>What WCAG 2.1 AA actually means</h2>
-<p>The Web Content Accessibility Guidelines (WCAG) 2.1 Level AA are the W3C standard for web accessibility. Level AA is the target we hold ourselves to, and it is a minimum: the level that lets people with low vision, dyslexia or motor impairments, and people who use screen readers, use a website at all. Our own accessibility statement commits to it.</p>
+<p>The Web Content Accessibility Guidelines (WCAG) 2.1 Level AA are the W3C standard for web accessibility. Level AA is the target we hold ourselves to. It is the floor: the minimum that lets people with low vision, dyslexia, motor impairments, screen readers, and many other conditions actually use a website. It is also what most government partnerships, UN agencies, and educational institutions require their digital partners to meet. Our own accessibility statement commits to it.</p>
 <p>The rules are concrete. Text must have a contrast ratio of at least 4.5:1 against its background, or 3:1 for large text (Success Criterion 1.4.3). Every form field needs a label. Every interactive element needs a name that screen readers can announce. Colour must not be the only thing that sets a link apart from the text around it (1.4.1). Heading levels should not skip, and a link to an #anchor should land on an element that exists. Scanners flag both, although they are best practice more than strict pass-or-fail criteria.</p>
 <p>None of this is glamorous. The World Health Organization estimates that 1.3 billion people, 16 percent of the world's population, live with a significant disability. Not every one of them meets barriers on the web, and for those who do, these rules decide whether a website includes them.</p>
 
@@ -362,18 +362,18 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <li><strong>Pass 4 (14 → 1):</strong> Two CSS faults. In four files a selector list grouped <code>[data-theme="light"]</code> with body.dark-mode, so the light theme received dark-theme token values. Separating them removed most of what was left, and the gradient fallbacks had to be declared after the gradient shorthand to take effect.</li>
 <li><strong>Pass 5 (1 → 0):</strong> A single text colour on a contact button. Done.</li>
 </ul>
-<p>Five passes took the count from 393 errors to zero on all thirteen pages our scanner tests.</p>
+<p>Five passes, roughly four hours of focused work, took the count from 393 errors to zero on all thirteen pages our scanner tests.</p>
 
 <figure class="article-illustration" role="group" aria-labelledby="fig1-caption">
 <img loading="lazy" src="../assets/images/blog/making-accessible-websites/illustration-1.png"
      alt="Bar chart of scanner errors falling from 393 at the start to 77 after pass 1, 21 after pass 2, 14 after pass 3, 1 after pass 4 and 0 after pass 5">
-<figcaption id="fig1-caption">From 393 errors to zero in five passes. Pass 1, a single button colour on the dataverse page, accounted for the largest single reduction.</figcaption>
+<figcaption id="fig1-caption">From 393 errors to zero in five passes: four hours, two people. Pass 1, a single button colour on the dataverse page, accounted for the largest single reduction.</figcaption>
 </figure>
 
 <h2>The five lessons that travel</h2>
 
 <h3>1. Your CI is probably lying to you about something</h3>
-<p>The deepest bug was in the checking itself: for weeks we had been adding features and shipping pull requests while believing our accessibility tests were passing. The workflow was structured in a way that was easy to miss in code review (a piped command, an exit code check, a wrapper script that posted "All pages passed" if it took the wrong branch). Telling a team to be more careful would not have caught this. Assuming that a green check might be lying, and testing the failure path, would. The workflow now reads the audit's own exit code, and a separate step fails the job when that code is non-zero.</p>
+<p>The deepest bug was in the checking itself: for weeks we had been adding features and shipping pull requests while believing our accessibility tests were passing. The workflow was structured in a way that was easy to miss in code review (a piped command, an exit code check, a wrapper script that posted "All pages passed" if it took the wrong branch). Telling a team to be more careful would not have caught this. Assuming that a green check might be lying, and testing the failure path, would. The workflow now reads the audit's own exit code, and a separate step fails the job when that code is non-zero. We now have a test that intentionally introduces a violation and confirms CI catches it.</p>
 
 <h3>2. Most accessibility bugs are caused by a small number of root causes</h3>
 <p>When you see "393 violations," it sounds like a project. But 271 of those came from one colour on one button class, repeated across roughly 260 cards on a single page. Most of the rest traced to a handful of shared causes: brand colours used as text, unlabelled form fields, an inverted theme default and a selector bug. The work was to find those five patterns, and the 393 followed from them.</p>
@@ -386,9 +386,9 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 </figure>
 
 <h3>3. Brand colours and accessibility are in tension, and it takes design work to resolve it</h3>
-<p>Our brand uses sky-500 (<code>#0EA5E9</code>) prominently. White text on a sky-500 button gives 2.77:1, and so does sky-500 text on a white background, because the ratio is the same in both directions. Both fail WCAG AA. So do indigo-500 (4.47:1 as text, just under the line), emerald-500 (2.54:1) and amber-500 (2.15:1). These are Tailwind's default 500 shades.</p>
+<p>Our brand uses sky-500 (<code>#0EA5E9</code>) prominently. White text on a sky-500 button gives 2.77:1, and so does sky-500 text on a white background, because the ratio is the same in both directions. Both fail WCAG AA. So do indigo-500 (4.47:1 as text, just under the line), emerald-500 (2.54:1) and amber-500 (2.15:1). These are the default bright choices in almost every modern design system, including Tailwind, Material, and Ant Design.</p>
 <p>Keep the brand and define <em>two</em> versions of every brand colour: a "decorative" version (used for backgrounds, borders, focus rings, icons) and a "text" version that is two or three steps darker on the same hue. Sky-500 stays for the gradient backgrounds; sky-800 (<code>#075985</code>) takes over for any sky-coloured text. Indigo-500 stays for fills and borders; indigo-700 (<code>#4338CA</code>) is the indigo text. And so on.</p>
-<p>This is design work, and it belongs in your design system before the code is written. Retrofitting it across an existing site is the slow, mechanical work we spent that session on.</p>
+<p>This is design work, and it belongs in your design system before the code is written. Retrofitting it across an existing site is exactly the kind of slow, mechanical work we just spent four hours on.</p>
 
 <figure class="article-illustration" role="group" aria-labelledby="fig2-caption">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="fig2-title fig2-desc" style="width:100%;height:auto;background:#FFFFFF;border-radius:12px;border:1px solid #E2E8F0;font-family:'Inter',sans-serif;">
@@ -458,7 +458,7 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <text x="600" y="520" font-size="13" fill="#475569" text-anchor="middle" font-style="italic">Using the -500 shade as text is where the trouble starts.</text>
 <text x="600" y="540" font-size="13" fill="#475569" text-anchor="middle">Define a "text" variant two or three steps darker on the same hue.</text>
 </svg>
-<figcaption id="fig2-caption">Tailwind's default palette has this trap. The fix is to define decorative and text variants of each brand colour up front, in the design system.</figcaption>
+<figcaption id="fig2-caption">Every major design system has this trap. The fix is to define decorative and text variants of each brand colour up front, in the design system.</figcaption>
 </figure>
 
 <h3>4. Automated tests miss things, but they miss less than you think</h3>
@@ -467,17 +467,17 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <p>You need both. Automated tests catch the high-volume mechanical issues so that human review can focus on the things that require judgement. A team that skips them has the same bugs and finds fewer of them.</p>
 
 <h3>5. Most users will never notice the bugs you are fixing</h3>
-<p>Most readers will see no difference between sky-500 text and sky-800 text, and will never know we changed anything.</p>
-<p>The people who benefit are the ones who <em>do</em> notice. Older users whose contrast sensitivity has declined. Users with low vision or colour blindness. Users on cracked phone screens or in bright sunlight. Users with screen readers who cannot use a form field that has no label. Users with motor impairments who cannot click a button that has no accessible name. These users were always there. They were just unable to use the parts of our site we never tested.</p>
-<p>We work in development education in South Asia, and our accessibility statement says a platform that cannot be used by people with disabilities is not actually free. Meeting WCAG 2.1 AA is part of reaching the audience we say we serve.</p>
+<p>Here is the plain version. Most ImpactMojo users have normal vision, modern devices, and good lighting. They will see no visual difference between sky-500 text and sky-800 text, and they will never know we changed anything. Does that mean the work was unnecessary?</p>
+<p>No. The work is for the people who <em>do</em> notice. Older users whose contrast sensitivity has declined. Users with low vision or colour blindness. Users on cracked phone screens or in bright sunlight. Users with screen readers who cannot use a form field that has no label. Users with motor impairments who cannot click a button that has no accessible name. These users were always there. They were just unable to use the parts of our site we never tested.</p>
+<p>We work in development education, in a region where many of our users are older, on shared devices, on slower connections, with regional-language screen readers. The accessibility floor is not optional for us. It is what allows the site to reach the audience we say we serve. Our accessibility statement says a platform that cannot be used by people with disabilities is not actually free.</p>
 
 <h2>What to do if you are starting from scratch</h2>
 <p>If you are about to build a website, or you are auditing one for the first time, here is the shortest path we know:</p>
 <ol>
-<li><strong>Pick a contrast checker before you pick a colour palette.</strong> The <a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener">WebAIM Contrast Checker</a> is free and applies the WCAG contrast formula. Test every text-on-background combination in your design system before you ship. If you cannot get to 4.5:1 with a brand colour as text, define a darker variant for text use.</li>
-<li><strong>Run axe-core or pa11y on at least your top five pages, on every pull request.</strong> Make the test fail the build if a serious violation is introduced.</li>
+<li><strong>Pick a contrast checker before you pick a colour palette.</strong> The <a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener">WebAIM Contrast Checker</a> is free and definitive, and applies the WCAG contrast formula. Test every text-on-background combination in your design system before you ship. If you cannot get to 4.5:1 with a brand colour as text, define a darker variant for text use.</li>
+<li><strong>Run axe-core or pa11y on at least your top five pages, on every pull request.</strong> Make the test fail the build if a serious violation is introduced. This is one afternoon of CI setup that pays for itself within weeks.</li>
 <li><strong>Verify your CI actually fails when it should.</strong> Push a test commit with a deliberately broken contrast ratio. If your build still says green, your test pipeline is lying to you. Fix that first.</li>
-<li><strong>Label every form field.</strong> Use a real <code>&lt;label for="..."&gt;</code> element, or an <code>aria-label</code> attribute, or both. A placeholder is not a label.</li>
+<li><strong>Label every form field.</strong> Use a real <code>&lt;label for="..."&gt;</code> element, or an <code>aria-label</code> attribute, or both. A placeholder is not a label. Your screen-reader users will thank you, and your search-engine ranking will improve.</li>
 <li><strong>Make every anchor link point to something that exists.</strong> If your jump nav points to <code>#data-technology</code>, make sure there is an element with <code>id="data-technology"</code> on the page. If the target is rendered by JavaScript, add a static placeholder so it exists at load time.</li>
 <li><strong>Test in a screen reader at least once.</strong> Mac users can turn on VoiceOver with <kbd>Cmd+F5</kbd>. It will be uncomfortable. That is the point: the people who depend on a screen reader cannot switch it off.</li>
 </ol>
@@ -488,7 +488,7 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <desc id="fig3-desc">A numbered checklist of six actions for teams beginning accessibility work: pick a contrast checker, run axe-core or pa11y on every pull request, verify CI actually fails when it should, label every form field, make every anchor link point to something that exists, and test in a screen reader at least once.</desc>
 
 <text x="600" y="40" font-size="22" font-weight="700" fill="#0F172A" text-anchor="middle">Starting accessibility from scratch</text>
-<text x="600" y="62" font-size="14" fill="#475569" text-anchor="middle">Six concrete actions for teams starting out</text>
+<text x="600" y="62" font-size="14" fill="#475569" text-anchor="middle">Six concrete actions that pay for themselves within weeks</text>
 
 <!-- Step 1 -->
 <rect x="80" y="90" width="1040" height="72" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" rx="10"/>
@@ -502,7 +502,7 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <circle cx="130" cy="212" r="26" fill="#075985"/>
 <text x="130" y="220" font-size="22" font-weight="800" fill="#FFFFFF" text-anchor="middle">2</text>
 <text x="180" y="206" font-size="17" font-weight="700" fill="#0F172A">Run axe-core or pa11y on your top 5 pages, every PR</text>
-<text x="180" y="230" font-size="13" fill="#475569">Make the build fail on serious violations.</text>
+<text x="180" y="230" font-size="13" fill="#475569">Make the build fail on serious violations. One afternoon of setup pays for itself within weeks.</text>
 
 <!-- Step 3 -->
 <rect x="80" y="262" width="1040" height="72" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" rx="10"/>
@@ -516,7 +516,7 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <circle cx="130" cy="384" r="26" fill="#4338CA"/>
 <text x="130" y="392" font-size="22" font-weight="800" fill="#FFFFFF" text-anchor="middle">4</text>
 <text x="180" y="378" font-size="17" font-weight="700" fill="#0F172A">Label every form field</text>
-<text x="180" y="402" font-size="13" fill="#475569">Real &lt;label for="..."&gt; or aria-label, not placeholder text.</text>
+<text x="180" y="402" font-size="13" fill="#475569">Real &lt;label for="..."&gt; or aria-label, not placeholder text. Screen readers + SEO both benefit.</text>
 
 <!-- Step 5 -->
 <rect x="80" y="434" width="1040" height="72" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" rx="10"/>
@@ -532,13 +532,13 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <text x="180" y="550" font-size="17" font-weight="700" fill="#0F172A">Test in a screen reader at least once</text>
 <text x="180" y="574" font-size="13" fill="#475569">Mac: Cmd+F5 for VoiceOver. It will be uncomfortable. That's the point: your users can't turn it off.</text>
 </svg>
-<figcaption id="fig3-caption">Step 3 is the one we skipped, and it is the one that would have shown us the 393 hidden errors sooner.</figcaption>
+<figcaption id="fig3-caption">Step 3 is the one most teams skip, and it is the one that would have shown us the 393 hidden errors sooner.</figcaption>
 </figure>
 
 <h2>The hardest part of accessible web development</h2>
 <p>The tools are free, the rules are published and the tension between brand and contrast can be settled in a design system. The hardest part is the <em>discipline</em> of treating accessibility as a continuous concern after the first audit is done.</p>
 <p>Every new feature can introduce a new violation. Every JavaScript widget that injects content into the page is a potential source of unlabelled inputs, missing names, and unreachable anchors. Every brand colour update can knock a critical text element below the contrast threshold. Without an automated gate that catches these regressions immediately, even the best-intentioned team will gradually drift back into inaccessibility.</p>
-<p>What we fixed in April included the gate itself, the system that now blocks a pull request carrying a serious violation on the pages it audits. The 393 errors were debt that had built up unseen. Keeping the gate honest is the continuing work.</p>
+<p>What we fixed in April included the gate itself, the system that now blocks a pull request carrying a serious violation on the pages it audits. The 393 errors were the visible payment for a year of accumulated tech debt. The real work is keeping the gate honest from now on.</p>
 
 <blockquote>"Accessibility is the floor that lets your features reach everyone."</blockquote>
 
@@ -548,16 +548,16 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <li><strong>1 PR</strong> (#362 and #365) fixed the inverted theme script default that was forcing headless tests into dark mode, on 41 pages and 27 blog posts.</li>
 <li><strong>4 files</strong> with a CSS selector grouping bug where <code>[data-theme="light"]</code> was incorrectly grouped with <code>body.dark-mode</code>, causing the "light" theme to apply dark token values.</li>
 <li><strong>27 gradient rules</strong> across three pages got explicit <code>background-color</code> fallbacks so pa11y could compute their contrast correctly.</li>
-<li><strong>Form fields</strong> across multiple pages got proper <code>aria-label</code> attributes (including five JavaScript-injected modal search inputs that we fixed in one place in <code>js/learning-tracks.js</code>).</li>
-<li><strong>24 files</strong> got CSS overrides that moved text uses of sky-500, indigo-500, emerald-500, amber-500 and similar colours to darker AA-compliant variants.</li>
+<li><strong>14 form fields</strong> across multiple pages got proper <code>aria-label</code> attributes (including five JavaScript-injected modal search inputs that we fixed in one place in <code>js/learning-tracks.js</code>).</li>
+<li><strong>23 brand-colour text uses</strong> got bumped from sky-500, indigo-500, emerald-500, amber-500, etc. to their darker AA-compliant variants, through CSS overrides in 24 files.</li>
 <li><strong>1 axe-core configuration update</strong> to exclude third-party widgets (Intro.js tour, UserWay, Google Translate) that we do not control.</li>
-<li><strong>13 of 13</strong> tested pages passed pa11y-ci when the work finished. <strong>5 of 5</strong> tested pages passed axe-core with zero serious violations. Both lists have since grown: the repository now audits 16 pages with axe-core and 23 with pa11y-ci.</li>
+<li><strong>13 of 13</strong> tested pages passed pa11y-ci when the work finished. <strong>5 of 5</strong> tested pages passed axe-core with zero serious violations. Both lists have since grown: the repository now audits 16 pages with axe-core and 23 with pa11y-ci. The CI gate is honest.</li>
 </ul>
 
 <h2>If you take one thing away from this post</h2>
-<p>It is this: accessibility is a property of your development process. If your process catches violations as they are introduced, the site tends to stay accessible. If it does not, the site drifts, and "we'll get to it later" rarely happens.</p>
-<p>Set up the gate, and verify that it fails when it should. Someone who meets a barrier may simply leave, and you will never see a report. Keeping barriers out is small work if you do it continuously and large work if you leave it for a later audit.</p>
-<p>If you are a development organisation building digital tools for the people you serve, treat this as the minimum. The people you say you serve should be able to use what you build.</p>
+<p>It is this: accessibility is a property of your development process. If your process catches violations the moment they are introduced, you stay accessible. If it does not, you drift. There is no in-between, and there is no "we'll get to it later" that actually happens.</p>
+<p>Set up the gate. Verify the gate works. Then trust the gate. The roughly one in six of your users who need it will never write you a bug report: they will just stop visiting. The work to keep them is small if you do it continuously, and impossible if you do not.</p>
+<p>If you are a development organisation building digital tools for the people you serve, this is the bare minimum, because the people you say you serve deserve to be able to use what you build.</p>
 <p>Accessibility in development work goes beyond websites. Our free <a href="/101-courses/disability-inclusion.html">Disability Inclusion 101</a> deck covers the wider practice of building programmes that disabled people can actually use.</p>
 
         </div>
