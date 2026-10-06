@@ -513,7 +513,7 @@ body { padding-top: 56px; }
             <div class="viz-story">
                 <h4><svg class="hi-emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg> The Power of Good Visualization: Two Ways to Show the Same Data</h4>
                 
-                <p><strong>Data:</strong> Child malnutrition rates by state from NFHS-5</p>
+                <p><strong>Data:</strong> Child stunting rates by state from NFHS-5 (2019-21); NFHS-6 (2023-24) national stunting is 29.3%</p>
                 
                 <p><strong>Approach A - Basic Table:</strong></p>
                 <div class="fake-chart">
@@ -616,7 +616,7 @@ body { padding-top: 56px; }
                     <h5>Dataset: NFHS-4 and NFHS-5 Children's File</h5>
                     <p><strong>Variables for Analysis:</strong></p>
                     <ul>
-                        <li><strong>Outcome:</strong> h9 (all basic vaccinations by age 12-23 months)</li>
+                        <li><strong>Outcome:</strong> all basic vaccinations, children 12-23 months, built from the h2-h9 vaccination variables</li>
                         <li><strong>Geographic:</strong> v024 (state), v025 (urban/rural)</li>
                         <li><strong>Social:</strong> v131 (caste/tribe), v190 (wealth quintile)</li>
                         <li><strong>Demographic:</strong> v106 (mother's education), b4 (child sex)</li>
@@ -624,7 +624,7 @@ body { padding-top: 56px; }
                         <li><strong>Weights:</strong> v005 (women's weight), scaled appropriately</li>
                     </ul>
                     
-                    <p><strong>Sample:</strong> 150,000 children aged 12-23 months across both surveys</p>
+                    <p><strong>Sample:</strong> about 91,000 children aged 12-23 months across both surveys (47,837 in NFHS-4, 43,247 in NFHS-5)</p>
                 </div>
                 
                 <h5>Problem 1: Intersectional Analysis Framework (10 minutes)</h5>
@@ -641,19 +641,19 @@ body { padding-top: 56px; }
                     <tr>
                         <td>Wealth × Caste</td>
                         <td>5 quintiles × 4 groups = 20 cells</td>
-                        <td>~7,500 per cell</td>
+                        <td>~4,500 per cell</td>
                         <td>200+ per cell</td>
                     </tr>
                     <tr>
                         <td>State × Urban/Rural</td>
                         <td>28 states × 2 = 56 cells</td>
-                        <td>~2,700 per cell</td>
+                        <td>~1,600 per cell</td>
                         <td>100+ per cell</td>
                     </tr>
                     <tr>
                         <td>Education × Wealth</td>
                         <td>4 levels × 5 quintiles = 20 cells</td>
-                        <td>~7,500 per cell</td>
+                        <td>~4,500 per cell</td>
                         <td>200+ per cell</td>
                     </tr>
                 </table></div>
@@ -688,10 +688,10 @@ svyttest(immunized ~ urban_rural, svydesign)
                     
                     <p><strong>Sample Results:</strong></p>
                     <ul>
-                        <li><strong>National average:</strong> 62% → 76% (+14 percentage points)</li>
-                        <li><strong>Top improver:</strong> Haryana 56% → 85% (+29 pp)</li>
-                        <li><strong>Laggard:</strong> Arunachal Pradesh 45% → 48% (+3 pp)</li>
-                        <li><strong>High performer:</strong> Tamil Nadu 85% → 89% (+4 pp)</li>
+                        <li><strong>National average:</strong> 62% → 77% (+15 percentage points)</li>
+                        <li><strong>Top improver:</strong> Arunachal Pradesh 38% → 65% (+27 pp)</li>
+                        <li><strong>Laggard:</strong> Punjab 89% → 76% (-13 pp)</li>
+                        <li><strong>High performer:</strong> Tamil Nadu 70% → 89% (+20 pp)</li>
                     </ul>
                 </div>
                 
@@ -724,7 +724,7 @@ change_data <- data %>%
                 
                 <h5>Problem 3: Inequality Analysis (10 minutes)</h5>
                 
-                <p><strong>Research Question:</strong> How has inequality in immunization changed within and between states?</p>
+                <p><strong>Research Question:</strong> How has inequality in immunization changed within and between states? (Overall rates are NFHS-5; the gaps and ranks are illustrative.)</p>
                 
                 <p><strong>Inequality Measures to Calculate:</strong></p>
                 <ul>
@@ -744,21 +744,21 @@ change_data <- data %>%
                     </tr>
                     <tr>
                         <td>Kerala</td>
-                        <td>89%</td>
+                        <td>78%</td>
                         <td>5 pp</td>
                         <td>2 pp</td>
                         <td>1 (most equal)</td>
                     </tr>
                     <tr>
                         <td>Uttar Pradesh</td>
-                        <td>69%</td>
+                        <td>70%</td>
                         <td>32 pp</td>
                         <td>18 pp</td>
                         <td>26 (least equal)</td>
                     </tr>
                     <tr>
                         <td>Maharashtra</td>
-                        <td>84%</td>
+                        <td>74%</td>
                         <td>15 pp</td>
                         <td>8 pp</td>
                         <td>12 (moderate)</td>
@@ -961,10 +961,10 @@ change_data <- data %>%
                 
                 <p><strong>Common EDA → Publication Improvements:</strong></p>
                 <ul>
-                    <li><strong>From:</strong> "Age Distribution" <strong>To:</strong> "Age Distribution of Women 15-49, NFHS-5 (N=699,686)"</li>
+                    <li><strong>From:</strong> "Age Distribution" <strong>To:</strong> "Age Distribution of Women 15-49, NFHS-5 (N=724,115)"</li>
                     <li><strong>From:</strong> Default color palette <strong>To:</strong> Colorbrewer or viridis scales</li>
                     <li><strong>From:</strong> Sample percentages <strong>To:</strong> Weighted population estimates ± 95% CI</li>
-                    <li><strong>From:</strong> No sample size info <strong>To:</strong> "Sample sizes: Urban n=235K, Rural n=465K"</li>
+                    <li><strong>From:</strong> No sample size info <strong>To:</strong> "Sample sizes: Urban n=180K, Rural n=545K"</li>
                 </ul>
             </div>
         </div>
@@ -1036,7 +1036,7 @@ change_data <- data %>%
             <ul>
                 <li><strong>Advanced plotting:</strong> altair, plotnine, bokeh</li>
                 <li><strong>Statistical viz:</strong> seaborn, statsmodels</li>
-                <li><strong>Survey analysis:</strong> statsmodels.survey, scikit-learn</li>
+                <li><strong>Survey analysis:</strong> samplics, scikit-learn</li>
                 <li><strong>Interactive dashboards:</strong> streamlit, dash</li>
             </ul>
             

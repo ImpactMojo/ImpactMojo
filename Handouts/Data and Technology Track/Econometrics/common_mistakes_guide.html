@@ -627,7 +627,7 @@ body { padding-top: 56px; }
                             <tr>
                                 <td>β = 0.08</td>
                                 <td>8% increase</td>
-                                <td>8 percentage point increase in log(Y), ≈ 8.3% increase in Y</td>
+                                <td>0.08 increase in log(Y) (8 log points), ≈ 8.3% increase in Y</td>
                             </tr>
                             <tr>
                                 <td>β = 0.5 (binary X)</td>
@@ -779,10 +779,11 @@ display "For binary variable: " (exp(0.5) - 1)*100  // 64.9%
                     
                     <div class="code-example">
 * Stata: Multiple testing correction
-bonferroni: reg outcome treatment controls, by(subgroup)
+reg outcome treat1 treat2 treat3 controls
+test treat1 treat2 treat3, mtest(bonferroni)
 
 # R: Multiple testing correction
-library(p.adjust)
+# p.adjust() is in base R (stats package); no library needed
 p_values <- c(0.02, 0.04, 0.01, 0.08)
 p.adjust(p_values, method = "bonferroni")
                     </div>
@@ -874,12 +875,12 @@ outlierTest(model)   # Outliers
                         <tbody>
                             <tr>
                                 <td class="right">F > 104</td>
-                                <td>Strong instrument (< 5% bias)</td>
+                                <td>Strong enough for a valid 5% t-test (Lee et al. 2022)</td>
                                 <td>Proceed with IV</td>
                             </tr>
                             <tr>
                                 <td class="wrong">10 < F < 104</td>
-                                <td>Weak instrument (5-10% bias)</td>
+                                <td>Passes the F &gt; 10 rule of thumb, but t-test size may be distorted</td>
                                 <td>Report weak IV robust tests</td>
                             </tr>
                             <tr>
@@ -936,7 +937,7 @@ outlierTest(model)   # Outliers
                                 <td>Panel data</td>
                                 <td>Panel-robust</td>
                                 <td>xtreg y x, fe robust</td>
-                                <td>feols(y ~ x | id, vcov = "hetero")</td>
+                                <td>feols(y ~ x | id, cluster = ~id)</td>
                             </tr>
                             <tr>
                                 <td>Survey data</td>

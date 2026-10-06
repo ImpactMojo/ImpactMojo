@@ -84,6 +84,7 @@ def link(file, name):
 
 KIO25 = "Access Now, KeepItOn report on internet shutdowns in 2025 (31 March 2026)"
 KIO24 = "Access Now, KeepItOn report on internet shutdowns in 2024"
+KIODATA = "Access Now, KeepItOn dataset, 2024 and 2025 sheets (updated 31 March 2026)"
 NFHS6 = "IIPS, NFHS-6 (2023-24) National Fact Sheet, May 2026"
 CMST = "MoSPI, Comprehensive Modular Survey: Telecom 2025 (NSS 80th round), press note 29 May 2025"
 
@@ -416,16 +417,18 @@ S03 = [
 
     C("South Asia", "Shutdowns in South Asia and Myanmar, 2024 and 2025", [
         tw([{"t": "chart", "canvas": "draiShutdowns", "type": "bar",
-             "title": "Internet shutdowns counted by Access Now",
-             "source": KIO24 + "; " + KIO25,
+             "title": "Internet shutdowns counted by Access Now (2024 as revised)",
+             "source": KIODATA,
              "data": {"labels": ["Myanmar", "India", "Pakistan", "Nepal"],
                       "datasets": [
-                          {"label": "2024", "data": [85, 84, 21, 1], "backgroundColor": "#6366F1"},
+                          {"label": "2024", "data": [85, 84, 22, 1], "backgroundColor": "#6366F1"},
                           {"label": "2025", "data": [95, 65, 20, 2], "backgroundColor": "#0EA5E9"}]},
              "options": {"__js__": "{ plugins:{ legend:{ position:'bottom' } }, scales:{ y:{ beginAtZero:true } } }"}}],
            [body("Myanmar's military imposed at least 95 shutdowns in 2025, many in areas of active "
                  "conflict. India imposed 65, down from 84 in 2024, still more than one a "
-                 "week. Pakistan imposed 20, against 21 in Access Now's 2024 report (revised to 22 in its 2025 report).", sm=True),
+                 "week. Pakistan imposed 20, against 22 in 2024 (the 2024 report first counted 21). The 2024 "
+                 "figures in the chart are Access Now's revised ones; for Myanmar, India and Nepal the revision "
+                 "changed nothing.", sm=True),
             body("Bangladesh imposed 5 shutdowns in 2024, including the blackout during the July quota-reform "
                  "protests. Access Now's 2025 release gives no Bangladesh count; it records instead that "
                  "advocacy there led to proposed legislation to prohibit shutdowns altogether.", sm=True)],

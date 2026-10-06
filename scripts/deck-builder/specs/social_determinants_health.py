@@ -976,7 +976,7 @@ DECK = {
                   "an open defecation free India by 2 October 2019. The Department of Drinking "
                   "Water and Sanitation reports that rural sanitation coverage rose 'from 39% in "
                   "2014 to 100% in 2019', and that more than 12 crore household latrines had been "
-                  "built by 16 December 2025 (Department of Drinking Water and Sanitation, Year End Review 2025, PIB)."),
+                  "built by 16 December 2025 (Department of Drinking Water and Sanitation, Year End Review 2025, PIB, 1 January 2026)."),
                pp("amber", "The surveys",
                   "JMP estimates 19.7% of India's population practised open defecation in 2019. "
                   "NFHS-5 (2019-21) found 19% of households had no facility and 'practice open "

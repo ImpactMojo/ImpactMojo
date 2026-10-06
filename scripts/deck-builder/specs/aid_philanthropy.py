@@ -1585,7 +1585,10 @@ SEC11 = [
                 "<strong>Local preference:</strong> districts near the plant meet the proviso to "
                 "s135(5).",
                 "<strong>Implementing agency:</strong> your organisation must be registered with the "
-                "MCA for CSR and have a track record of at least three years (CSR Rules, rule 4)."])],
+                "MCA for CSR (rule 4(2)), have a three-year track record, and either be exempt under "
+                "s10(23C) or hold 12A registration and 80G approval (rule 4(1)(d), as amended in "
+                "2022). The rule still names those sections of the 1961 Act, which the Income-tax "
+                "Act 2025 replaced from 1 April 2026: check the current text before relying on it."])],
            [BL(["<strong>Two years:</strong> this is an ongoing project. Unspent money at year-end "
                 "goes to the company's Unspent CSR Account within 30 days (s135(6)).",
                 "<strong>Impact assessment:</strong> not mandatory, because the company's average "

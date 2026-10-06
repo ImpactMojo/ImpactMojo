@@ -828,11 +828,16 @@ SLIDES += [
             "pupil-teacher norms for special teachers, create permanent posts and fill them on a "
             "regular basis, and held that special teachers must be qualified and registered with the "
             "Rehabilitation Council of India. The order of 5 May 2026 records about 4,900 vacant "
-            "special educator posts in Uttar Pradesh.")]),
+            "special educator posts in Uttar Pradesh. Whether they must also pass the TET is "
+            "unresolved: on 28 April 2026 the RCI said the TET is not one of its qualifications and "
+            "the Court let states that prescribe it continue recruiting; on 28 July 2026 it said, "
+            "prima facie, that Bihar's TET demand for contractual special teachers went beyond "
+            "Bihar's own 2023 Rules.")]),
       H("red", "The lesson for programme staff: an inclusion plan that runs on contractual resource "
         "persons is fragile, and the courts now treat regular, qualified posts as part of the right. "
         "Sources: Supreme Court judgment of 28 October 2021 and records of proceedings of "
-        "18 November 2025, 12 February 2026 and 5 May 2026 in WP(C) 132/2016, via indiankanoon.org.")),
+        "18 November 2025, 12 February, 28 April, 5 May and 28 July 2026 in WP(C) 132/2016, via "
+        "indiankanoon.org.")),
 ]
 
 # ===================== SECTION 06 =====================

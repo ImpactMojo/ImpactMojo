@@ -501,8 +501,8 @@ body { padding-top: 56px; }
                 <p><strong>The Process:</strong></p>
                 <ol>
                     <li><strong>Sampling Design:</strong> NFHS-5 surveyed 636,699 households across 707 districts using two-stage stratified sampling</li>
-                    <li><strong>Data Collection:</strong> 20+ surveyors spent 13 months collecting data with tablets/phones</li>
-                    <li><strong>Quality Control:</strong> GPS verification, audio recordings, supervisory checks</li>
+                    <li><strong>Data Collection:</strong> 1,061 field teams collected data on tablets in two phases, June 2019 to January 2020 and January 2020 to April 2021</li>
+                    <li><strong>Quality Control:</strong> GPS verification, supervisory checks</li>
                     <li><strong>Data Processing:</strong> Cleaning, coding, weighting, multiple rounds of validation</li>
                     <li><strong>Public Release:</strong> Anonymized datasets with documentation after 12-18 months</li>
                 </ol>
@@ -525,7 +525,7 @@ body { padding-top: 56px; }
                     <h4>NFHS (National Family Health Survey)</h4>
                     <ul>
                         <li><strong>Focus:</strong> Health, nutrition, population</li>
-                        <li><strong>Frequency:</strong> Every 5-7 years</li>
+                        <li><strong>Frequency:</strong> Irregular, 4 to 10 years apart (NFHS-5 in 2019-21, NFHS-6 in 2023-24)</li>
                         <li><strong>Sample:</strong> ~600,000 households</li>
                         <li><strong>Modules:</strong> Household, women (15-49), men (15-54), children</li>
                         <li><strong>Special Features:</strong> Biomarkers, GPS coordinates, detailed anthropometry</li>
@@ -614,7 +614,7 @@ Key Variables for Exercise:
 • v130: Religion
 • v190: Wealth index combined
 • v201: Total children ever born
-• v447a: Women's BMI
+• v445: Women's BMI (stored ×100, so 2150 = 21.50)
 • v453: Hemoglobin level (g/dl)
                 </div>
                 
@@ -681,7 +681,7 @@ missing_pct = (missing_summary / len(data)) * 100
                         <td>Y/N</td>
                     </tr>
                     <tr>
-                        <td>BMI (v447a)</td>
+                        <td>BMI (v445)</td>
                         <td>12-60 kg/m²</td>
                         <td>_____%</td>
                         <td>Y/N</td>
@@ -770,7 +770,7 @@ missing_pct = (missing_summary / len(data)) * 100
                 
                 <div class="code-block">
 Sample Data for Analysis:
-• Variable: v447a (BMI in kg/m²)
+• Variable: v445 (BMI in kg/m²)
 • Sample size: 10,000 women with BMI measurements
 • Sampling weight: v005 (women's individual weight)
 • Age groups: 15-19, 20-29, 30-39, 40-49
@@ -824,13 +824,13 @@ BMI Categories (WHO Standards):
                 <div class="code-block">
 # R code for distribution analysis
 # Calculate percentiles
-quantile(data$v447a, probs = c(0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95), na.rm = T)
+quantile(data$v445, probs = c(0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95), na.rm = T)
 
 # Check for outliers (values beyond Q1-1.5*IQR or Q3+1.5*IQR)
-Q1 <- quantile(data$v447a, 0.25, na.rm = T)
-Q3 <- quantile(data$v447a, 0.75, na.rm = T)
+Q1 <- quantile(data$v445, 0.25, na.rm = T)
+Q3 <- quantile(data$v445, 0.75, na.rm = T)
 IQR <- Q3 - Q1
-outliers <- data$v447a < (Q1 - 1.5*IQR) | data$v447a > (Q3 + 1.5*IQR)
+outliers <- data$v445 < (Q1 - 1.5*IQR) | data$v445 > (Q3 + 1.5*IQR)
                 </div>
                 
                 <p><strong>Questions to Answer:</strong></p>
@@ -1005,9 +1005,9 @@ outliers <- data$v447a < (Q1 - 1.5*IQR) | data$v447a > (Q3 + 1.5*IQR)
             
             <p><strong>Best Practice Guides:</strong></p>
             <ul>
-                <li><em>"Analyzing Health Equity Using Household Survey Data"</em> - WHO</li>
-                <li><em>"DHS Data Analysis Manual"</em> - ICF International</li>
-                <li><em>"Complex Survey Data Analysis"</em> - Lumley</li>
+                <li><em>"Analyzing Health Equity Using Household Survey Data"</em> - O'Donnell, van Doorslaer, Wagstaff &amp; Lindelow (World Bank)</li>
+                <li><em>"Guide to DHS Statistics"</em> - ICF</li>
+                <li><em>"Complex Surveys: A Guide to Analysis Using R"</em> - Lumley</li>
             </ul>
             
             <p><strong>Next Steps in ImpactMojo:</strong></p>
