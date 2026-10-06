@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.325.0 — October 6, 2026 (Flagship course pages accuracy pass)
+
+### Changed
+
+- **All 21 flagship course landing pages were checked against their sources and the files.** Content counts now match the platform (13 modules on two courses, 35 labs, 171 reading companions, 90 handouts, bi-weekly dojos), quotations were corrected to the wording of their sources, wrong citations and dates were fixed, and broken links and a mis-placed section on the Power BI page were repaired. Nothing was removed.
+
+### For Learners
+
+- **Corrected flagship course pages.** Course descriptions, counts, quotations and citations were rechecked against their sources.
+
 ## v10.324.0 — October 6, 2026 (Deep Dives accuracy pass)
 
 ### Changed
