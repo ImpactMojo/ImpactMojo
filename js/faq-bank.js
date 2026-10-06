@@ -237,7 +237,7 @@
 
     // Flagship count
     { re: /how many.*course|flagship|all.*course/i,
-      a: () => "We have **21 flagship courses** and **59 foundational courses**, 81 in all. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
+      a: () => "We have **21 flagship courses** and **79 foundational courses**, 81 in all. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
 
     // PoA specific
     { re: /poa|politics.*aspiration|nrega|rti|nfsa|forest.*right/i,

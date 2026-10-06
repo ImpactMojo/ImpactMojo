@@ -2,6 +2,46 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.336.0 — October 6, 2026 (twenty new 101 decks)
+
+### Added
+
+Twenty new free foundational courses, each a native 100-slide deck written for practitioners in South Asia. Every deck was checked against primary sources (statutes, court judgments, official survey reports and the original papers) before publication.
+
+- **Research Methods 101** — the research process from an answerable question to design, sampling, validity, secondary data from NFHS, PLFS and the Census, ethics under the ICMR 2017 guidelines, pre-registration and write-up. [Open it](/101-courses/research-methods.html).
+- **Quantitative Methods 101** — reading and commissioning quantitative work: levels of measurement, survey weights and design effects in NFHS and PLFS, confidence intervals, p-values, regression, effect sizes and power. [Open it](/101-courses/quant-methods.html).
+- **Causal Inference 101** — potential outcomes, selection bias, causal diagrams, randomisation, difference-in-differences, regression discontinuity, instrumental variables, matching and synthetic control, and how to read a causal claim in a policy report. [Open it](/101-courses/causal-inference.html).
+- **Programme Design 101** — from problem tree to implementation plan: stakeholder and power analysis, delivery models, targeting, theory of change, cost per outcome, risk and safeguarding, adaptive management and design for scale. [Open it](/101-courses/programme-design.html).
+- **Participatory Methods 101** — Freire, Fals-Borda and Chambers, the participation ladders, PRA tools, Gram Sabhas and PESA, social audits, Photovoice and Most Significant Change, with the evidence and the risk of elite capture. [Open it](/101-courses/participatory-methods.html).
+- **Gender & Development 101** — WID to GAD, practical and strategic gender needs, household bargaining, women's work in PLFS, unpaid care in the Time Use Survey, the PWDVA and POSH Acts and political representation. [Open it](/101-courses/gender-dev.html).
+- **Caste Studies 101** — varna and jati, the colonial census, Phule and Ambedkar, Article 17 and the atrocities law, reservations from Indra Sawhney to Davinder Singh, caste in land and labour markets, and caste data. [Open it](/101-courses/caste-studies.html).
+- **Human Rights 101** — the UDHR and the two Covenants, ratification across South Asia, the UN treaty bodies and the UPR, Article 21 and public interest litigation, the NHRC, civic space law and a rights-based approach to programmes. [Open it](/101-courses/human-rights.html).
+- **Child Rights 101** — the UNCRC and its four principles, the JJ Act 2015, POCSO 2012, the RTE Act 2009, child labour and child marriage law, Mission Vatsalya, and child participation, consent and assent. [Open it](/101-courses/child-rights.html).
+- **Governance & Accountability 101** — how governance is measured, the long and short routes of accountability, the 73rd and 74th Amendments, the RTI Act and its amendments, social audit, the Lokpal, the CAG and what improves services. [Open it](/101-courses/governance-accountability.html).
+- **Public Policy 101** — the policy cycle and its critics, policy instruments, how policy is made in India from Cabinet to Parliament's committees and the courts, implementation, and cases from MGNREGA to Aadhaar-linked DBT. [Open it](/101-courses/public-policy-101.html).
+- **Aid & Philanthropy 101** — the OECD definition of ODA, the 0.7% target, the aid debates, the 2025 aid cuts, CSR under section 135, the FCRA and its 2020 amendment, effective altruism and trust-based philanthropy. [Open it](/101-courses/aid-philanthropy.html).
+- **Inclusive Education 101** — CRPD Article 24, the RTE Act and the RPwD Act 2016, NEP 2020 chapter 6, who is left out of school and why, universal design for learning, multilingual education and a school audit checklist. [Open it](/101-courses/inclusive-education.html).
+- **Education Policy 101** — returns to schooling and the learning crisis, the RTE Act, NEP 2020, ASER 2024, PARAKH and UDISE+ data, the education budget, teachers, private schools and the evidence on what works. [Open it](/101-courses/education-policy.html).
+- **Foundational Literacy & Numeracy 101** — how children learn to read in alphabetic and akshara scripts, early number sense, ASER, FLS 2022 and PARAKH, NIPUN Bharat and Teaching at the Right Level. [Open it](/101-courses/fln.html).
+- **Mental Health 101** — the burden from WHO, GBD India and the National Mental Health Survey, the Mental Healthcare Act 2017, Tele-MANAS, task-sharing programmes and screening tools such as PHQ-9 and GAD-7. [Open it](/101-courses/mental-health.html).
+- **Nutrition 101** — stunting, wasting, anaemia and overweight, the WHO growth standards, India's figures from NFHS-6, NFHS-5 and CNNS, the National Food Security Act, Poshan 2.0 and the intervention evidence. [Open it](/101-courses/nutrition.html).
+- **Social Determinants of Health 101** — the WHO Commission's framework, the social gradient, gaps by wealth, caste, gender and place in NFHS-5, out-of-pocket spending and PM-JAY, and an equity lens for programmes. [Open it](/101-courses/social-determinants-health.html).
+- **Media & Communications 101** — media ownership, community radio, platforms and misinformation, Article 19 and the press freedom cases, defamation and the IT Rules, writing op-eds and data stories, and working with journalists. [Open it](/101-courses/media-comms.html).
+- **Digital Rights & AI 101** — rights online, Puttaswamy, Shreya Singhal and Anuradha Bhasin, internet shutdowns in South Asia, the Telecommunications Act 2023, surveillance, digital public infrastructure, algorithmic bias and AI in welfare. [Open it](/101-courses/digital-rights-ai.html).
+
+### Changed
+
+- **Counts.** The 101 series now holds 79 foundational courses and the platform 100 courses (21 flagship and 79 foundational), updated in `data/counts.json` and on every page that states them, including the 101 index, the catalogue, the sitemap page and the FAQ.
+- **The 101 index, catalogue, site search, deck data and sitemaps list the twenty decks.** The 101 index places each in its theme group with corrected group counts; `catalog.html` and `catalog_data.json` carry them as courses; `data/search-index.json`, `data/decks.json`, `sitemap.xml` and `sitemap.html` include them.
+- **Older decks now link to the new ones.** Eighteen existing 101 decks named a course that did not yet exist, under "Pair this deck with" or a similar pointer: Research Ethics (Research Methods), Exploratory Data Analysis (Quantitative Methods), Multivariate Analysis (Causal Inference), Theory of Change (Programme Design), Decolonial Development (Participatory Methods), Data Feminism, Women's Economic Empowerment and Sexual Health (Gender & Development), Indian Constitution (Human Rights, Governance & Accountability and Public Policy), SEL Basics (Child Rights, Inclusive Education and Mental Health), Education & Pedagogy (Foundational Literacy & Numeracy, Inclusive Education and Education Policy), Global Development Governance (Aid & Philanthropy), Maternal Health (Gender & Development and Nutrition), Public Health (Social Determinants of Health), Post-Truth Politics (Media & Communications, Digital Rights & AI), Digital Ethics ("AI & Society", now Digital Rights & AI), Systematic Reviews (Research Methods) and Work, Labour & Livelihoods (Caste Studies). Each name now links to the deck. The Indian Constitution deck's closing "Human Rights 101" button pointed at the 101 index and now opens the deck.
+- **`/101-courses/caste-studies` no longer redirects to Social Margins 101**, since Caste Studies 101 now exists at that address.
+
+### For Learners
+
+- **Twenty new free 101 courses.** Research Methods, Quantitative Methods, Causal Inference, Programme Design, Participatory Methods, Gender & Development, Caste Studies, Human Rights, Child Rights, Governance & Accountability, Public Policy, Aid & Philanthropy, Inclusive Education, Education Policy, Foundational Literacy & Numeracy, Mental Health, Nutrition, Social Determinants of Health, Media & Communications, and Digital Rights & AI.
+- **Every claim checked.** Each new course was checked against the laws, court judgments, survey reports and papers it cites before it went live.
+- **Easier to find your next course.** Older courses now link straight to the new ones they recommend.
+
 ## v10.335.0 — October 6, 2026 (NFHS-6)
 
 ### Changed
