@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.323.0 — October 6, 2026 (Blog accuracy pass)
+
+### Changed
+
+- **All 42 blog posts were checked against their sources and the writing tidied.** Wrong figures, misattributed studies, mismatched page descriptions and out-of-date platform counts were corrected, each against a source. Two figures in "Making accessible websites" were redrawn with the right numbers. The share buttons on "Designing an impact evaluation" now point at that post, and "Notes and new courses" no longer tells search engines it is a copy of another post.
+
+### For Learners
+
+- **Corrected blog posts.** Figures, citations and platform facts across the blog were rechecked against their sources.
+
 ## v10.322.0 — October 5, 2026 (Safer passwords)
 
 ### Added
