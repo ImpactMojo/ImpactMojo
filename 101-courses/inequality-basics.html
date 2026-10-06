@@ -2331,15 +2331,17 @@ html:not([data-theme="light"]):not(.light) body:not(.light) html{background:#1C1
  </div><!-- end slide-viewport -->
 </div><!-- end deck -->
 
-<nav id="nav">
+<div id="nav" role="navigation" aria-label="Slide navigation">
  <button class="nav-btn" id="prevBtn" onclick="go(-1)">&#8249;</button>
- <span id="prog-text">1 / 101</span>
+ <span id="prog-text">1 / 104</span>
  <button class="nav-btn" id="nextBtn" onclick="go(1)">&#8250;</button>
-</nav>
+</div>
 
 <script>
-let cur = 1, total = 101;
 const slides = document.querySelectorAll('.slide');
+let cur = 1, total = slides.length;
+// Declared before the start-up call to show(), which reads it through initCharts().
+const chartInited = {};
 const progText = document.getElementById('prog-text');
 const bar = document.getElementById('progress-bar');
 const prevBtn = document.getElementById('prevBtn');
@@ -2402,7 +2404,6 @@ function setTheme(t){
 })();
 
 // Charts
-const chartInited = {};
 function initCharts(n){
   if(chartInited[n]) return;
   chartInited[n] = true;

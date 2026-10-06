@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>OpenRefine: Cleaning Messy Survey and MIS Data | ImpactMojo</title>
+    <meta name="description" content="A free guided course in OpenRefine for development practitioners in South Asia: install it, create a project from a household CSV, use text, numeric and timeline facets, cluster district names spelt different ways, transform with GREL, split and join columns, reconcile, and save the operation history as JSON to repeat the cleaning.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/openrefine.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="OpenRefine: Cleaning Messy Survey and MIS Data">
+<meta property="og:description" content="A free guided course in OpenRefine for development practitioners in South Asia: install it, create a project from a household CSV, use text, numeric and timeline facets, cluster district names spelt different ways, transform with GREL, split and join columns, reconcile, and save the operation history as JSON to repeat the cleaning.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/openrefine.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OpenRefine: Cleaning Messy Survey and MIS Data">
+<meta name="twitter:description" content="A free guided course in OpenRefine for development practitioners in South Asia: install it, create a project from a household CSV, use text, numeric and timeline facets, cluster district names spelt different ways, transform with GREL, split and join columns, reconcile, and save the operation history as JSON to repeat the cleaning.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "OpenRefine: Cleaning Messy Survey and MIS Data", "description": "A free guided course in OpenRefine for development practitioners in South Asia: install it, create a project from a household CSV, use text, numeric and timeline facets, cluster district names spelt different ways, transform with GREL, split and join columns, reconcile, and save the operation history as JSON to repeat the cleaning.", "url": "https://www.impactmojo.in/code/openrefine.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Guided tool course</div>
+        <h1>OpenRefine: cleaning messy survey and MIS data</h1>
+        <p>Clean a household file the way most field teams receive it: district names spelt five ways, numbers stored as text, two facts in one column. OpenRefine is free, runs on your own computer and records every step, so the cleaning can be repeated on next month's export. Python cells on this page run each step on the same data, so you can compare.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>OpenRefine does not run in a browser tab from this site.</strong> It runs on your own computer and opens in your browser at a local address. The grey boxes are GREL expressions for you to type into OpenRefine; this page does not show OpenRefine screens or results, because it cannot produce them. Each module says what to look for on your screen. The Python cells run the same cleaning step here with pandas, so you can check your OpenRefine counts against them. The first Python run downloads the engine once (about 10&nbsp;MB).</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> Start</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> Project</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> Facets</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> Clustering</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> GREL</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> Columns</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Reconcile</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">8</span> History</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 8</div>
+<h2>Install and start OpenRefine</h2>
+<p>Monitoring and MIS exports arrive messy. One enumerator types <em>Purnea</em>, another <em>Purnia</em>, a third <em>PURNIA</em> with a trailing space. A spreadsheet treats those as three districts. OpenRefine is built for exactly this: it shows you every distinct value in a column, groups the ones that are probably the same, and lets you fix thousands of cells in one action.</p>
+<div class="info-box"><strong>Version and cost, checked 6 October 2026.</strong> The current release on the <a href="https://openrefine.org/download" rel="noopener" target="_blank" style="color:var(--accent-color)">OpenRefine download page</a> is <strong>OpenRefine 3.10.0</strong>, dated 26 February 2026 (3.9.5 and 3.8.7 are listed as older versions). OpenRefine is free software under the BSD 3-clause licence: no price, no account, no licence key.</div>
+<h3>Which file to download</h3>
+<ul><li><strong>Windows:</strong> an installer (EXE) or a ZIP file. Both Windows packages include Java (the download page calls this "embedded Java"), so you do not need to install Java separately.</li><li><strong>Mac:</strong> a DMG file. The <a href="https://openrefine.org/docs/manual/installing" rel="noopener" target="_blank" style="color:var(--accent-color)">installation manual</a> says the Mac version includes Java. It also mentions <code class="inline">brew install --cask openrefine</code> if you use Homebrew.</li><li><strong>Linux:</strong> a TAR.GZ file. Extract it and run <code class="inline">./refine</code> from the extracted folder. If Java is missing, the manual points to Adoptium.net for a Java runtime.</li></ul>
+<h3>Starting it</h3>
+<ol class="guide-steps"><li>Windows: run <code class="inline">openrefine.exe</code> from the folder where you installed it. Mac: open OpenRefine from Applications. Linux: run <code class="inline">./refine</code> in a terminal.</li><li>A console window opens and stays open. Leave it running: it is the program.</li><li>Your browser opens at <code class="inline">http://127.0.0.1:3333/</code>. If it does not, type that address yourself. The manual describes OpenRefine as "a small web server on your own computer" that you use through your browser.</li><li>To quit, close the browser tabs, go to the console window and press <code class="inline">Ctrl + C</code>. The manual says this is how OpenRefine saves your changes on exit; it also autosaves every five minutes.</li></ol>
+<div class="info-box"><strong>Your data stays on your computer.</strong> Projects are stored in a workspace folder on your own machine, and the local address <code class="inline">127.0.0.1</code> is your own computer. That matters for beneficiary lists and survey files with names and phone numbers. Two features do send data out: reconciliation (module 7) sends the column you reconcile to the service you choose, and fetching URLs sends whatever the URLs contain. Use them on columns that hold no personal data.</div>
+<h3>On a modest laptop</h3>
+<p>OpenRefine holds the whole project in memory. A file of a few hundred thousand rows is fine on most laptops; for larger ones, the manual explains how to raise the memory limit. On Windows, if you start OpenRefine with <code class="inline">refine.bat</code>, you can set it in <code class="inline">refine.ini</code> on the line <code class="inline">REFINE_MEMORY=1024M</code> (that file is not read when you start with <code class="inline">openrefine.exe</code>). The manual advises giving OpenRefine no more than half of the memory left after your operating system's own use.</p>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: Project &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 8</div>
+<h2>Create a project from a CSV</h2>
+<p>An OpenRefine <strong>project</strong> is a copy of your data plus the history of everything you do to it. The original file on disk is never changed.</p>
+<h3>The practice file</h3>
+<p>The course uses <a href="/code/data/households.csv" download style="color:var(--accent-color)">households.csv</a>: 240 households in ten districts. <span class="illustrative-tag">Illustrative data, invented for teaching</span> The district names are real places; every number is made up. That file is clean, so the cell below makes a messy copy of it, the kind a field team actually sends: every third household gets a variant spelling of its district (wrong case, extra spaces, a full stop, an older spelling, a transliteration variant, a colonial-era name), some expenditure figures arrive as <code class="inline">2,580</code> with a comma, and a few say <code class="inline">not asked</code>. A <code class="inline">location</code> column holds district and state together.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+print(raw.head(8))
+print(raw.shape)
+print()
+print(&quot;Copy everything below this line into OpenRefine&#x27;s Clipboard box&quot;)
+print(raw.to_csv(index=False))</textarea></div>
+<p>The first block printed is the top eight rows and the size, 240 rows and 6 columns. Below the line is the whole file as CSV text.</p>
+<h3>Load it into OpenRefine</h3>
+<ol class="guide-steps"><li>Run the cell above. Select the CSV text below the line "Copy everything below this line", from <code class="inline">hh_id,district,...</code> to the last row, and copy it.</li><li>In OpenRefine, on the <strong>Create project</strong> screen, choose <strong>Clipboard</strong> on the left, paste the text into the box and click <strong>Next &raquo;</strong>.</li><li>You now see the preview. Check that OpenRefine has read it as comma-separated values and that the first row became the column names. If a name such as <em>Kozhikode</em> showed odd characters, you would change the character encoding here (UTF-8 is the usual choice).</li><li>Type a project name, for example <code class="inline">households messy</code>, and click <strong>Create project &raquo;</strong>.</li></ol>
+<p>For your own files, choose <strong>This Computer</strong> and click <strong>Browse&hellip;</strong> instead of Clipboard. The manual lists CSV, TSV, Excel (XLS and XLSX), ODS, JSON and XML among the formats it reads, and it can open a ZIP or GZ archive directly.</p>
+<div class="info-box"><strong>What to look for.</strong> The project opens on a grid that shows the row count at the top: it should say 240 rows. The <code class="inline">monthly_pc_exp</code> column is text for now, because some cells hold commas and words.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Facets &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 8</div>
+<h2>See the problem: text, numeric and timeline facets</h2>
+<p>A <strong>facet</strong> summarises one column in the left-hand panel and lets you filter rows by clicking a value. It is the fastest way to see what a column really contains.</p>
+<h3>Text facet: every distinct spelling</h3>
+<ol class="guide-steps"><li>Click the small triangle at the top of the <code class="inline">district</code> column.</li><li>Choose <strong>Facet &rarr; Text facet</strong>.</li><li>The facet panel lists every value with its count. Use the sort option at the top of the facet to sort by count instead of alphabetically. Click a value to show only those rows; click <strong>exclude</strong> beside it to show every row except those.</li></ol>
+<p>The cell below does the same count with pandas.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+# Text facet on district: every distinct value and its count
+facet = raw[&quot;district&quot;].value_counts().sort_index()
+print(facet)
+print(len(facet), &quot;distinct values for 10 real districts&quot;)</textarea></div>
+<p>There are <strong>29 distinct values for 10 districts</strong>. Look closely: <em>Barmer</em> appears twice (16 rows and 4 rows) because one of them carries a trailing space you cannot see, and the same is true of <em>Gaya</em> and <em>Patna</em>. Your OpenRefine facet should list the same 29 choices with the same counts. The "29 choices" link at the top of the facet copies the list as tab-separated text, which is a quick way to paste it into a report.</p>
+<h3>Numeric facet: which cells are not numbers</h3>
+<ol class="guide-steps"><li>OpenRefine imported <code class="inline">monthly_pc_exp</code> as text. Convert it first with the data-type transform for numbers under <strong>Edit cells &rarr; Common transforms</strong>. A yellow bar at the top tells you how many cells were converted; cells that cannot be converted keep their original value. (For your own files, you can instead tick "Attempt to parse cell text into numbers" in the import preview.)</li><li>Then <strong>Facet &rarr; Numeric facet</strong> on the same column.</li><li>The facet draws a histogram and offers checkboxes for <strong>non-numeric</strong>, <strong>blank</strong> and <strong>error</strong> values. Tick only non-numeric to see the cells that did not convert.</li></ol>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+# Numeric facet: which cells parse as numbers?
+num = pd.to_numeric(raw[&quot;monthly_pc_exp&quot;], errors=&quot;coerce&quot;)
+print(&quot;numeric:&quot;, num.notna().sum(), &quot; non-numeric:&quot;, num.isna().sum())
+print(raw.loc[num.isna(), [&quot;hh_id&quot;, &quot;monthly_pc_exp&quot;]].drop_duplicates(&quot;monthly_pc_exp&quot;, keep=&quot;first&quot;).head(6))
+# The histogram OpenRefine draws, as counts in Rs 500 bands
+print(pd.cut(num.dropna(), bins=range(0, 8001, 500)).value_counts().sort_index())</textarea></div>
+<p>Here <strong>222 cells parse as numbers and 18 do not</strong>: twelve written with a thousands comma (such as <code class="inline">2,580</code>) and six that say <code class="inline">not asked</code>. The banded counts below them are the histogram the facet draws; most households sit between Rs&nbsp;1,500 and Rs&nbsp;3,500. Module 5 fixes the commas.</p>
+<h3>Timeline facet: dates</h3>
+<p>A <strong>timeline facet</strong> works like a numeric facet for dates, and only on cells of the date type. The practice file has no date column, so try it on your own data, for example the submission time in a KoboToolbox or ODK export: convert the column with the data-type transform for dates under <strong>Edit cells &rarr; Common transforms</strong> (or the GREL expression <code class="inline">value.toDate()</code>), then choose <strong>Facet &rarr; Timeline facet</strong>. The facet also counts blank cells and cells that failed to convert, which is how you spot interviews logged on impossible dates.</p>
+<div class="info-box"><strong>Exercise.</strong> Add a text facet on <code class="inline">caste</code> and click <em>SC</em>. The district facet now counts only SC households. Facets combine, and most operations apply only to the rows currently shown, so clear your selections (<strong>Reset All</strong>) before an edit meant for every row.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: Clustering &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 8</div>
+<h2>Cluster spellings of the same place</h2>
+<p>Clustering finds values that are probably the same thing written differently and offers to merge them. Open it from the column menu: <strong>Edit cells &rarr; Cluster and edit&hellip;</strong>, or press <strong>Cluster</strong> in a text facet. The window offers two families of methods, and the OpenRefine manual recommends using them in the order shown, strictest first.</p>
+<ul><li><strong>Key collision</strong>: each value is turned into a key, and values with the same key form a cluster. The keying functions are <em>Fingerprint</em>, <em>N-gram fingerprint</em>, and four phonetic ones: <em>Metaphone3</em>, <em>Cologne Phonetic</em>, <em>Daitch-Mokotoff</em> and <em>Beider-Morse</em>. Fast, even on millions of cells.</li><li><strong>Nearest neighbour</strong>: values are compared in pairs and clustered when their distance is within a <em>radius</em> you set. The distance functions are <em>Levenshtein</em> (edit distance) and <em>PPM</em>. Slower, and looser.</li></ul>
+<h3>Fingerprint first</h3>
+<p>The <a href="https://openrefine.org/docs/technical-reference/clustering-in-depth" rel="noopener" target="_blank" style="color:var(--accent-color)">clustering documentation</a> lists the fingerprint steps: trim spaces, lowercase, remove punctuation, turn accented Western letters into plain ASCII (<em>g&ouml;del</em> becomes <em>godel</em>), split into words, sort and de-duplicate the words, and join them again. The cell below follows those steps. It is our reimplementation, so OpenRefine's own keys may differ in small details.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+import re, unicodedata
+def fingerprint(s):
+    # The steps OpenRefine&#x27;s documentation lists for its fingerprint keying function
+    s = s.strip().lower()
+    s = re.sub(r&quot;[^\w\s]&quot;, &quot;&quot;, s)                     # drop punctuation
+    s = unicodedata.normalize(&quot;NFKD&quot;, s).encode(&quot;ascii&quot;, &quot;ignore&quot;).decode()  # ASCII-fold
+    return &quot; &quot;.join(sorted(set(s.split())))
+
+vals = raw[&quot;district&quot;].value_counts()
+keys = pd.DataFrame({&quot;value&quot;: vals.index, &quot;rows&quot;: vals.values})
+keys[&quot;key&quot;] = keys[&quot;value&quot;].map(fingerprint)
+clusters = keys.groupby(&quot;key&quot;).filter(lambda g: len(g) &gt; 1).sort_values([&quot;key&quot;, &quot;rows&quot;], ascending=[True, False])
+print(clusters.to_string(index=False))
+print()
+print(&quot;Not caught by fingerprint:&quot;, sorted(set(keys[&quot;value&quot;]) - set(clusters[&quot;value&quot;]) - set(dist[&quot;district&quot;])))</textarea></div>
+<p>Fingerprint finds six clusters: Barmer, Gaya, Kozhikode, Patna, Purnia and Udaipur, which between them hold the case, space and punctuation variants (<em>GAYA</em>, <em>patna</em>, <em>Udaipur.</em>, the trailing spaces). It leaves nine values alone: <em>Badmer, Baitul, Calicut, Indor, Kozhikkode, Purnea, Reewa, Wayanadu, Waynad</em>. Those differ in their letters, and fingerprint never changes letters, which is why it produces so few false matches.</p>
+<h3>Merging in the window</h3>
+<ol class="guide-steps"><li>Each row of the clustering window is one cluster, with its values, their row counts and a text box for the new value.</li><li>Pick one of the listed values to apply to every cell in the cluster, or type the official spelling into the text box, and mark the cluster for merging. Leave a cluster unmarked if its values are different places.</li><li>Click <strong>Merge selected &amp; re-cluster</strong>. OpenRefine applies the merge and runs the method again on what is left.</li><li>Change the method and keying function, and repeat. Close the window when nothing sensible is left.</li></ol>
+<h3>N-gram fingerprint and transliteration variants</h3>
+<p>N-gram fingerprint lowercases the value, strips spaces and punctuation, cuts it into overlapping pieces of <em>n</em> characters, and sorts the unique pieces. The cell compares four pairs with <em>n</em> = 2.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+import re
+def ngram_fingerprint(s, n=2):
+    s = re.sub(r&quot;[^\w]&quot;, &quot;&quot;, s.lower())                # lowercase, drop punctuation and spaces
+    grams = sorted(set(s[i:i + n] for i in range(len(s) - n + 1)))
+    return &quot;&quot;.join(grams)
+
+for a, b in [(&quot;Purnia&quot;, &quot;Purnea&quot;), (&quot;Kozhikode&quot;, &quot;Kozhikkode&quot;), (&quot;Wayanad&quot;, &quot;Waynad&quot;), (&quot;Barmer&quot;, &quot;Badmer&quot;)]:
+    print(f&quot;{a:10} {ngram_fingerprint(a):22} {b:11} {ngram_fingerprint(b):22} same key: {ngram_fingerprint(a) == ngram_fingerprint(b)}&quot;)</textarea></div>
+<p>All four pairs get <strong>different</strong> keys. <em>Kozhikkode</em> has a doubled <em>k</em>, which adds the piece <code class="inline">kk</code>; <em>Purnea</em> has <code class="inline">ea</code> where <em>Purnia</em> has <code class="inline">ia</code>. Key collision only clusters exact key matches, so a single changed letter is enough to escape it.</p>
+<h3>Nearest neighbour for one-letter differences</h3>
+<p>Levenshtein distance counts single-character edits. OpenRefine's manual gives the example that <em>New York</em> and <em>newyork</em> are 3 apart, so a change of case counts as an edit. The cell compares every messy value against the ten official names in <code class="inline">districts.csv</code> with a radius of 2.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+def lev(a, b):
+    # edit distance: insertions, deletions and substitutions
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        cur = [i]
+        for j, cb in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (ca != cb)))
+        prev = cur
+    return prev[-1]
+
+radius = 2
+official = list(dist[&quot;district&quot;])
+for v in sorted(raw[&quot;district&quot;].unique()):
+    if v in official:
+        continue
+    near = [(o, lev(v, o)) for o in official if lev(v, o) &lt;= radius]
+    print(repr(v).ljust(14), &quot;-&gt;&quot;, near if near else &quot;nothing within radius &quot; + str(radius))</textarea></div>
+<p>Radius 2 matches <em>Purnea, Kozhikkode, Badmer, Wayanadu, Waynad, Reewa, Indor</em> and most of the space, case and punctuation variants at distance 1, and <em>Baitul</em> to <em>Betul</em> and <em>Patna</em> with two trailing spaces at distance 2. It misses <em>GAYA</em> and <em>PURNIA</em>, because four or five capital letters are four or five edits; fingerprint had already caught those, which is the reason to run fingerprint first. It cannot match <em>Calicut</em> to <em>Kozhikode</em> at any sensible radius.</p>
+<div class="info-box warning"><strong>Set the block size for short names.</strong> Before comparing pairs, OpenRefine groups values into blocks that share a run of characters, 6 by default, and the manual recommends at least 3. Rewa, Gaya and Patna are shorter than six letters, so with the default they may never be compared at all. For district, block and village names, set the block size to 3 and raise it only if the window fills with nonsense.</div>
+<h3>What clustering can and cannot do with Indian place names</h3>
+<ul><li><strong>Case, spaces and punctuation</strong> (<em>GAYA, Patna&nbsp;&nbsp;, Udaipur.</em>): fingerprint handles them safely.</li><li><strong>One-letter transliteration differences</strong> (<em>Purnea/Purnia, Badmer/Barmer, Kozhikkode/Kozhikode, Baitul/Betul</em>): these come from writing the same Hindi, Malayalam or Bengali sound in Roman letters in different ways. Levenshtein at radius 1 or 2 finds most of them. Check each one: at radius 2, two different villages can also fall together, and the manual's own example is <em>M. Makeba</em> matching <em>B. Makeba</em>, another person.</li><li><strong>Phonetic keys</strong>: the manual describes Metaphone3 as an English-language algorithm and Cologne Phonetic as built for German. They may catch some vowel variants, but they were not designed for Indian names, so read each cluster before you accept it.</li><li><strong>Different names for one place</strong> (<em>Calicut/Kozhikode, Gurgaon/Gurugram, Allahabad/Prayagraj</em>): no string method links them. Use a lookup table, or better, match on the Census or LGD code instead of the name.</li><li><strong>Names in two scripts</strong> (<em>&#x92a;&#x942;&#x930;&#x94d;&#x923;&#x93f;&#x92f;&#x93e;</em> in one row, <em>Purnia</em> in another): the ASCII folding in fingerprint covers accented Western letters only, and none of the methods transliterates Devanagari or any other Indian script into Roman letters. Split such a column by script and map each against the official list.</li></ul>
+<p>The cell below writes down what you would decide in the clustering window as a mapping, applies it, and checks the result against the official list.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+# What you decide in the clustering window, written down as a mapping
+fix = {&quot;Purnea&quot;: &quot;Purnia&quot;, &quot;PURNIA&quot;: &quot;Purnia&quot;, &quot; Purnia&quot;: &quot;Purnia&quot;,
+       &quot;Kozhikkode&quot;: &quot;Kozhikode&quot;, &quot;kozhikode&quot;: &quot;Kozhikode&quot;,
+       &quot;Badmer&quot;: &quot;Barmer&quot;, &quot;Barmer &quot;: &quot;Barmer&quot;,
+       &quot;Wayanadu&quot;: &quot;Wayanad&quot;, &quot;Waynad&quot;: &quot;Wayanad&quot;,
+       &quot;udaipur&quot;: &quot;Udaipur&quot;, &quot;Udaipur.&quot;: &quot;Udaipur&quot;,
+       &quot;Gaya &quot;: &quot;Gaya&quot;, &quot;GAYA&quot;: &quot;Gaya&quot;, &quot;Baitul&quot;: &quot;Betul&quot;,
+       &quot;Reewa&quot;: &quot;Rewa&quot;, &quot;Indor&quot;: &quot;Indore&quot;, &quot;Patna  &quot;: &quot;Patna&quot;, &quot;patna&quot;: &quot;Patna&quot;}
+clean = raw.copy()
+clean[&quot;district&quot;] = clean[&quot;district&quot;].replace(fix)
+left = clean.loc[~clean[&quot;district&quot;].isin(dist[&quot;district&quot;]), &quot;district&quot;].value_counts()
+print(&quot;Values still not in districts.csv:&quot;)
+print(left)
+print()
+print(clean[&quot;district&quot;].value_counts().sort_index())</textarea></div>
+<p>After the merges, one value remains outside <code class="inline">districts.csv</code>: <em>Calicut</em>, 2 rows. That is the colonial-era name for Kozhikode, and the cell in module 8 maps it with an explicit lookup.</p>
+<div class="info-box"><strong>Exercise.</strong> In the Levenshtein cell, change <code class="inline">radius = 2</code> to <code class="inline">radius = 1</code> and run again. Which two matches disappear? Then try <code class="inline">radius = 3</code> and look for a match you would refuse.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: GREL &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 8</div>
+<h2>Transform cells with GREL</h2>
+<p>GREL (General Refine Expression Language) is OpenRefine's formula language. In an expression, <code class="inline">value</code> is the current cell. Open <strong>Edit cells &rarr; Transform&hellip;</strong> on a column, type an expression, and the window shows a preview of the first rows before you apply it. The functions below are from the <a href="https://openrefine.org/docs/manual/grelfunctions" rel="noopener" target="_blank" style="color:var(--accent-color)">GREL functions reference</a>.</p>
+<div class="syntax-label">GREL: tidy a name column</div><pre class="syntax-block">value.trim()
+value.toTitlecase()
+value.trim().toTitlecase()</pre>
+<p><code class="inline">trim()</code> removes leading and trailing spaces and <code class="inline">toTitlecase()</code> capitalises the first letter of each word. You can chain them. The same two fixes are also on the menu, under <strong>Edit cells &rarr; Common transforms</strong> (Trim leading and trailing whitespace; Case transforms).</p>
+<div class="syntax-label">GREL: numbers stored as text</div><pre class="syntax-block">value.replace(&quot;,&quot;, &quot;&quot;).toNumber()</pre>
+<p><code class="inline">replace(find, replacement)</code> removes the thousands comma; <code class="inline">toNumber()</code> converts the result to a number. A cell that still cannot be converted, such as <em>not asked</em>, stays as it was, which the numeric facet will show as non-numeric.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+# GREL value.trim().toTitlecase()  -&gt;  pandas .str.strip().str.title()
+t = raw[&quot;district&quot;].str.strip().str.title()
+print(raw[&quot;district&quot;].nunique(), &quot;distinct values before,&quot;, t.nunique(), &quot;after trim and title case&quot;)
+print(sorted(t.unique()))
+print()
+# GREL value.replace(&quot;,&quot;, &quot;&quot;).toNumber()  -&gt;  remove commas, then convert
+exp = pd.to_numeric(raw[&quot;monthly_pc_exp&quot;].str.replace(&quot;,&quot;, &quot;&quot;), errors=&quot;coerce&quot;)
+print(&quot;non-numeric before:&quot;, pd.to_numeric(raw[&quot;monthly_pc_exp&quot;], errors=&quot;coerce&quot;).isna().sum(),
+      &quot; after removing commas:&quot;, exp.isna().sum())
+print(raw.loc[exp.isna(), &quot;monthly_pc_exp&quot;].unique())</textarea></div>
+<p>Trim and title case take the district column from <strong>29 distinct values to 20</strong>. Removing commas takes the non-numeric expenditure cells from <strong>18 to 6</strong>, and the six left all say <em>not asked</em>. Those are missing values, and they should stay missing: do not type a zero.</p>
+<div class="syntax-label">GREL: more expressions you will use</div><pre class="syntax-block">value.fingerprint()
+value.split(&quot;,&quot;)[0]
+if(value == null, &quot;missing&quot;, value)
+cells[&quot;district&quot;].value + &quot;, &quot; + cells[&quot;area&quot;].value</pre>
+<ul><li><code class="inline">value.fingerprint()</code> in <strong>Edit column &rarr; Add column based on this column&hellip;</strong> puts each cell's fingerprint key in a new column, so you can see why two values clustered.</li><li><code class="inline">value.split(",")[0]</code> keeps the part before the first comma.</li><li><code class="inline">if(value == null, "missing", value)</code> labels empty cells.</li><li><code class="inline">cells["district"].value</code> reads another column in the same row, so the last line builds a combined label.</li></ul>
+<div class="info-box"><strong>Exercise.</strong> In the Python cell, delete <code class="inline">.str.title()</code> from the second line and run again. How many distinct values are left with only the trim?</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: Columns &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 8</div>
+<h2>Split and join columns</h2>
+<p>MIS exports often pack two facts into one column ("Gaya, Bihar") or spread one fact across several. OpenRefine's column menu handles both, as described in the <a href="https://openrefine.org/docs/manual/columnediting" rel="noopener" target="_blank" style="color:var(--accent-color)">column editing manual</a>.</p>
+<h3>Split one column into several</h3>
+<ol class="guide-steps"><li>On the <code class="inline">location</code> column, choose <strong>Edit column &rarr; Split into several columns&hellip;</strong></li><li>Choose <strong>by separator</strong> and type a comma followed by a space.</li><li>Choose whether to remove the original column, and click OK.</li></ol>
+<h3>Join several columns into one</h3>
+<ol class="guide-steps"><li>Choose <strong>Edit column &rarr; Join columns&hellip;</strong> from any column.</li><li>Tick the columns to join (here <code class="inline">area</code> and <code class="inline">caste</code>) and drag them into order.</li><li>Type a separator, for example <code class="inline"> | </code>, and choose whether the result goes into the selected column or a new one.</li></ol>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+# Edit column &gt; Split into several columns..., separator &quot;, &quot;
+parts = raw[&quot;location&quot;].str.split(&quot;, &quot;, n=1, expand=True)
+parts.columns = [&quot;location 1&quot;, &quot;location 2&quot;]
+print(parts.head(4))
+print(parts[&quot;location 2&quot;].value_counts())
+print()
+# Edit column &gt; Join columns..., separator &quot; | &quot;
+joined = raw[&quot;area&quot;] + &quot; | &quot; + raw[&quot;caste&quot;]
+print(joined.value_counts().head(6))</textarea></div>
+<p>The split gives a second column holding the state, with 72 rows each for Madhya Pradesh and Bihar and 48 each for Rajasthan and Kerala. The joined <em>area | caste</em> column is a quick cross-tab: Rural | OBC is the largest group with 71 households.</p>
+<h3>Multi-valued cells are a different operation</h3>
+<p>If a cell holds a list, such as the schemes a household receives ("PDS; MGNREGA; PM-KISAN"), use <strong>Edit cells &rarr; Split multi-valued cells&hellip;</strong>. That puts each item on its own row under the same record, so you can facet by scheme. <strong>Edit cells &rarr; Join multi-valued cells&hellip;</strong> puts them back.</p>
+<div class="info-box"><strong>Exercise.</strong> In the Python cell, change the join to <code class="inline">raw["area"] + " | " + raw["caste"]</code> &rarr; <code class="inline">raw["caste"] + " | " + raw["area"]</code> and run. The counts do not change; only the label order does.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Reconcile &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 8</div>
+<h2>Reconciliation, in outline</h2>
+<p>Clustering makes a column consistent with itself. <strong>Reconciliation</strong> matches it against an outside list and attaches that list's identifier to each cell. For a district column, the useful identifier is an official code that does not change when the spelling does.</p>
+<ol class="guide-steps"><li>On the column, choose <strong>Reconcile &rarr; Start reconciling&hellip;</strong></li><li>The window offers <strong>Wikidata</strong> as a built-in service. To use another, click <strong>Add Standard Service&hellip;</strong> and paste the service's address.</li><li>Pick a type if the service offers types (for a district column, a type meaning "district of India" narrows the candidates), and start. Each cell gets a best match, a list of candidates, or nothing.</li><li>Facet on the reconciliation results to review the uncertain ones, and match them by hand.</li></ol>
+<p>The <a href="https://openrefine.org/docs/manual/reconciling" rel="noopener" target="_blank" style="color:var(--accent-color)">reconciling manual</a> also mentions <em>reconcile-csv</em>, a small tool that builds a reconciliation service from a CSV file. That suits the usual MIS case: reconcile your messy village column against the official list your programme already holds, with its codes. If you already have identifiers in a column, <strong>Reconcile &rarr; Use values as identifiers</strong> links them directly.</p>
+<div class="info-box warning"><strong>Reconciliation leaves your computer.</strong> The values in the column are sent to the service. Reconciling district names against Wikidata is harmless; reconciling a column of beneficiary names is not. Under India's Digital Personal Data Protection Act 2023, check what your consent notice and data-sharing agreements allow before any personal data goes to an outside service.</div>
+<p>Without a service, the same idea is a join on a lookup table. The Python cell in the next module maps <em>Calicut</em> to <em>Kozhikode</em> that way and then refuses to finish if any district is still unknown.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="7">Next: History &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="7" role="tabpanel">
+<div class="eyebrow">Module 8 of 8</div>
+<h2>Undo, replay the cleaning, and export</h2>
+<h3>Undo / Redo</h3>
+<p>Click the <strong>Undo / Redo</strong> tab in the left panel. It lists every change in order, starting with step 0, <em>Create project</em>, which cannot be undone. Click any earlier step to go back to it; the later steps stay in the list, greyed out, and you can click forward again. If you make a new change while stepped back, the greyed steps are erased for good, so step forward again before carrying on.</p>
+<h3>Extract the operation history as JSON</h3>
+<ol class="guide-steps"><li>In the Undo / Redo tab, click <strong>Extract&hellip;</strong></li><li>A box lists every operation up to the current state. Tick the ones you want; they appear as JSON on the right.</li><li>Copy the JSON and save it as a text file next to your data, for example <code class="inline">clean_households.json</code>. That file is your cleaning recipe.</li><li>Next month, create a project from the new export, open Undo / Redo, click <strong>Apply&hellip;</strong>, paste the JSON, and every step runs again.</li></ol>
+<p>The manual notes that not every operation can be extracted: edits to a single cell cannot be replayed. Do one-off corrections with a GREL expression or a cluster merge, so they go into the recipe. Read the JSON before you rely on it: you should find your column names and your GREL expressions written out in it.</p>
+<h3>The same idea in Python</h3>
+<p>A cleaning recipe written as code does the same job and can be checked. This cell puts all the steps from this course into one function and stops with an error if a district is still unknown.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+dist = pd.read_csv(&quot;districts.csv&quot;)
+
+# A messy practice copy: every third household gets a variant spelling of its
+# district, and some expenditure cells arrive as text.
+variants = {
+    &quot;Purnia&quot;: [&quot;Purnea&quot;, &quot;PURNIA&quot;, &quot; Purnia&quot;],
+    &quot;Kozhikode&quot;: [&quot;Kozhikkode&quot;, &quot;Calicut&quot;, &quot;kozhikode&quot;],
+    &quot;Barmer&quot;: [&quot;Badmer&quot;, &quot;Barmer &quot;],
+    &quot;Wayanad&quot;: [&quot;Wayanadu&quot;, &quot;Waynad&quot;],
+    &quot;Udaipur&quot;: [&quot;udaipur&quot;, &quot;Udaipur.&quot;],
+    &quot;Gaya&quot;: [&quot;Gaya &quot;, &quot;GAYA&quot;],
+    &quot;Betul&quot;: [&quot;Baitul&quot;, &quot;Betul&quot;],
+    &quot;Rewa&quot;: [&quot;Reewa&quot;, &quot;Rewa&quot;],
+    &quot;Indore&quot;: [&quot;Indor&quot;, &quot;Indore&quot;],
+    &quot;Patna&quot;: [&quot;Patna  &quot;, &quot;patna&quot;],
+}
+def messy_district(r):
+    if r[&quot;hh_id&quot;] % 3:
+        return r[&quot;district&quot;]
+    v = variants[r[&quot;district&quot;]]
+    return v[(r[&quot;hh_id&quot;] // 3) % len(v)]
+def messy_exp(r):
+    if r[&quot;hh_id&quot;] % 40 == 13:
+        return &quot;not asked&quot;
+    if r[&quot;hh_id&quot;] % 20 == 7:
+        return f&quot;{r[&#x27;monthly_pc_exp&#x27;]:,}&quot;
+    return str(r[&quot;monthly_pc_exp&quot;])
+state = dict(zip(dist[&quot;district&quot;], dist[&quot;state&quot;]))
+raw = pd.DataFrame({
+    &quot;hh_id&quot;: hh[&quot;hh_id&quot;],
+    &quot;district&quot;: hh.apply(messy_district, axis=1),
+    &quot;location&quot;: hh[&quot;district&quot;] + &quot;, &quot; + hh[&quot;district&quot;].map(state),
+    &quot;area&quot;: hh[&quot;area&quot;],
+    &quot;caste&quot;: hh[&quot;caste&quot;],
+    &quot;monthly_pc_exp&quot;: hh.apply(messy_exp, axis=1),
+})
+# The whole cleaning as one recipe that runs again on next month&#x27;s export
+def clean_households(df, districts):
+    out = df.copy()
+    out[&quot;district&quot;] = out[&quot;district&quot;].str.strip().str.title()
+    out[&quot;district&quot;] = out[&quot;district&quot;].str.replace(r&quot;\.$&quot;, &quot;&quot;, regex=True)
+    lookup = {&quot;Purnea&quot;: &quot;Purnia&quot;, &quot;Kozhikkode&quot;: &quot;Kozhikode&quot;, &quot;Calicut&quot;: &quot;Kozhikode&quot;,
+              &quot;Badmer&quot;: &quot;Barmer&quot;, &quot;Wayanadu&quot;: &quot;Wayanad&quot;, &quot;Waynad&quot;: &quot;Wayanad&quot;,
+              &quot;Baitul&quot;: &quot;Betul&quot;, &quot;Reewa&quot;: &quot;Rewa&quot;, &quot;Indor&quot;: &quot;Indore&quot;}
+    out[&quot;district&quot;] = out[&quot;district&quot;].replace(lookup)
+    out[&quot;monthly_pc_exp&quot;] = pd.to_numeric(out[&quot;monthly_pc_exp&quot;].str.replace(&quot;,&quot;, &quot;&quot;), errors=&quot;coerce&quot;)
+    bad = set(out[&quot;district&quot;]) - set(districts[&quot;district&quot;])
+    assert not bad, f&quot;unknown districts: {bad}&quot;
+    return out
+
+clean = clean_households(raw, dist)
+print(clean.shape)
+print(clean[&quot;district&quot;].value_counts().sort_index())
+print(&quot;missing expenditure:&quot;, clean[&quot;monthly_pc_exp&quot;].isna().sum())
+clean.to_csv(&quot;households_clean.csv&quot;, index=False)
+print(pd.read_csv(&quot;households_clean.csv&quot;).shape, &quot;read back from households_clean.csv&quot;)</textarea></div>
+<p>The result has 240 rows and 6 columns, exactly 24 households in each of the ten districts, and 6 missing expenditure values (the <em>not asked</em> cells), and it reads back from the saved file with the same shape.</p>
+<div class="info-box"><strong>Exercise.</strong> Delete the <code class="inline">"Calicut": "Kozhikode"</code> entry from the lookup and run again. The <code class="inline">assert</code> line stops the run and names the unknown district. A recipe that fails loudly on a new spelling is better than one that lets it through.</div>
+<h3>Export</h3>
+<p>The <strong>Export</strong> button at the top right offers, among others: comma- or tab-separated values, an HTML table, Excel (XLS or XLSX), ODS, a custom tabular exporter, an SQL statement exporter and a templating exporter for JSON. The <a href="https://openrefine.org/docs/manual/exporting" rel="noopener" target="_blank" style="color:var(--accent-color)">exporting manual</a> warns that many of these export only the rows in the current view, with your facets applied, so clear facets before exporting the full file. <strong>Export &rarr; OpenRefine project archive to file</strong> saves the whole project with its history as a .tar.gz file that another OpenRefine can import.</p>
+<div class="info-box warning"><strong>A project archive keeps every earlier state.</strong> The exporting manual warns that project archives contain the data from previous steps. If you removed names or phone numbers in OpenRefine, anyone with the archive can step back to them. Share the exported CSV and the extracted JSON recipe, and keep the archive to yourself.</div>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/pandas.html" style="color:var(--text-primary)">pandas for development data</a></h4><p>Write the same cleaning as Python code, then summarise and merge.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/open-data-editor.html" style="color:var(--text-primary)">Open Data Editor</a></h4><p>Check a cleaned file for structural errors before you share it.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/qgis.html" style="color:var(--text-primary)">QGIS: maps for development data</a></h4><p>Clean district names are what make a map join work.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-lit.html" style="color:var(--text-primary)">Data Literacy 101</a></h4><p>The ideas behind tidy, trustworthy data.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-protection-dpdp.html" style="color:var(--text-primary)">Data Protection and the DPDP Act</a></h4><p>What you may do with personal data in survey and MIS files.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="6">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=3b5d57ac" defer></script>
+</body>
+</html>

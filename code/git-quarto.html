@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Git and Quarto: Reproducible Reports | ImpactMojo</title>
+    <meta name="description" content="A free guided course in Git and Quarto for development practitioners in South Asia: install Git, the init-add-commit-log-diff loop, branches, GitHub remotes, .gitignore and keeping personal data out of repositories under the DPDP Act, Quarto documents with R or Python, rendering to HTML, Word and PDF, parameterised district profiles, and a reproducible project layout.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/git-quarto.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Git and Quarto: Reproducible Reports">
+<meta property="og:description" content="A free guided course in Git and Quarto for development practitioners in South Asia: install Git, the init-add-commit-log-diff loop, branches, GitHub remotes, .gitignore and keeping personal data out of repositories under the DPDP Act, Quarto documents with R or Python, rendering to HTML, Word and PDF, parameterised district profiles, and a reproducible project layout.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/git-quarto.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Git and Quarto: Reproducible Reports">
+<meta name="twitter:description" content="A free guided course in Git and Quarto for development practitioners in South Asia: install Git, the init-add-commit-log-diff loop, branches, GitHub remotes, .gitignore and keeping personal data out of repositories under the DPDP Act, Quarto documents with R or Python, rendering to HTML, Word and PDF, parameterised district profiles, and a reproducible project layout.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Git and Quarto: Reproducible Reports", "description": "A free guided course in Git and Quarto for development practitioners in South Asia: install Git, the init-add-commit-log-diff loop, branches, GitHub remotes, .gitignore and keeping personal data out of repositories under the DPDP Act, Quarto documents with R or Python, rendering to HTML, Word and PDF, parameterised district profiles, and a reproducible project layout.", "url": "https://www.impactmojo.in/code/git-quarto.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Guided tool course</div>
+        <h1>Git and Quarto: reproducible reports</h1>
+        <p>Keep a record of every change to your analysis, share it with colleagues without emailing files, and turn one report template into ten district profiles with a single command. Git records versions; Quarto turns R or Python code and text into HTML, Word or PDF reports. Both are free. Cells on this page run the parts that can run in a browser.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>Git and Quarto run on your own computer, in a terminal.</strong> The grey boxes are commands and files for you to type there; this page shows no terminal output from them, because it cannot run them. Each module says what to look for. The code cells run the steps a browser can: a diff, a check for personal data before a commit, and the calculation inside a district profile. The first run downloads the engine once (R about 7&nbsp;MB, Python about 10&nbsp;MB).</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> Why Git</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> The loop</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> Branches</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> GitHub</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Personal data</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> Quarto</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Parameters</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">8</span> Layout</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 8</div>
+<h2>Why version control, and installing Git</h2>
+<p>A folder of <code class="inline">report_final.docx</code>, <code class="inline">report_final_v2.docx</code> and <code class="inline">report_final_v2_AK_comments.docx</code> is a version control system with no record of what changed, who changed it or why. Git keeps that record. Each <em>commit</em> is a saved snapshot of the project with a message. You can see the difference between any two snapshots, go back to one, and work on a change without disturbing the version others rely on.</p>
+<p>Git suits text files: R and Python scripts, Quarto documents, CSV codebooks, XLSForms saved as CSV. It stores Word and Excel files but cannot show what changed inside them.</p>
+<div class="info-box"><strong>Version and cost, checked 6 October 2026.</strong> The <a href="https://git-scm.com/" rel="noopener" target="_blank" style="color:var(--accent-color)">Git home page</a> lists the latest source release as <strong>2.56.0</strong> (release notes dated 28 September 2026). Git is "released under the GNU General Public License version 2.0", so it costs nothing. The <a href="https://git-scm.com/install/windows" rel="noopener" target="_blank" style="color:var(--accent-color)">Windows download page</a> offers Git for Windows 2.56.0(2), released 5 October 2026.</div>
+<h3>Install</h3>
+<ul><li><strong>Windows</strong>: download the installer from the <a href="https://git-scm.com/install/windows" rel="noopener" target="_blank" style="color:var(--accent-color)">Windows page</a>. The default choices are fine. It adds <em>Git Bash</em>, a terminal where every command on this page works. A portable version is offered for computers where you cannot install software.</li><li><strong>macOS</strong>: the <a href="https://git-scm.com/install/mac" rel="noopener" target="_blank" style="color:var(--accent-color)">macOS page</a> says Apple ships Git with the Xcode Command Line Tools: run <code class="inline">xcode-select --install</code> in Terminal. With Homebrew, <code class="inline">brew install git</code>.</li><li><strong>Linux</strong>: Debian and Ubuntu, <code class="inline">sudo apt-get install git</code>; Fedora, <code class="inline">sudo dnf install git</code> (<a href="https://git-scm.com/install/linux" rel="noopener" target="_blank" style="color:var(--accent-color)">Linux page</a>).</li></ul>
+<h3>First-time setup</h3>
+<p>These lines come from the <a href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup" rel="noopener" target="_blank" style="color:var(--accent-color)">Pro Git book's setup chapter</a>. Your name and email are written into every commit you make.</p>
+<div class="syntax-label">Terminal: set up Git once</div><pre class="syntax-block"># Tell Git who you are (once per computer). Use the name and email you want on your commits.
+git config --global user.name &quot;Asha Kumari&quot;
+git config --global user.email &quot;asha@example.org&quot;
+
+# Name the first branch of every new repository &quot;main&quot;
+git config --global init.defaultBranch main
+
+# Check what Git has recorded
+git config --list
+git --version</pre>
+<div class="info-box"><strong>Exercise.</strong> Run <code class="inline">git --version</code> after installing. It should print a version number starting with <code class="inline">git version</code>. If the terminal says the command is not found, close it, open a new one, and try again; on Windows, use Git Bash.</div>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: The loop &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 8</div>
+<h2>The basic loop: init, add, commit, log, diff</h2>
+<p>Almost all daily Git work is four commands: change files, <code class="inline">git add</code> the ones you want in the snapshot, <code class="inline">git commit</code> with a message, and look back with <code class="inline">git log</code> and <code class="inline">git diff</code>.</p>
+<div class="syntax-label">Terminal: the basic loop</div><pre class="syntax-block">cd district-profiles          # your project folder
+git init                      # start a repository here (creates a hidden .git folder)
+git status                    # what has changed since the last commit?
+
+git add README.md analysis/profile.qmd     # stage these files for the next commit
+git commit -m &quot;Add district profile template&quot;
+
+# ...edit analysis/profile.qmd...
+git diff                      # line-by-line changes not yet staged
+git add analysis/profile.qmd
+git commit -m &quot;Report toilet coverage as a percentage&quot;
+
+git log --oneline             # one line per commit, newest first</pre>
+<ul><li><code class="inline">git init</code> creates an empty repository: the <a href="https://git-scm.com/docs/git-init" rel="noopener" target="_blank" style="color:var(--accent-color)">manual</a> describes it as "basically a .git directory". Run it once per project.</li><li><code class="inline">git status</code> is the command to run whenever you are unsure. It lists files that changed, files staged for the next commit, and files Git is not tracking.</li><li><code class="inline">git add</code> stages a file. Only staged changes go into the next commit, so you can commit one fix at a time.</li><li><code class="inline">git commit -m</code> saves the snapshot. Write the message as what the commit does: "Fix Purnia district code", "Add caste table".</li><li><code class="inline">git diff</code> shows changed lines. <code class="inline">git log --oneline</code> lists commits with a short ID you can refer to.</li></ul>
+<h3>Reading a diff</h3>
+<p>Git shows changes in the unified diff format: a line starting with <code class="inline">-</code> was removed and a line starting with <code class="inline">+</code> was added, with unchanged lines around them for context. Python's <code class="inline">difflib</code> writes the same format, so the cell shows what <code class="inline">git diff</code> would report after a cleaning fix changed one figure in a district table (figures from <a href="/code/data/households.csv" download style="color:var(--accent-color)">households.csv</a>, illustrative data invented for teaching).</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import difflib
+
+before = &quot;&quot;&quot;district,households,pct_toilet,mean_pc_exp
+Barmer,24,75.0,2745
+Purnia,24,75.0,2395
+Rewa,24,50.0,2557
+&quot;&quot;&quot;.splitlines(keepends=True)
+
+# The same table after a cleaning fix changed one household&#x27;s answer in Purnia
+after = &quot;&quot;&quot;district,households,pct_toilet,mean_pc_exp
+Barmer,24,75.0,2745
+Purnia,24,79.2,2395
+Rewa,24,50.0,2557
+&quot;&quot;&quot;.splitlines(keepends=True)
+
+print(&quot;&quot;.join(difflib.unified_diff(before, after, &quot;a/district_table.csv&quot;, &quot;b/district_table.csv&quot;)))</textarea></div>
+<p>The output names the old and new file, then shows the Purnia row twice: once with <code class="inline">-</code> and 75.0, once with <code class="inline">+</code> and 79.2. Barmer and Rewa appear unmarked, as context. This is why Git suits CSV tables and code: a reviewer sees exactly which number moved.</p>
+<div class="info-box"><strong>Exercise.</strong> In the <code class="inline">after</code> text, also change Rewa's mean spending from 2557 to 2575, and run again. Both changes appear. Then add a new line for Gaya at the end of <code class="inline">after</code>: it appears with a <code class="inline">+</code> and no matching <code class="inline">-</code>.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Branches &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 8</div>
+<h2>Branches: try a change without breaking main</h2>
+<p>A branch is a separate line of commits. Keep <code class="inline">main</code> as the version that works, and make a branch for anything that might not: a new table, a different poverty line, a colleague's suggested rewrite.</p>
+<div class="syntax-label">Terminal: branches</div><pre class="syntax-block">git branch                         # list branches; * marks the one you are on
+git switch -c caste-tables         # create a branch and move to it
+# ...edit, add, commit on the branch...
+git switch main                    # back to main; the branch&#x27;s work is set aside
+git merge caste-tables             # bring the branch&#x27;s commits into main
+git branch -d caste-tables         # delete the branch once merged</pre>
+<ul><li><code class="inline">git switch -c name</code> creates the branch and moves to it; the <a href="https://git-scm.com/docs/git-switch" rel="noopener" target="_blank" style="color:var(--accent-color)">git switch manual</a> describes <code class="inline">-c</code> as "Create a new branch" before switching to it. Older tutorials use <code class="inline">git checkout -b</code> for the same thing.</li><li>Files in your folder change when you switch branches. Commit before switching.</li><li><code class="inline">git merge</code> brings the branch's commits into the branch you are on. If both changed the same lines, Git stops and marks the conflict in the file for you to resolve, then you add and commit.</li></ul>
+<div class="info-box"><strong>Exercise.</strong> In a practice folder, commit a file with one line, create a branch, change the line and commit. Switch back to <code class="inline">main</code> and open the file: it shows the old line. Merge the branch and open it again. Run <code class="inline">git log --oneline</code> at each step to see where you are.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: GitHub &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 8</div>
+<h2>Remotes: GitHub, push and pull</h2>
+<p>A remote is a copy of the repository on a server, which is how a team shares work and how a laptop's work survives the laptop. GitHub is the most common host. Its <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories" rel="noopener" target="_blank" style="color:var(--accent-color)">documentation</a> says a free account can own unlimited public and private repositories, and that private repositories are only accessible to you and the people you share them with.</p>
+<ol class="guide-steps"><li>On GitHub, create a new repository. Choose <strong>Private</strong>. Leave it empty (no README) if your folder already has commits.</li><li>Copy its HTTPS address and add it as a remote called <code class="inline">origin</code>, as below.</li><li>Push. GitHub's <a href="https://docs.github.com/en/get-started/git-basics/about-remote-repositories" rel="noopener" target="_blank" style="color:var(--accent-color)">remote repositories guide</a> says that when Git asks for your password over HTTPS, you enter a <strong>personal access token</strong>, because password authentication for Git has been removed. The same guide mentions Git Credential Manager as an alternative that remembers your login.</li></ol>
+<div class="syntax-label">Terminal: remotes</div><pre class="syntax-block"># Connect the folder to an empty private repository you created on GitHub
+git remote add origin https://github.com/YOUR-ORG/district-profiles.git
+git remote -v                       # check the address
+git push -u origin main             # send main to GitHub; -u remembers the pairing
+
+# Every working day
+git pull                            # get colleagues&#x27; commits first
+# ...work, add, commit...
+git push                            # send your commits
+
+# A colleague starting on a new laptop
+git clone https://github.com/YOUR-ORG/district-profiles.git</pre>
+<div class="info-box"><strong>Pull before you push.</strong> If a colleague pushed first, your push is refused until you pull their commits. Pull at the start of each day and before each push, and conflicts stay small.</div>
+<div class="info-box"><strong>Exercise.</strong> Create a private repository, push your practice folder, then edit README.md on the GitHub website and commit it there. Back on your computer, run <code class="inline">git pull</code> and open README.md: the website edit is now in your folder.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Personal data &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 8</div>
+<h2>.gitignore and keeping personal data out</h2>
+<p>Every file you commit stays in the repository's history, on every computer that clones it and on the server. A beneficiary list with names and phone numbers committed once is, for practical purposes, permanent. Under the <a href="https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf" rel="noopener" target="_blank" style="color:var(--accent-color)">DPDP Act 2023</a>, section 8(5), your organisation must take "reasonable security safeguards to prevent personal data breach". A private repository is access control, and it holds only as long as the access list stays right. Keep personal data out of Git from the start.</p>
+<p>A <code class="inline">.gitignore</code> file lists files Git should not track. From the <a href="https://git-scm.com/docs/gitignore" rel="noopener" target="_blank" style="color:var(--accent-color)">gitignore manual</a>: a line starting with <code class="inline">#</code> is a comment; a pattern ending in <code class="inline">/</code> matches only directories; <code class="inline">*</code> "matches anything except a slash".</p>
+<div class="syntax-label">.gitignore</div><pre class="syntax-block"># .gitignore at the top of the repository
+
+# Personal data never goes into the repository
+data/raw/
+*.xlsx
+*.sav
+*.dta
+
+# Rendered output can be rebuilt from the code
+outputs/
+*_files/
+
+# Credentials and local settings
+.env
+.Rhistory
+.Rproj.user/</pre>
+<p>The cell builds a small practice project with an invented beneficiary list, applies a simplified version of these rules, and scans every file for strings that look like Indian mobile numbers (ten digits starting with 6 to 9).</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">from pathlib import Path
+from fnmatch import fnmatch
+import re
+
+# Build a small practice project (all names and phone numbers are invented)
+files = {
+    &quot;README.md&quot;: &quot;District profiles, baseline 2026\n&quot;,
+    &quot;analysis/profile.qmd&quot;: &quot;---\ntitle: District profile\n---\n&quot;,
+    &quot;data/raw/beneficiaries.csv&quot;: &quot;hh_id,name,phone\n1,Asha Devi,9876543210\n2,Ramesh Kumar,8123456789\n&quot;,
+    &quot;data/clean/households.csv&quot;: open(&quot;households.csv&quot;).read(),
+    &quot;outputs/purnia.html&quot;: &quot;&lt;html&gt;&lt;/html&gt;&quot;,
+    &quot;notes/contacts.xlsx&quot;: &quot;binary&quot;,
+}
+root = Path(&quot;project&quot;)
+for name, text in files.items():
+    p = root / name
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(text)
+
+gitignore = &quot;&quot;&quot;
+# personal data never goes into the repository
+data/raw/
+*.xlsx
+# rendered outputs can be rebuilt from the code
+outputs/
+&quot;&quot;&quot;
+patterns = [l.strip() for l in gitignore.splitlines() if l.strip() and not l.startswith(&quot;#&quot;)]
+
+def ignored(rel):
+    # A simplified version of Git&#x27;s rules: &quot;dir/&quot; ignores a folder, &quot;*.ext&quot; ignores by name anywhere
+    for pat in patterns:
+        if pat.endswith(&quot;/&quot;) and (rel + &quot;/&quot;).startswith(pat):
+            return True
+        if &quot;/&quot; not in pat and fnmatch(rel.split(&quot;/&quot;)[-1], pat):
+            return True
+    return False
+
+phone = re.compile(r&quot;(?&lt;![0-9])[6-9][0-9]{9}(?![0-9])&quot;)   # a 10-digit Indian mobile number
+for p in sorted(root.rglob(&quot;*&quot;)):
+    if p.is_file():
+        rel = p.relative_to(root).as_posix()
+        status = &quot;ignored &quot; if ignored(rel) else &quot;COMMIT  &quot;
+        hits = len(phone.findall(p.read_text(errors=&quot;ignore&quot;)))
+        print(status, rel, f&quot;  &lt;- {hits} phone-like numbers&quot; if hits else &quot;&quot;)</textarea></div>
+<p>Three files would be committed (README.md, the .qmd and the clean household file) and three are ignored: the raw beneficiary list in <code class="inline">data/raw/</code>, the Excel file, and the rendered output. The scan finds 2 phone-like numbers, both in the ignored raw file.</p>
+<div class="info-box"><strong>Exercise.</strong> Delete the <code class="inline">data/raw/</code> line from <code class="inline">gitignore</code> and run again. The beneficiary list is now marked <code class="inline">COMMIT</code> with its two numbers flagged. A check like this, run before every commit, catches the mistake while it is still on your laptop. The cell's matcher is simpler than Git's; on your computer, <code class="inline">git status --ignored</code> lists what Git itself ignores.</div>
+<h3>If personal data was already committed</h3>
+<p>The gitignore manual says files already tracked are not affected by .gitignore, and points to <code class="inline">git rm --cached</code>, which removes a file from the index while leaving it on disk (<a href="https://git-scm.com/docs/git-rm" rel="noopener" target="_blank" style="color:var(--accent-color)">git rm manual</a>).</p>
+<div class="syntax-label">Terminal: stop tracking a file</div><pre class="syntax-block"># A file was committed before it was listed in .gitignore.
+# Stop tracking it (the file stays on your disk), then commit.
+git rm --cached data/raw/beneficiaries.csv
+git commit -m &quot;Stop tracking raw beneficiary list&quot;
+# The file is still inside every earlier commit. If it was ever pushed,
+# treat it as disclosed: tell your data protection lead.</pre>
+<div class="info-box warning"><strong>Removing a file in a new commit does not remove it from history.</strong> Anyone with a clone, or with access to the remote, can still check out the earlier commit. If the file was pushed, report it to whoever handles data protection in your organisation, as a possible breach, and get help to rewrite the history. Section 8(6) of the DPDP Act requires a Data Fiduciary to inform the Data Protection Board and each affected person of a personal data breach.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: Quarto &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 8</div>
+<h2>Quarto documents: text and code in one file</h2>
+<p>A Quarto document (<code class="inline">.qmd</code>) is a plain text file: a YAML header between two <code class="inline">---</code> lines, then text in Markdown and code chunks in R or Python. Rendering runs the code and writes the results into the report, so the numbers in the text always come from the data.</p>
+<div class="info-box"><strong>Version and cost, checked 6 October 2026.</strong> The <a href="https://quarto.org/docs/download/" rel="noopener" target="_blank" style="color:var(--accent-color)">Quarto download page</a>'s current release is <strong>1.10.19</strong>, published 6 October 2026. The <a href="https://quarto.org/license.html" rel="noopener" target="_blank" style="color:var(--accent-color)">licence page</a> says the Quarto command-line tool "is licensed under the MIT License (version 1.4 and later)". It is free. Installers are listed for Windows, macOS and Linux.</div>
+<ul><li><strong>With R</strong>: install the rmarkdown package, <code class="inline">install.packages("rmarkdown")</code>. The <a href="https://quarto.org/docs/computations/r.html" rel="noopener" target="_blank" style="color:var(--accent-color)">Quarto R guide</a> says this also installs knitr, which runs R chunks.</li><li><strong>With Python</strong>: install Jupyter, <code class="inline">python3 -m pip install jupyter</code> (on Windows, <code class="inline">py -m pip install jupyter</code>), from the <a href="https://quarto.org/docs/computations/python.html" rel="noopener" target="_blank" style="color:var(--accent-color)">Quarto Python guide</a>.</li></ul>
+<div class="syntax-label">profile.qmd (R)</div><pre class="syntax-block">---
+title: &quot;District profile&quot;
+author: &quot;MEL team&quot;
+date: today
+format:
+  html:
+    embed-resources: true
+  docx: default
+execute:
+  echo: false
+---
+
+## Coverage
+
+```{r}
+#| label: load
+hh &lt;- read.csv(&quot;households.csv&quot;)
+```
+
+Households surveyed: `r nrow(hh)`.
+
+```{r}
+#| label: toilet-by-district
+#| warning: false
+round(100 * tapply(hh$has_toilet == &quot;Yes&quot;, hh$district, mean), 1)
+```</pre>
+<ul><li>The YAML header sets the title and the output formats. <code class="inline">embed-resources: true</code> makes a single HTML file with no separate folder, which is easier to email.</li><li>Lines starting with <code class="inline">#|</code> at the top of a chunk are chunk options: <code class="inline">label</code>, <code class="inline">echo: false</code> (hide the code, show the result), <code class="inline">warning: false</code>. Under <code class="inline">execute:</code> in the header they apply to every chunk.</li><li>Inline R, <code class="inline">`r nrow(hh)`</code>, puts a number into a sentence.</li></ul>
+<div class="syntax-label">profile.qmd (Python)</div><pre class="syntax-block">---
+title: &quot;District profile&quot;
+format: html
+jupyter: python3
+---
+
+```{python}
+#| echo: false
+import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+print(len(hh), &quot;households&quot;)
+```</pre>
+<h3>Render to HTML, Word and PDF</h3>
+<div class="syntax-label">Terminal: render</div><pre class="syntax-block">quarto preview profile.qmd               # render and open in a browser, re-rendering on save
+quarto render profile.qmd --to html      # a single HTML file
+quarto render profile.qmd --to docx      # a Word document
+quarto render profile.qmd --to pdf       # a PDF (needs a TeX installation, below)
+
+quarto install tinytex                   # the TeX distribution Quarto recommends for PDF</pre>
+<p>The <a href="https://quarto.org/docs/get-started/hello/text-editor.html" rel="noopener" target="_blank" style="color:var(--accent-color)">Quarto tutorial</a> notes that the file name should come first after <code class="inline">quarto render</code>. For PDF, the <a href="https://quarto.org/docs/output-formats/pdf-basics.html" rel="noopener" target="_blank" style="color:var(--accent-color)">PDF guide</a> says you need a TeX distribution and recommends TinyTeX, installed with the last command above. Word output needs nothing extra.</p>
+<div class="info-box"><strong>Exercise.</strong> Save the R version as <code class="inline">profile.qmd</code> in a folder with <a href="/code/data/households.csv" download style="color:var(--accent-color)">households.csv</a>, run <code class="inline">quarto render profile.qmd --to html</code>, and open the HTML file. Look for the sentence "Households surveyed: 240." and a table of ten district percentages. Then render <code class="inline">--to docx</code> and open the Word file: the same numbers, no copying.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Parameters &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 8</div>
+<h2>Parameterised reports: one template, ten district profiles</h2>
+<p>A parameter is a value the report reads from outside, such as the district name. Write the report once, then render it once per district. The <a href="https://quarto.org/docs/computations/parameters.html" rel="noopener" target="_blank" style="color:var(--accent-color)">Quarto parameters guide</a> gives one syntax for each engine.</p>
+<ul><li><strong>R (knitr)</strong>: declare <code class="inline">params:</code> in the YAML header and use <code class="inline">params$district</code> in code.</li><li><strong>Python (Jupyter)</strong>: tag one cell <code class="inline">parameters</code> and set default values there; Quarto injects a cell after it with the values you pass.</li></ul>
+<div class="syntax-label">profile.qmd with a parameter (R)</div><pre class="syntax-block">---
+title: &quot;District profile: `r params$district`&quot;
+format: html
+params:
+  district: &quot;Purnia&quot;
+---
+
+```{r}
+hh &lt;- read.csv(&quot;households.csv&quot;)
+g  &lt;- hh[hh$district == params$district, ]
+```
+
+`r params$district` has `r nrow(g)` surveyed households.</pre>
+<div class="syntax-label">The parameters cell (Python)</div><pre class="syntax-block">```{python}
+#| tags: [parameters]
+district = &quot;Purnia&quot;
+```</pre>
+<div class="syntax-label">Terminal: render with parameters</div><pre class="syntax-block"># One district
+quarto render profile.qmd -P district:Gaya --output gaya.html
+
+# Every district, in a terminal (macOS, Linux, or Git Bash on Windows)
+for d in Barmer Betul Gaya Indore Kozhikode Patna Purnia Rewa Udaipur Wayanad; do
+  quarto render profile.qmd -P district:$d --output profile-$d.html
+done</pre>
+<p><code class="inline">-P district:Gaya</code> sets the parameter (the guide's own example is <code class="inline">-P alpha:0.2</code>) and <code class="inline">--output</code> names the file, so the ten renders do not overwrite each other.</p>
+<p>The cell runs what the report's chunk computes, for one district. Switch between R and Python with the tabs on the cell.</p>
+<div class="code-cell" data-r="params &lt;- list(district = &quot;Purnia&quot;)   # in a .qmd this comes from the YAML header
+
+hh &lt;- read.csv(&quot;households.csv&quot;)
+d  &lt;- read.csv(&quot;districts.csv&quot;)
+g  &lt;- hh[hh$district == params$district, ]
+info &lt;- d[d$district == params$district, ]
+
+cat(&quot;District profile:&quot;, params$district, &quot;(&quot;, info$state, &quot;)\n&quot;)
+cat(&quot;Households surveyed:&quot;, nrow(g), &quot;\n&quot;)
+cat(&quot;With a toilet:&quot;, round(100 * mean(g$has_toilet == &quot;Yes&quot;), 1), &quot;%\n&quot;)
+cat(&quot;With a bank account:&quot;, round(100 * mean(g$has_bank_account == &quot;Yes&quot;), 1), &quot;%\n&quot;)
+cat(&quot;Mean monthly spending per person: Rs&quot;, round(mean(g$monthly_pc_exp)), &quot;\n&quot;)
+table(g$caste)" data-py="import pandas as pd
+district = &quot;Purnia&quot;   # in a .qmd this is the cell tagged parameters
+
+hh = pd.read_csv(&quot;households.csv&quot;)
+d = pd.read_csv(&quot;districts.csv&quot;)
+g = hh[hh[&quot;district&quot;] == district]
+state = d.loc[d[&quot;district&quot;] == district, &quot;state&quot;].iloc[0]
+
+print(f&quot;District profile: {district} ({state})&quot;)
+print(&quot;Households surveyed:&quot;, len(g))
+print(&quot;With a toilet:&quot;, round(100 * (g[&quot;has_toilet&quot;] == &quot;Yes&quot;).mean(), 1), &quot;%&quot;)
+print(&quot;With a bank account:&quot;, round(100 * (g[&quot;has_bank_account&quot;] == &quot;Yes&quot;).mean(), 1), &quot;%&quot;)
+print(&quot;Mean monthly spending per person: Rs&quot;, round(g[&quot;monthly_pc_exp&quot;].mean()))
+print(g[&quot;caste&quot;].value_counts().sort_index())" data-pypkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Code editor">params &lt;- list(district = &quot;Purnia&quot;)   # in a .qmd this comes from the YAML header
+
+hh &lt;- read.csv(&quot;households.csv&quot;)
+d  &lt;- read.csv(&quot;districts.csv&quot;)
+g  &lt;- hh[hh$district == params$district, ]
+info &lt;- d[d$district == params$district, ]
+
+cat(&quot;District profile:&quot;, params$district, &quot;(&quot;, info$state, &quot;)\n&quot;)
+cat(&quot;Households surveyed:&quot;, nrow(g), &quot;\n&quot;)
+cat(&quot;With a toilet:&quot;, round(100 * mean(g$has_toilet == &quot;Yes&quot;), 1), &quot;%\n&quot;)
+cat(&quot;With a bank account:&quot;, round(100 * mean(g$has_bank_account == &quot;Yes&quot;), 1), &quot;%\n&quot;)
+cat(&quot;Mean monthly spending per person: Rs&quot;, round(mean(g$monthly_pc_exp)), &quot;\n&quot;)
+table(g$caste)</textarea></div>
+<p>For Purnia (Bihar) it reports 24 households, 75.0% with a toilet, 75.0% with a bank account and mean monthly spending of Rs 2,395 per person, then the count of households in each caste group. Your rendered Purnia profile should show the same figures.</p>
+<div class="info-box"><strong>Exercise.</strong> Change the district to <code class="inline">Kozhikode</code> and run again; then to <code class="inline">Kozhikkode</code>. The misspelt name finds no households: R prints 0 households and NaN percentages, and Python stops with an error when it looks up the state. Add a check at the top of your .qmd that stops the render when the district is not in districts.csv, so a typo in a loop cannot produce an empty profile with a confident title.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="7">Next: Layout &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="7" role="tabpanel">
+<div class="eyebrow">Module 8 of 8</div>
+<h2>A reproducible project layout</h2>
+<p>A project is reproducible when someone else can take the repository and the raw data, run it, and get the same report. A plain folder layout and three rules get most of the way.</p>
+<div class="syntax-label">Project folders</div><pre class="syntax-block">district-profiles/
+  README.md              what this is, how to run it, who to ask
+  .gitignore             data/raw/, outputs/, credentials
+  data/
+    raw/                 exports exactly as downloaded: never edited, never committed
+    clean/               written only by the cleaning script
+  scripts/
+    01_clean.R           raw -&gt; clean, with checks that stop on a problem
+  analysis/
+    profile.qmd          the parameterised report
+  outputs/               rendered reports: rebuilt, never edited by hand</pre>
+<ul><li><strong>Raw data is read-only.</strong> Scripts read <code class="inline">data/raw/</code> and write <code class="inline">data/clean/</code>; nobody edits a raw export by hand. Raw data stays out of Git and is shared through your organisation's controlled storage.</li><li><strong>Outputs are rebuilt.</strong> Anything in <code class="inline">outputs/</code> can be deleted and regenerated with the render loop, so it does not need to be committed.</li><li><strong>Numbered scripts run in order.</strong> <code class="inline">01_clean.R</code> before the report. The README says which command to run.</li><li><strong>Record versions.</strong> Note the R or Python version and package versions in the README (R's <code class="inline">sessionInfo()</code> prints them), so a result can be traced to the software that produced it.</li><li><strong>Commit small and often</strong>, each commit doing one thing, with a message that says what.</li></ul>
+<div class="info-box"><strong>Exercise.</strong> Set up this layout for a real project, with the .gitignore from module 5. Commit, push to a private repository, then clone it into a new folder, copy the raw data in, and run the README's command. If the reports come out the same, the project is reproducible. If something is missing, the clone tells you what.</div>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/r-python.html" style="color:var(--text-primary)">R and Python side by side</a></h4><p>The language for the code chunks in your reports.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/tidyverse.html" style="color:var(--text-primary)">The tidyverse</a></h4><p>Write the tables and charts your Quarto profiles will hold.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/spreadsheets.html" style="color:var(--text-primary)">Spreadsheets for M&amp;E</a></h4><p>Where most of the numbers start, and when to leave them.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-protection-dpdp.html" style="color:var(--text-primary)">Data Protection and the DPDP Act</a></h4><p>What the law asks before personal data goes anywhere.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/research-ethics.html" style="color:var(--text-primary)">Research Ethics 101</a></h4><p>Consent, confidentiality and data handling in field research.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="6">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=3b5d57ac" defer></script>
+</body>
+</html>

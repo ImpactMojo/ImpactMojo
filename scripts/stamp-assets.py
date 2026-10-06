@@ -43,6 +43,9 @@ PAGE_GLOBS = [
     "courses/*.html",
     "courses/*/*.html",
     "101-courses/*.html",
+    # Code Studio pages load js/code-studio.js, whose cell markup has to match
+    # what scripts/build-code-studio.py writes.
+    "code/*.html",
     # The Long View draws every chart from js/longview-charts.js, and its
     # per-chart page reads a generated data script that has to match the
     # renderer that consumes it. An old cached renderer against fresh markup

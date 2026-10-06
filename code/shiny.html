@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Shiny Dashboards for Development Data | ImpactMojo</title>
+    <meta name="description" content="Learn Shiny from zero for development data in South Asia: the ui and server model, inputs, outputs and reactivity, and a filterable district dashboard in both R and Shiny for Python, opened in Shinylive in your browser.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/shiny.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Shiny Dashboards for Development Data">
+<meta property="og:description" content="Learn Shiny from zero for development data in South Asia: the ui and server model, inputs, outputs and reactivity, and a filterable district dashboard in both R and Shiny for Python, opened in Shinylive in your browser.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/shiny.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shiny Dashboards for Development Data">
+<meta name="twitter:description" content="Learn Shiny from zero for development data in South Asia: the ui and server model, inputs, outputs and reactivity, and a filterable district dashboard in both R and Shiny for Python, opened in Shinylive in your browser.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Shiny Dashboards for Development Data", "description": "Learn Shiny from zero for development data in South Asia: the ui and server model, inputs, outputs and reactivity, and a filterable district dashboard in both R and Shiny for Python, opened in Shinylive in your browser.", "url": "https://www.impactmojo.in/code/shiny.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Runs in your browser</div>
+        <h1>Shiny Dashboards for Development Data</h1>
+        <p>Build interactive dashboards in R and in Python with Shiny. Learn the ui and server model, inputs, outputs and reactivity, prototype the summary on this page, then open a working district dashboard in Posit's Shinylive editor.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>Two kinds of cell on this page.</strong> Ordinary R and Python cells run here, as in the other Code Studio courses: the first Run downloads the engine once (R about 7&nbsp;MB, Python about 10&nbsp;MB), with <code class="inline">households.csv</code> and <code class="inline">districts.csv</code> loaded for you. Shiny cells carry an <strong>Open in Shinylive</strong> button instead. It opens the app on Posit's Shinylive site in a new tab. A Shinylive app cannot read this page's files, so every app here carries its own small data frame typed into the code.</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> What Shiny is</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> ui and server</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> Inputs and outputs</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> Reactivity</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Prototype here</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> Dashboard in R</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Dashboard in Python</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">8</span> Sharing</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 8</div>
+<h2>What Shiny is</h2>
+<p>Shiny is a framework from Posit for building interactive web pages out of R or Python code. You write the analysis you already know, add a few controls, and a programme officer can pick a state or an indicator from a menu and see the chart change, without opening R or Python themselves.</p>
+<p>It began as an R package. <strong>Shiny for Python</strong> is a separate package with the same ideas and slightly different spelling. This course teaches both side by side, so you can use whichever language your team already works in.</p>
+<p>A Shiny app usually needs a server running R or Python. <strong>Shinylive</strong> removes that: it runs R (through webR) or Python (through Pyodide) inside the visitor's browser, so the browser is both the client and the server. That is how the apps in this course open with nothing installed.</p>
+<div class="info-box"><strong>Where the apps run.</strong> A Shiny cell does not run on this page. <strong>Open in Shinylive</strong> packs the code into a link and opens it in a new tab on <a href="https://shinylive.io" rel="noopener" target="_blank" style="color:var(--accent-color)">shinylive.io</a>, Posit's site, where the app starts in an editor beside its code. The first start downloads R or Python into your browser (about 13&nbsp;MB for a Python app, by Posit's own count), so give it time on a slow connection. The code travels after the <code class="inline">#</code> in the link, which browsers do not send to the server, so Posit's site does not receive your app's code.</div>
+<h3>Your first app</h3>
+<p>Click <strong>Open in Shinylive</strong>. When the app appears on the right of the Shinylive editor, type a different district into the box and watch the line below it change.</p>
+<div class="code-cell" data-lang="shiny-r"><textarea class="code-input" spellcheck="false" aria-label="Shiny R code editor">library(shiny)
+
+ui &lt;- fluidPage(
+  h2(&quot;Hello from Shiny&quot;),
+  textInput(&quot;name&quot;, &quot;Your district&quot;, value = &quot;Gaya&quot;),
+  textOutput(&quot;greeting&quot;)
+)
+
+server &lt;- function(input, output, session) {
+  output$greeting &lt;- renderText({
+    paste(&quot;Dashboard for&quot;, input$name)
+  })
+}
+
+shinyApp(ui, server)</textarea></div>
+<p>The same app in Shiny for Python:</p>
+<div class="code-cell" data-lang="shiny-py"><textarea class="code-input" spellcheck="false" aria-label="Shiny Python code editor">from shiny import App, render, ui
+
+app_ui = ui.page_fluid(
+    ui.h2(&quot;Hello from Shiny for Python&quot;),
+    ui.input_text(&quot;name&quot;, &quot;Your district&quot;, value=&quot;Gaya&quot;),
+    ui.output_text(&quot;greeting&quot;),
+)
+
+
+def server(input, output, session):
+    @render.text
+    def greeting():
+        return f&quot;Dashboard for {input.name()}&quot;
+
+
+app = App(app_ui, server)</textarea></div>
+<p><strong>Try it:</strong> in the Shinylive editor, change the text inside <code class="inline">paste()</code> or the f-string, then re-run the app from the editor. Edits made there stay on Posit's page; to keep them, copy the code back into a file of your own.</p>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: ui and server &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 8</div>
+<h2>Two halves: ui and server</h2>
+<p>Every Shiny app has two parts.</p>
+<ul><li>The <strong>ui</strong> describes the page: headings, the controls a reader can change (<em>inputs</em>) and empty slots where results will appear (<em>outputs</em>). Each input and output has an id, a short name in quotes such as <code class="inline">"state"</code>.</li><li>The <strong>server</strong> is a function that fills the output slots. It reads the inputs by id and recomputes an output whenever an input it uses changes.</li><li>The last line joins the two: <code class="inline">shinyApp(ui, server)</code> in R, <code class="inline">App(app_ui, server)</code> in Python.</li></ul>
+<p>In R the server reads <code class="inline">input$state</code> and writes to <code class="inline">output$summary</code>. In Python it reads <code class="inline">input.state()</code> (note the brackets: it is a function call) and the output is a function decorated with <code class="inline">@render.text</code> whose name is the output id.</p>
+<p>This app embeds a ten-row data frame of district results. The data is invented for teaching <span class="illustrative-tag">Illustrative data</span>; module 5 shows where the numbers come from. Pick a state and read the sentence.</p>
+<div class="code-cell" data-lang="shiny-r"><textarea class="code-input" spellcheck="false" aria-label="Shiny R code editor">library(shiny)
+
+# Illustrative data, invented for teaching: one row per district,
+# summarised from the Code Studio households table.
+districts &lt;- data.frame(
+  state = c(&quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Kerala&quot;, &quot;Kerala&quot;,
+        &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Rajasthan&quot;, &quot;Rajasthan&quot;),
+  district = c(&quot;Gaya&quot;, &quot;Patna&quot;, &quot;Purnia&quot;, &quot;Kozhikode&quot;, &quot;Wayanad&quot;,
+        &quot;Betul&quot;, &quot;Indore&quot;, &quot;Rewa&quot;, &quot;Barmer&quot;, &quot;Udaipur&quot;),
+  pct_toilet = c(70.8, 83.3, 75.0, 83.3, 66.7,
+        75.0, 83.3, 50.0, 75.0, 62.5)
+)
+
+ui &lt;- fluidPage(
+  h2(&quot;Households with a toilet, by state&quot;),
+  selectInput(&quot;state&quot;, &quot;State&quot;, choices = unique(districts$state)),
+  textOutput(&quot;summary&quot;)
+)
+
+server &lt;- function(input, output, session) {
+  output$summary &lt;- renderText({
+    d &lt;- districts[districts$state == input$state, ]
+    paste0(nrow(d), &quot; districts. Mean share with a toilet: &quot;,
+           round(mean(d$pct_toilet), 1), &quot;%&quot;)
+  })
+}
+
+shinyApp(ui, server)</textarea></div>
+<div class="code-cell" data-lang="shiny-py"><textarea class="code-input" spellcheck="false" aria-label="Shiny Python code editor">from shiny import App, render, ui
+import pandas as pd
+
+# Illustrative data, invented for teaching: one row per district,
+# summarised from the Code Studio households table.
+districts = pd.DataFrame({
+    &quot;state&quot;: [&quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Kerala&quot;, &quot;Kerala&quot;,
+        &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Rajasthan&quot;, &quot;Rajasthan&quot;],
+    &quot;district&quot;: [&quot;Gaya&quot;, &quot;Patna&quot;, &quot;Purnia&quot;, &quot;Kozhikode&quot;, &quot;Wayanad&quot;,
+        &quot;Betul&quot;, &quot;Indore&quot;, &quot;Rewa&quot;, &quot;Barmer&quot;, &quot;Udaipur&quot;],
+    &quot;pct_toilet&quot;: [70.8, 83.3, 75.0, 83.3, 66.7,
+        75.0, 83.3, 50.0, 75.0, 62.5],
+})
+
+app_ui = ui.page_fluid(
+    ui.h2(&quot;Households with a toilet, by state&quot;),
+    ui.input_select(&quot;state&quot;, &quot;State&quot;, choices=sorted(districts[&quot;state&quot;].unique().tolist())),
+    ui.output_text(&quot;summary&quot;),
+)
+
+
+def server(input, output, session):
+    @render.text
+    def summary():
+        d = districts[districts[&quot;state&quot;] == input.state()]
+        return (f&quot;{len(d)} districts. Mean share with a toilet: &quot;
+                f&quot;{d[&#x27;pct_toilet&#x27;].mean():.1f}%&quot;)
+
+
+app = App(app_ui, server)</textarea></div>
+<p><strong>Try it:</strong> change <code class="inline">pct_toilet</code> to report the highest value instead of the mean (<code class="inline">max()</code> in R, <code class="inline">.max()</code> in Python), and edit the sentence to match.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Inputs and outputs &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 8</div>
+<h2>Inputs and outputs</h2>
+<p>Inputs and outputs come in pairs of functions: one in the ui to place them, one in the server to fill an output. The ones a monitoring dashboard needs most:</p>
+<ul><li><strong>Drop-down menu</strong>: <code class="inline">selectInput()</code> in R, <code class="inline">ui.input_select()</code> in Python.</li><li><strong>Slider</strong>: <code class="inline">sliderInput()</code> in R, <code class="inline">ui.input_slider()</code> in Python.</li><li><strong>Tick box</strong>: <code class="inline">checkboxInput()</code> in R, <code class="inline">ui.input_checkbox()</code> in Python.</li><li><strong>Text box</strong>: <code class="inline">textInput()</code> in R, <code class="inline">ui.input_text()</code> in Python.</li><li><strong>Text output</strong>: <code class="inline">textOutput()</code> with <code class="inline">renderText()</code> in R, <code class="inline">ui.output_text()</code> with <code class="inline">@render.text</code> in Python.</li><li><strong>Table output</strong>: <code class="inline">tableOutput()</code> with <code class="inline">renderTable()</code> in R, <code class="inline">ui.output_data_frame()</code> with <code class="inline">@render.data_frame</code> in Python.</li><li><strong>Chart output</strong>: <code class="inline">plotOutput()</code> with <code class="inline">renderPlot()</code> in R, <code class="inline">ui.output_plot()</code> with <code class="inline">@render.plot</code> in Python.</li></ul>
+<p>This app uses a slider, a tick box and a table. Move the slider: the table lists the districts whose toilet coverage is below the threshold.</p>
+<div class="code-cell" data-lang="shiny-r"><textarea class="code-input" spellcheck="false" aria-label="Shiny R code editor">library(shiny)
+
+# Illustrative data, invented for teaching: one row per district,
+# summarised from the Code Studio households table.
+districts &lt;- data.frame(
+  state = c(&quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Kerala&quot;, &quot;Kerala&quot;,
+        &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Rajasthan&quot;, &quot;Rajasthan&quot;),
+  district = c(&quot;Gaya&quot;, &quot;Patna&quot;, &quot;Purnia&quot;, &quot;Kozhikode&quot;, &quot;Wayanad&quot;,
+        &quot;Betul&quot;, &quot;Indore&quot;, &quot;Rewa&quot;, &quot;Barmer&quot;, &quot;Udaipur&quot;),
+  pct_toilet = c(70.8, 83.3, 75.0, 83.3, 66.7,
+        75.0, 83.3, 50.0, 75.0, 62.5)
+)
+
+ui &lt;- fluidPage(
+  h2(&quot;Which districts are below a toilet-coverage threshold?&quot;),
+  sliderInput(&quot;cutoff&quot;, &quot;Threshold (% of households)&quot;,
+              min = 40, max = 100, value = 75, step = 5),
+  checkboxInput(&quot;show_state&quot;, &quot;Show the state column&quot;, value = TRUE),
+  tableOutput(&quot;below&quot;)
+)
+
+server &lt;- function(input, output, session) {
+  output$below &lt;- renderTable({
+    d &lt;- districts[districts$pct_toilet &lt; input$cutoff, ]
+    if (!input$show_state) d$state &lt;- NULL
+    d
+  })
+}
+
+shinyApp(ui, server)</textarea></div>
+<div class="code-cell" data-lang="shiny-py"><textarea class="code-input" spellcheck="false" aria-label="Shiny Python code editor">from shiny import App, render, ui
+import pandas as pd
+
+# Illustrative data, invented for teaching: one row per district,
+# summarised from the Code Studio households table.
+districts = pd.DataFrame({
+    &quot;state&quot;: [&quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Kerala&quot;, &quot;Kerala&quot;,
+        &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Rajasthan&quot;, &quot;Rajasthan&quot;],
+    &quot;district&quot;: [&quot;Gaya&quot;, &quot;Patna&quot;, &quot;Purnia&quot;, &quot;Kozhikode&quot;, &quot;Wayanad&quot;,
+        &quot;Betul&quot;, &quot;Indore&quot;, &quot;Rewa&quot;, &quot;Barmer&quot;, &quot;Udaipur&quot;],
+    &quot;pct_toilet&quot;: [70.8, 83.3, 75.0, 83.3, 66.7,
+        75.0, 83.3, 50.0, 75.0, 62.5],
+})
+
+app_ui = ui.page_fluid(
+    ui.h2(&quot;Which districts are below a toilet-coverage threshold?&quot;),
+    ui.input_slider(&quot;cutoff&quot;, &quot;Threshold (% of households)&quot;,
+                    min=40, max=100, value=75, step=5),
+    ui.input_checkbox(&quot;show_state&quot;, &quot;Show the state column&quot;, value=True),
+    ui.output_data_frame(&quot;below&quot;),
+)
+
+
+def server(input, output, session):
+    @render.data_frame
+    def below():
+        d = districts[districts[&quot;pct_toilet&quot;] &lt; input.cutoff()]
+        if not input.show_state():
+            d = d.drop(columns=&quot;state&quot;)
+        return d
+
+
+app = App(app_ui, server)</textarea></div>
+<div class="info-box">A threshold slider makes a cut-off visible and adjustable. When a dashboard flags districts as "lagging", say where the cut-off came from, and let the reader see what moves when it changes.</div>
+<p><strong>Try it:</strong> change the slider's default <code class="inline">value</code> to 70 and its <code class="inline">step</code> to 1, then re-run the app in the Shinylive editor.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: Reactivity &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 8</div>
+<h2>Reactivity: write the filter once</h2>
+<p>Shiny keeps track of which inputs each output reads. When an input changes, Shiny reruns only the outputs that depend on it. This is <strong>reactivity</strong>, and it is why you never write "when the menu changes, redraw the chart" yourself.</p>
+<p>When two outputs need the same filtered data, do not filter twice. Put the filter in a <strong>reactive expression</strong>: <code class="inline">reactive({ ... })</code> in R, a function decorated with <code class="inline">@reactive.calc</code> in Python. Call it like a function, <code class="inline">selected()</code>, from each output. Shiny computes it once per change and both outputs share the result.</p>
+<div class="code-cell" data-lang="shiny-r"><textarea class="code-input" spellcheck="false" aria-label="Shiny R code editor">library(shiny)
+
+# Illustrative data, invented for teaching: one row per district,
+# summarised from the Code Studio households table.
+districts &lt;- data.frame(
+  state = c(&quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Kerala&quot;, &quot;Kerala&quot;,
+        &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Rajasthan&quot;, &quot;Rajasthan&quot;),
+  district = c(&quot;Gaya&quot;, &quot;Patna&quot;, &quot;Purnia&quot;, &quot;Kozhikode&quot;, &quot;Wayanad&quot;,
+        &quot;Betul&quot;, &quot;Indore&quot;, &quot;Rewa&quot;, &quot;Barmer&quot;, &quot;Udaipur&quot;),
+  mean_pc_exp = c(2698, 2569, 2395, 6758, 3957,
+        2962, 3758, 2557, 2745, 3611)
+)
+
+ui &lt;- fluidPage(
+  h2(&quot;One filter, two outputs&quot;),
+  selectInput(&quot;state&quot;, &quot;State&quot;, choices = c(&quot;All&quot;, unique(districts$state))),
+  textOutput(&quot;count&quot;),
+  tableOutput(&quot;table&quot;)
+)
+
+server &lt;- function(input, output, session) {
+  # The filter is written once, as a reactive expression.
+  selected &lt;- reactive({
+    if (input$state == &quot;All&quot;) districts
+    else districts[districts$state == input$state, ]
+  })
+
+  output$count &lt;- renderText({
+    paste(nrow(selected()), &quot;districts selected&quot;)
+  })
+
+  output$table &lt;- renderTable({
+    selected()
+  })
+}
+
+shinyApp(ui, server)</textarea></div>
+<div class="code-cell" data-lang="shiny-py"><textarea class="code-input" spellcheck="false" aria-label="Shiny Python code editor">from shiny import App, reactive, render, ui
+import pandas as pd
+
+# Illustrative data, invented for teaching: one row per district,
+# summarised from the Code Studio households table.
+districts = pd.DataFrame({
+    &quot;state&quot;: [&quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Kerala&quot;, &quot;Kerala&quot;,
+        &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Rajasthan&quot;, &quot;Rajasthan&quot;],
+    &quot;district&quot;: [&quot;Gaya&quot;, &quot;Patna&quot;, &quot;Purnia&quot;, &quot;Kozhikode&quot;, &quot;Wayanad&quot;,
+        &quot;Betul&quot;, &quot;Indore&quot;, &quot;Rewa&quot;, &quot;Barmer&quot;, &quot;Udaipur&quot;],
+    &quot;mean_pc_exp&quot;: [2698, 2569, 2395, 6758, 3957,
+        2962, 3758, 2557, 2745, 3611],
+})
+
+app_ui = ui.page_fluid(
+    ui.h2(&quot;One filter, two outputs&quot;),
+    ui.input_select(&quot;state&quot;, &quot;State&quot;,
+                    choices=[&quot;All&quot;] + sorted(districts[&quot;state&quot;].unique().tolist())),
+    ui.output_text(&quot;count&quot;),
+    ui.output_data_frame(&quot;table&quot;),
+)
+
+
+def server(input, output, session):
+    # The filter is written once, as a reactive calculation.
+    @reactive.calc
+    def selected():
+        if input.state() == &quot;All&quot;:
+            return districts
+        return districts[districts[&quot;state&quot;] == input.state()]
+
+    @render.text
+    def count():
+        return f&quot;{len(selected())} districts selected&quot;
+
+    @render.data_frame
+    def table():
+        return selected()
+
+
+app = App(app_ui, server)</textarea></div>
+<ul><li>The menu feeds <code class="inline">selected()</code>.</li><li><code class="inline">selected()</code> feeds both the count and the table.</li><li>Change the menu, and Shiny marks <code class="inline">selected()</code> out of date, then recomputes it and both outputs.</li></ul>
+<div class="info-box">Keep heavy work (reading a file, joining tables, fitting a model) outside the server function or inside a reactive expression. Code at the top of the app runs once when the app starts; code inside an output runs every time that output updates.</div>
+<p><strong>Try it:</strong> add a third output that shows the highest <code class="inline">mean_pc_exp</code> among the selected districts. Place it in the ui and fill it from <code class="inline">selected()</code>.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Prototype here &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 8</div>
+<h2>Prototype the summary before it goes into the app</h2>
+<p>A dashboard is an analysis with controls attached. Get the analysis right first, in ordinary code you can run and check, and only then wrap it in Shiny. These cells run on this page, on <code class="inline">households.csv</code> and <code class="inline">districts.csv</code>. <span class="illustrative-tag">Illustrative data</span> Both tables are invented for teaching; the district names are real places, but no number describes them.</p>
+<h3>Step 1: one row per district</h3>
+<p>Join households to districts, turn the Yes/No columns into 0 or 100, and average by district. Run it in R, then switch the tab to Python and run again.</p>
+<div class="code-cell" data-r="h &lt;- read.csv(&quot;households.csv&quot;)
+d &lt;- read.csv(&quot;districts.csv&quot;)
+m &lt;- merge(h, d, by = &quot;district&quot;)
+
+# Yes/No columns become 0/100, so their mean is a percentage
+for (v in c(&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;received_transfer&quot;)) {
+  m[[v]] &lt;- 100 * (m[[v]] == &quot;Yes&quot;)
+}
+
+summ &lt;- aggregate(cbind(monthly_pc_exp, has_toilet, has_bank_account, received_transfer)
+                  ~ state + district, data = m, FUN = mean)
+names(summ) &lt;- c(&quot;state&quot;, &quot;district&quot;, &quot;mean_pc_exp&quot;, &quot;pct_toilet&quot;, &quot;pct_bank&quot;, &quot;pct_transfer&quot;)
+summ$mean_pc_exp &lt;- round(summ$mean_pc_exp)
+summ[, 4:6] &lt;- round(summ[, 4:6], 1)
+summ" data-py="import pandas as pd
+
+h = pd.read_csv(&quot;households.csv&quot;)
+d = pd.read_csv(&quot;districts.csv&quot;)
+m = h.merge(d, on=&quot;district&quot;)
+
+# Yes/No columns become 0/100, so their mean is a percentage
+for v in [&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;received_transfer&quot;]:
+    m[v] = 100 * (m[v] == &quot;Yes&quot;)
+
+summ = (m.groupby([&quot;state&quot;, &quot;district&quot;], as_index=False)
+          .agg(mean_pc_exp=(&quot;monthly_pc_exp&quot;, &quot;mean&quot;),
+               pct_toilet=(&quot;has_toilet&quot;, &quot;mean&quot;),
+               pct_bank=(&quot;has_bank_account&quot;, &quot;mean&quot;),
+               pct_transfer=(&quot;received_transfer&quot;, &quot;mean&quot;)))
+summ[&quot;mean_pc_exp&quot;] = summ[&quot;mean_pc_exp&quot;].round().astype(int)
+summ = summ.round(1)
+print(summ.to_string(index=False))" data-pypkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Code editor">h &lt;- read.csv(&quot;households.csv&quot;)
+d &lt;- read.csv(&quot;districts.csv&quot;)
+m &lt;- merge(h, d, by = &quot;district&quot;)
+
+# Yes/No columns become 0/100, so their mean is a percentage
+for (v in c(&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;received_transfer&quot;)) {
+  m[[v]] &lt;- 100 * (m[[v]] == &quot;Yes&quot;)
+}
+
+summ &lt;- aggregate(cbind(monthly_pc_exp, has_toilet, has_bank_account, received_transfer)
+                  ~ state + district, data = m, FUN = mean)
+names(summ) &lt;- c(&quot;state&quot;, &quot;district&quot;, &quot;mean_pc_exp&quot;, &quot;pct_toilet&quot;, &quot;pct_bank&quot;, &quot;pct_transfer&quot;)
+summ$mean_pc_exp &lt;- round(summ$mean_pc_exp)
+summ[, 4:6] &lt;- round(summ[, 4:6], 1)
+summ</textarea></div>
+<p>Ten rows, one per district, and the same numbers in both languages. R lists the rows by district and Python by state; the values agree. Kozhikode has the highest mean expenditure, 6,758 rupees a month, and Rewa the lowest toilet coverage, 50 per cent. These ten rows are the data frame the apps in this course carry.</p>
+<h3>Step 2: the filter and the chart, with the inputs as plain variables</h3>
+<p>Before there is a menu, the reader's choices are just two variables. Write the filter and the chart with them. When this works, each variable becomes an input, and the code moves into the server almost unchanged.</p>
+<div class="code-cell" data-r="h &lt;- read.csv(&quot;households.csv&quot;)
+d &lt;- read.csv(&quot;districts.csv&quot;)
+m &lt;- merge(h, d, by = &quot;district&quot;)
+m$pct_toilet &lt;- 100 * (m$has_toilet == &quot;Yes&quot;)
+summ &lt;- aggregate(pct_toilet ~ state + district, data = m, FUN = mean)
+summ$pct_toilet &lt;- round(summ$pct_toilet, 1)
+
+# The two choices the dashboard will offer, written as plain variables
+state &lt;- &quot;Madhya Pradesh&quot;
+indicator &lt;- &quot;pct_toilet&quot;
+
+sel &lt;- summ[summ$state == state, ]
+sel &lt;- sel[order(sel[[indicator]], decreasing = TRUE), ]
+sel
+
+sel &lt;- sel[rev(seq_len(nrow(sel))), ]
+par(mar = c(5, 8, 1, 1))
+barplot(sel[[indicator]], names.arg = sel$district, horiz = TRUE, las = 1,
+        col = &quot;#0369A1&quot;, border = NA, xlab = &quot;Households with a toilet (%)&quot;)" data-py="import pandas as pd
+import matplotlib
+matplotlib.use(&quot;AGG&quot;)
+import matplotlib.pyplot as plt
+
+h = pd.read_csv(&quot;households.csv&quot;)
+d = pd.read_csv(&quot;districts.csv&quot;)
+m = h.merge(d, on=&quot;district&quot;)
+m[&quot;pct_toilet&quot;] = 100 * (m[&quot;has_toilet&quot;] == &quot;Yes&quot;)
+summ = m.groupby([&quot;state&quot;, &quot;district&quot;], as_index=False)[&quot;pct_toilet&quot;].mean().round(1)
+
+# The two choices the dashboard will offer, written as plain variables
+state = &quot;Madhya Pradesh&quot;
+indicator = &quot;pct_toilet&quot;
+
+sel = summ[summ[&quot;state&quot;] == state].sort_values(indicator, ascending=False)
+print(sel.to_string(index=False))
+
+sel = sel.iloc[::-1]
+fig, ax = plt.subplots(figsize=(6, 3))
+ax.barh(sel[&quot;district&quot;], sel[indicator], color=&quot;#0369A1&quot;)
+ax.set_xlabel(&quot;Households with a toilet (%)&quot;)
+show(fig)" data-pypkgs="pandas,matplotlib"><textarea class="code-input" spellcheck="false" aria-label="Code editor">h &lt;- read.csv(&quot;households.csv&quot;)
+d &lt;- read.csv(&quot;districts.csv&quot;)
+m &lt;- merge(h, d, by = &quot;district&quot;)
+m$pct_toilet &lt;- 100 * (m$has_toilet == &quot;Yes&quot;)
+summ &lt;- aggregate(pct_toilet ~ state + district, data = m, FUN = mean)
+summ$pct_toilet &lt;- round(summ$pct_toilet, 1)
+
+# The two choices the dashboard will offer, written as plain variables
+state &lt;- &quot;Madhya Pradesh&quot;
+indicator &lt;- &quot;pct_toilet&quot;
+
+sel &lt;- summ[summ$state == state, ]
+sel &lt;- sel[order(sel[[indicator]], decreasing = TRUE), ]
+sel
+
+sel &lt;- sel[rev(seq_len(nrow(sel))), ]
+par(mar = c(5, 8, 1, 1))
+barplot(sel[[indicator]], names.arg = sel$district, horiz = TRUE, las = 1,
+        col = &quot;#0369A1&quot;, border = NA, xlab = &quot;Households with a toilet (%)&quot;)</textarea></div>
+<p>The three Madhya Pradesh districts, sorted: Indore 83.3, Betul 75.0 and Rewa 50.0 per cent, and a bar chart with the highest at the top. The rows are reversed just before plotting because a horizontal bar chart draws the first row at the bottom.</p>
+<p><strong>Try it:</strong> set <code class="inline">state</code> to <code class="inline">"Kerala"</code> and run again. Then follow the same steps for <code class="inline">has_bank_account</code>.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: Dashboard in R &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 8</div>
+<h2>The district dashboard in R</h2>
+<p>This app puts modules 2 to 5 together. The sidebar has three inputs: a state (or All), an indicator and a sort switch. The main panel has a horizontal bar chart and a table, both fed by one reactive expression. The data frame at the top holds the ten rows that the Step 1 cell printed, typed in, because a Shinylive app cannot read <code class="inline">households.csv</code> from this page.</p>
+<div class="info-box"><strong>Where the apps run.</strong> A Shiny cell does not run on this page. <strong>Open in Shinylive</strong> packs the code into a link and opens it in a new tab on <a href="https://shinylive.io" rel="noopener" target="_blank" style="color:var(--accent-color)">shinylive.io</a>, Posit's site, where the app starts in an editor beside its code. The first start downloads R or Python into your browser (about 13&nbsp;MB for a Python app, by Posit's own count), so give it time on a slow connection. The code travels after the <code class="inline">#</code> in the link, which browsers do not send to the server, so Posit's site does not receive your app's code.</div>
+<div class="code-cell" data-lang="shiny-r"><textarea class="code-input" spellcheck="false" aria-label="Shiny R code editor">library(shiny)
+
+# Illustrative data, invented for teaching: one row per district,
+# summarised from the Code Studio households table.
+districts &lt;- data.frame(
+  state = c(&quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Kerala&quot;, &quot;Kerala&quot;,
+        &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Rajasthan&quot;, &quot;Rajasthan&quot;),
+  district = c(&quot;Gaya&quot;, &quot;Patna&quot;, &quot;Purnia&quot;, &quot;Kozhikode&quot;, &quot;Wayanad&quot;,
+        &quot;Betul&quot;, &quot;Indore&quot;, &quot;Rewa&quot;, &quot;Barmer&quot;, &quot;Udaipur&quot;),
+  mean_pc_exp = c(2698, 2569, 2395, 6758, 3957,
+        2962, 3758, 2557, 2745, 3611),
+  pct_toilet = c(70.8, 83.3, 75.0, 83.3, 66.7,
+        75.0, 83.3, 50.0, 75.0, 62.5),
+  pct_bank = c(87.5, 91.7, 75.0, 91.7, 83.3,
+        79.2, 83.3, 91.7, 91.7, 83.3),
+  pct_transfer = c(33.3, 45.8, 25.0, 20.8, 54.2,
+        45.8, 33.3, 45.8, 50.0, 29.2)
+)
+
+labels &lt;- c(
+  mean_pc_exp  = &quot;Mean monthly per-capita expenditure (Rs)&quot;,
+  pct_toilet   = &quot;Households with a toilet (%)&quot;,
+  pct_bank     = &quot;Households with a bank account (%)&quot;,
+  pct_transfer = &quot;Households that received a transfer (%)&quot;
+)
+
+ui &lt;- fluidPage(
+  titlePanel(&quot;District dashboard (illustrative data)&quot;),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(&quot;state&quot;, &quot;State&quot;, choices = c(&quot;All&quot;, unique(districts$state))),
+      selectInput(&quot;indicator&quot;, &quot;Indicator&quot;, choices = setNames(names(labels), labels)),
+      checkboxInput(&quot;sorted&quot;, &quot;Sort from highest to lowest&quot;, value = TRUE)
+    ),
+    mainPanel(
+      plotOutput(&quot;bars&quot;, height = &quot;360px&quot;),
+      tableOutput(&quot;table&quot;)
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  selected &lt;- reactive({
+    d &lt;- districts
+    if (input$state != &quot;All&quot;) d &lt;- d[d$state == input$state, ]
+    if (input$sorted) d &lt;- d[order(d[[input$indicator]], decreasing = TRUE), ]
+    d
+  })
+
+  output$bars &lt;- renderPlot({
+    d &lt;- selected()
+    d &lt;- d[rev(seq_len(nrow(d))), ]   # barplot draws the first row at the bottom
+    par(mar = c(5, 8, 1, 1))
+    barplot(d[[input$indicator]], names.arg = d$district, horiz = TRUE,
+            las = 1, col = &quot;#0369A1&quot;, border = NA,
+            xlim = c(0, 1.1 * max(d[[input$indicator]])),
+            xlab = labels[[input$indicator]])
+  })
+
+  output$table &lt;- renderTable({
+    selected()[, c(&quot;state&quot;, &quot;district&quot;, input$indicator)]
+  })
+}
+
+shinyApp(ui, server)</textarea></div>
+<h3>How the code maps to what you see</h3>
+<ul><li><code class="inline">sidebarLayout()</code> puts the inputs on the left and the outputs on the right; on a narrow screen they stack.</li><li><code class="inline">setNames(names(labels), labels)</code> shows readable labels in the menu while the server receives the column name, such as <code class="inline">pct_bank</code>.</li><li><code class="inline">selected()</code> is the same filter-and-sort as the Step 2 cell, with <code class="inline">input$state</code> and <code class="inline">input$indicator</code> in place of the plain variables.</li><li>The chart uses base R graphics, so the app needs no package beyond shiny and starts faster in Shinylive.</li></ul>
+<p><strong>Try it:</strong> add a fifth indicator. Put a column into the data frame (for example <code class="inline">pct_shg</code>, the share in a self-help group, computed the way Step 1 computes the others), then add a line for it to <code class="inline">labels</code>. The menu, chart and table pick it up with no other change.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Dashboard in Python &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 8</div>
+<h2>The district dashboard in Shiny for Python</h2>
+<p>The same dashboard in Shiny for Python, using the same ten rows. The structure is identical; the spelling differs.</p>
+<div class="info-box"><strong>Where the apps run.</strong> A Shiny cell does not run on this page. <strong>Open in Shinylive</strong> packs the code into a link and opens it in a new tab on <a href="https://shinylive.io" rel="noopener" target="_blank" style="color:var(--accent-color)">shinylive.io</a>, Posit's site, where the app starts in an editor beside its code. The first start downloads R or Python into your browser (about 13&nbsp;MB for a Python app, by Posit's own count), so give it time on a slow connection. The code travels after the <code class="inline">#</code> in the link, which browsers do not send to the server, so Posit's site does not receive your app's code.</div>
+<div class="code-cell" data-lang="shiny-py"><textarea class="code-input" spellcheck="false" aria-label="Shiny Python code editor">from shiny import App, reactive, render, ui
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Illustrative data, invented for teaching: one row per district,
+# summarised from the Code Studio households table.
+districts = pd.DataFrame({
+    &quot;state&quot;: [&quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Bihar&quot;, &quot;Kerala&quot;, &quot;Kerala&quot;,
+        &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Madhya Pradesh&quot;, &quot;Rajasthan&quot;, &quot;Rajasthan&quot;],
+    &quot;district&quot;: [&quot;Gaya&quot;, &quot;Patna&quot;, &quot;Purnia&quot;, &quot;Kozhikode&quot;, &quot;Wayanad&quot;,
+        &quot;Betul&quot;, &quot;Indore&quot;, &quot;Rewa&quot;, &quot;Barmer&quot;, &quot;Udaipur&quot;],
+    &quot;mean_pc_exp&quot;: [2698, 2569, 2395, 6758, 3957,
+        2962, 3758, 2557, 2745, 3611],
+    &quot;pct_toilet&quot;: [70.8, 83.3, 75.0, 83.3, 66.7,
+        75.0, 83.3, 50.0, 75.0, 62.5],
+    &quot;pct_bank&quot;: [87.5, 91.7, 75.0, 91.7, 83.3,
+        79.2, 83.3, 91.7, 91.7, 83.3],
+    &quot;pct_transfer&quot;: [33.3, 45.8, 25.0, 20.8, 54.2,
+        45.8, 33.3, 45.8, 50.0, 29.2],
+})
+
+LABELS = {
+    &quot;mean_pc_exp&quot;: &quot;Mean monthly per-capita expenditure (Rs)&quot;,
+    &quot;pct_toilet&quot;: &quot;Households with a toilet (%)&quot;,
+    &quot;pct_bank&quot;: &quot;Households with a bank account (%)&quot;,
+    &quot;pct_transfer&quot;: &quot;Households that received a transfer (%)&quot;,
+}
+
+app_ui = ui.page_sidebar(
+    ui.sidebar(
+        ui.input_select(&quot;state&quot;, &quot;State&quot;,
+                        choices=[&quot;All&quot;] + sorted(districts[&quot;state&quot;].unique().tolist())),
+        ui.input_select(&quot;indicator&quot;, &quot;Indicator&quot;, choices=LABELS),
+        ui.input_checkbox(&quot;sorted&quot;, &quot;Sort from highest to lowest&quot;, value=True),
+    ),
+    ui.output_plot(&quot;bars&quot;, height=&quot;360px&quot;),
+    ui.output_data_frame(&quot;table&quot;),
+    title=&quot;District dashboard (illustrative data)&quot;,
+)
+
+
+def server(input, output, session):
+    @reactive.calc
+    def selected():
+        d = districts
+        if input.state() != &quot;All&quot;:
+            d = d[d[&quot;state&quot;] == input.state()]
+        if input.sorted():
+            d = d.sort_values(input.indicator(), ascending=False)
+        return d
+
+    @render.plot
+    def bars():
+        d = selected().iloc[::-1]  # barh draws the first row at the bottom
+        fig, ax = plt.subplots()
+        ax.barh(d[&quot;district&quot;], d[input.indicator()], color=&quot;#0369A1&quot;)
+        ax.set_xlabel(LABELS[input.indicator()])
+        return fig
+
+    @render.data_frame
+    def table():
+        return selected()[[&quot;state&quot;, &quot;district&quot;, input.indicator()]]
+
+
+app = App(app_ui, server)</textarea></div>
+<h3>Differences from the R version</h3>
+<ul><li><code class="inline">ui.page_sidebar()</code> with <code class="inline">ui.sidebar()</code> plays the part of <code class="inline">sidebarLayout()</code>.</li><li><code class="inline">ui.input_select()</code> accepts a dictionary for <code class="inline">choices</code>: the keys are what the server receives, the values are what the reader sees.</li><li>Inputs are read with brackets, <code class="inline">input.indicator()</code>, and outputs are functions named after their ids, decorated with <code class="inline">@render.plot</code> or <code class="inline">@render.data_frame</code>.</li><li><code class="inline">@render.plot</code> displays the matplotlib figure the function returns.</li></ul>
+<p><strong>Try it:</strong> add <code class="inline">ax.axvline(districts[input.indicator()].mean(), color="#B45309")</code> before <code class="inline">return fig</code> to draw the ten-district average as a line, and re-run.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="7">Next: Sharing &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="7" role="tabpanel">
+<div class="eyebrow">Module 8 of 8</div>
+<h2>Sharing a dashboard, and what not to put in one</h2>
+<p>Three ways to get a dashboard to the people who need it, from lightest to heaviest:</p>
+<ul><li><strong>A Shinylive link.</strong> The link in your browser's address bar, after you open an app from this page, contains the whole app. Anyone who opens it runs the app in their own browser. Good for small apps with small, non-sensitive data.</li><li><strong>A static Shinylive site.</strong> The shinylive package turns an app folder into plain web files you can put on any static host (GitHub Pages, Netlify, your organisation's web server). It needs a web server: opening the files straight from disk does not work.</li><li><strong>A Shiny server.</strong> For large data, private data, or heavy computation, run the app on a server with R or Python installed, such as Posit Connect or a server your organisation runs. The data then stays on the server.</li></ul>
+<h3>Export an app to a static site</h3>
+<p>On your own computer, with the app saved as <code class="inline">myapp/app.R</code> or <code class="inline">myapp/app.py</code>, the commands from Posit's documentation are:</p>
+<div class="syntax-label">R (in an R console)</div><pre class="syntax-block">install.packages(&quot;shinylive&quot;)
+shinylive::export(&quot;myapp&quot;, &quot;site&quot;)
+httpuv::runStaticServer(&quot;site/&quot;)   # preview it locally</pre>
+<div class="syntax-label">Python (in a terminal, with uv installed)</div><pre class="syntax-block">uvx shinylive export myapp site</pre>
+<p>Sources: the <a href="https://posit-dev.github.io/r-shinylive/" rel="noopener" target="_blank" style="color:var(--accent-color)">shinylive R package site</a> and the <a href="https://shiny.posit.co/py/get-started/shinylive.html" rel="noopener" target="_blank" style="color:var(--accent-color)">Shiny for Python Shinylive guide</a>, both read in October 2026.</p>
+<div class="info-box warning"><strong>A Shinylive app has no secrets.</strong> Posit's Shinylive guide says it plainly: the code and data must be sent to the browser, so they cannot be kept from the user. Anything you embed in a Shinylive app, or in its link, can be read by anyone who opens it. Put only aggregated, non-identifying figures in one: district percentages, never beneficiary names, phone numbers, ID numbers or household-level rows. For data about people, follow the <a href="/101-courses/data-protection-dpdp.html" style="color:var(--accent-color)">Data Protection &amp; the DPDP Act</a> deck, and use a server-based app with access control.</div>
+<div class="info-box"><strong>Small cells mislead.</strong> A district average from 24 households moves a lot when one household changes. Before a dashboard goes to a district officer, show the number of households behind each bar, or suppress cells below a minimum size, as the HAVING example in the SQL course does.</div>
+<p><strong>Try it:</strong> add a <code class="inline">households</code> column (24 for every district here) to the dashboard's data frame and show it in the table, so every bar comes with its sample size.</p>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/sql.html" style="color:var(--text-primary)">SQL for Development Data</a></h4><p>Pull and summarise the rows a dashboard needs, straight from a database.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/r-python.html" style="color:var(--text-primary)">R &amp; Python for Development</a></h4><p>The data-frame skills underneath every Shiny app.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-viz.html" style="color:var(--text-primary)">Data Visualization 101</a></h4><p>Choosing the chart before you build the dashboard.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/mel-basics.html" style="color:var(--text-primary)">MEL Basics 101</a></h4><p>Which indicators a monitoring dashboard should carry.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-protection-dpdp.html" style="color:var(--text-primary)">Data Protection &amp; the DPDP Act 101</a></h4><p>What may and may not go into a shared app.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="6">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=3b5d57ac" defer></script>
+</body>
+</html>

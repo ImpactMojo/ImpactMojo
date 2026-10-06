@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Stata Syntax for Development Data | ImpactMojo</title>
+    <meta name="description" content="A free guided course in Stata syntax for development practitioners in South Asia: do-files, import delimited, describe, tabulate, generate, recode, labels, egen, collapse, merge, reshape, svyset with NFHS weights and design variables, regress, margins, graphs and logs.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/stata.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Stata Syntax for Development Data">
+<meta property="og:description" content="A free guided course in Stata syntax for development practitioners in South Asia: do-files, import delimited, describe, tabulate, generate, recode, labels, egen, collapse, merge, reshape, svyset with NFHS weights and design variables, regress, margins, graphs and logs.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/stata.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stata Syntax for Development Data">
+<meta name="twitter:description" content="A free guided course in Stata syntax for development practitioners in South Asia: do-files, import delimited, describe, tabulate, generate, recode, labels, egen, collapse, merge, reshape, svyset with NFHS weights and design variables, regress, margins, graphs and logs.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Stata Syntax for Development Data", "description": "A free guided course in Stata syntax for development practitioners in South Asia: do-files, import delimited, describe, tabulate, generate, recode, labels, egen, collapse, merge, reshape, svyset with NFHS weights and design variables, regress, margins, graphs and logs.", "url": "https://www.impactmojo.in/code/stata.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Guided tool course</div>
+        <h1>Stata syntax for development data</h1>
+        <p>Write Stata do-files from your first import to a weighted regression: describe, generate, recode, labels, egen, collapse, merge, reshape, svyset for NFHS-style surveys, regress and margins, graphs and logs. Follow along in your own copy of Stata with two small CSV files, and check each step in R on this page.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>Stata does not run in a browser.</strong> The grey boxes are do-file lines for you to type into your own Stata. This page does not show Stata output, because it cannot produce any; each module tells you what to look for on your screen instead. Where the same step can be done in R, an R cell runs it here on the same data, so you can check your Stata numbers against it. The first R run downloads the R engine once (about 7&nbsp;MB).</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> Set up</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> Import and look</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> New variables</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> egen and collapse</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Merge and reshape</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> Weights and svyset</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Regress and graph</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">8</span> Logs and reproducibility</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 8</div>
+<h2>Stata, the do-file and your project folder</h2>
+<p>Stata is a paid statistics package from StataCorp, used widely in development economics, evaluation teams and survey firms. Most published replication files for NFHS, PLFS and IHDS analyses are Stata do-files, so reading Stata is useful even if you work in R.</p>
+<div class="info-box"><strong>Version and cost, checked 6 October 2026.</strong> The current release is <strong>Stata 19</strong> (StataCorp's citation for it reads "StataCorp. 2025. Stata 19"). Annual licences also carry <strong>StataNow</strong>, which adds new features during the release. Stata comes in three editions, Stata/BE (basic, mid-sized datasets), Stata/SE (larger datasets) and Stata/MP (multicore, the largest datasets), and all three run on Windows, macOS and Linux. StataCorp's <a href="https://www.stata.com/order/" rel="noopener" target="_blank" style="color:var(--accent-color)">order page</a> asks for your country before it shows a price, and buyers in many countries go through an <a href="https://www.stata.com/worldwide/" rel="noopener" target="_blank" style="color:var(--accent-color)">authorised international reseller</a>. Check with your university or organisation before you buy: many hold a site licence.</div>
+<h3>The five main windows</h3>
+<p>Stata's own <em>Getting Started</em> manual names five main windows: <strong>History</strong> (commands you have run), <strong>Results</strong> (output), <strong>Command</strong> (where you type one command and press Enter), <strong>Variables</strong> (the variables in memory) and <strong>Properties</strong> (details of the selected variable). The menus can build most commands for you, and the command they build appears in the Results window, which is a good way to learn syntax.</p>
+<h3>Work in a do-file from the first day</h3>
+<p>A do-file is a plain text file of commands that Stata runs from top to bottom. It is your record of what you did, and anyone with the same data can re-run it and get the same numbers. Open the Do-file Editor by clicking its button on the toolbar or by typing <code class="inline">doedit</code> in the Command window.</p>
+<ol class="guide-steps"><li>Make a project folder, for example <code class="inline">C:\impactmojo\stata</code> on Windows or <code class="inline">~/impactmojo/stata</code> on a Mac.</li><li>Download the two course files into it: <a href="/code/data/households.csv" download style="color:var(--accent-color)">households.csv</a> (240 households) and <a href="/code/data/districts.csv" download style="color:var(--accent-color)">districts.csv</a> (10 districts). <span class="illustrative-tag">Illustrative data, invented for teaching</span> The district names are real places; every number is made up.</li><li>In Stata, type <code class="inline">doedit</code> in the Command window and press Enter.</li><li>Type the lines below into the new do-file and save it in your project folder as <code class="inline">01_setup.do</code>.</li><li>Click the <strong>Do</strong> button (Execute (do)) on the Do-file Editor toolbar. If you highlight some lines first, the same button runs only those lines.</li></ol>
+<div class="syntax-label">Stata do-file: 01_setup.do</div><pre class="syntax-block">* 01_setup.do : first do-file for the Code Studio Stata course
+version 19            // run as Stata 19, even in a later Stata
+clear all             // start with nothing in memory
+cd &quot;C:\impactmojo\stata&quot;   // change to YOUR project folder
+pwd                   // print the working folder, to check
+dir *.csv             // you should see households.csv and districts.csv</pre>
+<p>Lines starting with <code class="inline">*</code> are comments, and <code class="inline">//</code> starts a comment at the end of a line. Look in the Results window: <code class="inline">pwd</code> should print your folder, and <code class="inline">dir</code> should list both CSV files. If <code class="inline">cd</code> fails, the path is wrong; copy it from your file manager's address bar.</p>
+<div class="info-box"><strong>Exercise.</strong> Change the <code class="inline">cd</code> line to your own folder, run the do-file, then type <code class="inline">help import delimited</code> in the Command window. Every Stata command has a help file like this, with the syntax at the top and worked examples at the bottom.</div>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: Import and look &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 8</div>
+<h2>Import a CSV and look at it</h2>
+<p><code class="inline">import delimited</code> reads comma-separated and tab-separated text files. With the variable names in the first row, as in our files, it needs only the file name. Then look before you change anything.</p>
+<div class="syntax-label">Stata do-file: 02_look.do</div><pre class="syntax-block">version 19
+clear all
+cd &quot;C:\impactmojo\stata&quot;
+import delimited using &quot;households.csv&quot;, clear
+
+describe                         // variables, types, number of observations
+codebook district caste, compact
+list in 1/5                      // first five households
+summarize monthly_pc_exp hh_size head_edu_years
+summarize monthly_pc_exp, detail // adds percentiles and the median
+tabulate caste
+tabulate caste area              // two-way table
+tabulate caste area, row         // row percentages</pre>
+<h3>What to look for</h3>
+<ul><li><code class="inline">describe</code> should report 240 observations and 13 variables. Variables holding text (<code class="inline">district</code>, <code class="inline">caste</code>, <code class="inline">has_toilet</code> and the other Yes/No columns) show a <code class="inline">str</code> storage type. Stata cannot run numeric commands on them until you convert them, which is the next module.</li><li>In <code class="inline">tabulate caste</code> the Freq. column should sum to 240, with four rows: General, OBC, SC and ST.</li><li>In <code class="inline">summarize, detail</code> compare the mean with the 50% percentile (the median). Expenditure is usually skewed to the right, so the mean sits above the median.</li></ul>
+<p>The same look in R, on the same file, runs here. Use it to check the counts in your Stata tables.</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+str(hh)
+summary(hh$monthly_pc_exp)
+table(hh$caste)
+table(hh$caste, hh$area)</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> In Stata, run <code class="inline">tabulate district area</code> and find the district with the most urban households. In the R cell, change the last line to <code class="inline">table(hh$district, hh$area)</code>, run it, and check that the two tables agree.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: New variables &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 8</div>
+<h2>generate, replace, recode, encode and labels</h2>
+<p><code class="inline">generate</code> makes a new variable; <code class="inline">replace</code> changes values in one that exists. Stata refuses to <code class="inline">generate</code> a name already in use, which protects you from overwriting a variable by accident.</p>
+<div class="syntax-label">Stata do-file: 03_newvars.do</div><pre class="syntax-block">version 19
+clear all
+cd &quot;C:\impactmojo\stata&quot;
+import delimited using &quot;households.csv&quot;, clear
+
+* 0/1 indicators from Yes/No text
+generate toilet = (has_toilet == &quot;Yes&quot;)
+generate bank   = (has_bank_account == &quot;Yes&quot;)
+generate annual_pc_exp = monthly_pc_exp * 12
+
+* replace changes values in an existing variable
+generate low_exp = 0
+replace  low_exp = 1 if monthly_pc_exp &lt; 2000
+
+* recode a number into bands, with value labels, into a new variable
+recode head_edu_years (0 = 0 &quot;None&quot;) (1/5 = 1 &quot;Primary (1-5)&quot;) ///
+    (6/10 = 2 &quot;Secondary (6-10)&quot;) (11/max = 3 &quot;Higher (11+)&quot;), generate(edu_cat)
+tabulate edu_cat
+
+* encode turns text into numbers with labels (codes follow alphabetical order)
+encode caste, generate(caste_n)
+encode area,  generate(area_n)
+tabulate caste_n
+tabulate caste_n, nolabel        // see the numbers behind the labels</pre>
+<h3>Labels: say what a variable means</h3>
+<p>A variable label describes the variable. A value label names each code. You define a value label once with <code class="inline">label define</code>, then attach it with <code class="inline">label values</code>.</p>
+<div class="syntax-label">Stata do-file: add to 03_newvars.do</div><pre class="syntax-block">label variable toilet &quot;Household has a toilet (1 = yes)&quot;
+label variable monthly_pc_exp &quot;Monthly per capita expenditure (Rs)&quot;
+
+label define yesno 0 &quot;No&quot; 1 &quot;Yes&quot;
+label values toilet bank low_exp yesno
+
+describe toilet bank low_exp edu_cat caste_n
+tabulate toilet
+save households_clean, replace   // Stata&#x27;s own .dta format, labels included</pre>
+<ul><li>After <code class="inline">encode</code>, <code class="inline">tabulate caste_n, nolabel</code> should show codes 1 to 4, with 1 for General and 4 for ST, because <code class="inline">encode</code> assigns codes in alphabetical order.</li><li><code class="inline">tabulate toilet</code> should now show the words No and Yes, and the two frequencies should sum to 240.</li><li><code class="inline">///</code> at the end of a line tells a do-file that the command continues on the next line.</li></ul>
+<p>The R version of the indicator and the education bands:</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+# Stata: generate toilet = (has_toilet == &quot;Yes&quot;)
+hh$toilet &lt;- as.integer(hh$has_toilet == &quot;Yes&quot;)
+# Stata: recode head_edu_years (0=0) (1/5=1) (6/10=2) (11/max=3), generate(edu_cat)
+hh$edu_cat &lt;- cut(hh$head_edu_years, breaks = c(-Inf, 0, 5, 10, Inf),
+                  labels = c(&quot;None&quot;, &quot;Primary (1-5)&quot;, &quot;Secondary (6-10)&quot;, &quot;Higher (11+)&quot;))
+table(hh$edu_cat)
+mean(hh$toilet)</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> Make a variable <code class="inline">large_hh</code> equal to 1 when <code class="inline">hh_size</code> is 6 or more, give it the <code class="inline">yesno</code> label, and tabulate it against <code class="inline">area_n</code>. In the R cell, add <code class="inline">table(hh$hh_size &gt;= 6, hh$area)</code> and compare.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: egen and collapse &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 8</div>
+<h2>Group summaries: egen and collapse</h2>
+<p>Two commands summarise by group, and they differ in what they leave in memory. <code class="inline">egen ..., by()</code> adds a column and keeps every household. <code class="inline">collapse</code> replaces the data with one row per group. Use <code class="inline">egen</code> when you want to compare each household with its district; use <code class="inline">collapse</code> when you want a district table.</p>
+<div class="syntax-label">Stata do-file: 04_groups.do</div><pre class="syntax-block">version 19
+clear all
+cd &quot;C:\impactmojo\stata&quot;
+use households_clean, clear
+
+* egen: one new column, all 240 rows kept
+egen district_mean = mean(monthly_pc_exp), by(district)
+egen district_n    = count(hh_id), by(district)
+generate above_district = monthly_pc_exp &gt; district_mean
+list hh_id district monthly_pc_exp district_mean in 1/5
+
+* collapse: one row per district (preserve/restore brings the households back)
+preserve
+collapse (mean) monthly_pc_exp hh_size toilet (count) n = hh_id, by(district)
+list
+export delimited using &quot;district_summary.csv&quot;, replace
+restore
+describe, short    // back to 240 observations</pre>
+<ul><li>After <code class="inline">collapse</code>, <code class="inline">list</code> should show 10 rows, one per district, and the <code class="inline">n</code> column should sum to 240.</li><li><code class="inline">preserve</code> takes a copy of the data and <code class="inline">restore</code> puts it back, so one do-file can make a summary table and carry on with the household data.</li></ul>
+<p>In R, <code class="inline">ave()</code> plays the part of <code class="inline">egen, by()</code> and <code class="inline">aggregate()</code> the part of <code class="inline">collapse</code>. Check the district means against your Stata list.</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+# Stata: egen district_mean = mean(monthly_pc_exp), by(district)
+hh$district_mean &lt;- ave(hh$monthly_pc_exp, hh$district)
+head(hh[, c(&quot;hh_id&quot;, &quot;district&quot;, &quot;monthly_pc_exp&quot;, &quot;district_mean&quot;)])
+# Stata: collapse (mean) monthly_pc_exp hh_size (count) n = hh_id, by(district)
+by_d &lt;- aggregate(cbind(monthly_pc_exp, hh_size) ~ district, data = hh, FUN = mean)
+by_d$n &lt;- as.vector(table(hh$district)[by_d$district])
+by_d</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> Change the <code class="inline">by()</code> in the Stata <code class="inline">collapse</code> to <code class="inline">by(caste)</code> and run again; you should get four rows. In the R cell, change <code class="inline">~ district</code> to <code class="inline">~ caste</code> and <code class="inline">hh$district</code> to <code class="inline">hh$caste</code> in both places.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Merge and reshape &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 8</div>
+<h2>merge (1:1 and m:1) and reshape</h2>
+<p><code class="inline">merge</code> adds variables from a second Stata file (the <em>using</em> file) to the data in memory (the <em>master</em>), matching on key variables. Each household belongs to one district, and each district has many households, so attaching the district file is a many-to-one, <code class="inline">m:1</code>, merge. The using file must be a <code class="inline">.dta</code>, so save the districts first.</p>
+<div class="syntax-label">Stata do-file: 05_merge.do</div><pre class="syntax-block">version 19
+clear all
+cd &quot;C:\impactmojo\stata&quot;
+
+* the using file must be a Stata .dta
+import delimited using &quot;districts.csv&quot;, clear
+isid district                 // stops with an error if district is not unique
+save districts, replace
+
+use households_clean, clear
+merge m:1 district using districts
+tabulate _merge
+assert _merge == 3            // stop the do-file if any row failed to match
+drop _merge</pre>
+<h3>Read _merge every time</h3>
+<p><code class="inline">merge</code> creates a variable <code class="inline">_merge</code>: 1 means the row was only in the master (a household whose district is missing from the district file), 2 means only in the using file, and 3 means matched. Here <code class="inline">tabulate _merge</code> should show 240 matched rows and nothing else. In real files a misspelt district (Purnea for Purnia) shows up as a 1 and a 2, which is why the <code class="inline">assert</code> line is worth keeping.</p>
+<p>A <code class="inline">1:1</code> merge joins two files with one row per key on each side, such as two survey modules for the same households. To practise one, split the household file into two and join it back:</p>
+<div class="syntax-label">Stata do-file: a 1:1 merge</div><pre class="syntax-block">use households_clean, clear
+preserve
+keep hh_id shg_member received_transfer      // the &#x27;programme module&#x27;
+save hh_programme, replace
+restore
+drop shg_member received_transfer            // the &#x27;roster module&#x27;
+merge 1:1 hh_id using hh_programme
+tabulate _merge                              // expect 240 matched
+assert _merge == 3
+drop _merge</pre>
+<p>The same district merge in R, with the R version of the <code class="inline">_merge</code> check:</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+d  &lt;- read.csv(&quot;districts.csv&quot;)
+# Stata: merge m:1 district using districts
+m &lt;- merge(hh, d, by = &quot;district&quot;, all.x = TRUE)
+nrow(m)
+sum(is.na(m$state))   # households with no district match: Stata&#x27;s _merge == 1
+table(m$state)</textarea></div>
+<h3>reshape: wide and long</h3>
+<p>Long data has one row per unit per category (district by area); wide data has one row per unit and one column per category. <code class="inline">reshape</code> moves between them. You name the stub (the variable that repeats), <code class="inline">i()</code> (the unit) and <code class="inline">j()</code> (the category); add <code class="inline">string</code> when <code class="inline">j</code> is text.</p>
+<div class="syntax-label">Stata do-file: reshape</div><pre class="syntax-block">use households_clean, clear
+collapse (mean) monthly_pc_exp, by(district area)
+list in 1/4                                        // long: 20 rows
+reshape wide monthly_pc_exp, i(district) j(area) string
+list                                               // wide: 10 rows
+generate urban_rural_ratio = monthly_pc_expUrban / monthly_pc_expRural
+reshape long monthly_pc_exp, i(district) j(area) string   // and back</pre>
+<p>After <code class="inline">reshape wide</code> you should have 10 rows and two new columns, <code class="inline">monthly_pc_expRural</code> and <code class="inline">monthly_pc_expUrban</code>. Every district in this file has both rural and urban households, so neither column has missing values. The R version runs here:</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+# Stata: collapse (mean) monthly_pc_exp, by(district area)
+long &lt;- aggregate(monthly_pc_exp ~ district + area, data = hh, FUN = mean)
+nrow(long)
+# Stata: reshape wide monthly_pc_exp, i(district) j(area) string
+wide &lt;- reshape(long, idvar = &quot;district&quot;, timevar = &quot;area&quot;, direction = &quot;wide&quot;)
+wide</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> Repeat the reshape by head of household's gender: <code class="inline">collapse (mean) monthly_pc_exp (count) n = hh_id, by(district head_gender)</code>, then <code class="inline">reshape wide monthly_pc_exp n, i(district) j(head_gender) string</code>. Two stubs reshape together. Look at <code class="inline">nFemale</code>: every district has some female-headed households, but in seven districts the mean rests on three or four of them. Say in a comment why you would not publish those seven means.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: Weights and svyset &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 8</div>
+<h2>Weights, and svyset for NFHS-style surveys</h2>
+<p>Stata takes weights in square brackets after the variable list. The two you will use most are <code class="inline">[pw=...]</code> (probability or sampling weights, the kind a survey supplies) and <code class="inline">[aw=...]</code> (analytic weights, used for averages of group means). Our course file has no sampling weight, but it shows why weights matter: each row is a household, and a household of eight people counts for more people than a household of one. Weighting by household size turns a per-household average into a per-person average.</p>
+<div class="syntax-label">Stata do-file: 06_weights.do</div><pre class="syntax-block">use households_clean, clear
+mean monthly_pc_exp                    // average household
+mean monthly_pc_exp [pw = hh_size]     // average person
+mean monthly_pc_exp [pw = hh_size], over(caste_n)</pre>
+<p>The two means differ when large households are poorer or richer than small ones. The R cell computes both, overall and by caste, so you can compare with your Stata output:</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+# Stata: mean monthly_pc_exp   and   mean monthly_pc_exp [pw=hh_size]
+c(per_household = mean(hh$monthly_pc_exp),
+  per_person    = weighted.mean(hh$monthly_pc_exp, hh$hh_size))
+# the same two numbers by caste
+sapply(split(hh, hh$caste), function(g)
+  c(per_household = mean(g$monthly_pc_exp),
+    per_person    = weighted.mean(g$monthly_pc_exp, g$hh_size)))</textarea></div>
+<h3>Declaring an NFHS design with svyset</h3>
+<p>NFHS is India's Demographic and Health Survey, and its files use the DHS recode variable names. The DHS Recode VII manual defines the three you need: <code class="inline">v005</code> is the sample weight, "an 8 digit variable with 6 implied decimal places", to be divided by 1,000,000 before use; <code class="inline">v021</code> is the primary sampling unit; and <code class="inline">v022</code> is the "sample strata for sampling errors", the grouping of PSUs used for Taylor series variance estimates, which is the method <code class="inline">svy</code> uses by default. <code class="inline">svyset</code> declares this once, and every <code class="inline">svy:</code> command afterwards uses it.</p>
+<div class="syntax-label">Stata do-file: NFHS women&#x27;s file (not part of the course data)</div><pre class="syntax-block">* Use the NFHS women&#x27;s (IR) Stata file you downloaded from the DHS Program
+use &quot;your_nfhs_women_file.dta&quot;, clear
+
+generate wt = v005 / 1000000
+svyset v021 [pw = wt], strata(v022)
+svyset                                  // prints the design you declared
+
+* any 0/1 indicator you have built, e.g. currently using a modern method
+generate modern_use = (v313 == 3)
+svy: mean modern_use
+svy: mean modern_use, over(v024)        // v024 is the DHS region variable; codebook v024 shows its labels
+
+* subpopulations: keep the full design, estimate for a subgroup
+codebook v025                           // read the urban/rural codes first
+generate rural = (v025 == 2)            // if codebook shows 2 = rural
+svy, subpop(rural): mean modern_use</pre>
+<ul><li>The DHS Program's <em>Guide to DHS Statistics</em> uses the same <code class="inline">v313 == 3</code> definition of modern method use in its own Stata example, and notes that strata are not defined the same way in every survey: its example uses <code class="inline">v023</code>, and it suggests region by urban/rural (<code class="inline">v024</code> by <code class="inline">v025</code>) when that is how the sample was drawn. Check Appendix A of the survey report before you choose.</li><li>Use <code class="inline">subpop()</code> for a subgroup. Dropping the other rows with <code class="inline">keep if</code> throws away design information, and the standard errors come out wrong.</li><li>The output of <code class="inline">svy: mean</code> reports the number of strata, the number of PSUs and the design degrees of freedom above the estimates. Read them: a PSU count far below what the survey report says means the wrong variable went into <code class="inline">svyset</code>.</li></ul>
+<div class="info-box warning"><strong>Weights change estimates; the design changes standard errors.</strong> <code class="inline">mean x [pw=wt]</code> gives the right point estimate for NFHS, but only <code class="inline">svy: mean x</code> after <code class="inline">svyset</code> gives confidence intervals that allow for clustering and stratification.</div>
+<div class="info-box"><strong>Exercise.</strong> In the course file, run <code class="inline">mean toilet</code> and <code class="inline">mean toilet [pw = hh_size]</code>. Write one sentence in a comment saying which is the share of households with a toilet and which is the share of people living in one.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Regress and graph &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 8</div>
+<h2>regress, margins and graphs</h2>
+<p><code class="inline">regress</code> fits a linear regression. The prefix <code class="inline">i.</code> tells Stata a variable is categorical, so it makes the dummy variables for you and leaves out the lowest code as the base (General, code 1, for <code class="inline">caste_n</code>). <code class="inline">margins</code> then turns the coefficients into predicted values you can explain to a programme manager.</p>
+<div class="syntax-label">Stata do-file: 07_regress.do</div><pre class="syntax-block">use households_clean, clear
+regress monthly_pc_exp i.caste_n head_edu_years i.area_n
+margins caste_n          // average predicted expenditure for each caste group
+marginsplot              // graph of the margins with confidence intervals
+
+* with a 0/1 outcome the same command gives a linear probability model
+regress toilet i.caste_n head_edu_years i.area_n</pre>
+<p>By default <code class="inline">margins caste_n</code> sets every household to General, predicts and averages, then does the same for OBC, SC and ST, keeping each household's own education and area. The R cell below does exactly that by hand, so your Stata coefficients and margins should match it to the rupee.</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+hh$caste &lt;- factor(hh$caste)   # levels in alphabetical order, as Stata&#x27;s encode does
+hh$area  &lt;- factor(hh$area)
+# Stata: regress monthly_pc_exp i.caste_n head_edu_years i.area_n
+fit &lt;- lm(monthly_pc_exp ~ caste + head_edu_years + area, data = hh)
+round(summary(fit)$coefficients, 2)
+# Stata: margins caste_n
+# set every household to one caste in turn, predict, and average
+sapply(levels(hh$caste), function(k) {
+  nd &lt;- hh
+  nd$caste &lt;- factor(k, levels = levels(hh$caste))
+  round(mean(predict(fit, nd)), 1)
+})</textarea></div>
+<h3>Graphs</h3>
+<div class="syntax-label">Stata do-file: graphs</div><pre class="syntax-block">graph bar (mean) monthly_pc_exp, over(caste_n) ///
+    ytitle(&quot;Mean monthly per capita expenditure (Rs)&quot;)
+graph export &quot;exp_by_caste.png&quot;, replace width(1200)
+
+twoway (scatter monthly_pc_exp head_edu_years) ///
+       (lfit monthly_pc_exp head_edu_years),   ///
+       ytitle(&quot;Monthly per capita expenditure (Rs)&quot;) xtitle(&quot;Years of schooling, head&quot;)
+graph export &quot;exp_by_edu.png&quot;, replace width(1200)</pre>
+<p>The bar chart in R, for comparison with yours:</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+# Stata: graph bar (mean) monthly_pc_exp, over(caste_n)
+m &lt;- tapply(hh$monthly_pc_exp, hh$caste, mean)
+barplot(m, ylab = &quot;Mean monthly per capita expenditure (Rs)&quot;,
+        main = &quot;Illustrative data, invented for teaching&quot;)</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> Add <code class="inline">land_acres</code> to the Stata regression and run <code class="inline">margins area_n</code>. In the R cell above, add <code class="inline">+ land_acres</code> to the <code class="inline">lm()</code> formula and check that the coefficients still match Stata's.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="7">Next: Logs and reproducibility &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="7" role="tabpanel">
+<div class="eyebrow">Module 8 of 8</div>
+<h2>Logs, a master do-file and reproducible work</h2>
+<p>A log file records the commands you ran and everything in the Results window. Keep one for every analysis you report, so you can show where a number came from months later. <code class="inline">log using name, text</code> writes plain text that any editor can open.</p>
+<div class="syntax-label">Stata do-file: 00_master.do</div><pre class="syntax-block">* 00_master.do : runs the whole analysis from raw CSV to tables and graphs
+version 19
+clear all
+set more off
+cd &quot;C:\impactmojo\stata&quot;
+
+capture log close
+log using &quot;analysis_log&quot;, text replace
+
+do 03_newvars.do      // import, clean, label, save households_clean.dta
+do 04_groups.do       // district summary
+do 05_merge.do        // attach district information
+do 07_regress.do      // regression, margins, graphs
+
+log close</pre>
+<ul><li><code class="inline">version 19</code> at the top makes later releases of Stata interpret the do-file as Stata 19 did.</li><li><code class="inline">capture log close</code> closes a log left open by an earlier run without stopping on an error if none is open.</li><li>Never edit the raw CSV. Every change goes in a do-file, so the path from raw data to result can be re-run.</li><li>If you draw a random sample or bootstrap, put <code class="inline">set seed 20261006</code> (any fixed number) before it, so the same draw comes out every time.</li><li>Use <code class="inline">assert</code> for things that must be true (<code class="inline">assert hh_size &gt;= 1</code>, <code class="inline">isid hh_id</code>). A do-file that stops loudly is better than one that finishes with wrong numbers.</li></ul>
+<div class="info-box"><strong>Exercise.</strong> Build <code class="inline">00_master.do</code> from the do-files you wrote in this course, run it, then open <code class="inline">analysis_log.log</code> in a text editor and find the <code class="inline">tabulate _merge</code> table in it.</div>
+<h3>Stata's own documentation</h3>
+<ul><li><a href="https://www.stata.com/features/documentation/" rel="noopener" target="_blank" style="color:var(--accent-color)">Stata documentation</a>: every manual as a free PDF, including <em>Getting Started</em> and the <em>User's Guide</em>.</li><li><a href="https://www.stata.com/manuals/svysvyset.pdf" rel="noopener" target="_blank" style="color:var(--accent-color)">[SVY] svyset</a>, <a href="https://www.stata.com/manuals/dmerge.pdf" rel="noopener" target="_blank" style="color:var(--accent-color)">[D] merge</a>, <a href="https://www.stata.com/manuals/dreshape.pdf" rel="noopener" target="_blank" style="color:var(--accent-color)">[D] reshape</a> and <a href="https://www.stata.com/manuals/rmargins.pdf" rel="noopener" target="_blank" style="color:var(--accent-color)">[R] margins</a>.</li><li><a href="https://www.stata.com/new-in-stata/" rel="noopener" target="_blank" style="color:var(--accent-color)">New in Stata 19</a>.</li></ul>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/r-python.html" style="color:var(--text-primary)">R &amp; Python for Development</a></h4><p>Run the same steps in free software, live in your browser.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/spss.html" style="color:var(--text-primary)">SPSS Syntax for Development Data</a></h4><p>The same arc in SPSS syntax, including Complex Samples for NFHS.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/survey-design.html" style="color:var(--text-primary)">Survey Design 101</a></h4><p>Why surveys are stratified and clustered, and what that does to your standard errors.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/econometrics-101.html" style="color:var(--text-primary)">Econometrics 101</a></h4><p>What a regression coefficient means, and when it does not mean what you hope.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="6">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=3b5d57ac" defer></script>
+</body>
+</html>

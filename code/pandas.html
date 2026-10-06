@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>pandas for Development Data | ImpactMojo</title>
+    <meta name="description" content="Learn pandas for development data: DataFrames, read_csv, selection, filtering, groupby, merge, melt and pivot, categoricals, survey weights with numpy and matplotlib charts, on a 240-household illustrative survey. Runs in your browser, nothing to install.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/pandas.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="pandas for Development Data">
+<meta property="og:description" content="Learn pandas for development data: DataFrames, read_csv, selection, filtering, groupby, merge, melt and pivot, categoricals, survey weights with numpy and matplotlib charts, on a 240-household illustrative survey. Runs in your browser, nothing to install.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/pandas.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="pandas for Development Data">
+<meta name="twitter:description" content="Learn pandas for development data: DataFrames, read_csv, selection, filtering, groupby, merge, melt and pivot, categoricals, survey weights with numpy and matplotlib charts, on a 240-household illustrative survey. Runs in your browser, nothing to install.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "pandas for Development Data", "description": "Learn pandas for development data: DataFrames, read_csv, selection, filtering, groupby, merge, melt and pivot, categoricals, survey weights with numpy and matplotlib charts, on a 240-household illustrative survey. Runs in your browser, nothing to install.", "url": "https://www.impactmojo.in/code/pandas.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Runs in your browser</div>
+        <h1>pandas for development data</h1>
+        <p>Clean, join, reshape, weight and chart household survey data with Python's pandas, numpy and matplotlib, running live in your browser. For people who have finished the basics in <a href="/code/r-python.html" style="color:var(--accent-color)">R &amp; Python for Development</a>.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>How the live code works.</strong> Your first Run downloads Pyodide (Python for the browser, about 10&nbsp;MB) and pandas; numpy and matplotlib follow when a cell needs them. Give the first click up to a minute on a slow connection; after that it is quick. Two files are already in the working folder: <code class="inline">households.csv</code> and <code class="inline">districts.csv</code>. Both are illustrative data, invented for teaching. The district names are real places, but no number here describes them.</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> DataFrames</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> Selecting</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> groupby</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> merge</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Reshape</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> Categoricals</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Weights</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">8</span> Charts</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">9</span> Script</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 9</div>
+<h2>Reading data into a DataFrame</h2>
+<p>pandas is Python's library for tables. A table is a <strong>DataFrame</strong>: rows with an <strong>index</strong> (the row labels on the left) and named columns, each column a <strong>Series</strong> of one type. This course also uses <strong>numpy</strong> for weighted means and <strong>matplotlib</strong> for charts.</p>
+<p>The data is a household survey of 240 households across 10 districts in four states. <span class="illustrative-tag">Illustrative data, invented for teaching</span> <code class="inline">pd.read_csv()</code> reads it.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+print(hh.head())</textarea></div>
+<p><code class="inline">.head()</code> shows the first five rows. The <code class="inline">...</code> in the middle means pandas hid some columns to fit the width; the last line says the table has 13 columns. The numbers 0 to 4 on the left are the index, which pandas adds when the file has none.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+hh.info()</textarea></div>
+<p><code class="inline">.info()</code> lists every column with its count of non-missing values and its type. All 240 rows are complete. <code class="inline">int64</code> and <code class="inline">float64</code> are numbers; <code class="inline">object</code> is text, which includes the four Yes/No indicators.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+print(hh.shape)
+print(type(hh))
+print(hh[&quot;district&quot;].unique())</textarea></div>
+<p><code class="inline">.shape</code> is (rows, columns): (240, 13). <code class="inline">.unique()</code> lists the 10 districts.</p>
+<div class="info-box"><strong>Try it.</strong> Change <code class="inline">"households.csv"</code> to <code class="inline">"districts.csv"</code> in the third cell. What is its shape?</div>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: Selecting &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 9</div>
+<h2>Selecting, filtering and new columns</h2>
+<p>Square brackets with one name return one column as a Series; with a list of names they return a DataFrame. <code class="inline">.loc</code> selects by label and <code class="inline">.iloc</code> by position.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+print(hh[&quot;monthly_pc_exp&quot;].head(3))
+print(hh[[&quot;hh_id&quot;, &quot;district&quot;, &quot;monthly_pc_exp&quot;]].head(3))
+print(hh.loc[0:2, [&quot;district&quot;, &quot;caste&quot;]])
+print(hh.iloc[0:3, 0:4])</textarea></div>
+<p>Note the difference: <code class="inline">hh.loc[0:2, ...]</code> includes row label 2 and returns three rows, while <code class="inline">hh.iloc[0:3, 0:4]</code> stops before position 3, the usual Python rule. Use <code class="inline">.loc</code> with names in analysis code; positions break when someone adds a column.</p>
+<h3>Filtering rows</h3>
+<p>A condition on a column gives a True/False Series. Put it inside square brackets to keep the True rows. Combine conditions with <code class="inline">&amp;</code> (and) or <code class="inline">|</code> (or), and wrap each in parentheses.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+rural_f = hh[(hh[&quot;area&quot;] == &quot;Rural&quot;) &amp; (hh[&quot;head_gender&quot;] == &quot;Female&quot;)]
+print(rural_f[[&quot;hh_id&quot;, &quot;district&quot;, &quot;caste&quot;, &quot;hh_size&quot;, &quot;monthly_pc_exp&quot;]]
+      .sort_values(&quot;monthly_pc_exp&quot;))</textarea></div>
+<p>26 rural households are headed by a woman, and the poorest, in Gaya, spends &#8377;880 per person per month. The numbers on the left are the original row labels, kept through the filter and the sort.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+out = (hh.query(&quot;district in [&#x27;Gaya&#x27;, &#x27;Purnia&#x27;, &#x27;Patna&#x27;] and head_edu_years &lt;= 5&quot;)
+         [[&quot;hh_id&quot;, &quot;district&quot;, &quot;head_edu_years&quot;, &quot;monthly_pc_exp&quot;]]
+         .sort_values(&quot;monthly_pc_exp&quot;, ascending=False))
+print(len(out), &quot;households&quot;)
+print(out.head(10))</textarea></div>
+<p><code class="inline">.query()</code> takes the condition as a string, which reads closer to plain language. The three Bihar districts have 41 households whose head had five years of schooling or fewer; <code class="inline">ascending=False</code> sorts from largest down.</p>
+<div class="info-box"><strong>Try it.</strong> Select urban households in Kozhikode and Wayanad whose head had more than 10 years of schooling, and show only <code class="inline">hh_id</code>, <code class="inline">district</code> and <code class="inline">land_acres</code>.</div>
+<h3>Adding columns</h3>
+<p><code class="inline">.assign()</code> returns a copy of the table with new columns, computed from existing ones row by row. You can also write <code class="inline">hh["new"] = ...</code>, which changes <code class="inline">hh</code> in place.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+out = hh.assign(annual_pc_exp=hh[&quot;monthly_pc_exp&quot;] * 12,
+                hh_monthly_exp=hh[&quot;monthly_pc_exp&quot;] * hh[&quot;hh_size&quot;],
+                below_2000=hh[&quot;monthly_pc_exp&quot;] &lt; 2000)
+print(out[[&quot;hh_id&quot;, &quot;district&quot;, &quot;monthly_pc_exp&quot;, &quot;annual_pc_exp&quot;,
+           &quot;hh_monthly_exp&quot;, &quot;below_2000&quot;]].head(8))</textarea></div>
+<p><code class="inline">below_2000</code> is a True/False flag, the way to mark households under a threshold such as a poverty line. Household 7 has one member, so its household total equals its per-person figure.</p>
+<h3>Counting</h3>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+print(hh[&quot;caste&quot;].value_counts())
+print(hh.value_counts([&quot;area&quot;, &quot;caste&quot;]).sort_index())</textarea></div>
+<p><code class="inline">.value_counts()</code> counts each value, largest first. Given a list of columns it counts each combination, sorted here with <code class="inline">.sort_index()</code>. OBC households are the largest group (108 of 240), and 20 are ST, of whom only 5 are urban.</p>
+<div class="info-box"><strong>Try it.</strong> Add a column <code class="inline">big_hh</code> that is True when <code class="inline">hh_size &gt;= 6</code>, then count it by <code class="inline">area</code>.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: groupby &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 9</div>
+<h2>Group and aggregate</h2>
+<p><code class="inline">.groupby()</code> splits the table by one or more columns; <code class="inline">.agg()</code> reduces each group to one row. Named aggregation, <code class="inline">new_name=("column", "function")</code>, sets the output column names in the same line. A share is the mean of a True/False Series, so <code class="inline">100 * (s == "Yes").mean()</code> is a percentage.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+out = (hh.groupby(&quot;district&quot;)
+         .agg(n=(&quot;hh_id&quot;, &quot;size&quot;),
+              mean_exp=(&quot;monthly_pc_exp&quot;, &quot;mean&quot;),
+              median_exp=(&quot;monthly_pc_exp&quot;, &quot;median&quot;),
+              pct_toilet=(&quot;has_toilet&quot;, lambda s: 100 * (s == &quot;Yes&quot;).mean()))
+         .sort_values(&quot;median_exp&quot;, ascending=False)
+         .round(1))
+print(out)</textarea></div>
+<p>Look at Udaipur: a mean of &#8377;3,610.8 and a median of &#8377;2,795. A few high-spending households pull the mean up, which is normal for consumption and income data. Report the median for a typical household. Kozhikode has the highest median, &#8377;6,080, and Rewa the lowest toilet coverage, 50 per cent.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+out = (hh.groupby([&quot;caste&quot;, &quot;head_gender&quot;], as_index=False)
+         .agg(n=(&quot;hh_id&quot;, &quot;size&quot;), median_exp=(&quot;monthly_pc_exp&quot;, &quot;median&quot;)))
+print(out)</textarea></div>
+<p><code class="inline">as_index=False</code> keeps the group columns as ordinary columns, which is easier to merge or save later. Check <code class="inline">n</code> before reading any median: the SC female-headed group holds 2 households, so its median of &#8377;4,240 says almost nothing. In a real report you would suppress or flag cells that small.</p>
+<div class="info-box"><strong>Try it.</strong> Group by <code class="inline">["district", "area"]</code> and add <code class="inline">pct_bank</code> for bank accounts. Which district has the widest rural-urban gap in median spending?</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: merge &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 9</div>
+<h2>Merging households with districts</h2>
+<p>The household file has the district name; a separate district file has the state, region, programme phase and field team. <code class="inline">.merge()</code> matches rows on a shared key.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+districts = pd.read_csv(&quot;districts.csv&quot;)
+print(districts)
+hh_d = hh.merge(districts, on=&quot;district&quot;, how=&quot;left&quot;, validate=&quot;many_to_one&quot;)
+print(hh_d.value_counts([&quot;state&quot;, &quot;district&quot;]).sort_index())</textarea></div>
+<p><code class="inline">how="left"</code> keeps every household. <code class="inline">validate="many_to_one"</code> makes pandas raise an error if a district appears twice in the district file, which would duplicate households. Every district has 24 households after the merge, so nothing was lost or doubled.</p>
+<p>Merges fail silently when keys are spelt differently. Purnia is often written Purnea. Watch what happens when the district file uses the other spelling:</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+districts = pd.read_csv(&quot;districts.csv&quot;)
+# a misspelt district name, the kind you meet in real files
+bad = districts.replace({&quot;district&quot;: {&quot;Purnia&quot;: &quot;Purnea&quot;}})
+m = hh.merge(bad, on=&quot;district&quot;, how=&quot;left&quot;, indicator=True)
+print(m[&quot;_merge&quot;].value_counts())
+print(m.loc[m[&quot;_merge&quot;] == &quot;left_only&quot;, &quot;district&quot;].value_counts())</textarea></div>
+<p><code class="inline">indicator=True</code> adds a <code class="inline">_merge</code> column saying where each row came from. 216 rows matched and 24, all from Purnia, are <code class="inline">left_only</code>: still in the table but with missing state, so every state total would be quietly short. Check <code class="inline">_merge</code> after every merge.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+districts = pd.read_csv(&quot;districts.csv&quot;)
+out = (hh.merge(districts, on=&quot;district&quot;, how=&quot;left&quot;)
+         .groupby([&quot;state&quot;, &quot;programme_phase&quot;], as_index=False)
+         .agg(households=(&quot;hh_id&quot;, &quot;size&quot;),
+              pct_transfer=(&quot;received_transfer&quot;, lambda s: round(100 * (s == &quot;Yes&quot;).mean(), 1))))
+print(out)</textarea></div>
+<p>Kerala has rows for phases 1 and 3 only, because none of its districts is in phase 2. A missing row is a fact about the design, worth a footnote in a report.</p>
+<div class="info-box"><strong>Try it.</strong> Group by <code class="inline">field_team</code> instead and compute the share of SHG members for each team.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Reshape &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 9</div>
+<h2>melt and pivot for indicator tables</h2>
+<p>The four Yes/No indicators sit in four columns: <strong>wide</strong> form. <code class="inline">.melt()</code> makes it <strong>long</strong>: one row per household per indicator, so one groupby computes all four shares.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+yn = [&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;shg_member&quot;, &quot;received_transfer&quot;]
+long = hh.melt(id_vars=[&quot;hh_id&quot;, &quot;district&quot;], value_vars=yn,
+               var_name=&quot;indicator&quot;, value_name=&quot;answer&quot;)
+print(len(long))
+print(long.head(8))
+summary = (long.assign(yes=long[&quot;answer&quot;] == &quot;Yes&quot;)
+               .groupby([&quot;district&quot;, &quot;indicator&quot;], as_index=False)[&quot;yes&quot;].mean())
+summary[&quot;pct_yes&quot;] = (100 * summary[&quot;yes&quot;]).round()
+print(summary.head(8))</textarea></div>
+<p>240 households times 4 indicators gives 960 rows. The grouped result has one row per district per indicator, 40 in all; the first eight are shown.</p>
+<p><code class="inline">.pivot()</code> goes the other way, spreading one column's values into new columns. That gives the table a report needs: districts down the side, indicators across the top.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+yn = [&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;shg_member&quot;, &quot;received_transfer&quot;]
+pd.set_option(&quot;display.width&quot;, 120)
+long = hh.melt(id_vars=[&quot;hh_id&quot;, &quot;district&quot;], value_vars=yn,
+               var_name=&quot;indicator&quot;, value_name=&quot;answer&quot;)
+summary = (long.assign(yes=long[&quot;answer&quot;] == &quot;Yes&quot;)
+               .groupby([&quot;district&quot;, &quot;indicator&quot;], as_index=False)[&quot;yes&quot;].mean())
+summary[&quot;pct_yes&quot;] = (100 * summary[&quot;yes&quot;]).round()
+wide = summary.pivot(index=&quot;district&quot;, columns=&quot;indicator&quot;, values=&quot;pct_yes&quot;)
+print(wide)</textarea></div>
+<p>Rewa has 92 per cent of households with a bank account and 50 per cent with a toilet, and the lowest SHG membership, 4 per cent. Long form is for computing and charting, wide form is for reading.</p>
+<div class="info-box"><strong>Try it.</strong> Add <code class="inline">"head_gender"</code> to <code class="inline">id_vars</code> and to the <code class="inline">groupby</code> list, then pivot with <code class="inline">index=["district", "head_gender"]</code>.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: Categoricals &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 9</div>
+<h2>Categoricals, bands and labels</h2>
+<p>Text sorts alphabetically, which puts General before SC and ST. A <strong>categorical</strong> column stores a fixed set of categories in the order you choose.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+print(hh[&quot;caste&quot;].value_counts().sort_index())
+hh[&quot;caste&quot;] = pd.Categorical(hh[&quot;caste&quot;], categories=[&quot;SC&quot;, &quot;ST&quot;, &quot;OBC&quot;, &quot;General&quot;])
+print(hh[&quot;caste&quot;].value_counts().sort_index())
+print(hh[&quot;caste&quot;].cat.categories)</textarea></div>
+<p>After the conversion, <code class="inline">.sort_index()</code> follows the category order instead of the alphabet. Categoricals also use less memory on large files, which helps on a modest laptop.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+hh[&quot;edu_band&quot;] = pd.cut(hh[&quot;head_edu_years&quot;],
+                        bins=[-1, 0, 5, 10, 100],
+                        labels=[&quot;No schooling&quot;, &quot;1-5 years&quot;, &quot;6-10 years&quot;, &quot;Over 10 years&quot;])
+print(hh[&quot;edu_band&quot;].value_counts().sort_index())</textarea></div>
+<p><code class="inline">pd.cut()</code> turns a number into bands. Each bin includes its right edge, so <code class="inline">(-1, 0]</code> is no schooling and <code class="inline">(0, 5]</code> is one to five years. 36 heads had no schooling and 25 more than 10 years. A value outside every bin becomes missing, so check the counts add up to 240.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+hh = pd.read_csv(&quot;households.csv&quot;)
+yn = [&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;shg_member&quot;, &quot;received_transfer&quot;]
+hh[yn] = hh[yn].apply(lambda s: s.map({&quot;Yes&quot;: True, &quot;No&quot;: False}))
+hh[&quot;area&quot;] = hh[&quot;area&quot;].map({&quot;Rural&quot;: &quot;Rural household&quot;, &quot;Urban&quot;: &quot;Urban household&quot;})
+print((100 * hh.groupby(&quot;area&quot;)[yn].mean()).round())</textarea></div>
+<p><code class="inline">.map()</code> replaces values using a dictionary: Yes/No become True/False, and short codes become readable labels. Here 63 per cent of rural and 92 per cent of urban households have a toilet.</p>
+<div class="info-box"><strong>Try it.</strong> Band <code class="inline">land_acres</code> into landless, under 1 acre, 1 to 2.5 acres and over 2.5 acres, then count each band.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Weights &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 9</div>
+<h2>Weighted means and survey weights</h2>
+<p>Most large surveys do not give every household the same chance of selection. A household drawn with probability 1 in 500 stands for 500 households, so its <strong>design weight</strong> is 500. Unweighted means describe the sample; weighted means estimate the population. pandas has no weighted mean of its own, so we use <code class="inline">np.average(values, weights=...)</code>.</p>
+<p>Our file has no weight column, so we invent a design for teaching: rural households drawn 1 in 500 and urban households 1 in 1,000.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd, numpy as np
+hh = pd.read_csv(&quot;households.csv&quot;)
+# Illustrative design: rural households drawn 1 in 500, urban 1 in 1,000
+hh[&quot;prob&quot;] = np.where(hh[&quot;area&quot;] == &quot;Rural&quot;, 1/500, 1/1000)
+hh[&quot;weight&quot;] = 1 / hh[&quot;prob&quot;]
+print(hh.value_counts([&quot;area&quot;, &quot;weight&quot;]))
+toilet = (hh[&quot;has_toilet&quot;] == &quot;Yes&quot;).astype(float)
+print(&quot;unweighted mean:&quot;, round(hh[&quot;monthly_pc_exp&quot;].mean(), 1))
+print(&quot;weighted mean:  &quot;, round(np.average(hh[&quot;monthly_pc_exp&quot;], weights=hh[&quot;weight&quot;]), 1))
+print(&quot;toilet % unweighted:&quot;, round(100 * toilet.mean(), 1))
+print(&quot;toilet % weighted:  &quot;, round(100 * np.average(toilet, weights=hh[&quot;weight&quot;]), 1))</textarea></div>
+<p>Weighting raises mean spending from &#8377;3,400.9 to &#8377;3,856.9 and toilet coverage from 72.5 to 77.2 per cent, because urban households, which spend more and more often have toilets, now count for twice as much.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd, numpy as np
+hh = pd.read_csv(&quot;households.csv&quot;)
+hh[&quot;weight&quot;] = np.where(hh[&quot;area&quot;] == &quot;Rural&quot;, 500, 1000)
+def wmean(g):
+    return np.average(g[&quot;monthly_pc_exp&quot;], weights=g[&quot;weight&quot;])
+out = pd.DataFrame({
+    &quot;unweighted&quot;: hh.groupby(&quot;caste&quot;)[&quot;monthly_pc_exp&quot;].mean(),
+    &quot;weighted&quot;: hh.groupby(&quot;caste&quot;)[[&quot;monthly_pc_exp&quot;, &quot;weight&quot;]].apply(wmean),
+}).round(0)
+print(out)</textarea></div>
+<p>For weighted means by group, write a small function and apply it to each group. Weighting moves every caste group upward here, because each contains urban households.</p>
+<h3>NFHS weights</h3>
+<p>The DHS Program lists NFHS-5 (2019-21) as India's Standard DHS survey. Its <a href="https://dhsprogram.com/data/Guide-to-DHS-Statistics/Analyzing_DHS_Data.htm" rel="noopener" target="_blank" style="color:var(--accent-color)">Guide to DHS Statistics</a> (checked October 2026) explains that the women's weight <code class="inline">v005</code> is stored without its decimal point and must be divided by 1,000,000 before use. Three made-up rows show the step:</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd, numpy as np
+# Three made-up rows shaped like an NFHS women&#x27;s file
+women = pd.DataFrame({&quot;caseid&quot;: [&quot;A1&quot;, &quot;A2&quot;, &quot;A3&quot;],
+                      &quot;v005&quot;: [1234567, 876543, 2045110],
+                      &quot;anaemic&quot;: [1, 0, 1]})
+women[&quot;wt&quot;] = women[&quot;v005&quot;] / 1_000_000
+print(women)
+print(&quot;unweighted:&quot;, round(women[&quot;anaemic&quot;].mean(), 3))
+print(&quot;weighted:  &quot;, round(np.average(women[&quot;anaemic&quot;], weights=women[&quot;wt&quot;]), 3))</textarea></div>
+<div class="info-box warning"><strong>Weights fix the estimate; they do not fix the standard error.</strong> <code class="inline">np.average()</code> gives the right point estimate but knows nothing about clusters and strata, so a confidence interval built from it will be too narrow. For design-based standard errors in Python, look at <a href="https://pypi.org/project/samplics/" rel="noopener" target="_blank" style="color:var(--accent-color)">samplics</a> (0.6.1 on PyPI as of October 2026). The most widely used tool is R's <a href="https://cran.r-project.org/package=survey" rel="noopener" target="_blank" style="color:var(--accent-color)">survey package</a>, covered in the <a href="/code/tidyverse.html" style="color:var(--accent-color)">tidyverse course</a>.</div>
+<div class="info-box"><strong>Try it.</strong> Set both weights to 500 and run the first weights cell again. Weighted and unweighted results should now agree.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="7">Next: Charts &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="7" role="tabpanel">
+<div class="eyebrow">Module 8 of 9</div>
+<h2>Charts with matplotlib</h2>
+<p>matplotlib draws on a <strong>figure</strong> holding one or more <strong>axes</strong> (plot areas). <code class="inline">plt.subplots()</code> makes both; you draw on the axes and call <code class="inline">show(fig)</code>, a helper this page provides, to display the chart under the code. The first run downloads matplotlib.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas,matplotlib"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+import matplotlib
+matplotlib.use(&quot;AGG&quot;)
+import matplotlib.pyplot as plt
+hh = pd.read_csv(&quot;households.csv&quot;)
+m = hh.groupby(&quot;caste&quot;)[&quot;monthly_pc_exp&quot;].median()
+fig, ax = plt.subplots(figsize=(6, 3.5))
+ax.bar(m.index, m.values, color=&quot;#0369A1&quot;)
+ax.set_title(&quot;Median monthly per-capita expenditure by caste&quot;)
+ax.set_ylabel(&quot;Rupees per person per month&quot;)
+ax.set_ylim(bottom=0)
+print(m)
+show(fig)</textarea></div>
+<p>Medians range from &#8377;2,050 for SC households to &#8377;3,170 for General. <code class="inline">set_ylim(bottom=0)</code> fixes the axis at zero, because a bar's length is its value.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas,matplotlib"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+import matplotlib
+matplotlib.use(&quot;AGG&quot;)
+import matplotlib.pyplot as plt
+hh = pd.read_csv(&quot;households.csv&quot;)
+fig, ax = plt.subplots(figsize=(6, 4))
+for area, colour in [(&quot;Rural&quot;, &quot;#047857&quot;), (&quot;Urban&quot;, &quot;#0369A1&quot;)]:
+    d = hh[hh[&quot;area&quot;] == area]
+    ax.scatter(d[&quot;head_edu_years&quot;], d[&quot;monthly_pc_exp&quot;], s=14, alpha=0.7,
+               color=colour, label=area)
+ax.set_yscale(&quot;log&quot;)
+ax.set_xlabel(&quot;Years of schooling, household head&quot;)
+ax.set_ylabel(&quot;Rupees per person per month (log scale)&quot;)
+ax.legend()
+show(fig)</textarea></div>
+<p>Each point is a household. Spending is skewed, so a log scale spreads out the crowded lower end; say so in the axis label, because a reader will otherwise read the gaps as equal.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas,matplotlib"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+import matplotlib
+matplotlib.use(&quot;AGG&quot;)
+import matplotlib.pyplot as plt
+hh = pd.read_csv(&quot;households.csv&quot;)
+t = (hh.assign(toilet=hh[&quot;has_toilet&quot;] == &quot;Yes&quot;)
+       .groupby([&quot;district&quot;, &quot;area&quot;])[&quot;toilet&quot;].mean() * 100)
+districts = sorted(hh[&quot;district&quot;].unique())
+fig, axes = plt.subplots(2, 5, figsize=(10, 4.5), sharey=True)
+for ax, d in zip(axes.flat, districts):
+    s = t.loc[d]
+    ax.bar(s.index, s.values, color=&quot;#047857&quot;)
+    ax.set_title(d, fontsize=9)
+    ax.set_ylim(0, 100)
+axes[0, 0].set_ylabel(&quot;% with toilet&quot;)
+axes[1, 0].set_ylabel(&quot;% with toilet&quot;)
+fig.suptitle(&quot;Households with a toilet, by district and area&quot;)
+fig.tight_layout()
+show(fig)</textarea></div>
+<p>Small multiples: one panel per district, all on a shared 0 to 100 scale (<code class="inline">sharey=True</code>), so panels can be compared at a glance. Giving each panel its own scale would let a short bar in one panel stand for more than a tall bar in another. Kozhikode shows no rural bar because the value is zero: none of its 3 rural households has a toilet. Three households are far too few to report a percentage for.</p>
+<h3>Honest axes</h3>
+<div class="code-cell" data-lang="py" data-pkgs="pandas,matplotlib"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
+import matplotlib
+matplotlib.use(&quot;AGG&quot;)
+import matplotlib.pyplot as plt
+hh = pd.read_csv(&quot;households.csv&quot;)
+m = hh.groupby(&quot;area&quot;)[&quot;monthly_pc_exp&quot;].median()
+print(m)
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(8, 3.2))
+a1.bar(m.index, m.values, color=&quot;#0369A1&quot;); a1.set_ylim(2000, 5000)
+a1.set_title(&quot;Axis starts at 2,000&quot;)
+a2.bar(m.index, m.values, color=&quot;#0369A1&quot;); a2.set_ylim(bottom=0)
+a2.set_title(&quot;Axis starts at zero&quot;)
+fig.tight_layout()
+show(fig)</textarea></div>
+<p>The median is &#8377;2,380 for rural and &#8377;4,515 for urban households, about 1.9 times. In the left chart the axis starts at 2,000 and the urban bar looks more than six times as tall; the right chart, from zero, shows the real ratio. See <a href="/101-courses/data-viz.html" style="color:var(--accent-color)">Data Visualization 101</a>.</p>
+<div class="info-box"><strong>Try it.</strong> In the bar chart, group by <code class="inline">district</code> instead of <code class="inline">caste</code> and set <code class="inline">figsize=(9, 3.5)</code> so the ten names fit.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="6">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="8">Next: Script &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="8" role="tabpanel">
+<div class="eyebrow">Module 9 of 9</div>
+<h2>A reproducible script</h2>
+<p>Put the whole analysis in one script that runs from the raw files to the final table with no hand edits. Anyone with the files can then reproduce every number.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd, numpy as np
+
+# 1. Read
+hh = pd.read_csv(&quot;households.csv&quot;)
+districts = pd.read_csv(&quot;districts.csv&quot;)
+
+# 2. Join, and stop if any household fails to match
+df = hh.merge(districts, on=&quot;district&quot;, how=&quot;left&quot;,
+              validate=&quot;many_to_one&quot;, indicator=True)
+assert (df[&quot;_merge&quot;] == &quot;both&quot;).all(), &quot;unmatched districts&quot;
+
+# 3. Derive: illustrative weights and True/False indicators
+yn = [&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;shg_member&quot;, &quot;received_transfer&quot;]
+df[&quot;weight&quot;] = np.where(df[&quot;area&quot;] == &quot;Rural&quot;, 500, 1000)
+df[yn] = df[yn] == &quot;Yes&quot;
+
+# 4. Summarise: one row per state, weighted per cent
+def wpct(g):
+    return pd.Series({c: round(100 * np.average(g[c], weights=g[&quot;weight&quot;]), 1) for c in yn})
+table_out = df.groupby(&quot;state&quot;)[yn + [&quot;weight&quot;]].apply(wpct)
+print(table_out)
+
+# 5. Save, then read back to prove the file is right
+table_out.to_csv(&quot;state_indicators.csv&quot;)
+print(len(pd.read_csv(&quot;state_indicators.csv&quot;)), &quot;rows written&quot;)</textarea></div>
+<p>The script stops with an error if any household fails to match a district, builds the weights and indicators, and writes a four-row state table: Bihar 80.9 per cent toilet coverage, Kerala 82.2, Madhya Pradesh 72.9 and Rajasthan 71.7 (weighted, on illustrative data). It then reads the file back and confirms 4 rows.</p>
+<ul><li><code class="inline">assert</code> turns a silent problem into a loud one. Add one after every merge and filter you depend on.</li><li>Keep raw files read-only and write outputs to new files.</li><li>Keep names, phone numbers and other identifiers out of files you share. <a href="/101-courses/data-protection-dpdp.html" style="color:var(--accent-color)">Data Protection &amp; the DPDP Act 101</a> covers what India's Digital Personal Data Protection Act, 2023 asks of survey teams.</li><li>On your own laptop, save it as a <code class="inline">.py</code> file and run it with <code class="inline">python analysis.py</code>, or use a Jupyter notebook and restart and run all cells before sharing.</li></ul>
+<div class="info-box"><strong>Try it.</strong> Group by <code class="inline">["state", "region"]</code> in step 4 and change the output file name. Run it and check the row count.</div>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/tidyverse.html" style="color:var(--text-primary)">Tidyverse for Development Data</a></h4><p>The same analysis on the same files, in R.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/r-python.html" style="color:var(--text-primary)">R &amp; Python for Development</a></h4><p>Back to the basics, side by side in both languages.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/eda-hhs.html" style="color:var(--text-primary)">Exploratory Data Analysis 101</a></h4><p>What to look for in a household survey before you model it.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/survey-design.html" style="color:var(--text-primary)">Survey Design 101</a></h4><p>Where sampling weights come from.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/data-viz.html" style="color:var(--text-primary)">Data Visualization 101</a></h4><p>Design principles for the charts you can now draw.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="7">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=3b5d57ac" defer></script>
+</body>
+</html>
