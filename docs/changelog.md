@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.337.0 — October 6, 2026 (handouts fact-checked)
+
+### Changed
+
+- **All 90 handouts checked against their sources.** Every statistic, legal citation, quotation and named study in the handouts was checked against the statute, judgment, survey report or paper. Wrong figures were corrected (for example the Time Use Survey minutes, ASER 2022 shares, India's MPI and HDI, the Tendulkar poverty lines of Rs 816 and Rs 1,000, PDS issue prices, which had rice and wheat reversed, MMR 87 from SRS 2022-24, and out-of-pocket spending of 43.4% from the National Health Accounts 2022-23). Claims that could not be traced were removed. Worked examples that had presented invented figures as NFHS or NSS data are now labelled illustrative, and statistics in the exercises were recomputed where they did not follow from the numbers given. Dozens of wrong book or author attributions and several references to tools or packages that do not exist were corrected. Status of the law is now current: MGNREGA repealed from 1 July 2026, the four Labour Codes in force since 21 November 2025 in place of 29 laws, and the DPDP Act's duties applying from 13 May 2027.
+- **NIPUN Bharat's target.** The Education Policy deck, the Education & Pedagogy deck and the learning-crisis deep dive now say that the 2021 mission document set FLN by the end of Grade 3, and that Ministry of Education replies in Parliament since December 2025 put it at the end of Grade 2.
+- **Six of the new 101 decks updated.** Aid & Philanthropy gives the full test for a CSR implementing agency under rule 4(1)(d) as amended in 2022 (s10(23C) exemption or 12A registration with 80G approval). Digital Rights & AI charts Access Now's revised 2024 shutdown counts. Inclusive Education records that the Supreme Court has not settled whether special educators also need the TET (orders of 28 April and 28 July 2026). Education Policy adds the TET directions in Anjuman Ishaat-e-Taleem Trust (1 September 2025). Nutrition gives NFHS-6 overweight among urban women (42.8%) and states the WASH trial results more exactly. Mental Health cites Nepal's Criminal Code from the Law Commission's official text, and Media & Communications adds a second source for the fact check unit appeal.
+
+### For Learners
+
+- **Handouts you can rely on.** Every handout has been checked against the laws, surveys and papers it cites, with figures corrected and invented examples marked as illustrative.
+
 ## v10.336.0 — October 6, 2026 (twenty new 101 decks)
 
 ### Added
