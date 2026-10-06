@@ -141,18 +141,18 @@ body.dark-mode .module-tab .tab-num, [data-theme="dark"] .module-tab .tab-num, h
     <div class="module-eyebrow">Module 2 . ~30 min</div>
     <h2>NFHS-comparable measurement</h2>
 
-    <p>The National Family Health Survey is India's gold-standard household survey for health, nutrition, and demographic indicators. NFHS-5 (2019-21) covers 6.37 lakh households. If your programme targets indicators that NFHS also measures, you have a comparability opportunity -- and a measurement obligation.</p>
+    <p>The National Family Health Survey is India's gold-standard household survey for health, nutrition, and demographic indicators. NFHS-6 (2023-24), whose fact sheets were released in May 2026, is the latest round and covered 6.79 lakh households; NFHS-5 (2019-21) covered 6.37 lakh. If your programme targets indicators that NFHS also measures, you have a comparability opportunity -- and a measurement obligation.</p>
 
     <h3>Why NFHS comparability matters</h3>
     <ul>
-      <li><strong>Benchmarking</strong> -- your programme's district has an NFHS-5 baseline. If you measure the same indicators the same way, you can show where your participants stand relative to the district/state/national average.</li>
+      <li><strong>Benchmarking</strong> -- your programme's district has an NFHS-5 (2019-21) baseline, and NFHS-6 (2023-24) gives the latest state and national figures. If you measure the same indicators the same way, you can show where your participants stand relative to the district/state/national average.</li>
       <li><strong>Policy credibility</strong> -- government decision-makers trust NFHS. If your evaluation uses the same question wording and recall period, your findings are directly comparable.</li>
       <li><strong>Secondary data</strong> -- NFHS microdata is publicly available. You can construct a quasi-comparison group from NFHS records for your district.</li>
     </ul>
 
     <h3>Key NFHS indicators by domain</h3>
     <table class="framework-table">
-      <thead><tr><th>Domain</th><th>NFHS-5 indicator</th><th>Exact question wording matters?</th></tr></thead>
+      <thead><tr><th>Domain</th><th>NFHS indicator</th><th>Exact question wording matters?</th></tr></thead>
       <tbody>
         <tr><td>ANC</td><td>% mothers who had 4+ ANC visits</td><td>Yes -- recall period and visit counting differ</td></tr>
         <tr><td>Nutrition</td><td>% children under 5 stunted (height-for-age below -2SD)</td><td>Requires anthropometry with same WHO standards</td></tr>
@@ -168,10 +168,10 @@ body.dark-mode .module-tab .tab-num, [data-theme="dark"] .module-tab .tab-num, h
       <h4>Your NFHS Alignment Plan</h4>
       <p class="pp-form-desc">Map your indicators to NFHS. These flow into your capstone.</p>
 
-      <div class="pp-field"><label for="s5-m2-indicators">Which of your indicators overlap with NFHS-5?</label><textarea id="s5-m2-indicators" data-pp-save></textarea></div>
+      <div class="pp-field"><label for="s5-m2-indicators">Which of your indicators overlap with NFHS?</label><textarea id="s5-m2-indicators" data-pp-save></textarea></div>
       <div class="pp-field"><label for="s5-m2-wording">Will you use NFHS-exact question wording? If not, why?</label><textarea id="s5-m2-wording" data-pp-save></textarea></div>
       <div class="pp-field"><label for="s5-m2-biomarker">Biomarker or clinical measurement plan</label><span class="pp-hint">e.g., BP measurement protocol, anthropometry equipment, HemoCue for Hb</span><textarea id="s5-m2-biomarker" data-pp-save></textarea></div>
-      <div class="pp-field"><label for="s5-m2-benchmark">NFHS-5 benchmark values for your district</label><textarea id="s5-m2-benchmark" data-pp-save></textarea></div>
+      <div class="pp-field"><label for="s5-m2-benchmark">NFHS benchmark values for your district (name the round)</label><textarea id="s5-m2-benchmark" data-pp-save></textarea></div>
       <div class="pp-field"><label for="s5-m2-secondary-data">Will you use NFHS microdata for comparison?</label><textarea id="s5-m2-secondary-data" data-pp-save></textarea></div>
 
       <div class="pp-saved-indicator" id="ind-m2"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px"><polyline points="20 6 9 17 4 12"/></svg> Saved</div>
@@ -313,7 +313,7 @@ function goTab(idx){document.querySelectorAll('.module-tab').forEach((t,i)=>t.cl
 document.querySelectorAll('.module-tab').forEach((t,i)=>t.addEventListener('click',()=>goTab(i)));
 document.querySelectorAll('[data-mcq]').forEach(g=>{const fbId=g.dataset.mcq+'-fb';g.querySelectorAll('.mcq-opt').forEach(o=>{o.addEventListener('click',()=>{g.querySelectorAll('.mcq-opt').forEach(x=>{x.classList.add('disabled');if(x.dataset.correct==='1')x.classList.add('correct');else if(x===o)x.classList.add('wrong');});document.getElementById(fbId)?.classList.add('show');});});});
 function v(id,fb){const x=getFieldValue(id);return(x&&x.trim())?x.trim():(fb||'_____');}
-function buildCapstone(){const today=new Date().toISOString().slice(0,10);document.getElementById('capstoneOutput').innerText=`# HEALTH EVALUATION DESIGN BRIEF\nDate: ${today}\n\n## 1. PROGRAMME & CONTEXT\n${v('s5-m1-programme','_(not filled)_')}\n\n## 2. OUTCOME FRAMING\n**Domain:** ${v('s5-m1-domain')}\n**Primary outcome:** ${v('s5-m1-primary-outcome')}\n**Secondary outcomes:** ${v('s5-m1-secondary')}\n**Detection timeframe:** ${v('s5-m1-timeframe')}\n\n## 3. NFHS ALIGNMENT\n**Overlapping indicators:** ${v('s5-m2-indicators')}\n**Question wording:** ${v('s5-m2-wording')}\n**Biomarker plan:** ${v('s5-m2-biomarker')}\n**NFHS-5 benchmarks:** ${v('s5-m2-benchmark')}\n**Secondary data use:** ${v('s5-m2-secondary-data')}\n\n## 4. SYSTEMS vs CLINICAL\n**Systems outcomes:** ${v('s5-m3-systems')}\n**Clinical outcomes:** ${v('s5-m3-clinical')}\n**Time lag:** ${v('s5-m3-timelag')}\n**Facility data:** ${v('s5-m3-facility')}\n**Quality measurement:** ${v('s5-m3-quality')}\n\n## 5. CHW EVALUATION\n**CHW type & role:** ${v('s5-m4-chw-type')}\n**Competency assessment:** ${v('s5-m4-competency')}\n**Service quality:** ${v('s5-m4-quality')}\n**Attribution strategy:** ${v('s5-m4-attribution')}\n\n## 6. HONESTY-TEST SENTENCE\n${v('s5-m4-honesty')}\n\n---\n*Built with ImpactMojo Practice Pack PP-S5: Health Intervention Evaluation.*\n*All data stored locally. Nothing transmitted.*\n`;}
+function buildCapstone(){const today=new Date().toISOString().slice(0,10);document.getElementById('capstoneOutput').innerText=`# HEALTH EVALUATION DESIGN BRIEF\nDate: ${today}\n\n## 1. PROGRAMME & CONTEXT\n${v('s5-m1-programme','_(not filled)_')}\n\n## 2. OUTCOME FRAMING\n**Domain:** ${v('s5-m1-domain')}\n**Primary outcome:** ${v('s5-m1-primary-outcome')}\n**Secondary outcomes:** ${v('s5-m1-secondary')}\n**Detection timeframe:** ${v('s5-m1-timeframe')}\n\n## 3. NFHS ALIGNMENT\n**Overlapping indicators:** ${v('s5-m2-indicators')}\n**Question wording:** ${v('s5-m2-wording')}\n**Biomarker plan:** ${v('s5-m2-biomarker')}\n**NFHS benchmarks:** ${v('s5-m2-benchmark')}\n**Secondary data use:** ${v('s5-m2-secondary-data')}\n\n## 4. SYSTEMS vs CLINICAL\n**Systems outcomes:** ${v('s5-m3-systems')}\n**Clinical outcomes:** ${v('s5-m3-clinical')}\n**Time lag:** ${v('s5-m3-timelag')}\n**Facility data:** ${v('s5-m3-facility')}\n**Quality measurement:** ${v('s5-m3-quality')}\n\n## 5. CHW EVALUATION\n**CHW type & role:** ${v('s5-m4-chw-type')}\n**Competency assessment:** ${v('s5-m4-competency')}\n**Service quality:** ${v('s5-m4-quality')}\n**Attribution strategy:** ${v('s5-m4-attribution')}\n\n## 6. HONESTY-TEST SENTENCE\n${v('s5-m4-honesty')}\n\n---\n*Built with ImpactMojo Practice Pack PP-S5: Health Intervention Evaluation.*\n*All data stored locally. Nothing transmitted.*\n`;}
 function copyCapstone(){const text=document.getElementById('capstoneOutput').innerText;const btn=document.getElementById('copy-capstone');navigator.clipboard.writeText(text).then(()=>{const orig=btn.textContent;btn.textContent='Copied';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied');},1800);});}
 document.querySelectorAll('.theme-btn').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.themeSet;document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('impactmojo-theme',t);}catch(e){}}));
 attachSaveHandlers();loadAll();
