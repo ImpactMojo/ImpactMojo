@@ -2,6 +2,22 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.333.0 — October 6, 2026 (owner decisions, part 1)
+
+### Changed
+
+- **Indian Political Economy deep dive.** A reading credited to Pritchett and Sen as "Subnational Political Economy in India" did not exist, and its link went to an unrelated IMF paper. It now cites Pritchett, Sen and Werker (eds), *Deals and Development* (Oxford University Press, 2017, open access), whose chapter 9 covers India's growth episodes.
+- **Structural Equation Modelling 101.** In the model comparison table, the second-order model's SRMR now equals M1's (0.048), because the two models are equivalent.
+- **Public Choice flagship.** The readings section no longer points to a Dropbox folder that does not exist yet, and the capstone suggestions name the Viksit Bharat G RAM G Act 2025 beside MGNREGA.
+- **SEL flagship, SEL evaluation deep dive and SEL simulation game.** SEE Learning is credited to Emory University, where it was developed, and the course states the NEP 2020 50-hour CPD provision as an expectation, as the policy does.
+- **AI for Development flagship.** An unsourced claim that DFID's adaptive programmes did 30% better was removed, and a pull quote credited to a J-PAL initiative that does not exist is now the course's own line.
+- **Blog: The law that moved.** The disclaimer no longer says the authors are not lawyers, and "free to check this year" now reads "now free to check".
+- **Blog: Participatory MEL.** A dead scorecard link was replaced by the CIVICUS tool note, source links were added for Afridi and Iversen (2014) and the NRLM handbook, and the pull quote now reads as the author's own line.
+
+### For Learners
+
+- **Corrected readings and sources.** One deep dive reading and several course and blog sources now point to the right documents.
+
 ## v10.332.0 — October 6, 2026 (Code Studio)
 
 ### Added
