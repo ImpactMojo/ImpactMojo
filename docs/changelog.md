@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.328.0 — October 6, 2026 (101 decks accuracy pass, part 3)
+
+### Changed
+
+- **Four more 101 decks were checked against their sources:** Data Protection and DPDP, Data Visualisation, Development Economics and Development Finance. HDI figures, penalty tiers, the under-five mortality chart, slide counts and several statistics were corrected, and the head metadata of the DPDP deck now describes that deck.
+
+### For Learners
+
+- **Corrected 101 decks.** Figures, penalties and citations in four more decks were rechecked against their sources.
+
 ## v10.327.0 — October 6, 2026 (101 decks accuracy pass, part 2; MGNREGA repeal notes)
 
 ### Changed
