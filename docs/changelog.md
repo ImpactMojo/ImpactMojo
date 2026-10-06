@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.331.0 — October 6, 2026 (101 decks accuracy pass, part 6)
+
+### Changed
+
+- **The last four 101 decks of the pass were checked against their sources:** QDA Software, Public Health Basics, Public Finance and Budgeting, and Qualitative Methods. Tool capabilities, tax and budget facts, attributions and quotations were corrected, and slide counts now match the files.
+
+### For Learners
+
+- **Corrected 101 decks.** Software capabilities, public finance figures and attributions in four more decks were rechecked against their sources.
+
 ## v10.330.0 — October 6, 2026 (101 decks accuracy pass, part 5)
 
 ### Changed
