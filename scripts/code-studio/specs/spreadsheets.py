@@ -529,7 +529,8 @@ PAGE = {
                  "20 million cells for a spreadsheet. A slow, heavy file usually reaches its practical limit long "
                  "before either.",
                  "<strong>The data is personal.</strong> A spreadsheet of names and phone numbers emailed between "
-                 "staff is copied everywhere; under the DPDP Act 2023 your organisation must protect it. Keep "
+                 "staff is copied everywhere; under the DPDP Act 2023 your organisation must protect it from "
+                 "13 May 2027, and should start now. Keep "
                  "identifiers in one controlled file and share the analysis without them.",
              ]},
              {"t": "p", "html": "Every cell on this page did in a few lines what took a column of formulas. The "

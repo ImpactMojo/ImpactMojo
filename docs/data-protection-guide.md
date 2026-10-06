@@ -12,7 +12,7 @@ ImpactMojo is aligned with India's **Digital Personal Data Protection Act 2023**
 
 ## What the DPDPA Means for You
 
-The DPDPA is India's data protection law: it gives you rights over your personal data and sets rules for how organisations like ImpactMojo handle it.
+The DPDPA is India's data protection law: it gives you rights over your personal data and sets rules for how organisations like ImpactMojo handle it. Those rights and rules take legal effect on 13 May 2027 (notification G.S.R. 843(E) of 13 November 2025). ImpactMojo honours them now.
 
 **Your rights under the DPDPA:**
 
@@ -85,7 +85,7 @@ To exercise any of your data rights:
 1. **Email** [hello@impactmojo.in](mailto:hello@impactmojo.in) with your request
 2. **We'll verify** your identity (to prevent someone else accessing your data)
 3. **We'll respond** within 2 business days
-4. **We'll act** within 30 days (as required by the DPDPA)
+4. **We'll act** within 30 days (our own standard; the DPDPA's response duties apply from 13 May 2027)
 
 ---
 

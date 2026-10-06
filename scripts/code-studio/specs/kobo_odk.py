@@ -608,8 +608,10 @@ PAGE = {
                  "Digital Personal Data Protection Act, 2023") + " (published 11 August 2023) applies to "
                                 "digital personal data, and a phone survey is digital from the first answer. The "
                                 "organisation that decides why and how the data is processed is the Data "
-                                "Fiduciary; the respondent is the Data Principal. Sections that matter for a "
-                                "survey:"},
+                                "Fiduciary; the respondent is the Data Principal. The duties below, the "
+                                "exemption and the penalties apply from 13 May 2027 (notification G.S.R. "
+                                "843(E), 13 November 2025), so design forms to them now. Sections that "
+                                "matter for a survey:"},
              {"t": "ul", "items": [
                  "<strong>Section 5</strong>: a request for consent must come with or after a notice telling the "
                  "respondent what personal data is collected and why, and how to exercise their rights.",

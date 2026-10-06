@@ -435,7 +435,7 @@ PAGE = {
                                 "clones it and on the server. A beneficiary list with names and phone numbers "
                                 "committed once is, for practical purposes, permanent. Under the " + link(
                                     "https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf",
-                                    "DPDP Act 2023") + ", section 8(5), your organisation must take \"reasonable "
+                                    "DPDP Act 2023") + ", section 8(5), which applies from 13 May 2027, your organisation must take \"reasonable "
                                 "security safeguards to prevent personal data breach\". A private repository is "
                                 "access control, and it holds only as long as the access list stays right. Keep "
                                 "personal data out of Git from the start."},
@@ -468,7 +468,7 @@ PAGE = {
               "html": "<strong>Removing a file in a new commit does not remove it from history.</strong> Anyone "
                       "with a clone, or with access to the remote, can still check out the earlier commit. If the "
                       "file was pushed, report it to whoever handles data protection in your organisation, as a "
-                      "possible breach, and get help to rewrite the history. Section 8(6) of the DPDP Act requires "
+                      "possible breach, and get help to rewrite the history. From 13 May 2027, section 8(6) of the DPDP Act requires "
                       "a Data Fiduciary to inform the Data Protection Board and each affected person of a "
                       "personal data breach."},
          ]},
