@@ -2,6 +2,17 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.335.0 — October 6, 2026 (NFHS-6)
+
+### Changed
+
+- **NFHS-6 is now the latest round across the site.** The sixth National Family Health Survey (fieldwork 2023-24) published its India and state fact sheets in May 2026; the results are provisional and the fact sheet has no anaemia figures yet. Pages that called NFHS-5 the latest round or gave its figures as today's national numbers now give NFHS-6 where the fact sheet reports the indicator (stunting 29.3%, wasting 19.0%, underweight 31.8%, institutional births 90.6%, spousal violence 22.3%, women married before 18 20.1%, unmet need 8.5%), and label NFHS-5 (2019-21) where it remains the source, such as anaemia and breakdowns by caste and wealth. Updated: Inequality Basics, Development Economics, Social Margins, MEL Basics, Public Health Basics, Maternal Health, Sexual Health, Exploratory Data Analysis, the BCT repository, the health evaluation practice pack and one blog post.
+- **Two readings corrected while doing it.** Exclusive breastfeeding fell between the rounds (63.7% to 55.8%), and modern contraceptive use fell (56.4% to 52.7%) as traditional methods rose; pages that described both as rising now say what the data show.
+
+### For Learners
+
+- **NFHS-6 figures.** Health and nutrition pages now use the 2023-24 National Family Health Survey wherever it reports the figure.
+
 ## v10.334.0 — October 6, 2026 (DPDP Act commencement dates)
 
 ### Changed
