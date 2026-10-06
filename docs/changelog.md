@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.324.0 — October 6, 2026 (Deep Dives accuracy pass)
+
+### Changed
+
+- **All 25 Deep Dives were checked against their sources.** Wrong authors, venues, years and figures were corrected, and about a dozen reading links that pointed at the wrong paper or a homepage now go to the right one. Examples: the ILO figure on why women's labour-force participation fell, India's first nationwide Time Use Survey, the 2023 egg-laying hens rules, and the NEP 2020 paragraph numbers on social and emotional learning. Nothing was removed.
+
+### For Learners
+
+- **Corrected Deep Dives.** Citations, figures and reading links across all 25 Deep Dives were rechecked against their sources.
+
 ## v10.323.0 — October 6, 2026 (Blog accuracy pass)
 
 ### Changed
