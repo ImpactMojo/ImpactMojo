@@ -12,12 +12,14 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **SEL flagship, SEL evaluation deep dive and SEL simulation game.** SEE Learning is credited to Emory University, where it was developed, and the course states the NEP 2020 50-hour CPD provision as an expectation, as the policy does. Delhi's Happiness and Entrepreneurship Mindset curricula are now described as reaching a reported 8 to 10 lakh students, with the 2018 launch figure cited.
 - **AI for Development flagship.** An unsourced claim that DFID's adaptive programmes did 30% better was removed, and a pull quote credited to a J-PAL initiative that does not exist is now the course's own line.
 - **MEL Basics 101.** A nonexistent "USAID Iris indicator library" now reads IRIS+ (GIIN) and the US Standard Foreign Assistance Indicators. The sample programme budget is ₹4.2 crore over four years on both slides, since the deck's own 7% MEL allocation and ₹18 lakh evaluation only add up at that size, and the logframe endline is Year 4 to match. The output-indicator range and its chart now follow the deck's own 5–7 per level rule.
+- **Law, Politics of Aspiration and Power BI lexicons.** Each course had a lexicon page and a downloadable spreadsheet holding different word lists. Each pair is now one glossary in both formats: 95 terms for Law, 98 for Politics of Aspiration and 93 for Power BI, with the course cards updated.
 - **Blog: The law that moved.** The disclaimer no longer says the authors are not lawyers, and "free to check this year" now reads "now free to check".
 - **Blog: Participatory MEL.** A dead scorecard link was replaced by the CIVICUS tool note, source links were added for Afridi and Iversen (2014) and the NRLM handbook, and the pull quote now reads as the author's own line.
 
 ### For Learners
 
 - **Corrected readings and sources.** One deep dive reading and several course and blog sources now point to the right documents.
+- **Bigger lexicons.** The Law, Politics of Aspiration and Power BI glossaries each combine their web page and spreadsheet, so both now hold every term.
 
 ## v10.332.0 — October 6, 2026 (Code Studio)
 
