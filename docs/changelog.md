@@ -2,6 +2,19 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.327.0 — October 6, 2026 (101 decks accuracy pass, part 2; MGNREGA repeal notes)
+
+### Changed
+
+- **Twenty-three more 101 decks were checked against their sources.** Wrong figures, attributions and statute references were corrected, slide counts now match the files, and the prose was tidied without removing content.
+- **MGNREGA is described as repealed from 1 July 2026** wherever courses, deep dives, quizzes and the BCT repository presented it as current, with a pointer to the Viksit Bharat G RAM G Act 2025 (125 days).
+- **Fundraising Basics** now cites the Income-tax Act 2025 (sections 332 and 354); **Feminist Research** states the DPDP research exemption and its conditions; **GenAI for Practitioners** names model families rather than versions; **Gender Mainstreaming** mentions the Gender Budget Part C.
+- **The Power BI calculator** has an editable exchange rate (default 96 rupees per dollar, October 2026).
+
+### For Learners
+
+- **Corrected 101 decks.** Citations, quotations and figures in twenty-three more decks were rechecked against their sources.
+
 ## v10.326.0 — October 6, 2026 (101 decks accuracy pass, part 1)
 
 ### Changed

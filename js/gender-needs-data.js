@@ -129,7 +129,7 @@ window.GENDER_NEEDS = (function () {
       name: "A guaranteed wage, at her own rate",
       short: "MGNREGA: equal wage, one-third of days, paid to her account",
       relief: 68, shift: 66, quadrant: "both",
-      what: "Mahatma Gandhi National Rural Employment Guarantee Act 2005. Up to 100 days of wage employment per rural household, at a statutory wage that does not differ by sex, with at least one-third of beneficiaries to be women.",
+      what: "Mahatma Gandhi National Rural Employment Guarantee Act 2005. Up to 100 days of wage employment per rural household, at a statutory wage that does not differ by sex, with at least one-third of beneficiaries to be women. The Act was repealed from 1 July 2026 and replaced by the Viksit Bharat G RAM G Act 2025, which raises the guarantee to 125 days.",
       reading: "The case worth studying. The strategic provisions are not additions to the scheme; they are how the scheme works. The wage is the same for a woman and a man because the Act sets one rate, the work is near the village so attending it does not require permission for travel, and payment goes to an individual account rather than to a household head.",
       complication: "Whether the income remains hers after it arrives is a different question, and the transfer record cannot answer it. Nor does the Act touch the unpaid work that continues alongside the hundred days.",
       evidence: [

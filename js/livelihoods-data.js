@@ -88,7 +88,7 @@ window.LIVELIHOODS = (function () {
       evidence: [
         { stat: "50.3%", detail: "of the amount of loan outstanding to households possessing under 0.01 hectares is owed to professional moneylenders. For households with more than ten hectares it is 5.2%.", source: "MoSPI, NSS 77th Round, distribution of loan outstanding by source, All India", year: "2018-19" },
         { stat: "13.5%", detail: "of the landless households' outstanding credit comes from commercial banks. For the largest holdings it is 55.8%. Land is what buys access to the banking system.", source: "MoSPI, NSS 77th Round, distribution of loan outstanding by source, All India", year: "2018-19" },
-        { stat: "One-third", detail: "MGNREGA guarantees up to 100 days per rural household at a statutory wage, with at least a third of beneficiaries to be women. It is the one part of this pentagon the state supplies directly.", source: "MGNREGA 2005, s.3 and Schedule II", year: "2005" }
+        { stat: "One-third", detail: "MGNREGA guarantees up to 100 days per rural household at a statutory wage, with at least a third of beneficiaries to be women. It is the one part of this pentagon the state supplies directly. The Act was repealed from 1 July 2026 and replaced by the Viksit Bharat G RAM G Act 2025, which raises the guarantee to 125 days.", source: "MGNREGA 2005, s.3 and Schedule II", year: "2005" }
       ]
     },
     {

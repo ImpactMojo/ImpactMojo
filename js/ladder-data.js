@@ -81,7 +81,7 @@ window.LADDER = (function () {
       india: "The state publishes what it has decided and what it has spent.",
       evidence: [
         { stat: "§4(1)(b)", detail: "The Right to Information Act requires every public authority to publish 17 categories of information on its own initiative, without anyone having to ask.", source: "Right to Information Act", year: "2005" },
-        { stat: "Muster rolls", detail: "MGNREGA requires job cards, muster rolls and payment records to be publicly displayed and read out at social audits, making the paper trail contestable in the village where the work happened.", source: "Mahatma Gandhi National Rural Employment Guarantee Act, §17", year: "2005" }
+        { stat: "Muster rolls", detail: "MGNREGA requires job cards, muster rolls and payment records to be publicly displayed and read out at social audits, making the paper trail contestable in the village where the work happened. The Act was repealed from 1 July 2026 and replaced by the Viksit Bharat G RAM G Act 2025.", source: "Mahatma Gandhi National Rural Employment Guarantee Act, §17", year: "2005" }
       ],
       complication: "Arnstein placed informing on the tokenism band, which fits one-way disclosure. India's version sits awkwardly there: MGNREGA's social audit gives the information a return channel, and disclosure with a forum to contest it behaves more like the rungs above."
     },
