@@ -15,7 +15,7 @@ Deep, multi-module courses with 8–16 modules each, interactive lexicons, South
 | 3 | Seeing Data: Visualization for Impact | Data & Technology | 13 | – | [Open](/courses/dataviz/) |
 | 4 | AI for Impact: Data Monitoring & Evaluation | Data & Technology | 13 | 50 terms | [Open](/courses/devai/) |
 | 5 | MEL for Development: Monitoring, Evaluation & Learning | MEL & Research | 13 | 65 terms | [Open](/courses/mel/) |
-| 6 | Politics of Aspiration: Rights, Insurance & Social Mobility | Policy & Economics | 13 | 60 terms | [Open](/courses/poa/) |
+| 6 | Politics of Aspiration: Rights, Insurance & Social Mobility | Policy & Economics | 13 | 98 terms | [Open](/courses/poa/) |
 | 7 | Media for Development: Communication, Power & Practice | Health & Communication | 12 | 65 terms | [Open](/courses/media/) |
 | 8 | Social-Emotional Learning for Development | Health & Communication | 12 | – | [Open](/courses/sel/) |
 | 9 | Constitution & Law for Development Practice | Philosophy & Governance | 12 | – | [Open](/courses/law/) |
@@ -23,7 +23,7 @@ Deep, multi-module courses with 8–16 modules each, interactive lexicons, South
 | 11 | Public Choice: Decisions, Incentives & Institutions | Policy & Economics | 13 | – | [Open](/courses/pubchoice/) |
 | 12 | Gender Studies: Feminisms, Power & Social Change | Health & Communication | 16 | – | [Open](/courses/gender/) |
 | 13 | Livelihoods in India: Rural, Urban & Skills | Policy & Economics | 3 | – | [Open](/courses/livelihoods/) |
-| 14 | Power BI for Practitioners | Data & Technology | 8 | 68 terms | [Open](/courses/powerBI/powerbi.html) |
+| 14 | Power BI for Practitioners | Data & Technology | 8 | 93 terms | [Open](/courses/powerBI/powerbi.html) |
 | 15 | Causal Inference for Development | MEL & Research | 13 | 65 terms | [Open](/courses/causal/) |
 | 16 | Sustainability, ESG & Corporate Responsibility for Development Practice | Policy & Economics | – | yes | [Open](/courses/esg/) |
 | 17 | Gender-Sensitive Monitoring, Evaluation & Learning | MEL & Research | – | yes | [Open](/courses/gender-mel/) |

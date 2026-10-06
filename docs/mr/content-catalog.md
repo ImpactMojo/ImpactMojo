@@ -15,7 +15,7 @@
 | 3 | Seeing Data: Visualization for Impact | Data & Technology | 13 | — | [Open](/courses/dataviz/) |
 | 4 | AI for Impact: Data Monitoring & Evaluation | Data & Technology | 13 | 50 terms | [Open](/courses/devai/) |
 | 5 | MEL for Development: Monitoring, Evaluation & Learning | MEL & Research | 13 | 65 terms | [Open](/courses/mel/) |
-| 6 | Politics of Aspiration: Rights, Insurance & Social Mobility | Policy & Economics | 13 | 60 terms | [Open](/courses/poa/) |
+| 6 | Politics of Aspiration: Rights, Insurance & Social Mobility | Policy & Economics | 13 | 98 terms | [Open](/courses/poa/) |
 | 7 | Media for Development: Communication, Power & Practice | Health & Communication | 12 | 65 terms | [Open](/courses/media/) |
 | 8 | Social-Emotional Learning for Development | Health & Communication | 12 | — | [Open](/courses/sel/) |
 | 9 | Law & Development: Constitution, Rights & Justice | Philosophy & Governance | 12 | — | [Open](/courses/law/) |

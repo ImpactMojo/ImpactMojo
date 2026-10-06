@@ -15,7 +15,7 @@
 | 3 | Seeing Data: Visualization for Impact | Data & Technology | 13 | — | [తెరవండి](/courses/dataviz/) |
 | 4 | AI for Impact: Data Monitoring & Evaluation | Data & Technology | 13 | 50 పదాలు | [తెరవండి](/courses/devai/) |
 | 5 | MEL for Development: Monitoring, Evaluation & Learning | MEL & Research | 13 | 65 పదాలు | [తెరవండి](/courses/mel/) |
-| 6 | Politics of Aspiration: Rights, Insurance & Social Mobility | Policy & Economics | 13 | 60 పదాలు | [తెరవండి](/courses/poa/) |
+| 6 | Politics of Aspiration: Rights, Insurance & Social Mobility | Policy & Economics | 13 | 98 పదాలు | [తెరవండి](/courses/poa/) |
 | 7 | Media for Development: Communication, Power & Practice | Health & Communication | 12 | 65 పదాలు | [తెరవండి](/courses/media/) |
 | 8 | Social-Emotional Learning for Development | Health & Communication | 12 | — | [తెరవండి](/courses/sel/) |
 | 9 | Law & Development: Constitution, Rights & Justice | Philosophy & Governance | 12 | — | [తెరవండి](/courses/law/) |
@@ -23,7 +23,7 @@
 | 11 | Public Choice: Decisions, Incentives & Institutions | Policy & Economics | 13 | — | [తెరవండి](/courses/pubchoice/) |
 | 12 | Gender Studies: Feminisms, Power & Social Change | Health & Communication | 16 | — | [తెరవండి](/courses/gender/) |
 | 13 | Livelihoods in India: Rural, Urban & Skills | Policy & Economics | 3 | — | [తెరవండి](/courses/livelihoods/) |
-| 14 | Power BI for Practitioners | Data & Technology | 8 | 68 పదాలు | [తెరవండి](/courses/powerbi/) |
+| 14 | Power BI for Practitioners | Data & Technology | 8 | 93 పదాలు | [తెరవండి](/courses/powerbi/) |
 
 ---
 

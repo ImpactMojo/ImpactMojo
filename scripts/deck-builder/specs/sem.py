@@ -1182,7 +1182,7 @@ DECK = {
                          "rows": [
                              ["M1: three correlated factors", "112.4 (41)", "0.052 [0.041, 0.064]", "0.96", "0.95", "0.048", "&mdash;"],
                              ["M2: one factor", "418.3 (44)", "0.115 [0.105, 0.126]", "0.77", "0.71", "0.104", "306 (3), p &lt; .001"],
-                             ["M3: second-order factor over the three", "115.0 (41)", "0.053 [0.042, 0.065]", "0.96", "0.95", "0.050", "2.6 (0), not nested with M1 in df; equivalent fit"],
+                             ["M3: second-order factor over the three", "112.4 (41)", "0.052 [0.041, 0.064]", "0.96", "0.95", "0.048", "0 (0); equivalent to M1, because a second-order factor over exactly three first-order factors is just-identified"],
                              ["M4: M1 with d5 dropped", "78.9 (32)", "0.048 [0.035, 0.061]", "0.97", "0.96", "0.041", "Different items; not comparable by &chi;&sup2;"]]},
                         {"t": "hbox", "color": "amber", "html": "Illustrative. The table is "
                          "where the model comparison lives; the sentence is what the "
