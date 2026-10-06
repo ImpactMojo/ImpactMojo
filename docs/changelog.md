@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.326.0 — October 6, 2026 (101 decks accuracy pass, part 1)
+
+### Changed
+
+- **Fourteen 101 decks were checked against their sources.** Wrong citations, quotations and figures were corrected, course links on closing slides now point to courses that exist, and the prose was tidied. Decks covered: SRHR Basics, Academic Writing, Advocacy Basics, Care Economy, Child Development, Decolonising Development, Development Architecture, Disability Inclusion, Econometrics, Environmental Justice, Feminist Research, Fundraising Basics, GenAI for Practitioners and Gender Mainstreaming. Nothing was removed.
+
+### For Learners
+
+- **Corrected 101 decks.** Citations, quotations and figures in fourteen decks were rechecked against their sources.
+
 ## v10.325.0 — October 6, 2026 (Flagship course pages accuracy pass)
 
 ### Changed
