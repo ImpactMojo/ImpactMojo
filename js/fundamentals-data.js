@@ -104,7 +104,7 @@ window.FUNDAMENTALS = (function () {
           { stat: "41.7%", detail: "female labour force participation, up from 23.3% in 2017-18 and still barely half the male rate.", source: "PLFS Annual Report", year: "2023-24", url: "/plfs.html" },
           { stat: "299 min", detail: "a day on unpaid domestic work, over three times what men do. None of it enters the national accounts.", source: "Time Use Survey, NSO", year: "2019" },
           { stat: "929", detail: "girls born per 1,000 boys in the five years before the survey. No natural process produces a ratio that low.", source: "NFHS-5", year: "2019-21" },
-          { stat: "~30%", detail: "of ever-married women aged 18-49 report physical or sexual violence by a spouse; a small minority of them ever seek help.", source: "NFHS-5", year: "2019-21" },
+          { stat: "22.3%", detail: "of ever-married women aged 18-49 report physical or sexual violence by a spouse, against 29.2% in NFHS-5. In NFHS-5 only a small minority of them ever sought help.", source: "NFHS-6", year: "2023-24" },
           { stat: "33%", detail: "of legislative seats reserved for women by the Nari Shakti Vandan Adhiniyam, but only after the next delimitation and Census.", source: "Constitution (106th Amendment) Act", year: "2023" }
         ]
       },
@@ -160,7 +160,7 @@ window.FUNDAMENTALS = (function () {
         evidence: [
           { stat: "Zero", detail: "official Indian statistics exist on asexual, aromantic or pansexual people. No national survey has ever asked.", source: "Review of Census, NFHS, PLFS instruments", year: "2026" },
           { stat: "2022", detail: "the National Medical Commission directed that so-called conversion therapy is professional misconduct, following the Madras High Court's directions in S. Sushma.", source: "NMC; Madras High Court", year: "2021, 2022" },
-          { stat: "Compulsory", detail: "marriage remains the main enforcement mechanism: with 23.3% of women married before 18 and near-universal marriage by 30, opting out is not a recognised life course.", source: "NFHS-5", year: "2019-21" }
+          { stat: "Compulsory", detail: "marriage remains the main enforcement mechanism: with 20.1% of women aged 20-24 married before 18 and near-universal marriage by 30, opting out is not a recognised life course.", source: "NFHS-6", year: "2023-24" }
         ]
       }
     },
@@ -322,8 +322,8 @@ window.FUNDAMENTALS = (function () {
         groups: "Average build; conventional attractiveness",
         short: "Average build",
         evidence: [
-          { stat: "24.0% / 22.9%", detail: "of women and men aged 15 to 49 are overweight or obese, up from 20.6% and 18.9% five years earlier.", source: "NFHS-5", year: "2019-21" },
-          { stat: "Both ends", detail: "the same survey finds 18.7% of women and 16.2% of men underweight. India carries the double burden, and the middle band is statistically the smaller part of the population.", source: "NFHS-5", year: "2019-21" }
+          { stat: "30.7% / 27.3%", detail: "of women and men aged 15 to 49 are overweight or obese, up from 24.0% and 22.9% in NFHS-5.", source: "NFHS-6", year: "2023-24" },
+          { stat: "Both ends", detail: "the same survey finds 19.7% of women and 19.7% of men underweight. India carries the double burden: half of women aged 15 to 49 are outside the healthy weight band at one end or the other.", source: "NFHS-6", year: "2023-24" }
         ]
       },
       margin: {
@@ -449,7 +449,7 @@ window.FUNDAMENTALS = (function () {
         groups: "Children and vulnerable elders",
         short: "Children & elders",
         evidence: [
-          { stat: "35.5%", detail: "of children under five are stunted, 32.1% underweight and 19.3% wasted. All three improved on the previous round and remain among the highest burdens in the world.", source: "NFHS-5", year: "2019-21", url: "/nfhs.html" },
+          { stat: "29.3%", detail: "of children under five are stunted, 31.8% underweight and 19.0% wasted. Stunting fell six points from 35.5% in NFHS-5; underweight and wasting barely moved.", source: "NFHS-6", year: "2023-24", url: "/nfhs.html" },
           { stat: "1.01 crore", detail: "children aged 5-14 recorded as working.", source: "Census of India", year: "2011" },
           { stat: "10.5% to 20.8%", detail: "the 60-plus share of the population between 2022 and 2050, rising from 14.9 crore to 34.7 crore people.", source: "UNFPA & IIPS, India Ageing Report", year: "2023" },
           { stat: "40%+", detail: "of India's elderly are in the poorest wealth quintile, and about 18.7% live with no income of their own.", source: "UNFPA & IIPS, India Ageing Report", year: "2023" },
@@ -525,7 +525,7 @@ window.FUNDAMENTALS = (function () {
         groups: "Dating, engaged, or married under compulsion",
         short: "Dating, engaged",
         evidence: [
-          { stat: "23.3%", detail: "of women aged 20 to 24 were married before 18, down from 26.8% in the previous round and still nearly one in four.", source: "NFHS-5", year: "2019-21" },
+          { stat: "20.1%", detail: "of women aged 20 to 24 were married before 18, down from 23.3% in NFHS-5 and still one in five.", source: "NFHS-6", year: "2023-24" },
           { stat: "Under-recorded", detail: "so-called honour killings appear in NCRB data in the low tens each year, a figure researchers and state commissions treat as a fraction of the real count.", source: "NCRB, Crime in India", year: "2022" },
           { stat: "Protected", detail: "inter-faith and inter-caste couples face registration objections under state 'conversion' laws enacted since 2018 in several states, despite Shafin Jahan and Lata Singh affirming the right to choose.", source: "Supreme Court of India", year: "2006, 2018" }
         ]
