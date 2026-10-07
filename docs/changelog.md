@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.344.0 — October 7, 2026 (deck metadata and deck specs)
+
+### Fixed
+
+- **23 course decks named the wrong course to search engines.** The deck builder copied in each deck's description by matching Development Economics 101's description word for word, and when that text changed the match failed silently. Twenty decks went out with Development Economics' description in their search, Open Graph and Twitter tags and its name in their structured data; three more had the wrong structured-data name only. All 23 now carry their own title and description, and the builder reads the donor's text instead of retyping it and refuses to write a deck that still carries it (#1163).
+
+### Changed
+
+- **Deck specs can no longer overwrite corrected decks.** The specs for Maternal Health, SRHR Basics and Systematic Reviews did not run. They run now, but rebuilding them, and 41 other specs, would have replaced the live decks with versions from before the fact-check: 44 of 64 specs differed from their deck on 8 to 91 slides. Those 44 are now listed in `scripts/deck-builder/frozen.json` with the reason, the builder refuses to write them, and a new CI check fails when any spec drifts from its deck without being listed. The builder now also writes root-relative links itself.
+
 ## v10.343.0 — October 7, 2026 (fictional organisations in illustrative cases)
 
 ### Changed

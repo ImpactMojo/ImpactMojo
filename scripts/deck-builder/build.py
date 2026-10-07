@@ -24,6 +24,7 @@ Usage:
 A spec module lives in scripts/deck-builder/specs/<name>.py and defines DECK.
 See specs/_schema.md for the spec format.
 """
+import html
 import json
 import re
 import sys
@@ -311,7 +312,25 @@ def load_spec(name):
     return mod.DECK
 
 
+def _relativise(text):
+    """Apply scripts/make-links-origin-relative.py, so a build is final as written."""
+    path = ROOT / "scripts" / "make-links-origin-relative.py"
+    spec = importlib.util.spec_from_file_location("links_relative", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.rewrite(text)[0]
+
+
+FROZEN_FILE = Path(__file__).resolve().parent / "frozen.json"
+
+
+def frozen():
+    """Specs whose live deck has been edited past them, with the reason."""
+    return json.loads(FROZEN_FILE.read_text(encoding="utf-8")) if FROZEN_FILE.exists() else {}
+
+
 def build(name):
+    _CHARTS.clear()
     deck = load_spec(name)
     donor = DONOR.read_text(encoding="utf-8")
 
@@ -332,10 +351,17 @@ def build(name):
     desc = deck["description"]
     slug = deck["slug"]
     head = head.replace("Development Economics 101 | ImpactMojo", f"{title} | ImpactMojo")
-    head = head.replace(
-        "Development Economics 101 — free development education from ImpactMojo. "
-        "Browse courses, games, labs, and resources for practitioners across South Asia.",
-        desc)
+    # The donor's own description is read from the donor rather than typed
+    # here: when it was retyped, an edit to the donor (an em dash becoming a
+    # colon) left the literal matching nothing, and every deck built after that
+    # shipped Development Economics' description and JSON-LD course name.
+    donor_desc = re.search(r'<meta name="description" content="([^"]*)"', head).group(1)
+    ld_desc = json.dumps(html.unescape(donor_desc))[1:-1]
+    head = head.replace(f'"name": "Development Economics 101", "description": "{ld_desc}"',
+                        f'"name": {json.dumps(title)}, "description": {json.dumps(desc)}')
+    head = head.replace(donor_desc, html.escape(desc, quote=True))
+    if title != "Development Economics 101" and (donor_desc in head or '"name": "Development Economics 101"' in head):
+        raise SystemExit(f"[refused] {slug}: donor description or course name left in <head>")
     head = head.replace("dev-economics.html", f"{slug}.html")
     # Remaining bare references (og:title / twitter:title / header none in head)
     head = head.replace(">Development Economics 101<", f">{title}<")
@@ -363,7 +389,7 @@ def build(name):
                         f"<span id=\"prog-text\">1 / {total}</span>")
 
     out = head + VIEWPORT_OPEN + "\n\n" + slides_out + "\n\n" + VIEWPORT_CLOSE + tail
-    return out, total
+    return _relativise(out), total
 
 
 def main():
@@ -384,6 +410,13 @@ def main():
         print(f"[check] {name}: {total} slides [{status}], {n_charts} charts -> {target}")
         sys.exit(0 if ok else 1)
 
+    if name in frozen() and not force:
+        print(f"[refused] {name}: the live deck 101-courses/{deck['slug']}.html has been "
+              f"edited past this spec, and building would overwrite those edits.\n"
+              f"  {frozen()[name]}\n"
+              f"  Edit the HTML directly, or port it back into the spec, drop the entry "
+              f"from scripts/deck-builder/frozen.json and rebuild.")
+        sys.exit(1)
     if not ok and not force:
         print(f"[refused] {deck['slug']}: {total} slides — every 101 deck must be "
               f"EXACTLY {REQUIRED_SLIDES} slides. Adjust the spec (or pass --force).")

@@ -1127,7 +1127,7 @@ DECK = {
                  "<strong>UNESCO</strong> &mdash; International Technical Guidance on Sexuality Education",
                  "<strong>NFHS &amp; SRS (India)</strong> &mdash; national data on health and fertility"]},
              {"t": "hbox", "color": "cyan", "html": "Pair this deck with ImpactMojo's "
-              "<strong><a href="/101-courses/gender-dev.html" style="color:inherit;text-decoration:underline">Gender &amp; Development</a></strong>, <strong>Public Health</strong> and <strong>Adolescent "
+              "<strong><a href='/101-courses/gender-dev.html' style='color:inherit;text-decoration:underline'>Gender &amp; Development</a></strong>, <strong>Public Health</strong> and <strong>Adolescent "
               "Health</strong> 101 courses."},
          ]},
 

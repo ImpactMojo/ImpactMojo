@@ -618,6 +618,12 @@ jobs:
       - name: Check deck density and the rewrite backlog
         run: python3 scripts/check-decks.py
 
+      # A spec overwrites its deck on build. 44 decks were edited as HTML after
+      # their spec was written, so a rebuild would have undone the fact-check.
+      # Every spec must build its deck exactly or be frozen with a reason.
+      - name: Check deck specs agree with their decks
+        run: python3 scripts/check-deck-specs.py
+
   password-check:
     name: Breached-password check
     runs-on: ubuntu-latest
