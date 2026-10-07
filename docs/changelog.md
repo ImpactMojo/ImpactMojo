@@ -2,6 +2,29 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.346.0 — October 7, 2026 (thirteen new reading companions)
+
+### Added
+
+- **Thirteen reading companions, taking the library from 171 to 184**, and a rebuilt companion for *Causality in Policy Studies* at its existing address. Each was built from the source text: quotations were transcribed from the PDF and checked against it, section page ranges come from the text, and every outside fact (statutes, judgments, dates) was checked against a primary source or left out. Where a book gets a fact wrong, the companion says so in the section concerned: among others, Fanon's 1848 decree is the Second Republic's, Wynter's Valladolid debate was 1550–51, *Knowledge/Nation* puts the Babri demolition in 1989, the Mahmood book cites the wrong surah for the verse on lowering the gaze, and the NITI Aayog report gives two different GERD comparisons. Two texts follow specific rules: the suicide handbook companion follows WHO safe-messaging guidance and opens with India's Tele-MANAS helpline (14416), and the AI misuse companion gives categories and defences only, with no operational detail.
+
+### For Learners
+
+- **Detecting and Countering Misuse of AI (Anthropic, September 2026)** — The seven harm areas in a provider threat report, what its safeguards caught and missed, and how to read evidence like this without over-reading it. [Read it](/BookSummaries/anthropic-detecting-countering-misuse-ai-companion.html)
+- **The City Through Her Eyes** — A companion to the NBER survey of 4,137 women in Delhi and Bengaluru on harassment in public spaces, the fear it creates and how it shapes work. [Read it](/BookSummaries/beaman-jayachandran-city-through-her-eyes-companion.html)
+- **Cash Transfers and the Indian Household** — A companion to a 2026 framework for what India's farmer and women's cash transfers should do to work, debt and resilience, with its scheme facts checked. [Read it](/BookSummaries/cash-transfers-indian-household-framework-companion.html)
+- **Causality in Policy Studies** — A companion to an open-access toolbox of causal methods, with a guide to matching your evaluation question to a technique. [Read it](/BookSummaries/causality-in-policy-companion.html)
+- **Provincializing Europe** — A chapter-by-chapter companion to Dipesh Chakrabarty's argument that European thought is both indispensable and inadequate for understanding modern India. [Read it](/BookSummaries/chakrabarty-provincializing-europe-companion.html)
+- **The Emergence of Critical Realist Grounded Theory** — A step-by-step companion to coding for causal mechanisms, with worksheets for qualitative evaluation teams. [Read it](/BookSummaries/critical-realist-grounded-theory-companion.html)
+- **Black Skin, White Masks** — A chapter-by-chapter companion to Fanon's study of colonialism and the mind, with tools for applying it to programme design. [Read it](/BookSummaries/fanon-black-skin-white-masks-companion.html)
+- **Knowledge/Nation** — How India's humanities and social sciences grew inside the nation, chapter by chapter, with the book's factual errors flagged. [Read it](/BookSummaries/knowledge-nation-humanities-social-sciences-companion.html)
+- **Politics of Piety (Saba Mahmood)** — A guided companion to the classic ethnography that asks whether agency is always resistance, with tools for reading measures of women's agency. [Read it](/BookSummaries/mahmood-politics-of-piety-companion.html)
+- **Modernity, Religion-Making, and the Postsecular** — A section-by-section companion to Mandair and Dressler's account of how religion and the secular were made together, linked to the Geertz and Asad companions. [Read it](/BookSummaries/mandair-dressler-religion-making-companion.html)
+- **Ease of Doing R&D in India** — NITI Aayog's 2026 report on why research is slow to fund, staff and translate, with its evidence checked. [Read it](/BookSummaries/niti-ease-of-doing-research-development-companion.html)
+- **Towards Ethical Journalism (NNSW)** — What 606 Indian news items in eight languages show about how sex workers are reported, and the twelve guidelines the study proposes for newsrooms. [Read it](/BookSummaries/nnsw-towards-ethical-journalism-companion.html)
+- **The Oxford Handbook of the Philosophy of Suicide (Cholbi and Stellino, eds)** — A part-by-part guide to the philosophical arguments on definition, rights and the ethics of prevention, with India's legal context. [Read it](/BookSummaries/oxford-handbook-philosophy-suicide-companion.html)
+- **Unsettling the Coloniality of Being** — A section-by-section companion to Sylvia Wynter's essay on 'Man' and its claim to speak for the human, with a tool for reading development indicators. [Read it](/BookSummaries/wynter-unsettling-coloniality-companion.html)
+
 ## v10.345.0 — October 7, 2026 (four new Field Radio videos)
 
 ### Added

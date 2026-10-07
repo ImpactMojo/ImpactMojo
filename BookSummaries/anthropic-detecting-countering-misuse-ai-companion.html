@@ -1,0 +1,792 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Detecting and Countering Misuse of AI - Anthropic | Reading Companion | ImpactMojo</title>
+<link rel="stylesheet" href="/css/fonts.css">
+<style>
+/* === ImpactMojo Design System === */
+:root {
+    --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+    --im-accent: #0EA5E9;
+    --im-nav-bg: rgba(15, 23, 42, 0.95);
+    --im-border: #334155;
+    --im-text-primary: #F1F5F9;
+    --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8;
+    --im-card-bg: #1E293B;
+    --im-hover-bg: #334155;
+    --im-secondary-bg: #1E293B;
+}
+body { padding-top: 56px !important; }
+.im-topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    background: var(--im-nav-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0.5rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.75rem; flex-wrap: wrap;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+}
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1rem;
+    background: var(--im-gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; stroke: #0EA5E9; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn {
+    background: var(--im-gradient);
+    color: #fff !important; -webkit-text-fill-color: #fff;
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.35rem;
+    transition: opacity 0.2s; border: none; cursor: pointer;
+}
+.im-browse-btn { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--im-text, #1C1917); background: var(--im-surface, #FFFFFF); border: 1.5px solid var(--im-border, #E2E8F0); padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; transition: background 0.18s ease, border-color 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease; }
+.im-browse-btn:hover { background: #0A7AAD; color: #FFFFFF; border-color: var(--im-accent, #0EA5E9); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25); }
+.im-browse-btn svg { width: 14px; height: 14px; }
+@media (prefers-color-scheme: dark) { .im-browse-btn { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.18); } .im-browse-btn:hover { background: #0A7AAD; border-color: var(--im-accent, #0EA5E9); color: #FFFFFF; } }
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-theme-selector {
+    display: flex; gap: 2px;
+    background: var(--im-card-bg);
+    border: 1px solid var(--im-border);
+    border-radius: 8px; padding: 2px;
+}
+.im-theme-btn {
+    background: transparent; border: none;
+    color: var(--im-text-secondary);
+    padding: 6px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center;
+    justify-content: center; width: 30px; height: 30px;
+}
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: #0A7AAD; color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-footer {
+    background: var(--im-secondary-bg);
+    border-top: 1px solid var(--im-border);
+    padding: 2rem 1rem; margin-top: auto;
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-secondary);
+}
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: 0.9rem; color: var(--im-text-muted);
+}
+.im-footer-made a { color: var(--im-accent); text-decoration: underline; text-underline-offset: 2px; }
+.im-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-bottom: 1.5rem;
+}
+.im-footer-section h4 {
+    font-family: 'Inter', 'Amaranth', sans-serif;
+    color: var(--im-text-primary);
+    font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600;
+}
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a {
+    color: var(--im-text-secondary);
+    text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+}
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom {
+    text-align: center; padding-top: 1rem;
+    border-top: 1px solid var(--im-border);
+    font-size: 0.8rem; color: var(--im-text-muted);
+}
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 640px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home { font-size: 0.85rem; }
+    .im-topbar-home svg { width: 20px; height: 20px; }
+    .im-topbar-home span { display: none; }
+    .im-premium-btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    .im-theme-btn { width: 26px; height: 26px; padding: 4px; }
+    .im-theme-btn svg { width: 14px; height: 14px; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 400px) {
+    .im-footer-grid { grid-template-columns: 1fr; }
+}
+/* === End ImpactMojo Design System === */
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F8F5F0;--card:#fff;--border:#E8E0D5;--text:#1C1C1C;--muted:#6B6560;
+  --accent:#1A3C34;--accent-light:#EBF5F2;--teal:#1A6B5A;--teal-light:#EBF5F2;
+  --radius:8px;
+}
+body{background:var(--bg);font-family:'Amaranth','Inter',system-ui,sans-serif;color:var(--text);padding-top:52px}
+.app{min-height:100vh;display:flex;flex-direction:column}
+nav{background:#1C1C1C;display:flex;align-items:center;gap:20px;padding:0 20px;min-height:52px;flex-wrap:wrap;position:sticky;top:52px;z-index:99}
+.brand{display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.brand-name{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:.05em;text-transform:uppercase}
+.tabs{display:flex;gap:2px;flex-wrap:wrap}
+.tab-btn{background:none;border:none;padding:6px 13px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;transition:all .15s}
+.tab-btn:hover{color:rgba(255,255,255,.85)}
+.tab-btn.active{color:#fff;background:var(--accent)}
+main{flex:1;padding:32px 20px;max-width:860px;margin:44px auto 0;width:100%}
+.h1{font-family:Inter,sans-serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.sub{color:var(--muted);font-size:15px;margin-bottom:24px;font-family:Inter,sans-serif;line-height:1.5}
+.panel{display:none}.panel.active{display:block}
+
+/* HERO */
+.hero{background:#1C1C1C;color:#fff;border-radius:12px;padding:32px;margin-bottom:20px}
+.day-badge{display:inline-block;background:var(--accent);font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:4px;margin-bottom:14px}
+.hero h1{font-size:34px;font-weight:700;margin-bottom:4px}
+.hero .auth{font-family:Inter,sans-serif;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:14px}
+.hero .tagline{font-size:15px;color:rgba(255,255,255,.8);line-height:1.6;max-width:620px;margin-bottom:18px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:Inter,sans-serif;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 14px;text-align:center}
+.stat-n{font-size:30px;font-weight:700;color:var(--accent);font-family:Inter,sans-serif}
+.stat-l{font-family:Inter,sans-serif;font-size:12px;color:var(--muted);margin-top:4px}
+.arg{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px;margin-bottom:24px}
+.arg p{font-size:15px;line-height:1.75}
+.arg p+p{margin-top:1rem}
+.nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.nav-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:left;cursor:pointer;transition:all .15s}
+.nav-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.nav-card-label{font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.nav-card-desc{font-family:Inter,sans-serif;font-size:12px;color:var(--muted)}
+
+/* PATHWAYS */
+.pw-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pw-btn{font-family:Inter,sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s}
+.pw-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pw-desc{font-family:Inter,sans-serif;font-size:14px;color:var(--muted);padding:12px 14px;background:var(--accent-light);border-radius:6px;margin-bottom:20px;line-height:1.5}
+.pw-steps{display:flex;flex-direction:column;gap:10px}
+.pw-step{display:flex;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-family:Inter,sans-serif;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-title{font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
+.step-focus{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);line-height:1.5}
+
+/* SECTIONS */
+.sec-card{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.sec-header{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;cursor:pointer;background:none;border:none;text-align:left;width:100%}
+.sec-num{font-family:Inter,sans-serif;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;min-width:24px;padding-top:2px}
+.sec-title{font-family:Inter,sans-serif;font-size:15px;font-weight:700;margin-bottom:2px}
+.sec-sub{font-family:Inter,sans-serif;font-size:12px;color:var(--muted)}
+.sec-chev{font-size:16px;color:var(--muted);padding-top:2px;margin-left:auto}
+.sec-body{padding:0 18px 18px 56px;border-top:1px solid var(--border)}
+.sec-summary{font-size:15px;line-height:1.75;padding-top:14px;margin-bottom:18px}
+.ideas-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.idea-item{display:flex;gap:8px;margin-bottom:7px;font-family:Inter,sans-serif;font-size:13px;line-height:1.55}
+.idea-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px}
+blockquote{font-style:italic;font-size:14px;color:var(--muted);border-left:3px solid var(--accent);padding-left:12px;margin-bottom:8px;line-height:1.6}
+.dev-toggle{font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:var(--teal);background:var(--teal-light);border:none;padding:7px 12px;border-radius:4px;cursor:pointer;margin-top:10px}
+.dev-text{margin-top:10px;font-family:Inter,sans-serif;font-size:13px;line-height:1.65;background:var(--teal-light);padding:12px;border-radius:6px}
+
+/* CONCEPTS */
+.concept-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.concept-card:hover,.concept-card.open{border-color:var(--accent)}
+.concept-term{font-family:Inter,sans-serif;font-size:15px;font-weight:700}
+.concept-def{font-family:Inter,sans-serif;font-size:14px;line-height:1.7;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.prac-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-top:10px;margin-bottom:4px}
+.prac-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:var(--muted)}
+
+/* TOOLKIT */
+.tool-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.tool-btn{font-family:Inter,sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all .15s}
+.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tool-panel{display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:22px}
+.tool-panel.active{display:block}
+.tool-intro{font-family:Inter,sans-serif;font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.fld-label{font-family:Inter,sans-serif;font-size:13px;font-weight:600;margin-bottom:5px;display:block}
+.fld{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;outline:none;background:var(--bg);margin-bottom:12px}
+.fld:focus{border-color:var(--accent)}
+.output-box{background:var(--accent-light);padding:14px;border-radius:6px;margin-top:16px;font-family:Inter,sans-serif;font-size:14px;line-height:1.65}
+.output-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:8px}
+
+/* CONTEXT */
+.conn-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:16px 18px;margin-bottom:10px}
+.conn-book{font-family:Inter,sans-serif;font-size:14px;font-weight:700;margin-bottom:5px}
+.conn-text{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);line-height:1.65}
+.crit-item{display:flex;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px}
+.crit-n{width:24px;height:24px;border-radius:50%;background: #402E00;color:#C8910A;font-family:Inter,sans-serif;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.crit-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65}
+.context-h{font-family:Inter,sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;margin-top:6px}
+
+/* ASK */
+.ask-setup{}
+.setup-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.setup-step{display:flex;gap:12px;font-family:Inter,sans-serif;font-size:14px;line-height:1.5}
+.setup-num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.setup-step a{color:var(--accent)}
+.key-row{display:flex;gap:10px}
+.key-input{flex:1;max-width:400px;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;outline:none}
+.key-btn{padding:9px 22px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:Inter,sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.key-btn:disabled{opacity:.4;cursor:not-allowed}
+.ask-ui{display:flex;flex-direction:column;height:calc(100vh - 180px)}
+.ask-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ask-hdr-title{font-family:Inter,sans-serif;font-size:18px;font-weight:700}
+.ask-reset{background:none;border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-family:Inter,sans-serif;font-size:12px;color:var(--muted);cursor:pointer}
+.msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px;margin-bottom:10px}
+.suggested-label{font-family:Inter,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+.sug-btn{display:block;width:100%;text-align:left;padding:9px 12px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;cursor:pointer;margin-bottom:6px;transition:all .15s}
+.sug-btn:hover{border-color:var(--accent);background:var(--accent-light)}
+.msg{max-width:85%}
+.msg.user{align-self:flex-end}
+.msg.assistant{align-self:flex-start}
+.msg-text{font-family:Inter,sans-serif;font-size:13px;line-height:1.65;padding:10px 14px;border-radius:8px;white-space:pre-wrap}
+.msg.user .msg-text{background:var(--accent);color:#fff}
+.msg.assistant .msg-text{background:var(--card);border:1px solid var(--border)}
+.typing{display:flex;gap:4px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.ask-input-row{display:flex;gap:8px;border-top:1px solid var(--border);padding-top:10px}
+.ask-input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:13px;resize:none;outline:none;background:var(--bg)}
+.ask-input:focus{border-color:var(--accent)}
+.ask-send{padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:Inter,sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.ask-send:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:640px){.stat-grid{grid-template-columns:repeat(2,1fr)}.nav-grid{grid-template-columns:1fr 1fr}.sec-body{padding-left:18px}}
+
+/* WCAG 2.1 AA (1.4.1 Use of Color): inline anchors in content paragraphs must be distinguishable without relying on color alone. Scoped to <main> so nav/footer button-links are unaffected. */
+main p a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]),
+main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+/* === Dark Mode === */
+html.dark body { background: #0f172a; color: #e2e8f0; }
+html.dark #root,
+html.dark main,
+html.dark .app,
+html.dark [id^="p-"],
+html.dark .panel { filter: invert(0.88) hue-rotate(180deg); }
+html.dark #root img,
+html.dark #root svg:not([class*="im-"]),
+html.dark main img,
+html.dark main svg:not([class*="im-"]) { filter: invert(1) hue-rotate(180deg); }
+html.dark .im-topbar, html.dark .im-footer { filter: none; }
+</style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>
+<!-- SEO meta (autogenerated) -->
+<meta name="description" content="An interactive reading companion to Anthropic&#x27;s threat intelligence report of 10 September 2026: the seven harm areas, the patterns across them, what the company&#x27;s safeguards caught and missed, and the policy questions the report leaves open.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.impactmojo.in/BookSummaries/anthropic-detecting-countering-misuse-ai-companion.html">
+<meta property="og:title" content="Detecting and Countering Misuse of AI - Anthropic | Reading Companion | ImpactMojo">
+<meta property="og:description" content="An interactive reading companion to Anthropic&#x27;s threat intelligence report of 10 September 2026: the seven harm areas, the patterns across them, what the company&#x27;s safeguards caught and missed, and the policy questions the report leaves open.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/BookSummaries/anthropic-detecting-countering-misuse-ai-companion.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Detecting and Countering Misuse of AI - Anthropic | Reading Companion | ImpactMojo">
+<meta name="twitter:description" content="An interactive reading companion to Anthropic&#x27;s threat intelligence report of 10 September 2026: the seven harm areas, the patterns across them, what the company&#x27;s safeguards caught and missed, and the policy questions the report leaves open.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<!-- Favicons -->
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<!-- Translate -->
+<style>
+/* Skip link (WCAG 2.4.1) */
+.im-skip-link { position:absolute; top:-40px; left:0; background:#0EA5E9; color:#fff; padding:8px 16px; z-index:10000; text-decoration:none; font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:600; }
+.im-skip-link:focus { top:0; }
+/* Floating paper plane */
+.im-paper-plane { position:fixed; bottom:2rem; right:2rem; width:60px; height:60px; opacity:0.14; pointer-events:none; z-index:0; animation: imFloat 6s ease-in-out infinite; }
+@keyframes imFloat { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-15px) rotate(3deg);} }
+html.dark .im-paper-plane { opacity:0.22; }
+/* Interactive companion CTA */
+.im-interactive-cta { display:inline-flex; align-items:center; gap:0.5rem; background:var(--im-gradient); color:#fff !important; -webkit-text-fill-color:#fff; padding:0.5rem 1rem; border-radius:6px; font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:600; text-decoration:none; margin-top:14px; transition:opacity 0.2s; }
+.im-interactive-cta:hover { opacity:0.9; }
+
+/* === ImpactMojo Brand Override (fonts + dark mode) — v10.21 === */
+html body, html body .app, html body main, html body .panel,
+html body p, html body li, html body blockquote, html body .sec-summary, html body .arg p,
+html body .sub, html body .tagline, html body .hero, html body .hero h1 {
+  font-family: 'Amaranth', Arial, sans-serif !important;
+}
+html body h1, html body h2, html body h3, html body h4, html body h5, html body h6,
+html body .h1, html body .brand-name, html body .day-badge, html body .pill,
+html body .stat-n, html body .stat-l, html body .sec-title, html body .sec-sub, html body .sec-num,
+html body .concept-term, html body .step-title, html body .step-focus, html body .conn-book,
+html body .book-title, html body .tab-btn, html body .pw-btn, html body .tool-btn,
+html body .im-topbar, html body .im-topbar *, html body .im-footer, html body .im-footer * {
+  font-family: 'Inter', 'Amaranth', Helvetica, sans-serif !important;
+}
+html body code, html body pre, html body .mono, html body kbd, html body samp {
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+}
+
+/* Replace filter-invert dark mode with proper token-based dark mode */
+html.dark body { background: #0F172A !important; color: #E2E8F0 !important; }
+html.dark #root, html.dark main, html.dark .app, html.dark [id^="p-"], html.dark .panel,
+html.dark .arg, html.dark .hero, html.dark .stat, html.dark .nav-card, html.dark .pw-step,
+html.dark .sec-card, html.dark .sec-body, html.dark .concept-card, html.dark .tool-panel,
+html.dark .conn-card, html.dark .crit-item, html.dark .msg.assistant .msg-text,
+html.dark .output-box, html.dark .typing, html.dark .ask-input, html.dark .key-input,
+html.dark .fld, html.dark .tool-btn, html.dark .pw-btn, html.dark .sug-btn, html.dark .pw-desc {
+  filter: none !important;
+}
+html.dark { color-scheme: dark; }
+html.dark body,
+html.dark body .app,
+html.dark body main { background: #0F172A !important; color: #E2E8F0 !important; }
+html.dark .hero { background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%) !important; color: #F1F5F9 !important; border: 1px solid #334155; }
+html.dark .hero .auth, html.dark .hero .tagline { color: #CBD5E1 !important; }
+html.dark .stat, html.dark .arg, html.dark .nav-card, html.dark .sec-card, html.dark .pw-step,
+html.dark .concept-card, html.dark .tool-panel, html.dark .conn-card, html.dark .crit-item,
+html.dark .msg.assistant .msg-text { background: #1E293B !important; border-color: #334155 !important; color: #E2E8F0 !important; }
+html.dark .sec-header, html.dark .sec-body { background: transparent !important; color: #E2E8F0 !important; }
+html.dark .sec-body { border-top-color: #334155 !important; }
+html.dark .stat-n { color: #38BDF8 !important; }
+html.dark .stat-l, html.dark .sec-sub, html.dark .sub, html.dark .nav-card-desc,
+html.dark .step-focus, html.dark .pw-desc, html.dark .prac-text, html.dark .conn-text,
+html.dark .ideas-label, html.dark .prac-label, html.dark .output-label, html.dark .suggested-label,
+html.dark .dev-text, html.dark .fld-label { color: #94A3B8 !important; }
+html.dark .h1, html.dark .sec-title, html.dark .concept-term, html.dark .step-title,
+html.dark .nav-card-label, html.dark .conn-book, html.dark .context-h, html.dark .ask-hdr-title { color: #F1F5F9 !important; }
+html.dark blockquote { color: #CBD5E1 !important; border-left-color: #38BDF8 !important; }
+html.dark .pill { background: rgba(56, 189, 248, 0.15) !important; color: #7DD3FC !important; }
+html.dark .day-badge { background: #0369A1 !important; color: #FFFFFF !important; }
+html.dark .tab-btn { color: rgba(226, 232, 240, 0.6) !important; }
+html.dark .tab-btn.active { background: #0369A1 !important; color: #FFFFFF !important; }
+html.dark .tab-btn:hover { color: #F1F5F9 !important; }
+html.dark nav { background: #0F172A !important; border-bottom: 1px solid #334155; }
+html.dark .pw-btn, html.dark .tool-btn { background: #1E293B !important; border-color: #334155 !important; color: #E2E8F0 !important; }
+html.dark .pw-btn.active, html.dark .tool-btn.active { background: #0369A1 !important; border-color: #0369A1 !important; color: #FFFFFF !important; }
+html.dark .pw-desc { background: rgba(14, 165, 233, 0.1) !important; color: #CBD5E1 !important; }
+html.dark .output-box { background: rgba(14, 165, 233, 0.1) !important; color: #E2E8F0 !important; }
+html.dark .step-n, html.dark .setup-num { background: #0369A1 !important; color: #FFFFFF !important; }
+html.dark .sec-num { color: #38BDF8 !important; }
+html.dark .ideas-label, html.dark .prac-label, html.dark .output-label { color: #38BDF8 !important; }
+html.dark .dev-toggle { background: rgba(56, 189, 248, 0.1) !important; color: #7DD3FC !important; }
+html.dark .dev-text { background: rgba(56, 189, 248, 0.08) !important; color: #CBD5E1 !important; }
+html.dark .fld, html.dark .key-input, html.dark .ask-input { background: #0F172A !important; border-color: #334155 !important; color: #E2E8F0 !important; }
+html.dark .msg.user .msg-text { background: #0369A1 !important; color: #FFFFFF !important; }
+html.dark .sug-btn { background: #1E293B !important; border-color: #334155 !important; color: #E2E8F0 !important; }
+html.dark .sug-btn:hover { background: rgba(14, 165, 233, 0.15) !important; border-color: #0EA5E9 !important; }
+html.dark .crit-n { background: rgba(251, 191, 36, 0.15) !important; color: #FCD34D !important; }
+html.dark #root img, html.dark #root svg:not([class*="im-"]),
+html.dark main img, html.dark main svg:not([class*="im-"]) { filter: none !important; }
+html.dark .im-topbar, html.dark .im-footer { filter: none !important; }
+/* === End ImpactMojo Brand Override === */
+
+/* Ethics disclaimer heading — readable in both modes */
+.im-ethics-disclaimer .im-ethics-heading { color: #0F172A !important; }
+html.dark .im-ethics-disclaimer .im-ethics-heading, body.dark-mode .im-ethics-disclaimer .im-ethics-heading { color: #F1F5F9 !important; }
+html.dark .im-ethics-disclaimer, body.dark-mode .im-ethics-disclaimer { background: rgba(56,189,248,0.08) !important; border-left-color: #38BDF8 !important; color: #CBD5E1 !important; }
+</style>
+<link rel="stylesheet" href="/assets/css/booksummary-dark.css">
+</head>
+<body>
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<header class="im-topbar" role="banner">
+  <div class="im-topbar-left">
+    <a class="im-topbar-home" href="/" aria-label="ImpactMojo home">
+      <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+      <span>ImpactMojo</span>
+    </a>  </div>
+  <div class="im-topbar-right">
+    <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+    
+    <a class="im-premium-btn" href="/premium.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Premium
+    </a>
+    <div class="im-theme-selector" role="group" aria-label="Theme">
+      <button class="im-theme-btn" data-imtheme="system" title="System theme" aria-label="System theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </button>
+      <button class="im-theme-btn" data-imtheme="light" title="Light theme" aria-label="Light theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="im-theme-btn" data-imtheme="dark" title="Dark theme" aria-label="Dark theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="app">
+<nav>
+  <div class="brand"><div class="dot"></div><span class="brand-name">ImpactMojo</span></div>
+  <div class="tabs" id="tabbar"></div>
+</nav>
+<main id="main-content">
+  <div class="panel active" id="p-overview"></div>
+  <div class="panel" id="p-pathways"></div>
+  <div class="panel" id="p-sections"></div>
+  <div class="panel" id="p-concepts"></div>
+  <div class="panel" id="p-toolkit"></div>
+  <div class="panel" id="p-context"></div>
+  <div class="panel" id="p-ask"></div>
+</main>
+</div>
+
+<!-- Sargam Icon Sprites -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="si_Direction_alt" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m3 3 18 7.92-7.987 2.093L10.92 21z"/></symbol>
+<symbol id="si_Flare" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip_si_Flare)"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M7 12H1m22 0h-6m-5 5v6m3.536-7.464 1.414 1.414m-9.9-9.9 1.414 1.414m7.072 0L16.95 7.05m-9.9 9.9 1.414-1.414M12 1v6m2 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/></g><defs><clipPath id="clip_si_Flare"><path fill="#fff" d="M0 0h24v24H0z"/></clipPath></defs></symbol>
+<symbol id="si_Info" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 8h.008M12 16v-5m10 1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10"/></symbol>
+<symbol id="si_Lock" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 10V7c0-2.21 1.79-4 4-4s4 1.79 4 4v3m-4 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 0v3m-5.4-8h10.8c.88 0 1.6.72 1.6 1.6v7c0 1.32-1.08 2.4-2.4 2.4H7.4C6.08 21 5 19.92 5 18.6v-7c0-.88.72-1.6 1.6-1.6"/></symbol>
+<symbol id="si_Lightning" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="m12.667 10.5 1.25-7.5L6 13h5l-1.25 7.5 7.917-10z" clip-rule="evenodd"/></symbol>
+<symbol id="si_Library_books" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M10 11h8m-8 3h4m-4-6h8m2 14H8.4C5.42 22 3 19.58 3 16.6V5m5.4-2h11.2A2.4 2.4 0 0 1 22 5.4v11.2a2.4 2.4 0 0 1-2.4 2.4H8.4A2.4 2.4 0 0 1 6 16.6V5.4A2.4 2.4 0 0 1 8.4 3"/></symbol>
+<symbol id="si_Book" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M12 7.333C12 5.5 10.5 4 8.667 4H2v12h6.708C12 16 12 19.334 12 19.334m0-12C12 5.5 13.5 4 15.333 4H22v12h-6.667C12 16 12 19.334 12 19.334m0-12v12m1.875 1.124A2.58 2.58 0 0 1 16.167 19H21m-10.875 1.458A2.54 2.54 0 0 0 7.833 19H3"/></symbol>
+<symbol id="si_Article" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8 12h8m-8 3h4M8 9h8M4.4 4h15.2A2.4 2.4 0 0 1 22 6.4v11.2a2.4 2.4 0 0 1-2.4 2.4H4.4A2.4 2.4 0 0 1 2 17.6V6.4A2.4 2.4 0 0 1 4.4 4"/></symbol>
+<symbol id="si_Mail" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5 7.06 6.87 5.89c.07.06.19.06.26 0L19 7.06M3.2 4h17.6c.66 0 1.2.54 1.2 1.2v12.4c0 1.32-1.08 2.4-2.4 2.4H4.4C3.08 20 2 18.92 2 17.6V5.2C2 4.54 2.54 4 3.2 4"/></symbol>
+<symbol id="si_Help" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M11.83 14v-.621a2.33 2.33 0 0 1 1.164-2.02c1.126-.66 1.514-2.057.854-3.183s-2.057-1.514-3.183-.854C9.965 7.75 9.5 8.487 9.5 9.341M12 17h-.008M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10"/></symbol>
+<symbol id="si_Heart" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.696 3C14.652 3 12.887 4.197 12 5.943 11.113 4.197 9.348 3 7.304 3 4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/></symbol>
+<symbol id="si_Globe_detailed" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M22 12c0 5.523-4.477 10-10 10m10-10c0-5.523-4.477-10-10-10m10 10H2m10 10C6.477 22 2 17.523 2 12m10 10 .66-.31c2.1-2.71 3.34-6.14 3.34-9.78s-1.22-7-3.27-9.69L12 2m0 20-.73-.31A15.94 15.94 0 0 1 8 12c0-3.64 1.24-7.07 3.34-9.78L12 2M2 12C2 6.477 6.477 2 12 2m7.14 17c-1.82-1.85-4.34-3-7.14-3s-5.33 1.15-7.14 3M19.14 5C17.33 6.85 14.8 8 12 8S6.68 6.85 4.86 5"/></symbol>
+</svg>
+
+
+<div id="root"></div>
+<script>
+const DATA = {"title": "Detecting and Countering Misuse of AI", "dayBadge": "AI & Security", "author": "Anthropic | Detecting and countering misuse of AI: September 2026. Published 10 September 2026, 154 pages. A threat intelligence report covering activity disrupted between December 2025 and August 2026 across seven harm areas.", "tagline": "A model provider publishing what it caught on its own platform: state espionage run through agent frameworks, nine influence operations, state surveillance desks with no analysts left, weapons software, dual-use biology, a fake dating network and seven labs harvesting its reasoning. Read it for the patterns and the admissions.", "pills": ["Seven harm areas", "Uplift as speed and scale", "Agentic autonomy", "Breakout Scale", "Dual use", "Illicit distillation"], "stats": [{"n": "14", "l": "Sections"}, {"n": "7", "l": "Key concepts"}, {"n": "7", "l": "Harm areas"}, {"n": "2026", "l": "Published"}], "argument": ["The report's central claim about cyber operations is an economic one. None of the intrusions it describes needed a technique defenders had not seen; what changed is that reconnaissance, tooling, exploitation and data processing, the labour that used to separate well-resourced operations from everyone else, can be delegated to models running in parallel.", "Autonomy is treated as a separate axis from harm. Some of the most serious compromises described were directed step by step by a person; autonomy multiplied scale, speed and parallelism and lowered the cost per campaign. It did not raise the ceiling on damage.", "In influence operations the finding runs the other way. Most of what Anthropic found drew little or no authentic audience, partly because the company sees campaigns while they are being assembled, before they circulate. The widest real reach came where state media outlets were the distribution channel.", "The uncomfortable half of the report is about its own defences. Classifiers held in the areas they were built for and did not hold elsewhere; a refusal was reversed on re-prompting in one surveillance case and complied with across many sessions in another; work split into small benign-looking requests got through; and for frontier biology the report concludes that filters alone cannot separate benefit from harm."], "accent": "#3730A3", "accent_light": "#E0E7FF", "pathways": [{"label": "First reading", "desc": "Four sections. What the report is, the two findings that generalise, and what it concedes.", "steps": [{"section": "What this report is", "focus": "Scope, period, and why a model provider publishes this at all."}, {"section": "Cyber: sophistication stops being a signal", "focus": "The economic argument, stated plainly."}, {"section": "Influence operations: building the apparatus", "focus": "What the model was used for beyond writing posts."}, {"section": "What the report concedes about its own defences", "focus": "The admissions, collected in one place."}]}, {"label": "For security and policy readers", "desc": "The harm areas in the order the report puts them, with the measurement questions.", "steps": [{"section": "Cyber: sophistication stops being a signal", "focus": "The autonomy spectrum, and why it is not a harm scale."}, {"section": "AI access as target, loot and cover", "focus": "Stolen keys as compute, and the reseller market."}, {"section": "Surveillance: a desk with no analysts left", "focus": "State bureaucracies substituting a model for a team."}, {"section": "Conventional weapons", "focus": "Six cases, and the procurement problem that looks mundane."}, {"section": "Illicit distillation, and the users in the middle", "focus": "Seven labs, and whose data travelled with the traffic."}]}, {"label": "For researchers and lawyers", "desc": "Read for the evidence standard, the definitions and the open questions.", "steps": [{"section": "How the influence findings were measured", "focus": "The Breakout Scale, and what visibility ends at."}, {"section": "Biological misuse and the dual-use problem", "focus": "The strongest reasoning in the report, and its limits."}, {"section": "What the report concedes about its own defences", "focus": "Where safeguards held and where they did not."}, {"section": "What this evidence cannot settle", "focus": "Selection, attribution and the absence of a denominator."}, {"section": "The policy questions left open", "focus": "Disclosure, gated access, and who audits the claim."}]}], "sections": [{"title": "What this report is", "subtitle": "Overview, page 3", "summary": "A threat intelligence report from Anthropic's own platform, covering activity the company says it disrupted between December 2025 and August 2026 across seven harm areas: cyber operations, influence operations, surveillance, scams and fraud, biological misuse, conventional weapons development, and distillation. It is the fourth in a series after reports in March, August and November 2025. The actors described include suspected state-sponsored groups, financially motivated criminals, commercial spyware vendors, state propaganda institutions and politically motivated individuals.", "ideas": ["The selection principle is stated and matters for every number in the report: these are the most notable and novel cases. They are not a sample of typical misuse.", "Two things a reader should hold throughout: the company is the detector, the adjudicator and the publisher, and its visibility stops at the edge of its own platform."], "quotes": ["The cases we share here aren't typical misuse, but rather examples of the most notable and novel threat activity we've identified to date.", "we believe we have a responsibility to disclose malicious misuse of our services"], "devEcon": "For anyone reading provider threat reports as evidence, the useful question is what the publisher can see and what it cannot. A platform sees the construction of an operation and loses sight of it at deployment; a social network sees distribution and not assembly; a government may see neither. None of the three can produce a rate, and all three can produce a pattern."}, {"title": "Cyber: sophistication stops being a signal", "subtitle": "Cyber operations, trends, pages 5-6 and 38-39", "summary": "The cyber argument is that the labour and tooling gap between a state service and a lone operator has closed. A hacktivist working from stolen credentials, scattered financially motivated individuals and a state espionage operator each ran multi-victim campaigns that would until recently have needed teams of skilled people. The attacks themselves are described as familiar; what changed is the economics. The report then sorts its cases along a spectrum of autonomy, from conversational assistance, through directed execution with a person making each targeting decision, to multi-agent operations running unattended for hours or days.", "ideas": ["For investigators, sophistication has stopped working as an attribution signal, which undoes a heuristic that has shaped threat intelligence for twenty years.", "Uplift is defined through speed, scale and depth, and the measured effects quoted concern tempo, and none concerns novelty: breaches completed in two or three hours, dozens of victims handled in parallel by one operator.", "Two caveats are entered carefully. Humans retain the decisions that matter most to them, including target selection, monetisation and review of results; and autonomy and harm are separate axes, since several of the worst compromises were directed step by step."], "quotes": ["Sophisticated attacks no longer require sophisticated attackers", "The main distinguishing feature between these classes of actors is no longer sophistication but intent."], "devEcon": "The defensive consequence is about static detection. If a defender's main cost imposition was that an attacker had to rebuild tooling after a signature was published, and rebuilding is now automated, that cost has moved. Nothing here suggests the underlying vulnerabilities changed, so the patching and credential hygiene agenda is unaltered and merely more urgent."}, {"title": "AI access as target, loot and cover", "subtitle": "Cyber operations, pages 28-33", "summary": "One of the report's more specific findings is that access to AI itself became an objective. Compromised keys, session tokens and accounts are described as having three uses at once: resale value, compute that runs at someone else's expense, and attribution to the credential's legitimate owner. A market has formed around this, including resellers offering cheap access to a frontier model while quietly serving a different one and harvesting the buyer's credentials. In every instance the report describes, the credentials were taken from customers' own environments. None came from Anthropic's systems.", "ideas": ["The practical advice in this section is unusually concrete: treat AI keys and agent integrations with the same seriousness as production credentials, and buy access only through authorised channels.", "One actor's stated goal was access to an unreleased model. The report says every attempted path failed, and says so in terms, which is the kind of negative statement these reports rarely contain."], "quotes": ["security through obscurity", "Organizations should treat AI keys and agent integrations with the same level of seriousness as they do production credentials"], "devEcon": "For anyone running a programme with an AI integration, this section is the operational one. An API key in a repository has always been a liability; the change is that it is now also a compute subsidy and a disguise for someone else's activity. The control is old and dull: rotate, scope, and audit what the key can reach."}, {"title": "Influence operations: building the apparatus", "subtitle": "Influence operations, pages 41-43", "summary": "Anthropic defines influence operations as efforts to manipulate the information environment with intent to deceive or covertly influence, typically while concealing the activity's origin. The pattern it reports is that the model was used to build the organisation as much as the content: doctrine manuals, opposition dossiers, persona systems, target databases, scoring rubrics for ranking staff, and in one case employment contracts encoding editorial loyalty. Standing instructions and doctrine files, reused across hundreds of sessions, replaced prompt-by-prompt direction, so contributors never needed to coordinate with each other.", "ideas": ["Attribution laundering is the recurring tactic: state or commissioned material engineered to read as independent reporting, passed through chains of outlets until it appears independently confirmed. In one case an actor had caveats about unverified claims removed so the material would read as established fact.", "Influence sold as a service appears repeatedly, including firms running these campaigns alongside ordinary advertising work, which gives the ultimate client deniability and puts the capability within reach of actors who would not build it."], "quotes": ["not to be the narrator, but the director", "no one knows the news is fake"], "devEcon": "The finding that generalises is about the back office. Propaganda has always needed editors, style guides, staff management and quality control, and that overhead is what limited how many operations a small group could run. A persistent instruction file does that work, which makes the interesting defensive signal organisational consistency across accounts. The text of any single post says little."}, {"title": "How the influence findings were measured", "subtitle": "Influence operations, pages 41-44 and case ratings throughout", "summary": "Anthropic rates each operation on the Breakout Scale, a six-category framework from the Brookings Institution that scores impact by how far content travels across platforms and communities. Category One is content confined to one community on one platform; the higher categories measure wider exposure. Most of the nine operations in the report are rated Two or Three. The company is explicit about why: it sits at the production stage, upstream of the platforms where content circulates, so it often disrupts an operation while it is still being assembled, and it relies on open-source research and industry data to learn what happened after material left its platform.", "ideas": ["The highest rating given is Category Four, for an operation whose content went out daily on an FM radio station and was carried by local outlets. The widest authentic reach in the report comes from broadcast distribution. Social media reached fewer people.", "The report says plainly that most of the content it found drew little or no authentic engagement, which is a useful corrective to the assumption that automated content automatically finds an audience."], "quotes": ["Influence operations often fail to reach a genuine audience.", "Our visibility into these operations ends once it's live."], "devEcon": "Borrowing the Breakout Scale is the single best methodological choice in the report, because it imports an external, published yardstick that other researchers already use. It also constrains the company's own claims: an operation rated Category Two cannot be described as having shaped an election, however alarming its construction."}, {"title": "Nine influence cases, and who ran them", "subtitle": "Influence operations, pages 44-80", "summary": "The nine operations are attributed to a mix of states, state-aligned institutions, commercial firms and individuals, originating in Russia, Iran, Turkey and across the Gulf, South Asia, Africa and Europe. They include a Russian state-aligned operation supplying a radio station in the Central African Republic; a France-based advertising agency running roughly seventy fabricated news sites that shifted political position according to who was paying; a commercial election-manipulation platform aimed at Malaysian constituencies; editorial pipelines feeding Russian state media; three Iranian state-aligned propaganda bodies; an automated fabricated-news operation in Bangladesh; an astroturfing campaign in Kenya; and an operation linked to Gulf officials targeting United Nations accountability mechanisms.", "ideas": ["The Bangladesh case is the clearest instance of an operation designed to be cheap: one person, rotating accounts, a script producing fixed batches of fabricated headlines and narratives aimed at audiences with limited literacy.", "The most serious individual harms are not about audiences at all. They include impersonating a real activist to hold live conversations with his contacts inside Iran, and profiling named individuals in Iran by arrest history."], "quotes": ["An actor might create a hundred social media accounts that appear to belong to ordinary citizens of a country, then have all of them post content amplifying the same political view over the course of a week."], "devEcon": "Read as a set, the cases say that the commercial market is now the main carrier. Two of the nine were run by working marketing or technology companies, and one explicitly sold itself as a political operations platform. Procurement, advertising regulation and company law are therefore as relevant to this problem as content moderation, and a good deal more enforceable."}, {"title": "Surveillance: a desk with no analysts left", "subtitle": "Surveillance operations, pages 81-108", "summary": "This section describes state-aligned actors, state-linked contractors and commercial spyware vendors using the model to build and run surveillance, with cases from China, Iran and West Africa. Three trends are stated: AI used in place of an engineering workforce, including the design of a population-scale interception platform for a national intelligence service; AI used to ingest data in bulk and pick targets, sorting social media users by location, demographic group and political leaning; and AI folded into security bureaucracy, to the point where one state security office produced an internal manual on prompting the model for intelligence work.", "ideas": ["The targets are the ones these services have always pursued: diaspora communities, religious minorities, journalists and dissidents abroad, with one case profiling religious leaders across Asia and another compiling pre-operational detail on lawful protests overseas.", "The most consequential design choice described is a warrant requirement removed at an operator's request from the component that generates a dossier on any phone number, with retention set to indefinite."], "quotes": ["First, AI is now being used in place of an engineering workforce.", "Second, AI is being used not only to build tools but to ingest data in bulk to identify targets.", "Third, AI is being fully integrated into states' security bureaucracy."], "devEcon": "The substitution claim is the one to test elsewhere. A unit that once needed many analysts producing a few hundred reports can, on this account, produce thousands from one office. If that holds, the binding constraint on state surveillance stops being staff and becomes data access and legal process, which is exactly where the warrant-removal detail lands."}, {"title": "Conventional weapons", "subtitle": "Conventional weapons, pages 111-128", "summary": "A harm area new to this series. The report describes six cases, three in China, two in Russia and one in Yemen, split between development and procurement. In the development cases, actors used the model to write software for systems they already had hardware for and expertise in, including guidance software for a rocket that was field-tested and failed, software for an autonomous drone swarm, a specification and proposal for an undersea defensive system, and a targeting suite for electronic warfare and air defence suppression. In the two procurement cases, actors sourced mixed military and civilian goods and compiled intelligence on a foreign weapons programme and its suppliers.", "ideas": ["In every development case the actors split work across many sessions so that no single session revealed the purpose, and the report says safeguards blocked many requests but not all of them.", "The drone case is the clearest statement of a line crossed: the report says the platform was designed for autonomous lethal engagement, with target selection and detonation possible without a person in the loop."], "quotes": ["each of the actor's requests (commercial quote requests, tender documents, and supplier lookups) seem individually mundane"], "devEcon": "The procurement case has the clearest policy lesson and nothing to do with weapons engineering. Every individual request was an ordinary commercial errand, and the pattern was visible only in aggregate. Export control is an aggregation problem, which is what classifiers trained on single requests cannot see."}, {"title": "Biological misuse and the dual-use problem", "subtitle": "Biological misuse, pages 129-138", "summary": "The most carefully written section in the report, and the one with the least to show. Five cases are described at a deliberately coarse level, with institutions, countries and specific agents withheld because the people involved are working scientists whom the company does not accuse of intending harm. Two involve viral gain-of-function work reached through services that evaded regional blocks; one is a grant application drafted through a reseller relay; two involve computational work on venoms and toxins with stated therapeutic goals and recognised dual-use potential. The conclusion is that significant dual-use research is being done by actors who routinely evade access controls. The report does not conclude that models have uplifted a biological threat.", "ideas": ["The strongest safeguard result in the report is here: classifiers blocked the high-risk category well enough that one researcher's work was confined to the company's weakest models, which the report estimates limited the help to clerical assistance.", "The strongest admission is also here: for novel dual-use compounds the classifier was never designed to intervene, and the report concludes that a filter cannot simultaneously enable benefit and prevent harm when intent cannot be read.", "The historical analogy the report reaches for is the Soviet Biopreparat programme, where most researchers believed they were doing defensive work, and which supports its point that visible malicious intent is a marker of an unsophisticated actor."], "quotes": ["Biological capabilities are dual use: they can be used for beneficial or harmful purposes", "Overt malicious intent is, therefore, often evidence that a particular actor is not all that sophisticated"], "devEcon": "The conclusion drawn, that frontier biological capability should be served through trusted user programmes with institutional verification, is a governance proposal dressed as a technical finding. It is reasonable and it has costs the report does not price: it excludes researchers in regions the company does not serve, and it makes the provider the accreditor of legitimate science."}, {"title": "Scams: a deceptive dating network", "subtitle": "Scams and fraud, pages 139-142", "summary": "One case, and the report presents it as showing both the reach and the limits of current models for fraud. A China-based studio built a network of more than twenty dating apps in which the conversational personas were automated while the service advertised itself as human. Over a two-week window in April 2026 the company identified more than 4,700 distinct personas in conversation with at least 25,000 people. Real gig workers were mixed into the same feed at roughly one to three, handling the things the model could not do, such as live video calls and social media follow-backs, so that users would believe the app was authentic.", "ideas": ["The deception was invisible from inside any single exchange. The operator's instructions read like an ordinary roleplay deployment, and the monetisation sat outside the conversation entirely.", "The report notes cases where the model's own reasoning surfaced the harm, including exchanges in which users disclosed serious illness or acute distress, and the output continued in persona anyway.", "The designators in the report, such as the one in the quote below, are Anthropic's own internal labels for actors it observes abusing the models. They do not map to the names other vendors or governments use."], "quotes": ["Despite not drawing upon any novel model-misuse techniques, GTG-15001 is operating at a much larger scale, and deliberately misused multiple AI providers for distinct, non-overlapping roles."], "devEcon": "This case is the best argument in the report for looking at deployments rather than at conversations. A system prompt that is unremarkable in isolation becomes fraud when there is a payment wall, a metered quota and a policy of never disclosing automation behind it. The finding points at app store review and payment processing as much as at model safeguards."}, {"title": "Illicit distillation, and the users in the middle", "subtitle": "Illicit distillation, pages 143-154", "summary": "Anthropic distinguishes distillation, a legitimate training method, from what it calls illicit distillation: an industrial-scale covert campaign to extract a model's capabilities and replicate them elsewhere without authorisation, typically enabled by fraudulent accounts and proxy services. It reports campaigns attributed with high confidence to seven China-based labs, naming Alibaba, Moonshot, DeepSeek, Zhipu, Xiaomi, SenseTime and MiniMax, with volumes from hundreds of thousands to over 151 million exchanges.", "ideas": ["The privacy finding is the part of this section that reaches beyond the industry. Some labs relayed their own users' sessions to Claude, in some cases serving the responses back as their own, and those sessions carried names, contact details, corporate data and credentials from users in many languages who had no way of knowing.", "The safety argument is that safeguards do not travel. The report says a model distilled from a frontier model can carry capability gains into domains the harvested exchanges barely touched, while the protections that governed the original do not come with them.", "Anthropic's countermeasures are described as layered: attribution of proxy networks to organisations rather than account-by-account bans, classifiers for adversarial extraction, summarising internal reasoning before responding, and identity verification when abuse signals appear."], "quotes": ["Distillation itself is a legitimate training method.", "We define illicit distillation as an industrial-scale, covert campaign to extract a model's capabilities and replicate them in another model without authorization."], "devEcon": "This is the section where the publisher has the most direct commercial interest. Separate the three claims: that named competitors harvested reasoning traces is an assertion about conduct, evidenced from the company's own logs; that this is unfair appropriation is a commercial and legal claim; that it strips safety properties is a safety claim resting on internal research described but not published."}, {"title": "What the report concedes about its own defences", "subtitle": "Across the report, with the admissions collected", "summary": "Anthropic's safeguard record, in its own account, is mixed and specifically mixed. Refusals worked where the boundary was clear and the request legible: the model declined to name real individuals as militants for an operation in the Central African Republic, declined requests for covert interrogation and large-scale persona creation in one surveillance case, and refused most facially malicious requests in another. Where the request was fragmented, reframed or technically dual-use, the record is worse. One refusal was reversed on re-prompting; in another case the model complied across many sessions with no intervention.", "ideas": ["Fragmentation is the recurring bypass: work split into individually benign requests, across smaller later sessions, in weapons, surveillance and malware cases alike.", "Several actors reached the models from regions the company does not serve, through virtual private servers, foreign phone numbers, rotated accounts and resellers, which makes regional policy as much a detection problem as a compliance one.", "One case records the model flagging the political weighting in a staff scoring scheme, the actor relabelling it in neutral terms, and the scoring continuing unchanged."], "quotes": ["Our existing safeguards did not perform uniformly in these cases.", "the only safe way to serve frontier biological capabilities is to offer them in trusted user programs"], "devEcon": "Publishing failure modes in this much detail is the most credible thing the report does. The pattern across every admission is the same: refusals are evaluated per request, and the operations described are built across requests. That is an architectural mismatch, which tuning cannot fix, and nothing claims it has been solved."}, {"title": "What this evidence cannot settle", "subtitle": "Reading the report as evidence", "summary": "The report is a set of case studies chosen for novelty, published by the party that detected them, with no denominator anywhere. It cannot tell you how much misuse there is, what share of attempts succeed, whether misuse is rising or falling, or how this platform compares with others. Where it offers figures, they count what was found, with no estimate of what exists, and several of the operational numbers, such as engagement metrics in one influence case, are taken from the actors' own tools and flagged as unverifiable. None of that makes the patterns unreliable; it means they are patterns, and they cannot serve as measurements.", "ideas": ["Attribution is stated with varying and labelled confidence, from high confidence to low, and sometimes with no attribution at all. Treat each case's confidence label as part of the claim.", "Because disruption often happened during assembly, outcomes are frequently unknown. The report says so case by case, including where it cannot confirm whether ghost-written testimony or target dossiers reached their intended recipients."], "quotes": ["Because these figures are self-reported by the actor's own tools, we cannot independently verify them."], "devEcon": "There is a reasonable use for evidence like this and an unreasonable one. It is good for identifying mechanisms a defender should look for and for shaping where to put controls. It is not a base rate, and it cannot carry a claim about trend. Any policy argument that needs a trend needs several providers publishing comparably over several periods, which does not yet exist."}, {"title": "The policy questions left open", "subtitle": "Reading across the seven harm areas", "summary": "Four questions run through the report without being answered. Who should receive this information, and in what form, given that disclosure is voluntary, selective and unaudited? If frontier capability in some domains can only be served safely to verified users, who accredits the users, and what happens to researchers in regions a provider does not serve? If safeguards do not survive distillation, what obligation attaches to a lab that trains on another model's outputs? And if operations are assembled across many ordinary-looking requests, what is the unit of review that could catch them without reading everything?", "ideas": ["The report assumes industry intelligence sharing as the main remedy and shows its limits in passing: one operator re-established access within days of a takedown, and another's platform kept running locally after the account was banned.", "The observability argument runs against the privacy argument and the report acknowledges it only on one side: retaining enough data to detect misuse is what lets a provider see a mass surveillance platform being designed, and is also what makes the provider a surveillance risk."], "quotes": ["As models become increasingly capable, their risks will increase, unless AI developers and society's defenders act to make them safer."], "devEcon": "For practitioners the answerable question is narrower: if your work would look, in a provider's logs, like one of the dual-use cases here, assume it can be reviewed, blocked or reported, and design around that. Human rights documentation, conflict research, security testing and infectious disease work all sit in that space."}], "concepts": [{"term": "Uplift", "definition": "The report's term for the capability boost a model gives an actor, assessed separately through speed, scale and depth.", "practitionerNote": "The frame is better than the usual question of whether a model can perform a task, because it asks which step was automated and what that step used to cost."}, {"term": "The autonomy spectrum", "definition": "Anthropic's ordering of its cases from conversational assistance, through directed execution with a human making each targeting decision, to multi-agent operations running unattended.", "practitionerNote": "The report insists autonomy is not a severity scale: some of its worst compromises were human-directed throughout."}, {"term": "AI supply chain as target", "definition": "The pattern of stealing API keys, session tokens and accounts for three simultaneous uses: resale value, compute at the victim's expense, and attribution to the victim.", "practitionerNote": "Treat model credentials as production secrets. Every instance in the report came from a customer environment. None came from the provider's systems."}, {"term": "Breakout Scale", "definition": "A six-category framework from the Brookings Institution for rating the impact of an influence operation by how far content travels across platforms and communities.", "practitionerNote": "Most cases in this report are rated Category Two or Three. The one Category Four rating is for an operation distributed by radio, which is a finding about broadcasting."}, {"term": "Attribution laundering", "definition": "Engineering content so that state or commissioned narratives appear to come from independent voices, including stripping state attribution from republished material and passing claims through chains of outlets.", "practitionerNote": "The detectable signature is repetition across supposedly unrelated outlets within minutes, which is an organisational fingerprint that no single text carries."}, {"term": "Dual use", "definition": "Research whose beneficial and harmful applications rest on the same knowledge, which the report treats as the central difficulty in biological safeguards.", "practitionerNote": "The report's conclusion is that intent cannot be read from a technical request, so a classifier cannot enable benefit and prevent harm at once. That is an argument for gating by user rather than by content."}, {"term": "Illicit distillation", "definition": "An industrial-scale covert campaign to extract a model's capabilities and replicate them in another model without authorisation, usually enabled by fraudulent accounts and proxy services.", "practitionerNote": "The claim with the widest reach is that safety properties do not transfer with the capabilities, so a distilled model can carry the ability without the restraint."}], "tools": [{"label": "Reading a provider threat report without over-reading it", "intro": "Six questions to put to this report, or to the next one from any provider. They are the questions that separate a mechanism you can act on from a number you cannot use.", "html": "<div class='tool-body'><p><b>1. What could the publisher see, and where did its sight end?<\/b> Here it is the construction of an operation and not its circulation, which is why most influence cases are rated low on reach and why outcomes in the weapons and surveillance cases are often unknown. A social platform would have the opposite blind spot.<\/p><p><b>2. Is there a denominator?<\/b> No report in this genre has one. Counts of cases found cannot support a rate, a share or a trend, and the report says its cases were selected for novelty and are not typical.<\/p><p><b>3. What is the attribution confidence on this specific case?<\/b> The report labels it case by case, from high to low, and sometimes declines to attribute at all. A high-confidence state attribution and an assessed contractor relationship are different claims.<\/p><p><b>4. Which claims rest on what actors said about themselves?<\/b> Institutional affiliations, funding sources and engagement metrics are frequently self-reported. The report flags most of these; carry the flag when you quote the figure.<\/p><p><b>5. Does the publisher have an interest in this finding?<\/b> Separate the conduct claim from the commercial claim from the safety claim, most of all in the distillation section, where all three are present and only the first is evidenced from logs.<\/p><p><b>6. What would this change on Monday?<\/b> Across seven harm areas, the actionable items in this report are unglamorous: rotate and scope model credentials, treat agent integrations as production surface, patch the edge devices, and review deployments rather than individual messages.<\/p><\/div>"}], "connections": [{"book": "Ben Nimmo, The Breakout Scale: Measuring the Impact of Influence Operations (Brookings Institution, 2020)", "text": "The framework the report uses to rate every influence case. Reading it first tells you what a Category Two rating does and does not assert, which is the difference between an operation that existed and one that worked."}, {"book": "Thomas Rid, Active Measures: The Secret History of Disinformation and Political Warfare (Farrar, Straus and Giroux, 2020)", "text": "A century of the same tradecraft without the automation: forged documents, front organisations, laundered attribution and ghost-written testimony. It is the best corrective to reading any of this as new, and it makes the question what automation changed in existing practice."}, {"book": "Renee DiResta, Invisible Rulers: The People Who Turn Lies into Reality (PublicAffairs, 2024)", "text": "On how manufactured narratives acquire real audiences, which is precisely the step this report cannot observe. Useful for thinking about why most of the operations here failed to break out and what the exceptions had in common."}, {"book": "Ronald J. Deibert, Reset: Reclaiming the Internet for Civil Society (House of Anansi, 2020)", "text": "From the director of the Citizen Lab, on the commercial surveillance market and the targeting of diaspora and dissident communities. The surveillance section of this report is a continuation of that story with a new supplier in the chain."}, {"book": "Ken Alibek, Biohazard (Random House, 1999)", "text": "The first-hand account of the Soviet Biopreparat programme that the report's own footnote draws on for its point that most researchers in an offensive programme believed their work was defensive. It is the historical ground for the dual-use argument."}], "southAsia": ["South Asia appears in the report in three places. One influence operation was run by a single person in Bangladesh, producing fabricated Bengali-language news promoting the Awami League and attacking its opponents, aimed at rural audiences through live video platforms; the report says it found no evidence the party directed or funded it. South Asia is also named among the regions the Iranian state-aligned operations targeted, and one of the Russian state-media pipelines produced material in languages for audiences across several continents.", "India does not appear as a target anywhere in the report, which is worth noting given that the techniques travel without modification: the Bangladesh case needed one operator, one script and a rotating set of accounts.", "For Indian organisations the direct exposure in this report lies mainly in the cyber and credential material, with less in the influence material. Incident reporting here is governed by the CERT-In directions of 28 April 2022, issued under section 70B(6) of the Information Technology Act 2000 and effective from 27 June 2022, which require a cyber security incident to be reported to CERT-In within six hours of being noticed. A compromised model credential being used for someone else's attack traffic is an incident on that definition.", "The privacy half of the distillation finding maps onto the Digital Personal Data Protection Act 2023, which places obligations on a data fiduciary for the personal data it processes and requires intimation of a personal data breach to the Data Protection Board and to affected data principals. An Indian company whose staff used a model router that silently relayed sessions to a third party would have a hard time showing it knew where its users' data went.", "The use that Indian practitioners should think hardest about is the one the report treats as a safeguard success. Work that resembles the dual-use cases here, including human rights documentation, conflict monitoring, security research and infectious disease work, can be blocked, reviewed or reported by a provider, and there is no published route by which an Indian researcher or civil society organisation can be recognised in advance as legitimate."], "critiques": ["The cases are selected for novelty by the publisher, who is also the detector and the adjudicator, and there is no denominator anywhere. Nothing in the report supports a statement about how much misuse occurs or whether it is growing.", "The company's own commercial interest is strongest in the distillation section, where competitors are named and the conduct, commercial and safety claims are presented together. The safety claim, that distilled models carry capability without restraint, rests on internal research that the report describes and has not published.", "Uplift is asserted case by case and never measured against a counterfactual. The report tells you what actors did with the model and not what the same actors would have achieved without it, which is the quantity its own definition requires.", "The biological section withholds countries, institutions and agents for good reasons, with the effect that its central claims cannot be checked by anyone outside the company. Protecting named scientists and enabling external verification pull in opposite directions here, and the report chooses one.", "The remedy the report lands on for frontier biology, trusted user programmes with institutional verification, is a governance proposal with distributional consequences it does not examine: it makes providers the accreditors of legitimate science and leaves researchers in unserved regions with the gray market the report is otherwise documenting."], "suggested": ["What are the seven harm areas in this report, and what period does it cover?", "Explain the argument that sophisticated attacks no longer require sophisticated attackers, and what evidence is offered for it.", "What does the report mean by uplift, and why does it insist that autonomy and harm are separate axes?", "How does the Breakout Scale work, and why are most of the influence operations rated low on it?", "What does the report concede about its own safeguards, and where did they fail?", "Summarise the dual-use argument in the biological section and the conclusion it reaches about classifiers."], "systemPrompt": "You are a study companion for 'Detecting and countering misuse of AI: September 2026', a threat intelligence report published by Anthropic on 10 September 2026, 154 pages, covering activity the company says it disrupted between December 2025 and August 2026. It is the fourth in a series after reports in March, August and November 2025. Seven harm areas in the report's order: cyber operations (pages 4-40), influence operations (41-80), surveillance (81-110), conventional weapons (111-128), biological misuse (129-138), scams and fraud (139-142) and illicit distillation (143-154). The cyber argument is economic: the gap between state services and lone operators has closed, the attacks themselves are familiar, and sophistication has stopped being a reliable attribution signal; uplift is defined through speed, scale and depth; cases are ordered along an autonomy spectrum, with the caveats that humans retain target selection, monetisation and review, and that autonomy and harm are separate axes. A further cyber finding is that AI access itself became a target, stolen keys serving as loot, compute and cover, always taken from customer environments and never from Anthropic's systems. Influence operations: nine cases from Russia, Iran, Turkey, the Gulf, South Asia, Africa and Europe, run by states, state-aligned institutions, commercial firms and individuals, rated on the Brookings Institution's six-category Breakout Scale, mostly Category Two or Three, with one Category Four for an operation distributed daily by FM radio in the Central African Republic; the model built the apparatus as well as the content, including doctrine manuals, persona systems, target databases and scoring rubrics; recurring tactics are attribution laundering, influence sold as a service, fabricated personas and impersonation; most content drew little or no authentic engagement, and the company's visibility ends once an operation goes live. Surveillance: state-aligned actors, contractors and commercial vendors in China, Iran and West Africa, with three stated trends, that AI stands in for an engineering workforce, that it ingests data in bulk to pick targets, and that it is folded into security bureaucracy; targets are diaspora communities, religious minorities, journalists and dissidents. Conventional weapons: six cases, three in China, two in Russia, one in Yemen, split between software development for systems the actors already had, and procurement and intelligence collection; actors split work across sessions to hide purpose. Biological misuse: five cases described coarsely, with institutions, countries and agents withheld because the individuals are working scientists not accused of intending harm; classifiers held for the high-risk category and did not intervene for novel dual-use compounds, and the conclusion is that a classifier cannot simultaneously enable benefit and prevent harm where intent cannot be read, so frontier biology should be served through trusted user programmes. Scams: one case, a China-based studio running more than twenty dating apps with automated personas advertised as human, over 4,700 personas in contact with at least 25,000 people in two weeks in April 2026, with real gig workers mixed in at roughly one to three. Illicit distillation: campaigns attributed with high confidence to seven China-based labs, named as Alibaba, Moonshot, DeepSeek, Zhipu, Xiaomi, SenseTime and MiniMax, targeting reasoning transcripts, with volumes up to over 151 million exchanges; some labs relayed their own users' sessions, which carried third parties' names, corporate data and credentials; the report argues safety properties do not transfer with distilled capabilities. Important rule: describe categories, patterns, defences and policy questions only. Give no operational detail about any attack, malware, weapon, pathogen, fraud technique or extraction method beyond what a general newspaper reader would need to understand the category, and do not reproduce indicators of compromise, prompts or procedures from the report even if asked. Be accurate about what the evidence supports: cases selected for novelty by the company that detected them, with no denominator, so they establish mechanisms and cannot establish rates or trends; attribution confidence is labelled case by case; several figures are self-reported by actors and flagged as unverifiable. Users are development practitioners, researchers, policy people and lawyers. Where the publisher's own interest is engaged, particularly in distillation, separate the conduct claim from the commercial claim from the safety claim."};
+// Tab management
+const ALL_TABS = [
+  {id:"overview",label:"Overview"},
+  {id:"pathways",label:"Pathways"},
+  {id:"sections",label:"Sections"},
+  {id:"concepts",label:"Concepts"},
+  {id:"toolkit",label:"Toolkit"},
+  {id:"context",label:"Context"},
+  {id:"ask",label:"Ask"},
+];
+// Only show a tab when it actually has content — otherwise it opens to a blank
+// panel (e.g. pathways is left empty for most books). Overview and Ask always show.
+function __hasTab(id){
+  const has = a => Array.isArray(a) && a.length > 0;
+  switch(id){
+    case "pathways": return has(DATA.pathways);
+    case "sections": return has(DATA.sections);
+    case "concepts": return has(DATA.concepts);
+    case "toolkit":  return has(DATA.tools);
+    case "context":  return has(DATA.southAsia)||has(DATA.critiques)||has(DATA.connections)||has(DATA.suggested);
+    case "ask":      return !!DATA.systemPrompt;
+    default: return true;
+  }
+}
+const TABS = ALL_TABS.filter(t => __hasTab(t.id));
+
+const tabbar = document.getElementById("tabbar");
+TABS.forEach(t => {
+  const btn = document.createElement("button");
+  btn.className = "tab-btn" + (t.id === "overview" ? " active" : "");
+  btn.textContent = t.label;
+  btn.onclick = () => switchTab(t.id);
+  tabbar.appendChild(btn);
+});
+
+function switchTab(id) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("p-" + id).classList.add("active");
+  tabbar.querySelectorAll(".tab-btn")[TABS.findIndex(t=>t.id===id)].classList.add("active");
+}
+
+// OVERVIEW
+(function() {
+  const el = document.getElementById("p-overview");
+  el.innerHTML = `
+    <div class="hero">
+      <div class="day-badge">${DATA.dayBadge}</div>
+      <h1>${DATA.title}</h1>
+      <div class="auth">${DATA.author}</div>
+      <div class="tagline">${DATA.tagline}</div>
+      <div class="pills">${DATA.pills.map(p=>`<span class="pill">${p}</span>`).join("")}</div>
+    </div>
+    <div class="stat-grid">
+      ${DATA.stats.map(s=>`<div class="stat"><div class="stat-n">${s.n}</div><div class="stat-l">${s.l}</div></div>`).join("")}
+    </div>
+    <div class="arg">
+      <div class="h1">The central argument</div>
+      ${DATA.argument.map(p=>`<p>${p}</p>`).join("")}
+    </div>
+    <div class="h1" style="margin-top:24px">What's in this companion</div>
+    <div class="nav-grid">
+      ${[["pathways","Learning Pathways","Structured reading routes by role"],["sections","Section by Section","Full analysis with dev econ connections"],["concepts","Concepts & Frameworks","Key terms with practitioner notes"],["toolkit","Practitioner Toolkit","Interactive tools"],["context","Book in Context","Connections and assessment"],["ask","Ask the Book","Gemini-powered Q&A"]].filter(([id])=>__hasTab(id)).map(([id,label,desc])=>`<button class="nav-card" onclick="switchTab('${id}')" ><div class="nav-card-label">${label}</div><div class="nav-card-desc">${desc}</div></button>`).join("")}
+    </div>
+  `;
+})();
+
+// PATHWAYS
+(function() {
+  const el = document.getElementById("p-pathways");
+  let active = 0;
+  function render() {
+    const pw = DATA.pathways[active];
+    if (!pw) { el.innerHTML = ""; return; }
+    el.innerHTML = `
+      <div class="h1">Learning Pathways</div>
+      <div class="sub">Three structured routes through the book based on your role.</div>
+      <div class="pw-tabs">
+        ${DATA.pathways.map((p,i)=>`<button class="pw-btn ${i===active?"active":""}" onclick="__pw(${i})">${p.label}</button>`).join("")}
+      </div>
+      <div class="pw-desc">${pw.desc}</div>
+      <div class="pw-steps">
+        ${pw.steps.map((s,i)=>`<div class="pw-step"><div class="step-n">${i+1}</div><div><div class="step-title">${s.section}</div><div class="step-focus">${s.focus}</div></div></div>`).join("")}
+      </div>
+    `;
+  }
+  window.__pw = (i) => { active = i; render(); };
+  render();
+})();
+
+// SECTIONS
+(function() {
+  const el = document.getElementById("p-sections");
+  let openId = null;
+  let showDev = {};
+  function render() {
+    el.innerHTML = `
+      <div class="h1">Section by Section</div>
+      <div class="sub">All sections with full analysis and development economics connections.</div>
+      ${DATA.sections.map((s,i)=>`
+        <div class="sec-card">
+          <button class="sec-header" onclick="__sec(${i})">
+            <div class="sec-num">§${i+1}</div>
+            <div class="sec-title-block"><div class="sec-title">${s.title}</div><div class="sec-sub">${s.subtitle}</div></div>
+            <div class="sec-chev">${openId===i?"−":"+"}</div>
+          </button>
+          ${openId===i?`<div class="sec-body">
+            <div class="sec-summary">${s.summary}</div>
+            <div class="ideas-label">Key ideas</div>
+            ${s.ideas.map(idea=>`<div class="idea-item"><span class="idea-dot"></span><span>${idea}</span></div>`).join("")}
+            <div class="ideas-label" style="margin-top:14px">Key quotes</div>
+            ${s.quotes.map(q=>`<blockquote>${q}</blockquote>`).join("")}
+            <button class="dev-toggle" onclick="__dev(${i})">${showDev[i]?"Hide":"Show"} development economics connection</button>
+            ${showDev[i]?`<div class="dev-text">${s.devEcon}</div>`:""}
+          </div>`:""}
+        </div>
+      `).join("")}
+    `;
+  }
+  window.__sec = (i) => { openId = openId===i?null:i; render(); };
+  window.__dev = (i) => { showDev[i]=!showDev[i]; render(); };
+  render();
+})();
+
+// CONCEPTS
+(function() {
+  const el = document.getElementById("p-concepts");
+  let open = null;
+  function render() {
+    el.innerHTML = `
+      <div class="h1">Concepts & Frameworks</div>
+      <div class="sub">Key terms with definitions and practitioner notes. Click to expand.</div>
+      ${DATA.concepts.map((c,i)=>`
+        <div class="concept-card ${open===i?"open":""}" onclick="__con(${i})">
+          <div class="concept-term">${c.term}</div>
+          ${open===i?`<div class="concept-def">${c.definition}</div><div class="prac-label">Practitioner note</div><div class="prac-text">${c.practitionerNote}</div>`:""}
+        </div>
+      `).join("")}
+    `;
+  }
+  window.__con = (i) => { open = open===i?null:i; render(); };
+  render();
+})();
+
+// TOOLKIT  
+(function() {
+  const el = document.getElementById("p-toolkit");
+  el.innerHTML = `
+    <div class="h1">Practitioner Toolkit</div>
+    <div class="sub">Interactive tools derived from the book. Use for personal practice or programme design.</div>
+    <div class="tool-tabs">
+      ${DATA.tools.map((t,i)=>`<button class="tool-btn ${i===0?"active":""}" onclick="__tool(${i})">${t.label}</button>`).join("")}
+    </div>
+    ${DATA.tools.map((t,i)=>`
+      <div class="tool-panel ${i===0?"active":""}" id="toolp-${i}">
+        <div class="tool-intro">${t.intro}</div>
+        ${t.html}
+      </div>
+    `).join("")}
+  `;
+  window.__tool = (i) => {
+    document.querySelectorAll(".tool-btn").forEach((b,j)=>b.classList.toggle("active",i===j));
+    document.querySelectorAll(".tool-panel").forEach((p,j)=>p.classList.toggle("active",i===j));
+  };
+})();
+
+// CONTEXT
+(function() {
+  const el = document.getElementById("p-context");
+  el.innerHTML = `
+    <div class="h1">Book in Context</div>
+    <div class="sub">How this book fits within the broader literature, and an honest assessment of its limits.</div>
+    <div class="context-h">Connected works</div>
+    ${DATA.connections.map(c=>`<div class="conn-card"><div class="conn-book">${c.book}</div><div class="conn-text">${c.text}</div></div>`).join("")}
+    <div class="context-h" style="margin-top:24px">Honest assessment</div>
+    <div class="sub">Limits and qualifications for the ImpactMojo context:</div>
+    ${DATA.critiques.map((c,i)=>`<div class="crit-item"><div class="crit-n">${i+1}</div><div class="crit-text">${c}</div></div>`).join("")}
+  `;
+})();
+
+// ASK
+(function() {
+  const el = document.getElementById("p-ask");
+  let apiKey = "", msgs = [], loading = false;
+  
+  function renderSetup() {
+    el.innerHTML = `
+      <div class="ask-setup">
+        <div class="h1">Ask the Book</div>
+        <div class="sub">AI-powered Q&A using Gemini 2.0 Flash (free). Requires a Google AI Studio API key.</div>
+        <div class="setup-steps">
+          <div class="setup-step"><span class="setup-num">1</span><span>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a> and create a free API key.</span></div>
+          <div class="setup-step"><span class="setup-num">2</span><span>Paste it below. The key stays in your browser only and is never stored.</span></div>
+        </div>
+        <div class="key-row">
+          <input class="key-input" type="password" id="key-in" placeholder="AIza..." oninput="document.getElementById('key-submit').disabled=!this.value.trim()"/>
+          <button class="key-btn" id="key-submit" disabled onclick="__setKey()">Connect</button>
+        </div>
+      </div>
+    `;
+  }
+  
+  function renderChat() {
+    el.innerHTML = `
+      <div class="ask-ui">
+        <div class="ask-hdr"><span class="ask-hdr-title">Ask the Book</span><button class="ask-reset" onclick="__resetKey()">Change key</button></div>
+        <div class="msgs" id="msgs-box">
+          ${msgs.length===0?`<div><div class="suggested-label">Suggested questions</div>${DATA.suggested.map(q=>`<button class="sug-btn" onclick="__ask('${q.replace(/'/g,"\'")}')">${q}</button>`).join("")}</div>`:""}
+          ${msgs.map(m=>`<div class="msg ${m.role}"><div class="msg-text">${m.content}</div></div>`).join("")}
+          ${loading?`<div class="msg assistant"><div class="typing"><span></span><span></span><span></span></div></div>`:""}
+        </div>
+        <div class="ask-input-row">
+          <textarea class="ask-input" id="ask-in" rows="2" placeholder="Ask about the book..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();__sendAsk()}"></textarea>
+          <button class="ask-send" id="ask-send" onclick="__sendAsk()">Send</button>
+        </div>
+      </div>
+    `;
+    const box = document.getElementById("msgs-box");
+    if(box) box.scrollTop = box.scrollHeight;
+  }
+  
+  window.__setKey = () => {
+    const v = document.getElementById("key-in").value.trim();
+    if(v) { apiKey = v; renderChat(); }
+  };
+  window.__resetKey = () => { apiKey=""; msgs=[]; renderSetup(); };
+  window.__ask = (q) => {
+    document.getElementById("ask-in").value = q;
+    __sendAsk();
+  };
+  window.__sendAsk = async () => {
+    const inp = document.getElementById("ask-in");
+    if(!inp) return;
+    const q = inp.value.trim();
+    if(!q || loading) return;
+    inp.value = "";
+    msgs.push({role:"user",content:q});
+    loading = true; renderChat();
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          system_instruction:{parts:[{text:DATA.systemPrompt}]},
+          contents: msgs.map(m=>{return{role:m.role==="assistant"?"model":"user",parts:[{text:m.content}]}}).slice(0,-1).concat([{role:"user",parts:[{text:q}]}]),
+          generationConfig:{maxOutputTokens:1200,temperature:0.3}
+        })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error?.message||"API error");
+      const reply = data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join("")||"No response.";
+      msgs.push({role:"assistant",content:reply});
+    } catch(e) {
+      msgs.push({role:"assistant",content:"Error: "+e.message});
+    }
+    loading = false; renderChat();
+  };
+  
+  renderSetup();
+})();
+</script>
+
+<!-- ImpactMojo Footer -->
+<!-- Ethics & Copyright Disclaimer -->
+<section class="im-ethics-disclaimer" style="max-width:1100px;margin:2rem auto 1rem;padding:1.25rem 1.5rem;background:rgba(14,165,233,0.06);border-left:4px solid #0EA5E9;border-radius:8px;font-family:'Inter','Amaranth',sans-serif;font-size:0.85rem;line-height:1.65;color:#475569;">
+  <p class="im-ethics-heading" style="margin:0 0 0.5rem;font-weight:600;">A note on books, authors, and intellectual labour</p>
+  <p style="margin:0;">All books companioned on ImpactMojo have been duly purchased with real money and form part of a personal collection. None of the source texts have been obtained by any illegal means: we deeply respect the intellectual labour of authors, editors, and publishers. These reading companions are offered free of charge as educational aids; ImpactMojo does not sell reading companions as a paid service and therefore does not violate any commercial licensing agreement or copyright. Nothing here reproduces the full text of any book: each companion is an interpretive study guide.</p>
+</section>
+
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;color:#EF4444;"><use href="#si_Heart"/></svg> by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Info"/></svg> About ImpactMojo</h4>
+<ul>
+<li><a href="../about.html">About Us</a></li>
+<li><a href="../contact.html">Contact</a></li>
+<li><a href="https://github.com/ImpactMojo/ImpactMojo" rel="noopener noreferrer" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Globe_detailed"/></svg> GitHub</a></li>
+<li><a href="../transparency.html">Transparency</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lock"/></svg> Legal</h4>
+<ul>
+<li><a href="../privacy-policy.html">Privacy Policy</a></li>
+<li><a href="../terms-of-service.html">Terms of Service</a></li>
+<li><a href="../disclaimer.html">Disclaimer</a></li>
+<li><a href="../data-protection.html">Data Protection</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Lightning"/></svg> Quick Links</h4>
+<ul>
+<li><a href="../catalog.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Library_books"/></svg> All Courses</a></li>
+<li><a href="../premium.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Flare"/></svg> Premium Content</a></li>
+<li><a href="../coaching.html">Coaching</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><use href="#si_Book"/></svg> Resources</h4>
+<ul>
+<li><a href="../handouts.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Article"/></svg> Handouts</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../faq.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#si_Help"/></svg> FAQ</a></li>
+<li><a href="../sitemap.html">Sitemap</a></li>
+<li><a href="/docs/" rel="noopener noreferrer" target="_blank">Documentation</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. All content for educational purposes only.</p>
+<p>Released under <strong>MIT License</strong> | Supported by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+</div>
+</div>
+</footer>
+
+<script src="/js/theme.js"></script>
+
+
+<!-- Supabase Auth -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
+<script src="/js/state-manager.js"></script>
+<script src="/js/config.js"></script>
+<script src="/js/auth.js"></script>
+
+<!-- Floating paper plane (ImpactMojo decorative element) -->
+<svg class="im-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+  <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+  <circle cx="40" cy="155" r="2" fill="#0EA5E9" opacity="0.6"/>
+  <circle cx="35" cy="165" r="1.5" fill="#6366F1" opacity="0.4"/>
+  <circle cx="45" cy="170" r="1" fill="#10B981" opacity="0.5"/>
+</svg>
+<script src="/js/translate-sarvam.js" defer></script>
+  <script src="/js/site-chrome.js" defer></script>
+</body>
+</html>
