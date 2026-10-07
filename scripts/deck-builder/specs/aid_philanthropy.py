@@ -1450,7 +1450,7 @@ SEC10 = [
            [P("green", "When some money is unrestricted",
               "Reserves bridge gaps. Systems for data and finance improve. Organisations can respond "
               "to a flood or a policy change without waiting for a new grant.")]),
-        H("amber", "Illustrative: an NGO with a &#8377;2 crore budget and no unrestricted income "
+        H("amber", "Illustrative (hypothetical figures): an NGO with a &#8377;2 crore budget and no unrestricted income "
           "cannot cover a three-month funding delay from any source. A reserve of &#8377;50 lakh "
           "would cover it."),
     ]),
@@ -1577,7 +1577,7 @@ SEC11 = [
     ], compact=True),
 
     S("Worked example", "Worked example: a CSR grant (Illustrative)", [
-        B("<strong>Illustrative.</strong> A manufacturing company had average net profits of "
+        B("<strong>Illustrative case (hypothetical figures).</strong> A manufacturing company had average net profits of "
           "&#8377;300 crore over the last three financial years, so its CSR obligation is &#8377;6 "
           "crore (2 per cent, s135(5)). It offers your NGO &#8377;1.2 crore over two years for "
           "girls' secondary education in two districts near its plant."),
@@ -1600,7 +1600,7 @@ SEC11 = [
     ]),
 
     S("Worked example", "Worked example: a foreign grant under the FCRA (Illustrative)", [
-        B("<strong>Illustrative.</strong> A European foundation offers your FCRA-registered NGO "
+        B("<strong>Illustrative case (hypothetical figures).</strong> A European foundation offers your FCRA-registered NGO "
           "&#8377;1 crore over one year for a livelihoods programme run with three community-based "
           "organisations in Assam. Plan the budget against the FCRA before you sign."),
         FL(["RECEIVE: only in the FCRA Account at the notified SBI branch, New Delhi (s17)",

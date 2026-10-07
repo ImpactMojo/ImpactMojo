@@ -1605,7 +1605,7 @@ S11 = [
     ], compact=True),
 
     C("Worked example: the tool", "Illustrative worked example: a WhatsApp chatbot for pension eligibility", [
-        body("<strong>Illustrative.</strong> A women's rights NGO in one district plans a WhatsApp chatbot. "
+        body("<strong>Illustrative case (hypothetical figures).</strong> A women's rights NGO in one district plans a WhatsApp chatbot. "
              "Widows type or speak a few answers (age, district, whether they hold a ration card) and the bot "
              "tells them which state and central pension schemes they may qualify for, and which documents to "
              "bring to the block office. Version two would add a <em>likely eligible</em> score that the NGO "

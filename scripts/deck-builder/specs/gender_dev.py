@@ -1698,7 +1698,7 @@ DECK = {
         ], compact=True),
 
         C("Worked example", "Worked example: a women's livelihood programme in Bihar", [
-            body("<strong>Illustrative case.</strong> An NGO plans to train 2,000 women in "
+            body("<strong>Illustrative case (hypothetical figures).</strong> An NGO plans to train 2,000 women in "
                  "self-help groups in goat rearing and connect them to buyers. The team "
                  "applies the tools from this course."),
             table(["Tool", "Finding (Illustrative)", "Design change"],

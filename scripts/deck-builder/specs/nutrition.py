@@ -1828,7 +1828,7 @@ SLIDES_C = [
     ], compact=True),
 
     C("Worked example", "Illustrative: sizing a screening programme in one block", [
-        body("<strong>Illustrative case.</strong> A block has 12,000 children aged 6-59 "
+        body("<strong>Illustrative case (hypothetical figures).</strong> A block has 12,000 children aged 6-59 "
              "months. A recent survey estimates 18% wasting by weight-for-height and 4% "
              "severe acute malnutrition. All numbers on this slide are Illustrative."),
         table(["Step", "Calculation (Illustrative)", "Result"],
@@ -1847,7 +1847,7 @@ SLIDES_C = [
     ], compact=True),
 
     C("Targets", "Illustrative: setting a target you can defend", [
-        body("<strong>Illustrative case.</strong> A district with 40% stunting is asked "
+        body("<strong>Illustrative case (hypothetical figures).</strong> A district with 40% stunting is asked "
              "to reach 30% in three years. The question is whether that is realistic."),
         tw(pp("amber", "What history suggests",
               "India's stunting fell from 48.0% to 38.4% over about ten years between "

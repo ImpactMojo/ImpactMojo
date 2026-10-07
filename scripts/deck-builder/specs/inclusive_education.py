@@ -1231,7 +1231,7 @@ SLIDES += [
         "Guidelines version 3.0, udlguidelines.cast.org.")),
 
     C("UDL in an Indian classroom", "One lesson, planned with UDL for a mixed Class 4",
-      B("<strong>Illustrative.</strong> A government school in rural Jharkhand, Class 4, 38 children. "
+      B("<strong>Illustrative case (hypothetical figures).</strong> A government school in rural Jharkhand, Class 4, 38 children. "
         "The lesson is on measuring length. Two children speak Santali at home, one has low vision, "
         "one is suspected of dyslexia and several are below grade level in reading."),
       TW([P("cyan", "Before UDL",
@@ -1336,7 +1336,7 @@ SLIDES += [
         "progress. An IEP is the simplest way to show both.")),
 
     C("An IEP, worked", "A one-page IEP for a Class 3 child",
-      B("<strong>Illustrative.</strong> Anjali, aged 8, Class 3, government primary school in Pune "
+      B("<strong>Illustrative case (fictional child, hypothetical figures).</strong> Anjali, aged 8, Class 3, government primary school in Pune "
         "district. Moderate hearing loss in both ears, uses a hearing aid that often needs a battery. "
         "Loves drawing. Reads 15 Marathi words a minute; class average around 40."),
       T(["IEP part", "Entry for Anjali (Illustrative)"],
@@ -1468,7 +1468,7 @@ SLIDES += [
         "with disabilities is the responsibility of the State.")),
 
     C("Building a workforce", "Planning teachers for inclusion is a district-level task",
-      B("<strong>Illustrative worked example.</strong> A district has 1,800 government schools in 60 "
+      B("<strong>Illustrative worked example (hypothetical figures).</strong> A district has 1,800 government schools in 60 "
         "clusters. UDISE+ shows 3,600 CWSN enrolled. NSS-based prevalence suggests many more children "
         "are unidentified."),
       T(["Step", "Calculation or decision (Illustrative)"],
@@ -1685,7 +1685,7 @@ SLIDES += [
         "with Disabilities or the courts. Keep copies of every letter.")),
 
     C("Worked example", "Worked example: one block, one year",
-      B("<strong>Illustrative.</strong> An NGO works with the education department in a block of "
+      B("<strong>Illustrative case (hypothetical figures).</strong> An NGO works with the education department in a block of "
         "Nandurbar district, Maharashtra, with 210 government schools and many Bhil and Pawra "
         "children. The goal for the year is to reduce the number of out-of-school children with "
         "functional difficulty."),

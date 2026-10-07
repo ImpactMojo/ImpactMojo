@@ -1542,7 +1542,7 @@ SLIDES += [
         "starting point for a rights-based programme."), compact=True),
 
     C("Worked example", "Two children at one learning centre (Illustrative)",
-      B("<strong>Illustrative.</strong> An NGO runs an after-school learning centre in an urban "
+      B("<strong>Illustrative case (hypothetical figures).</strong> An NGO runs an after-school learning centre in an urban "
         "settlement. In one week a volunteer learns that Raju, aged 13, washes dishes at a "
         "roadside eatery from 6 pm to midnight, and that Salma, aged 16, has stopped attending "
         "because her family has fixed her wedding for next month."),

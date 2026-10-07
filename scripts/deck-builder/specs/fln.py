@@ -1625,7 +1625,7 @@ DECK = {
         ], compact=True),
 
         S("Grouping", "From the diagnostic to groups: an Illustrative class", [
-            B("Illustrative example. A Grade 3 government school class in a Hindi-medium block has 40 "
+            B("Illustrative example (hypothetical figures). A Grade 3 government school class in a Hindi-medium block has 40 "
               "children. The teacher runs the diagnostic in the first week of the session. Her "
               "results, which roughly follow the ASER 2024 national spread for Std III, are below."),
             T(["Reading level", "Children", "Group and focus"],

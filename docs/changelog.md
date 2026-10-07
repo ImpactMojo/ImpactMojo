@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.343.0 — October 7, 2026 (fictional organisations in illustrative cases)
+
+### Changed
+
+- **Illustrative cases no longer use real organisations.** Where a worked example or hypothetical case named a real organisation as its actor, it now uses an invented one and says so on first mention: in the practice packs, Pratham, JEEViKA, Sangati and SRIJAN became Vachanveer Trust, Bhoomijan and Gangatir Livelihoods Societies, Manobal Learning Trust and Neerdhara Watershed Trust; in the handouts, WhatsApp and Meta, Swiggy and Zomato, and a named analytics firm became Charchamitra, Tiffinrun and Paisarekha Insights. Each invented name was searched first so that it matches no real organisation. Real schemes used as settings (Bhamashah, Mee Seva, Swachh Bharat, NRLM) keep their names, with any findings marked hypothetical. Every illustrative case that carries numbers, across the handouts, the practice packs and 23 of the 79 decks, now says its figures are hypothetical. A box that states a real fact about Pratham's Read India is relabelled a real-world example.
+
+### For Learners
+
+- **Clear examples.** Made-up teaching cases now say plainly that the organisation is fictional and the figures hypothetical.
+
 ## v10.342.0 — October 7, 2026 (second source check; NFHS-6 in Fundamentals)
 
 ### Changed

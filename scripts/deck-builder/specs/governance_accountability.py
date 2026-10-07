@@ -1533,7 +1533,7 @@ DECK = {
         ]),
 
         S("Worked example", "Illustrative: a ration shop that runs short", [
-            B("Illustrative example. Families in a block report that their ration shop opens "
+            B("Illustrative example (hypothetical figures). Families in a block report that their ration shop opens "
               "irregularly and gives less grain than entitled. A district NGO runs the "
               "diagnostic and finds: the dealer is related to the sarpanch, stock registers are "
               "not displayed, and complaints to the block supply officer go unanswered."),

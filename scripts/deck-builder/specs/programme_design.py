@@ -1416,7 +1416,7 @@ DECK = {
         C("Worked example", "Worked example: the problem (Illustrative)", [
             body("An NGO in a district of eastern Uttar Pradesh is asked by a CSR funder to "
                  "design a three-year programme to improve reading in government primary "
-                 "schools. This example is Illustrative and used to walk through the design "
+                 "schools. This example is Illustrative, with hypothetical figures, and used to walk through the design "
                  "steps. The team first gathers data: an assessment in 40 schools finds most "
                  "Class 3 to 5 children below Class 2 reading level, teacher vacancies in about "
                  "a fifth of schools, and sharp attendance drops in the wheat harvest."),

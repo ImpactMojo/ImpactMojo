@@ -1617,7 +1617,7 @@ DECK = {
         ], compact=True),
 
         S("Worked example", "Illustrative: planning a reading programme for one block", [
-            B("Illustrative. A block education officer has 120 government primary schools and "
+            B("Illustrative case (hypothetical figures). A block education officer has 120 government primary schools and "
               "about 6,000 children in Grades 3 to 5. A quick one-on-one test in a sample of "
               "schools suggests that roughly two-thirds cannot read a Grade 2 text. The officer "
               "has a modest budget from the state's foundational learning allocation."),
