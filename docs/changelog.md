@@ -2,11 +2,21 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.348.0 — October 7, 2026 (search on phones; roundup post for readers)
+
+### Fixed
+
+- **The site search script stopped on pages whose menu button sits inside a wrapper** (#1169). It added its phone search button next to the menu button by inserting into the navigation bar, which fails when the button is not a direct child, as on the What's New page. It now inserts beside the button in its own container.
+
+### Changed
+
+- **The roundup post is written for readers.** It lists the new courses, companions, Field Radio videos and the data and law the site now follows, and leaves out internal corrections.
+
 ## v10.347.0 — October 7, 2026 (what is new, and wiring it in)
 
 ### Added
 
-- **A roundup post: [New on ImpactMojo, 4 to 7 October 2026](/blog/whats-new-early-october-2026.html).** Everything added and corrected from 4 to 7 October, with links.
+- **A roundup post: [New on ImpactMojo, 4 to 7 October 2026](/blog/whats-new-early-october-2026.html).** Everything added from 4 to 7 October, with links.
 
 ### Changed
 
@@ -18,7 +28,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### For Learners
 
-- **New on ImpactMojo, 4 to 7 October** — one post listing the October courses, companions, Field Radio videos and corrections, with links. [Read it](/blog/whats-new-early-october-2026.html)
+- **New on ImpactMojo, 4 to 7 October** — one post listing the October courses, companions and Field Radio videos, with links. [Read it](/blog/whats-new-early-october-2026.html)
 
 ## v10.346.0 — October 7, 2026 (thirteen new reading companions)
 
