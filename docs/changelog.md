@@ -2,6 +2,17 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.342.0 — October 7, 2026 (second source check; NFHS-6 in Fundamentals)
+
+### Changed
+
+- **Claims that rested on weak sources were checked again.** The first fact-check of the handouts and practice packs had left about 100 claims in place on secondary sources or none. Each was taken back to a primary source. Corrected, among others: India's informal employment at about 90% (ILO and IHD, India Employment Report 2024) and the sector table behind it; the gender pay gap from PLFS (about 24% for regular workers, 31% for casual); agriculture at 43% of workers and about 18% of GVA, and manufacturing at about 15%; Ayushman Bharat coverage of about 55 crore people (PIB); SEWA at 3.7 million members; rabies deaths at about 5,700 a year (ICMR-NIE); women at about 58% of Bangladesh's garment workforce; life expectancy from 49.7 years (1970-75) to 70.3 (2019-23, SRS); India's 2024 emissions growth at 3.7% (Global Carbon Budget 2024); the Bangalore citizen report card starting in 1993-94; the Good Governance Index editions of 2019 and 2020-21; and sample-size guidance in the SEL pack recomputed (about 90 children for a pre-post comparison; 25 to 42 schools per arm for a cluster trial). Claims and resources that could not be traced were removed, including an invented Python package, a "Gig Workers Collective", and promises of solution guides and video walkthroughs that the site does not offer; those handouts now link to the 101 decks and the Code Studio course. Unverifiable worked-example figures are labelled illustrative.
+- **Fundamentals data cards use NFHS-6.** Child stunting (29.3%), spousal violence (22.3%), child marriage (20.1%) and adult overweight and underweight now come from the NFHS-6 (2023-24) fact sheet; breakdowns by caste and wealth stay on NFHS-5 until the full report is out. The Policy Brief Lab's stunting example now compares India's 29.3% with Bangladesh (24%) and Nepal (25%) in their 2022 DHS rounds, which it had given as 27-28%.
+
+### For Learners
+
+- **Firmer sources throughout.** Handouts and practice packs now cite primary sources for their figures, and the Fundamentals cards use the latest national health survey.
+
 ## v10.341.0 — October 7, 2026 (owner decisions on handouts and packs)
 
 ### Changed
