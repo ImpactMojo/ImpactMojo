@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.347.0 — October 7, 2026 (what is new, and wiring it in)
+
+### Added
+
+- **A roundup post: [New on ImpactMojo, 4 to 7 October 2026](/blog/whats-new-early-october-2026.html).** Everything added and corrected from 4 to 7 October, with links.
+
+### Changed
+
+- **Code Studio is in the navigation.** It was linked only from the catalogue and the sitemap page. It is now under Learn in the home navigation, in the home and site-wide footers, and pointed to from the 101 index, where R & Python for Development used to sit.
+- **The catalogue lists every reading companion.** Its own list held 163 of them; the 22 missing, including the thirteen added this week, are now in it and in `catalog_data.json`.
+- **What's New carries the October launches**: the twenty 101 courses, Code Studio, the thirteen companions, and Field Radio with the Global Macro Database.
+- **Pro Studio ratings restored.** The 17 star ratings on the Pro Studio tools and team services in the home page's tools panel, removed on 5 October in v10.319.0, are back. They come from the platform ImpactMojo used before its migration, restored from its records, as the transparency page explains; removing them was a mistake.
+- **"Recently updated" dots** now mark 101 Decks, Code Studio, Libraries, Handouts, Practice Packs, Deep Dives, the Law Docket and Field Radio, each with the date of its last change; they expire after 30 days.
+
+### For Learners
+
+- **New on ImpactMojo, 4 to 7 October** — one post listing the October courses, companions, Field Radio videos and corrections, with links. [Read it](/blog/whats-new-early-october-2026.html)
+
 ## v10.346.0 — October 7, 2026 (thirteen new reading companions)
 
 ### Added

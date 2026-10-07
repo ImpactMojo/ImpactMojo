@@ -1318,3 +1318,7 @@ final"* — is quoted on the page, not paraphrased. The income-tax figure is lab
 rupee as anyone's. Licensing was considered and deliberately left as attribution: GODL-India on
 data.gov.in would be an explicit grant, but republishing published government figures with
 attribution matches what every other explorer here already does.
+
+## Ratings and user counts are real (owner, 2026-10-07)
+- **Do not describe catalogue or product ratings, stars or user counts as invented.** They came from the platform ImpactMojo used before its migration; the data was lost in the move and restored by hand from an Excel export. The transparency page explains this. Leave them as they are unless the owner asks otherwise.
+- The 17 Pro Studio tool ratings removed on 2026-10-05 (v10.319.0, #1132) on the mistaken assumption that they had no source were restored on 2026-10-07 (v10.347.0). Never remove ratings or reviews.
