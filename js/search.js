@@ -435,7 +435,10 @@
     if (!container || container.querySelector('.ims-nav-btn--m')) return;
     var btn = makeButton('ims-nav-btn ims-nav-btn--m', 'Search', ICON);
     var toggle = container.querySelector('.mobile-menu-toggle, #mobile-menu-btn');
-    if (toggle) container.insertBefore(btn, toggle);
+    /* The toggle is not always a direct child of .nav-container (on updates.html it
+       sits one level down), and insertBefore throws unless it is, which stopped
+       this script on those pages. Insert beside it in its own parent instead. */
+    if (toggle) toggle.parentNode.insertBefore(btn, toggle);
     else container.appendChild(btn);
   }
 
