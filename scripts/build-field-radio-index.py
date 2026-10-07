@@ -181,6 +181,31 @@ COPY: dict[str, tuple[str, list[str]]] = {
         ["gender", "mel", "sex-disaggregated data", "participation", "access", "control",
          "measurement", "gesi", "women's empowerment"],
     ),
+    "vs-09": (
+        "Children's reading scores rose from 40 to 55, but the school year alone might have added ten. "
+        "Why improvement is not impact, why correlation is not causation, and why the method follows "
+        "from how you build the missing counterfactual.",
+        ["causal inference", "counterfactual", "impact", "selection bias", "rct", "difference in differences",
+         "regression discontinuity", "matching", "attribution"],
+    ),
+    "vs-10": (
+        "What rigorous measurement means, using the Women's Empowerment in Agriculture Index: five domains, "
+        "gender parity within the household, explicit thresholds, and a measure that was tested and revised.",
+        ["weai", "women's empowerment", "agriculture", "measurement", "gender", "pro-weai", "ifpri",
+         "indicators", "gesi"],
+    ),
+    "vs-11": (
+        "Feminist evaluation as a lens on power and knowledge: whose definition of empowerment counts, why "
+        "participatory is not automatically feminist, and three questions to ask of any evaluation.",
+        ["feminist evaluation", "gender", "power", "knowledge", "participatory evaluation", "empowerment",
+         "intersectionality", "evaluation"],
+    ),
+    "vs-12": (
+        "A community score card turns community experience into evidence. Start from what you need to learn, hear groups "
+        "separately, ask why a centre scored two out of five, and close the loop in the next round.",
+        ["community score card", "social accountability", "mel", "participatory", "maternal health",
+         "service delivery", "gender", "care"],
+    ),
 }
 
 
