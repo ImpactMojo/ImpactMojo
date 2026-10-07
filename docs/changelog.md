@@ -2,6 +2,15 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.341.0 — October 7, 2026 (owner decisions on handouts and packs)
+
+### Changed
+
+- **Development Economics problem set uses real state figures.** Problem 1.1 compared three states on invented numbers. It now uses Gujarat, Kerala and Odisha with per capita net state domestic product for 2022-23 (MoSPI National Accounts), life expectancy for 2016-20 (SRS abridged life tables), mean years of schooling for adults 25 and over in 2022-23 (MoSPI) and Census 2011 literacy. Gujarat replaces Haryana, which is absent from MoSPI's state per capita series; the exercise's point survives, since Gujarat out-earns Kerala and Kerala leads on every human development measure.
+- **RTI exemption for personal information.** The rights-based approach handout now says exactly what section 44(3) of the DPDP Act does: it substitutes clause 8(1)(j) of the RTI Act and does not mention the Parliament proviso that follows it, which is why the proviso's survival is disputed.
+- **Cost tables marked illustrative.** The evaluation cost bands in the ToR-writing pack and the per-unit costs in the SEL evaluation pack are teaching estimates and are now labelled as such, like the salary table in the programme-costing pack.
+- **Assam fieldwork timing.** The ToR-writing pack said Brahmaputra floods peak in July and August and advised October to November fieldwork. Floods come in waves from June to September, and October to November is the festival season (Durga Puja, Kati Bihu, Diwali); the feedback now says so and points to the dry season.
+
 ## v10.340.0 — October 6, 2026 (public health handout resource list)
 
 ### Changed
