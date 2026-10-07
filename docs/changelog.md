@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.349.0 — October 7, 2026 (Power BI in Code Studio)
+
+### Added
+
+- **[Power BI for M&E Dashboards](/code/powerbi.html)**, a guided Code Studio course in eight modules. It covers Power Query M for cleaning a survey export, a one-district-to-many-households model, DAX measures and CALCULATE, population-weighted means with SUMX, accessible report pages, and the Publish to web setting that makes a report and its data public. Power BI runs only on Windows, so the page shows M and DAX to type into Power BI Desktop and checks each number in R. Linked from the Code Studio index, the flagship Power BI course, search and the sitemap.
+
+### For Learners
+
+- **Power BI for M&E Dashboards** — clean a survey export in Power Query, write DAX measures for coverage rates and weighted means, and share a dashboard without leaking the data behind it. [Start the course](/code/powerbi.html)
+
 ## v10.348.0 — October 7, 2026 (search on phones; roundup post for readers)
 
 ### Fixed

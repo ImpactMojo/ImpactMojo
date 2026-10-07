@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Power BI for M&amp;E Dashboards | ImpactMojo</title>
+    <meta name="description" content="A free guided course in Power BI Desktop for development practitioners in South Asia: Power Query and M for cleaning survey exports, a district and household data model, DAX measures, CALCULATE and filter context, population-weighted means with SUMX, accessible report pages, safe sharing and Power BI project files for Git.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/powerbi.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Power BI for M&amp;E Dashboards">
+<meta property="og:description" content="A free guided course in Power BI Desktop for development practitioners in South Asia: Power Query and M for cleaning survey exports, a district and household data model, DAX measures, CALCULATE and filter context, population-weighted means with SUMX, accessible report pages, safe sharing and Power BI project files for Git.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/powerbi.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Power BI for M&amp;E Dashboards">
+<meta name="twitter:description" content="A free guided course in Power BI Desktop for development practitioners in South Asia: Power Query and M for cleaning survey exports, a district and household data model, DAX measures, CALCULATE and filter context, population-weighted means with SUMX, accessible report pages, safe sharing and Power BI project files for Git.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Power BI for M&E Dashboards", "description": "A free guided course in Power BI Desktop for development practitioners in South Asia: Power Query and M for cleaning survey exports, a district and household data model, DAX measures, CALCULATE and filter context, population-weighted means with SUMX, accessible report pages, safe sharing and Power BI project files for Git.", "url": "https://www.impactmojo.in/code/powerbi.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="households,districts">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Guided tool course</div>
+        <h1>Power BI for M&amp;E dashboards</h1>
+        <p>Build a district dashboard in Power BI Desktop from two survey files: clean them in Power Query, model one district to many households, write DAX measures for coverage rates and weighted means, and publish a report that is accessible and does not leak the data behind it. Follow along in your own copy of Power BI Desktop, and check every number in R on this page.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>Power BI does not run in a browser tab.</strong> The grey boxes are Power Query M and DAX for you to type into your own Power BI Desktop, which runs on Windows. This page does not show Power BI output, because it cannot produce any; each module tells you what to look for on your screen instead. Where the same number can be computed in R, an R cell computes it here on the same data, so you can check your cards and tables against it. The first R run downloads the R engine once (about 7&nbsp;MB).</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> Set up</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> Get data</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> Clean in Power Query</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> The data model</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Measures</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> CALCULATE</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">7</span> Weighted figures</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">8</span> Report and share</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 8</div>
+<h2>Power BI Desktop, the service and your project folder</h2>
+<p>Power BI is Microsoft's business intelligence software. Most M&amp;E teams meet it as the tool behind a donor dashboard: a page of indicator cards, a district map and a few slicers. Two parts matter. <strong>Power BI Desktop</strong> is the free Windows application in which you load data, build the model, write the formulas and design the report. The <strong>Power BI service</strong> (app.powerbi.com) is where a report is published, refreshed and shared.</p>
+<div class="info-box"><strong>Cost and requirements, checked 7 October 2026.</strong> Microsoft offers Power BI Desktop as a free download from the Microsoft Store or as a 64-bit installer. It needs Windows 10, Windows Server 2016 or later, at least 2&nbsp;GB of free memory (4&nbsp;GB recommended) and a screen of at least 1440x900. There is no Mac version; Microsoft supports Desktop on Azure Virtual Desktop and Windows 365, which is one route for Mac users. Microsoft releases a new version every month and supports only the latest. Sharing is what costs money: Microsoft's <a href="https://www.microsoft.com/en-us/power-platform/products/power-bi/pricing" rel="noopener" target="_blank" style="color:var(--accent-color)">pricing page</a> lists Power BI Pro at US$14 per user per month and Premium Per User at US$24 (both billed yearly), and says the free account must upgrade to share reports. Ask your organisation first; many already pay for Microsoft 365 licences that include Pro.</div>
+<h3>Two languages, two jobs</h3>
+<p>Power BI has two formula languages, and most confusion comes from mixing them up.</p>
+<ul><li><strong>M</strong> is the language of Power Query, the editor that gets and cleans data <em>before</em> it reaches the model. Every click in Power Query writes a line of M. It runs when the data is refreshed.</li><li><strong>DAX</strong> (Data Analysis Expressions) is the language of the model. You use it to write measures, the numbers on your report, such as coverage rates and means. It runs every time a reader clicks a slicer.</li></ul>
+<p>The rule of thumb: shape and clean in M, calculate in DAX.</p>
+<h3>Set up the course folder</h3>
+<ol class="guide-steps"><li>Install Power BI Desktop from the <a href="https://aka.ms/pbidesktopstore" rel="noopener" target="_blank" style="color:var(--accent-color)">Microsoft Store</a> (updates arrive by themselves, and you do not need administrator rights) or the <a href="https://www.microsoft.com/download/details.aspx?id=58494" rel="noopener" target="_blank" style="color:var(--accent-color)">Download Center</a>.</li><li>Make a project folder with a short path, for example <code class="inline">C:\impactmojo\powerbi</code>.</li><li>Download the two course files into it: <a href="/code/data/households.csv" download style="color:var(--accent-color)">households.csv</a> (240 households) and <a href="/code/data/districts.csv" download style="color:var(--accent-color)">districts.csv</a> (10 districts). <span class="illustrative-tag">Illustrative data, invented for teaching</span> The district names are real places; every number is made up.</li><li>Open Power BI Desktop, close the start screen and choose <strong>File &gt; Save as</strong>. Save as type <strong>Power BI project files (*.pbip)</strong> and name it <code class="inline">mne_dashboard</code>.</li></ol>
+<p>A <code class="inline">.pbix</code> file is one closed package. A Power BI project saves the same report as a folder of plain text files: <code class="inline">mne_dashboard.pbip</code>, a <code class="inline">mne_dashboard.Report</code> folder and a <code class="inline">mne_dashboard.SemanticModel</code> folder, plus a <code class="inline">.gitignore</code>. Text files can be compared line by line and kept in Git, so you can see which measure changed between the June and the September dashboard. You can convert back to <code class="inline">.pbix</code> at any time with <strong>File &gt; Save as</strong>.</p>
+<div class="info-box"><strong>Exercise.</strong> After saving, open the project folder in File Explorer. Find the <code class="inline">.gitignore</code> file Power BI wrote, open it in Notepad and note which two files it keeps out of Git: the local settings and the data cache.</div>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: Get data &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 8</div>
+<h2>Get data and read the M that Power Query writes</h2>
+<p>Every dataset enters Power BI through <strong>Get data</strong>. For a CSV the steps are the same whether it came from KoboToolbox, an MIS export or a government portal.</p>
+<ol class="guide-steps"><li>On the <strong>Home</strong> ribbon choose <strong>Get data &gt; Text/CSV</strong> and pick <code class="inline">households.csv</code>.</li><li>A preview opens. Do <em>not</em> press Load. Press <strong>Transform data</strong>, which opens the Power Query Editor.</li><li>Repeat for <code class="inline">districts.csv</code>. Both now appear under <strong>Queries</strong> on the left.</li></ol>
+<p>Look at the <strong>Applied steps</strong> pane on the right. Power Query has already taken three steps for you: <em>Source</em>, <em>Promoted Headers</em> and <em>Changed Type</em>. Open <strong>Home &gt; Advanced Editor</strong> to see them as M. It will look much like this; your file path, and possibly the encoding number, will differ.</p>
+<div class="syntax-label">Power Query M: households (as generated, abridged)</div><pre class="syntax-block">let
+    Source = Csv.Document(File.Contents(&quot;C:\impactmojo\powerbi\households.csv&quot;),
+        [Delimiter = &quot;,&quot;, Columns = 13, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+    #&quot;Promoted Headers&quot; = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+    #&quot;Changed Type&quot; = Table.TransformColumnTypes(#&quot;Promoted Headers&quot;, {
+        {&quot;hh_id&quot;, Int64.Type}, {&quot;district&quot;, type text}, {&quot;area&quot;, type text},
+        {&quot;caste&quot;, type text}, {&quot;head_edu_years&quot;, Int64.Type}, {&quot;hh_size&quot;, Int64.Type},
+        {&quot;monthly_pc_exp&quot;, Int64.Type}, {&quot;land_acres&quot;, type number},
+        {&quot;has_toilet&quot;, type text}, {&quot;has_bank_account&quot;, type text}})
+in
+    #&quot;Changed Type&quot;</pre>
+<h3>How to read it</h3>
+<ul><li>An M query is a <code class="inline">let ... in</code> expression. Each line names a step and refers to the step before it. The name after <code class="inline">in</code> is what the query returns.</li><li>A step name with a space is written <code class="inline">#&quot;Changed Type&quot;</code>.</li><li><code class="inline">Columns = 13</code> is fixed at the moment of import. If next month's export has a fourteenth column, the extra column is silently dropped. Delete <code class="inline">Columns = 13,</code> from that line if your exports change shape.</li><li>The automatic type step guesses from the first rows. Check every column's icon in the header: <code class="inline">123</code> for whole numbers, <code class="inline">1.2</code> for decimals, <code class="inline">ABC</code> for text. An ID stored as a number loses its leading zeros, so a village code <code class="inline">0042</code> becomes <code class="inline">42</code>. Set such columns to text.</li></ul>
+<p>The same import and type check in R, on the same file, runs here. Use it to confirm the row and column counts Power Query shows in its status bar.</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+dim(hh)          # rows, columns: compare with the Power Query status bar
+str(hh)          # int, num and chr are Power Query&#x27;s whole number, decimal and text
+d &lt;- read.csv(&quot;districts.csv&quot;)
+d</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> In Power Query, click the <em>Changed Type</em> step and change <code class="inline">land_acres</code> to <strong>Whole number</strong>. Look at what happens to the values, then delete your change from Applied steps. A wrong type does not raise an error; it rounds your data.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Clean in Power Query &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 8</div>
+<h2>Clean in Power Query: indicators, bands and a district table</h2>
+<p>Survey exports arrive with Yes/No text, raw years of schooling and stray spaces. Fix them in Power Query, once, so every measure downstream starts from clean columns. Each step below can be done with a menu, and the menu writes the M shown.</p>
+<h3>Yes/No to 1/0</h3>
+<p>Select the households query, then <strong>Add Column &gt; Custom column</strong>. Name it <code class="inline">toilet</code> and enter the formula below. Repeat for <code class="inline">bank</code>.</p>
+<div class="syntax-label">Power Query M: custom columns</div><pre class="syntax-block">#&quot;Added toilet&quot; = Table.AddColumn(#&quot;Changed Type&quot;, &quot;toilet&quot;,
+    each if [has_toilet] = &quot;Yes&quot; then 1 else 0, Int64.Type),
+#&quot;Added bank&quot; = Table.AddColumn(#&quot;Added toilet&quot;, &quot;bank&quot;,
+    each if [has_bank_account] = &quot;Yes&quot; then 1 else 0, Int64.Type)</pre>
+<p><code class="inline">each</code> means "for each row", and <code class="inline">[has_toilet]</code> is that row's value. The last argument sets the new column's type, so the column arrives as a whole number and not as type <code class="inline">any</code>.</p>
+<h3>Education bands</h3>
+<div class="syntax-label">Power Query M: a banded column</div><pre class="syntax-block">#&quot;Added edu band&quot; = Table.AddColumn(#&quot;Added bank&quot;, &quot;edu_band&quot;,
+    each if [head_edu_years] = 0 then &quot;None&quot;
+    else if [head_edu_years] &lt;= 5 then &quot;Primary (1-5)&quot;
+    else if [head_edu_years] &lt;= 10 then &quot;Secondary (6-10)&quot;
+    else &quot;Higher (11+)&quot;, type text)</pre>
+<h3>Tidy text keys before you join on them</h3>
+<p>District names typed by hand carry trailing spaces and mixed case, and <code class="inline">&quot;Gaya &quot;</code> will not match <code class="inline">&quot;Gaya&quot;</code> in a relationship. Select the <code class="inline">district</code> column in <em>both</em> queries and choose <strong>Transform &gt; Format &gt; Trim</strong>.</p>
+<div class="syntax-label">Power Query M: trim</div><pre class="syntax-block">#&quot;Trimmed district&quot; = Table.TransformColumns(#&quot;Added edu band&quot;, {{&quot;district&quot;, Text.Trim, type text}})</pre>
+<h3>A district summary with Group By</h3>
+<p>To build a separate one-row-per-district table (for export, or to check totals), right-click the households query, choose <strong>Reference</strong>, then <strong>Transform &gt; Group By</strong>, Advanced.</p>
+<div class="syntax-label">Power Query M: Group By</div><pre class="syntax-block">let
+    Source = households,
+    Grouped = Table.Group(Source, {&quot;district&quot;}, {
+        {&quot;households&quot;, each Table.RowCount(_), Int64.Type},
+        {&quot;toilet_rate&quot;, each List.Average([toilet]), type number},
+        {&quot;mean_pc_exp&quot;, each List.Average([monthly_pc_exp]), type number}})
+in
+    Grouped</pre>
+<p>The R version of the indicator, the bands and the district table. Check the district counts against your Group By result.</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+hh$toilet &lt;- as.integer(hh$has_toilet == &quot;Yes&quot;)
+hh$edu_band &lt;- cut(hh$head_edu_years, breaks = c(-Inf, 0, 5, 10, Inf),
+                   labels = c(&quot;None&quot;, &quot;Primary (1-5)&quot;, &quot;Secondary (6-10)&quot;, &quot;Higher (11+)&quot;))
+table(hh$edu_band)
+aggregate(cbind(toilet, monthly_pc_exp) ~ district, data = hh, FUN = mean)
+table(hh$district)</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> Add a column <code class="inline">shg</code> that is 1 when <code class="inline">shg_member</code> is "Yes". Then right-click the <code class="inline">has_toilet</code> column and choose <strong>Remove</strong>: you no longer need the text once the 1/0 column exists. Close Power Query with <strong>Home &gt; Close &amp; Apply</strong>.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: The data model &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 8</div>
+<h2>The data model: one district, many households</h2>
+<p>A Power BI report is only as right as its model. The model for most survey dashboards is a <strong>star schema</strong>: one <em>fact</em> table with a row per unit observed (here, households), and <em>dimension</em> tables that describe something the facts belong to (here, districts). Facts carry numbers to add up; dimensions carry the labels you slice by.</p>
+<ol class="guide-steps"><li>Open <strong>Model view</strong> (the third icon on the left edge).</li><li>Power BI may already have drawn a line between the two tables on <code class="inline">district</code>. If not, drag <code class="inline">district</code> from <em>districts</em> onto <code class="inline">district</code> in <em>households</em>.</li><li>Double-click the line. Check that <strong>Cardinality</strong> reads <em>Many to one (*:1)</em> from households to districts, and <strong>Cross filter direction</strong> reads <em>Single</em>.</li></ol>
+<ul><li><strong>Many to one</strong> says each household belongs to one district and each district has many households. If Power BI proposes <em>many to many</em>, the districts table has a duplicate district, which is a data problem. Fix it in Power Query before you go on.</li><li><strong>Single</strong> direction means a slicer on districts filters households, and not the other way. Leave it single unless you can say why you need both; two-way filters make totals hard to explain.</li><li>Slice by the column on the <em>one</em> side. Put <code class="inline">districts[state]</code> and <code class="inline">districts[district]</code> in slicers, and hide <code class="inline">households[district]</code> (right-click, <strong>Hide in report view</strong>) so nobody slices by the wrong copy.</li></ul>
+<h3>Wide indicator sheets: unpivot before you load</h3>
+<p>Programme teams often keep indicators one column per round: <code class="inline">district, baseline, midline, endline</code>. Power BI wants one column for the round and one for the value, so a single line chart can draw all three. Select <code class="inline">district</code>, then <strong>Transform &gt; Unpivot Columns &gt; Unpivot Other Columns</strong>.</p>
+<div class="syntax-label">Power Query M: unpivot</div><pre class="syntax-block">#&quot;Unpivoted&quot; = Table.UnpivotOtherColumns(Source, {&quot;district&quot;}, &quot;round&quot;, &quot;value&quot;)</pre>
+<p><code class="inline">Table.UnpivotOtherColumns(table, pivotColumns, attributeColumn, valueColumn)</code> keeps the columns you name and turns every other column into round/value pairs. "Other columns" matters: when an endline column is added next year, it is unpivoted too, with no change to the query.</p>
+<p>In R, <code class="inline">merge()</code> does what the relationship does, and the <code class="inline">all.x</code> check tells you whether any household failed to find its district.</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+d  &lt;- read.csv(&quot;districts.csv&quot;)
+anyDuplicated(d$district)                 # 0 means the one side really is one
+m &lt;- merge(hh, d, by = &quot;district&quot;, all.x = TRUE)
+sum(is.na(m$state))                       # households with no matching district
+table(m$state)</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> In <em>Report view</em>, put a <strong>Table</strong> visual on the page with <code class="inline">districts[state]</code> and a count of <code class="inline">households[hh_id]</code>. The counts should add to 240. If a row reads <em>(Blank)</em>, some household's district has no match in the districts table.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Measures &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 8</div>
+<h2>DAX measures, and why a rate is never a column</h2>
+<p>DAX gives you two ways to calculate. A <strong>calculated column</strong> is worked out once per row when the data loads, and stored. A <strong>measure</strong> is worked out when a visual asks for it, for whatever rows the reader's slicers leave in play. Indicators on a dashboard (rates, means, counts) are measures.</p>
+<ol class="guide-steps"><li>In <em>Report view</em> select the households table in the <strong>Data</strong> pane, then <strong>Home &gt; New measure</strong>.</li><li>Type each measure below into the formula bar and press Enter. Each one is a separate measure.</li><li>Set the format on the <strong>Measure tools</strong> ribbon: percentage for the rate, whole number for the count.</li></ol>
+<div class="syntax-label">DAX: first measures (each line is one measure)</div><pre class="syntax-block">Households = COUNTROWS ( households )
+
+Toilet coverage = DIVIDE ( SUM ( households[toilet] ), [Households] )
+
+Mean MPCE = AVERAGE ( households[monthly_pc_exp] )
+
+Bank account rate = DIVIDE ( SUM ( households[bank] ), [Households] )</pre>
+<ul><li><code class="inline">DIVIDE(numerator, denominator [, alternateresult])</code> returns BLANK, or your alternate result, when the denominator is zero. With the <code class="inline">/</code> operator a district with no households would show an error in the middle of your dashboard.</li><li><code class="inline">[Households]</code> reuses a measure inside another. Define the denominator once and every rate that uses it stays consistent.</li><li>Put the table name before the column (<code class="inline">households[toilet]</code>) and not before a measure (<code class="inline">[Households]</code>). That convention tells a reader at a glance which is which.</li></ul>
+<h3>Why the rate must be a measure</h3>
+<p>Suppose you stored coverage as a column of group rates and let the total row average them. That gives every group equal weight, so a district of 20 households would count as much as one of 2,000. The measure above divides total toilets by total households for whatever is selected, so the total row is the true pooled rate.</p>
+<p>In the course file every district has 24 households, so for districts the two answers happen to agree. Rural and urban households are unequal groups (164 and 76), and there they part company. The R cell shows both.</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+hh$toilet &lt;- as.integer(hh$has_toilet == &quot;Yes&quot;)
+table(hh$area)                          # unequal groups
+rates &lt;- tapply(hh$toilet, hh$area, mean)
+rates
+mean(rates)          # average of the two area rates: the wrong total
+mean(hh$toilet)      # pooled rate: what the DAX measure shows in the total row</textarea></div>
+<h3>When a calculated column is right</h3>
+<p>Use a column for something you will slice <em>by</em>, which belongs to one row and does not change with the filters. An expenditure band is one.</p>
+<div class="syntax-label">DAX: a calculated column (Table tools &gt; New column)</div><pre class="syntax-block">MPCE band =
+SWITCH (
+    TRUE (),
+    households[monthly_pc_exp] &lt; 2000, &quot;Under 2,000&quot;,
+    households[monthly_pc_exp] &lt; 4000, &quot;2,000 to 3,999&quot;,
+    &quot;4,000 and above&quot;
+)</pre>
+<p><code class="inline">SWITCH(TRUE(), ...)</code> tests each condition in order and returns the first that holds, so the bands cannot overlap.</p>
+<div class="info-box"><strong>Exercise.</strong> Make a <strong>Matrix</strong> visual with <code class="inline">households[area]</code> on rows and the measures <code class="inline">[Households]</code> and <code class="inline">[Toilet coverage]</code>. Read the total row, then compare it with the two numbers the R cell printed.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: CALCULATE &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 8</div>
+<h2>CALCULATE and filter context</h2>
+<p>Every number in a visual is computed under a <strong>filter context</strong>: the set of filters from the row it sits in, the slicers on the page and any page or report filters. <code class="inline">CALCULATE</code> evaluates an expression under a filter context you change. It is the most used function in DAX and the one that explains almost every "why does my total look wrong" question.</p>
+<div class="syntax-label">DAX: CALCULATE</div><pre class="syntax-block">Rural households = CALCULATE ( [Households], households[area] = &quot;Rural&quot; )
+
+Rural toilet coverage = CALCULATE ( [Toilet coverage], households[area] = &quot;Rural&quot; )
+
+SC/ST households =
+CALCULATE ( [Households], households[caste] IN { &quot;SC&quot;, &quot;ST&quot; } )</pre>
+<p>A filter argument such as <code class="inline">households[area] = &quot;Rural&quot;</code> replaces any filter already on that column. Put <code class="inline">[Rural households]</code> in a matrix by area and the Urban row also shows the rural count, because the measure overrides the row's own filter. Wrap the filter in <code class="inline">KEEPFILTERS( )</code> when you want it to intersect with the row instead.</p>
+<h3>Share of the total</h3>
+<p>To show each district's share of all households, the denominator must ignore the district filter. <code class="inline">REMOVEFILTERS</code> (or the older <code class="inline">ALL</code>) clears it.</p>
+<div class="syntax-label">DAX: share of total</div><pre class="syntax-block">Share of households =
+DIVIDE ( [Households], CALCULATE ( [Households], REMOVEFILTERS ( districts ) ) )</pre>
+<p><code class="inline">REMOVEFILTERS ( districts )</code> clears filters from every column of the districts table, so the share still sums to 100% when the reader also slices by state. A state slicer would still filter the numerator; decide whether your share is "of the state" or "of the whole sample", and write it into the visual title.</p>
+<h3>Reading the selection</h3>
+<div class="syntax-label">DAX: a dynamic title</div><pre class="syntax-block">Selected district title =
+&quot;Toilet coverage, &quot; &amp; SELECTEDVALUE ( districts[district], &quot;all districts&quot; )</pre>
+<p><code class="inline">SELECTEDVALUE</code> returns the value when exactly one is selected and the alternate text otherwise. Use it as a card or as a visual title (Format pane, <strong>Title &gt; fx</strong>) so a screenshot sent on WhatsApp still says what it shows.</p>
+<p>The same three numbers in R, to check your cards against:</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+hh$toilet &lt;- as.integer(hh$has_toilet == &quot;Yes&quot;)
+sum(hh$area == &quot;Rural&quot;)                          # Rural households
+mean(hh$toilet[hh$area == &quot;Rural&quot;])              # Rural toilet coverage
+round(100 * prop.table(table(hh$district)), 1)   # Share of households, %</textarea></div>
+<div class="info-box"><strong>Exercise.</strong> Make a measure <code class="inline">Urban toilet coverage</code> and a third measure for the rural minus urban gap, written as <code class="inline">[Rural toilet coverage] - [Urban toilet coverage]</code>. Put all three in a matrix by state and check one state by hand in the R cell.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="6">Next: Weighted figures &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="6" role="tabpanel">
+<div class="eyebrow">Module 7 of 8</div>
+<h2>Population-weighted figures with SUMX</h2>
+<p><code class="inline">Mean MPCE</code> from Module 5 averages over households: every household counts once, whether it has two members or nine. A per-person figure, the mean expenditure of the average <em>person</em>, weights each household by its size. DAX's iterators do this: <code class="inline">SUMX(table, expression)</code> evaluates the expression row by row and adds the results.</p>
+<div class="syntax-label">DAX: a population-weighted mean</div><pre class="syntax-block">Persons = SUM ( households[hh_size] )
+
+Mean MPCE per person =
+DIVIDE (
+    SUMX ( households, households[monthly_pc_exp] * households[hh_size] ),
+    [Persons]
+)</pre>
+<p>The same pattern takes any weight. If your file carries a survey weight column, as NFHS and PLFS unit-level files do, replace <code class="inline">households[hh_size]</code> with it in both places.</p>
+<div class="info-box warning"><strong>Weights give the right estimate. Its uncertainty needs survey software.</strong> SUMX gives a correctly weighted point estimate. Power BI has no survey design features, so it cannot give a standard error or confidence interval that allows for stratification and clustering. If your dashboard reports estimates from a sample survey, compute the intervals in Stata (<code class="inline">svy:</code>), R (<code class="inline">survey</code>) or SPSS Complex Samples, bring them in as a table, and show them beside the estimate. Do not let a dashboard imply that a district difference of two points is real when the interval is ten points wide.</div>
+<p>Check both means in R. If larger households here spend less per head, the weighted mean comes out lower, because those households now count once for each member.</p>
+<div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
+mean(hh$monthly_pc_exp)                               # Mean MPCE (households)
+weighted.mean(hh$monthly_pc_exp, w = hh$hh_size)      # Mean MPCE per person
+sum(hh$hh_size)                                       # Persons</textarea></div>
+<h3>Iterators and the total row</h3>
+<p><code class="inline">SUMX</code>, <code class="inline">AVERAGEX</code> and their relatives loop over whatever rows the filter context leaves. That is why the total row of a matrix is computed afresh over all rows, never by adding up the rows above it. For a sum the two agree; for a mean or a rate they do not, and the fresh computation is the correct one.</p>
+<div class="info-box"><strong>Exercise.</strong> Add <code class="inline">[Mean MPCE]</code> and <code class="inline">[Mean MPCE per person]</code> to the matrix by district. In which districts do they differ most? Check one in the R cell with <code class="inline">subset(hh, district == &quot;Purnia&quot;)</code>.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="5">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="7">Next: Report and share &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="7" role="tabpanel">
+<div class="eyebrow">Module 8 of 8</div>
+<h2>A report people can read, and sharing it safely</h2>
+<p>A dashboard is read by a district officer on a phone, a programme manager on a projector and a donor in a PDF. Build for all three.</p>
+<h3>Page design</h3>
+<ul><li>Put the three or four headline measures as <strong>Card</strong> visuals across the top, each with a title that says the unit ("Households with a toilet, %").</li><li>Use a bar chart, sorted by value, for comparing districts. Sort by clicking the visual's <strong>More options (...) &gt; Sort axis</strong>. A pie chart with ten districts cannot be read.</li><li>Keep slicers for state, area and caste group in one place on the page, and add the dynamic title from Module 6 so every visual says what selection it shows.</li><li>Show the sample size. A card for <code class="inline">[Households]</code> beside the rates stops a reader trusting a rate computed on six households.</li></ul>
+<h3>Accessibility</h3>
+<ul><li>Give every visual <strong>Alt text</strong> (Format pane, <strong>General &gt; Alt text</strong>). A screen reader reads it in place of the chart. It accepts a DAX measure, so the alt text can state the current value.</li><li>Set the keyboard order in <strong>View &gt; Selection</strong>, on the <strong>Tab order</strong> tab, so it follows the reading order of the page.</li><li>Never use colour alone to carry meaning. If red means "below target", say so in the label or a data label too.</li></ul>
+<h3>Sharing: the one setting that can leak a dataset</h3>
+<div class="info-box warning"><strong>Publish to web makes a report public.</strong> Microsoft's documentation says that anyone on the internet can view a report published this way, with no sign-in, and that this includes detail-level data the report aggregates: anyone can reach the underlying data in the model even if no visual shows it. A household survey with names, phone numbers or GPS points must never be published this way, even if the visuals show only district totals. Remove personal identifiers in Power Query before the data reaches the model, and share through a workspace, an app or a secure embed instead.</div>
+<p>To publish, choose <strong>Home &gt; Publish</strong> and pick a workspace. Colleagues need access to that workspace or an app built from it, and both you and they need the licence your organisation's workspace requires. Schedule refresh in the service only when the source is somewhere the service can reach, such as SharePoint or a database; a CSV on your laptop cannot refresh on its own.</p>
+<h3>Version control</h3>
+<p>Because you saved as a Power BI project in Module 1, the model is stored as text. Put the project folder in a Git repository (the <a href="/code/git-quarto.html" style="color:var(--accent-color)">Git and Quarto course</a> covers the commands) and commit after each working change. A diff then shows exactly which measure definition changed between two versions of a donor report. Keep raw survey files out of the repository; the <code class="inline">.gitignore</code> Power BI wrote keeps out its data cache, and you should add your data files to it as well.</p>
+<div class="info-box"><strong>Exercise.</strong> Build one page: three cards, a sorted bar chart of <code class="inline">[Toilet coverage]</code> by district, slicers for state and area, a dynamic title, and alt text on every visual. Then press Tab from the top of the page and check that focus moves in the order you read.</div>
+<h3>Microsoft's own documentation</h3>
+<ul><li><a href="https://learn.microsoft.com/en-us/power-bi/fundamentals/desktop-get-the-desktop" rel="noopener" target="_blank" style="color:var(--accent-color)">Download Power BI Desktop</a>, with the system requirements.</li><li><a href="https://learn.microsoft.com/en-us/powerquery-m/" rel="noopener" target="_blank" style="color:var(--accent-color)">Power Query M function reference</a> and <a href="https://learn.microsoft.com/en-us/dax/" rel="noopener" target="_blank" style="color:var(--accent-color)">DAX function reference</a>.</li><li><a href="https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview" rel="noopener" target="_blank" style="color:var(--accent-color)">Power BI Desktop projects (PBIP)</a>.</li><li><a href="https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-publish-to-web" rel="noopener" target="_blank" style="color:var(--accent-color)">Publish to web</a>, including the warning quoted above.</li></ul>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/courses/powerBI/powerbi.html" style="color:var(--text-primary)">Power BI flagship course</a></h4><p>Eight modules with labs on NFHS, ASER and World Bank data, and where the free version stops.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/courses/powerBI/lexicon.html" style="color:var(--text-primary)">Power BI Lexicon</a></h4><p>Plain definitions of the terms used in this course and many more.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/spreadsheets.html" style="color:var(--text-primary)">Spreadsheets for M&amp;E</a></h4><p>Tidy sheets, validation and indicator tables before the data reaches Power BI.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/sql.html" style="color:var(--text-primary)">SQL for Development Data</a></h4><p>When the data lives in a database, Power BI can query it; SQL is how you check what it gets.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="6">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+</body>
+</html>
