@@ -1487,7 +1487,7 @@ DECK = {
         ]),
 
         S("Worked example", "Worked example: a water programme in a mixed-caste village", [
-            B("<strong>Illustrative.</strong> An NGO plans handpumps in a village of 400 households "
+            B("<strong>Illustrative case (hypothetical figures).</strong> An NGO plans handpumps in a village of 400 households "
               "in eastern Uttar Pradesh: 260 households of a dominant OBC caste in the main "
               "settlement, 110 SC households in a separate tola 600 metres away, and 30 others. "
               "The panchayat proposes all four pumps in the main settlement, near the temple."),

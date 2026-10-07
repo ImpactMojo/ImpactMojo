@@ -272,7 +272,7 @@ DECK = {
         {"type": "content", "label": "A Worked Table", "title": "Five women, ten outcomes, five observed",
          "compact": True,
          "blocks": [
-             {"t": "body", "html": "Illustrative. Monthly earnings in rupees for five women offered a tailoring "
+             {"t": "body", "html": "Illustrative (hypothetical figures). Monthly earnings in rupees for five women offered a tailoring "
               "course. In real data only the shaded column for each woman exists."},
              {"t": "table",
               "head": ["Woman", "Took course?", "Y(1): earnings if trained", "Y(0): earnings if not", "Individual effect", "What we observe"],
@@ -337,7 +337,7 @@ DECK = {
                         "counterfactual. It assumes the outcome would have stayed exactly where it was. In a "
                         "fast-changing economy that assumption fails almost by default: wages, prices, "
                         "rainfall, roads, phones and other schemes all move between the two survey rounds."},
-                       {"t": "body", "html": "Illustrative: a district reports that average yields rose 18% in "
+                       {"t": "body", "html": "Illustrative (hypothetical figures): a district reports that average yields rose 18% in "
                         "the two years after a soil health card drive. If the second year had a normal monsoon "
                         "after a drought, much of the rise would have happened anyway. The before-after number "
                         "measures the card drive plus the rain plus every other change, and cannot tell them "
@@ -904,7 +904,7 @@ DECK = {
         {"type": "content", "label": "The DiD Logic", "title": "Difference-in-differences in a two-by-two table",
          "compact": True,
          "blocks": [
-             {"t": "body", "html": "Illustrative. A state starts a free school bus in District A in 2024. District B "
+             {"t": "body", "html": "Illustrative case (hypothetical figures). A state starts a free school bus in District A in 2024. District B "
               "gets nothing. Girls' attendance rates in both districts, before and after:"},
              {"t": "table",
               "head": ["", "2023 (before)", "2025 (after)", "Change"],
@@ -1488,7 +1488,7 @@ DECK = {
         {"type": "content", "label": "Synthetic Control in Practice", "title": "Choosing donors and testing with placebos",
          "blocks": [
              {"t": "twocol", "ratio": "half",
-              "left": [{"t": "body", "html": "Illustrative. Suppose one state introduces a monthly cash transfer to "
+              "left": [{"t": "body", "html": "Illustrative case (hypothetical figures). Suppose one state introduces a monthly cash transfer to "
                         "women in 2024 and an analyst wants its effect on female labour force participation, "
                         "measured each year in the Periodic Labour Force Survey. The donor pool is the other "
                         "states. The method picks weights (say 40% one neighbouring state, 35% another, 25% a "
@@ -1688,7 +1688,7 @@ DECK = {
 
         {"type": "content", "label": "Worked Example, Part 1", "title": "A state scholarship for girls: choosing the design",
          "blocks": [
-             {"t": "body", "html": "Illustrative. A state launches a scholarship of &#8377;10,000 a year for girls "
+             {"t": "body", "html": "Illustrative case (hypothetical figures). A state launches a scholarship of &#8377;10,000 a year for girls "
               "from households below an income limit who pass Class 10 and enrol in Class 11. It begins in 12 "
               "districts in 2025 and is to cover all 38 districts by 2027. The finance department asks: does it "
               "raise girls' Class 11 enrolment, and is it worth extending?"},
@@ -1710,7 +1710,7 @@ DECK = {
         {"type": "content", "label": "Worked Example, Part 2", "title": "Reading the numbers that come back",
          "compact": True,
          "blocks": [
-             {"t": "body", "html": "Illustrative results after the 2026 phase. Girls' Class 11 enrolment as a share "
+             {"t": "body", "html": "Illustrative results after the 2026 phase (hypothetical figures). Girls' Class 11 enrolment as a share "
               "of girls who passed Class 10:"},
              {"t": "table",
               "head": ["", "2024 (before)", "2026 (after)", "Change"],

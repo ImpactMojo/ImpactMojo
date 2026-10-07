@@ -431,7 +431,7 @@ DECK = {
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [
-                  {"t": "body", "html": "Illustrative: monthly per capita consumption (&#8377;) for ten "
+                  {"t": "body", "html": "Illustrative (hypothetical figures): monthly per capita consumption (&#8377;) for ten "
                    "households in a hamlet, sorted:"},
                   {"t": "raw", "html": "<div style='font-family:monospace;font-size:1rem;margin:0.4rem 0;'>"
                    "2,000 &middot; 2,200 &middot; 2,400 &middot; 2,600 &middot; 2,800 &middot; 3,000 &middot; 3,200 &middot; 3,400 &middot; 3,800 &middot; 30,000</div>"},
@@ -947,7 +947,7 @@ DECK = {
                    "before generalising from it."}],
               "right": [
                   {"t": "panel", "color": "red", "title": "Non-response bias, illustrated", "html":
-                   "Illustrative: a phone survey reaches 70% of sampled households. If the 30% not "
+                   "Illustrative (hypothetical figures): a phone survey reaches 70% of sampled households. If the 30% not "
                    "reached are poorer, the estimate of poverty is biased downward, and interviewing "
                    "more of the reachable households only gives a more precise estimate of the wrong "
                    "number. Weighting adjustments help only to the extent that the variables used to "
@@ -1299,7 +1299,7 @@ DECK = {
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [
-                  {"t": "panel", "color": "green", "title": "Illustrative: reading scores", "html":
+                  {"t": "panel", "color": "green", "title": "Illustrative: reading scores (hypothetical figures)", "html":
                    "100 children in tutored schools average 52 marks; 100 in comparison schools average "
                    "47. SD in both groups = 20 marks.<br>"
                    "Difference = 5 marks.<br>"
@@ -1862,7 +1862,7 @@ DECK = {
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [
-                  {"t": "body", "cls": "sm", "html": "Illustrative brief: a state nutrition mission wants a "
+                  {"t": "body", "cls": "sm", "html": "Illustrative brief (hypothetical figures): a state nutrition mission wants a "
                    "baseline for anaemia among women aged 15&ndash;49 in one district, precise enough to "
                    "detect later change, and separate figures for SC and ST women."},
                   {"t": "panel", "color": "green", "title": "Sizing it", "html":

@@ -1755,7 +1755,7 @@ DECK = {
         ], compact=True),
 
         C("Worked example 1", "Illustrative: a block-level nutrition and WASH programme", [
-            body("<strong>Illustrative.</strong> An NGO works in three blocks of a district with "
+            body("<strong>Illustrative case (hypothetical figures).</strong> An NGO works in three blocks of a district with "
                  "a large Scheduled Tribe population. Its baseline surveys 1,200 households with "
                  "a child under five, using NFHS categories."),
             table(["Group (baseline, Illustrative)", "Children", "Stunted (%)",
@@ -1775,7 +1775,7 @@ DECK = {
         ], compact=True),
 
         C("Worked example 2", "Illustrative: allocating effort in proportion to disadvantage", [
-            body("<strong>Illustrative.</strong> The NGO has 30 community workers. Option A "
+            body("<strong>Illustrative (hypothetical figures).</strong> The NGO has 30 community workers. Option A "
                  "allocates them by number of children. Option B gives every group a base level of "
                  "home visits and adds intensity in proportion to the stunting gap."),
             table(["Group", "Share of children", "Option A workers", "Option B workers",

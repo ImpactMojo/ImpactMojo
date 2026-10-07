@@ -716,7 +716,7 @@ S05 = [
     ]),
 
     C("Illustrative case", "Redesigning a water programme with a rights lens", [
-        body("Illustrative. A trust installs hand pumps in 40 hamlets in a drought-prone district. A "
+        body("Illustrative case (hypothetical figures). A trust installs hand pumps in 40 hamlets in a drought-prone district. A "
              "rights review finds three problems: pumps in two Dalit hamlets were sited at the dominant-"
              "caste end; repairs depend on the trust; and the panchayat has a water budget it never used "
              "in these hamlets."),
@@ -1437,7 +1437,7 @@ S11 = [
     ], compact=True),
 
     C("Worked example", "Worked example: migrant workers from a Bihar district", [
-        body("Illustrative. An NGO in a source district of Bihar works with families of seasonal migrant "
+        body("Illustrative case (hypothetical figures). An NGO in a source district of Bihar works with families of seasonal migrant "
              "workers who go to brick kilns and construction sites in other states. It wants to move from "
              "relief to rights."),
         table(["Problem found", "Right and source", "Duty-bearer", "Programme action"], [

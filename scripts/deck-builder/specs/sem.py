@@ -336,7 +336,7 @@ DECK = {
                             ["mobility =~ m2", "0.94", "0.07", "0.77", "0.59", ""],
                             ["mobility =~ m3", "0.88", "0.08", "0.70", "0.49", ""],
                             ["decide ~~ mobility (correlation)", "", "", "0.46", "", "Related, distinct"]]},
-                       {"t": "body", "cls": "sm", "html": "Illustrative; n = 640 women. "
+                       {"t": "body", "cls": "sm", "html": "Illustrative, hypothetical figures; n = 640 women. "
                         "Standardised loadings above about 0.5 (R&sup2; above 0.25) are the "
                         "conventional floor; d5 fails it. The factor correlation of 0.46 says "
                         "decision-making and mobility are not the same thing, which matters "

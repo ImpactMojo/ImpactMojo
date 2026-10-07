@@ -1532,7 +1532,7 @@ SLIDES = [
     DIV("11", "Eleven", "Putting it to work"),
 
     S("Worked example 1", "Worked example: from a district problem to a question", [
-        H("amber", "Illustrative. A district education officer and an NGO partner want to "
+        H("amber", "Illustrative case (hypothetical figures). A district education officer and an NGO partner want to "
           "understand why girls in three blocks do not move from class 8 to class 9."),
         TC([P("cyan", "Step 1: check existing data",
               "UDISE+ enrolment by school and grade gives transition rates by block. ASER "

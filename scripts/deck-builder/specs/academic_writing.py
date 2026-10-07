@@ -1176,7 +1176,7 @@ DECK = {
                             ["Monthly consumption (Rs, 2023)", "9,840 (4,210)", "9,610 (4,050)", "230", "0.22"],
                             ["Distance to bank branch (km)", "6.8 (4.9)", "6.5 (4.7)", "0.3", "0.18"],
                             ["Decision-making index (0&ndash;1)", "0.32 (0.21)", "0.31 (0.20)", "0.01", "0.44"]]},
-                       {"t": "body", "cls": "sm", "html": "Illustrative. Means with standard "
+                       {"t": "body", "cls": "sm", "html": "Illustrative, hypothetical figures. Means with standard "
                         "deviations in parentheses; the note would state the survey round, "
                         "that p-values are from a regression of each variable on treatment "
                         "with village-clustered standard errors, and the joint F-test."}],

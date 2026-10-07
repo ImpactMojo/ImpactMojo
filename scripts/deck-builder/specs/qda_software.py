@@ -584,7 +584,7 @@ DECK = {
                             ["FORMAL_FINANCE", "Parent: banks, officers, forms, phones", "A priori", "&mdash;", "30"],
                             ["&nbsp;&nbsp;FEAR_FORMAL_FINANCE", "Anxiety, avoidance, distrust", "A priori, redefined", "38", "21"],
                             ["IN_VIVO", "Respondents' own phrases kept as codes", "Inductive", "29", "19"]]}],
-              "right": [{"t": "body", "cls": "sm", "html": "Illustrative. Eleven of the "
+              "right": [{"t": "body", "cls": "sm", "html": "Illustrative: the SHG study used through this course is hypothetical, and its figures are invented for teaching. Eleven of the "
                         "study's 46 codes, with their origin and their counts from the "
                         "code-summary report every tool produces. Two inductive codes "
                         "(SHIELD, STRATEGY) became the analytic centre of the study and "
