@@ -1100,7 +1100,7 @@ DECK = {
                  "<strong>MoHFW</strong> guidelines: JSY, JSSK, PMSMA, LaQshya, SUMAN, HBNC",
                  "<em>Thaddeus &amp; Maine (1994)</em> &mdash; 'Too far to walk', the three-delays paper"]},
              {"t": "hbox", "color": "cyan", "html": "Pair this deck with ImpactMojo's "
-              "<strong>Public Health</strong>, <strong><a href="/101-courses/gender-dev.html" style="color:inherit;text-decoration:underline">Gender &amp; Development</a></strong> and <strong><a href="/101-courses/nutrition.html" style="color:inherit;text-decoration:underline">Nutrition</a></strong> "
+              "<strong>Public Health</strong>, <strong><a href='/101-courses/gender-dev.html' style='color:inherit;text-decoration:underline'>Gender &amp; Development</a></strong> and <strong><a href='/101-courses/nutrition.html' style='color:inherit;text-decoration:underline'>Nutrition</a></strong> "
               "101 courses."},
          ]},
 
