@@ -15,7 +15,7 @@ No sign-in, no card, no trial clock:
 - **All 21 flagship courses** and **79 foundational (101) courses**
 - **35 labs** and **135 games** (18 simulations + 117 puzzles)
 - **171 reading companions** and **25 deep dives**
-- **12 data notes** and **Field Radio**: 19 clips of practitioner voice notes and shorts, each with a transcript
+- **12 data notes** and **Field Radio**: 23 clips of practitioner voice notes and shorts, each with a transcript
 - **200 case studies**, **500+ Dev Discourses**, and the **ImpactLex** glossary
 - **AI study companions** (NotebookLM notebooks)
 - **Pro Studio builders that are free to *use***: Research Question Builder, ToR Builder, Logframe Builder, Empathy Mapping, AI Strategy Canvas, Statistical Code Converter and Qualitative Insights Lab (seven of the 13 Pro Studio tools; four more are free to open, and two AI tools run on your own API key)

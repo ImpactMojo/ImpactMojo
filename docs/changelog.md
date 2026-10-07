@@ -2,6 +2,19 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.345.0 — October 7, 2026 (four new Field Radio videos)
+
+### Added
+
+- **Four short videos on Field Radio, taking the station from 19 clips to 23**, all from Vandana on the MEL & Research track and transcribed in full. Transcripts were cleaned only where speech recognition misheard a term or a name (MEL heard as "mail", the Women's Empowerment in Agriculture Index, Feed the Future, Sielbeck-Bowen, Radhika Govinda), and nothing was added. A fifth file in the source folder is a re-upload of the existing gender-sensitive FGD clip and was left out.
+
+### For Learners
+
+- **Why causal inference** — improvement is not the same as impact, and how the counterfactual decides the method. [Listen](/field-radio.html#vs-09)
+- **What rigorous measurement looks like: the WEAI** — five domains of women's empowerment in agriculture, and why the index was tested and revised. [Listen](/field-radio.html#vs-10)
+- **Feminist evaluation: whose knowledge counts** — three questions about power to ask of any evaluation. [Listen](/field-radio.html#vs-11)
+- **Community score cards as an MEL practice** — from a score of two out of five to an action agenda, and closing the loop. [Listen](/field-radio.html#vs-12)
+
 ## v10.344.0 — October 7, 2026 (deck metadata and deck specs)
 
 ### Fixed
