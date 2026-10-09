@@ -34,6 +34,7 @@
     { t:"Aid & Philanthropy 101", u:"/101-courses/aid-philanthropy.html", o:"Aid & Philanthropy 101: a free foundational course for development practitioners in South Asia. The OECD definition of ODA and the grant-equivalent measure, the 0.7%..."},
     { t:"Behaviour Change Communication 101", u:"/101-courses/bcc-comms.html", o:"Behaviour Change Communication 101: a free foundational course for development and public-health communicators in South Asia."},
     { t:"Bivariate Analysis 101", u:"/101-courses/bi-analysis.html", o:"Bivariate Analysis 101: a free foundational course for development practitioners and researchers in South Asia."},
+    { t:"BRSR & Sustainability Reporting 101", u:"/101-courses/brsr-reporting.html", o:"India's Business Responsibility and Sustainability Report for preparers and readers: who files, BRSR Core, emissions, energy, water, waste and people metrics, with worked..."},
     { t:"Care Economy 101", u:"/101-courses/care-economy-101.html", o:"Care Economy 101: a free foundational course for development practitioners and policy folk in South Asia."},
     { t:"Caste Studies 101", u:"/101-courses/caste-studies.html", o:"Caste Studies 101: a free foundational course for development practitioners and researchers in South Asia. Caste as a structure of inequality: varna and jati, the..."},
     { t:"Causal Inference 101", u:"/101-courses/causal-inference.html", o:"Causal Inference 101: a free foundational course for development practitioners in South Asia on the logic of causal claims. Potential outcomes and the counterfactual..."},
@@ -284,7 +285,7 @@
 
     // Flagship count
     { re: /how many.*course|flagship|all.*course/i,
-      a: () => "We have **21 flagship courses** and **79 foundational courses**, 100 in all, plus " + CODE.length + " Code Studio courses. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
+      a: () => "We have **21 flagship courses** and **80 foundational courses**, 101 in all, plus " + CODE.length + " Code Studio courses. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
 
     // PoA specific
     { re: /poa|politics.*aspiration|nrega|rti|nfsa|forest.*right/i,

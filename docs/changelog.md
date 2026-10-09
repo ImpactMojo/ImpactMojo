@@ -2,6 +2,20 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.351.0 — October 9, 2026 (BRSR & Sustainability Reporting 101)
+
+### Added
+
+- **[BRSR & Sustainability Reporting 101](/101-courses/brsr-reporting.html)**, the 80th foundational course: 100 slides on India's Business Responsibility and Sustainability Report for people who prepare one and people who read one. It covers who must file under LODR Regulation 34(2)(f) and how the top 1,000 is now ranked, Sections A, B and C, the nine NGRBC principles, BRSR Core and the timetable for independent checking, the 28 March 2025 move to "assessment or assurance", the voluntary value chain and green credit disclosures, materiality, GRI, the ISSB standards and the EU's CBAM. Twenty-five calculation and reading exercises use one illustrative company: Scope 1 from IPCC default factors, Scope 2 from the CEA grid factor for FY 2024-25 (0.710 t CO2 per MWh, Version 21.0), PPP-adjusted intensity, energy, water, waste, the lost-time injury frequency rate, wages paid to women, MSME sourcing, payment days and value chain partners. Rules stated as of 9 October 2026 from SEBI's circulars, the LODR and its Master Circular. Linked from the 101 index, the ESG flagship, the catalogue, search, both sitemaps and Mojini.
+
+### Changed
+
+- **Counts**: foundational courses 79 to 80 and courses 100 to 101 wherever they are stated. The human-readable sitemap now lists the Adaptive Experiments Lab and shows 36 Labs, a count the automated check does not read.
+
+### For Learners
+
+- **BRSR & Sustainability Reporting 101** — how India's listed companies report on environment, people and governance, with worked calculations for emissions, energy, water, safety and wages, and a guide to reading a BRSR critically. [Open the course](/101-courses/brsr-reporting.html)
+
 ## v10.350.0 — October 9, 2026 (Adaptive Experiments Lab)
 
 ### Added
