@@ -119,6 +119,10 @@ EXCLUDE_WIKI = {"Changelog.md", "Roadmap.md"}
 # canonical figures had moved to 35, 166 and 23. Copy is copy wherever it lives.
 COPY_FILES = [
     "js/tours.js",
+    # Mojini's answer bank states the course and Lab totals. It said "81 in
+    # all" beside 21 flagship and 79 foundational courses, a sum that was
+    # never right, and nothing read the file.
+    "js/faq-bank.js",
     # The 101 series landing page. Not root-level, so the HTML glob never saw
     # it, and its <title>, og:title and <h1> each carried a stale foundational
     # count -- the one page whose entire subject is that number.
