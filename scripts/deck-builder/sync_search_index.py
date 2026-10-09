@@ -52,6 +52,7 @@ DECKS = [
     ("fln", "fln"), ("mental_health", "mental-health"), ("nutrition", "nutrition"),
     ("social_determinants_health", "social-determinants-health"),
     ("media_comms", "media-comms"), ("digital_rights_ai", "digital-rights-ai"),
+    ("brsr_reporting", "brsr-reporting"),
 ]
 
 STOP = {"and", "the", "for", "of", "to", "in", "a", "an", "101", "amp"}

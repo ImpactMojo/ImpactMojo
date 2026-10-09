@@ -81,6 +81,7 @@ SECTIONS = [
   ("governance-accountability","Governance & Accountability 101","si_Check_circle","cyan","RTI, social audits, the CAG & what improves services."),
   ("public-policy-101","Public Policy 101","si_Flag","indigo","How policy is made in India, and how it is carried out."),
   ("aid-philanthropy","Aid & Philanthropy 101","si_Wallet","amber","ODA, CSR, the FCRA & how to read a funder."),
+  ("brsr-reporting","BRSR & Sustainability Reporting 101","si_Fact_check","green","India's BRSR for preparers and readers, with worked calculations."),
  ]),
  ("Critical & Digital", "Power, ethics, environment and the digital world.", [
   ("decolonize-dev","Decolonial Development 101","si_Globe_detailed","red","Decolonising development thought & practice."),
