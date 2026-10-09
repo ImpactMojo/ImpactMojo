@@ -365,7 +365,11 @@ def build_pattern():
     alts = "|".join(f"(?P<t{i}>{rx})" for i, (rx, _) in enumerate(TERMS))
     # number not part of a larger number/word and not the end of a range
     # ("2–3 games"); phrase not followed by a letter ("35 labscape")
-    return re.compile(rf"(?<![\d\w\-–—])(\d+)\+?\s+({alts})(?![a-z])", re.IGNORECASE)
+    # "79 Free Foundational Courses" put an adjective between the number and
+    # the noun, and the 101 index page's <title>, og:title and description
+    # sat one behind canonical for that reason alone. "free" is the only
+    # adjective the site puts there, so it is the only one allowed.
+    return re.compile(rf"(?<![\d\w\-–—])(\d+)\+?\s+(?:free\s+)?({alts})(?![a-z])", re.IGNORECASE)
 
 
 def line_hits(line, pattern, counts):

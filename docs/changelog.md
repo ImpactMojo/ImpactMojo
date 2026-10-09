@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.352.0 — October 9, 2026 (course counts with "free" in them)
+
+### Fixed
+
+- **Course counts written as "N free courses" were never checked, and had drifted** (#1175). The count check matched "80 courses" and missed "80 free courses". The 101 index title said 79 foundational courses against 80; chatbot answers on two legal pages said "39+ free courses"; the catalogue, 404, contact and podcast pages said 70; the FAQ said 80. The check now allows "free" between the number and the noun, and every figure matches `data/counts.json`.
+
+### Changed
+
+- **The homepage gets 60 seconds in the pa11y audit.** It is the largest page audited, and one run timed out loading it at 30 seconds without auditing anything.
+
 ## v10.351.0 — October 9, 2026 (BRSR & Sustainability Reporting 101)
 
 ### Added
