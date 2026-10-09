@@ -113,6 +113,7 @@
     { t:"Policy Advocacy Studio", u:"/Labs/policy-advocacy-lab.html" },
     { t:"Policy Analysis Studio: Structured Tools for Policy Reasoning", u:"/Labs/policy-analysis-lab.html" },
     { t:"Policy Brief Writing Studio", u:"/Labs/policy-brief-lab.html" },
+    { t:"Adaptive Experiments Lab", u:"/Labs/adaptive-experiments-lab.html" },
     { t:"RCT Readiness Diagnostic", u:"/Labs/rct-readiness-lab.html" },
     { t:"Resource Sustainability Studio", u:"/Labs/resource-sustainability-lab.html" },
     { t:"Risk & Mitigation Studio", u:"/Labs/risk-mitigation-lab.html" },

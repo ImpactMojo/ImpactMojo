@@ -2,13 +2,13 @@
 
 ## What Are the ImpactMojo Studios?
 
-ImpactMojo offers **35 interactive studios**: hands-on workbenches where you build, design, and practice real development skills. Unlike courses (which teach concepts) or games (which simulate dynamics), studios produce **tangible outputs** (a Theory of Change diagram, a MEL plan, a policy brief) that you can export and use in your actual work.
+ImpactMojo offers **36 interactive studios**: hands-on workbenches where you build, design, and practice real development skills. Unlike courses (which teach concepts) or games (which simulate dynamics), studios produce **tangible outputs** (a Theory of Change diagram, a MEL plan, a policy brief) that you can export and use in your actual work.
 
 All studios are **free, browser-based, and require no login**.
 
 ---
 
-## The 35 Studios
+## The 36 Studios
 
 ### MEL & Research Studios
 
@@ -26,6 +26,7 @@ All studios are **free, browser-based, and require no login**.
 | **Teacher Evidence Explorer** | A filtered shortlist of 30+ teacher-effectiveness interventions by evidence quality, cost, and India relevance | [Open](/Labs/teacher-evidence-lab.html) |
 | **Impact Evaluation Designer** | A credible impact-evaluation design: frame the estimand, choose an identification strategy (RCT/DiD/RDD/matching/synthetic control/ITS), size the sample and power, and check validity threats | [Open](/Labs/impact-evaluation-lab.html) |
 | **RCT Readiness Diagnostic** | A go/no-go read on whether your evidence base, theory of change, rollout and baseline can support a randomised trial: with a baseline detectability (ceiling/floor and power) calculator, a readiness verdict, and cheaper alternatives when you're not ready | [Open](/Labs/rct-readiness-lab.html) |
+| **Adaptive Experiments Lab** | A fixed A/B test and a Thompson-sampling bandit run on simulated users whose true rates you set, a repeated-experiment simulation showing how adaptive allocation lowers the coverage of ordinary confidence intervals, a check of quick measures against outcomes, and a fit diagnostic. Evidential, from IDinsight and the Agency Fund, as the worked example | [Open](/Labs/adaptive-experiments-lab.html) |
 | **Disability-Inclusive MEL** | A disability-inclusive MEL plan: set the social-model / twin-track approach, count disability with the Washington Group Short Set, draft mainstream-disaggregated and disability-specific SMART indicators, and score whether your data collection is accessible. Companion to Disability Inclusion 101 | [Open](/Labs/disability-inclusive-mel-lab.html) |
 
 ### Design & Programme Studios

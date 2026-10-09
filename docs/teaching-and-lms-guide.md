@@ -111,6 +111,6 @@ Course material is **CC BY-NC-ND 4.0**. You may use it in teaching, distribute i
 ## Related
 
 - [Teach with ImpactMojo](https://www.impactmojo.in/teach), syllabus mappings and ready-made course kits
-- [Labs Guide](labs-guide.md): what each of the 35 Studios does
+- [Labs Guide](labs-guide.md): what each of the 36 Studios does
 - [101 Course Decks Guide](101-decks-guide.md): the foundational decks
 - [Workshops & Facilitation](workshops-and-facilitation.md): running the material live

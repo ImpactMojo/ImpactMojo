@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Adaptive Experiments Lab | ImpactMojo</title>
+    <meta name="description" content="Simulate a fixed A/B test and a Thompson-sampling bandit on users whose true response rates you set, see why ordinary confidence intervals go wrong when allocation follows the results, and check whether rapid experiments suit your programme. With Evidential, the open-source experiment engine from IDinsight and the Agency Fund, as a worked example.">
+    <meta name="keywords" content="adaptive experiments, A/B testing, multi-armed bandit, Thompson sampling, confidence intervals, adaptive inference, rapid experimentation, nonprofits, Evidential, IDinsight, WhatsApp programmes, South Asia, India, ImpactMojo">
+    <link rel="canonical" href="https://www.impactmojo.in/Labs/adaptive-experiments-lab.html">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+
+    <style>
+        :root {
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
+            --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
+            --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
+            --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+        }
+@media (prefers-color-scheme: dark) { :root {
+            --primary-bg: #0F172A; --secondary-bg: #1E293B; --accent-color: #0EA5E9; --accent-hover: #0284C7;
+            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --text-primary: #F1F5F9; --text-secondary: #CBD5E1; --text-muted: #94A3B8;
+            --card-bg: #1E293B; --hover-bg: #334155; --border-color: #334155;
+            --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+        } }
+body.light-mode, [data-theme="light"] {
+            --primary-bg: #FFFFFF; --secondary-bg: #F8FAFC; --accent-color: #0369A1; --accent-hover: #0284C7;
+            --secondary-accent: #4F46E5; --success-color: #047857; --warning-color: #92400E; --danger-color: #991B1B;
+            --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #52627A;
+            --card-bg: #FFFFFF; --hover-bg: #F1F5F9; --border-color: #E2E8F0;
+            --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+        }
+body.dark-mode, [data-theme="dark"] {
+            --primary-bg: #0F172A; --secondary-bg: #1E293B; --accent-color: #0EA5E9; --accent-hover: #0284C7;
+            --secondary-accent: #6366F1; --success-color: #10B981; --warning-color: #F59E0B; --danger-color: #EF4444;
+            --text-primary: #F1F5F9; --text-secondary: #CBD5E1; --text-muted: #94A3B8;
+            --card-bg: #1E293B; --hover-bg: #334155; --border-color: #334155;
+            --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+            --font-sans: 'Amaranth', sans-serif; --font-heading: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--primary-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; position: relative; z-index: 1; }
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; margin-bottom: 2rem; }
+        .back-link:hover { color: var(--accent-hover); }
+        .back-link svg { width: 18px; height: 18px; }
+        .header { text-align: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1rem; background: rgba(14, 165, 233, 0.15); color: var(--accent-color); border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; font-family: var(--font-heading); }
+        .header h1 { font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 720px; margin: 0 auto; }
+        .top-controls { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .ctrl-btn { padding: 0.6rem 0.9rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); transition: all 0.2s; }
+        .ctrl-btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .progress-bar { width: 100%; height: 6px; background: var(--border-color); border-radius: 3px; margin-bottom: 2rem; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--gradient-primary); border-radius: 3px; transition: width 0.4s; width: 20%; }
+        .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); overflow-x: auto; }
+        .tab-btn { padding: 0.85rem 1.1rem; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--text-muted); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s; }
+        .tab-btn:hover { color: var(--text-secondary); }
+        .tab-btn.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+        .tab-btn .tab-num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--border-color); font-size: 0.7rem; font-weight: 700; font-family: var(--font-heading); }
+        .tab-btn.active .tab-num { background: #0A7AAD; color: #fff; }
+        .tab-btn.completed .tab-num { background: #0B835B; color: #fff; }
+        .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .section-title { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .section-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        h3.block-title { font-family: var(--font-heading); font-size: 1.1rem; margin: 1.75rem 0 0.75rem; color: var(--text-primary); }
+        p.body-text { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.75rem; }
+
+        /* Info boxes */
+        .info-box { background: rgba(14,165,233,0.08); border-left: 4px solid var(--accent-color); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.92rem; color: var(--text-secondary); }
+        .info-box strong { color: var(--text-primary); }
+        .info-box.warning { background: rgba(245,158,11,0.10); border-left-color: var(--im-ink-warn, #92400E); }
+        .info-box.success { background: rgba(16,185,129,0.10); border-left-color: var(--im-ink-good, #047857); }
+        .info-box.danger { background: rgba(239,68,68,0.10); border-left-color: var(--im-ink-bad, #991B1B); }
+        .illustrative-tag { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600; padding: 2px 8px; border-radius: 5px; background: rgba(245,158,11,0.15); color: var(--im-ink-warn, #92400E); border: 1px solid rgba(245,158,11,0.35); margin-left: 6px; vertical-align: middle; }
+
+        /* Tables */
+        .budget-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.92rem; }
+        .budget-table th, .budget-table td { padding: 0.7rem 0.85rem; text-align: left; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
+        .budget-table th { background: var(--secondary-bg); font-family: var(--font-heading); font-weight: 600; color: var(--accent-color); }
+        .budget-table td strong { color: var(--text-primary); }
+        .budget-table tr:hover td { background: var(--hover-bg); }
+        .table-scroll { overflow-x: auto; }
+
+        /* Result / chart box */
+        .result-box { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.25rem 0; }
+        .result-box h4 { font-family: var(--font-heading); font-size: 1rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+        .result-box p { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 0.35rem; }
+        .result-box strong { color: var(--text-primary); }
+        .big-figure { font-size: 2rem; font-weight: 700; font-family: var(--font-heading); color: var(--accent-color); }
+
+        /* Reveal / choice cards */
+        .scheme-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; margin: 0.75rem 0; background: var(--card-bg); transition: all 0.2s; }
+        .scheme-card h4 { font-family: var(--font-heading); color: var(--accent-color); margin-bottom: 0.4rem; font-size: 1rem; }
+        .scheme-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.35rem; }
+        .scheme-card .meta { font-size: 0.82rem; color: var(--text-muted); }
+
+        /* Tags */
+        .tag { display: inline-block; padding: 4px 12px; background: rgba(14,165,233,0.12); color: var(--accent-color); border-radius: 12px; font-size: 0.78rem; font-family: var(--font-heading); font-weight: 600; margin: 4px 4px 4px 0; }
+
+        /* Completion */
+        .completion-badge { text-align: center; padding: 2.5rem 1.5rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 16px; margin: 1rem 0; }
+        .completion-badge .tick { width: 72px; height: 72px; border-radius: 50%; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+        .completion-badge .tick svg { width: 38px; height: 38px; stroke: #fff; }
+        .completion-badge h2 { font-family: var(--font-heading); color: var(--text-primary); font-size: 1.6rem; margin-bottom: 0.75rem; }
+        .completion-badge p { color: var(--text-secondary); max-width: 560px; margin: 0 auto; }
+        .next-steps { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+
+        /* Buttons + nav */
+        .btn { padding: 0.7rem 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); font-size: 0.9rem; font-family: var(--font-sans); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; }
+        .btn:hover { border-color: var(--accent-color); background: var(--hover-bg); }
+        .btn-primary { background: var(--accent-solid, #0369A1); border-color: var(--accent-color); color: #fff; font-weight: 600; }
+        .btn-primary:hover { background: #027AB8; color: #fff; }
+        .pro-pill { display:inline-flex; align-items:center; gap:0.25rem; background:linear-gradient(135deg,#F59E0B,#EF4444); color:#fff; font-family:var(--font-heading); font-weight:700; font-size:0.6rem; text-transform:uppercase; letter-spacing:0.4px; padding:0.12rem 0.45rem; border-radius:5px; vertical-align:middle; }
+        .export-note { font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .nav-row { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); gap: 1rem; }
+        ul.body-list { margin: 0.5rem 0 0.75rem 1.5rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.8; }
+
+        /* ===== Form fields (ImpactMojo variables only) ===== */
+        .field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .field { display: flex; flex-direction: column; gap: 0.35rem; }
+        .field.full { grid-column: 1 / -1; }
+        .field label { font-family: var(--font-heading); font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); }
+        .field .hint { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-sans); }
+        input[type="text"], input[type="number"], textarea, select { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--secondary-bg); color: var(--text-primary); font-family: var(--font-sans); font-size: 0.9rem; }
+        textarea { min-height: 68px; resize: vertical; }
+        input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent-color); outline-offset: 1px; }
+        input::placeholder, textarea::placeholder { color: var(--text-muted); }
+
+        /* Evidence ladder */
+        .ladder { list-style: none; margin: 1.25rem 0; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
+        .ladder li { display: flex; gap: 0.85rem; padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-color); align-items: flex-start; }
+        .ladder li:last-child { border-bottom: none; }
+        .ladder .rung-badge { flex-shrink: 0; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: rgba(99,102,241,0.12); color: var(--im-ink-info, #4F46E5); white-space: nowrap; margin-top: 2px; }
+        .ladder .rung-body strong { color: var(--text-primary); font-family: var(--font-heading); }
+        .ladder .rung-body span { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* Stage / gate choices */
+        .stage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.85rem; margin: 1.25rem 0; }
+        .stage-card { background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 1rem 1.1rem; cursor: pointer; transition: all 0.2s; }
+        .stage-card:hover { border-color: var(--accent-color); }
+        .stage-card.selected { border-color: var(--accent-color); background: rgba(14,165,233,0.06); box-shadow: 0 4px 14px rgba(15,23,42,0.08); }
+        .stage-card h4 { font-family: var(--font-heading); font-size: 0.98rem; margin-bottom: 0.3rem; color: var(--text-primary); }
+        .stage-card p { font-size: 0.82rem; color: var(--text-muted); margin: 0; }
+
+        /* Gate items (Yes / Partly / No) */
+        .gate { border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem 1.15rem; margin: 0.75rem 0; background: var(--card-bg); }
+        .gate .gate-q { font-family: var(--font-heading); font-weight: 600; color: var(--text-primary); font-size: 0.95rem; margin-bottom: 0.15rem; }
+        .gate .gate-why { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.7rem; }
+        .seg { display: inline-flex; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+        .seg button { padding: 0.4rem 0.9rem; background: var(--secondary-bg); border: none; border-right: 1px solid var(--border-color); color: var(--text-secondary); font-family: var(--font-sans); font-size: 0.85rem; cursor: pointer; transition: all 0.15s; }
+        .seg button:last-child { border-right: none; }
+        .seg button:hover { background: var(--hover-bg); }
+        .seg button.sel-yes { background: #0B835B; color: #fff; }
+        .seg button.sel-partly { background: #A06707; color: #fff; }
+        .seg button.sel-no { background: #E71414; color: #fff; }
+
+        /* Score circle */
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; border: 6px solid var(--accent-color); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.6rem; font-weight: 700; color: var(--accent-color); font-family: var(--font-heading); }
+        .verdict-banner { border-radius: 14px; padding: 1.5rem 1.6rem; margin: 1.25rem 0; border: 1px solid var(--border-color); }
+        .verdict-banner h3 { font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .verdict-banner p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        .assumption-flag { background: rgba(99,102,241,0.10); border-left: 4px solid var(--secondary-accent); padding: 0.85rem 1.1rem; border-radius: 0 8px 8px 0; margin: 0.75rem 0; font-size: 0.9rem; color: var(--text-secondary); }
+        .assumption-flag strong { color: var(--text-primary); }
+
+        .v3-inline-icon { width: 16px; height: 16px; vertical-align: middle; display: inline-block; }
+        .v3-paper-plane { position: fixed; top: 15%; right: 6%; width: 130px; height: 130px; opacity: 0.18; z-index: 0; pointer-events: none; animation: v3-float-plane 25s ease-in-out infinite; }
+        @keyframes v3-float-plane { 0% { transform: translate(0,0) rotate(0deg);} 20% { transform: translate(-50px,40px) rotate(10deg);} 40% { transform: translate(100px,30px) rotate(-8deg);} 60% { transform: translate(40px,60px) rotate(15deg);} 80% { transform: translate(-30px,-40px) rotate(-12deg);} 100% { transform: translate(0,0) rotate(0deg);} }
+        @media (prefers-reduced-motion: reduce) { .v3-paper-plane { animation: none !important; } .tab-panel { animation: none; } }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .v3-paper-plane { width: 90px; height: 90px; opacity: 0.12; }
+            .budget-table { font-size: 0.82rem; }
+            .budget-table th, .budget-table td { padding: 0.5rem 0.55rem; }
+        }
+        @media print {
+            body { background: #fff; color: #000; }
+            .top-controls, .back-link, .tabs, .nav-row, .btn, .im-topbar, .v3-paper-plane { display: none !important; }
+            .tab-panel { display: block !important; page-break-inside: avoid; margin-bottom: 2rem; }
+        }
+    
+/* The indigo chip ink needs a value per theme: #4F46E5 on the pale tint,
+   #A5B4FC on the same tint over the dark card. */
+:root{--im-ink-info:#4F46E5}
+@media (prefers-color-scheme: dark){:root{--im-ink-info:#A5B4FC}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-info:#A5B4FC}
+
+/* Ink, not fill: the saturated token stays for backgrounds. */
+:root{--im-ink-bad:#991B1B;--im-ink-good:#047857;--im-ink-warn:#92400E;}
+@media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-warn:#FCD34D;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-good:#6EE7B7;--im-ink-warn:#FCD34D;}
+
+/* Adaptive Experiments Lab: arm colours are fills (non-text, 3:1 needed) and flip with the theme. */
+:root{--arm0:#0369A1;--arm1:#B45309;--arm2:#7C3AED}
+@media (prefers-color-scheme: dark){:root{--arm0:#38BDF8;--arm1:#FBBF24;--arm2:#C4B5FD}}
+[data-theme="dark"],body.dark-mode,html.dark{--arm0:#38BDF8;--arm1:#FBBF24;--arm2:#C4B5FD}
+[data-theme="light"]{--arm0:#0369A1;--arm1:#B45309;--arm2:#7C3AED}
+.alloc{margin:1rem 0}.alloc svg{width:100%;height:auto;display:block}
+.alloc .arm0{fill:var(--arm0)}.alloc .arm1{fill:var(--arm1)}.alloc .arm2{fill:var(--arm2)}
+.alloc .axis{stroke:var(--text-muted);stroke-width:1}.alloc .tick{fill:var(--text-secondary);font-size:12px;font-family:var(--font-sans)}
+.alloc figcaption{display:flex;gap:1rem;flex-wrap:wrap;font-size:0.85rem;color:var(--text-secondary);margin-top:0.4rem}
+.legend-item{display:inline-flex;align-items:center;gap:0.4rem}.swatch{display:inline-block;width:12px;height:12px;border-radius:3px}
+.swatch.arm0{background:var(--arm0)}.swatch.arm1{background:var(--arm1)}.swatch.arm2{background:var(--arm2)}
+.budget-table .meta{color:var(--text-muted);font-size:0.82rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.gate .seg{flex-wrap:wrap}
+.body-text a{color:var(--accent-color);text-decoration:underline;text-underline-offset:2px}
+</style>
+<style>
+/* ===== ImpactMojo Design System (topbar / footer) ===== */
+:root {
+    --im-primary-bg: #0F172A; --im-secondary-bg: #1E293B; --im-accent: #0369A1; --im-accent-hover: #0284C7;
+    --im-secondary-accent: #4F46E5; --im-success: #047857; --im-text-primary: #F1F5F9; --im-text-secondary: #CBD5E1;
+    --im-text-muted: #94A3B8; --im-card-bg: #1E293B; --im-hover-bg: #334155; --im-border: #334155;
+    --im-nav-bg: rgba(15, 23, 42, 0.95); --im-gradient: linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%);
+}
+[data-theme="light"] {
+    --im-primary-bg: #F8FAFC; --im-secondary-bg: #FFFFFF; --im-accent: #0284C7; --im-accent-hover: #0369A1;
+    --im-text-primary: #0F172A; --im-text-secondary: #475569; --im-text-muted: #94A3B8; --im-card-bg: #FFFFFF;
+    --im-hover-bg: #F1F5F9; --im-border: #E2E8F0; --im-nav-bg: rgba(248, 250, 252, 0.95);
+}
+.im-topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: var(--im-nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--im-border); padding: 0.5rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; font-family: 'Inter', sans-serif; }
+.im-topbar a { text-decoration: none; }
+.im-topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.im-topbar-home { display: flex; align-items: center; gap: 0.5rem; color: var(--im-text-primary); font-weight: 700; font-size: 1rem; background: var(--im-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.im-topbar-home svg { width: 24px; height: 24px; flex-shrink: 0; }
+.im-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+.im-premium-btn { background: var(--im-gradient); color: #fff !important; padding: 0.35rem 0.85rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.35rem; transition: opacity 0.2s; -webkit-text-fill-color: #fff; }
+.im-premium-btn:hover { opacity: 0.9; }
+.im-premium-btn svg { width: 14px; height: 14px; }
+.im-browse-btn { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--im-text-primary); background: var(--im-card-bg); border: 1.5px solid var(--im-border); padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; transition: all 0.18s ease; }
+.im-browse-btn:hover { background: #027AB8; color: #FFFFFF; border-color: var(--im-accent); transform: translateY(-1px); }
+.im-browse-btn svg { width: 14px; height: 14px; }
+.im-theme-selector { display: flex; gap: 2px; background: var(--im-card-bg); border: 1px solid var(--im-border); border-radius: 8px; padding: 2px; }
+.im-theme-btn { background: transparent; border: none; color: var(--im-text-secondary); padding: 6px; border-radius: 5px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; }
+.im-theme-btn:hover { background: var(--im-hover-bg); color: var(--im-text-primary); }
+.im-theme-btn.active { background: #027AB8; color: #fff; }
+.im-theme-btn svg { width: 16px; height: 16px; }
+.im-footer { background: var(--im-secondary-bg); border-top: 1px solid var(--im-border); padding: 2rem 1rem; margin-top: 3rem; font-family: 'Inter', sans-serif; color: var(--im-text-secondary); }
+.im-footer-content { max-width: 1100px; margin: 0 auto; }
+.im-footer-made { text-align: center; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--im-text-muted); }
+.im-footer-made a { color: var(--im-accent); }
+.im-footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
+.im-footer-section h4 { color: var(--im-text-primary); font-size: 0.9rem; margin-bottom: 0.75rem; font-weight: 600; }
+.im-footer-section ul { list-style: none; padding: 0; margin: 0; }
+.im-footer-section li { margin-bottom: 0.4rem; }
+.im-footer-section a { color: var(--im-text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+.im-footer-section a:hover { color: var(--im-accent); }
+.im-footer-bottom { text-align: center; padding-top: 1rem; border-top: 1px solid var(--im-border); font-size: 0.8rem; color: var(--im-text-muted); }
+.im-footer-bottom p { margin: 0.25rem 0; }
+.im-footer-bottom a { color: var(--im-accent); text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 768px) {
+    .im-topbar { padding: 0.4rem 0.75rem; gap: 0.5rem; }
+    .im-topbar-home span { display: inline; font-size: 0.85rem; }
+    .im-footer-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media (max-width: 480px) { .im-footer-grid { grid-template-columns: 1fr; } .im-topbar-home span { display: none; } }
+body { font-family: 'Amaranth', sans-serif; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; }
+code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace; }
+/* Body clears fixed im-topbar */
+body { padding-top: 56px; }
+@media (max-width: 768px) { body { padding-top: 52px; } }
+</style>
+<!-- SEO / social -->
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Adaptive Experiments Lab">
+<meta property="og:description" content="Run an A/B test and a bandit in your browser, see what adaptive allocation does to your confidence intervals, and check whether rapid experiments suit your programme.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/Labs/adaptive-experiments-lab.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Adaptive Experiments Lab">
+<meta name="twitter:description" content="Run an A/B test and a bandit in your browser, see what adaptive allocation does to your confidence intervals, and check whether rapid experiments suit your programme.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Adaptive Experiments Lab", "description": "Simulate a fixed A/B test and a Thompson-sampling bandit on users whose true response rates you set, see why ordinary confidence intervals go wrong when allocation follows the results, and check whether rapid experiments suit your programme. With Evidential, the open-source experiment engine from IDinsight and the Agency Fund, as a worked example.", "url": "https://www.impactmojo.in/Labs/adaptive-experiments-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body>
+<a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
+/* This page declares one palette and no dark block: in dark mode the site
+   chrome paints the body #0F172A while these tokens stay. The inks above are
+   right on the light surface and about 3:1 on the dark one, so the dark theme
+   takes the brighter pair. */
+@media (prefers-color-scheme: dark){:root{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-accent-hover:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
+</style>
+<!-- ImpactMojo Top Bar -->
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="../index.html" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="../premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<a href="#main" class="back-link" style="position:absolute;left:-9999px;top:0;">Skip to content</a>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+
+    <a href="../index.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        Back to ImpactMojo
+    </a>
+    <div class="header">
+        <div class="header-badge">Interactive Studio</div>
+        <h1>Adaptive Experiments Lab</h1>
+        <p>Many nonprofits now run a programme through WhatsApp, an app or a call centre, and can test two versions of a message on real users within a week. This Lab shows how such tests work, using simulated users whose true response rates you set yourself. You will run a fixed A/B test, run a bandit on the same users, see what a bandit costs you in statistical accuracy, and check whether this kind of experiment suits your programme.</p>
+    </div>
+
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+
+    <div class="tabs" id="tabs" role="tablist">
+        <button class="tab-btn active" type="button" role="tab" data-tab="0"><span class="tab-num">1</span> Two questions</button>
+        <button class="tab-btn" type="button" role="tab" data-tab="1"><span class="tab-num">2</span> A fixed A/B test</button>
+        <button class="tab-btn" type="button" role="tab" data-tab="2"><span class="tab-num">3</span> A bandit</button>
+        <button class="tab-btn" type="button" role="tab" data-tab="3"><span class="tab-num">4</span> The cost in accuracy</button>
+        <button class="tab-btn" type="button" role="tab" data-tab="4"><span class="tab-num">5</span> Replies and outcomes</button>
+        <button class="tab-btn" type="button" role="tab" data-tab="5"><span class="tab-num">6</span> Does it fit?</button>
+    </div>
+
+    <!-- ===== 1 ===== -->
+    <div class="tab-panel active" data-panel="0" role="tabpanel">
+        <h2 class="section-title">Improving a running programme and measuring its impact are separate questions</h2>
+        <p class="section-desc">Both use random assignment. They are asked by different people, for different decisions, and the answer to one cannot be used as the answer to the other.</p>
+        <p class="body-text">A programme team that sends early-childhood activities to parents over WhatsApp might ask whether a reminder at 7 in the evening gets more parents to do the day's activity than one at 10 in the morning. The programme is already running, both versions are acceptable, and the team wants to run it better. Random assignment answers that question cheaply, because the team can send the two reminders to two random halves of its parents and count what happens within days.</p>
+        <p class="body-text">A funder deciding whether to pay for the same programme in another state asks something else: would these children be better prepared for school than children whose parents received nothing? That needs a comparison with people who do not get the programme at all, an outcome measured months later, and usually an independent evaluator. The Impact Evaluation Designer and the RCT Readiness Diagnostic in these Labs cover that question.</p>
+        <p class="body-text">Fast experiments of the first kind are now within reach of small teams. Evidential, a free and open-source experiment engine built by IDinsight and the Agency Fund, lists among the questions its early partners have tested whether a casual tone with younger users raises completion rates and what time of day to send messages. Its documentation also says plainly that it is not built for full-scale randomised controlled trials.</p>
+
+        <h3 class="block-title">Sort these six questions</h3>
+        <p class="body-text">For each one, choose which kind of question it is. The explanation appears when you choose.</p>
+        <div id="sortList"></div>
+        <div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: a fixed A/B test &rarr;</button></div>
+    </div>
+
+    <!-- ===== 2 ===== -->
+    <div class="tab-panel" data-panel="1" role="tabpanel">
+        <h2 class="section-title">A fixed A/B test</h2>
+        <p class="section-desc">Every version gets an equal share of users from start to finish, and you compare them at the end.</p>
+        <p class="body-text">In a real test nobody knows the true response rate of each version; that is why the test is run. In this simulator you set the true rates, so that you can see how close each method gets to them and what each method costs. A response here means whatever you count: a reply, an opened link, a completed activity. Each simulated user responds at random with the probability you set for the version they receive.</p>
+        <p class="body-text"><span class="illustrative-tag">Simulated data</span> Nothing on this page is a result from a real programme.</p>
+        <div class="field-grid">
+            <div class="field"><label for="nArms">Number of versions</label><select id="nArms"><option value="2">2</option><option value="3" selected>3</option></select></div>
+            <div class="field"><label for="pA">True response rate of version A (%)</label><input type="number" id="pA" min="1" max="99" step="0.5" value="20"></div>
+            <div class="field"><label for="pB">True response rate of version B (%)</label><input type="number" id="pB" min="1" max="99" step="0.5" value="23"></div>
+            <div class="field" id="pCWrap"><label for="pC">True response rate of version C (%)</label><input type="number" id="pC" min="1" max="99" step="0.5" value="26"></div>
+            <div class="field"><label for="nUsers">Users in the experiment</label><input type="number" id="nUsers" min="300" max="50000" step="100" value="3000"><span class="hint">Users arrive in batches of 100.</span></div>
+            <div class="field"><label for="seed">Random seed</label><input type="number" id="seed" min="1" step="1" value="1"><span class="hint">The same seed gives the same simulated users. Change it to see a different draw.</span></div>
+        </div>
+        <button class="btn btn-primary" type="button" id="runAB">Run the fixed test</button>
+        <div id="abOut" aria-live="polite"></div>
+        <div class="info-box"><strong>What to notice.</strong> Each 95% interval is the range the data are consistent with. Compare it with the true rate you set. Then look at the last line: every user who received a version other than the best one was a user who could have responded and was less likely to. That count is what a bandit tries to reduce.</div>
+        <div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: a bandit &rarr;</button></div>
+    </div>
+
+    <!-- ===== 3 ===== -->
+    <div class="tab-panel" data-panel="2" role="tabpanel">
+        <h2 class="section-title">A bandit moves users towards the version that is doing better</h2>
+        <p class="section-desc">This one uses Thompson sampling, one of the standard rules for bandits.</p>
+        <p class="body-text">The first batch of 100 users is split equally. After each batch, the simulator looks at the responses so far and, for every version, draws a plausible response rate from what the data allow (a Beta distribution, which is what the counts of responses and non-responses imply). It does this 200 times and counts how often each version comes out on top. The next batch is split in those proportions. A version that is clearly ahead gets most of the next batch; a version that is uncertain still gets some users, so the bandit can change its mind.</p>
+        <p class="body-text">William Thompson proposed the rule in 1933 for allocating patients between two treatments. Kasy and Sautmann (2021) adapted it into a rule they call exploration sampling, built for experiments whose purpose is to pick one policy for a later rollout, and used it in Odisha to choose among six ways of recruiting farmers to an agricultural extension service, working with Precision Agriculture for Development.</p>
+        <p class="body-text">The bandit below uses the rates, number of users and seed you set in the previous step, so the two methods face the same population.</p>
+        <button class="btn btn-primary" type="button" id="runTS">Run the bandit on the same settings</button>
+        <div id="tsOut" aria-live="polite"></div>
+        <div class="info-box"><strong>What to notice.</strong> The chart shows the share of each batch given to each version. Compare the users lost here with the fixed test. Then look at the interval for the version the bandit starved of users: it is much wider, because few people received it. When two versions are close, try several seeds; a bandit sometimes spends most of its users on a version that is good without being the best.</div>
+        <div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: the cost in accuracy &rarr;</button></div>
+    </div>
+
+    <!-- ===== 4 ===== -->
+    <div class="tab-panel" data-panel="3" role="tabpanel">
+        <h2 class="section-title">The usual estimates go wrong when allocation follows the results</h2>
+        <p class="section-desc">Run the same experiment hundreds of times and count how often the usual 95% interval contains the true difference.</p>
+        <p class="body-text">A version that has bad luck in the first batches gets fewer users from then on, so its low early estimate is corrected slowly. A version that has good luck gets more users, and its high early estimate is corrected quickly. Low errors persist and high errors are washed out, so the estimated rates come out too low on average, and the ordinary 95% interval for the difference between versions contains the truth less often than 95 times in 100. Hadad, Hirshberg, Zhan, Wager and Athey (2021) set out the problem and give estimators that correct it.</p>
+        <p class="body-text">The simulation below runs two versions many times, once with a fixed equal split and once with the bandit, and computes the ordinary interval each time. Start with two versions that are equally good, which is where the problem is largest.</p>
+        <div class="field-grid">
+            <div class="field"><label for="cA">True rate of version A (%)</label><input type="number" id="cA" min="1" max="99" step="0.5" value="20"></div>
+            <div class="field"><label for="cB">True rate of version B (%)</label><input type="number" id="cB" min="1" max="99" step="0.5" value="20"></div>
+            <div class="field"><label for="cN">Users per experiment</label><input type="number" id="cN" min="500" max="10000" step="100" value="2000"></div>
+            <div class="field"><label for="cR">Number of repeated experiments</label><select id="cR"><option value="200">200 (quick)</option><option value="500" selected>500</option><option value="1000">1,000 (slower)</option></select></div>
+        </div>
+        <button class="btn btn-primary" type="button" id="runCov">Run the repeated experiments</button>
+        <div id="covOut" aria-live="polite"></div>
+        <div class="info-box warning"><strong>What this means for a report.</strong> A bandit is a good way to give more users the better version while you learn. If you then want to report how much better that version is, with an interval, the ordinary formula is the wrong tool. Two options: use an estimator built for adaptively collected data, such as those in Hadad and coauthors (2021), or keep a fixed share of users, say one in five, assigned in equal shares throughout and estimate the difference from that share alone, where the ordinary formula holds.</div>
+        <div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: replies and outcomes &rarr;</button></div>
+    </div>
+
+    <!-- ===== 5 ===== -->
+    <div class="tab-panel" data-panel="4" role="tabpanel">
+        <h2 class="section-title">A fast experiment finds the version that wins on what you count fast</h2>
+        <p class="section-desc">Replies and clicks arrive within hours. The change a programme exists to make takes longer to see.</p>
+        <p class="body-text">Suppose a team tests two messages. Version A is short and ends with a one-tap quiz. Version B is longer and asks the parent to do a ten-minute activity with the child and send a photo. Parents reply to A more often. Whether the parent then does the activity with the child is the outcome the programme is for, and it can only be checked through the photo or a later call. Change the numbers below and watch which version each choice of metric picks.</p>
+        <p class="body-text"><span class="illustrative-tag">Illustrative numbers</span> Invented for teaching.</p>
+        <div class="field-grid">
+            <div class="field"><label for="rA">Version A: replies within a day (%)</label><input type="number" id="rA" min="0" max="100" step="0.5" value="30"></div>
+            <div class="field"><label for="rB">Version B: replies within a day (%)</label><input type="number" id="rB" min="0" max="100" step="0.5" value="20"></div>
+            <div class="field"><label for="oA">Version A: activity done with the child (%)</label><input type="number" id="oA" min="0" max="100" step="0.5" value="8"></div>
+            <div class="field"><label for="oB">Version B: activity done with the child (%)</label><input type="number" id="oB" min="0" max="100" step="0.5" value="12"></div>
+            <div class="field"><label for="oN">Parents who will receive the winning message</label><input type="number" id="oN" min="100" step="100" value="10000"></div>
+        </div>
+        <div id="metricOut" aria-live="polite"></div>
+        <p class="body-text">Evidential's documentation makes the same point about the metrics an experiment should target: they "should be the primary metrics that the organization holds itself accountable to." Before you use a quick measure as the target, check on past data whether it moves with the outcome you care about. If you cannot check, run the test long enough to observe the outcome, or treat the quick result as a lead to test properly.</p>
+        <div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: does it fit? &rarr;</button></div>
+    </div>
+
+    <!-- ===== 6 ===== -->
+    <div class="tab-panel" data-panel="5" role="tabpanel">
+        <h2 class="section-title">Does this kind of experiment suit your programme?</h2>
+        <p class="section-desc">Answer for one change you would like to test. The verdict counts your answers and names what is missing.</p>
+        <div id="gates"></div>
+        <div id="verdict" aria-live="polite"></div>
+
+        <h3 class="block-title">One tool, as an example: Evidential</h3>
+        <p class="body-text">Evidential was built by IDinsight and the Agency Fund and is released under the Apache 2.0 licence. It is free; an organisation can use the managed service or run it on its own servers, and it reads outcome data from the organisation's own data warehouse or event logs. It supports frequentist A/B tests, Bayesian tests, and multi-armed and contextual bandits, and integrations with messaging and survey platforms are listed as coming soon. Its documentation thanks Rocket Learning as its earliest design partner, and Noora Health, myAgro, Jacaranda Health and Saajha for running experiments with it.</p>
+        <p class="body-text">Its published analysis page, read on 9 October 2026, describes the A/B analysis: power calculated for a two-sample t-test at 80% power and a 5% significance level, a default target effect of 10% of the baseline, a balance check, and an ordinary least squares estimate of the intent-to-treat effect with pre-specified strata and pre-treatment outcomes as controls. It does not describe how results from its bandits are analysed. If you use a bandit on any platform and plan to report an effect size, ask how its intervals allow for adaptive allocation.</p>
+        <p class="body-text"><a href="https://www.idinsight.org/evidential/" rel="noopener" target="_blank">Evidential at IDinsight</a> &middot; <a href="https://docs.evidential.dev/" rel="noopener" target="_blank">Evidential documentation</a></p>
+
+        <h3 class="block-title">Sources</h3>
+        <ul class="body-list">
+            <li>Thompson, W. R. (1933). On the likelihood that one unknown probability exceeds another in view of the evidence of two samples. <em>Biometrika</em>, 25(3/4), 285&ndash;294.</li>
+            <li>Russo, D., Van Roy, B., Kazerouni, A., Osband, I. and Wen, Z. (2018). A tutorial on Thompson sampling. <em>Foundations and Trends in Machine Learning</em>, 11(1), 1&ndash;96.</li>
+            <li>Kasy, M. and Sautmann, A. (2021). Adaptive treatment assignment in experiments for policy choice. <em>Econometrica</em>, 89(1), 113&ndash;132.</li>
+            <li>Hadad, V., Hirshberg, D. A., Zhan, R., Wager, S. and Athey, S. (2021). Confidence intervals for policy evaluation in adaptive experiments. <em>Proceedings of the National Academy of Sciences</em>, 118(15), e2014602118.</li>
+            <li>Evidential documentation, docs.evidential.dev: Welcome page and Data Analysis page, read 9 October 2026.</li>
+        </ul>
+
+        <div class="completion-badge">
+            <h2>Where next</h2>
+            <p>If your question is whether the programme works at all, go to the RCT Readiness Diagnostic and then the Impact Evaluation Designer.</p>
+            <div class="next-steps">
+                <a class="btn btn-primary" href="/Labs/rct-readiness-lab.html">RCT Readiness Diagnostic</a>
+                <a class="btn" href="/Labs/impact-evaluation-lab.html">Impact Evaluation Designer</a>
+                <a class="btn" href="/courses/intervention/">Designing What Works</a>
+                <a class="btn" href="/courses/causal/">Causal Inference for Development</a>
+            </div>
+        </div>
+        <div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><a class="btn" href="/Labs/">All Labs</a></div>
+    </div>
+</div>
+
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section">
+<h4>Learn</h4>
+<ul>
+<li><a href="../courses/">Courses</a></li>
+<li><a href="index.html">Interactive Studios</a></li>
+<li><a href="/game-library.html">Games</a></li>
+<li><a href="../catalog.html">Full Catalog</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Explore</h4>
+<ul>
+<li><a href="../index.html">Home</a></li>
+<li><a href="../blog.html">Blog</a></li>
+<li><a href="../BookSummaries/">Book Summaries</a></li>
+<li><a href="../premium.html">Membership</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>About</h4>
+<ul>
+<li><a href="../about.html">About ImpactMojo</a></li>
+<li><a href="../contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="im-footer-section">
+<h4>Connect</h4>
+<ul>
+<li><a href="/">impactmojo.in</a></li>
+</ul>
+</div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p><a href="../index.html">Home</a> &middot; <a href="index.html">Studios</a> &middot; <a href="../catalog.html">Catalog</a></p>
+</div>
+</div>
+</footer>
+<script>
+/* THEME (3-button: system / light / dark) */
+(function initTheme() {
+    var saved = localStorage.getItem('impactmojo-theme') || 'system';
+    applyTheme(saved);
+    document.querySelectorAll('.im-theme-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var theme = btn.dataset.theme;
+            localStorage.setItem('impactmojo-theme', theme);
+            applyTheme(theme);
+        });
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+        if ((localStorage.getItem('impactmojo-theme') || 'system') === 'system') applyTheme('system');
+    });
+})();
+function applyTheme(theme) {
+    var root = document.documentElement;
+    if (theme === 'light') { root.setAttribute('data-theme', 'light'); }
+    else if (theme === 'dark') { root.removeAttribute('data-theme'); }
+    else { if (window.matchMedia('(prefers-color-scheme: light)').matches) root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme'); }
+    document.querySelectorAll('.im-theme-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.theme === theme); });
+}
+
+</script>
+<script>
+/* Adaptive Experiments Lab. Everything here is simulated in the browser; nothing is sent anywhere. */
+(function () {
+'use strict';
+var STORE = 'impactmojo-adaptive-lab';
+var state = { sort: {}, gates: {}, visited: { 0: true } };
+try { var raw = localStorage.getItem(STORE); if (raw) { var p = JSON.parse(raw); for (var k in p) state[k] = p[k]; } } catch (e) {}
+function save() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function pct(x, d) { return (100 * x).toFixed(d == null ? 1 : d) + '%'; }
+function num(x) { return Math.round(x).toLocaleString('en-IN'); }
+function val(id, lo, hi, dflt) { var v = parseFloat($(id).value); if (!isFinite(v)) v = dflt; return Math.min(hi, Math.max(lo, v)); }
+
+/* ---------- tabs ---------- */
+var tabs = document.querySelectorAll('.tab-btn'), panels = document.querySelectorAll('.tab-panel');
+function go(i) {
+    state.visited[i] = true; save();
+    tabs.forEach(function (b, j) { b.classList.toggle('active', i === j); b.setAttribute('aria-selected', i === j ? 'true' : 'false'); if (state.visited[j] && j !== i) b.classList.add('completed'); });
+    panels.forEach(function (p, j) { p.classList.toggle('active', i === j); });
+    $('progressFill').style.width = (100 * Object.keys(state.visited).length / panels.length) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+tabs.forEach(function (b, i) { b.addEventListener('click', function () { go(i); }); });
+document.querySelectorAll('[data-goto]').forEach(function (b) { b.addEventListener('click', function () { go(+b.getAttribute('data-goto')); }); });
+$('progressFill').style.width = (100 * Object.keys(state.visited).length / panels.length) + '%';
+
+/* ---------- 1. sorting exercise ---------- */
+var IMP = 'Improving a running programme', EFF = 'Whether the programme works';
+var QS = [
+    ['Does a reminder sent at 7 pm get more parents to do the day\'s activity than one sent at 10 am?', IMP, 'Both reminders are acceptable, the programme continues either way, and the answer is visible within days.'],
+    ['A year later, do children whose parents received the WhatsApp activities do better on a school-readiness test than children whose parents received nothing?', EFF, 'This compares the programme with no programme, and the outcome takes a year to appear.'],
+    ['Do farmers who get a five-question sign-up survey drop out of the advisory service less often than farmers who get a fifteen-question one?', IMP, 'The service runs either way; the question is which way of running it keeps more farmers.'],
+    ['Does the advisory service raise farm incomes in the villages that receive it?', EFF, 'This needs villages without the service as a comparison and a full season or more of outcome data.'],
+    ['Does a voice note recorded by a community health worker get more mothers to open the message than a text message does?', IMP, 'Two acceptable versions of the same message, compared on a measure that arrives within hours.'],
+    ['Does the programme reduce the number of newborns who die in their first month?', EFF, 'An outcome of this kind needs a comparison group, a large sample and an independent evaluation.']
+];
+function renderSort() {
+    $('sortList').innerHTML = QS.map(function (q, i) {
+        var pick = state.sort[i];
+        var btn = function (lab) { var sel = pick === lab; return '<button type="button" class="' + (sel ? (lab === q[1] ? 'sel-yes' : 'sel-no') : '') + '" data-q="' + i + '" data-a="' + esc(lab) + '" aria-pressed="' + sel + '">' + esc(lab) + '</button>'; };
+        var fb = pick ? '<p class="gate-why" style="margin-top:0.6rem;margin-bottom:0"><strong>' + (pick === q[1] ? 'Yes.' : 'This one is the other kind: ' + esc(q[1].toLowerCase()) + '.') + '</strong> ' + esc(q[2]) + '</p>' : '';
+        return '<div class="gate"><p class="gate-q">' + (i + 1) + '. ' + esc(q[0]) + '</p><div class="seg" role="group" aria-label="Question ' + (i + 1) + '">' + btn(IMP) + btn(EFF) + '</div>' + fb + '</div>';
+    }).join('');
+    $('sortList').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { state.sort[b.getAttribute('data-q')] = b.getAttribute('data-a'); save(); renderSort(); }); });
+}
+renderSort();
+
+/* ---------- random numbers ---------- */
+function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function gauss(r) { var u = 0; while (!u) u = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * r()); }
+function gamma(r, k) {
+    if (k < 1) return gamma(r, k + 1) * Math.pow(r(), 1 / k);
+    var d = k - 1 / 3, c = 1 / Math.sqrt(9 * d);
+    for (;;) { var x, v; do { x = gauss(r); v = 1 + c * x; } while (v <= 0); v = v * v * v; var u = r();
+        if (u < 1 - 0.0331 * x * x * x * x) return d * v;
+        if (Math.log(u) < 0.5 * x * x + d * (1 - v + Math.log(v))) return d * v; }
+}
+function beta(r, a, b) { var x = gamma(r, a), y = gamma(r, b); return x / (x + y); }
+
+/* One experiment. mode 'ab' splits every batch equally; 'ts' uses Thompson sampling after the first batch. */
+var BATCH = 100, DRAWS = 200;
+function experiment(p, N, mode, r, track) {
+    var k = p.length, n = [], s = [], share = [], hist = [];
+    for (var j = 0; j < k; j++) { n.push(0); s.push(0); share.push(1 / k); }
+    for (var done = 0; done < N;) {
+        var m = Math.min(BATCH, N - done);
+        if (mode === 'ts' && done > 0) {
+            var wins = []; for (j = 0; j < k; j++) wins.push(0);
+            for (var d = 0; d < DRAWS; d++) { var best = 0, bv = -1; for (j = 0; j < k; j++) { var v = beta(r, 1 + s[j], 1 + n[j] - s[j]); if (v > bv) { bv = v; best = j; } } wins[best]++; }
+            share = wins.map(function (w) { return w / DRAWS; });
+        }
+        if (track) hist.push(share.slice());
+        for (var i = 0; i < m; i++) {
+            var a;
+            if (mode === 'ab') a = (done + i) % k;
+            else { var u = r(), acc = 0; a = k - 1; for (j = 0; j < k; j++) { acc += share[j]; if (u < acc) { a = j; break; } } }
+            n[a]++; if (r() < p[a]) s[a]++;
+        }
+        done += m;
+    }
+    return { n: n, s: s, hist: hist };
+}
+
+/* ---------- 2 and 3. single runs ---------- */
+var NAMES = ['A', 'B', 'C'];
+function settings() {
+    var k = +$('nArms').value;
+    var p = [val('pA', 1, 99, 20), val('pB', 1, 99, 23), val('pC', 1, 99, 26)].slice(0, k).map(function (x) { return x / 100; });
+    return { p: p, N: Math.round(val('nUsers', 300, 50000, 3000)), seed: Math.round(val('seed', 1, 1e9, 1)) };
+}
+$('nArms').addEventListener('change', function () { $('pCWrap').style.display = $('nArms').value === '3' ? '' : 'none'; });
+$('pCWrap').style.display = $('nArms').value === '3' ? '' : 'none';
+
+function table(p, o, N) {
+    var best = Math.max.apply(null, p), got = 0, rows = '';
+    for (var j = 0; j < p.length; j++) {
+        got += o.s[j];
+        var est = o.n[j] ? o.s[j] / o.n[j] : 0, se = o.n[j] ? Math.sqrt(est * (1 - est) / o.n[j]) : 0;
+        rows += '<tr><td><strong>' + NAMES[j] + '</strong></td><td>' + pct(p[j]) + '</td><td>' + num(o.n[j]) + '</td><td>' + num(o.s[j]) + '</td><td>' +
+            (o.n[j] ? pct(est) + ' <span class="meta">(' + pct(Math.max(0, est - 1.96 * se)) + ' to ' + pct(Math.min(1, est + 1.96 * se)) + ')</span>' : 'no users') + '</td></tr>';
+    }
+    var ideal = best * N;
+    return { got: got, lost: ideal - got, html: '<div class="table-scroll" tabindex="0" role="region" aria-label="Results table"><table class="budget-table"><caption class="sr-only">Results by version</caption><thead><tr><th scope="col">Version</th><th scope="col">True rate you set</th><th scope="col">Users</th><th scope="col">Responses</th><th scope="col">Estimated rate (95% interval)</th></tr></thead><tbody>' + rows + '</tbody></table></div>' };
+}
+var lastAB = null;
+$('runAB').addEventListener('click', function () {
+    var c = settings(), o = experiment(c.p, c.N, 'ab', rng(c.seed), false), t = table(c.p, o, c.N);
+    lastAB = { key: JSON.stringify(c), lost: t.lost, got: t.got };
+    $('abOut').innerHTML = '<div class="result-box"><h4>Fixed test, ' + num(c.N) + ' users, seed ' + c.seed + '</h4>' + t.html +
+        '<p>Responses in the experiment: <strong>' + num(t.got) + '</strong>. If every user had received the best version, the expected number would have been <strong>' + num(Math.max.apply(null, c.p) * c.N) + '</strong>. The equal split cost about <strong>' + num(t.lost) + '</strong> responses.</p></div>';
+});
+
+function chart(hist, k) {
+    var W = 640, H = 200, padL = 40, padB = 26, w = W - padL - 8, h = H - padB - 8, n = hist.length, bw = w / n, out = '';
+    for (var i = 0; i < n; i++) { var y = 8 + h; for (var j = 0; j < k; j++) { var hh = hist[i][j] * h; y -= hh; out += '<rect x="' + (padL + i * bw).toFixed(2) + '" y="' + y.toFixed(2) + '" width="' + (bw + 0.5).toFixed(2) + '" height="' + hh.toFixed(2) + '" class="arm' + j + '"/>'; } }
+    var axis = '<line x1="' + padL + '" y1="' + (8 + h) + '" x2="' + (padL + w) + '" y2="' + (8 + h) + '" class="axis"/>' +
+        '<text x="' + (padL - 6) + '" y="14" text-anchor="end" class="tick">100%</text><text x="' + (padL - 6) + '" y="' + (8 + h) + '" text-anchor="end" class="tick">0%</text>' +
+        '<text x="' + padL + '" y="' + (H - 6) + '" class="tick">first batch</text><text x="' + (padL + w) + '" y="' + (H - 6) + '" text-anchor="end" class="tick">last batch</text>';
+    var legend = NAMES.slice(0, k).map(function (nm, j) { return '<span class="legend-item"><span class="swatch arm' + j + '"></span>Version ' + nm + '</span>'; }).join('');
+    return '<figure class="alloc"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Share of each batch of 100 users given to each version, from the first batch to the last">' + out + axis + '</svg><figcaption>' + legend + '</figcaption></figure>';
+}
+$('runTS').addEventListener('click', function () {
+    var c = settings(), o = experiment(c.p, c.N, 'ts', rng(c.seed), true), t = table(c.p, o, c.N);
+    var cmp = '';
+    if (lastAB && lastAB.key === JSON.stringify(c)) cmp = '<p>On the same settings the fixed test cost about <strong>' + num(lastAB.lost) + '</strong> responses and the bandit about <strong>' + num(t.lost) + '</strong>.</p>';
+    else { var oa = experiment(c.p, c.N, 'ab', rng(c.seed), false), ta = table(c.p, oa, c.N); cmp = '<p>A fixed test on the same settings would have cost about <strong>' + num(ta.lost) + '</strong> responses; the bandit cost about <strong>' + num(t.lost) + '</strong>.</p>'; }
+    var top = 0; for (var j = 1; j < c.p.length; j++) if (o.n[j] > o.n[top]) top = j;
+    var bestIdx = c.p.indexOf(Math.max.apply(null, c.p));
+    var note = top === bestIdx ? 'The bandit gave most users to version ' + NAMES[top] + ', which is the version you set as best.' : 'The bandit gave most users to version ' + NAMES[top] + ', although you set version ' + NAMES[bestIdx] + ' as best. With rates this close, early luck can decide where the users go.';
+    $('tsOut').innerHTML = '<div class="result-box"><h4>Bandit, ' + num(c.N) + ' users, seed ' + c.seed + '</h4>' + chart(o.hist, c.p.length) + t.html + cmp + '<p>' + note + '</p></div>';
+});
+
+/* ---------- 4. coverage ---------- */
+var running = false;
+$('runCov').addEventListener('click', function () {
+    if (running) return; running = true;
+    var p = [val('cA', 1, 99, 20) / 100, val('cB', 1, 99, 20) / 100], N = Math.round(val('cN', 500, 10000, 2000)), R = +$('cR').value;
+    var res = { ab: { c: 0, e: 0 }, ts: { c: 0, e: 0 } }, r = rng(20261009), i = 0, btn = $('runCov');
+    btn.disabled = true;
+    function step() {
+        var stop = Math.min(R, i + 20);
+        for (; i < stop; i++) {
+            ['ab', 'ts'].forEach(function (m) {
+                var o = experiment(p, N, m, r, false), a = o.s[0] / Math.max(1, o.n[0]), b = o.s[1] / Math.max(1, o.n[1]);
+                var se = Math.sqrt(a * (1 - a) / Math.max(1, o.n[0]) + b * (1 - b) / Math.max(1, o.n[1]));
+                if (Math.abs((a - b) - (p[0] - p[1])) <= 1.96 * se) res[m].c++;
+                res[m].e += a - p[0];
+            });
+        }
+        $('covOut').innerHTML = '<div class="result-box"><p>Running: ' + i + ' of ' + R + ' experiments.</p></div>';
+        if (i < R) { setTimeout(step, 0); return; }
+        var cAB = res.ab.c / R, cTS = res.ts.c / R, eAB = res.ab.e / R, eTS = res.ts.e / R;
+        var moe = 1.96 * Math.sqrt(0.95 * 0.05 / R);
+        $('covOut').innerHTML = '<div class="result-box"><h4>' + R + ' experiments of ' + num(N) + ' users each</h4>' +
+            '<div class="table-scroll" tabindex="0" role="region" aria-label="Results table"><table class="budget-table"><thead><tr><th scope="col">Method</th><th scope="col">Intervals containing the true difference</th><th scope="col">Average error in the estimated rate of version A</th></tr></thead><tbody>' +
+            '<tr><td><strong>Fixed equal split</strong></td><td>' + pct(cAB) + '</td><td>' + (eAB >= 0 ? '+' : '') + (100 * eAB).toFixed(2) + ' points</td></tr>' +
+            '<tr><td><strong>Bandit</strong></td><td>' + pct(cTS) + '</td><td>' + (eTS >= 0 ? '+' : '') + (100 * eTS).toFixed(2) + ' points</td></tr></tbody></table></div>' +
+            '<p>A correctly built 95% interval should contain the truth in about 95% of experiments. With ' + R + ' repeats, chance alone moves that share by up to about ' + (100 * moe).toFixed(1) + ' points either way, so treat smaller gaps as noise.</p></div>';
+        btn.disabled = false; running = false;
+    }
+    step();
+});
+
+/* ---------- 5. metric choice ---------- */
+function metric() {
+    var rA = val('rA', 0, 100, 30) / 100, rB = val('rB', 0, 100, 20) / 100, oA = val('oA', 0, 100, 8) / 100, oB = val('oB', 0, 100, 12) / 100, N = Math.round(val('oN', 100, 1e8, 10000));
+    var byReply = rA >= rB ? 'A' : 'B', byOutcome = oA >= oB ? 'A' : 'B';
+    var outR = (byReply === 'A' ? oA : oB) * N, outO = (byOutcome === 'A' ? oA : oB) * N;
+    var msg = byReply === byOutcome ? 'Here both measures pick version ' + byReply + ', so the quick measure would have led you to the right choice.' :
+        'Picking on replies sends version ' + byReply + ' to everyone and about <strong>' + num(outR) + '</strong> parents do the activity. Picking on the activity sends version ' + byOutcome + ' and about <strong>' + num(outO) + '</strong> do it. The quick measure would have cost about <strong>' + num(outO - outR) + '</strong> parents doing the activity with their child.';
+    $('metricOut').innerHTML = '<div class="result-box"><p>Version picked on replies: <strong>' + byReply + '</strong>. Version picked on the activity: <strong>' + byOutcome + '</strong>.</p><p>' + msg + '</p></div>';
+}
+['rA', 'rB', 'oA', 'oB', 'oN'].forEach(function (id) { $(id).addEventListener('input', metric); });
+metric();
+
+/* ---------- 6. fit ---------- */
+var GATES = [
+    ['dig', 'At least part of the programme reaches people through a channel that records who received what.', 'WhatsApp, SMS, an app, IVR or a call centre all qualify. Without a record of who got which version, nothing can be compared.'],
+    ['vol', 'Several hundred people a week reach the point you want to change.', 'Small differences between versions need thousands of people to detect. At a few dozen a week a test can run for a year.'],
+    ['fast', 'The outcome you care about, or a measure you have checked against it on past data, shows up within days or weeks.', 'If only a quick measure is available and nobody has checked that it moves with the outcome, the test may pick the wrong version.'],
+    ['ok', 'You would be willing to give every version you test to everyone.', 'A version you would not be willing to give to everyone should not be in the test. A bandit shifts users between versions automatically, so this matters more than in a fixed test.'],
+    ['q', 'The programme itself is settled and the question is which version of a part of it works better.', 'If the question is whether the programme works at all, use the RCT Readiness Diagnostic instead.'],
+    ['ana', 'Someone on the team can explain the analysis, including how adaptive allocation changes the intervals.', 'A platform can run the test. Someone still has to say what the numbers mean before they go into a report.']
+];
+var LAB = { yes: 'Yes', partly: 'Partly', no: 'No' };
+function renderGates() {
+    $('gates').innerHTML = GATES.map(function (g) {
+        var a = state.gates[g[0]];
+        var b = function (k) { return '<button type="button" class="' + (a === k ? 'sel-' + k : '') + '" data-g="' + g[0] + '" data-v="' + k + '" aria-pressed="' + (a === k) + '">' + LAB[k] + '</button>'; };
+        return '<div class="gate"><p class="gate-q">' + esc(g[1]) + '</p><p class="gate-why">' + esc(g[2]) + '</p><div class="seg" role="group" aria-label="' + esc(g[1]) + '">' + b('yes') + b('partly') + b('no') + '</div></div>';
+    }).join('');
+    $('gates').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { state.gates[b.getAttribute('data-g')] = b.getAttribute('data-v'); save(); renderGates(); }); });
+    var answered = GATES.filter(function (g) { return state.gates[g[0]]; });
+    if (answered.length < GATES.length) { $('verdict').innerHTML = '<p class="body-text">' + answered.length + ' of ' + GATES.length + ' answered.</p>'; return; }
+    var no = GATES.filter(function (g) { return state.gates[g[0]] === 'no'; }), part = GATES.filter(function (g) { return state.gates[g[0]] === 'partly'; });
+    var title, body;
+    if (state.gates.q === 'no') { title = 'Your question is about impact.'; body = 'Whether the programme works at all needs a comparison with people who do not receive it. Start with the RCT Readiness Diagnostic.'; }
+    else if (state.gates.ok === 'no') { title = 'Fix the versions before you test them.'; body = 'Take out any version you would not be willing to give to everyone, then answer again.'; }
+    else if (no.length === 0 && part.length === 0) { title = 'This kind of experiment suits the change you described.'; body = 'Decide the outcome measure and the analysis before the first message goes out, and write both down.'; }
+    else { title = 'Possible, with work on ' + (no.length + part.length) + ' point' + (no.length + part.length > 1 ? 's' : '') + '.'; body = 'Not yet in place: ' + no.concat(part).map(function (g) { return g[1].replace(/\.$/, '').toLowerCase(); }).join('; ') + '.'; }
+    $('verdict').innerHTML = '<div class="verdict-banner"><h3>' + esc(title) + '</h3><p>' + esc(body) + '</p></div>';
+}
+renderGates();
+})();
+</script>
+  <script src="/js/theme.js?v=ca787a55"></script>
+  <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+  <script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+</body>
+</html>
