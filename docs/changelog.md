@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.350.0 — October 9, 2026 (Adaptive Experiments Lab)
+
+### Added
+
+- **[Adaptive Experiments Lab](/Labs/adaptive-experiments-lab.html)**, the 36th Lab. For programmes that run through WhatsApp, an app or a call centre: a fixed A/B test and a Thompson-sampling bandit run in the browser on simulated users whose true response rates the learner sets; a repeated-experiment simulation that counts how often the ordinary 95% interval contains the truth under each method; a calculator showing when a quick measure such as replies picks a different version from the outcome; and a six-question fit diagnostic. Evidential, the open-source experiment engine from IDinsight and the Agency Fund, is described from its own documentation as a worked example. Sources: Thompson (1933), Russo and coauthors (2018), Kasy and Sautmann (2021), Hadad and coauthors (2021). Linked from the Labs index, the intervention, MEL and causal inference flagships, the catalogue, search and the sitemap.
+
+### For Learners
+
+- **Adaptive Experiments Lab** — run an A/B test and a bandit on simulated users, see what adaptive allocation does to your confidence intervals, and check whether rapid experiments suit your programme. [Open the Lab](/Labs/adaptive-experiments-lab.html)
+
 ## v10.349.0 — October 7, 2026 (Power BI in Code Studio)
 
 ### Added
