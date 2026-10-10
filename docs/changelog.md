@@ -2,6 +2,26 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.356.0 — October 10, 2026 (copy pass against the house style)
+
+### Changed
+
+- **About 220 sentences across 135 pages rewritten in plain English.** Stock words (genuinely, arguably, notably, crucial, unlock, empower used loosely, "at the intersection of", "navigating the complexities", "harnessing the power") and every "not just X but Y" or "isn't just X: it's Y" construction are gone from courses, handouts, Labs, explorers, book companions and the main pages. The twelve flagships no longer say "13 Comprehensive Modules" or "a comprehensive journey", and their search and preview descriptions now say what each course covers. Technical and statutory uses were kept: robust standard errors, gender-transformative programming, research paradigms, CSR Rule 4(5)'s "utilised", NEP 2020's "holistic". So were quotations, titles of cited works and every testimonial.
+- **A new check, `check-copy-tells.py`, keeps the banned stock phrases out**, with quotations and titles exempted one by one.
+
+## v10.355.0 — October 10, 2026 (sitewide audit: data, counts and Mojini)
+
+### Fixed
+
+- **The Dataverse counted four resources twice** (#1181). Bhuvan, ACLED, Climate Watch and Semantic Scholar were each listed twice, so the site said 336 while holding 332 distinct entries. Each now appears once, the count reads 332 everywhere, and the 106 entries site search could not find now have search rows.
+- **The 101 deck listings had gaps and wrong slide counts** (#1182). Twelve of the twenty decks added this month were missing from the deck data the partner API serves, and eight from the catalogue data file. Development Finance has 116 slides and was listed at 100; CSR & ESG has 100 and was listed at 88; four more were listed at 100 against 102 to 107. Three catalogue ids were shared by two entries each, so bookmarking one bookmarked both.
+- **Mojini sent readers to two Lab pages that no longer exist** (#1183). Questions about the MEL framework builder now go to the MEL Studio, and the premium page uses the current Lab names.
+- **Stated totals outside the count check** (#1184). The sign-up and invite emails said 70 courses and 16 games and promised 500 glossary terms. The human-readable sitemap said 79 foundational courses, 35 Labs and 171 companions. The marketing kit said 69 courses. The practice-data page said 10 datasets, 35 MB and Python 3.8, against 36 datasets, about 130 MB and Python 3.11.
+
+### Changed
+
+- **Two new checks run in CI.** `check-dataverse.py` holds the Dataverse total to its distinct entries and every entry to a search row. `check-deck-listings.py` holds every 101 deck to an entry in the deck data and the catalogue, with its real slide count, and every catalogue id to one entry. The count check now also reads the two email templates.
+
 ## v10.354.0 — October 10, 2026 (Caste Lists Explorer)
 
 ### Added
