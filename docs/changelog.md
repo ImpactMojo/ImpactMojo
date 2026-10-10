@@ -6,7 +6,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Added
 
-- **Database of Castes in the [Dataverse](/dataverse.html#database-of-castes)**, the 336th entry, under Gender & Inclusion Data. Shivakumar Jolad and Gaurav Kalyani at FLAME University have digitised and linked five sources: the 1931 Census caste tables by religion and province; the 1931 count of "exterior castes" from Appendix I of the Census report, which put 50.2 million people, 21% of Hindus, in that category; today's Scheduled Caste lists by state, each entry matched back to 1931; the Scheduled Tribe lists by state; and the NCBC Central List of OBCs, set against the 1980 Mandal Commission lists. Released on 9 October 2026 on Harvard Dataverse under CC0. Names are matched across the lists by spelling, so a missing match does not show that a community was absent from a list.
+- **Database of Castes in the [Dataverse](/dataverse.html#database-of-castes)**, the 336th entry, under Gender & Inclusion Data. Shivakumar Jolad and Gaurav Kalyani at FLAME University have digitised and linked five sources: the 1931 Census caste tables by religion and province; the 1931 count of "exterior castes" from Appendix I of the Census report, which put 50.2 million people, 21% of Hindus, in that category; the Scheduled Caste lists by state, taken from Wikipedia's transcription of the Constitution orders and each entry matched back to 1931; the notified Scheduled Tribe lists by state; and the NCBC Central List of OBCs, set against the 1980 Mandal Commission lists. Released on 9 October 2026 on Harvard Dataverse under CC0. Names are matched across the lists by spelling, so a missing match does not show that a community was absent from a list.
 
 ### Fixed
 
