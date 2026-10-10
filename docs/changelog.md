@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.362.0 — October 10, 2026 (course notes on the closing slide)
+
+### For Learners
+
+- **Course notes at the end of every 101 course** — the closing slide now carries a Course Notes PDF button beside More 101 Courses, for readers who finished the course and want it on paper. ₹149.
+
+### Changed
+
+- **The title slide says which thing is free.** Its tag read "Free Forever" or "Free Access" right beside the ₹149 notes tag; it now reads "Course free forever" or "Course free to access". The course has not changed and stays free.
+
 ## v10.361.0 — October 10, 2026 (course notes linked from every 101 course)
 
 ### For Learners

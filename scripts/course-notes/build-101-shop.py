@@ -14,9 +14,11 @@ the last render):
   netlify/functions/submission-created.mjs  the FILES lines between the
                                           101-notes markers
   sitemap.xml and data/search-index.json  one entry per page
-  101-courses/<slug>.html                 a buy link on the title slide and
-                                          in the slide controls, between
-                                          notes-101 markers
+  101-courses/<slug>.html                 a buy link on the title slide, in
+                                          the slide controls and on the closing
+                                          slide, between notes-101 markers; the
+                                          title tag "Free Forever" becomes
+                                          "Course free forever"
 
 A deck added to decks.json without a render fails here, so nothing is put on
 sale that the order handler cannot deliver.
@@ -46,6 +48,9 @@ DECK_CSS = ('<style id="notes-101">'
             '@media print{.notes-buy{display:none !important}}'
             '</style>\n')
 MARK = re.compile(r"<!--notes-101-->.*?<!--/notes-101-->", re.S)
+FREE_TAGS = [('<span class="title-tag">Free Forever</span>', '<span class="title-tag">Course free forever</span>'),
+             ('<span class="title-tag">Free Access</span>', '<span class="title-tag">Course free to access</span>'),
+             ('<span class="title-tag">Free access</span>', '<span class="title-tag">Course free to access</span>')]
 CSS_MARK = re.compile(r'<style id="notes-101">.*?</style>\n')
 
 
@@ -62,6 +67,16 @@ def deck_with_link(text, slug, title):
     nav = text.find('<div id="nav"')
     close = text.find("</div>", nav)
     text = text[:close] + f'<!--notes-101--> <a class="nav-notes notes-buy" href="{url}" aria-label="{label}">Notes ₹{PRICE}</a>\n<!--/notes-101-->' + text[close:]
+    # The closing slide: the reader who reached it is the likeliest buyer.
+    cta = text.find('<div class="end-cta">')
+    if cta < 0:
+        return None
+    close = text.find("</div>", cta)
+    text = text[:close] + f'<!--notes-101--><a class="end-btn end-btn-secondary notes-buy" href="{url}" aria-label="{label}">Course Notes PDF &middot; ₹{PRICE}</a><!--/notes-101-->' + text[close:]
+    # A paid tag beside one reading "Free Forever" looks like a contradiction;
+    # say which thing is free.
+    for old, new in FREE_TAGS:
+        text = text.replace(old, new)
     return text.replace("</head>", DECK_CSS + "</head>", 1)
 
 
@@ -217,7 +232,7 @@ def main():
         else:
             want[dp] = new
     if nowhere:
-        sys.exit("FAIL - no title tags or slide controls to carry the notes link in: " + ", ".join(nowhere))
+        sys.exit("FAIL - no title tags, slide controls or closing buttons to carry the notes link in: " + ", ".join(nowhere))
 
     # handler FILES block
     h = HANDLER.read_text(encoding="utf-8")
