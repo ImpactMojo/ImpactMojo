@@ -144,6 +144,12 @@ COPY_FILES = [
     "mcp-server/README.md",
     ".github/profile/README.md",
     "admin/analytics-appscript.js",
+    # The sign-up and invite emails state the course, Lab, game and companion
+    # totals to every new user. Found on 2026-10-10 saying 70 courses and 16
+    # games in the repository, and 48 courses, 12 games and 10 Labs in the
+    # copy Supabase was actually sending.
+    "supabase/email-templates/confirm-signup.html",
+    "supabase/email-templates/invite-user.html",
 ]
 
 

@@ -1,7 +1,7 @@
 # The 101 Deck Standard
 
 What a foundational course deck has to contain before it counts as finished.
-Companion to `flagship-course-standard.md`, which governs the twenty flagship
+Companion to `flagship-course-standard.md`, which governs the twenty-one flagship
 courses and does not apply here: decks have no modules, so they carry no
 excerpts, worked examples or reflection prompts.
 
@@ -101,6 +101,6 @@ convention in the other guards:
 
 ## Related
 
-- `docs/flagship-course-standard.md`, the twenty flagship courses
+- `docs/flagship-course-standard.md`, the twenty-one flagship courses
 - `docs/101-decks-guide.md`, the deck format, slugs and LMS embedding
 - `scripts/check-decks.py`, the guard

@@ -153,6 +153,26 @@ jobs:
       - name: Rebuild the justice data and compare
         run: python3 scripts/build-justice-explorer-data.py --check
 
+  listings:
+    name: Dataverse and 101 deck listings agree with their contents
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # The Dataverse said 336 while holding 332 distinct entries, and 106
+      # entries had no search row. Twelve decks were missing from the deck
+      # catalogue the partner API serves, six slide counts were wrong, and
+      # three catalogue ids were shared by two entries each.
+      - name: Dataverse totals, ids and search rows
+        run: python3 scripts/check-dataverse.py
+      - name: Every deck listed with its real slide count
+        run: python3 scripts/check-deck-listings.py
+
   castes-data:
     name: Caste lists explorer data is current
     runs-on: ubuntu-latest

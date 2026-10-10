@@ -228,8 +228,8 @@
       a: () => `Here are our labs:\n\n${listLabs()}` },
     { re: /\bTOC\b|\btheor(y|ies) of change\b/i,
       a: () => `**TOC Lab** helps you structure a Theory of Change quickly and clearly.\n/Labs/toc-lab.html` },
-    { re: /MLE (framework|builder|workbench)/i,
-      a: () => `The **MLE Framework Workbench/Builder** help you design monitoring & learning frameworks.\nWorkbench: /Labs/mel-design-lab.html\nBuilder:   /Labs/mel-plan-lab.html` },
+    { re: /\b(MLE|MEL) (framework|builder|workbench|studio|lab|plan)/i,
+      a: () => `The **MEL Studio** takes you through designing a monitoring, evaluation and learning framework and then planning it: indicators, data sources, frequency and who is responsible.\n/Labs/mel-lab.html` },
     { re: /how (to )?access.+lab|use.+lab/i,
       a: "Labs are web tools. Click a lab link and start; most open directly in your browser." },
 
