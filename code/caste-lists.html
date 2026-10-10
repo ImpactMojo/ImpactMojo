@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Linking Caste Lists | ImpactMojo</title>
+    <meta name="description" content="A record-linkage exercise on real government lists: clean caste names, match the Mandal Commission&#x27;s 1980 Bihar list to the Central List of OBCs exactly and by string similarity, and find names that sit on both the OBC and Scheduled Caste lists. Python and pandas in your browser.">
+    <link rel="canonical" href="https://www.impactmojo.in/code/caste-lists.html">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/code-studio.css?v=c27dbee1">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Linking Caste Lists">
+<meta property="og:description" content="A record-linkage exercise on real government lists: clean caste names, match the Mandal Commission&#x27;s 1980 Bihar list to the Central List of OBCs exactly and by string similarity, and find names that sit on both the OBC and Scheduled Caste lists. Python and pandas in your browser.">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta property="og:url" content="https://www.impactmojo.in/code/caste-lists.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Linking Caste Lists">
+<meta name="twitter:description" content="A record-linkage exercise on real government lists: clean caste names, match the Mandal Commission&#x27;s 1980 Bihar list to the Central List of OBCs exactly and by string similarity, and find names that sit on both the OBC and Scheduled Caste lists. Python and pandas in your browser.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Linking Caste Lists", "description": "A record-linkage exercise on real government lists: clean caste names, match the Mandal Commission's 1980 Bihar list to the Central List of OBCs exactly and by string similarity, and find names that sit on both the OBC and Scheduled Caste lists. Python and pandas in your browser.", "url": "https://www.impactmojo.in/code/caste-lists.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="mandal_bihar,obc_bihar,sc_bihar">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code Studio</a>
+    <div class="header">
+        <div class="header-badge">Code Studio &middot; Runs in your browser</div>
+        <h1>Linking caste lists</h1>
+        <p>Match the Mandal Commission's 1980 list of backward classes in Bihar to today's Central List of OBCs, name by name, in pandas running in your browser. The method is record linkage, and the lesson is how much of it a computer cannot decide for you.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>How the live code works.</strong> Your first Run downloads Pyodide (Python for the browser, about 10&nbsp;MB) and pandas, so give it up to a minute on a slow connection. Three files are in the working folder: <code class="inline">mandal_bihar.csv</code> (168 entries), <code class="inline">obc_bihar.csv</code> (132) and <code class="inline">sc_bihar.csv</code> (23). <strong>This is real data</strong>, taken from Jolad and Kalyani's <a href="/dataverse.html#database-of-castes">Database of castes</a> (Harvard Dataverse, doi:10.7910/DVN/WT5VIY, CC0), which digitises the Mandal Commission report and the National Commission for Backward Classes' Central List.</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> The lists</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> Cleaning</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> Near matches</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> Two lists</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Limits</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 5</div>
+<h2>Two lists, forty years apart</h2>
+<p>In 1980 the Second Backward Classes Commission, chaired by B.&nbsp;P. Mandal, listed the backward classes of each state. The Central List of OBCs that governs central government jobs and admissions today was built after 1993 and has been amended by resolution ever since. A researcher who wants to know which communities Mandal named and the Central List kept has to link the two lists name by name, because neither carries the other's identifiers.</p>
+<p>Linking two files that share no key is called <strong>record linkage</strong>. The same problem turns up when you match beneficiary lists to a survey, villages across census rounds, or schools across two years of UDISE. Caste lists make the difficulty unusually visible: one community is spelt several ways, one entry lists several communities, and two different communities can have names a letter apart.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import re
+import pandas as pd
+mandal = pd.read_csv(&quot;mandal_bihar.csv&quot;)
+obc = pd.read_csv(&quot;obc_bihar.csv&quot;)
+print(len(mandal), &quot;entries on the Mandal list for Bihar (1980)&quot;)
+print(len(obc), &quot;active entries on the Central List for Bihar&quot;)
+print(mandal.sample(5, random_state=1).to_string(index=False))</textarea></div>
+<p>Bihar has 168 entries on the Mandal list and 132 active entries on the Central List. Look at the sample: one entry can carry several names (<code class="inline">Dhunia, Dhumian</code>), and brackets hold either another spelling (<code class="inline">Sauta (Sota)</code>) or another name.</p>
+<div class="info-box"><strong>Try it.</strong> Print the entries whose name contains a bracket with <code class="inline">obc[obc["name"].str.contains(r"\(")]</code>. How many are there, and what do the brackets say?</div>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: Cleaning &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 5</div>
+<h2>Cleaning names before you compare them</h2>
+<p>Two spellings that a reader sees as the same, <code class="inline">Kewat</code> and <code class="inline">kewat </code>, are different strings to a computer. So every name is reduced to a <strong>key</strong>: lower case, letters and spaces only, single spaces, and one key per name the entry lists.</p>
+<p>The brackets need a decision. In the Bihar Central List they hold three kinds of thing: a religion (<code class="inline">(Muslim)</code>, on 23 entries), a limit on area (<code class="inline">(only in the districts of Sivan &amp; Rohtas)</code>) and another name for the same community (<code class="inline">Chandrabanshi (Kahar)</code>). The function keeps the third and drops the first two.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import re
+import pandas as pd
+mandal = pd.read_csv(&quot;mandal_bihar.csv&quot;)
+obc = pd.read_csv(&quot;obc_bihar.csv&quot;)
+
+def names(entry):
+    &quot;&quot;&quot;Every name an entry lists, cleaned for comparison.&quot;&quot;&quot;
+    extra = []
+    for inside in re.findall(r&quot;\((.*?)\)&quot;, entry):
+        low = inside.lower().strip()
+        if low == &quot;muslim&quot; or low.startswith((&quot;only&quot;, &quot;in &quot;, &quot;this&quot;)):
+            continue  # a religion or a limit on area, not another name
+        extra.append(inside)
+    entry = re.sub(r&quot;\(.*?\)&quot;, &quot; &quot;, entry) + &quot;,&quot; + &quot;,&quot;.join(extra)
+    out = []
+    for part in re.split(r&quot;[,/;\u2014]| or | and | &amp; &quot;, entry):
+        part = part.lower().replace(&quot;-&quot;, &quot; &quot;)
+        part = re.sub(r&quot;[^a-z ]&quot;, &quot;&quot;, part)
+        part = re.sub(r&quot;\s+&quot;, &quot; &quot;, part).strip()
+        if part:
+            out.append(part)
+    return out
+
+for e in [&quot;Kasab(Kasai) (Muslim)&quot;, &quot;Chandrabanshi (Kahar)&quot;, &quot;Kewat, Keot&quot;,
+          &quot;Aguri\u2014Vaishya, Sudi, Halwai&quot;]:
+    print(e, &quot;-&gt;&quot;, names(e))</textarea></div>
+<p><code class="inline">Kasab(Kasai) (Muslim)</code> becomes two keys, <code class="inline">kasab</code> and <code class="inline">kasai</code>, and the religion goes. The Mandal entry for Aguri is one long entry in which a dash separates the first name from the rest, so the function splits on it too.</p>
+<h3>Exact matches</h3>
+<p><code class="inline">.explode()</code> turns each list of keys into one row per key, and a merge on the key finds every pair of entries that share a cleaned name.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import re
+import pandas as pd
+mandal = pd.read_csv(&quot;mandal_bihar.csv&quot;)
+obc = pd.read_csv(&quot;obc_bihar.csv&quot;)
+
+def names(entry):
+    &quot;&quot;&quot;Every name an entry lists, cleaned for comparison.&quot;&quot;&quot;
+    extra = []
+    for inside in re.findall(r&quot;\((.*?)\)&quot;, entry):
+        low = inside.lower().strip()
+        if low == &quot;muslim&quot; or low.startswith((&quot;only&quot;, &quot;in &quot;, &quot;this&quot;)):
+            continue  # a religion or a limit on area, not another name
+        extra.append(inside)
+    entry = re.sub(r&quot;\(.*?\)&quot;, &quot; &quot;, entry) + &quot;,&quot; + &quot;,&quot;.join(extra)
+    out = []
+    for part in re.split(r&quot;[,/;\u2014]| or | and | &amp; &quot;, entry):
+        part = part.lower().replace(&quot;-&quot;, &quot; &quot;)
+        part = re.sub(r&quot;[^a-z ]&quot;, &quot;&quot;, part)
+        part = re.sub(r&quot;\s+&quot;, &quot; &quot;, part).strip()
+        if part:
+            out.append(part)
+    return out
+
+m = mandal.assign(key=mandal[&quot;name&quot;].map(names)).explode(&quot;key&quot;)
+o = obc.assign(key=obc[&quot;name&quot;].map(names)).explode(&quot;key&quot;)
+print(len(m), &quot;Mandal names;&quot;, len(o), &quot;Central List names&quot;)
+pairs = m.merge(o, on=&quot;key&quot;, suffixes=(&quot;_m&quot;, &quot;_o&quot;))
+print(pairs[&quot;mandal_id&quot;].nunique(), &quot;of&quot;, len(mandal), &quot;Mandal entries share at least one exact name&quot;)
+print(pairs[[&quot;mandal_id&quot;, &quot;obc_id&quot;, &quot;key&quot;]].head(6).to_string(index=False))</textarea></div>
+<p>The 168 Mandal entries carry 272 names and the 132 Central List entries carry 201. <strong>114 Mandal entries share at least one exact name</strong> with the Central List. Mandal entry 432 matches Central List entry 325 on seven names at once, because both lists group the trading castes of the Vaishya cluster into a single entry.</p>
+<div class="info-box"><strong>Try it.</strong> In <code class="inline">names()</code>, delete the line <code class="inline">extra.append(inside)</code> so that every bracket is thrown away, and run the exact match again. How many Mandal entries do you lose, and which?</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Near matches &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 5</div>
+<h2>Near matches, and why a score cannot decide</h2>
+<p>The 54 entries left over may be missing from today's list, or spelt differently. <code class="inline">difflib.SequenceMatcher</code> from Python's standard library scores how alike two strings are, from 0 to 1. For each unmatched Mandal name the cell finds the most similar Central List name.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import re
+import pandas as pd
+mandal = pd.read_csv(&quot;mandal_bihar.csv&quot;)
+obc = pd.read_csv(&quot;obc_bihar.csv&quot;)
+
+def names(entry):
+    &quot;&quot;&quot;Every name an entry lists, cleaned for comparison.&quot;&quot;&quot;
+    extra = []
+    for inside in re.findall(r&quot;\((.*?)\)&quot;, entry):
+        low = inside.lower().strip()
+        if low == &quot;muslim&quot; or low.startswith((&quot;only&quot;, &quot;in &quot;, &quot;this&quot;)):
+            continue  # a religion or a limit on area, not another name
+        extra.append(inside)
+    entry = re.sub(r&quot;\(.*?\)&quot;, &quot; &quot;, entry) + &quot;,&quot; + &quot;,&quot;.join(extra)
+    out = []
+    for part in re.split(r&quot;[,/;\u2014]| or | and | &amp; &quot;, entry):
+        part = part.lower().replace(&quot;-&quot;, &quot; &quot;)
+        part = re.sub(r&quot;[^a-z ]&quot;, &quot;&quot;, part)
+        part = re.sub(r&quot;\s+&quot;, &quot; &quot;, part).strip()
+        if part:
+            out.append(part)
+    return out
+
+m = mandal.assign(key=mandal[&quot;name&quot;].map(names)).explode(&quot;key&quot;)
+o = obc.assign(key=obc[&quot;name&quot;].map(names)).explode(&quot;key&quot;)
+from difflib import SequenceMatcher
+pairs = m.merge(o, on=&quot;key&quot;)
+left = m[~m[&quot;mandal_id&quot;].isin(pairs[&quot;mandal_id&quot;])]
+print(left[&quot;mandal_id&quot;].nunique(), &quot;Mandal entries with no exact name in common&quot;)
+keys = o[&quot;key&quot;].unique()
+rows = []
+for mid, key in zip(left[&quot;mandal_id&quot;], left[&quot;key&quot;]):
+    score, best = max((SequenceMatcher(None, key, k).ratio(), k) for k in keys)
+    rows.append((mid, key, best, round(score, 2)))
+cand = pd.DataFrame(rows, columns=[&quot;mandal_id&quot;, &quot;mandal_name&quot;, &quot;obc_name&quot;, &quot;score&quot;])
+cand = cand.sort_values(&quot;score&quot;, ascending=False)
+print(cand.head(25).to_string(index=False))</textarea></div>
+<p>Read the list from the top. <code class="inline">churihara</code> and <code class="inline">churihar</code> differ by a final vowel, and <code class="inline">kaghzi</code> and <code class="inline">kagzi</code> by one letter: these look like one name written two ways. Further down, <code class="inline">sunri</code> and <code class="inline">sunar</code> score 0.80, and so do <code class="inline">lodha</code> and <code class="inline">lohar</code>. Those are different communities whose names happen to share most of their letters. The score measures spelling, and caste names are short, so a single letter is a large share of the string.</p>
+<h3>Choosing a cut-off</h3>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import re
+import pandas as pd
+mandal = pd.read_csv(&quot;mandal_bihar.csv&quot;)
+obc = pd.read_csv(&quot;obc_bihar.csv&quot;)
+
+def names(entry):
+    &quot;&quot;&quot;Every name an entry lists, cleaned for comparison.&quot;&quot;&quot;
+    extra = []
+    for inside in re.findall(r&quot;\((.*?)\)&quot;, entry):
+        low = inside.lower().strip()
+        if low == &quot;muslim&quot; or low.startswith((&quot;only&quot;, &quot;in &quot;, &quot;this&quot;)):
+            continue  # a religion or a limit on area, not another name
+        extra.append(inside)
+    entry = re.sub(r&quot;\(.*?\)&quot;, &quot; &quot;, entry) + &quot;,&quot; + &quot;,&quot;.join(extra)
+    out = []
+    for part in re.split(r&quot;[,/;\u2014]| or | and | &amp; &quot;, entry):
+        part = part.lower().replace(&quot;-&quot;, &quot; &quot;)
+        part = re.sub(r&quot;[^a-z ]&quot;, &quot;&quot;, part)
+        part = re.sub(r&quot;\s+&quot;, &quot; &quot;, part).strip()
+        if part:
+            out.append(part)
+    return out
+
+m = mandal.assign(key=mandal[&quot;name&quot;].map(names)).explode(&quot;key&quot;)
+o = obc.assign(key=obc[&quot;name&quot;].map(names)).explode(&quot;key&quot;)
+from difflib import SequenceMatcher
+pairs = m.merge(o, on=&quot;key&quot;)
+left = m[~m[&quot;mandal_id&quot;].isin(pairs[&quot;mandal_id&quot;])]
+keys = o[&quot;key&quot;].unique()
+rows = []
+for mid, key in zip(left[&quot;mandal_id&quot;], left[&quot;key&quot;]):
+    score, best = max((SequenceMatcher(None, key, k).ratio(), k) for k in keys)
+    rows.append((mid, key, best, round(score, 2)))
+cand = pd.DataFrame(rows, columns=[&quot;mandal_id&quot;, &quot;mandal_name&quot;, &quot;obc_name&quot;, &quot;score&quot;])
+for cut in (0.95, 0.9, 0.85, 0.8):
+    print(cut, (cand[&quot;score&quot;] &gt;= cut).sum(), &quot;names would be accepted&quot;)
+print(cand[cand[&quot;score&quot;] &gt;= 0.85].sort_values(&quot;score&quot;, ascending=False).to_string(index=False))</textarea></div>
+<p>No cut-off separates the true from the false. At 0.95 nothing is accepted. At 0.85 seven names are accepted, and each needs a reason before you keep it: <code class="inline">godhi</code> and <code class="inline">godi</code> are plausibly one community, because the Mandal entry also gives <code class="inline">Chhavo</code> and the Central List entry <code class="inline">Chhava</code>, while <code class="inline">kawar</code> and <code class="inline">kalwar</code> score 0.91 on spelling alone and need a source, such as the state's own list or an ethnographic survey, before anyone treats them as the same. Lower the cut-off to 0.80 and 26 names come in, including the pairs above that are plainly different.</p>
+<div class="info-box warning"><strong>A score ranks candidates for a person to check. It does not make the decision.</strong> Record every accepted near match with the reason you accepted it, so that someone else can disagree with you.</div>
+<div class="info-box"><strong>Try it.</strong> Add a column <code class="inline">decision</code> to <code class="inline">cand</code> and fill it by hand for the seven pairs at 0.85 or above, with <code class="inline">"same"</code>, <code class="inline">"different"</code> or <code class="inline">"check"</code>. Then count each.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: Two lists &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 5</div>
+<h2>One name on two lists</h2>
+<p>The same cleaning can link the Central List of OBCs to Bihar's list of Scheduled Castes.</p>
+<div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import re
+import pandas as pd
+mandal = pd.read_csv(&quot;mandal_bihar.csv&quot;)
+obc = pd.read_csv(&quot;obc_bihar.csv&quot;)
+
+def names(entry):
+    &quot;&quot;&quot;Every name an entry lists, cleaned for comparison.&quot;&quot;&quot;
+    extra = []
+    for inside in re.findall(r&quot;\((.*?)\)&quot;, entry):
+        low = inside.lower().strip()
+        if low == &quot;muslim&quot; or low.startswith((&quot;only&quot;, &quot;in &quot;, &quot;this&quot;)):
+            continue  # a religion or a limit on area, not another name
+        extra.append(inside)
+    entry = re.sub(r&quot;\(.*?\)&quot;, &quot; &quot;, entry) + &quot;,&quot; + &quot;,&quot;.join(extra)
+    out = []
+    for part in re.split(r&quot;[,/;\u2014]| or | and | &amp; &quot;, entry):
+        part = part.lower().replace(&quot;-&quot;, &quot; &quot;)
+        part = re.sub(r&quot;[^a-z ]&quot;, &quot;&quot;, part)
+        part = re.sub(r&quot;\s+&quot;, &quot; &quot;, part).strip()
+        if part:
+            out.append(part)
+    return out
+
+m = mandal.assign(key=mandal[&quot;name&quot;].map(names)).explode(&quot;key&quot;)
+o = obc.assign(key=obc[&quot;name&quot;].map(names)).explode(&quot;key&quot;)
+sc = pd.read_csv(&quot;sc_bihar.csv&quot;)
+s = sc.assign(key=sc[&quot;name&quot;].map(names)).explode(&quot;key&quot;)
+both = o.merge(s, on=&quot;key&quot;, suffixes=(&quot;_obc&quot;, &quot;_sc&quot;))
+print(both[[&quot;name_obc&quot;, &quot;name_sc&quot;, &quot;key&quot;]].to_string(index=False))</textarea></div>
+<p>Six names sit on both lists: Dhobi, Nat, Mehtar, Lalbegi, Halalkhor and Bhangi. They come from three Central List entries, and each is marked <code class="inline">(Muslim)</code>, which the cleaning function threw away. That qualifier is the whole difference. Paragraph 3 of the Constitution (Scheduled Castes) Order, 1950 allows only a person who professes Hinduism, Sikhism or Buddhism to be a member of a Scheduled Caste, and the Muslim members of these communities appear on the backward classes list instead.</p>
+<p>The general point: <strong>cleaning decides what a match means</strong>. A rule that is right for linking Mandal to the Central List, where religion is not the question, is wrong for linking the OBC and SC lists, where it is the question. Write the rule down next to the result.</p>
+<div class="info-box"><strong>Try it.</strong> Change <code class="inline">names()</code> so that it keeps <code class="inline">muslim</code> as part of the key, and run the cell again. What is left?</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Limits &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 5</div>
+<h2>What a match can and cannot tell you</h2>
+<p>Every match here is a match of spellings. A Mandal entry with no match has not been shown to be dropped from the Central List: it may be listed under a name neither list prints, or folded into another entry. A match has not been shown to be the same people either: two communities in different parts of a state can share a name.</p>
+<ul><li>Report the count of exact matches and the count of near matches separately, and say how the near ones were decided.</li><li>Keep the original text of both entries in the output, beside the keys you matched on.</li><li>Treat the cut-off as a choice you made and report what happens to the result if it moves.</li><li>Check a sample of matches and non-matches against a third source before you publish a rate.</li></ul>
+<div class="info-box"><strong>Try it.</strong> Repeat the exact match for the whole country with the full Database of castes, and compare the share of Mandal entries matched across states. Which states fall well below Bihar's 114 of 168, and is that a difference in lists or in spelling?</div>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/castes.html" style="color:var(--text-primary)">Caste Lists Explorer</a></h4><p>The 1931 Census, the SC and OBC lists and the Mandal list, charted.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/101-courses/caste-studies.html" style="color:var(--text-primary)">Caste Studies 101</a></h4><p>The history and politics behind these lists.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/pandas.html" style="color:var(--text-primary)">pandas for Development Data</a></h4><p>The pandas basics this page assumes.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/dataverse.html#database-of-castes" style="color:var(--text-primary)">Database of castes</a></h4><p>The source data, in the Dataverse.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code Studio</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=c8ac0135"></script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+</body>
+</html>
