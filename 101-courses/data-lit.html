@@ -2442,7 +2442,15 @@ showSlide(0);
   }
   var vp = document.getElementById("viewport") || document.querySelector(".slide-viewport");
   if (vp && window.MutationObserver) {
-    new MutationObserver(resizeActive).observe(vp, {subtree:true, attributes:true, attributeFilter:["class"]});
+    // React only to a slide changing class. Resizing a chart sets classes on
+    // its own elements, and reacting to those resized the chart again, for
+    // ever: the tab froze on the slide (#1193).
+    new MutationObserver(function(recs){
+      for (var i = 0; i < recs.length; i++) {
+        var t = recs[i].target;
+        if (t.classList && t.classList.contains("slide")) { resizeActive(); return; }
+      }
+    }).observe(vp, {subtree:true, attributes:true, attributeFilter:["class"]});
   }
   // Initial pass after charts have had time to init
   setTimeout(resizeActive, 400);
