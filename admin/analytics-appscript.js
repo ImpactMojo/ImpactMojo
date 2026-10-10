@@ -248,7 +248,7 @@ function populateLegacyData() {
     ['Portfolio Builder', 'Credentialing', '', '', '', 'Active'],
     ['Certificate Verification', 'Credentialing', '', '', '', 'Active'],
     ['ImpactLex Glossary', 'Reference', '', '', '', 'Active'],
-    ['Dataverse (335+ tools)', 'Reference', '', '', '', 'Active'],
+    ['Dataverse (336+ tools)', 'Reference', '', '', '', 'Active'],
     ['NudgeKit (BCT Repository)', 'Reference', '', '', '', 'Active'],
     ['Podcast', 'Content', '', '', '', 'Active'],
     ['Blog', 'Content', '', '', '', 'Active'],

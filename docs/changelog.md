@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.353.0 — October 10, 2026 (Database of Castes in the Dataverse)
+
+### Added
+
+- **Database of Castes in the [Dataverse](/dataverse.html#database-of-castes)**, the 336th entry, under Gender & Inclusion Data. Shivakumar Jolad and Gaurav Kalyani at FLAME University have digitised and linked five sources: the 1931 Census caste tables by religion and province; the 1931 count of "exterior castes" from Appendix I of the Census report, which put 50.2 million people, 21% of Hindus, in that category; the Scheduled Caste lists by state, taken from Wikipedia's transcription of the Constitution orders and each entry matched back to 1931; the notified Scheduled Tribe lists by state; and the NCBC Central List of OBCs, set against the 1980 Mandal Commission lists. Released on 9 October 2026 on Harvard Dataverse under CC0. Names are matched across the lists by spelling, so a missing match does not show that a community was absent from a list.
+
+### Fixed
+
+- **A Dataverse result in site search now opens its entry** (#1177). Search links each entry as `/dataverse.html#<id>`, and the page never read the address, so every result landed at the top of 336 cards. The page now opens the entry the link names.
+
+### Changed
+
+- **Counts**: the Dataverse 335 to 336 wherever it is stated.
+
+### For Learners
+
+- **Database of Castes** — the 1931 caste census, the exterior castes of 1931, and today's SC, ST and OBC lists in one linked, free dataset. [Find it in the Dataverse](/dataverse.html#database-of-castes)
+
 ## v10.352.0 — October 9, 2026 (course counts with "free" in them)
 
 ### Fixed
