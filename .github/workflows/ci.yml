@@ -227,6 +227,24 @@ jobs:
       - name: Check inline stylesheets
         run: python3 scripts/check-inline-css.py
 
+  notes-101-shop:
+    name: 101 Course Notes shop matches the deck list
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Eighty buy pages, eighty order-handler lines, the sitemap and the
+      # search rows are all written from data/decks.json. A deck added or
+      # renamed without re-running the builder would sell nothing, or sell a
+      # file the order handler cannot find.
+      - name: Check the 101 notes shop
+        run: python3 scripts/course-notes/build-101-shop.py --check
+
   castes-data:
     name: Caste lists explorer data is current
     runs-on: ubuntu-latest

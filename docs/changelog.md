@@ -2,10 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
-## v10.360.0 — October 10, 2026 (seven decks no longer freeze, and a record-linkage exercise)
+## v10.360.0 — October 10, 2026 (101 Course Notes, a Deep Dive on the caste lists, and seven decks that no longer freeze)
 
 ### For Learners
 
+- **101 Course Notes** — every course in the 101 series as a printable A4 PDF, all the slides two to a page with space for notes, ₹149 each.
+- **The Caste Lists** — a Deep Dive on how India came to count caste in 1931, govern through lists after 1950, and count again, with 12 readings from Hutton's census report to Bihar's 2023 survey.
 - **Linking Caste Lists** — a Code Studio exercise that matches the Mandal Commission's 1980 list for Bihar to today's Central List of OBCs in Python, with real data, and shows which near matches a computer cannot decide.
 
 ### Fixed
