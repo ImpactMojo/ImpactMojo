@@ -2,6 +2,26 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.354.0 — October 10, 2026 (Caste Lists Explorer)
+
+### Added
+
+- **[Caste Lists Explorer](/castes.html)**, the 20th explorer in the Data Room, built on Jolad and Kalyani's Database of Castes (FLAME University, Harvard Dataverse, CC0). Four sections. The 1931 Census count of exterior castes for each province, princely state and agency, 50,195,770 people and 21% of Hindus, as a share of Hindus, of all people or as a number. Each state's Scheduled Caste entries traced back to a 1931 caste name, with matches on the main name kept apart from matches on an alternative name alone, which can point to a different community. The 2,428 entries in the Central List of OBCs by the year they were first notified, from 1,337 in 1993 to the last additions in 2016. And the 3,751 entries in the 1980 Mandal Commission lists against today's list. Every match on the page is a match of spellings, and the page says what that can and cannot show.
+
+### Fixed
+
+- **The explorer index stated four different counts in words** (#1179): Thirteen in its description, Twelve in its preview text and opening paragraph, Ten in its structured data and nineteen further down, while it listed 19. All now read twenty, as does the homepage's Data Room paragraph.
+
+### Changed
+
+- **OBC entries are dated by their resolution.** The dataset records the year printed in each gazette file number, and file 12011/14/2004-BCC, for example, was dated 12 March 2007. For 654 entries the resolution falls one to five years after the file year. The explorer dates by the resolution and lets a reader switch to see the difference.
+- **Mojini answers questions about the Data Room** and the Caste Lists Explorer.
+- **Counts**: data explorers 19 to 20 wherever they are stated.
+
+### For Learners
+
+- **Caste Lists Explorer** — the 1931 count of exterior castes, how far today's Scheduled Caste lists trace back to it, and how the Central List of OBCs grew after 1993. [Open the explorer](/castes.html)
+
 ## v10.353.0 — October 10, 2026 (Database of Castes in the Dataverse)
 
 ### Added

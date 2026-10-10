@@ -153,6 +153,26 @@ jobs:
       - name: Rebuild the justice data and compare
         run: python3 scripts/build-justice-explorer-data.py --check
 
+  castes-data:
+    name: Caste lists explorer data is current
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Rebuilds castes.html's inline data from data/castes-india.json and
+      # fails if either copy is stale. On the way it checks the 1931
+      # exterior-caste table against its own printed subtotals (two known
+      # gaps are pinned, so a third fails), keeps the four units outside the
+      # 1931 Census out of the match rates, and dates OBC entries by the
+      # resolution, which differs from the file-number year for 654 of them.
+      - name: Rebuild the caste lists data and compare
+        run: python3 scripts/build-castes-explorer-data.py --check
+
   origin-relative-links:
     name: In-site links work on any origin
     runs-on: ubuntu-latest
