@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.359.0 — October 10, 2026 (three new sets of course notes, and tighter pages)
+
+### For Learners
+
+- **Sustainability, ESG & CSR: Course Notes** — all 13 modules as a printable PDF, ₹350.
+- **Gender-Sensitive MEL: Course Notes** — all 13 modules as a printable PDF, ₹350.
+- **Social Movements & Protests: Course Notes** — all 13 modules as a printable PDF, ₹350.
+
+### Changed
+
+- **All 21 sets of course notes have been reset with less empty space.** Modules now follow on from each other under a rule, where each used to start a new page. Worked examples, data exercises and long tables now continue onto the next page instead of jumping to it whole. Together these left about 1,580 pages where 1,473 now carry the same text. Every product page and search entry now states the new page count.
+
 ## v10.358.0 — October 10, 2026 (stylesheets that were silently cut short)
 
 ### Fixed

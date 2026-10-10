@@ -69,12 +69,23 @@ body { font-family: Inter, 'Segoe UI', Arial, sans-serif; font-size: 10.5pt; lin
 .notes-toc { page-break-after: always; }
 .notes-toc h2 { font-size: 16pt; color: #0369A1; }
 .notes-toc ol { padding-left: 1.6em; } .notes-toc li { margin: .3em 0; }
-.notes-module { page-break-before: always; }
-.notes-module > h2.module-title { font-size: 17pt; color: #0369A1; margin: 0 0 .5em; }
+/* Modules run on: a forced page break per module left the end of almost every
+   module mostly blank. A rule and the title mark the start instead. */
+.notes-module { margin-top: 14pt; padding-top: 10pt; border-top: 2px solid #0369A1; }
+.notes-toc + .notes-module { margin-top: 0; padding-top: 0; border-top: 0; }
+.notes-module > h2.module-title { font-size: 17pt; color: #0369A1; margin: 0 0 .5em; break-after: avoid; page-break-after: avoid; }
 .notes-module .module-intro { color: #334155; font-style: italic; }
 h1, h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
-table, figure, .callout, .coach-callout, .data-exercise, .worked-example, .definition, .key-insight,
-.concept-box, .equation-box, .reflection-prompt, .stat-card, .comparison-card, .reading-box { break-inside: avoid; page-break-inside: avoid; }
+/* Long tables break across pages so they leave no half-empty page behind;
+   rows stay whole and the header row repeats. */
+thead { display: table-header-group; } tr, thead { break-inside: avoid; page-break-inside: avoid; }
+/* Only short blocks are kept whole. Worked examples and data exercises run to
+   half a page, and holding them together pushed each one to the next page and
+   left the rest of the current page empty. */
+figure, .dag-figure, .callout, .coach-callout, .definition, .key-insight, .concept-box, .equation-box,
+.reflection-prompt, .stat-card, .comparison-card, .reading-box, li, p { break-inside: avoid; page-break-inside: avoid; }
+.data-exercise, .worked-example { break-inside: auto; page-break-inside: auto; }
+p { orphans: 3; widows: 3; }
 /* Every inline icon gets a size. Unsized, each one printed as wide as the page. */
 svg { max-width: 100%; height: auto; }
 svg.external-icon, a svg, li svg, p svg, button svg, h2 svg, h3 svg, h4 svg,
