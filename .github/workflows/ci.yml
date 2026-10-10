@@ -173,6 +173,25 @@ jobs:
       - name: Every deck listed with its real slide count
         run: python3 scripts/check-deck-listings.py
 
+  copy-tells:
+    name: No banned stock phrases in reader-facing text
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # The house style bans "isn't just X: it's Y", "genuinely",
+      # "arguably", "navigating the complexities" and the like. About 220
+      # sentences were rewritten on 2026-10-10; this keeps them out. It reads
+      # only phrases with no technical reading, and quotations, titles and
+      # testimonials are exempted one by one with a reason.
+      - name: Scan for stock phrases
+        run: python3 scripts/check-copy-tells.py
+
   castes-data:
     name: Caste lists explorer data is current
     runs-on: ubuntu-latest

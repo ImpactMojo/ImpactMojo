@@ -2,6 +2,13 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.356.0 — October 10, 2026 (copy pass against the house style)
+
+### Changed
+
+- **About 220 sentences across 135 pages rewritten in plain English.** Stock words (genuinely, arguably, notably, crucial, unlock, empower used loosely, "at the intersection of", "navigating the complexities", "harnessing the power") and every "not just X but Y" or "isn't just X: it's Y" construction are gone from courses, handouts, Labs, explorers, book companions and the main pages. The twelve flagships no longer say "13 Comprehensive Modules" or "a comprehensive journey", and their search and preview descriptions now say what each course covers. Technical and statutory uses were kept: robust standard errors, gender-transformative programming, research paradigms, CSR Rule 4(5)'s "utilised", NEP 2020's "holistic". So were quotations, titles of cited works and every testimonial.
+- **A new check, `check-copy-tells.py`, keeps the banned stock phrases out**, with quotations and titles exempted one by one.
+
 ## v10.355.0 — October 10, 2026 (sitewide audit: data, counts and Mojini)
 
 ### Fixed

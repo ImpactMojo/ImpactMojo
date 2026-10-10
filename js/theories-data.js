@@ -962,7 +962,7 @@ window.THEORIES = {
         },
         {
           "title": "Which fixes the wage",
-          "text": "A worker deciding whether to move compares the subsistence income with the modern wage. Since leaving costs the farm little and the worker gives up little, the modern sector needs to offer only that income plus a margin, which Lewis suggested might be around thirty per cent to cover the higher cost and discomfort of town life. Crucially, that wage does not rise as hiring continues, because the reserve is deep.",
+          "text": "A worker deciding whether to move compares the subsistence income with the modern wage. Since leaving costs the farm little and the worker gives up little, the modern sector needs to offer only that income plus a margin, which Lewis suggested might be around thirty per cent to cover the higher cost and discomfort of town life. That wage does not rise as hiring continues, because the reserve is deep.",
           "nodes": [
             {
               "id": "wage",
@@ -1085,7 +1085,7 @@ window.THEORIES = {
           "year": 1955
         }
       ],
-      "unsettled": "Whether India has passed the turning point is genuinely open, and the answer differs by state. Real rural wages grew quickly between roughly 2007 and 2013 and then stalled, which is a pattern consistent with a turning point that arrived and then went into reverse, and equally consistent with a construction boom that ended. What is not in doubt is that the model's second half never happened here: the reserve emptied partway into an informal sector that pays a wage without providing the capital, so the surplus that was supposed to compound was never concentrated anywhere it could.",
+      "unsettled": "Whether India has passed the turning point is an open question, and the answer differs by state. Real rural wages grew quickly between roughly 2007 and 2013 and then stalled, which is a pattern consistent with a turning point that arrived and then went into reverse, and equally consistent with a construction boom that ended. What is not in doubt is that the model's second half never happened here: the reserve emptied partway into an informal sector that pays a wage without providing the capital, so the surplus that was supposed to compound was never concentrated anywhere it could.",
       "india": "The model was built partly from Asian material and Lewis cited India directly, and its assumption maps onto something real: the joint family farm that absorbs a returning migrant without complaint. What it misses is who is free to leave. Withdrawal from the village is not a labour-supply decision alone when a Dalit household's alternative employment is set by who will hire it, and when women's withdrawal from the workforce in India rose as household incomes rose. The reserve is not one pool.",
       "compare": "nehru-mahalanobis",
       "compare_note": "Both make the reinvested surplus the engine and both are indifferent to consumption in the short run. Mahalanobis adds the question of what the surplus should be spent on.",
@@ -1347,7 +1347,7 @@ window.THEORIES = {
           "author": "Planning Commission",
           "title": "Second Five Year Plan",
           "year": 1956,
-          "note": "Chapter 2 on the approach. Notably frank about the consumption it was asking for."
+          "note": "Chapter 2 on the approach. It is frank about the consumption it was asking for."
         },
         {
           "author": "C. N. Vakil and P. R. Brahmananda",
@@ -1965,7 +1965,7 @@ window.THEORIES = {
       "claim": "Development should be measured by what people are actually able to do and to be, because income and even goods say nothing about what a particular person can convert them into.",
       "summary": [
         "Sen's opening move is a question about measurement: equality of what? Income treats a rupee as a rupee whoever holds it. Utility treats satisfaction as the currency, which means a person who has adapted to deprivation and stopped wanting much scores well. Goods themselves are no better, because the same bicycle gives mobility to one person and nothing to another.",
-        "The answer is to evaluate at the level of functionings, the things a person actually manages to do and be, and capabilities, the set of functionings genuinely open to them. What sits between a resource and a functioning is a conversion factor: a disability, a caste rule about who may draw water, a road that floods, a norm about where a woman may walk after dark. Two households with the same income can have entirely different capability sets, and the difference is not a matter of preference.",
+        "The answer is to evaluate at the level of functionings, the things a person actually manages to do and be, and capabilities, the set of functionings actually open to them. What sits between a resource and a functioning is a conversion factor: a disability, a caste rule about who may draw water, a road that floods, a norm about where a woman may walk after dark. Two households with the same income can have entirely different capability sets, and the difference is not a matter of preference.",
         "Haq's contribution was to make it operational and public. The first Human Development Report in 1990 opened by saying that people are the real wealth of a nation, and put a three-part index next to GDP: a long and healthy life, knowledge, and a decent standard of living. Sen was uneasy about compressing the idea into one number and joined anyway, on the argument that a crude index that competes with GNP is more use than a refined idea that does not.",
         "With Jean Drèze, Sen then applied it to India across three books, and the argument that came out is about public action. India's record on the things the approach measures has lagged its record on income growth, and the gap is not explained by poverty alone, since poorer countries and poorer Indian states have done better on schooling, immunisation and child nutrition."
       ],
@@ -2154,7 +2154,7 @@ window.THEORIES = {
         },
         {
           "claim": "Public provision, not income, does most of the work.",
-          "finding": "Supported by the within-India comparison that Drèze and Sen built the argument on. Kerala reached life expectancy and literacy levels far above what its income per head predicted, on a record of school provision, public health and land reform going back to the princely states and sustained by electoral competition. The comparison is genuinely informative and it is one case, which is the standing weakness of the argument.",
+          "finding": "Supported by the within-India comparison that Drèze and Sen built the argument on. Kerala reached life expectancy and literacy levels far above what its income per head predicted, on a record of school provision, public health and land reform going back to the princely states and sustained by electoral competition. The comparison is informative, and it is one case, which is the standing weakness of the argument.",
           "source": "Jean Drèze and Amartya Sen, India: Economic Development and Social Opportunity",
           "year": 1995
         }
@@ -2934,7 +2934,7 @@ window.THEORIES = {
         },
         {
           "claim": "Settler mortality is a valid instrument for institutions.",
-          "finding": "Disputed on the data rather than the logic. David Albouy showed that the mortality rates for a large share of the sample were not observed in the country concerned but assigned from elsewhere, and that the results weaken considerably under alternative and arguably more defensible assignments. The authors contest this. The exchange has not been settled, and the wider institutional literature has largely moved to other identification strategies.",
+          "finding": "Disputed on the data rather than the logic. David Albouy showed that the mortality rates for a large share of the sample were not observed in the country concerned but assigned from elsewhere, and that the results weaken considerably under alternative assignments that Albouy considers more defensible. The authors contest this. The exchange has not been settled, and the wider institutional literature has largely moved to other identification strategies.",
           "source": "David Albouy, American Economic Review, and the reply by Acemoglu, Johnson and Robinson",
           "year": 2012
         },
