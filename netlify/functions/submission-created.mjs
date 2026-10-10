@@ -73,7 +73,20 @@ const FILES = {
   "Data & Technology Assessment: 500-Question Bank": "assessments/data-tech-500-assessment.pdf",
   "Policy & Economics Assessment: 500-Question Bank": "assessments/policy-econ-500-assessment.pdf",
   "AI for M&E Assessment: 500-Question Bank": "assessments/ai-for-me-500-assessment.pdf",
+  // Annotated Bare Acts (PDF) — ₹350 each
+  "The DPDP Act 2023, Annotated for the Development Sector": "ImpactMojo-DPDP-Act-Annotated.pdf",
+  "The RTI Act 2005, Annotated for the Development Sector": "ImpactMojo-RTI-Act-Annotated.pdf",
+  "How Your NGO Exists: Trusts, Societies & Section 8, Annotated": "ImpactMojo-NGO-Formation-Annotated.pdf",
 };
+
+// Titles are matched with case and punctuation ignored. On 2026-10-05 the
+// em-dash sweep rewrote these keys ("…Learning, Course Notes") but not the
+// titles the buy pages send ("…Learning — Course Notes"), so every order for
+// 41 of 62 products fell through to "deliver manually". A dash, colon or
+// comma must never decide whether a paying buyer gets their file.
+const norm = (t) => String(t || "").toLowerCase().replace(/&(?:amp|#x?[0-9a-f]+|[a-z]+);/g, "").replace(/[^a-z0-9]+/g, "");
+const FILES_NORM = Object.fromEntries(Object.entries(FILES).map(([k, v]) => [norm(k), v]));
+const fileFor = (title) => FILES[title] || FILES_NORM[norm(title)];
 
 const looksLikeEmail = (v) => typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 
@@ -153,7 +166,7 @@ export const handler = async (event) => {
   let type, key, label;
   if (form === "product-order") {
     const title = (data.product || "").replace(/\s*\(₹.*$/, "").trim();
-    const file = FILES[title];
+    const file = fileFor(title);
     if (!file) { await sendMail(ADMIN_EMAIL, `Order needs manual handling: ${data.product}`, `<p>Unknown product "${data.product}" from ${email} (UPI ref ${upiRef}). Deliver manually.</p>`); return { statusCode: 200 }; }
     type = "product"; key = file; label = data.product;
   } else if (form === "subscription-payment") {

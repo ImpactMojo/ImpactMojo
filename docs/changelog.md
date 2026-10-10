@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.357.0 — October 10, 2026 (paid orders deliver again)
+
+### Fixed
+
+- **Paid orders for 41 of 62 products were not delivered** (#1186). The order handler finds the file to send by the product's title. A punctuation pass on 5 October changed the handler's titles and not the ones the buy pages send, so a buyer of course notes, question banks, refreshers, trainer decks or workbooks got no file and the owner got a "deliver manually" note instead of the usual confirm email. One order was affected and has been delivered. Titles are now matched with punctuation ignored, the DPDP, RTI and NGO-formation annotated Acts are delivered automatically for the first time, and a new check ties every buy button to a file.
+- **The Course Notes PDFs were padded with full-page icons** (#1187). The small link and callout icons in the course text had no size of their own when printed, so each grew to fill a page: 249 pages across 12 of the 18 PDFs, 85 of them in the data visualisation notes. All 18 have been rebuilt from the current course text, which also brings in the mini-projects and coaching prompts added since they were first made, and a new builder refuses to write a PDF with a near-empty page.
+- **The sign-up, invite, sign-in, password and email-change emails** sent by Supabase now carry the corrected copy from the repository: 101 courses, 36 Labs, 135 games and 184 reading companions, and no em dashes in the bodies or subject lines (#1184).
+
+### Changed
+
+- **The press kit's English gloss of a Hindi testimonial** now says what the speaker said: "made project planning very easy", where it read "found the TOC Workbench transformative". The Hindi quotation is unchanged.
+
 ## v10.356.0 — October 10, 2026 (copy pass against the house style)
 
 ### Changed
