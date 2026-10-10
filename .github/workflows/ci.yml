@@ -209,6 +209,24 @@ jobs:
       - name: Scan for stock phrases
         run: python3 scripts/check-copy-tells.py
 
+  inline-css:
+    name: Every inline stylesheet closes what it opens
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # A browser keeps parsing a stylesheet with an unclosed rule and
+      # silently drops everything after the break. On 2026-10-10 that was
+      # 79 pages, most of them a block of dark-theme corrections inserted
+      # in the middle of a word (#1189).
+      - name: Check inline stylesheets
+        run: python3 scripts/check-inline-css.py
+
   castes-data:
     name: Caste lists explorer data is current
     runs-on: ubuntu-latest

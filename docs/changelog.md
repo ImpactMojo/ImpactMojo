@@ -2,6 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.358.0 — October 10, 2026 (stylesheets that were silently cut short)
+
+### Fixed
+
+- **Part of the styling was missing on 79 pages** (#1189). A colour fix applied in August and September was inserted into each page's stylesheet at a fixed position, not at its end. On 77 pages that position fell in the middle of a word, and browsers drop everything from such a break to the end of the damaged rule. The rule that was split never applied, and neither did the dark-theme colour corrections the fix existed to deliver. The affected pages include the course-notes and assessment product pages, eighteen practice packs, several Labs, Field Radio, the Studios index and the timelines. The two halves have been joined back, and each block now sits at the end of its stylesheet. The Gender Studies and Public Policy lexicons had lost the second half of their top-bar styling, about 54 rules, and it is restored. A new check fails the build if any page's stylesheet leaves a rule or comment open.
+
 ## v10.357.0 — October 10, 2026 (paid orders deliver again)
 
 ### Fixed
