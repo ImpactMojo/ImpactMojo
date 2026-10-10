@@ -117,6 +117,9 @@
     // another origin and register against the LMS instead.
     var m = doc.querySelector('link[rel=manifest]');
     if (m) m.remove();
+    // The 101 decks link to their paid course notes. A shop link has no place
+    // inside a course an instructor has put in front of a class.
+    Array.prototype.slice.call(doc.querySelectorAll('.notes-buy')).forEach(function (a) { a.remove(); });
   }
 
   /* Replace every same-origin (or CDN) asset with its inline text. Failures are

@@ -14,6 +14,9 @@ the last render):
   netlify/functions/submission-created.mjs  the FILES lines between the
                                           101-notes markers
   sitemap.xml and data/search-index.json  one entry per page
+  101-courses/<slug>.html                 a buy link on the title slide and
+                                          in the slide controls, between
+                                          notes-101 markers
 
 A deck added to decks.json without a render fails here, so nothing is put on
 sale that the order handler cannot deliver.
@@ -31,6 +34,35 @@ TEMPLATE = ROOT / "products" / "notes-nothing-about-us" / "index.html"
 HANDLER = ROOT / "netlify" / "functions" / "submission-created.mjs"
 START, END = "  // 101-notes:start (written by build-101-shop.py)\n", "  // 101-notes:end\n"
 E = html.escape
+
+# What the builder adds to each deck. Everything sits between markers so a
+# re-run replaces it rather than stacking a second copy.
+DECK_CSS = ('<style id="notes-101">'
+            '.title-tag.notes-buy{color:#fff;text-decoration:none;border-color:#38BDF8;background:rgba(14,165,233,0.22)}'
+            '.title-tag.notes-buy:hover,.title-tag.notes-buy:focus-visible{background:rgba(14,165,233,0.4)}'
+            '#nav .nav-notes{color:#fff;text-decoration:none;font-family:var(--font-mono);font-size:10px;letter-spacing:0.6px;'
+            'text-transform:uppercase;padding:6px 10px;border-radius:14px;background:rgba(255,255,255,0.1);white-space:nowrap}'
+            '#nav .nav-notes:hover,#nav .nav-notes:focus-visible{background:rgba(255,255,255,0.2)}'
+            '@media print{.notes-buy{display:none !important}}'
+            '</style>\n')
+MARK = re.compile(r"<!--notes-101-->.*?<!--/notes-101-->", re.S)
+CSS_MARK = re.compile(r'<style id="notes-101">.*?</style>\n')
+
+
+def deck_with_link(text, slug, title):
+    """The deck's HTML with its notes link, or None if it has nowhere to put it."""
+    url = f"/products/notes-101/{slug}/"
+    text = CSS_MARK.sub("", MARK.sub("", text))
+    tags = '<div class="title-tags">'
+    nav = text.find('<div id="nav"')
+    if tags not in text or nav < 0 or "</head>" not in text:
+        return None
+    label = E(f"Buy the {title} course notes, a printable PDF, for ₹{PRICE}")
+    text = text.replace(tags, tags + f'<!--notes-101--><a class="title-tag notes-buy" href="{url}" aria-label="{label}">Course Notes PDF &middot; ₹{PRICE}</a><!--/notes-101-->', 1)
+    nav = text.find('<div id="nav"')
+    close = text.find("</div>", nav)
+    text = text[:close] + f'<!--notes-101--> <a class="nav-notes notes-buy" href="{url}" aria-label="{label}">Notes ₹{PRICE}</a>\n<!--/notes-101-->' + text[close:]
+    return text.replace("</head>", DECK_CSS + "</head>", 1)
 
 
 def title_of(d):
@@ -138,6 +170,16 @@ def index_page(rows, pages):
 </main>'''
 
 
+def link_deck(text, slug):
+    """For scripts/deck-builder/build.py: the deck with its notes link, if it is on sale."""
+    pages = json.loads((ROOT / "data/course-notes-101.json").read_text(encoding="utf-8"))
+    decks = json.loads((ROOT / "data/decks.json").read_text(encoding="utf-8"))["decks"]
+    d = next((d for d in decks if d["slug"] == slug), None)
+    if d is None or slug not in pages:
+        return text
+    return deck_with_link(text, slug, title_of(d)) or text
+
+
 def main():
     check = "--check" in sys.argv
     decks = json.loads((ROOT / "data/decks.json").read_text(encoding="utf-8"))["decks"]
@@ -164,6 +206,18 @@ def main():
     search.insert(0, {"id": "N101-index", "title": "101 Course Notes (PDF)", "description": idx_meta, "type": "product",
                       "category": "101 Course Notes", "url": "/products/notes-101/", "tags": ["notes", "paid", f"₹{PRICE}", "101"]})
     urls.insert(0, "/products/notes-101/")
+
+    # the decks themselves
+    nowhere = []
+    for d in rows:
+        dp = ROOT / d["url"].lstrip("/")
+        new = deck_with_link(dp.read_text(encoding="utf-8"), d["slug"], title_of(d))
+        if new is None:
+            nowhere.append(d["slug"])
+        else:
+            want[dp] = new
+    if nowhere:
+        sys.exit("FAIL - no title tags or slide controls to carry the notes link in: " + ", ".join(nowhere))
 
     # handler FILES block
     h = HANDLER.read_text(encoding="utf-8")

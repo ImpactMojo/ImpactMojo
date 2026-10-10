@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.361.0 — October 10, 2026 (course notes linked from every 101 course)
+
+### For Learners
+
+- **Course notes from inside the course** — every 101 course now links to its printable notes, ₹149, from the title slide and from the slide controls. The course itself stays free.
+
+### Changed
+
+- **The link is written by the shop builder**, between markers in each deck, so a deck added to the series gets its link and the CI check fails if one goes missing. It is hidden when a deck is printed and removed from LMS export packages, so a class receiving a course through its LMS sees no shop link.
+
 ## v10.360.0 — October 10, 2026 (101 Course Notes, a Deep Dive on the caste lists, and seven decks that no longer freeze)
 
 ### For Learners

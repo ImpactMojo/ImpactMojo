@@ -389,7 +389,14 @@ def build(name):
                         f"<span id=\"prog-text\">1 / {total}</span>")
 
     out = head + VIEWPORT_OPEN + "\n\n" + slides_out + "\n\n" + VIEWPORT_CLOSE + tail
-    return _relativise(out), total
+    out = _relativise(out)
+    # The buy link for the deck's course notes is written by the shop builder;
+    # a rebuild from the spec must keep it, or the shop's CI check fails.
+    shop_path = Path(__file__).resolve().parents[1] / "course-notes" / "build-101-shop.py"
+    sp = importlib.util.spec_from_file_location("build_101_shop", shop_path)
+    shop = importlib.util.module_from_spec(sp)
+    sp.loader.exec_module(shop)
+    return shop.link_deck(out, deck["slug"]), total
 
 
 def main():
