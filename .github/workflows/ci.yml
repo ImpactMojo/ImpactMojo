@@ -173,6 +173,23 @@ jobs:
       - name: Every deck listed with its real slide count
         run: python3 scripts/check-deck-listings.py
 
+  product-orders:
+    name: Every buy button resolves to a deliverable file
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # The order handler looks a paid product up by its title. A punctuation
+      # sweep once changed the handler's titles and not the pages', and a
+      # buyer paid and received nothing (#1186). This holds the two together.
+      - name: Buy buttons against the order handler
+        run: python3 scripts/check-product-orders.py
+
   copy-tells:
     name: No banned stock phrases in reader-facing text
     runs-on: ubuntu-latest
