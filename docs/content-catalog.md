@@ -499,7 +499,7 @@ Thirteen browser tools for research and evaluation work. Seven builders are free
 | **ImpactLex** | 494 development terms dictionary (PWA, hosted on ImpactMojo) | Free: [Browse](/impactlex/) |
 | **FieldCases** | 200 curated development cases from 117 countries | Free |
 | **NudgeKit** | 203 behaviour change techniques (BCTs) with South Asian context | Free: [Browse](/bct-repository) |
-| **Dataverse** | 335 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
+| **Dataverse** | 336 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
 | **DevDiscourses** | 500+ curated research papers and books | Free |
 | **PolicyDhara** | Indian policy tracking and analysis | Free: [Browse](/policydhara) |
 | **NotebookLM Study Companions** | 12 AI study companion notebooks | Free |
