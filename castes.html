@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<meta name="theme-color" content="#0F172A">
+<title>Caste Lists Explorer: the 1931 census, the SC lists and the OBC Central List | ImpactMojo</title>
+<meta name="description" content="Explore the 1931 Census count of exterior castes, how far today's Scheduled Caste lists can be traced back to 1931, and how the Central List of OBCs grew after 1993, from the FLAME University Database of Castes.">
+<link rel="canonical" href="https://www.impactmojo.in/castes.html">
+<meta property="og:title" content="Caste Lists Explorer | 1931, the SC lists and the OBC Central List">
+<meta property="og:description" content="Fifty million people counted as exterior castes in 1931, today's SC lists traced back by name, and the Central OBC List year by year.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.impactmojo.in/castes.html">
+<meta property="og:image" content="https://www.impactmojo.in/assets/images/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="/assets/images/favicon.png" rel="icon" type="image/png">
+<style>
+:root{
+  --bg:#F6F8FB; --panel:#FFFFFF; --ink:#0F172A; --mut:#5A6B82; --faint:#617087;
+  --bd:#E4EAF1; --acc:#0369A1; --acc2:#4F46E5;
+  --chip:#EEF3F9; --chipactive:#0369A1; --chipink:#FFFFFF;
+  --gridline:#E9EEF5; --bar:#0369A1;
+  --s1:#0369A1; --s2:#7C3AED; --s3:#EEF3F9; --s3line:#7C8CA5; --alt:#B45309;
+}
+html[data-theme="dark"]{
+  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#A8BACF; --faint:#8D9DB4;
+  --bd:#25314A; --acc:#38BDF8; --acc2:#818CF8;
+  --chip:#1C2740; --chipactive:#38BDF8; --chipink:#06283B;
+  --gridline:#1E2A42; --bar:#38BDF8;
+  --s1:#38BDF8; --s2:#C4B5FD; --s3:#1C2740; --s3line:#7C8CA5; --alt:#FBBF24;
+}
+@media(prefers-color-scheme:dark){html:not([data-theme]){
+  --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#A8BACF; --faint:#8D9DB4;
+  --bd:#25314A; --acc:#38BDF8; --acc2:#818CF8;
+  --chip:#1C2740; --chipactive:#38BDF8; --chipink:#06283B;
+  --gridline:#1E2A42; --bar:#38BDF8;
+  --s1:#38BDF8; --s2:#C4B5FD; --s3:#1C2740; --s3line:#7C8CA5; --alt:#FBBF24;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:15px;line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+a{color:var(--acc)}
+p a,li a{text-decoration:underline}
+h1,h2,h3{font-family:Amaranth,Georgia,serif;line-height:1.2;text-wrap:balance;margin:0}
+header.top{padding:34px 0 8px}
+.eyebrow{font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);font-weight:700}
+h1{font-size:clamp(1.85rem,4.6vw,2.7rem);margin:.35em 0 .3em}
+.lede{color:var(--mut);max-width:66ch;font-size:1.03rem}
+.panel{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:20px;margin:20px 0}
+h2{font-size:1.2rem;margin-bottom:.15em}
+.sub{color:var(--mut);font-size:.9rem;margin:.2em 0 1.1em;max-width:72ch}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:22px 0}
+.tile{background:var(--panel);border:1px solid var(--bd);border-radius:12px;padding:15px 16px}
+.tile .v{font-family:Amaranth,Georgia,serif;font-size:1.85rem;line-height:1.05;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.tile .l{font-size:.8rem;color:var(--mut);margin-top:5px}
+.ctrls{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;margin-bottom:8px}
+.cgrp{display:flex;flex-direction:column;gap:6px}
+.clab{font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--bd);background:var(--chip);color:var(--ink);
+  border-radius:999px;padding:6px 13px;font:inherit;font-size:.83rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--chipactive);color:var(--chipink);border-color:var(--chipactive);font-weight:600}
+.chip:focus-visible,rect:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
+.chartbox{position:relative;width:100%}
+svg{display:block;max-width:100%;height:auto}
+.glab{fill:var(--mut);font-size:11.5px}
+.dlab{fill:var(--ink);font-size:11.5px;font-weight:600;
+  paint-order:stroke;stroke:var(--panel);stroke-width:3px;stroke-linejoin:round}
+.bar{fill:var(--bar)}
+.s1{fill:var(--s1)} .s2{fill:var(--s2)} .s3{fill:var(--s3);stroke:var(--s3line);stroke-width:1}
+.alt{fill:var(--alt)}
+.key{display:flex;flex-wrap:wrap;gap:14px;font-size:.82rem;color:var(--mut);margin:4px 0 10px}
+.key i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.key .k1{background:var(--s1)} .key .k2{background:var(--s2)} .key .k3{background:var(--s3);border:1px solid var(--s3line)}
+.tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--bd);
+  border-radius:9px;padding:8px 11px;font-size:.82rem;box-shadow:0 6px 22px rgba(15,23,42,.16);
+  opacity:0;transition:opacity .1s;max-width:260px;z-index:5}
+.tip b{font-family:Amaranth,Georgia,serif;font-size:1rem}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--bd)}
+th{font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+details.tbl{margin-top:14px}
+details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight:600}
+.scroll{max-height:360px;overflow:auto;margin-top:10px;border:1px solid var(--bd);border-radius:10px}
+.notes{font-size:.88rem;color:var(--mut)}
+.notes li{margin-bottom:.55em}
+.src{font-size:.8rem;color:var(--faint);margin-top:16px}
+.back{display:inline-block;margin:26px 0 0;font-size:.87rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Data Explorer</div>
+  <h1>Who the lists counted</h1>
+  <p class="lede">Reservations in India are given to the communities named in lists. The Scheduled Caste lists
+  date from the Constitution order of 1950 and the Central List of Other Backward Classes from 1993, and each
+  was compiled by a different body under a different law. This page sets them beside the last census to publish
+  full caste tables, the 1931 Census of India, using the Database of Castes that Shivakumar Jolad and Gaurav Kalyani
+  of FLAME University released in October 2026.</p>
+</header>
+
+<div class="tiles" id="tiles"></div>
+
+<section class="panel" id="exterior">
+  <h2>The exterior castes of 1931</h2>
+  <p class="sub">The 1931 Census, under its Commissioner J. H. Hutton, asked each province to identify the castes
+  treated as untouchable, by tests such as whether a caste could draw water from public wells, enter temples or
+  be served by barbers, and called them "exterior castes". The Government of India (Scheduled Castes) Order, 1936,
+  made under the 1935 Act, drew its schedule largely from this work, and the Constitution (Scheduled Castes)
+  Order, 1950 grew out of that schedule. Each bar is a province, princely state or agency of 1931.</p>
+  <div class="ctrls">
+    <div class="cgrp">
+      <span class="clab" id="exl">Measure</span>
+      <div class="chips" role="group" aria-labelledby="exl" id="exMeasure">
+        <button class="chip" data-m="pct_hindu" aria-pressed="true">Share of Hindus</button>
+        <button class="chip" data-m="pct_total" aria-pressed="false">Share of all people</button>
+        <button class="chip" data-m="exterior" aria-pressed="false">Number of people</button>
+      </div>
+    </div>
+  </div>
+  <div class="chartbox"><svg id="exChart" role="img" aria-labelledby="exTitle"><title id="exTitle">Exterior castes in 1931, by province, state or agency</title></svg><div class="tip" id="exTip"></div></div>
+  <p class="notes" id="exNote"></p>
+  <details class="tbl"><summary>Show as a table</summary><div class="scroll" tabindex="0" role="region" aria-label="Exterior castes in 1931, scrollable table"><table id="exTable"></table></div></details>
+</section>
+
+<section class="panel" id="sc">
+  <h2>How far today's Scheduled Caste lists reach back to 1931</h2>
+  <p class="sub">Each entry in a state's Scheduled Caste list was compared, by spelling, with the caste names in
+  the 1931 tables for the province or princely state that covered most of that state's territory. A bar shows
+  what share of the state's entries found a 1931 name. A missing match means the spelling was not found. It
+  does not show that the community was missing in 1931, since many names were merged, renamed or left under
+  "caste unspecified".</p>
+  <div class="key" aria-hidden="true"><span><i class="k1"></i>Main name found in 1931</span><span><i class="k2"></i>Only an alternative name found</span><span><i class="k3"></i>No 1931 name found</span></div>
+  <div class="chartbox"><svg id="scChart" role="img" aria-labelledby="scTitle"><title id="scTitle">Share of each state's Scheduled Caste entries matched to a 1931 caste name</title></svg><div class="tip" id="scTip"></div></div>
+  <p class="notes" id="scNote"></p>
+  <details class="tbl"><summary>Show as a table</summary><div class="scroll" tabindex="0" role="region" aria-label="Scheduled Caste entries traced to 1931, scrollable table"><table id="scTable"></table></div></details>
+</section>
+
+<section class="panel" id="obc">
+  <h2>The Central List of OBCs, year by year</h2>
+  <p class="sub">The National Commission for Backward Classes keeps the Central List. Its first entries were
+  notified in 1993, after the Supreme Court upheld the Mandal reservations in <em>Indra Sawhney v. Union of
+  India</em> (1992). Each later resolution added communities to one state's section. The bars count the
+  entries in today's list by the year their earliest resolution was dated.</p>
+  <div class="ctrls">
+    <div class="cgrp">
+      <span class="clab" id="obl">Date each entry by</span>
+      <div class="chips" role="group" aria-labelledby="obl" id="obMode">
+        <button class="chip" data-m="dated" aria-pressed="true">Resolution date</button>
+        <button class="chip" data-m="file" aria-pressed="false">Year in the file number</button>
+      </div>
+    </div>
+  </div>
+  <div class="chartbox"><svg id="obChart" role="img" aria-labelledby="obTitle"><title id="obTitle">Entries in the Central List of OBCs by year first notified</title></svg><div class="tip" id="obTip"></div></div>
+  <p class="notes" id="obNote"></p>
+  <details class="tbl"><summary>Show every state as a table</summary><div class="scroll" tabindex="0" role="region" aria-label="Central List of OBCs by state, scrollable table"><table id="obTable"></table></div></details>
+</section>
+
+<section class="panel" id="mandal">
+  <h2>The Mandal lists of 1980 against today's Central List</h2>
+  <p class="sub">The Backward Classes Commission chaired by B. P. Mandal reported in December 1980 with
+  state-wise lists of backward classes. Each Mandal entry was looked for, by name, in the same state's section
+  of today's Central List.</p>
+  <div class="chartbox"><svg id="mdChart" role="img" aria-labelledby="mdTitle"><title id="mdTitle">Mandal Commission entries by how they appear in today's Central List</title></svg><div class="tip" id="mdTip"></div></div>
+  <p class="notes" id="mdNote"></p>
+</section>
+
+<section class="panel" id="limits">
+  <h2>What this data cannot tell you</h2>
+  <ul class="notes" id="caveats"></ul>
+  <p class="src" id="src"></p>
+</section>
+
+<a class="back" href="/explorers.html">&larr; All data explorers</a>
+</div>
+
+<script id="castes-data" type="application/json">{"_source":{"citation":"Jolad, S. and Kalyani, G. (2026). Database of castes: SC, ST, OBC and 1931 Caste Census. Harvard Dataverse, V1.1.","doi":"https://doi.org/10.7910/DVN/WT5VIY","licence":"CC0 1.0","producer":"FLAME Center for Legislative Education and Research, FLAME University, Pune"},"_built_by":"scripts/build-castes-explorer-data.py","exterior":{"india":{"population":350529557,"hindu":239195140,"exterior":50195770},"provinces":{"population":271431549,"hindu":177727988,"exterior":39064009},"states":{"population":79098088,"hindu":61467152,"exterior":11131761},"units":[{"name":"Madras States Agency","group":"State or agency","population":6754484,"hindu":4323150,"exterior":1960370,"pct_hindu":45.3,"pct_total":29.0,"pct_literate":13.8},{"name":"Assam","group":"Province","population":8622251,"hindu":4931760,"exterior":1829009,"pct_hindu":37.1,"pct_total":21.2,"pct_literate":3.1},{"name":"Bengal","group":"Province","population":50114002,"hindu":21570407,"exterior":6899809,"pct_hindu":32.0,"pct_total":13.8,"pct_literate":5},{"name":"United Provinces of Agra and Oudh","group":"Province","population":48408763,"hindu":40905586,"exterior":11322281,"pct_hindu":27.7,"pct_total":23.4,"pct_literate":0.5},{"name":"Punjab States","group":"State or agency","population":437787,"hindu":383883,"exterior":94347,"pct_hindu":24.6,"pct_total":21.6,"pct_literate":0.3},{"name":"Jammu and Kashmir State","group":"State or agency","population":3646243,"hindu":736222,"exterior":170928,"pct_hindu":23.2,"pct_total":4.7,"pct_literate":0.5},{"name":"United Provinces States","group":"State or agency","population":1206070,"hindu":950724,"exterior":208864,"pct_hindu":22.0,"pct_total":17.3,"pct_literate":0.2},{"name":"Central Provinces and Berar","group":"Province","population":15507723,"hindu":13338223,"exterior":2818346,"pct_hindu":21.1,"pct_total":18.2,"pct_literate":1.5},{"name":"Punjab States Agency","group":"State or agency","population":4472218,"hindu":1887249,"exterior":392999,"pct_hindu":20.8,"pct_total":8.8,"pct_literate":0.3},{"name":"Gwalior State","group":"State or agency","population":3523070,"hindu":3271576,"exterior":678119,"pct_hindu":20.7,"pct_total":19.2,"pct_literate":null},{"name":"Hyderabad State","group":"State or agency","population":14436148,"hindu":12176727,"exterior":2473230,"pct_hindu":20.3,"pct_total":17.1,"pct_literate":0.6},{"name":"Punjab","group":"Province","population":23580852,"hindu":6328588,"exterior":1279459,"pct_hindu":20.2,"pct_total":5.4,"pct_literate":0.8},{"name":"Bihar and Orissa","group":"Province","population":37677576,"hindu":31011474,"exterior":5744393,"pct_hindu":18.5,"pct_total":15.2,"pct_literate":0.6},{"name":"Delhi","group":"Province","population":636246,"hindu":399863,"exterior":72883,"pct_hindu":18.2,"pct_total":11.5,"pct_literate":1.4},{"name":"Ajmer-Merwara","group":"Province","population":560292,"hindu":434509,"exterior":76816,"pct_hindu":17.7,"pct_total":13.7,"pct_literate":2.2},{"name":"Madras","group":"Province","population":46740107,"hindu":41277370,"exterior":7234104,"pct_hindu":17.5,"pct_total":15.5,"pct_literate":1.5},{"name":"Coorg","group":"Province","population":163327,"hindu":146007,"exterior":24803,"pct_hindu":17.0,"pct_total":15.2,"pct_literate":1.5},{"name":"Mysore State","group":"State or agency","population":6557302,"hindu":6015880,"exterior":1000326,"pct_hindu":16.6,"pct_total":15.3,"pct_literate":1.4},{"name":"Rajputana Agency","group":"State or agency","population":11225712,"hindu":9578805,"exterior":1565409,"pct_hindu":16.3,"pct_total":13.9,"pct_literate":0.4},{"name":"Bihar and Orissa States","group":"State or agency","population":4652007,"hindu":4194878,"exterior":631864,"pct_hindu":15.1,"pct_total":13.6,"pct_literate":1},{"name":"Central Provinces States","group":"State or agency","population":2483214,"hindu":1788401,"exterior":252732,"pct_hindu":14.1,"pct_total":10.2,"pct_literate":0.5},{"name":"Baluchistan (Districts and Administered Territories)","group":"Province","population":463508,"hindu":41432,"exterior":5702,"pct_hindu":13.8,"pct_total":1.2,"pct_literate":6.9},{"name":"Central India Agency","group":"State or agency","population":6632790,"hindu":5852204,"exterior":797902,"pct_hindu":13.6,"pct_total":12.0,"pct_literate":0.3},{"name":"Bombay","group":"Province","population":21854866,"hindu":16621221,"exterior":1750424,"pct_hindu":10.5,"pct_total":8.0,"pct_literate":2.8},{"name":"Western India States Agency","group":"State or agency","population":3999250,"hindu":3245768,"exterior":318220,"pct_hindu":9.8,"pct_total":8.0,"pct_literate":1.9},{"name":"Baroda State","group":"State or agency","population":2443007,"hindu":2152071,"exterior":203043,"pct_hindu":9.4,"pct_total":8.3,"pct_literate":10.3},{"name":"Bombay States","group":"State or agency","population":4468396,"hindu":3921088,"exterior":348574,"pct_hindu":8.9,"pct_total":7.8,"pct_literate":2.8},{"name":"Andamans and Nicobars","group":"Province","population":29463,"hindu":7618,"exterior":512,"pct_hindu":6.7,"pct_total":1.7,"pct_literate":null},{"name":"Bengal States","group":"State or agency","population":973336,"hindu":641662,"exterior":30822,"pct_hindu":4.8,"pct_total":3.2,"pct_literate":null},{"name":"Sikkim State","group":"State or agency","population":109808,"hindu":47074,"exterior":2029,"pct_hindu":4.3,"pct_total":1.8,"pct_literate":null},{"name":"North-West Frontier Province (Agencies and Tribal Areas)","group":"State or agency","population":46451,"hindu":13651,"exterior":542,"pct_hindu":4.0,"pct_total":1.2,"pct_literate":null},{"name":"North-West Frontier Province","group":"Province","population":2425076,"hindu":142977,"exterior":5468,"pct_hindu":3.8,"pct_total":0.2,"pct_literate":3.6},{"name":"Assam States","group":"State or agency","population":625606,"hindu":272890,"exterior":1421,"pct_hindu":0.5,"pct_total":0.2,"pct_literate":12.9},{"name":"Baluchistan States","group":"State or agency","population":405109,"hindu":12249,"exterior":20,"pct_hindu":0.2,"pct_total":0.0,"pct_literate":2.5}],"parts":[{"name":"Cochin State","population":1205016,"hindu":780484,"exterior":125339,"pct_hindu":16.1},{"name":"Travancore State","population":5095973,"hindu":3134888,"exterior":1769735,"pct_hindu":56.5},{"name":"Other Madras States","population":453495,"hindu":407778,"exterior":65296,"pct_hindu":16.0}],"no_count":["Burma"],"row_error_hindu":1000,"pages":"Census of India 1931, Vol. I, Part I, Appendix I, pp. 474-494"},"sc":{"total":{"entries":1194,"entries_in_1931_units":1164,"main_name":510,"alt_only":61,"exterior_1931":599},"states":[{"state":"Karnataka","region":"South","entries":100,"units_1931":"Mysore, Bombay Presidency, Madras, Hyderabad","main_name":47,"alt_only":4,"exterior_1931":52,"outside_1931":false,"repeats":null},{"state":"Odisha","region":"East","entries":93,"units_1931":"Bihar & Orissa, Madras","main_name":37,"alt_only":4,"exterior_1931":39,"outside_1931":false,"repeats":null},{"state":"Tamil Nadu","region":"South","entries":74,"units_1931":"Madras, Travancore","main_name":52,"alt_only":1,"exterior_1931":55,"outside_1931":false,"repeats":null},{"state":"Uttar Pradesh","region":"North","entries":66,"units_1931":"United Provinces","main_name":21,"alt_only":0,"exterior_1931":41,"outside_1931":false,"repeats":null},{"state":"Uttarakhand","region":"North","entries":65,"units_1931":"United Provinces","main_name":21,"alt_only":0,"exterior_1931":41,"outside_1931":false,"repeats":null},{"state":"Andhra Pradesh","region":"South","entries":60,"units_1931":"Madras, Hyderabad","main_name":28,"alt_only":2,"exterior_1931":31,"outside_1931":false,"repeats":null},{"state":"West Bengal","region":"East","entries":60,"units_1931":"Bengal","main_name":41,"alt_only":2,"exterior_1931":42,"outside_1931":false,"repeats":null},{"state":"Maharashtra","region":"West","entries":59,"units_1931":"Bombay Presidency, Central Provinces & Berar, Hyderabad","main_name":20,"alt_only":3,"exterior_1931":22,"outside_1931":false,"repeats":null},{"state":"Rajasthan","region":"West","entries":59,"units_1931":"Rajputana Agency, Ajmer-Merwara","main_name":26,"alt_only":7,"exterior_1931":29,"outside_1931":false,"repeats":null},{"state":"Himachal Pradesh","region":"North","entries":55,"units_1931":"Punjab","main_name":9,"alt_only":4,"exterior_1931":9,"outside_1931":false,"repeats":null},{"state":"Kerala","region":"South","entries":52,"units_1931":"Travancore, Cochin, Madras","main_name":40,"alt_only":0,"exterior_1931":41,"outside_1931":false,"repeats":null},{"state":"Madhya Pradesh","region":"Central","entries":48,"units_1931":"Central Provinces & Berar, Central India Agency, Gwalior","main_name":31,"alt_only":2,"exterior_1931":29,"outside_1931":false,"repeats":null},{"state":"Chhattisgarh","region":"Central","entries":44,"units_1931":"Central Provinces & Berar","main_name":17,"alt_only":3,"exterior_1931":21,"outside_1931":false,"repeats":null},{"state":"Punjab","region":"North","entries":39,"units_1931":"Punjab","main_name":8,"alt_only":4,"exterior_1931":9,"outside_1931":false,"repeats":null},{"state":"Haryana","region":"North","entries":36,"units_1931":"Punjab","main_name":8,"alt_only":3,"exterior_1931":8,"outside_1931":false,"repeats":null},{"state":"Chandigarh","region":"North","entries":35,"units_1931":"Punjab","main_name":7,"alt_only":2,"exterior_1931":8,"outside_1931":false,"repeats":null},{"state":"Gujarat","region":"West","entries":35,"units_1931":"Bombay Presidency, Baroda, Western India States Agency","main_name":15,"alt_only":3,"exterior_1931":15,"outside_1931":false,"repeats":null},{"state":"Delhi","region":"North","entries":34,"units_1931":"Delhi","main_name":7,"alt_only":0,"exterior_1931":7,"outside_1931":false,"repeats":null},{"state":"Tripura","region":"North-East","entries":34,"units_1931":"Bengal","main_name":11,"alt_only":1,"exterior_1931":11,"outside_1931":false,"repeats":null},{"state":"Bihar","region":"East","entries":23,"units_1931":"Bihar & Orissa","main_name":16,"alt_only":0,"exterior_1931":19,"outside_1931":false,"repeats":null},{"state":"Jharkhand","region":"East","entries":22,"units_1931":"Bihar & Orissa","main_name":16,"alt_only":0,"exterior_1931":18,"outside_1931":false,"repeats":null},{"state":"Assam","region":"North-East","entries":16,"units_1931":"Assam","main_name":6,"alt_only":5,"exterior_1931":12,"outside_1931":false,"repeats":null},{"state":"Meghalaya","region":"North-East","entries":16,"units_1931":"Assam","main_name":6,"alt_only":5,"exterior_1931":12,"outside_1931":false,"repeats":"Assam"},{"state":"Mizoram","region":"North-East","entries":16,"units_1931":"Assam","main_name":6,"alt_only":5,"exterior_1931":12,"outside_1931":false,"repeats":"Assam"},{"state":"Jammu & Kashmir","region":"North","entries":12,"units_1931":"Jammu & Kashmir","main_name":7,"alt_only":0,"exterior_1931":9,"outside_1931":false,"repeats":null},{"state":"Manipur","region":"North-East","entries":7,"units_1931":"Assam","main_name":4,"alt_only":1,"exterior_1931":5,"outside_1931":false,"repeats":null},{"state":"Sikkim","region":"North-East","entries":4,"units_1931":"Sikkim","main_name":3,"alt_only":0,"exterior_1931":2,"outside_1931":false,"repeats":null},{"state":"Puducherry","region":"South","entries":16,"units_1931":null,"main_name":0,"alt_only":0,"exterior_1931":0,"outside_1931":true,"repeats":null},{"state":"Daman & Diu","region":"West","entries":5,"units_1931":null,"main_name":0,"alt_only":0,"exterior_1931":0,"outside_1931":true,"repeats":null},{"state":"Goa","region":"West","entries":5,"units_1931":null,"main_name":0,"alt_only":0,"exterior_1931":0,"outside_1931":true,"repeats":null},{"state":"Dadra & Nagar Haveli","region":"West","entries":4,"units_1931":null,"main_name":0,"alt_only":0,"exterior_1931":0,"outside_1931":true,"repeats":null}],"outside_1931":["Dadra & Nagar Haveli","Daman & Diu","Goa","Puducherry"]},"obc":{"total":{"active":2428,"first_year":1993,"first_list":1337,"later":1090,"undated":21,"moved":654,"muslim":135,"christian":38,"last_year":2016},"growth":[{"year":1993,"dated":1337,"file":1337},{"year":1994,"dated":302,"file":368},{"year":1995,"dated":79,"file":79},{"year":1996,"dated":38,"file":26},{"year":1997,"dated":57,"file":3},{"year":1998,"dated":0,"file":115},{"year":1999,"dated":120,"file":66},{"year":2000,"dated":61,"file":3},{"year":2001,"dated":3,"file":3},{"year":2002,"dated":0,"file":1},{"year":2003,"dated":3,"file":0},{"year":2004,"dated":2,"file":61},{"year":2005,"dated":0,"file":1},{"year":2006,"dated":11,"file":0},{"year":2007,"dated":49,"file":115},{"year":2008,"dated":0,"file":72},{"year":2010,"dated":136,"file":22},{"year":2011,"dated":73,"file":53},{"year":2014,"dated":53,"file":102},{"year":2015,"dated":1,"file":0},{"year":2016,"dated":102,"file":0}],"states":[{"state":"Maharashtra","active":261,"first_list":215,"later":46,"muslim":12,"christian":2},{"state":"Karnataka","active":199,"first_list":171,"later":28,"muslim":3,"christian":1},{"state":"Odisha","active":197,"first_list":0,"later":197,"muslim":1,"christian":1},{"state":"Tamil Nadu","active":182,"first_list":172,"later":10,"muslim":1,"christian":7},{"state":"Bihar","active":132,"first_list":118,"later":14,"muslim":24,"christian":2},{"state":"Assam","active":124,"first_list":123,"later":0,"muslim":2,"christian":1},{"state":"Gujarat","active":105,"first_list":79,"later":26,"muslim":24,"christian":1},{"state":"Andhra Pradesh","active":104,"first_list":89,"later":15,"muslim":2,"christian":1},{"state":"Madhya Pradesh","active":98,"first_list":78,"later":20,"muslim":3,"christian":1},{"state":"West Bengal","active":98,"first_list":0,"later":98,"muslim":39,"christian":1},{"state":"Chhattisgarh","active":92,"first_list":0,"later":92,"muslim":3,"christian":1},{"state":"Telangana","active":90,"first_list":0,"later":90,"muslim":3,"christian":1},{"state":"Kerala","active":83,"first_list":71,"later":12,"muslim":1,"christian":2},{"state":"Uttar Pradesh","active":76,"first_list":53,"later":23,"muslim":4,"christian":0},{"state":"Haryana","active":73,"first_list":59,"later":14,"muslim":0,"christian":0},{"state":"Rajasthan","active":68,"first_list":0,"later":68,"muslim":2,"christian":0},{"state":"Punjab","active":67,"first_list":63,"later":4,"muslim":0,"christian":1},{"state":"Chandigarh","active":60,"first_list":0,"later":60,"muslim":4,"christian":5},{"state":"Puducherry","active":58,"first_list":0,"later":58,"muslim":0,"christian":2},{"state":"Delhi","active":56,"first_list":0,"later":56,"muslim":2,"christian":0},{"state":"Himachal Pradesh","active":52,"first_list":45,"later":7,"muslim":1,"christian":0},{"state":"Daman & Diu","active":44,"first_list":0,"later":44,"muslim":3,"christian":2},{"state":"Tripura","active":42,"first_list":0,"later":42,"muslim":0,"christian":0},{"state":"Jammu & Kashmir","active":23,"first_list":0,"later":23,"muslim":0,"christian":0},{"state":"Goa","active":17,"first_list":1,"later":16,"muslim":0,"christian":6},{"state":"Dadra & Nagar Haveli","active":10,"first_list":0,"later":10,"muslim":1,"christian":0},{"state":"Sikkim","active":8,"first_list":0,"later":8,"muslim":0,"christian":0},{"state":"Andaman & Nicobar Islands","active":5,"first_list":0,"later":5,"muslim":0,"christian":0},{"state":"Manipur","active":4,"first_list":0,"later":4,"muslim":0,"christian":0}]},"mandal":{"entries":3751,"status":[{"status":"Same names","entries":1002},{"status":"NCBC entry all within Mandal entry (Mandal wider)","entries":104},{"status":"Mandal names all in one NCBC entry (NCBC wider)","entries":304},{"status":"Covered by several NCBC entries","entries":21},{"status":"Partial: some names shared","entries":317},{"status":"No match","entries":1951},{"status":"State / UT not in OBC_List","entries":52}]},"st_rows_by_state":{"Andaman and Nicobar Islands":18,"Andhra Pradesh":91,"Arunachal Pradesh":27,"Assam":79,"Bihar":42,"Chhattisgarh":188,"Dadra and Nagar Haveli and Daman and Diu":18,"Goa":11,"Gujarat":76,"Himachal Pradesh":18,"Jammu & Kashmir":16,"Jharkhand":54,"Karnataka":104,"Kerala":64,"Ladakh":16,"Lakshadweep":1,"Madhya Pradesh":164,"Maharashtra":176,"Manipur":40,"Meghalaya":26,"Mizoram":23,"Nagaland":5,"Odisha":193,"Puducherry":3,"Rajasthan":43,"Sikkim":12,"Tamil Nadu":42,"Telangana":87,"Tripura":51,"Uttar Pradesh":23,"Uttrakhand":5,"West Bengal":51}}</script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('castes-data').textContent);
+  if(!D || !D.exterior){ return; }
+
+  var fmt = function(n,d){ return (n==null||isNaN(n)) ? '-' :
+    n.toLocaleString('en-IN',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); };
+  var pct = function(a,b){ return b ? 100*a/b : 0; };
+  var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var lakh = function(n){ return fmt(n/1e5,1)+' lakh'; };
+  var crore = function(n){ return fmt(n/1e7,2)+' crore'; };
+
+  var NS = 'http://www.w3.org/2000/svg';
+  function measurer(svg, cls){
+    var t = document.createElementNS(NS,'text');
+    t.setAttribute('class', cls);
+    t.setAttribute('x','-9999'); t.setAttribute('y','-9999');
+    svg.appendChild(t);
+    function m(s){
+      t.textContent = String(s);
+      var w = 0;
+      try { w = t.getComputedTextLength(); } catch(e){ w = 0; }
+      return w || String(s).length * 6.6;
+    }
+    m.done = function(){ if(t.parentNode) t.parentNode.removeChild(t); };
+    return m;
+  }
+  function clip(s, px, m){
+    if(m(s) <= px) return s;
+    var out = String(s);
+    while(out.length > 1 && m(out + '…') > px) out = out.slice(0,-1);
+    return out.replace(/[\s,.;:]+$/,'') + '…';
+  }
+  function finish(svg,W,H,g){
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    svg.setAttribute('width',W); svg.setAttribute('height',H);
+    var ttl=svg.querySelector('title');
+    svg.innerHTML=(ttl?ttl.outerHTML:'')+g.join('');
+  }
+  function tips(svg,tip,W,H,left){
+    svg.querySelectorAll('[data-tip]').forEach(function(b){
+      function show(){
+        var r=svg.getBoundingClientRect(), p=svg.parentNode.getBoundingClientRect();
+        tip.innerHTML=b.getAttribute('data-tip');
+        tip.style.opacity=1;
+        var x = left!=null ? left : (+b.getAttribute('x'));
+        tip.style.left=Math.max(0,Math.min(p.width-230,x*(r.width/W)))+'px';
+        tip.style.top=((+b.getAttribute('y'))*(r.height/H)-8)+'px';
+      }
+      b.addEventListener('mouseenter',show); b.addEventListener('focus',show);
+      b.addEventListener('mouseleave',function(){tip.style.opacity=0;});
+      b.addEventListener('blur',function(){tip.style.opacity=0;});
+    });
+  }
+
+  /* Horizontal bars. Each row carries one or more segments. */
+  function hbars(svgId,tipId,rows,valueText){
+    var svg=document.getElementById(svgId), tip=document.getElementById(tipId);
+    var W=Math.min(1000,svg.parentNode.clientWidth||760), narrow=W<560;
+    var BH=narrow?20:22;
+    var mName=measurer(svg,'glab'), mVal=measurer(svg,'dlab');
+    var longest=rows.reduce(function(a,r){ return Math.max(a,mName(r.n)); },0);
+    var widest=rows.reduce(function(a,r){ return Math.max(a,mVal(valueText(r))); },0);
+    var M={t:4,r:Math.ceil(widest)+14,b:4,l:Math.ceil(Math.min(longest+10,W*(narrow?0.42:0.34)))};
+    var H=M.t+M.b+rows.length*BH, span=W-M.l-M.r;
+    var max=Math.max.apply(null,rows.map(function(r){ return r.total; }))||1;
+    var g=[];
+    rows.forEach(function(r,i){
+      var y=M.t+i*BH, x=M.l;
+      r.segs.forEach(function(s,k){
+        var w=Math.max(s.v>0?1.5:0,s.v/max*span);
+        if(w<=0) return;
+        g.push('<rect class="'+s.cls+'" x="'+x+'" y="'+(y+3)+'" width="'+w+'" height="'+(BH-6)+'"'+
+          (k===0?' tabindex="0" role="img" aria-label="'+esc(r.label)+'" data-tip="'+esc(r.tip)+'"':'')+'/>');
+        x+=w;
+      });
+      g.push('<text class="glab" x="'+(M.l-8)+'" y="'+(y+BH/2+4)+'" text-anchor="end">'+esc(clip(r.n,M.l-10,mName))+'</text>');
+      g.push('<text class="dlab" x="'+(x+7)+'" y="'+(y+BH/2+4)+'">'+esc(valueText(r))+'</text>');
+    });
+    mName.done(); mVal.done();
+    finish(svg,W,H,g);
+    tips(svg,tip,W,H,M.l);
+  }
+
+  /* ---------- tiles ---------- */
+  function tiles(){
+    var e=D.exterior.india, sc=D.sc.total, o=D.obc.total;
+    var t=[
+      [crore(e.exterior), 'people counted as exterior castes in 1931, '+fmt(pct(e.exterior,e.hindu),0)+'% of Hindus'],
+      [fmt(pct(sc.main_name+sc.alt_only,sc.entries_in_1931_units),0)+'%', 'of Scheduled Caste entries found a 1931 caste name ('+fmt(sc.main_name+sc.alt_only)+' of '+fmt(sc.entries_in_1931_units)+')'],
+      [fmt(o.active), 'communities in the Central List of OBCs; '+fmt(o.first_list)+' date from '+o.first_year],
+      [fmt(o.moved), 'OBC entries dated a year or more after the year in their file number']
+    ];
+    document.getElementById('tiles').innerHTML=t.map(function(x){
+      return '<div class="tile"><div class="v">'+esc(x[0])+'</div><div class="l">'+esc(x[1])+'</div></div>';
+    }).join('');
+  }
+
+  /* ---------- 1931 ---------- */
+  var exMeasure='pct_hindu';
+  function exterior(){
+    var X=D.exterior;
+    var lab={pct_hindu:'% of Hindus',pct_total:'% of all people',exterior:'people'};
+    var rows=X.units.slice().sort(function(a,b){ return b[exMeasure]-a[exMeasure]; }).map(function(u){
+      var v=u[exMeasure];
+      var txt = exMeasure==='exterior' ? lakh(v) : fmt(v,1)+'%';
+      return {n:u.name,total:v,segs:[{v:v,cls:'bar'}],txt:txt,
+        label:u.name+': '+txt+(exMeasure==='exterior'?'':' '+lab[exMeasure]),
+        tip:'<b>'+esc(u.name)+'</b><br>'+fmt(u.exterior)+' counted exterior<br>'+
+            fmt(u.pct_hindu,1)+'% of '+fmt(u.hindu)+' Hindus<br>'+fmt(u.pct_total,1)+'% of '+fmt(u.population)+' people'};
+    });
+    hbars('exChart','exTip',rows,function(r){ return r.txt; });
+    var tr=X.parts.filter(function(p){ return /Travancore/.test(p.name); })[0];
+    var top=X.units.slice().sort(function(a,b){ return b.pct_hindu-a.pct_hindu; });
+    var big=X.units.slice().sort(function(a,b){ return b.exterior-a.exterior; })[0];
+    document.getElementById('exNote').innerHTML=
+      'Across British India and the princely states the census counted <b>'+fmt(X.india.exterior)+'</b> people as exterior castes: '+
+      fmt(pct(X.india.exterior,X.india.hindu),1)+'% of '+fmt(X.india.hindu)+' Hindus and '+fmt(pct(X.india.exterior,X.india.population),1)+'% of the whole population. '+
+      'The highest share of Hindus was in the '+esc(top[0].name)+' ('+fmt(top[0].pct_hindu,1)+'%)'+
+      (tr?', and within it Travancore alone reached '+fmt(tr.pct_hindu,1)+'%':'')+'. '+
+      'The largest number lived in the '+esc(big.name)+': '+lakh(big.exterior)+' people. '+
+      'Shares are recomputed from the counts, so they differ from the whole-number percentages printed in 1931 by rounding only. '+
+      esc(X.no_count.join(', '))+' printed no count and is left out.';
+    document.getElementById('exTable').innerHTML='<thead><tr><th>Province, state or agency</th><th>Type</th><th class="n">Exterior castes</th><th class="n">% of Hindus</th><th class="n">% of all</th><th class="n">% literate</th></tr></thead><tbody>'+
+      X.units.slice().sort(function(a,b){ return b.pct_hindu-a.pct_hindu; }).map(function(u){
+        return '<tr><td>'+esc(u.name)+'</td><td>'+esc(u.group)+'</td><td class="n">'+fmt(u.exterior)+'</td><td class="n">'+fmt(u.pct_hindu,1)+'</td><td class="n">'+fmt(u.pct_total,1)+'</td><td class="n">'+(u.pct_literate==null?'-':fmt(u.pct_literate,1))+'</td></tr>';
+      }).join('')+'</tbody>';
+  }
+
+  /* ---------- SC ---------- */
+  function sc(){
+    var S=D.sc;
+    var rows=S.states.filter(function(s){ return !s.outside_1931; }).map(function(s){
+      var none=s.entries-s.main_name-s.alt_only, share=pct(s.main_name+s.alt_only,s.entries);
+      return {n:s.state+(s.repeats?' *':''),total:100,share:share,
+        segs:[{v:pct(s.main_name,s.entries),cls:'s1'},{v:pct(s.alt_only,s.entries),cls:'s2'},{v:pct(none,s.entries),cls:'s3'}],
+        label:s.state+': '+fmt(s.main_name+s.alt_only)+' of '+fmt(s.entries)+' entries found a 1931 name',
+        tip:'<b>'+esc(s.state)+'</b><br>'+fmt(s.entries)+' entries<br>'+fmt(s.main_name)+' main name found<br>'+
+            fmt(s.alt_only)+' alternative name only<br>'+fmt(s.exterior_1931)+' listed exterior in 1931<br>1931 units: '+esc(s.units_1931)};
+    }).sort(function(a,b){ return b.share-a.share; });
+    hbars('scChart','scTip',rows,function(r){ return fmt(r.share,0)+'%'; });
+    var t=S.total, out=S.states.filter(function(s){ return s.outside_1931; });
+    var rep=S.states.filter(function(s){ return s.repeats; });
+    var inside=S.states.filter(function(s){ return !s.outside_1931; });
+    var hi=inside.slice().sort(function(a,b){ return (b.main_name+b.alt_only)/b.entries-(a.main_name+a.alt_only)/a.entries; });
+    document.getElementById('scNote').innerHTML=
+      'Of '+fmt(t.entries_in_1931_units)+' entries in states the 1931 census covered, '+fmt(t.main_name)+' matched a 1931 caste on their main name and '+
+      fmt(t.alt_only)+' more on an alternative name alone. The dataset warns that an alternative-name match (Bania, Mali, Julaha, Rawat) can point to a different, non-SC community. '+
+      fmt(t.exterior_1931)+' entries carry a name that appears in the 1931 exterior-caste tables. '+
+      'Matching is highest in '+esc(hi[0].state)+' and lowest in '+esc(hi[hi.length-1].state)+'. Where it is low, look first at spelling and at the 1931 unit: every state carved from Punjab is compared with the whole of undivided Punjab. '+
+      (rep.length?'* '+rep.map(function(s){ return esc(s.state); }).join(' and ')+' repeat the '+esc(rep[0].repeats)+' list on the source page. ':'')+
+      'Not shown, because they lay outside the 1931 Census of India: '+out.map(function(s){ return esc(s.state)+' ('+s.entries+')'; }).join(', ')+'.';
+    document.getElementById('scTable').innerHTML='<thead><tr><th>State / UT</th><th class="n">Entries</th><th class="n">Main name in 1931</th><th class="n">Alternative only</th><th class="n">Exterior in 1931</th><th>1931 unit</th></tr></thead><tbody>'+
+      S.states.map(function(s){
+        return '<tr><td>'+esc(s.state)+'</td><td class="n">'+s.entries+'</td><td class="n">'+(s.outside_1931?'-':s.main_name)+'</td><td class="n">'+(s.outside_1931?'-':s.alt_only)+'</td><td class="n">'+(s.outside_1931?'-':s.exterior_1931)+'</td><td>'+esc(s.outside_1931?'Outside the 1931 Census':s.units_1931)+'</td></tr>';
+      }).join('')+'</tbody>';
+  }
+
+  /* ---------- OBC ---------- */
+  var obMode='dated';
+  function obc(){
+    var svg=document.getElementById('obChart'), tip=document.getElementById('obTip');
+    var G=D.obc.growth, o=D.obc.total;
+    var y0=G[0].year, y1=G[G.length-1].year, byY={};
+    G.forEach(function(r){ byY[r.year]=r; });
+    var years=[]; for(var y=y0;y<=y1;y++) years.push(y);
+    var W=Math.min(1000,svg.parentNode.clientWidth||760), narrow=W<560;
+    var H=narrow?260:300, M={t:22,r:8,b:30,l:8};
+    var max=Math.max.apply(null,G.map(function(r){ return Math.max(r.dated,r.file); }));
+    var cw=(W-M.l-M.r)/years.length, g=[];
+    years.forEach(function(y,i){
+      var v=byY[y]?byY[y][obMode]:0, h=v/max*(H-M.t-M.b), x=M.l+i*cw;
+      if(v>0){
+        g.push('<rect class="bar" x="'+(x+cw*0.12)+'" y="'+(H-M.b-h)+'" width="'+(cw*0.76)+'" height="'+h+'" tabindex="0" role="img" '+
+          'aria-label="'+y+': '+v+' entries" data-tip="<b>'+y+'</b><br>'+fmt(v)+' entries"/>');
+        if(!narrow || v>=50) g.push('<text class="dlab" x="'+(x+cw/2)+'" y="'+(H-M.b-h-5)+'" text-anchor="middle">'+fmt(v)+'</text>');
+      }
+      if(!narrow || y%4===1) g.push('<text class="glab" x="'+(x+cw/2)+'" y="'+(H-M.b+16)+'" text-anchor="middle">'+(narrow?y:("'"+String(y).slice(2)))+'</text>');
+    });
+    g.push('<line x1="'+M.l+'" x2="'+(W-M.r)+'" y1="'+(H-M.b)+'" y2="'+(H-M.b)+'" stroke="var(--gridline)"/>');
+    finish(svg,W,H,g);
+    tips(svg,tip,W,H,null);
+    document.getElementById('obNote').innerHTML=
+      'Today’s list holds '+fmt(o.active)+' active entries. '+fmt(o.first_list)+' were in the first notification of '+o.first_year+
+      ' and '+fmt(o.later)+' were added later, the last of them in '+o.last_year+'. '+fmt(o.muslim)+' entries name Muslims and '+fmt(o.christian)+' name Christians. '+
+      'The dataset records the year printed in each resolution’s file number. File 12011/14/2004-BCC, for example, was dated 12 March 2007. '+
+      'For '+fmt(o.moved)+' entries the resolution date falls one to five years after the file year, so this page dates entries by the resolution. '+
+      'Switch to the file number to see the difference. '+fmt(o.undated)+' entries carry no printed date and keep their file year.';
+    document.getElementById('obTable').innerHTML='<thead><tr><th>State / UT</th><th class="n">Entries</th><th class="n">From '+o.first_year+'</th><th class="n">Added later</th><th class="n">Name Muslims</th><th class="n">Name Christians</th></tr></thead><tbody>'+
+      D.obc.states.map(function(s){
+        return '<tr><td>'+esc(s.state)+'</td><td class="n">'+s.active+'</td><td class="n">'+s.first_list+'</td><td class="n">'+s.later+'</td><td class="n">'+s.muslim+'</td><td class="n">'+s.christian+'</td></tr>';
+      }).join('')+'</tbody>';
+  }
+
+  /* ---------- Mandal ---------- */
+  var MD={
+    'Same names':'The same names',
+    'NCBC entry all within Mandal entry (Mandal wider)':'Today’s entry covers fewer names',
+    'Mandal names all in one NCBC entry (NCBC wider)':'Today’s entry covers more names',
+    'Covered by several NCBC entries':'Split across several entries today',
+    'Partial: some names shared':'Some names shared',
+    'No match':'No name found in that state’s section',
+    'State / UT not in OBC_List':'The state has no section today'
+  };
+  function mandal(){
+    var M=D.mandal;
+    var rows=M.status.map(function(s){
+      return {n:MD[s.status]||s.status,total:s.entries,segs:[{v:s.entries,cls:s.status==='No match'?'alt':'bar'}],
+        label:(MD[s.status]||s.status)+': '+s.entries+' entries',
+        tip:'<b>'+esc(MD[s.status]||s.status)+'</b><br>'+fmt(s.entries)+' of '+fmt(M.entries)+' Mandal entries'};
+    });
+    hbars('mdChart','mdTip',rows,function(r){ return fmt(r.total); });
+    var none=M.status.filter(function(s){ return s.status==='No match'; })[0].entries;
+    var found=M.entries-none-M.status.filter(function(s){ return /not in/.test(s.status); })[0].entries;
+    document.getElementById('mdNote').innerHTML=
+      fmt(found)+' of '+fmt(M.entries)+' Mandal entries share at least one name with an entry in today’s list for the same state. '+
+      'For '+fmt(none)+' no name was found. That number counts spellings that did not match as well as communities never carried into the Central List, '+
+      'and the data cannot separate the two. Read it as an upper bound on omissions.';
+  }
+
+  /* ---------- notes ---------- */
+  function notes(){
+    var X=D.exterior;
+    var li=[
+      'Every match on this page is a match of spellings. Caste names vary across scripts, regions and decades, so a match rate measures how well two lists can be joined by name. It understates continuity where a name was respelt or renamed, and overstates it where one name belongs to two different communities.',
+      'Each present-day state is compared with the 1931 unit that covered most of its territory. Boundaries changed in 1947 and again in 1956, and the 1931 figures are for the whole old unit: the Punjab-origin states are all set against undivided Punjab, including what is now Pakistan.',
+      'The Scheduled Caste lists come from the Wikipedia page “List of Scheduled Castes”, read on 22 September 2026, which transcribes the Constitution (Scheduled Castes) Order, 1950 and its amendments. It has no separate Telangana or Ladakh section, so Andhra Pradesh is the undivided state’s list.',
+      'The 1931 exterior-caste table was transcribed from Census of India 1931, Vol. I, Part I, Appendix I. Its rows agree with the printed totals for India with one exception: the Hindu column of the states and agencies is '+fmt(X.row_error_hindu)+' short of its printed subtotal, so one row is off by one digit, either in transcription or in the 1931 print. The printed subtotal for their population is 80 higher than its rows, and the rows are the figure that agrees with the all-India total. Neither changes any percentage here.',
+      'Scheduled Caste status applies only to Hindus, Sikhs and Buddhists, while the 1931 caste tables count every religion. The 1931 exterior share is a share of Hindus because the census computed it that way.',
+      'The Scheduled Tribe lists in the same dataset are not drawn here. They have no 1931 link and no dates, so a count of entries by state would mostly measure how finely each state splits its names.'
+    ];
+    document.getElementById('caveats').innerHTML=li.map(function(c){ return '<li>'+esc(c)+'</li>'; }).join('');
+    var s=D._source;
+    document.getElementById('src').innerHTML='Source: '+esc(s.citation)+' <a href="'+esc(s.doi)+'">'+esc(s.doi)+'</a>. '+esc(s.licence)+'. Built by <code>scripts/build-castes-explorer-data.py</code>.';
+  }
+
+  function chipGroup(id,set){
+    document.getElementById(id).addEventListener('click',function(e){
+      var b=e.target.closest('button[data-m]'); if(!b) return;
+      this.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed',String(x===b)); });
+      set(b.dataset.m);
+    });
+  }
+  chipGroup('exMeasure',function(m){ exMeasure=m; exterior(); });
+  chipGroup('obMode',function(m){ obMode=m; obc(); });
+
+  function render(){ tiles(); exterior(); sc(); obc(); mandal(); notes(); }
+  render();
+  var t; window.addEventListener('resize',function(){ clearTimeout(t); t=setTimeout(render,180); });
+})();
+</script>
+<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
+<script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+</body>
+</html>
