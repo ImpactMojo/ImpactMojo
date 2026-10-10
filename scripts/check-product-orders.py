@@ -31,8 +31,6 @@ MANUAL = {
     "MEL Assessed Track": "an enrolment, fulfilled by hand",
     "Policy & Economics Assessed Track": "an enrolment, fulfilled by hand",
     "Verified Credential Upgrade": "an enrolment, fulfilled by hand",
-    "12A, 12AB & 80G — Tax Exemption for NGOs, Annotated": "no PDF in the products bucket yet (checked 2026-10-10)",
-    "Labour Laws for NGOs, Annotated": "no PDF in the products bucket yet (checked 2026-10-10)",
 }
 
 

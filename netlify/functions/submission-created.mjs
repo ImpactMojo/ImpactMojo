@@ -77,6 +77,8 @@ const FILES = {
   "The DPDP Act 2023, Annotated for the Development Sector": "ImpactMojo-DPDP-Act-Annotated.pdf",
   "The RTI Act 2005, Annotated for the Development Sector": "ImpactMojo-RTI-Act-Annotated.pdf",
   "How Your NGO Exists: Trusts, Societies & Section 8, Annotated": "ImpactMojo-NGO-Formation-Annotated.pdf",
+  "12A, 12AB & 80G, Tax Exemption for NGOs, Annotated": "ImpactMojo-Tax-Exemption-12A-12AB-80G.pdf",
+  "Labour Laws for NGOs, Annotated": "ImpactMojo-Labour-Laws-NGOs-Digest.pdf",
 };
 
 // Titles are matched with case and punctuation ignored. On 2026-10-05 the
