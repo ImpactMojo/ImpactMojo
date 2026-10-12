@@ -78,7 +78,7 @@ for (const c of todo) {
       while (words.length > 3 && T.scrollHeight > room) { words.pop(); T.textContent = words.join(' ') + '…'; }
     }
   }, c);
-  await page.screenshot({ path: path.join(ROOT, c.card), type: 'jpeg', quality: 84 });
+  await page.screenshot({ path: path.join(ROOT, c.card), type: 'jpeg', quality: 76 });
   if (++n % 100 === 0) console.log(`  ${n} / ${todo.length}`);
 }
 await browser.close();

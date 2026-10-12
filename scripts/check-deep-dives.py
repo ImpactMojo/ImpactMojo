@@ -49,9 +49,9 @@ ITEM_RE = re.compile(r'<article class="dd-item">')
 # platform-gig-work-india.html kept its url, description and datePublished,
 # because the headline was rewritten and nothing on screen reads the rest.
 ARTICLE_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
-SELF_URL_RE = re.compile(r'"url":\s*"[^"]*?/DeepDives/([a-z0-9-]+\.html)"')
+SELF_URL_RE = re.compile(r'"url":\s*"[^"]*?/DeepDives/([a-z0-9-]+\.html)"', re.I)
 LD_RE = re.compile(r'"itemListElement":\s*\[(.*?)\]\s*\}\s*\}\s*</script>', re.S)
-LD_URL_RE = re.compile(r'"url":\s*"[^"]*?(/DeepDives/[a-z0-9-]+\.html)"')
+LD_URL_RE = re.compile(r'"url":\s*"[^"]*?(/DeepDives/[a-z0-9-]+\.html)"', re.I)
 NUM_RE = re.compile(r'"numberOfItems":\s*(\d+)')
 CHIP_RE = re.compile(r'dd-chip-teal">\s*(\d+) readings')
 
