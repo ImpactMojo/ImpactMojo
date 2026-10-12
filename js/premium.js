@@ -413,7 +413,7 @@
                         <strong>${tierName}</strong> required
                     </div>
                     <button class="premium-unlock-btn" data-tier="${requiredTier}">
-                        Unlock ${tierPrice !== 'Free' ? 'from ' + tierPrice : ''}
+                        Get access ${tierPrice !== 'Free' ? 'from ' + tierPrice : ''}
                     </button>
                 </div>
             `;
@@ -469,7 +469,7 @@
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                             </svg>
                         </div>
-                        <h2 class="premium-upgrade-title">Unlock paid content</h2>
+                        <h2 class="premium-upgrade-title">Get access to paid content</h2>
                         <p class="premium-upgrade-subtitle">Upgrade to access advanced tools, courses, and exclusive features</p>
                     </div>
                     
@@ -485,7 +485,7 @@
                         </div>
                         
                         <div class="premium-upgrade-features">
-                            <h3>What you'll unlock:</h3>
+                            <h3>What you get:</h3>
                             <ul class="feature-list"></ul>
                         </div>
                         

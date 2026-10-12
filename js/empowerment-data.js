@@ -35,7 +35,7 @@ window.EMPOWERMENT = (function () {
       caution: "Agency measured by asking about decisions cannot see the decisions nobody raised, and preferences formed inside a constraint will report as satisfaction." },
     { id: "achievements", name: "Achievements", colour: "#047857",
       gloss: "The outcomes. What the resources and the agency actually produced in a person's life.",
-      caution: "An outcome can improve for reasons that have nothing to do with anyone's choice, and Kabeer's test is whether the alternative was genuinely available." }
+      caution: "An outcome can improve for reasons that have nothing to do with anyone's choice, and Kabeer's test is whether the alternative was actually available." }
   ];
 
   var indicators = [

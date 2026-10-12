@@ -241,10 +241,10 @@ window.LEAP_DATA={"meta":{"src":"LEAP Cities Index 2026 · Patnaik (2026) · Zen
   function renderQuestion(){
     var q=document.getElementById("qline"),h="";
     var V=blank("view",S.view,VIEW_OPTS);
-    if(S.view==="rank") h=V+" by "+blank("m",S.m,MEAS_OPTS)+" — "+blank("tier",S.tier,TIER_OPTS)+", "+blank("state",S.state,STATE_OPTS)+".";
+    if(S.view==="rank") h=V+" by "+blank("m",S.m,MEAS_OPTS)+", "+blank("tier",S.tier,TIER_OPTS)+", "+blank("state",S.state,STATE_OPTS)+".";
     else if(S.view==="compare") h=V+": "+cityBlank("a",S.a)+" against "+cityBlank("b",S.b)+", pillar by pillar.";
-    else if(S.view==="state") h=V+" — which states' smaller cities score highest on "+blank("m",S.m,MEAS_OPTS)+"?";
-    else h=V+" — every city, every pillar, sortable and searchable.";
+    else if(S.view==="state") h=V+": which states' smaller cities score highest on "+blank("m",S.m,MEAS_OPTS)+"?";
+    else h=V+": every city, every pillar, sortable and searchable.";
     q.innerHTML=h;
     q.querySelectorAll("select.blank").forEach(function(sel){
       sel.addEventListener("change",function(){
@@ -271,19 +271,19 @@ window.LEAP_DATA={"meta":{"src":"LEAP Cities Index 2026 · Patnaik (2026) · Zen
     var mName=MEAS_SHORT[S.m];
     if(S.view==="rank"){
       var n=filt().length;
-      h='<div class="q">'+esc(mName)+' — '+(S.tier==="all"?"all tiers":"Tier-"+S.tier)+(S.state==="all"?", all India":", "+esc(S.state))+' ('+n+' '+(n===1?'city':'cities')+')</div>'+
+      h='<div class="q">'+esc(mName)+': '+(S.tier==="all"?"all tiers":"Tier-"+S.tier)+(S.state==="all"?", all India":", "+esc(S.state))+' ('+n+' '+(n===1?'city':'cities')+')</div>'+
         '<div class="sub">Scores are relative (0–100) within the 233-city set. Bars are shaded by score.</div>'+
-        (S.m>0?'<div class="why">Single-pillar ranks reshuffle the league table — a mid-table composite city can lead a pillar outright.</div>':'');
+        (S.m>0?'<div class="why">Single-pillar ranks reshuffle the league table. A mid-table composite city can lead a pillar outright.</div>':'');
     }else if(S.view==="compare"){
       var a=C[S.a],b=C[S.b];
       h='<div class="q">'+esc(a[1])+' vs '+esc(b[1])+'</div>'+
         '<div class="sub">Composite rank #'+a[0]+' vs #'+b[0]+' of 233. Each pillar compared on the same 0–100 scale.</div>'+
-        '<div class="why">Head-to-head profiles show <i>how</i> two cities differ, not just which is "ahead".</div>';
+        '<div class="why">Head-to-head profiles show <i>how</i> two cities differ, as well as which is "ahead".</div>';
     }else if(S.view==="state"){
-      h='<div class="q">State averages — '+esc(mName)+'</div>'+
-        '<div class="sub">Unweighted mean of each state’s indexed cities. States with one or two cities carry big error bars in spirit — read the city count.</div>';
+      h='<div class="q">State averages: '+esc(mName)+'</div>'+
+        '<div class="sub">Unweighted mean of each state’s indexed cities. States with one or two cities carry big error bars in spirit. Read the city count.</div>';
     }else{
-      h='<div class="q">The full table — 233 cities × 9 scores</div>'+
+      h='<div class="q">The full table: 233 cities × 9 scores</div>'+
         '<div class="sub">Click a column head to sort; type to filter by city or state. Best score per row is highlighted.</div>';
     }
     cap.innerHTML=h;
@@ -341,7 +341,7 @@ window.LEAP_DATA={"meta":{"src":"LEAP Cities Index 2026 · Patnaik (2026) · Zen
         '<span class="rtrack"><i style="width:'+(r.mean/max*100)+'%;background:'+barColor(r.mean,lo,hi)+'"></i></span>'+
         '<span class="rval">'+f1(r.mean)+'</span></div>';
     });
-    h+='<p class="note"><b>Read the city counts.</b> Maharashtra’s average rests on 71 cities; several states’ on just one or two — a single strong city can carry a whole state’s bar.</p>';
+    h+='<p class="note"><b>Read the city counts.</b> Maharashtra’s average rests on 71 cities; several states’ on just one or two. A single strong city can carry a whole state’s bar.</p>';
     document.getElementById("panel").innerHTML=h;
   }
 
@@ -395,6 +395,6 @@ window.LEAP_DATA={"meta":{"src":"LEAP Cities Index 2026 · Patnaik (2026) · Zen
 })();
 </script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-<script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+<script src="/js/site-chrome.js?v=d3a5d3a2" defer></script>
 </body>
 </html>

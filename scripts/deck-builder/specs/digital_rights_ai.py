@@ -1642,7 +1642,7 @@ S11 = [
         body("<strong>Illustrative.</strong> Using the decision table, the team rated version one Medium and "
              "version two Unacceptable as designed. It launched version one after the agreed actions and "
              "replaced the score with a document checklist that the widow herself carries to the office. The "
-             "block office gets nothing from the bot, which removes the risk that a score quietly becomes a "
+             "block office gets nothing from the bot, which removes the risk that a score becomes a "
              "gate. The team set four indicators to watch."),
         tw([panel("green", "Monitoring indicators", [bullets([
                 "Share of users who are women using their own phone",

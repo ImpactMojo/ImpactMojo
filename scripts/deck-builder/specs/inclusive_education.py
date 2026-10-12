@@ -526,7 +526,7 @@ SLIDES += [
     C("Gender, religion, migration", "Several groups the law names are excluded in different ways",
       T(["Group", "What the evidence or the law says", "Source"],
         [["Girls", "Girls were 48.4% of school enrolment in 2025-26. NEP says women make up about half "
-          "of every disadvantaged group and face amplified exclusion within it",
+          "of every disadvantaged group and face greater exclusion within it",
           UDISE26 + "; NEP 2020 para 6.7"],
          ["Transgender children", "NEP names transgender students alongside girls for the "
           "Gender-Inclusion Fund", "NEP 2020 paras 6.2 and 6.8"],

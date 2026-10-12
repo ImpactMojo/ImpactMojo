@@ -518,7 +518,7 @@ body { padding-top: 56px; }
             </div>
             <div class="vuln-card" onclick="toggleVuln(this)" data-vuln="true">
                 <h4>High child malnutrition rate (42% stunted)</h4>
-                <p>High sensitivity: health vulnerability amplifies climate impacts</p>
+                <p>High sensitivity: health vulnerability magnifies climate impacts</p>
             </div>
             <div class="vuln-card" onclick="toggleVuln(this)" data-vuln="true">
                 <h4>River 2&nbsp;km away frequently floods during monsoon</h4>
@@ -570,7 +570,7 @@ body { padding-top: 56px; }
                 <div class="risk-cell risk-high" onclick="showRiskDetail(this, 'Water Scarcity', 'high', 'Tanker dependence, resource conflict, school closures')">Water Scarcity<br>High</div>
 
                 <div class="risk-axis-label">Low Probability</div>
-                <div class="risk-cell risk-low" onclick="showRiskDetail(this, 'Earthquake', 'low', 'Seismic zone III &mdash; rare but potentially catastrophic')">Earthquake<br>Low</div>
+                <div class="risk-cell risk-low" onclick="showRiskDetail(this, 'Earthquake', 'low', 'Seismic zone III, rare but potentially catastrophic')">Earthquake<br>Low</div>
                 <div class="risk-cell risk-med" onclick="showRiskDetail(this, 'Flash Flood', 'medium', 'Dam breach or extreme event, large-scale displacement')">Flash Flood<br>Medium</div>
                 <div class="risk-cell risk-high" onclick="showRiskDetail(this, 'Multi-year Drought', 'high', 'Three or more consecutive droughts, famine conditions, mass migration')">Multi-year Drought<br>High</div>
             </div>
@@ -903,7 +903,7 @@ function checkVulnerability() {
         var n2 = document.getElementById('q2next'); if (n2) n2.disabled = false;
     } else {
         var note = chosenWrong > 0 ? ' You also selected ' + chosenWrong + ' factor(s) that actually <strong>reduce</strong> vulnerability (schools, SHGs).' : '';
-        fb.innerHTML = '<div class="feedback show incorrect">You identified ' + chosenCorrect + '/' + correctTotal + ' vulnerability factors.' + note + ' Remember: high adaptive capacity reduces vulnerability &mdash; do not select those. Focus on exposure, sensitivity, and low capacity.</div>';
+        fb.innerHTML = '<div class="feedback show incorrect">You identified ' + chosenCorrect + '/' + correctTotal + ' vulnerability factors.' + note + ' Remember: high adaptive capacity reduces vulnerability. Do not select those. Focus on exposure, sensitivity, and low capacity.</div>';
     }
 }
 
@@ -913,7 +913,7 @@ function showRiskDetail(el, hazard, level, detail) {
     el.classList.add('selected');
     var box = document.getElementById('riskDetail');
     box.style.display = 'block';
-    box.innerHTML = '<strong>' + hazard + '</strong> &mdash; ' + level.toUpperCase() + ' RISK<br>' + detail;
+    box.innerHTML = '<strong>' + hazard + '</strong>: ' + level.toUpperCase() + ' RISK<br>' + detail;
 }
 
 /* ===== MODULE 3: DRAG-AND-DROP RISK PLACEMENT ===== */
@@ -967,7 +967,7 @@ function checkRiskMatrix() {
     });
     var fb = document.getElementById('riskMatrixFeedback');
     if (score >= 4) {
-        fb.innerHTML = '<div class="feedback show correct">Strong risk assessment &mdash; ' + score + '/6 hazards correctly placed. Cyclones, storm surge, and sea-level rise are the highest risks for coastal Odisha. Tsunamis are rare (low probability). Salinity and erosion are chronic but lower in immediate impact.</div>';
+        fb.innerHTML = '<div class="feedback show correct">Strong risk assessment: ' + score + '/6 hazards correctly placed. Cyclones, storm surge, and sea-level rise are the highest risks for coastal Odisha. Tsunamis are rare (low probability). Salinity and erosion are chronic but lower in immediate impact.</div>';
         var n3 = document.getElementById('q3next'); if (n3) n3.disabled = false;
     } else {
         var msg = placed === 0 ? 'Drag the hazards into the risk columns first, then check.' : score + '/6 correct so far.';
@@ -980,7 +980,7 @@ var adaptQuestions = [
     {
         scenario: "A village in Rajasthan where groundwater has fallen from 30 m to 120 m depth over 20 years.",
         options: [
-            { text: "Dig deeper borewells", correct: false, reason: "Unsustainable &mdash; accelerates depletion." },
+            { text: "Dig deeper borewells", correct: false, reason: "Unsustainable, accelerates depletion." },
             { text: "Switch to drip irrigation + recharge structures + crop diversification", correct: true, reason: "Reduces demand, recharges the aquifer, builds resilience." },
             { text: "Subsidise diesel pumps for deeper extraction", correct: false, reason: "Worsens the problem and increases emissions." },
             { text: "Import water by tanker permanently", correct: false, reason: "Expensive, unreliable, not a long-term solution." }
@@ -1035,7 +1035,7 @@ function checkAdaptation() {
     });
     var fb = document.getElementById('adaptFeedback');
     if (score === adaptQuestions.length) {
-        fb.innerHTML = '<div class="feedback show correct">Perfect. You chose the most robust, multi-layered adaptation strategies. Good adaptation combines structural, institutional, and social measures &mdash; not single silver bullets.</div>';
+        fb.innerHTML = '<div class="feedback show correct">Perfect. You chose the strongest, multi-layered adaptation strategies. Good adaptation combines structural, institutional, and social measures, not single silver bullets.</div>';
         var n4 = document.getElementById('q4next'); if (n4) n4.disabled = false;
     } else {
         fb.innerHTML = '<div class="feedback show incorrect">' + score + '/' + adaptQuestions.length + ' correct.<br>' + feedback.map(function(f) { return '&bull; ' + f; }).join('<br>') + '</div>';
@@ -1133,7 +1133,7 @@ function checkPlan() {
     planPhases.forEach(function(p, pi) { if (planAnswers[pi] === p.correct) score++; });
     var fb = document.getElementById('planFeedback');
     if (score >= 3) {
-        fb.innerHTML = '<div class="feedback show correct">Strong planning approach &mdash; ' + score + '/4 phases well designed. You prioritised participation, iterative learning, and mixed portfolios: the hallmarks of effective adaptation planning.</div>';
+        fb.innerHTML = '<div class="feedback show correct">Strong planning approach: ' + score + '/4 phases well designed. You prioritised participation, iterative learning, and mixed portfolios: the hallmarks of effective adaptation planning.</div>';
         var n6 = document.getElementById('q6next'); if (n6) n6.disabled = false;
     } else {
         fb.innerHTML = '<div class="feedback show incorrect">' + score + '/4 correct. Remember: adaptation planning must be participatory, iterative, and multi-layered. Top-down, single-intervention approaches fail when climate complexity exceeds their design.</div>';
@@ -1143,7 +1143,7 @@ function checkPlan() {
 /* ===== EXPORT NOTES ===== */
 function exportNotes() {
     var lines = [
-        'ImpactMojo — Climate Risk & Adaptation Lab',
+        'ImpactMojo | Climate Risk & Adaptation Lab',
         '==========================================',
         '',
         'Key skills practised:',
@@ -1169,6 +1169,6 @@ function exportNotes() {
 updateCalc();
 </script>
   <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+  <script src="/js/site-chrome.js?v=d3a5d3a2" defer></script>
 </body>
 </html>

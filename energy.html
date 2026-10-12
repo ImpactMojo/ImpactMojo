@@ -125,7 +125,7 @@ table.data tr.ai td{font-weight:800;color:var(--acc);border-top:2px solid var(--
 
   <section class="about">
     <h2>What this shows, and what it can't</h2>
-    <p>This explorer sits on the <b>supply and resource</b> side of India's energy account: what each state <em>could</em> produce from renewables, what it has <em>installed</em>, its <em>total capacity</em> and its <em>coal reserves</em>, and a derived view of <em>how much of its renewable potential each state has actually built</em>. Read together they tell the transition story: some states are rich in potential but have built little; some sit on huge coal reserves that make moving away harder. What this report does <b>not</b> break down by state is the <em>demand</em> side: electricity consumption, per-capita use and village electrification are published as national figures only (India reached 100% village electrification by March 2022). So there is no "per-capita power by state" here; those national trends are shown on their own, honestly labelled, and where two official sources measure the same thing differently, the explorer says so.</p>
+    <p>This explorer sits on the <b>supply and resource</b> side of India's energy account: what each state <em>could</em> produce from renewables, what it has <em>installed</em>, its <em>total capacity</em> and its <em>coal reserves</em>, and a derived view of <em>how much of its renewable potential each state has actually built</em>. Read together they tell the transition story: some states have high potential but have built little; some sit on huge coal reserves that make moving away harder. What this report does <b>not</b> break down by state is the <em>demand</em> side: electricity consumption, per-capita use and village electrification are published as national figures only (India reached 100% village electrification by March 2022). So there is no "per-capita power by state" here; those national trends are shown on their own, clearly labelled, and where two official sources measure the same thing differently, the explorer says so.</p>
   </section>
 
   <div class="howto">
@@ -151,7 +151,7 @@ table.data tr.ai td{font-weight:800;color:var(--acc);border-top:2px solid var(--
     <h2>Making sense of the numbers</h2>
     <p><b>What the state measures mean.</b> <b>Renewable potential</b> is the maximum capacity a state could install across wind, solar, small hydro, biomass and bagasse cogeneration plus large hydro, as estimated by MNRE: a ceiling, not a plan. <b>Installed renewable capacity</b> is grid-interactive renewables actually connected today (solar, wind, bio-power, small hydro, waste-to-energy: it excludes large hydro). <b>Total installed capacity</b> is all utility generation in the state: thermal, hydro, nuclear and renewables. <b>Coal reserves</b> are the geological estimate in the ground (proved + indicated + inferred), not what is mined. <b>% of potential built</b> divides installed renewables by assessed potential; because potential includes large hydro while installed does not, read it as an <em>indicative</em> build-out ratio, not an exact percentage.</p>
     <p><b>Reading it responsibly.</b> A big-potential state that has built little (Rajasthan, Maharashtra) is not "behind" in any moral sense: potential reflects land, wind and sun, while build-out reflects investment, grid access and policy. Coal-rich states (Odisha, Jharkhand, Chhattisgarh) face a harder transition because coal is also jobs and state revenue. Total capacity by state <b>excludes inter-state central-sector stations</b> (about 104 GW, roughly a quarter of the national fleet) that aren't allocated to a single state, so the state figures sum to less than the all-India total shown.</p>
-    <p><b>Two official numbers, honestly.</b> India's per-capita electricity use here is <b>1,106 kWh</b> (2023-24): MoSPI's figure, which divides <em>final electricity consumption</em> by population. The Central Electricity Authority publishes a higher per-capita number (about <b>1,395 kWh</b>) because it divides <em>gross</em> consumption, including transmission-and-distribution losses, by population. Same country, two valid methods; this explorer uses MoSPI's series and flags the difference rather than hiding it. The national trends also show the real tension of the transition: capacity, generation and the renewable share all climbed, <em>and</em> coal production kept rising (to a provisional 997.83 MT), growth and greening at once.</p>
+    <p><b>Two official numbers, both shown.</b> India's per-capita electricity use here is <b>1,106 kWh</b> (2023-24): MoSPI's figure, which divides <em>final electricity consumption</em> by population. The Central Electricity Authority publishes a higher per-capita number (about <b>1,395 kWh</b>) because it divides <em>gross</em> consumption, including transmission-and-distribution losses, by population. Same country, two valid methods; this explorer uses MoSPI's series and flags the difference rather than hiding it. The national trends also show the real tension of the transition: capacity, generation and the renewable share all climbed, <em>and</em> coal production kept rising (to a provisional 997.83 MT), growth and greening at once.</p>
     <p>Data transcribed verbatim from <a href="https://mospi.gov.in/" target="_blank" rel="noopener">Energy Statistics India 2025</a> (Ministry of Statistics &amp; Programme Implementation, Government of India): state tables 1.1 (coal reserves), 1.4 (renewable potential), 2.4 (installed capacity) and 2.5 (installed renewables), all dated 31.03.2024 / 01.04.2024; national series from tables 2.3, 3.1, 3.6A, 6.8 and chapter 8 (sustainability indicators). The CEA per-capita comparison is from the <a href="https://cea.nic.in/" target="_blank" rel="noopener">Central Electricity Authority</a> General Review. All FY 2023-24 figures are <b>provisional (P)</b>. Ladakh is combined with Jammu &amp; Kashmir (as the renewable-potential table does); an unallocated "Others" row and inter-state central-sector stations are excluded from the state rows, so state values may not sum exactly to the published all-India total. This is an independent, source-linked interface for learning and discussion: for methodology and authoritative interpretation, consult MoSPI and CEA directly. ImpactMojo is not affiliated with either.</p>
   </div>
 </main>
@@ -258,7 +258,7 @@ window.ENERGY_DATA={
     var V=blank("view",S.view,VIEW_OPTS);
     if(S.view==="rank") h=V+" by "+blank("metric",S.metric,METRIC_OPTS)+", as on 31 March 2024.";
     else if(S.view==="trend") h=V+" in "+blank("series",S.series,SERIES_OPTS)+", 2014&ndash;15 to 2023&ndash;24.";
-    else h=V+" — potential, installed renewables, capacity, coal and build-out for every state.";
+    else h=V+": potential, installed renewables, capacity, coal and build-out for every state.";
     q.innerHTML=h;
     [].forEach.call(q.querySelectorAll("select.blank"),function(sel){
       sel.addEventListener("change",function(){S[sel.dataset.key]=sel.value;renderQuestion();render();});
@@ -270,9 +270,9 @@ window.ENERGY_DATA={
     if(S.view==="trend"){
       var se=S.series, v=TR[se], first=v[0], last=v[v.length-1], T=TREND[se];
       var chg=Math.round((last/first-1)*100), dir=chg>=0?"+":"";
-      var extra = se==="eint" ? "<div class='why'>Falling energy intensity means India produces more GDP per unit of energy — a rise in efficiency.</div>"
+      var extra = se==="eint" ? "<div class='why'>Falling energy intensity means India produces more GDP per unit of energy, a rise in efficiency.</div>"
                 : se==="reshare" ? "<div class='why'>The renewable share of electricity (excluding large hydro) has roughly doubled in a decade.</div>"
-                : se==="coalp" ? "<div class='why'>Coal production kept climbing even as renewables grew — the transition is happening on top of a still-expanding system.</div>" : "";
+                : se==="coalp" ? "<div class='why'>Coal production kept climbing even as renewables grew. The transition is happening on top of a still-expanding system.</div>" : "";
       cap.innerHTML="<div class='q'>India's "+T.L+", 2014-15 to 2023-24</div>"+
         "<div class='sub'>National total · "+(se==="cap"?"as on 31 March each year":"financial year")+" · "+T.unit+"</div>"+
         "<div class='allindia'>"+grp(first,T.dec)+" ("+M.trendYears[0]+") → <b>"+grp(last,T.dec)+" "+T.unit+"</b> ("+M.trendYears[M.trendYears.length-1]+"P) · <b>"+dir+chg+"%</b> over the decade</div>"+extra;
@@ -287,7 +287,7 @@ window.ENERGY_DATA={
       cap.innerHTML="<div class='q'>How much of its renewable potential each state has built</div>"+
         "<div class='sub'>installed grid-interactive renewables ÷ assessed potential · indicative ratio · as on 31 March 2024</div>"+
         "<div class='allindia'>National: <b>"+grp(MET.reinst.nat/MET.pot.nat*100,1)+"%</b> of assessed potential built</div>"+
-        "<div class='why'>"+esc(top.n)+" leads at "+grp(top.v,1)+"% — while giants like Rajasthan and Maharashtra have used only a small share of their vast headroom.</div>";
+        "<div class='why'>"+esc(top.n)+" leads at "+grp(top.v,1)+"%, while giants like Rajasthan and Maharashtra have used only a small share of their vast headroom.</div>";
       return;
     }
     var share=Math.round(top.v/mt.nat*1000)/10;
@@ -372,6 +372,6 @@ window.ENERGY_DATA={
 })();
 </script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-<script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+<script src="/js/site-chrome.js?v=d3a5d3a2" defer></script>
 </body>
 </html>

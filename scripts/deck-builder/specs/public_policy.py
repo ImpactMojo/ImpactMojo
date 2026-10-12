@@ -1433,7 +1433,7 @@ DECK = {
                 "Who identifies beneficiaries, and who checks them?"],
                ["Technology helps or harms by design", "Andhra Pradesh smartcards; Jharkhand PDS",
                 "What happens when authentication fails?"],
-               ["Opaque formulas exclude quietly", "Aswesuma appraisal", "Can a household see and appeal its score?"],
+               ["Opaque formulas exclude people unseen", "Aswesuma appraisal", "Can a household see and appeal its score?"],
                ["Courts can set floors, states deliver", "Midday meal orders, 2001 and 2003",
                 "Who has the budget and staff to comply?"]]),
             H("indigo", "Use these questions in Section 10's checklist when you appraise a policy "

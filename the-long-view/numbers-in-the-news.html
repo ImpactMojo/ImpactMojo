@@ -114,7 +114,7 @@
   <div class="hero-inner">
     <span class="eyebrow">A companion to The Long View</span>
     <h1 style="font-size:clamp(2.2rem,6vw,3.6rem);">Numbers in the <span class="accent">News</span></h1>
-    <p class="sub">A reader's field guide to the statistics that pass for facts. Eight ways numbers mislead: each with a small interactive you can actually poke at. Learn to spot them, and you read the news more honestly.</p>
+    <p class="sub">A reader's field guide to the statistics that pass for facts. Eight ways numbers mislead: each with a small interactive you can actually poke at. Learn to spot them, and you read the news more accurately.</p>
   </div>
 </section>
 
@@ -197,7 +197,7 @@
           <div class="nn-baseline"></div>
           <div class="nn-axisnote" id="nnAxisNote"></div>
         </div>
-        <p class="nn-takeaway"><b>Ask:</b> where does the axis start? A bar chart should almost always start at zero. When it doesn't, someone is amplifying a small difference.</p>
+        <p class="nn-takeaway"><b>Ask:</b> where does the axis start? A bar chart should almost always start at zero. When it doesn't, someone is exaggerating a small difference.</p>
       </article>
 
       <!-- 5. CHERRY-PICKED BASELINE -->
@@ -243,7 +243,7 @@
           <div class="nn-baseline"></div>
           <div class="nn-axisnote" id="nnConfNote"></div>
         </div>
-        <p class="nn-takeaway"><b>Ask:</b> what else could explain both? A genuine cause survives the question "what's the confounder?": see ImpactMojo's work on causal inference.</p>
+        <p class="nn-takeaway"><b>Ask:</b> what else could explain both? A real cause survives the question "what's the confounder?": see ImpactMojo's work on causal inference.</p>
       </article>
 
       <!-- 8. SURVIVORSHIP -->
@@ -270,7 +270,7 @@
         <li><span class="qn">01</span><b>Out of how many?</b>: a count needs a denominator to mean anything.</li>
         <li><span class="qn">02</span><b>Percent of what base?</b>: relative vs absolute change are different stories.</li>
         <li><span class="qn">03</span><b>How common is it to begin with?</b>: accuracy without the base rate misleads.</li>
-        <li><span class="qn">04</span><b>Where does the axis start?</b>: a truncated axis amplifies small gaps.</li>
+        <li><span class="qn">04</span><b>Where does the axis start?</b>: a truncated axis exaggerates small gaps.</li>
         <li><span class="qn">05</span><b>Why that start year?</b>: a cherry-picked baseline manufactures trends.</li>
         <li><span class="qn">06</span><b>How big is the sample?</b>: if the gap is under the margin of error, it's noise.</li>
         <li><span class="qn">07</span><b>What's the confounder?</b>: correlation rarely proves causation.</li>
@@ -329,7 +329,7 @@ function nnDen(mode,btn){
   var lead=vals[0]>vals[1]?'State A':'State B';
   document.getElementById('nnDenNote').innerHTML=mode==='count'
     ?'By raw count, State A looks far more dangerous. But it has roughly 8&times; the population of State B.'
-    :'<span class="flip">Per 100,000 people, '+lead+' is actually higher — the ranking flips.</span>';
+    :'<span class="flip">Per 100,000 people, '+lead+' is actually higher. The ranking flips.</span>';
 }
 
 /* ---- 2. Percent vs points ---- */
@@ -340,7 +340,7 @@ function nnPct(){
   res(document.getElementById('nnPctOut'),false,
     'Absolute change: <b>'+(pp>=0?'+':'')+pp.toFixed(1)+' percentage points</b>. '+
     'Relative change: <span class="flip">'+relTxt+'</span>. '+
-    'Same fact — headline writers reach for whichever sounds bigger.');
+    'Same fact. Headline writers reach for whichever sounds bigger.');
 }
 
 /* ---- 3. Base rates ---- */
@@ -360,8 +360,8 @@ function nnBase(){
     host.appendChild(w);
   });
   res(document.getElementById('nnBaseOut'),ppv<0.5,
-    'Of 100,000 people, about <b>'+have.toLocaleString()+'</b> truly have it. A positive result then means a real chance of <b>'+(ppv*100).toFixed(ppv<0.1?1:0)+'%</b>'+
-    (ppv<0.5?' — <span class="flip">more likely a false alarm than the real thing.</span>':' — now the positive is trustworthy.'));
+    'Of 100,000 people, about <b>'+have.toLocaleString()+'</b> actually have it. A positive result then means a real chance of <b>'+(ppv*100).toFixed(ppv<0.1?1:0)+'%</b>'+
+    (ppv<0.5?'. <span class="flip">That is more likely a false alarm than the real thing.</span>':'. Now the positive is trustworthy.'));
 }
 
 /* ---- 4. Truncated axis ---- */
@@ -406,7 +406,7 @@ function nnCherry(){
     '<circle cx="'+X(s)+'" cy="'+Y(startV)+'" r="5" fill="var(--color-primary)"/>'+
     '<circle cx="'+X(n-1)+'" cy="'+Y(endV)+'" r="5" fill="'+col+'"/>';
   res(document.getElementById('nnCherryOut'),false,
-    '"Since <b>'+NN_YEARS[s]+'</b>, the figure has <b style="color:'+col+'">'+dir+'</b>" — from '+startV+' to '+endV+' ('+(diff>=0?'+':'')+diff+'). '+
+    '"Since <b>'+NN_YEARS[s]+'</b>, the figure has <b style="color:'+col+'">'+dir+'</b>", from '+startV+' to '+endV+' ('+(diff>=0?'+':'')+diff+'). '+
     '<span class="nn-note">Same 14 data points every time; only the start year moved.</span>');
 }
 
@@ -429,7 +429,7 @@ function nnMoe(){
     '<line x1="'+bx(50)+'" y1="26" x2="'+bx(50)+'" y2="86" stroke="var(--color-text-muted)" stroke-width="1" stroke-dasharray="3,3"/>';
   res(document.getElementById('nnMoeOut'),overlap,
     'Margin of error: about <b>&plusmn;'+moe.toFixed(1)+' points</b> each. '+
-    (overlap?'<span class="flip">The bands overlap — the 2-point "lead" is statistically a tie.</span>':'<b>The bands have separated — the lead is now real.</b>'));
+    (overlap?'<span class="flip">The bands overlap, so the 2-point "lead" is statistically a tie.</span>':'<b>The bands have separated. The lead is now real.</b>'));
 }
 
 /* ---- 7. Confounder ---- */
@@ -446,7 +446,7 @@ function nnConf(mode,btn){
   });
   document.getElementById('nnConfNote').innerHTML=mode==='raw'
     ?'Across all children, more books tracks a big jump in scores (58 &rarr; 80). Looks causal.'
-    :'<span class="flip">But within one income group, the gap nearly vanishes (70 &rarr; 74). Income drove most of it — books were a marker, not the cause.</span>';
+    :'<span class="flip">But within one income group, the gap nearly vanishes (70 &rarr; 74). Income drove most of it. Books were a marker of income and did not cause the gap.</span>';
 }
 
 /* ---- 8. Survivorship (Wald's plane) ---- */
@@ -470,7 +470,7 @@ function nnSurv(mode,btn){
   res(document.getElementById('nnSurvOut'),mode==='armor',
     mode==='seen'
     ?'These are the hits on planes that <b>made it home</b>. The instinct: armour where the dots cluster.'
-    :'<span class="flip">Wrong. Armour the empty spots — engines and cockpit.</span> Planes hit there never returned to be counted; the gaps are the danger.');
+    :'<span class="flip">Wrong. Armour the empty spots: engines and cockpit.</span> Planes hit there never returned to be counted; the gaps are the danger.');
 }
 
 /* init */
@@ -484,6 +484,6 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
   <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+  <script src="/js/site-chrome.js?v=d3a5d3a2" defer></script>
 </body>
 </html>

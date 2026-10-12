@@ -380,7 +380,7 @@ DECK = {
               "untouchability was highest in the Hindi-speaking north and centre and lowest in "
               "West Bengal and Kerala. Practice was also reported within groups that are themselves "
               "discriminated against: 15% of SC and 22% of ST respondents admitted to it, which "
-              "shows how deeply graded hierarchy runs."),
+              "shows how entrenched graded hierarchy is."),
             {"t": "chart", "canvas": "ihdsStateChart",
              "title": "Households admitting to practising untouchability, selected states (%)",
              "source": "IHDS-II 2011-12 (NCAER and University of Maryland), as reported by The Indian Express, November 2014, and republished by NCAER",
@@ -1133,7 +1133,7 @@ DECK = {
         S("Why the gap", "Why Dalit enterprise stays small", [
             B("Iyer, Khanna and Varshney found the ownership gap was not significantly associated "
               "with literacy, secondary schooling or reliance on farming across states and districts. Other studies point to mechanisms that "
-              "programmes can address directly, though the weight of each varies by region and "
+              "programmes can address directly, though how much each matters varies by region and "
               "sector."),
             T(["Barrier", "How it works", "Programme lever"],
               [["Networks", "Suppliers, buyers and lenders deal within caste", "Market linkages, buyer agreements"],

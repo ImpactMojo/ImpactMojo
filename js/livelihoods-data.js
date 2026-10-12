@@ -99,7 +99,7 @@ window.LIVELIHOODS = (function () {
       strategy: "Farm at a scale that carries a bad year, and use land as the instrument that opens everything else.",
       context: { shock: "The same weather, absorbed rather than survived.", trend: "The same input prices, paid from a position that can hedge or store.", season: "Storage and credit both convert seasonality from a crisis into a decision about when to sell." },
       structures: "The same structures, working the other way round. Procurement, insurance and institutional credit are all built around recorded land, and this is the household that has it.",
-      reading: "Included as the contrast case, because the framework's value is comparative. The pentagon is close to full, and the reason is not that this household works harder: it is that one corner, natural capital, unlocks the other four.",
+      reading: "Included as the contrast case, because the framework's value is comparative. The pentagon is close to full because one corner, natural capital, makes the other four usable. This household does not work harder than the others.",
       complication: "0.37% of agricultural households are in this class. A framework that shows what a full pentagon looks like should also say how rare it is.",
       evidence: [
         { stat: "55.8%", detail: "of outstanding credit to households with more than ten hectares comes from commercial banks, and a further 5.8% from regional rural banks. Institutional sources are the majority of the borrowing.", source: "MoSPI, NSS 77th Round, distribution of loan outstanding by source, All India", year: "2018-19" },

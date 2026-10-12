@@ -153,7 +153,7 @@
     var backdrop = document.createElement('div');
     backdrop.className = 'pp-gate-backdrop';
     backdrop.innerHTML =
-      '<div class="pp-gate-modal" role="dialog" aria-modal="true" aria-label="Unlock this Practice Pack">' +
+      '<div class="pp-gate-modal" role="dialog" aria-modal="true" aria-label="Get this Practice Pack">' +
         '<button class="pp-gate-close" aria-label="Close">&times;</button>' +
         '<div class="pp-gate-head">' +
           '<span class="pp-gate-badge">' + LOCK_SVG + 'Free preview complete</span>' +

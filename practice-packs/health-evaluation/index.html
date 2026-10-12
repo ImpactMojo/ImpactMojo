@@ -86,7 +86,7 @@ body.dark-mode .module-tab .tab-num, [data-theme="dark"] .module-tab .tab-num, h
 
     <h3>Three outcome families</h3>
     <table class="framework-table">
-      <thead><tr><th>Domain</th><th>Typical outcomes</th><th>Timeframe to detect change</th><th>India data sources</th></tr></thead>
+      <thead><tr><th>Area</th><th>Typical outcomes</th><th>Timeframe to detect change</th><th>India data sources</th></tr></thead>
       <tbody>
         <tr><td><strong>RMNCH+A</strong></td><td>ANC registration, institutional delivery, immunisation coverage, exclusive breastfeeding, child stunting/wasting</td><td>6-18 months for service uptake; 2-3 years for nutritional outcomes</td><td>NFHS, HMIS, ICDS/Poshan Tracker</td></tr>
         <tr><td><strong>NCD</strong></td><td>Screening rates, diagnosis rates, treatment adherence, blood pressure/glucose control, tobacco cessation</td><td>12-24 months for behavioural outcomes; 3-5 years for morbidity/mortality</td><td>NFHS-6 blood sugar and blood pressure measures, NCD screening data (NP-NCD, formerly NPCDCS), facility records</td></tr>
@@ -115,11 +115,11 @@ body.dark-mode .module-tab .tab-num, [data-theme="dark"] .module-tab .tab-num, h
 
       <div class="pp-field"><label for="s5-m1-programme">Programme name and context</label><span class="pp-hint">e.g., "NCD screening and management, 50 PHCs, Rajasthan, NP-NCD-linked"</span><textarea id="s5-m1-programme" data-pp-save></textarea></div>
 
-      <div class="pp-field"><label>Disease domain</label><div class="pp-radio-group">
+      <div class="pp-field"><label>Disease area</label><div class="pp-radio-group">
         <label class="pp-radio"><input type="radio" name="s5-m1-domain" value="RMNCH+A" data-pp-save><span>RMNCH+A -- maternal, newborn, child, adolescent health</span></label>
         <label class="pp-radio"><input type="radio" name="s5-m1-domain" value="NCD" data-pp-save><span>NCD -- non-communicable diseases</span></label>
         <label class="pp-radio"><input type="radio" name="s5-m1-domain" value="Mental health" data-pp-save><span>Mental health</span></label>
-        <label class="pp-radio"><input type="radio" name="s5-m1-domain" value="Mixed / multi-domain" data-pp-save><span>Mixed or multi-domain</span></label>
+        <label class="pp-radio"><input type="radio" name="s5-m1-domain" value="Mixed / multi-domain" data-pp-save><span>Mixed or several areas</span></label>
       </div></div>
 
       <div class="pp-field"><label for="s5-m1-primary-outcome">Primary outcome (one sentence, at which ladder level?)</label><textarea id="s5-m1-primary-outcome" data-pp-save placeholder="e.g., Proportion of diagnosed hypertensives with blood pressure controlled (<140/90) at 12 months"></textarea></div>
@@ -150,9 +150,9 @@ body.dark-mode .module-tab .tab-num, [data-theme="dark"] .module-tab .tab-num, h
       <li><strong>Secondary data</strong> -- NFHS microdata is publicly available. You can construct a quasi-comparison group from NFHS records for your district.</li>
     </ul>
 
-    <h3>Key NFHS indicators by domain</h3>
+    <h3>Key NFHS indicators by area</h3>
     <table class="framework-table">
-      <thead><tr><th>Domain</th><th>NFHS indicator</th><th>Exact question wording matters?</th></tr></thead>
+      <thead><tr><th>Area</th><th>NFHS indicator</th><th>Exact question wording matters?</th></tr></thead>
       <tbody>
         <tr><td>ANC</td><td>% mothers who had 4+ ANC visits</td><td>Yes -- recall period and visit counting differ</td></tr>
         <tr><td>Nutrition</td><td>% children under 5 stunted (height-for-age below -2SD)</td><td>Requires anthropometry with same WHO standards</td></tr>
@@ -187,7 +187,7 @@ body.dark-mode .module-tab .tab-num, [data-theme="dark"] .module-tab .tab-num, h
     <div class="module-eyebrow">Module 3 . ~30 min</div>
     <h2>Health systems indicators vs clinical outcomes</h2>
 
-    <p>Many health programmes aim to strengthen health systems -- training providers, improving supply chains, building referral networks. Evaluating these is fundamentally different from evaluating a clinical intervention. The distinction matters because funders and programme teams routinely conflate them.</p>
+    <p>Many health programmes aim to strengthen health systems -- training providers, improving supply chains, building referral networks. Evaluating these is different in kind from evaluating a clinical intervention. The distinction matters because funders and programme teams routinely conflate them.</p>
 
     <h3>Two different evaluation logics</h3>
     <ul>
@@ -313,7 +313,7 @@ function goTab(idx){document.querySelectorAll('.module-tab').forEach((t,i)=>t.cl
 document.querySelectorAll('.module-tab').forEach((t,i)=>t.addEventListener('click',()=>goTab(i)));
 document.querySelectorAll('[data-mcq]').forEach(g=>{const fbId=g.dataset.mcq+'-fb';g.querySelectorAll('.mcq-opt').forEach(o=>{o.addEventListener('click',()=>{g.querySelectorAll('.mcq-opt').forEach(x=>{x.classList.add('disabled');if(x.dataset.correct==='1')x.classList.add('correct');else if(x===o)x.classList.add('wrong');});document.getElementById(fbId)?.classList.add('show');});});});
 function v(id,fb){const x=getFieldValue(id);return(x&&x.trim())?x.trim():(fb||'_____');}
-function buildCapstone(){const today=new Date().toISOString().slice(0,10);document.getElementById('capstoneOutput').innerText=`# HEALTH EVALUATION DESIGN BRIEF\nDate: ${today}\n\n## 1. PROGRAMME & CONTEXT\n${v('s5-m1-programme','_(not filled)_')}\n\n## 2. OUTCOME FRAMING\n**Domain:** ${v('s5-m1-domain')}\n**Primary outcome:** ${v('s5-m1-primary-outcome')}\n**Secondary outcomes:** ${v('s5-m1-secondary')}\n**Detection timeframe:** ${v('s5-m1-timeframe')}\n\n## 3. NFHS ALIGNMENT\n**Overlapping indicators:** ${v('s5-m2-indicators')}\n**Question wording:** ${v('s5-m2-wording')}\n**Biomarker plan:** ${v('s5-m2-biomarker')}\n**NFHS benchmarks:** ${v('s5-m2-benchmark')}\n**Secondary data use:** ${v('s5-m2-secondary-data')}\n\n## 4. SYSTEMS vs CLINICAL\n**Systems outcomes:** ${v('s5-m3-systems')}\n**Clinical outcomes:** ${v('s5-m3-clinical')}\n**Time lag:** ${v('s5-m3-timelag')}\n**Facility data:** ${v('s5-m3-facility')}\n**Quality measurement:** ${v('s5-m3-quality')}\n\n## 5. CHW EVALUATION\n**CHW type & role:** ${v('s5-m4-chw-type')}\n**Competency assessment:** ${v('s5-m4-competency')}\n**Service quality:** ${v('s5-m4-quality')}\n**Attribution strategy:** ${v('s5-m4-attribution')}\n\n## 6. HONESTY-TEST SENTENCE\n${v('s5-m4-honesty')}\n\n---\n*Built with ImpactMojo Practice Pack PP-S5: Health Intervention Evaluation.*\n*All data stored locally. Nothing transmitted.*\n`;}
+function buildCapstone(){const today=new Date().toISOString().slice(0,10);document.getElementById('capstoneOutput').innerText=`# HEALTH EVALUATION DESIGN BRIEF\nDate: ${today}\n\n## 1. PROGRAMME & CONTEXT\n${v('s5-m1-programme','_(not filled)_')}\n\n## 2. OUTCOME FRAMING\n**Area:** ${v('s5-m1-domain')}\n**Primary outcome:** ${v('s5-m1-primary-outcome')}\n**Secondary outcomes:** ${v('s5-m1-secondary')}\n**Detection timeframe:** ${v('s5-m1-timeframe')}\n\n## 3. NFHS ALIGNMENT\n**Overlapping indicators:** ${v('s5-m2-indicators')}\n**Question wording:** ${v('s5-m2-wording')}\n**Biomarker plan:** ${v('s5-m2-biomarker')}\n**NFHS benchmarks:** ${v('s5-m2-benchmark')}\n**Secondary data use:** ${v('s5-m2-secondary-data')}\n\n## 4. SYSTEMS vs CLINICAL\n**Systems outcomes:** ${v('s5-m3-systems')}\n**Clinical outcomes:** ${v('s5-m3-clinical')}\n**Time lag:** ${v('s5-m3-timelag')}\n**Facility data:** ${v('s5-m3-facility')}\n**Quality measurement:** ${v('s5-m3-quality')}\n\n## 5. CHW EVALUATION\n**CHW type & role:** ${v('s5-m4-chw-type')}\n**Competency assessment:** ${v('s5-m4-competency')}\n**Service quality:** ${v('s5-m4-quality')}\n**Attribution strategy:** ${v('s5-m4-attribution')}\n\n## 6. HONESTY-TEST SENTENCE\n${v('s5-m4-honesty')}\n\n---\n*Built with ImpactMojo Practice Pack PP-S5: Health Intervention Evaluation.*\n*All data stored locally. Nothing transmitted.*\n`;}
 function copyCapstone(){const text=document.getElementById('capstoneOutput').innerText;const btn=document.getElementById('copy-capstone');navigator.clipboard.writeText(text).then(()=>{const orig=btn.textContent;btn.textContent='Copied';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied');},1800);});}
 document.querySelectorAll('.theme-btn').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.themeSet;document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('impactmojo-theme',t);}catch(e){}}));
 attachSaveHandlers();loadAll();

@@ -349,7 +349,7 @@ var RUBRICS = [
  { id:'critical', cat:'Thinking & Analysis', name:'Critical Thinking',
    dev:'Weighing the evidence behind a programme claim, a donor report, or a policy before acting on it.',
    criteria:[
-    { name:'Evidence', l:['Takes information at face value; repeats claims without checking the source.','Notes where information came from but does not question its quality or bias.','Weighs sources for reliability and relevance; flags weak or motivated evidence.','Systematically interrogates evidence, cross-checks sources, and states confidence honestly.'] },
+    { name:'Evidence', l:['Takes information at face value; repeats claims without checking the source.','Notes where information came from but does not question its quality or bias.','Weighs sources for reliability and relevance; flags weak or motivated evidence.','Systematically interrogates evidence, cross-checks sources, and states confidence truthfully.'] },
     { name:'Context & assumptions', l:['Ignores the assumptions and context behind a claim.','Names an obvious assumption but does not test it.','Identifies key assumptions and the context that shapes them.','Surfaces hidden assumptions, tests them, and traces how context changes the conclusion.'] },
     { name:'Conclusions', l:['States a conclusion unconnected to the evidence shown.','Draws a conclusion that only partly follows from the evidence.','Reaches a conclusion the evidence supports and notes its limits.','Reaches a well-qualified conclusion, weighs alternatives, and states what would change it.'] }
    ]},
@@ -361,7 +361,7 @@ var RUBRICS = [
     { name:'Test & evaluate', l:['Implements without checking whether it worked.','Notes informally whether it worked.','Evaluates the solution against clear criteria and adjusts.','Tests, measures against criteria, learns from failure, and iterates the design.'] }
    ]},
  { id:'inquiry', cat:'Thinking & Analysis', name:'Inquiry & Analysis',
-   dev:'Designing a study, needs assessment, or evaluation and reading the results honestly.',
+   dev:'Designing a study, needs assessment, or evaluation and reading the results accurately.',
    criteria:[
     { name:'Framing the question', l:['Question is unclear or unanswerable with the data at hand.','Question is stated but too broad or vague.','Poses a focused, answerable question suited to the method.','Poses a sharp question, scoped to the decision it must inform.'] },
     { name:'Evidence & method', l:['Collects whatever data is easy; method unstated.','Uses a method but applies it loosely.','Selects a method fit for the question and applies it carefully.','Justifies the method, applies it rigorously, and guards against bias.'] },
@@ -370,7 +370,7 @@ var RUBRICS = [
  { id:'creative', cat:'Thinking & Analysis', name:'Creative Thinking',
    dev:'Designing an intervention or campaign that breaks from the default template.',
    criteria:[
-    { name:'Generating ideas', l:['Reuses the standard approach unchanged.','Makes minor tweaks to an existing idea.','Generates original ideas suited to the context.','Generates genuinely novel ideas and reframes the problem itself.'] },
+    { name:'Generating ideas', l:['Reuses the standard approach unchanged.','Makes minor tweaks to an existing idea.','Generates original ideas suited to the context.','Generates novel ideas and reframes the problem itself.'] },
     { name:'Combining & adapting', l:['Keeps ideas siloed.','Borrows one idea from elsewhere.','Adapts and combines ideas across fields or contexts.','Synthesises ideas across disciplines into a coherent, original design.'] },
     { name:'Risk & innovation', l:['Avoids anything untried.','Tries something new only when it feels safe.','Takes considered risks and learns from them.','Embraces productive risk, prototypes boldly, and treats failure as data.'] }
    ]},
@@ -429,7 +429,7 @@ var RUBRICS = [
  { id:'intercultural', cat:'Values & Ethics', name:'Intercultural Competence',
    dev:'Working respectfully across caste, language, faith, gender, and disability.',
    criteria:[
-    { name:'Cultural self-awareness', l:['Assumes own norms are universal.','Aware that others differ.','Aware of own culture and its biases.','Deeply aware of own positionality and how it shapes the work.'] },
+    { name:'Cultural self-awareness', l:['Assumes own norms are universal.','Aware that others differ.','Aware of own culture and its biases.','Fully aware of own positionality and how it shapes the work.'] },
     { name:'Empathy & perspective', l:['Judges others by own frame.','Acknowledges that other perspectives exist.','Takes others’ perspectives seriously in decisions.','Steps into others’ frames and adapts practice accordingly.'] },
     { name:'Communicating across difference', l:['Communication breaks down across difference.','Communicates with effort but misses cues.','Communicates effectively across cultural difference.','Bridges difference skilfully and helps others do the same.'] }
    ]},
@@ -453,7 +453,7 @@ var RUBRICS = [
    criteria:[
     { name:'Connections', l:['Treats each task in isolation.','Notes a connection when pointed out.','Connects ideas across contexts and projects.','Synthesises across theory, experience and disciplines into insight.'] },
     { name:'Transfer', l:['Cannot apply learning to a new setting.','Applies learning to a very similar setting.','Transfers learning to new, related situations.','Transfers skilfully to novel, unfamiliar situations.'] },
-    { name:'Reflection & self-assessment', l:['Does not reflect on own learning.','Reflects only when required.','Reflects honestly on strengths and gaps.','Reflects deeply and directs their own growth from it.'] }
+    { name:'Reflection & self-assessment', l:['Does not reflect on own learning.','Reflects only when required.','Reflects openly on strengths and gaps.','Reflects in depth and directs their own growth from it.'] }
    ]},
  { id:'lifelong', cat:'Working & Growing', name:'Lifelong Learning',
    dev:'Staying curious, self-directed, and reflective over a career in the sector.',
@@ -516,7 +516,7 @@ function openRubric(id){
     var sc = state.scores[id] || {};
     var head = '<div class="rubric-head"><h2>'+esc(r.name)+'</h2><span class="cc-cat">'+esc(r.cat)+'</span></div>'+
         '<div class="rubric-dev"><strong>In development practice:</strong> '+esc(r.dev)+'</div>'+
-        '<div class="scale-legend"><span>1 · Benchmark</span><span>2 · Milestone</span><span>3 · Milestone</span><span>4 · Capstone</span><span style="border:none;background:none;">— click a cell to score</span></div>';
+        '<div class="scale-legend"><span>1 · Benchmark</span><span>2 · Milestone</span><span>3 · Milestone</span><span>4 · Capstone</span><span style="border:none;background:none;">Click a cell to score</span></div>';
     var rows = r.criteria.map(function(cr, ci){
         var cells = cr.l.map(function(txt, li){
             var lvl = li+1; var selCls = (sc[ci]===lvl) ? ' sel' : '';
@@ -562,7 +562,7 @@ function exportAssessment(){
     if (!gateOK()) return;
     saveState();
     var L = [];
-    L.push('ImpactMojo — Competency Assessment');
+    L.push('ImpactMojo: Competency Assessment');
     L.push('=====================================');
     L.push('Generated: ' + new Date().toISOString().slice(0,10));
     L.push('Assessing: ' + (state.subject || '(not set)'));
@@ -574,11 +574,11 @@ function exportAssessment(){
         any = true;
         var vals = r.criteria.map(function(_,i){ return sc[i]; }).filter(function(v){ return v; });
         var avg = vals.reduce(function(a,b){return a+b;},0)/vals.length;
-        L.push(r.name.toUpperCase() + '  [' + r.cat + ']   — average ' + (Math.round(avg*10)/10) + '/4');
+        L.push(r.name.toUpperCase() + '  [' + r.cat + '], average ' + (Math.round(avg*10)/10) + '/4');
         L.push('-'.repeat(r.name.length + 20));
         r.criteria.forEach(function(cr, ci){
             var lvl = sc[ci];
-            if (lvl) { L.push('  • ' + cr.name + ': ' + lvl + '/4 (' + LEVELS[lvl-1] + ') — ' + cr.l[lvl-1]); }
+            if (lvl) { L.push('  • ' + cr.name + ': ' + lvl + '/4 (' + LEVELS[lvl-1] + '): ' + cr.l[lvl-1]); }
             else { L.push('  • ' + cr.name + ': (not scored)'); }
         });
         L.push('');
@@ -605,8 +605,8 @@ if (state.selected && RUBRICS.some(function(r){return r.id===state.selected;})) 
   <script src="/js/state-manager.js?v=62445627"></script>
   <script src="/js/config.js?v=7e6af861"></script>
   <script src="/js/auth.js?v=57fe7e3d"></script>
-  <script src="/js/premium.js?v=a0ac5a6a"></script>
+  <script src="/js/premium.js?v=235e6eef"></script>
   <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+  <script src="/js/site-chrome.js?v=d3a5d3a2" defer></script>
 </body>
 </html>

@@ -2,6 +2,20 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.366.0 — October 12, 2026 (the house style, applied across the site)
+
+### Fixed
+
+- **The em-dash sweep of 5 October broke dropdowns, empty-value markers and a Studio label** (#1204). Several Studio dropdowns read ", Select, ", the "no value" dash in tables and on the ToR builder and status page read ", ", and the stakeholder-mapping Studio showed the wrong text on dropped cards. All are repaired.
+- **ImpactMojo summaries were printed as quotations from named economists** (#1205). Eighteen summaries in the Public Finance, Labour and Social Margins decks sat inside quotation marks with credits such as "a working synthesis from Y.V. Reddy, C. Rangarajan, Raghuram Rajan". They now appear without quotation marks, labelled "Our summary, drawing on" the same sources.
+
+### Changed
+
+- About 6,800 edits across 781 pages and 40 data and script files to meet the owner's writing standards: banned filler words (honestly, genuine, quietly, deeply, navigate, landscape, leverage as a verb and the rest), "not X but Y" constructions, and 3,343 em dashes inside page scripts that the earlier sweep did not reach. Technical terms (women's empowerment, robust standard errors, regression leverage, facilitation as a workshop role, statutory wording), quotations, cited titles, testimonials and ratings were left as written.
+- The behaviour-change technique definitions keep the BCT Taxonomy v1 wording they adapt.
+- The blog post on South Asian development in 2026 is retitled "Where South Asian Development Stands in 2026".
+- The WhatsApp button on every page now shares the page being read, with its own title, description and address. It used to send the same homepage message everywhere, with emoji, em dashes and counts from months ago (69 courses, 35 labs, 321 tools).
+
 ## v10.365.1 — October 12, 2026 (the last three certificate answers)
 
 ### Fixed

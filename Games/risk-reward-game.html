@@ -814,7 +814,7 @@ body { padding-top: 56px; }
   </div>
 
   <p class="story-narrative">
-    Your mind plays tricks when fortune is at stake. A guaranteed gain feels safe. A guaranteed loss feels unbearable. But are you truly rational, or is your brain's ancient wiring making the choice for you? <strong>Kahneman and Tversky</strong> discovered the answer.
+    Your mind plays tricks when fortune is at stake. A guaranteed gain feels safe. A guaranteed loss feels unbearable. But are you actually rational, or is your brain's ancient wiring making the choice for you? <strong>Kahneman and Tversky</strong> discovered the answer.
   </p>
 
   <button class="btn-primary" onclick="showScreen('welcome')">Begin the Experiment &rarr;</button>
@@ -1174,20 +1174,20 @@ function showInsight(s, choice, outcome){
 
   if(s.frame==='gain' && choice==='safe'){
     if(betterEV==='risky'){
-      msg='<strong>Loss aversion detected!</strong> You chose the safe option even though the risky one had a higher expected value ('+s.ev_risky+' vs '+s.ev_safe+'). This is classic risk-aversion for gains — most people do exactly this.';
+      msg='<strong>Loss aversion detected!</strong> You chose the safe option even though the risky one had a higher expected value ('+s.ev_risky+' vs '+s.ev_safe+'). This is classic risk-aversion for gains. Most people do exactly this.';
     } else {
       msg='<strong>Rational choice.</strong> The safe option had equal or better expected value here. You played it smart.';
     }
   } else if(s.frame==='gain' && choice==='risky'){
-    msg='<strong>Going for it!</strong> You took the gamble in a gain scenario. Expected value was '+s.ev_risky+' (risky) vs '+s.ev_safe+' (safe). '+(betterEV==='risky'?'The EV favored your choice.':'The safe option actually had better EV — bold move!');
+    msg='<strong>Going for it!</strong> You took the gamble in a gain scenario. Expected value was '+s.ev_risky+' (risky) vs '+s.ev_safe+' (safe). '+(betterEV==='risky'?'The EV favored your choice.':'The safe option actually had better EV. Bold move!');
   } else if(s.frame==='loss' && choice==='risky'){
     if(betterEV==='safe'){
-      msg='<strong>Classic framing effect!</strong> You chose the gamble even though the safe loss was smaller in expected value ('+s.ev_safe+' vs '+s.ev_risky+'). When facing losses, we become risk-seeking — hoping to escape the loss entirely.';
+      msg='<strong>Classic framing effect!</strong> You chose the gamble even though the safe loss was smaller in expected value ('+s.ev_safe+' vs '+s.ev_risky+'). When facing losses, we become risk-seeking, hoping to escape the loss entirely.';
     } else {
       msg='<strong>Risk-seeking in losses.</strong> Prospect theory predicts this. When facing losses, people prefer to gamble. EV: '+s.ev_risky+' (risky) vs '+s.ev_safe+' (safe).';
     }
   } else if(s.frame==='loss' && choice==='safe'){
-    msg='<strong>Accepting the certain loss.</strong> Most people would gamble here to try to avoid the loss. You chose certainty — quite unusual! EV was '+s.ev_safe+' (safe) vs '+s.ev_risky+' (risky).';
+    msg='<strong>Accepting the certain loss.</strong> Most people would gamble here to try to avoid the loss. You chose certainty, quite unusual! EV was '+s.ev_safe+' (safe) vs '+s.ev_risky+' (risky).';
   }
 
   ib.innerHTML=msg;
@@ -1240,7 +1240,7 @@ function showEndScreen(){
   var label,desc;
   if(gainSafe>=3 && lossRisky>=3){
     label = 'Classic Prospect Theory Profile';
-    desc = 'You\'re risk-averse for gains and risk-seeking for losses — exactly what Kahneman and Tversky predicted. You feel losses more strongly than gains, and you\'ll gamble to avoid a sure loss.';
+    desc = 'You\'re risk-averse for gains and risk-seeking for losses, exactly what Kahneman and Tversky predicted. You feel losses more strongly than gains, and you\'ll gamble to avoid a sure loss.';
   } else if(gainSafe>=3 && lossSafe>=3){
     label = 'Strongly Risk-Averse';
     desc = 'You prefer certainty in all situations. You\'d rather take a known outcome than gamble, whether it\'s a gain or a loss. You value security above potential upside.';
@@ -1249,10 +1249,10 @@ function showEndScreen(){
     desc = 'You love the gamble! In both gains and losses, you went for the uncertain option. You\'re comfortable with volatility and believe the upside is worth the risk.';
   } else if(gainRisky>=3 && lossSafe>=3){
     label = 'Reverse Framing Profile';
-    desc = 'Interesting — you\'re the opposite of what prospect theory predicts. You take risks for gains but play it safe for losses. This is unusual and suggests you may evaluate probabilities more carefully than most.';
+    desc = 'Interesting. You\'re the opposite of what prospect theory predicts. You take risks for gains but play it safe for losses. This is unusual and suggests you may evaluate probabilities more carefully than most.';
   } else {
     label = 'Mixed Risk Profile';
-    desc = 'You showed a mix of risk preferences across different scenarios. Context mattered to you — you evaluated each situation on its merits rather than following a fixed pattern.';
+    desc = 'You showed a mix of risk preferences across different scenarios. Context mattered to you. You evaluated each situation on its merits rather than following a fixed pattern.';
   }
 
   $('profileLabel').textContent = label;
@@ -1264,7 +1264,7 @@ function showEndScreen(){
     +'<p><strong>Gain scenarios:</strong> You chose SAFE '+gainSafe+' time'+(gainSafe!==1?'s':'')+' and RISKY '+gainRisky+' time'+(gainRisky!==1?'s':'')+'.</p>'
     +'<p><strong>Loss scenarios:</strong> You chose SAFE '+lossSafe+' time'+(lossSafe!==1?'s':'')+' and RISKY '+lossRisky+' time'+(lossRisky!==1?'s':'')+'.</p>'
     +'<p style="margin-top:8px">Prospect theory predicts most people will be <strong>risk-averse for gains</strong> (prefer the safe bet) and <strong>risk-seeking for losses</strong> (prefer the gamble). '
-    +(gainSafe>=3&&lossRisky>=3?'You matched this pattern almost perfectly!':'Your pattern deviated from the classic prediction — you think differently!')+'</p>';
+    +(gainSafe>=3&&lossRisky>=3?'You matched this pattern almost perfectly!':'Your pattern deviated from the classic prediction. You think differently!')+'</p>';
 
   // Comparison grid
   var cg = $('comparisonGrid');
@@ -1356,8 +1356,8 @@ function drawEndStoryArt(profileLabel){
       +'<g transform="translate(140,220)"><circle r="8" fill="none" stroke="#800020" stroke-width="1"/><circle r="3" fill="#DAA520" stroke="#8B4513" stroke-width="0.5"/><ellipse cx="0" cy="-6" rx="2" ry="4" fill="#800020" stroke-width="0.3"/><ellipse cx="6" cy="0" rx="4" ry="2" fill="#800020" stroke-width="0.3"/><ellipse cx="0" cy="6" rx="2" ry="4" fill="#800020" stroke-width="0.3"/><ellipse cx="-6" cy="0" rx="4" ry="2" fill="#800020" stroke-width="0.3"/><line x1="0" y1="8" x2="0" y2="22" stroke="#556B2F" stroke-width="0.8"/><ellipse cx="-3" cy="16" rx="4" ry="2" fill="#556B2F" stroke="#3a4a1f" stroke-width="0.3" transform="rotate(-20 -3 16)"/></g>'
       +'<g transform="translate(660,210)"><circle r="7" fill="none" stroke="#556B2F" stroke-width="1"/><circle r="2.5" fill="#DAA520" stroke="#8B4513" stroke-width="0.5"/><ellipse cx="0" cy="-5.5" rx="1.8" ry="3.5" fill="#556B2F" stroke-width="0.3"/><ellipse cx="5.5" cy="0" rx="3.5" ry="1.8" fill="#556B2F" stroke-width="0.3"/><ellipse cx="0" cy="5.5" rx="1.8" ry="3.5" fill="#556B2F" stroke-width="0.3"/><ellipse cx="-5.5" cy="0" rx="3.5" ry="1.8" fill="#556B2F" stroke-width="0.3"/><line x1="0" y1="7" x2="0" y2="20" stroke="#556B2F" stroke-width="0.7"/></g>'
       // Title
-      +'<text x="400" y="80" text-anchor="middle" fill="#DAA520" font-size="16" font-family="serif" font-weight="bold">The Weight of Loss</text>'
-      +'<text x="400" y="100" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">Losses loom larger than gains &mdash; the ancient imbalance</text>';
+      +'<text x="400" y="80" text-anchor="middle" fill="#DAA520" font-size="16" font-family="serif" font-weight="bold">Loss Weighs More</text>'
+      +'<text x="400" y="100" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">Losses loom larger than gains, the ancient imbalance</text>';
 
   } else if(profileLabel === 'Strongly Risk-Averse'){
     // Scene: A figure inside a walled garden of certainty, flowers inside, storm outside
@@ -1384,7 +1384,7 @@ function drawEndStoryArt(profileLabel){
       // Rain lines outside
       +'<g stroke="#475569" stroke-width="0.6"><line x1="80" y1="110" x2="75" y2="130"/><line x1="100" y1="105" x2="95" y2="125"/><line x1="130" y1="100" x2="125" y2="120"/><line x1="150" y1="105" x2="145" y2="125"/><line x1="650" y1="100" x2="645" y2="120"/><line x1="680" y1="95" x2="675" y2="115"/><line x1="710" y1="100" x2="705" y2="120"/><line x1="735" y1="98" x2="730" y2="118"/></g>'
       +'<text x="400" y="75" text-anchor="middle" fill="#DAA520" font-size="16" font-family="serif" font-weight="bold">The Walled Garden</text>'
-      +'<text x="400" y="95" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">Safety is its own reward &mdash; the shelter of certainty</text>';
+      +'<text x="400" y="95" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">Safety is its own reward, the shelter of certainty</text>';
 
   } else if(profileLabel === 'Strongly Risk-Seeking'){
     // Scene: A figure leaping across a chasm, flames and treasure on far side
@@ -1423,7 +1423,7 @@ function drawEndStoryArt(profileLabel){
       // Sparkle effects near treasure
       +'<g stroke="#DAA520" stroke-width="0.8"><line x1="630" y1="195" x2="635" y2="190"/><line x1="632" y1="195" x2="632" y2="188"/><line x1="570" y1="200" x2="565" y2="195"/><line x1="568" y1="200" x2="568" y2="193"/></g>'
       +'<text x="400" y="75" text-anchor="middle" fill="#DAA520" font-size="16" font-family="serif" font-weight="bold">The Leap of Fortune</text>'
-      +'<text x="400" y="95" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">Nothing ventured, nothing gained &mdash; the bold cross chasms</text>';
+      +'<text x="400" y="95" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">Nothing ventured, nothing gained, the bold cross chasms</text>';
 
   } else if(profileLabel === 'Reverse Framing Profile'){
     // Scene: A figure walking against the current, fish swimming the other way
@@ -1454,7 +1454,7 @@ function drawEndStoryArt(profileLabel){
       +'<g transform="translate(100,160)"><circle r="6" fill="none" stroke="#800020" stroke-width="0.8"/><circle r="2" fill="#DAA520"/><ellipse cx="0" cy="-4.5" rx="1.2" ry="3" fill="#800020" stroke-width="0.3"/><ellipse cx="4.5" cy="0" rx="3" ry="1.2" fill="#800020" stroke-width="0.3"/><ellipse cx="0" cy="4.5" rx="1.2" ry="3" fill="#800020" stroke-width="0.3"/><ellipse cx="-4.5" cy="0" rx="3" ry="1.2" fill="#800020" stroke-width="0.3"/></g>'
       +'<g transform="translate(700,155)"><circle r="6" fill="none" stroke="#556B2F" stroke-width="0.8"/><circle r="2" fill="#DAA520"/><ellipse cx="0" cy="-4.5" rx="1.2" ry="3" fill="#556B2F" stroke-width="0.3"/><ellipse cx="4.5" cy="0" rx="3" ry="1.2" fill="#556B2F" stroke-width="0.3"/><ellipse cx="0" cy="4.5" rx="1.2" ry="3" fill="#556B2F" stroke-width="0.3"/><ellipse cx="-4.5" cy="0" rx="3" ry="1.2" fill="#556B2F" stroke-width="0.3"/></g>'
       +'<text x="400" y="75" text-anchor="middle" fill="#DAA520" font-size="16" font-family="serif" font-weight="bold">Against the Current</text>'
-      +'<text x="400" y="95" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">You defy the pattern &mdash; your mind charts its own course</text>';
+      +'<text x="400" y="95" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">You defy the pattern, your mind charts its own course</text>';
 
   } else {
     // Mixed profile: figure at a garden crossroads, flowers on all sides, many paths
@@ -1481,7 +1481,7 @@ function drawEndStoryArt(profileLabel){
       +'<g transform="translate(605,170)"><circle r="7" fill="none" stroke="#800020" stroke-width="1"/><circle r="2.5" fill="#DAA520"/><ellipse cx="0" cy="-5.5" rx="1.5" ry="3.5" fill="#800020" stroke-width="0.3"/><ellipse cx="5.5" cy="0" rx="3.5" ry="1.5" fill="#800020" stroke-width="0.3"/><ellipse cx="0" cy="5.5" rx="1.5" ry="3.5" fill="#800020" stroke-width="0.3"/><ellipse cx="-5.5" cy="0" rx="3.5" ry="1.5" fill="#800020" stroke-width="0.3"/></g>'
       +'<g transform="translate(450,132)"><circle r="7" fill="none" stroke="#1A237E" stroke-width="1"/><circle r="2.5" fill="#DAA520"/><ellipse cx="0" cy="-5.5" rx="1.5" ry="3.5" fill="#1A237E" stroke-width="0.3"/><ellipse cx="5.5" cy="0" rx="3.5" ry="1.5" fill="#1A237E" stroke-width="0.3"/><ellipse cx="0" cy="5.5" rx="1.5" ry="3.5" fill="#1A237E" stroke-width="0.3"/><ellipse cx="-5.5" cy="0" rx="3.5" ry="1.5" fill="#1A237E" stroke-width="0.3"/></g>'
       +'<text x="400" y="75" text-anchor="middle" fill="#DAA520" font-size="16" font-family="serif" font-weight="bold">The Garden of Many Paths</text>'
-      +'<text x="400" y="95" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">Each choice weighed on its own &mdash; the flexible mind</text>';
+      +'<text x="400" y="95" text-anchor="middle" fill="#8B4513" font-size="10" font-family="serif" font-style="italic">Each choice weighed on its own, the flexible mind</text>';
   }
 
   art.innerHTML = '<svg viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kalamkari illustration of your risk profile story">'

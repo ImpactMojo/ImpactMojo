@@ -78,7 +78,7 @@ window.CAPABILITIES = (function () {
         { stat: "Article 21", detail: "the Supreme Court has read sanitation into the right to life, and the National Green Tribunal has repeatedly held municipalities to it. The entitlement is not in doubt; what is in doubt is whether a built structure discharges it.", source: "Constitution of India, as interpreted", year: "1950" }
       ],
       reading: "Two numbers describe the same country in the same years and disagree, because they measure different stages of the chain. One counts the resource. The other asks about the functioning. Neither is wrong, and a programme evaluated on the first can be judged a complete success while the second says otherwise.",
-      complication: "The ODF figure is not simply false. Construction at that scale genuinely happened and open defecation genuinely fell a long way. The problem is the choice of measure: declaring a district ODF on the basis of toilets built makes a claim about behaviour using a count of objects, and no amount of construction can settle a question about use."
+      complication: "The ODF figure is not simply false. Construction at that scale did happen and open defecation did fall a long way. The problem is the choice of measure: declaring a district ODF on the basis of toilets built makes a claim about behaviour using a count of objects, and no amount of construction can settle a question about use."
     },
 
     {
@@ -119,7 +119,7 @@ window.CAPABILITIES = (function () {
       evidence: [
         { stat: "Kerala", detail: "has India's highest life expectancy without having India's highest income per head. Sen's long-standing reading is that public provision in health and schooling converts modest income into long life at a rate that richer states with weaker provision do not achieve.", source: "Drèze & Sen, An Uncertain Glory", year: "2013" },
         { stat: "Self-reported", detail: "Kerala also reports among the highest rates of self-perceived morbidity in India. Sen's explanation is that reported illness measures the ability to recognise and name illness, which schooling and contact with doctors raise, so the healthiest state can look the sickest in a survey that asks people how they feel.", source: "Sen, 'Health: perception versus observation', BMJ", year: "2002" },
-        { stat: "HDI", detail: "the Human Development Index was built by Mahbub ul Haq with Sen's involvement precisely to stop income standing alone as the measure of development. Sen's own view of it is notably cool: he called it a crude measure, and defended it as a device for shifting attention rather than as a summary of what matters.", source: "UNDP Human Development Report", year: "1990" }
+        { stat: "HDI", detail: "the Human Development Index was built by Mahbub ul Haq with Sen's involvement precisely to stop income standing alone as the measure of development. Sen's own view of it is cool: he called it a crude measure, and defended it as a device for shifting attention rather than as a summary of what matters.", source: "UNDP Human Development Report", year: "1990" }
       ],
       reading: "Income is the resource with the best claim to being general, and it is still only a resource. The Kerala pair is the standard demonstration: the same rupee buys different amounts of life depending on what public provision is already in place around it.",
       complication: "The morbidity finding cuts both ways and is worth handling carefully. It explains why self-reported health data can invert the truth, but it can also be used to wave away any survey result that is politically inconvenient. The check is whether an observational measure, like mortality, agrees with the self-report or contradicts it."
@@ -144,7 +144,7 @@ window.CAPABILITIES = (function () {
         { stat: "42.0%", detail: "of rural households had exclusive access to an improved source, in the premises, sufficiently available throughout the year: all three conditions at once. Urban: 50.5%. The gap between this and 94.5% is entirely made of conversion factors.", source: "NSS 76th Round (MoSPI)", year: "2018" }
       ],
       reading: "Three figures from one survey, describing the same households, ranging from 94.5% to 42.0%. None of them is wrong and none is a correction of the others: each adds a condition that has to hold before the source becomes water you can actually rely on. A target written on the first is met at a point where the third is still a minority.",
-      complication: "The narrowest measure is not automatically the right one. A shared standpost fifty metres away is a real improvement on an unprotected well, and refusing to count it would erase genuine progress. The argument is not that 42.0% is the true number: it is that which of the three you report is a choice, and it is rarely made explicit."
+      complication: "The narrowest measure is not automatically the right one. A shared standpost fifty metres away is a real improvement on an unprotected well, and refusing to count it would erase real progress. The argument is not that 42.0% is the true number: it is that which of the three you report is a choice, and it is rarely made explicit."
     },
 
     {
@@ -188,7 +188,7 @@ window.CAPABILITIES = (function () {
         { stat: "Article 21", detail: "the right to food was read into the right to life in the PUCL litigation from 2001, and the Supreme Court's interim orders converted several schemes into entitlements years before Parliament legislated.", source: "PUCL v. Union of India", year: "2001" }
       ],
       reading: "This chain shows a conversion factor that is purely administrative. The entitlement is real, the grain exists, and the binding constraint for a household formed after 2011 is a list. No amount of the resource fixes it, because the failure is not in the resource.",
-      complication: "Whether a cereal entitlement should be expected to produce nutrition is genuinely contested. One reading is that the scheme is doing its job and nutrition needs different instruments; another is that a food security law measured in grain has picked the wrong unit. The page does not settle it."
+      complication: "Whether a cereal entitlement should be expected to produce nutrition is contested. One reading is that the scheme is doing its job and nutrition needs different instruments; another is that a food security law measured in grain has picked the wrong unit. The page does not settle it."
     }
   ];
 

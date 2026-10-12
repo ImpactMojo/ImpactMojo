@@ -151,7 +151,7 @@ window.FUNDAMENTALS = (function () {
           { stat: "2018", detail: "Navtej Singh Johar read down Section 377. Consensual same-sex conduct between adults is no longer a crime.", source: "Supreme Court of India", year: "2018" },
           { stat: "2023", detail: "Supriyo v. Union of India declined to recognise same-sex marriage or civil unions, leaving the question to Parliament and a Cabinet Secretary-led committee.", source: "Supreme Court of India", year: "2023" },
           { stat: "None", detail: "of India's employment or housing law prohibits discrimination on grounds of sexual orientation. The Equality Bill drafts that would have done so were never introduced.", source: "Statutory review", year: "2026" },
-          { stat: "~25 lakh", detail: "the government's own estimate of LGBT Indians, submitted to the Supreme Court. It was derived from 2012 figures and is almost certainly a fraction of the real number.", source: "Union of India submission", year: "2018" }
+          { stat: "~25 lakh", detail: "the government's own estimate of LGBT Indians, submitted to the Supreme Court. It was derived from 2012 figures and is very likely a fraction of the real number.", source: "Union of India submission", year: "2018" }
         ]
       },
       margin: {

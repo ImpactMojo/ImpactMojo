@@ -545,7 +545,7 @@ body { padding-top: 56px; }
         </div>
 
         <div class="info-box success">
-            <strong>Leverage, not effort.</strong> A leverage point is where a small, well-placed change ripples through the system: e.g. putting a shared milk-fat analyser at the collection point can shift the terms of every future transaction, not just one. Ask of each constraint: if this were fixed, would the market keep working differently on its own?
+            <strong>Find the leverage.</strong> A leverage point is where a small, well-placed change ripples through the system: e.g. putting a shared milk-fat analyser at the collection point can shift the terms of every future transaction, not just one. Ask of each constraint: if this were fixed, would the market keep working differently on its own?
         </div>
 
         <div class="nav-row">
@@ -825,7 +825,7 @@ function renderActors() {
     if (!state.actors.length) { el.innerHTML = '<div class="empty-note">No actors added yet.</div>'; return; }
     el.innerHTML = state.actors.map(function(a, i) {
         return '<div class="item-row"><div class="item-body"><strong>' + esc(a.name) + '</strong>' +
-            (a.role ? ' &mdash; ' + esc(a.role) : '') + '</div>' +
+            (a.role ? ', ' + esc(a.role) : '') + '</div>' +
             '<button class="remove-btn" onclick="removeActor(' + i + ')" aria-label="Remove">&#10005;</button></div>';
     }).join('');
 }
@@ -854,7 +854,7 @@ function removeNode(i) { state.nodes.splice(i, 1); renderChain(); saveState(); }
 
 function renderChain() {
     var el = document.getElementById('chainRender');
-    if (!state.nodes.length) { el.innerHTML = '<div class="empty-note">No chain nodes yet — add the first stage above.</div>'; return; }
+    if (!state.nodes.length) { el.innerHTML = '<div class="empty-note">No chain nodes yet. Add the first stage above.</div>'; return; }
     var rows = state.nodes.map(function(n, i) {
         return '<tr><td><span class="chain-stage-badge">' + esc(n.stage) + '</span></td>' +
             '<td><strong>' + esc(n.actors || '&mdash;') + '</strong></td>' +
@@ -882,7 +882,7 @@ function renderChain() {
         html += '<h3 class="block-title">Margin distribution across the chain</h3>' +
             '<div class="margin-bar">' + segs + '</div>' +
             '<div class="margin-legend">' + legend + '</div>' +
-            (total !== 100 ? '<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;">Entered margins sum to ' + total + '% — shown as relative shares. Adjust so stages reflect the full farm-gate-to-retail price.</p>' : '');
+            (total !== 100 ? '<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;">Entered margins sum to ' + total + '%, shown as relative shares. Adjust so stages reflect the full farm-gate-to-retail price.</p>' : '');
     }
     el.innerHTML = html;
 }
@@ -971,7 +971,7 @@ function esc(s) {
 /* ===== EXPORT ===== */
 function exportPlan() {
     var L = [];
-    L.push('ImpactMojo — Livelihoods & Value-Chain Plan');
+    L.push('ImpactMojo | Livelihoods & Value-Chain Plan');
     L.push('===========================================');
     L.push('');
     L.push('1. CONTEXT');
@@ -979,7 +979,7 @@ function exportPlan() {
     L.push('   Geography          : ' + (state.context.geography || '(not set)'));
     L.push('   Target group       : ' + (state.context.target || '(not set)'));
     L.push('');
-    L.push('   Asset base — five capitals (Sustainable Livelihoods Framework):');
+    L.push('   Asset base: five capitals (Sustainable Livelihoods Framework):');
     L.push('   - Human    : ' + (state.capitals.human || '(none noted)'));
     L.push('   - Social   : ' + (state.capitals.social || '(none noted)'));
     L.push('   - Natural  : ' + (state.capitals.natural || '(none noted)'));
@@ -988,7 +988,7 @@ function exportPlan() {
     L.push('');
     L.push('   Actors:');
     if (state.actors.length) {
-        state.actors.forEach(function(a) { L.push('   - ' + a.name + (a.role ? ' — ' + a.role : '')); });
+        state.actors.forEach(function(a) { L.push('   - ' + a.name + (a.role ? ', ' + a.role : '')); });
     } else { L.push('   (none listed)'); }
     L.push('');
     L.push('2. VALUE-CHAIN MAP (input supply -> production -> aggregation -> processing -> marketing -> retail)');
@@ -1002,7 +1002,7 @@ function exportPlan() {
     L.push('3. CONSTRAINTS & LEVERAGE (M4P market-systems lens)');
     if (state.constraints.length) {
         state.constraints.forEach(function(c) {
-            L.push('   [' + c.node + '] ' + c.type + ' — ' + c.failure + (c.leverage ? ' — LEVERAGE POINT' : ''));
+            L.push('   [' + c.node + '] ' + c.type + ': ' + c.failure + (c.leverage ? ' (LEVERAGE POINT)' : ''));
             L.push('       ' + c.desc);
         });
     } else { L.push('   (no constraints identified)'); }
@@ -1043,6 +1043,6 @@ updateProgress();
 <script src="/js/config.js?v=7e6af861"></script>
 <script src="/js/auth.js?v=57fe7e3d"></script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-<script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+<script src="/js/site-chrome.js?v=d3a5d3a2" defer></script>
 </body>
 </html>

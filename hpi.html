@@ -254,9 +254,9 @@ window.HPI_DATA={"meta":{"src":"Happy Planet Index 2026 public data file · Hot 
     var q=document.getElementById("qline"),h="";
     var V=blank("view",S.view,VIEW_OPTS);
     if(S.view==="rank") h=V+" by "+blank("m",S.m,MEAS_OPTS)+" in "+blank("year",S.year,YEAR_OPTS)+", "+blank("reg",S.reg,REG_OPTS)+".";
-    else if(S.view==="trend") h=V+": "+cBlank("a",S.a)+" — "+blank("m",S.m,MEAS_OPTS)+" — 2006 to 2025, against the world median.";
+    else if(S.view==="trend") h=V+": "+cBlank("a",S.a)+", "+blank("m",S.m,MEAS_OPTS)+", 2006 to 2025, against the world median.";
     else if(S.view==="compare") h=V+": "+cBlank("a",S.a)+" against "+cBlank("b",S.b)+", ingredient by ingredient, in "+blank("year",S.year,YEAR_OPTS)+".";
-    else h=V+" for "+blank("year",S.year,YEAR_OPTS)+" — sortable and searchable.";
+    else h=V+" for "+blank("year",S.year,YEAR_OPTS)+", sortable and searchable.";
     q.innerHTML=h;
     q.querySelectorAll("select.blank").forEach(function(sel){
       sel.addEventListener("change",function(){
@@ -283,21 +283,21 @@ window.HPI_DATA={"meta":{"src":"Happy Planet Index 2026 public data file · Hot 
     var M=MEAS[S.m];
     if(S.view==="rank"){
       var n=filt().length, tot=(S.reg==="all"?C.length:C.filter(function(c){return String(c[2])===S.reg;}).length);
-      h='<div class="q">'+esc(M.short)+' — '+S.year+(S.reg==="all"?", world":", "+esc(REG[parseInt(S.reg,10)-1]))+' ('+n+' of '+tot+' countries measured)</div>'+
+      h='<div class="q">'+esc(M.short)+': '+S.year+(S.reg==="all"?", world":", "+esc(REG[parseInt(S.reg,10)-1]))+' ('+n+' of '+tot+' countries measured)</div>'+
         '<div class="sub">'+esc(M.unit)+'. Positions come from sorting the published scores; unmeasured countries are excluded, not zeroed.</div>'+
-        (S.m===3?'<div class="why">The 2025 fair share is '+BIO[BIO.length-1].toFixed(2)+' gha per person — most of the world’s top HPI performers sit near or below it.</div>':'');
+        (S.m===3?'<div class="why">The 2025 fair share is '+BIO[BIO.length-1].toFixed(2)+' gha per person. Most of the world’s top HPI performers sit near or below it.</div>':'');
     }else if(S.view==="trend"){
       var a=C[S.a];
-      h='<div class="q">'+esc(a[0])+' — '+esc(M.short)+', 2006–2025</div>'+
-        '<div class="sub">Solid line: '+esc(a[0])+'. Dashed: world median of measured countries that year (computed here). '+(S.m===3?'Dotted: the planet’s per-person biocapacity — the fair share.':'')+'</div>'+
-        '<div class="why">Line breaks are years without data — honesty, not zero.</div>';
+      h='<div class="q">'+esc(a[0])+': '+esc(M.short)+', 2006–2025</div>'+
+        '<div class="sub">Solid line: '+esc(a[0])+'. Dashed: world median of measured countries that year (computed here). '+(S.m===3?'Dotted: the planet’s per-person biocapacity, the fair share.':'')+'</div>'+
+        '<div class="why">Line breaks are years without data. A gap here means no figure was published, and it is not a zero.</div>';
     }else if(S.view==="compare"){
       var a=C[S.a],b=C[S.b];
-      h='<div class="q">'+esc(a[0])+' vs '+esc(b[0])+' — '+S.year+'</div>'+
+      h='<div class="q">'+esc(a[0])+' vs '+esc(b[0])+': '+S.year+'</div>'+
         '<div class="sub">All three ingredients plus the headline score, on each measure’s own scale. For the footprint, the shorter bar is the lighter one.</div>';
     }else{
       var n2=C.filter(function(c){return c[4][yi()]!==null;}).length;
-      h='<div class="q">The full table — '+S.year+' ('+n2+' countries with an HPI score)</div>'+
+      h='<div class="q">The full table: '+S.year+' ('+n2+' countries with an HPI score)</div>'+
         '<div class="sub">Click a column head to sort; type to filter by country or region. South Asian countries highlighted.</div>';
     }
     cap.innerHTML=h;
@@ -390,11 +390,11 @@ window.HPI_DATA={"meta":{"src":"Happy Planet Index 2026 public data file · Hot 
     var h='<div class="cmp-head">'+
       '<div class="cmp-card"><div class="cc-n">'+esc(a[0])+'</div><div class="cc-s">'+esc(REG[a[2]-1])+(a[3]?' · GDP pc ~$'+a[3].toLocaleString('en-US'):'')+'</div><div class="cc-r">HPI '+fmt(val(a,0),0)+(pa?' · #'+pa+' in '+S.year:'')+'</div></div>'+
       '<div class="cmp-card b"><div class="cc-n">'+esc(b[0])+'</div><div class="cc-s">'+esc(REG[b[2]-1])+(b[3]?' · GDP pc ~$'+b[3].toLocaleString('en-US'):'')+'</div><div class="cc-r">HPI '+fmt(val(b,0),0)+(pb?' · #'+pb+' in '+S.year:'')+'</div></div></div>';
-    h+='<div class="gap-wrap"><div class="gap-sec"><h3>The headline &amp; the three ingredients — '+S.year+'</h3>';
+    h+='<div class="gap-wrap"><div class="gap-sec"><h3>The headline &amp; the three ingredients: '+S.year+'</h3>';
     h+=cmpPair("Happy Planet Index","0–100",val(a,0),val(b,0),a[0],b[0],1);
     h+=cmpPair("Life expectancy","years",val(a,1),val(b,1),a[0],b[0],1);
     h+=cmpPair("Life satisfaction","0–10 ladder",val(a,2),val(b,2),a[0],b[0],2);
-    h+=cmpPair("Ecological footprint","gha / person — shorter is lighter",val(a,3),val(b,3),a[0],b[0],2);
+    h+=cmpPair("Ecological footprint","gha / person, shorter is lighter",val(a,3),val(b,3),a[0],b[0],2);
     h+='</div></div>';
     h+='<div class="gap-legend"><span><span class="dot a-c"></span>'+esc(a[0])+'</span><span><span class="dot b-c"></span>'+esc(b[0])+'</span></div>';
     document.getElementById("panel").innerHTML=h;
@@ -461,6 +461,6 @@ window.HPI_DATA={"meta":{"src":"Happy Planet Index 2026 public data file · Hot 
 })();
 </script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-<script src="/js/site-chrome.js?v=c6963ba7" defer></script>
+<script src="/js/site-chrome.js?v=d3a5d3a2" defer></script>
 </body>
 </html>

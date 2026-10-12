@@ -400,7 +400,7 @@ SLIDES = [
     S("Plain words", "Ontology and epistemology without the jargon", [
         B("Two philosophical questions sit underneath every study, whether or not the authors "
           "name them. You do not need to resolve them, but you need to know which answers your "
-          "design quietly assumes, because they decide what counts as evidence."),
+          "design assumes without saying so, because they decide what counts as evidence."),
         TC([TERM("Ontology", "What is there to know? Is 'poverty' a fact about households that "
                  "exists whether or not we measure it, or a category people construct and "
                  "contest?")],
@@ -421,7 +421,7 @@ SLIDES = [
             "Replicable measurement, controlled comparison, quantified uncertainty",
             "Surveys, experiments, secondary data analysis"],
            ["Interpretivist or constructivist", "Social reality is made through meaning",
-            "Rich accounts of how people understand and act", "In-depth interviews, ethnography, "
+            "Detailed accounts of how people understand and act", "In-depth interviews, ethnography, "
             "case studies"],
            ["Critical", "Knowledge is shaped by power", "Evidence that "
             "exposes and challenges inequality, produced with those affected",
@@ -652,7 +652,7 @@ SLIDES = [
            [B("Constraints are design inputs. State them in the protocol and explain how the "
               "chosen design answers the question within them. Reviewers respect a modest "
               "design matched candidly to its limits.", sm=True),
-            H("red", "The dangerous move is keeping an ambitious question and quietly using a "
+            H("red", "The dangerous move is keeping an ambitious question and using, without saying so, a "
               "design that cannot answer it. Shrink the question instead.")], ratio="a32"),
         B("Illustrative figures. Costs vary widely by state, sample and partner.", sm=True),
     ]),

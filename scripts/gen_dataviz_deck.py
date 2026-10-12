@@ -810,7 +810,7 @@ content('<div class="section-label">Worked example</div>'
         '<div class="flow-step"><div class="flow-num">3</div><div class="flow-label">Sequential ramp + stated bins</div></div>'
         '</div>'
         '<div class="hbox green"><div class="hbox-text">See this exact chart built from Census data on '
-        '<strong>The Long View</strong> &mdash; ImpactMojo&rsquo;s data-visualisation showcase.</div></div>')
+        '<strong>The Long View</strong> &mdash; ImpactMojo&rsquo;s data-visualisation gallery.</div></div>')
 
 # ===================== SECTION 10 =====================
 divider(10, "Section Ten", "Audience &amp; Access")
