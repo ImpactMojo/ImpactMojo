@@ -452,7 +452,7 @@ body { padding-top: 56px; }
                     </div>
                     <div class="field">
                         <label for="policyLevel">Policy Level</label><select id="policyLevel">
-                            <option value="">, Select, </option>
+                            <option value="">Select</option>
                             <option value="local">Local (Gram Panchayat / Block)</option>
                             <option value="district">District</option>
                             <option value="state">State</option>
@@ -462,7 +462,7 @@ body { padding-top: 56px; }
                     </div>
                     <div class="field">
                         <label for="sector">Sector</label><select id="sector">
-                            <option value="">, Select, </option>
+                            <option value="">Select</option>
                             <option value="health">Health</option>
                             <option value="education">Education</option>
                             <option value="livelihoods">Livelihoods</option>
@@ -709,7 +709,7 @@ function addDecisionMaker() {
 function renderDecisionMakers() {
     const el = document.getElementById('decisionMakerList');
     el.innerHTML = state.decisionMakers.map((d, i) =>
-        '<li class="item-row"><span><strong>' + esc(d.name) + '</strong> — ' + esc(d.role) + '</span><button class="item-remove" onclick="state.decisionMakers.splice(' + i + ',1);renderDecisionMakers();saveState();">&times;</button></li>'
+        '<li class="item-row"><span><strong>' + esc(d.name) + '</strong>, ' + esc(d.role) + '</span><button class="item-remove" onclick="state.decisionMakers.splice(' + i + ',1);renderDecisionMakers();saveState();">&times;</button></li>'
     ).join('');
 }
 
@@ -757,7 +757,7 @@ function renderStakeholders() {
     const el = document.getElementById('stakeholderList');
     if (!state.stakeholders.length) { el.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">No stakeholders mapped yet.</p>'; return; }
     el.innerHTML = state.stakeholders.map((s, i) =>
-        '<div class="item-row" style="margin-bottom:0.4rem;"><span><strong>' + esc(s.name) + '</strong> <span class="stakeholder-badge badge-' + s.position + '">' + s.position.toUpperCase() + '</span> — ' + esc(s.influence) + '</span>' +
+        '<div class="item-row" style="margin-bottom:0.4rem;"><span><strong>' + esc(s.name) + '</strong> <span class="stakeholder-badge badge-' + s.position + '">' + s.position.toUpperCase() + '</span>: ' + esc(s.influence) + '</span>' +
         '<button class="item-remove" onclick="state.stakeholders.splice(' + i + ',1);renderStakeholders();saveState();">&times;</button></div>'
     ).join('');
 }
@@ -823,13 +823,13 @@ function exportResults() {
     t += 'Affected: ' + (document.getElementById('affected')?.value || 'N/A') + '\n';
     t += 'Environment: ' + (document.getElementById('policyEnv')?.value || 'N/A') + '\n\n';
     t += '--- DECISION MAKERS ---\n';
-    state.decisionMakers.forEach(d => t += '  ' + d.name + ' — ' + d.role + '\n');
+    state.decisionMakers.forEach(d => t += '  ' + d.name + ', ' + d.role + '\n');
     t += '\n--- EVIDENCE ---\n';
     state.evidence.forEach(e => t += '  [' + e.type + '] ' + e.finding + ' (Source: ' + e.source + ', Quality: ' + e.quality + ')\n');
     t += '\n--- APPROACHES ---\n';
     document.querySelectorAll('#approaches input:checked').forEach(c => t += '  - ' + c.value + '\n');
     t += '\n--- STAKEHOLDERS ---\n';
-    state.stakeholders.forEach(s => t += '  ' + s.name + ' (' + s.position + ') — ' + s.influence + '\n');
+    state.stakeholders.forEach(s => t += '  ' + s.name + ' (' + s.position + '): ' + s.influence + '\n');
     t += '\n--- OBJECTIVES ---\n';
     state.objectives.forEach(o => t += '  - ' + o + '\n');
     t += '\n--- ACTION PLAN ---\n';

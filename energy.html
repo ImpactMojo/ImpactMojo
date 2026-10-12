@@ -258,7 +258,7 @@ window.ENERGY_DATA={
     var V=blank("view",S.view,VIEW_OPTS);
     if(S.view==="rank") h=V+" by "+blank("metric",S.metric,METRIC_OPTS)+", as on 31 March 2024.";
     else if(S.view==="trend") h=V+" in "+blank("series",S.series,SERIES_OPTS)+", 2014&ndash;15 to 2023&ndash;24.";
-    else h=V+" — potential, installed renewables, capacity, coal and build-out for every state.";
+    else h=V+": potential, installed renewables, capacity, coal and build-out for every state.";
     q.innerHTML=h;
     [].forEach.call(q.querySelectorAll("select.blank"),function(sel){
       sel.addEventListener("change",function(){S[sel.dataset.key]=sel.value;renderQuestion();render();});
@@ -270,9 +270,9 @@ window.ENERGY_DATA={
     if(S.view==="trend"){
       var se=S.series, v=TR[se], first=v[0], last=v[v.length-1], T=TREND[se];
       var chg=Math.round((last/first-1)*100), dir=chg>=0?"+":"";
-      var extra = se==="eint" ? "<div class='why'>Falling energy intensity means India produces more GDP per unit of energy — a rise in efficiency.</div>"
+      var extra = se==="eint" ? "<div class='why'>Falling energy intensity means India produces more GDP per unit of energy, a rise in efficiency.</div>"
                 : se==="reshare" ? "<div class='why'>The renewable share of electricity (excluding large hydro) has roughly doubled in a decade.</div>"
-                : se==="coalp" ? "<div class='why'>Coal production kept climbing even as renewables grew — the transition is happening on top of a still-expanding system.</div>" : "";
+                : se==="coalp" ? "<div class='why'>Coal production kept climbing even as renewables grew. The transition is happening on top of a still-expanding system.</div>" : "";
       cap.innerHTML="<div class='q'>India's "+T.L+", 2014-15 to 2023-24</div>"+
         "<div class='sub'>National total · "+(se==="cap"?"as on 31 March each year":"financial year")+" · "+T.unit+"</div>"+
         "<div class='allindia'>"+grp(first,T.dec)+" ("+M.trendYears[0]+") → <b>"+grp(last,T.dec)+" "+T.unit+"</b> ("+M.trendYears[M.trendYears.length-1]+"P) · <b>"+dir+chg+"%</b> over the decade</div>"+extra;
@@ -287,7 +287,7 @@ window.ENERGY_DATA={
       cap.innerHTML="<div class='q'>How much of its renewable potential each state has built</div>"+
         "<div class='sub'>installed grid-interactive renewables ÷ assessed potential · indicative ratio · as on 31 March 2024</div>"+
         "<div class='allindia'>National: <b>"+grp(MET.reinst.nat/MET.pot.nat*100,1)+"%</b> of assessed potential built</div>"+
-        "<div class='why'>"+esc(top.n)+" leads at "+grp(top.v,1)+"% — while giants like Rajasthan and Maharashtra have used only a small share of their vast headroom.</div>";
+        "<div class='why'>"+esc(top.n)+" leads at "+grp(top.v,1)+"%, while giants like Rajasthan and Maharashtra have used only a small share of their vast headroom.</div>";
       return;
     }
     var share=Math.round(top.v/mt.nat*1000)/10;

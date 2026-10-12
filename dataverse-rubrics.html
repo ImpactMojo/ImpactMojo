@@ -516,7 +516,7 @@ function openRubric(id){
     var sc = state.scores[id] || {};
     var head = '<div class="rubric-head"><h2>'+esc(r.name)+'</h2><span class="cc-cat">'+esc(r.cat)+'</span></div>'+
         '<div class="rubric-dev"><strong>In development practice:</strong> '+esc(r.dev)+'</div>'+
-        '<div class="scale-legend"><span>1 · Benchmark</span><span>2 · Milestone</span><span>3 · Milestone</span><span>4 · Capstone</span><span style="border:none;background:none;">— click a cell to score</span></div>';
+        '<div class="scale-legend"><span>1 · Benchmark</span><span>2 · Milestone</span><span>3 · Milestone</span><span>4 · Capstone</span><span style="border:none;background:none;">Click a cell to score</span></div>';
     var rows = r.criteria.map(function(cr, ci){
         var cells = cr.l.map(function(txt, li){
             var lvl = li+1; var selCls = (sc[ci]===lvl) ? ' sel' : '';
@@ -562,7 +562,7 @@ function exportAssessment(){
     if (!gateOK()) return;
     saveState();
     var L = [];
-    L.push('ImpactMojo — Competency Assessment');
+    L.push('ImpactMojo: Competency Assessment');
     L.push('=====================================');
     L.push('Generated: ' + new Date().toISOString().slice(0,10));
     L.push('Assessing: ' + (state.subject || '(not set)'));
@@ -574,11 +574,11 @@ function exportAssessment(){
         any = true;
         var vals = r.criteria.map(function(_,i){ return sc[i]; }).filter(function(v){ return v; });
         var avg = vals.reduce(function(a,b){return a+b;},0)/vals.length;
-        L.push(r.name.toUpperCase() + '  [' + r.cat + ']   — average ' + (Math.round(avg*10)/10) + '/4');
+        L.push(r.name.toUpperCase() + '  [' + r.cat + '], average ' + (Math.round(avg*10)/10) + '/4');
         L.push('-'.repeat(r.name.length + 20));
         r.criteria.forEach(function(cr, ci){
             var lvl = sc[ci];
-            if (lvl) { L.push('  • ' + cr.name + ': ' + lvl + '/4 (' + LEVELS[lvl-1] + ') — ' + cr.l[lvl-1]); }
+            if (lvl) { L.push('  • ' + cr.name + ': ' + lvl + '/4 (' + LEVELS[lvl-1] + '): ' + cr.l[lvl-1]); }
             else { L.push('  • ' + cr.name + ': (not scored)'); }
         });
         L.push('');

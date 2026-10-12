@@ -671,7 +671,7 @@ function exportNote() {
     saveNote();
     var map = { admin: 'Administrative / statutory border', econ: 'Economic (built-up) boundary', both: 'Both, compared side by side', undecided: 'Still deciding' };
     var L = [];
-    L.push('ImpactMojo — City Boundary Decision Note');
+    L.push('ImpactMojo | City Boundary Decision Note');
     L.push('=========================================');
     L.push('Generated: ' + new Date().toISOString().slice(0, 10));
     L.push('');
@@ -708,7 +708,7 @@ function setMap(mode) {
     setOpacity('excluded', showEcon ? 1 : 0);
     var note = el('mapNote');
     if (mode === 'admin') { el('btnAdmin').classList.add('active'); note.innerHTML = '<strong>Administrative border.</strong> A rigid rectangle drawn (and rarely redrawn) by administration. See how it swallows <strong>farmland</strong> in the top-left corner, while the dense new suburb on the right sits partly outside it.'; }
-    else if (mode === 'econ') { el('btnEcon').classList.add('active'); note.innerHTML = '<strong>Economic city.</strong> The green boundary hugs the actual built-up density — it drops the farmland and reaches out to include the dense suburb the official line cut off.'; }
+    else if (mode === 'econ') { el('btnEcon').classList.add('active'); note.innerHTML = '<strong>Economic city.</strong> The green boundary hugs the actual built-up density. It drops the farmland and reaches out to include the dense suburb the official line cut off.'; }
     else { el('btnBoth').classList.add('active'); note.innerHTML = '<strong>Both, overlaid.</strong> The gap between the red administrative line and the green economic boundary <em>is</em> the measurement error: farmland wrongly counted as city, real city wrongly counted as outside.'; }
 }
 
@@ -728,8 +728,8 @@ function classifyCell() {
     el('dotLight').className = 'dot ' + (pLight ? 'yes' : 'no');
     var count = (pPop ? 1 : 0) + (pBuilt ? 1 : 0) + (pLight ? 1 : 0);
     var v = el('cellVerdict');
-    if (count >= 2) { v.textContent = '🏙️ URBAN — ' + count + ' of 3 signals cleared'; v.style.color = 'var(--success-color)'; }
-    else { v.textContent = '🌾 Not urban — only ' + count + ' of 3 signals cleared'; v.style.color = 'var(--text-muted)'; }
+    if (count >= 2) { v.textContent = '🏙️ URBAN: ' + count + ' of 3 signals cleared'; v.style.color = 'var(--success-color)'; }
+    else { v.textContent = '🌾 Not urban, only ' + count + ' of 3 signals cleared'; v.style.color = 'var(--text-muted)'; }
 }
 
 /* ===== INIT ===== */

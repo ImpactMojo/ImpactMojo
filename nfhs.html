@@ -509,18 +509,18 @@ body.dark-mode .nf-chip[aria-pressed="true"], [data-theme="dark"] .nf-chip[aria-
 /* ---------------- constants / teaching content ---------------- */
 // Short labels + plain-language "why it matters" for the 12 hero indicators (by catalog id)
 var HERO_INFO = {
-  72:{short:"Child stunting", why:"Share of under-5 children too short for their age — a marker of chronic undernutrition in the first 1,000 days of life. Lower is better."},
-  73:{short:"Child wasting",  why:"Share of under-5 children too thin for their height — a sign of acute, recent undernutrition or illness. Lower is better."},
-  75:{short:"Underweight",    why:"Share of under-5 children weighing too little for their age — a combined signal of chronic and acute undernutrition."},
+  72:{short:"Child stunting", why:"Share of under-5 children too short for their age, a marker of chronic undernutrition in the first 1,000 days of life. Lower is better."},
+  73:{short:"Child wasting",  why:"Share of under-5 children too thin for their height, a sign of acute, recent undernutrition or illness. Lower is better."},
+  75:{short:"Underweight",    why:"Share of under-5 children weighing too little for their age, a combined signal of chronic and acute undernutrition."},
   80:{short:"Child anaemia",  why:"Share of children 6-59 months with low blood haemoglobin, which slows growth and impairs learning. Lower is better."},
-  83:{short:"Women's anaemia",why:"Share of women 15-49 who are anaemic — linked to fatigue, poor pregnancy outcomes and lost productivity. Lower is better."},
-  41:{short:"Institutional births", why:"Share of births in a health facility, where obstetric emergencies can be managed — a key driver of lower maternal deaths. Higher is better."},
-  48:{short:"Full immunisation",   why:"Share of 1-2 year-olds who received all basic childhood vaccines — the frontline defence against preventable disease."},
-  14:{short:"Women's schooling",   why:"Share of women with 10 or more years of schooling — secondary education is one of the strongest predictors of later marriage, better family health and higher household income. Higher is better."},
-  15:{short:"Child marriage",      why:"Share of women 20-24 married before 18 — child marriage cuts short schooling and raises health risks. Lower is better."},
-  8: {short:"Sanitation",          why:"Share of people living in households with an improved toilet — central to preventing disease and protecting dignity. Higher is better."},
+  83:{short:"Women's anaemia",why:"Share of women 15-49 who are anaemic, linked to fatigue, poor pregnancy outcomes and lost productivity. Lower is better."},
+  41:{short:"Institutional births", why:"Share of births in a health facility, where obstetric emergencies can be managed, a key driver of lower maternal deaths. Higher is better."},
+  48:{short:"Full immunisation",   why:"Share of 1-2 year-olds who received all basic childhood vaccines, the frontline defence against preventable disease."},
+  14:{short:"Women's schooling",   why:"Share of women with 10 or more years of schooling. Secondary education is one of the strongest predictors of later marriage, better family health and higher household income. Higher is better."},
+  15:{short:"Child marriage",      why:"Share of women 20-24 married before 18. Child marriage cuts short schooling and raises health risks. Lower is better."},
+  8: {short:"Sanitation",          why:"Share of people living in households with an improved toilet, central to preventing disease and protecting dignity. Higher is better."},
   9: {short:"Clean cooking fuel",  why:"Share of households cooking with clean fuel rather than wood or dung, cutting deadly household air pollution. Higher is better."},
-  11:{short:"Health insurance",    why:"Share of households with any member covered by a health scheme — a buffer against catastrophic medical bills. Higher is better."}
+  11:{short:"Health insurance",    why:"Share of households with any member covered by a health scheme, a buffer against catastrophic medical bills. Higher is better."}
 };
 // Which ImpactMojo course each hero indicator links to
 var COURSE_MAP = {
@@ -579,7 +579,7 @@ Promise.all([
   var m=document.getElementById("nf-main");
   var d=document.createElement("div"); d.className="nf-wrap";
   d.style.padding="30px 0";
-  d.innerHTML="<p style='color:#e11d48;font-weight:600'>Sorry — the NFHS data could not be loaded ("+
+  d.innerHTML="<p style='color:#e11d48;font-weight:600'>Sorry, the NFHS data could not be loaded ("+
     (err&&err.message?err.message:"unknown error")+"). Please refresh.</p>";
   m.insertBefore(d, m.firstChild);
   if(window.console) console.error(err);
@@ -833,7 +833,7 @@ function syncModes(){
   });
   if(noN4){
     note.hidden=false;
-    note.textContent="NFHS-5 only — this indicator was not measured at district level in NFHS-4, so change and NFHS-4 views are unavailable.";
+    note.textContent="NFHS-5 only. This indicator was not measured at district level in NFHS-4, so change and NFHS-4 views are unavailable.";
   } else { note.hidden=true; }
 }
 
@@ -871,8 +871,8 @@ function renderLegend(){
   if(scale.type==="div"){
     var dir=CAT[indicatorId].dir;
     title.textContent = dir===0
-      ? "Change (direction not evaluated) — "+(u||"pts")
-      : "Change since NFHS-4 — worse ◄ ► better ("+(u==="%"?"pp":u||"pts")+")";
+      ? "Change (direction not evaluated): "+(u||"pts")
+      : "Change since NFHS-4: worse ◄ ► better ("+(u==="%"?"pp":u||"pts")+")";
     var bp=scale.bp;
     // labels aligned under boundaries; ends open
     var labels=["", fmtChange(bp[0],indicatorId), fmtChange(bp[1],indicatorId), "", "0", "",
@@ -883,7 +883,7 @@ function renderLegend(){
   } else {
     var dir2=CAT[indicatorId].dir;
     var val=dir2===-1?"lower is better":(dir2===1?"higher is better":"neutral");
-    title.textContent = modeLabel()+" — "+(u||"value")+" ("+val+")";
+    title.textContent = modeLabel()+": "+(u||"value")+" ("+val+")";
     var br=scale.breaks;
     scale.ramp.forEach(function(col,i){
       var lab = i<br.length ? "≤"+fmt(br[i],indicatorId) : "max";
@@ -903,7 +903,7 @@ function renderMeaning(){
   document.getElementById("nf-meaning-title").textContent=c.name;
   var info=HERO_INFO[indicatorId];
   var why = info ? info.why
-    : ("A "+c.cat+" indicator. "+(c.dir===-1?"For this measure, lower values are better.":c.dir===1?"For this measure, higher values are better.":"Direction not evaluated — read the number itself rather than a 'good/bad' colour.")+" Compare districts and track the NFHS-4 → NFHS-5 change.");
+    : ("A "+c.cat+" indicator. "+(c.dir===-1?"For this measure, lower values are better.":c.dir===1?"For this measure, higher values are better.":"Direction not evaluated. Read the number itself rather than a 'good/bad' colour.")+" Compare districts and track the NFHS-4 → NFHS-5 change.");
   document.getElementById("nf-meaning-why").textContent=why;
   var dirTxt = c.dir===-1?"lower is better":(c.dir===1?"higher is better":"direction not evaluated");
   document.getElementById("nf-meaning-meta").textContent="Theme: "+c.cat+" · Unit: "+(c.unit||"—")+" · "+dirTxt;
@@ -929,7 +929,7 @@ function updateHowto(){
     var end = dir===-1?'darker <span style="color:#d84420;font-weight:700">red</span> = higher (worse)'
             : dir===1?'darker <span style="color:#0a6b4f;font-weight:700">teal</span> = higher (better)'
             : 'darker <span style="color:#26538f;font-weight:700">blue</span> = higher value';
-    el.innerHTML='<strong>Level mode ('+(mode==="n5"?"NFHS-5":"NFHS-4")+'):</strong> shade shows the raw value — '+end+'. Switch to <em>Change since NFHS-4</em> to see who improved.';
+    el.innerHTML='<strong>Level mode ('+(mode==="n5"?"NFHS-5":"NFHS-4")+'):</strong> shade shows the raw value: '+end+'. Switch to <em>Change since NFHS-4</em> to see who improved.';
   }
 }
 
@@ -977,7 +977,7 @@ function selectDistrict(rec){
 function renderDetail(rec){
   var body=document.getElementById("nf-detail-body");
   var html='<div class="nf-dhead"><b>'+esc(rec.d)+'</b> <span class="nf-dstate">'+esc(rec.s)+'</span></div>';
-  if(!rec.m){ html+='<p class="nf-dnote">Not shown on the map (no 2011 boundary) — listed in rankings &amp; table.</p>'; }
+  if(!rec.m){ html+='<p class="nf-dnote">Not shown on the map (no 2011 boundary). Listed in rankings &amp; table.</p>'; }
   html+='<div class="nf-bars">';
   HERO.forEach(function(id){
     var r=raw(rec,id); var c=CAT[id];
@@ -1040,7 +1040,7 @@ function trySearch(val){
 var tableSort={key:"name", dir:1};
 function renderTable(){
   var cap=document.getElementById("nf-table-cap");
-  cap.textContent = CAT[indicatorId].name+" — "+modeLabel()+" (all districts)";
+  cap.textContent = CAT[indicatorId].name+": "+modeLabel()+" (all districts)";
   var rows=records.map(function(rec){
     var r=raw(rec,indicatorId);
     var chg = (r.n5!=null&&r.n4!=null)? valueFor(rec,indicatorId,"change") : null;

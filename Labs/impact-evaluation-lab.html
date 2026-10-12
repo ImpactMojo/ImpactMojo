@@ -698,10 +698,10 @@ function updateProgress() {
 
 /* ===== TAB 1: ESTIMAND ===== */
 var estimandNotes = {
-    ate: 'ATE is the effect averaged over the whole population — the right target when the policy question is "should everyone get this?" It is what a well-run RCT with full compliance recovers.',
+    ate: 'ATE is the effect averaged over the whole population, the right target when the policy question is "should everyone get this?" It is what a well-run RCT with full compliance recovers.',
     att: 'ATT is the effect for those who actually received treatment. It is the natural target for matching, DiD and synthetic-control designs, which compare treated units to a constructed counterfactual for those same units.',
-    itt: 'ITT compares everyone assigned/offered treatment regardless of take-up. It is conservative, policy-relevant, and protected by randomisation — the default reported estimate in most RCTs.',
-    late: 'LATE (a.k.a. CACE) is the effect among "compliers" — units whose take-up is moved by assignment. Instrumental-variables / randomised-encouragement designs recover it; it is not the effect for always-takers or never-takers.'
+    itt: 'ITT compares everyone assigned/offered treatment regardless of take-up. It is conservative, policy-relevant, and protected by randomisation, the default reported estimate in most RCTs.',
+    late: 'LATE (a.k.a. CACE) is the effect among "compliers", units whose take-up is moved by assignment. Instrumental-variables / randomised-encouragement designs recover it; it is not the effect for always-takers or never-takers.'
 };
 function onEstimandChange() {
     saveState();
@@ -715,7 +715,7 @@ var designs = [
     {
         id: 'rct', name: 'Randomised Controlled Trial', abbr: 'RCT',
         blurb: 'You can randomly assign who gets the programme.',
-        when: 'You can ethically and practically randomise units (or an offer of the programme) to treatment and control — including phased rollouts and lotteries for over-subscribed programmes.',
+        when: 'You can ethically and practically randomise units (or an offer of the programme) to treatment and control, including phased rollouts and lotteries for over-subscribed programmes.',
         assumption: 'Randomisation balances treatment and control in expectation on all characteristics, observed and unobserved, so treatment is independent of potential outcomes. Check with a baseline balance table.',
         data: 'Randomisation/assignment records, baseline and endline outcomes on both arms, and take-up/compliance data to separate ITT from treatment-on-the-treated.',
         threats: 'Attrition (differential drop-out), non-compliance, spillovers between arms, and Hawthorne effects. Example: many J-PAL / evaluation-partner RCTs across India randomise at the village or school level.'
@@ -723,7 +723,7 @@ var designs = [
     {
         id: 'did', name: 'Difference-in-Differences', abbr: 'DiD',
         blurb: 'A policy rolled out to some groups, not others, over time.',
-        when: 'No randomisation, but you observe a treated and a comparison group both before and after the intervention — classic for staggered policy rollouts.',
+        when: 'No randomisation, but you observe a treated and a comparison group both before and after the intervention, classic for staggered policy rollouts.',
         assumption: 'Parallel trends: absent treatment, the treated and comparison groups would have moved in parallel. Support it with multiple pre-periods showing matching trends.',
         data: 'Panel or repeated cross-sections with at least one pre- and one post-period; ideally several pre-periods to test for differential trends.',
         threats: 'Differential pre-trends, time-varying confounders hitting one group, compositional change, and "bad controls". Example: the phased district rollout of NREGA has been studied with DiD.'
@@ -731,23 +731,23 @@ var designs = [
     {
         id: 'rdd', name: 'Regression Discontinuity', abbr: 'RDD',
         blurb: 'Eligibility is set by a cutoff on a score.',
-        when: 'Treatment is assigned by a threshold on a continuous running variable — a poverty score, test mark, age, or population cutoff for a scheme.',
+        when: 'Treatment is assigned by a threshold on a continuous running variable, a poverty score, test mark, age, or population cutoff for a scheme.',
         assumption: 'Continuity at the cutoff: potential outcomes vary smoothly through the threshold, and units cannot precisely manipulate their score to land on the favourable side.',
         data: 'The running variable and outcome for many units densely packed near the cutoff; more data close to the threshold matters more than far from it.',
-        threats: 'Manipulation/sorting at the cutoff (test with a density check), functional-form misspecification, and limited external validity — you recover a local effect at the cutoff only. Example: eligibility-score thresholds such as BPL/poverty-scorecard cutoffs.'
+        threats: 'Manipulation/sorting at the cutoff (test with a density check), functional-form misspecification, and limited external validity. You recover a local effect at the cutoff only. Example: eligibility-score thresholds such as BPL/poverty-scorecard cutoffs.'
     },
     {
         id: 'psm', name: 'Propensity Score Matching', abbr: 'PSM',
         blurb: 'Observational data with detailed background covariates.',
         when: 'You only have observational data with no cutoff or clean rollout, but you do have extensive baseline covariates and want to compare treated units to similar untreated ones.',
-        assumption: 'Conditional independence (selection on observables): once you condition on the measured covariates, treatment is as good as random. Plus common support / overlap — treated and comparison units span the same covariate range.',
+        assumption: 'Conditional independence (selection on observables): once you condition on the measured covariates, treatment is as good as random. Plus common support / overlap. Treated and comparison units span the same covariate range.',
         data: 'A large set of pre-treatment covariates that drive both programme participation and the outcome, measured the same way for both groups.',
         threats: 'Unobserved confounding is the central, untestable risk; also poor overlap and model dependence. Matching cannot fix selection on things you did not measure. Example: PROGRESA/Oportunidades-style conditional cash transfers have been examined with matching as a comparison approach.'
     },
     {
         id: 'synth', name: 'Synthetic Control', abbr: 'SCM',
         blurb: 'One treated unit (a state/district) and many untreated donors.',
-        when: 'A policy affects a single or a few aggregate units — a state or district — and you have many untreated units to serve as a donor pool.',
+        when: 'A policy affects a single or a few aggregate units (a state or district) and you have many untreated units to serve as a donor pool.',
         assumption: 'A weighted combination of donor units can reproduce the treated unit’s pre-treatment trajectory. Needs a good donor pool and close pre-period fit; the weighted "synthetic" unit then proxies the counterfactual.',
         data: 'A long pre-treatment series for the treated unit and the donor pool, plus predictor variables used to build the weights.',
         threats: 'Poor pre-treatment fit, interpolation bias, contamination of donors by the same or similar policy, and few post-periods. Inference relies on placebo/permutation tests rather than large samples.'
@@ -886,11 +886,11 @@ function calcPower() {
 /* ===== TAB 4: THREATS ===== */
 var internalThreats = [
     { id: 'selection', name: 'Selection bias', desc: 'Treated and comparison units differ systematically before treatment, so the difference is not caused by the programme.' },
-    { id: 'attrition', name: 'Attrition / differential attrition', desc: 'Units drop out of measurement — and if drop-out differs by arm, the surviving groups are no longer comparable.' },
+    { id: 'attrition', name: 'Attrition / differential attrition', desc: 'Units drop out of measurement, and if drop-out differs by arm, the surviving groups are no longer comparable.' },
     { id: 'spillover', name: 'Spillover / SUTVA violation', desc: 'Treatment of one unit affects the outcomes of others (information, markets, contagion), breaking the stable-unit assumption.' },
     { id: 'hawthorne', name: 'Hawthorne / John Henry effects', desc: 'Being observed changes behaviour: the treated try harder because watched (Hawthorne); controls compete to catch up (John Henry).' },
     { id: 'contamination', name: 'Contamination', desc: 'The control group gets the treatment or a close substitute from another source, shrinking the measured contrast.' },
-    { id: 'noncompliance', name: 'Non-compliance', desc: 'Assigned-treated units do not take up, or assigned-controls find a way in — separating ITT from the effect on the treated.' },
+    { id: 'noncompliance', name: 'Non-compliance', desc: 'Assigned-treated units do not take up, or assigned-controls find a way in, separating ITT from the effect on the treated.' },
     { id: 'rtm', name: 'Regression to the mean', desc: 'Selecting units on an extreme baseline value (worst-performing schools/districts) means they drift toward average anyway.' }
 ];
 var externalThreats = [
@@ -931,9 +931,9 @@ function calcRobustness() {
     var out = document.getElementById('robustnessResult');
     var pct = Math.round(addressed / totalT * 100);
     var msg;
-    if (pct >= 80) msg = '<strong>Robust.</strong> You have a plan for most known threats — document the residual ones openly.';
+    if (pct >= 80) msg = '<strong>Robust.</strong> You have a plan for most known threats. Document the residual ones openly.';
     else if (pct >= 50) msg = '<strong>Reasonable.</strong> The core threats are covered; work through the remaining boxes before fielding.';
-    else if (pct >= 25) msg = '<strong>Fragile.</strong> Several major threats are unaddressed — revisit the design or the data plan.';
+    else if (pct >= 25) msg = '<strong>Fragile.</strong> Several major threats are unaddressed. Revisit the design or the data plan.';
     else msg = '<strong>High risk.</strong> Most threats are unhandled; the estimate would be hard to defend.';
     var colour = pct >= 50 ? 'var(--success-color)' : 'var(--warning-color)';
     out.innerHTML = '<div class="result-box" style="text-align:center;">' +
@@ -950,7 +950,7 @@ function exportMemo() {
     saveState();
     var d = designs.filter(function(x) { return x.id === state.design; })[0];
     var L = [];
-    L.push('ImpactMojo — Evaluation Design Memo');
+    L.push('ImpactMojo | Evaluation Design Memo');
     L.push('=====================================');
     L.push('Generated: ' + new Date().toISOString().slice(0, 10));
     L.push('');

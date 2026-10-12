@@ -64,18 +64,18 @@ var plan=q.get('plan')||'Practitioner';
 var period=q.get('period')||'';
 var upiStr="upi://pay?pa=impactmojo@ibl&pn=ImpactMojo&am="+amt+"&cu=INR&tn="+encodeURIComponent(ref);
 document.getElementById('amountBig').textContent="₹"+amt.toLocaleString('en-IN');
-document.getElementById('planTitle').textContent=plan+" — subscription";
+document.getElementById('planTitle').textContent=plan+" subscription";
 document.getElementById('periodLine').textContent=period?("Payment for "+period+". Scan to pay by UPI."):"Scan to pay this cycle's subscription by UPI.";
 document.getElementById('refBox').textContent=ref;
 document.getElementById('fRef').value=ref;
 document.getElementById('fPlan').value=plan;
 document.getElementById('upiBtn').href=upiStr;
-function qrFailed(){ var el=document.getElementById('qr'); if(el) el.replaceWith(Object.assign(document.createElement('p'),{className:'note',textContent:'Could not draw QR — use the UPI ID above.'})); }
+function qrFailed(){ var el=document.getElementById('qr'); if(el) el.replaceWith(Object.assign(document.createElement('p'),{className:'note',textContent:'Could not draw QR. Use the UPI ID above.'})); }
 /* Guard the global: if the CDN script fails, calling QRCode.toCanvas throws a ReferenceError before its own error callback can run, so the fallback line below never appears and the visitor gets an empty box with no explanation. That is what shipped while the pinned URL was 404. */
 if (typeof QRCode === 'undefined') { qrFailed(); }
 else { QRCode.toCanvas(document.getElementById('qr'), upiStr, {width:220,margin:1}, function(e){ if(e) qrFailed(); }); }
-function waOrder(){location.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi ImpactMojo — paying my "+plan+" subscription (₹"+amt+"), reference "+ref+". Screenshot attached.");}
-function submitPay(e){e.preventDefault();var f=e.target;/* Both paths: Netlify sends the notification, /api/form-submit writes the row. A spam-classified submission is accepted with a 200, so the notification alone cannot mean delivered. */window.imxSubmitBothFromElement(f).then(function(){f.querySelector('button[type=submit]').style.display='none';document.getElementById('okMsg').style.display='block';toast('Recorded — thank you');}).catch(function(){toast('Error — please WhatsApp us');});return false;}
+function waOrder(){location.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi ImpactMojo, paying my "+plan+" subscription (₹"+amt+"), reference "+ref+". Screenshot attached.");}
+function submitPay(e){e.preventDefault();var f=e.target;/* Both paths: Netlify sends the notification, /api/form-submit writes the row. A spam-classified submission is accepted with a 200, so the notification alone cannot mean delivered. */window.imxSubmitBothFromElement(f).then(function(){f.querySelector('button[type=submit]').style.display='none';document.getElementById('okMsg').style.display='block';toast('Recorded. Thank you');}).catch(function(){toast('Error. Please WhatsApp us');});return false;}
 </script>
   <script src="/js/translate-sarvam.js" defer></script>
   <script src="/js/site-chrome.js" defer></script>

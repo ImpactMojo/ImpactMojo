@@ -236,12 +236,12 @@ window.ASER_DIST={"Andhra Pradesh":{"t":[61.8,0.1,27.2,58.9,50.3,45.2],"d":{"Ana
         SC=blank("school",S.school,SCHOOL_OPTS);
     if(S.view==="rank")       h=V+" by the share of "+G+" "+SC+" who can "+T+" in "+Y+".";
     else if(S.view==="table") h=V+" of the share of "+G+" "+SC+" who can "+T+" in "+Y+", state by state.";
-    else if(S.view==="trend") h=V+" for "+blank("state",S.state,whoOpts())+" — "+G+" children who can "+T+", by school type, "+(startYear(S.state))+"&ndash;2024.";
+    else if(S.view==="trend") h=V+" for "+blank("state",S.state,whoOpts())+", "+G+" children who can "+T+", by school type, "+(startYear(S.state))+"&ndash;2024.";
     else if(S.view==="district"){
       var DS=blank("dstate",S.dstate,distStateOpts()),
           DB=blank("dband",S.dband,DBAND_OPTS),
           DT=blank("subject",S.subject,taskOptsDist());
-      h=V+" of "+DS+" &mdash; the share of "+DB+" who can "+DT+", 2024.";
+      h=V+" of "+DS+": the share of "+DB+" who can "+DT+", 2024.";
     }
     else /* ladder */         h=V+" for "+blank("subject",S.subject,[["read","reading"],["arith","arithmetic"]])+", grade by grade, in 2024.";
     q.innerHTML=h;
@@ -266,21 +266,21 @@ window.ASER_DIST={"Andhra Pradesh":{"t":[61.8,0.1,27.2,58.9,50.3,45.2],"d":{"Ana
       var rec=DIST[S.dstate], idx=distColIdx();
       var bandL=S.dband==="35"?"Std III&ndash;V":"Std VI&ndash;VIII";
       var tot=rec.t[idx];
-      cap.innerHTML="<div class='q'>"+esc(S.dstate)+" districts &mdash; "+bandL+" children who can "+distSkillPhrase()+"</div>"+
+      cap.innerHTML="<div class='q'>"+esc(S.dstate)+" districts: "+bandL+" children who can "+distSkillPhrase()+"</div>"+
         "<div class='sub'>Rural "+esc(S.dstate)+" · 2024 · district-level ASER estimates</div>"+
         "<div class='allindia'>"+esc(S.dstate)+" state average: <b>"+(tot!=null?tot.toFixed(1)+"%":"—")+"</b> · "+Object.keys(rec.d).length+" districts surveyed</div>";
       return;
     }
     if(S.view==="ladder"){
       var subj=S.subject==="read"?"reading":"arithmetic";
-      cap.innerHTML="<div class='q'>The "+subj+" skill ladder — where children actually are, grade by grade</div>"+
+      cap.innerHTML="<div class='q'>The "+subj+" skill ladder: where children actually are, grade by grade</div>"+
         "<div class='sub'>All children (government + private) · Rural India · 2024 · each bar sums to 100%</div>"+
         "<div class='allindia'>Read up the grades (Std I → VIII) to see how the "+(S.subject==="read"?"top rung (reads a Std II text)":"top rung (can divide)")+" fills in.</div>";
       return;
     }
     if(S.view==="trend"){
       var s0=startYear(S.state);
-      cap.innerHTML="<div class='q'>"+esc(S.state)+" by school type — "+GLABEL[S.grade]+" children who "+taskPhrase()+"</div>"+
+      cap.innerHTML="<div class='q'>"+esc(S.state)+" by school type: "+GLABEL[S.grade]+" children who "+taskPhrase()+"</div>"+
         "<div class='sub'>Rural India · "+s0+"–2024 · government vs private vs all children</div>"+
         "<div class='allindia'>Private-school children usually start higher; the gap and the 2022 pandemic dip both show here.</div>";
       return;
@@ -430,7 +430,7 @@ window.ASER_DIST={"Andhra Pradesh":{"t":[61.8,0.1,27.2,58.9,50.3,45.2],"d":{"Ana
     svg.push('</svg>');
     var leg='<div class="legend"><span><span class="dot" style="background:'+css('--barhi')+'"></span>higher = more children at this level</span>'+
       '<span><span class="dot" style="background:'+css('--acc2')+'"></span>dashed line = state average</span></div>';
-    var sup=supp.length?'<div class="note" style="margin-top:14px"><b>Not shown '+'('+supp.length+' district'+(supp.length>1?'s':'')+'):</b> '+esc(supp.join(", "))+' — sample too small to report at district level.</div>':'';
+    var sup=supp.length?'<div class="note" style="margin-top:14px"><b>Not shown '+'('+supp.length+' district'+(supp.length>1?'s':'')+'):</b> '+esc(supp.join(", "))+'. Sample too small to report at district level.</div>':'';
     document.getElementById("panel").innerHTML=svg.join("")+leg+sup;
   }
 

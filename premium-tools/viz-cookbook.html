@@ -374,7 +374,7 @@ const RECIPES = [
 // ─── HOUSEHOLD SURVEY ───
 {dataset:'household_survey',title:'Consumption inequality across wealth quintiles',question:'compare',chartType:'box',
  vars:['wealth_quintile','consumption_per_capita'],
- insight:'Reveals how consumption spread widens dramatically in the top quintile — a hallmark of developing-country inequality.',
+ insight:'Reveals how consumption spread widens dramatically in the top quintile, a hallmark of developing-country inequality.',
  tip:'Always start y-axis at zero. Label the median values directly on each box.',
  code:`df = pd.read_csv('output/household_survey.csv')
 sns.boxplot(data=df, x='wealth_quintile', y='consumption_per_capita',
@@ -383,9 +383,9 @@ plt.xlabel('Wealth Quintile')
 plt.ylabel('Consumption per Capita (USD/month)')
 plt.title('Consumption Distribution by Wealth Group')
 plt.tight_layout(); plt.show()`},
-{dataset:'household_survey',title:'Income distribution — log-normal shape',question:'distribute',chartType:'histogram',
+{dataset:'household_survey',title:'Income distribution: log-normal shape',question:'distribute',chartType:'histogram',
  vars:['household_income'],
- insight:'Income follows a log-normal distribution — most households cluster at the bottom with a long right tail.',
+ insight:'Income follows a log-normal distribution. Most households cluster at the bottom with a long right tail.',
  tip:'Use log scale or log-transform for a clearer shape. Annotate the median vs mean to show skewness.',
  code:`df = pd.read_csv('output/household_survey.csv')
 plt.hist(df['household_income'].dropna(), bins=50, edgecolor='white', alpha=0.8)
@@ -408,7 +408,7 @@ plt.tight_layout(); plt.show()`},
 // ─── RCT EXPERIMENT ───
 {dataset:'rct_experiment',title:'Treatment effect by arm with confidence intervals',question:'compare',chartType:'lollipop',
  vars:['treatment_arm','outcome_score'],
- insight:'Visualise point estimates with CIs — which arms have statistically significant effects?',
+ insight:'Visualise point estimates with CIs. Which arms have statistically significant effects?',
  tip:'Sort by effect size. Add a vertical reference line at zero (null effect). Grey out non-significant arms.',
  code:`df = pd.read_csv('output/rct_experiment.csv')
 means = df.groupby('treatment_arm')['outcome_score'].agg(['mean','sem']).reset_index()
@@ -420,7 +420,7 @@ plt.xlabel('Outcome Score'); plt.title('Treatment Effects by Arm')
 plt.tight_layout(); plt.show()`},
 {dataset:'rct_experiment',title:'Attrition patterns by treatment arm',question:'compose',chartType:'stacked_bar',
  vars:['treatment_arm','attrited'],
- insight:'Differential attrition across arms threatens internal validity — check balance here.',
+ insight:'Differential attrition across arms threatens internal validity. Check balance here.',
  tip:'Use a two-colour scheme (stayed/attrited). Annotate percentages on each segment.',
  code:`df = pd.read_csv('output/rct_experiment.csv')
 ct = pd.crosstab(df['treatment_arm'], df['attrited'], normalize='index')
@@ -428,7 +428,7 @@ ct.plot(kind='bar', stacked=True, color=['#10B981','#EF4444'])
 plt.ylabel('Proportion'); plt.title('Attrition Rate by Treatment Arm')
 plt.legend(['Stayed','Attrited']); plt.xticks(rotation=0)
 plt.tight_layout(); plt.show()`},
-{dataset:'rct_experiment',title:'Compliance vs outcome — IV intuition',question:'relate',chartType:'scatter',
+{dataset:'rct_experiment',title:'Compliance vs outcome: IV intuition',question:'relate',chartType:'scatter',
  vars:['compliance','outcome_score','treatment_arm'],
  insight:'The compliance-outcome relationship gives intuition for LATE estimation. Non-compliers blur ITT.',
  tip:'Use colour for treatment arm. Add separate trend lines per arm to show differential slopes.',
@@ -452,7 +452,7 @@ plt.title('GDP Trajectories'); plt.legend(fontsize=7)
 plt.tight_layout(); plt.show()`},
 {dataset:'panel_data',title:'Development indicator correlation matrix',question:'relate',chartType:'heatmap',
  vars:['gdp_per_capita','life_expectancy','literacy_rate','infant_mortality'],
- insight:'Heatmap reveals which development indicators move together — and which don\'t.',
+ insight:'Heatmap reveals which development indicators move together, and which don\'t.',
  tip:'Use a diverging colour scale (red-white-blue). Annotate cells with r values. Mask the diagonal.',
  code:`df = pd.read_csv('output/panel_data.csv')
 cols = ['gdp_per_capita','life_expectancy','literacy_rate','infant_mortality_rate']
@@ -465,7 +465,7 @@ plt.tight_layout(); plt.show()`},
 // ─── AGRICULTURE ───
 {dataset:'agriculture',title:'Crop yield distribution by crop type',question:'compare',chartType:'violin',
  vars:['crop_type','yield_kg_per_hectare'],
- insight:'Violin plots reveal that yield distributions are often bimodal — reflecting irrigated vs rainfed farming.',
+ insight:'Violin plots reveal that yield distributions are often bimodal, reflecting irrigated vs rainfed farming.',
  tip:'Add a box plot inside the violin. Order crops by median yield.',
  code:`df = pd.read_csv('output/agriculture.csv')
 sns.violinplot(data=df, x='crop_type', y='yield_kg_per_hectare',
@@ -473,9 +473,9 @@ sns.violinplot(data=df, x='crop_type', y='yield_kg_per_hectare',
 plt.xticks(rotation=45, ha='right')
 plt.ylabel('Yield (kg/ha)'); plt.title('Yield Distribution by Crop')
 plt.tight_layout(); plt.show()`},
-{dataset:'agriculture',title:'Fertiliser use vs yield — diminishing returns',question:'relate',chartType:'scatter',
+{dataset:'agriculture',title:'Fertiliser use vs yield: diminishing returns',question:'relate',chartType:'scatter',
  vars:['fertilizer_kg_per_hectare','yield_kg_per_hectare'],
- insight:'Shows the classic agronomic production function — returns diminish at higher fertiliser rates.',
+ insight:'Shows the classic agronomic production function. Returns diminish at higher fertiliser rates.',
  tip:'Add a LOWESS or polynomial trend line to show the non-linear relationship. Use alpha for density.',
  code:`df = pd.read_csv('output/agriculture.csv')
 sns.regplot(data=df, x='fertilizer_kg_per_hectare', y='yield_kg_per_hectare',
@@ -484,7 +484,7 @@ plt.xlabel('Fertiliser (kg/ha)'); plt.ylabel('Yield (kg/ha)')
 plt.title('Fertiliser-Yield Relationship'); plt.tight_layout(); plt.show()`},
 {dataset:'agriculture',title:'Input adoption rates by wealth quintile',question:'compare',chartType:'bar',
  vars:['wealth_quintile','uses_improved_seed','uses_fertilizer','has_irrigation'],
- insight:'Adoption of modern inputs rises sharply with wealth — a key constraint for smallholders.',
+ insight:'Adoption of modern inputs rises sharply with wealth, a key constraint for smallholders.',
  tip:'Use horizontal grouped bars. Add a benchmark line if there is a target adoption rate.',
  code:`df = pd.read_csv('output/agriculture.csv')
 inputs = ['uses_improved_seed','uses_fertilizer','has_irrigation']
@@ -532,7 +532,7 @@ plt.tight_layout(); plt.show()`},
 // ─── EDUCATION ───
 {dataset:'education',title:'Test score distributions by school type',question:'compare',chartType:'violin',
  vars:['school_type','avg_math_score'],
- insight:'Private vs public school score gaps — but is it selection or quality?',
+ insight:'Private vs public school score gaps. But is it selection or quality?',
  tip:'Add individual data points (jitter) inside the violin to show sample sizes.',
  code:`df = pd.read_csv('output/education.csv')
 sns.violinplot(data=df, x='school_type', y='avg_math_score', inner='stick', palette='muted')
@@ -540,7 +540,7 @@ plt.ylabel('Average Math Score'); plt.title('Math Scores by School Type')
 plt.tight_layout(); plt.show()`},
 {dataset:'education',title:'Pupil-teacher ratio vs test scores',question:'relate',chartType:'scatter',
  vars:['pupil_teacher_ratio','avg_math_score'],
- insight:'Classic education production function — do smaller classes help? The relationship is often weaker than expected.',
+ insight:'Classic education production function. Do smaller classes help? The relationship is often weaker than expected.',
  tip:'Use bubble size for school enrollment. Add a regression line with confidence band.',
  code:`df = pd.read_csv('output/education.csv')
 sns.regplot(data=df, x='pupil_teacher_ratio', y='avg_math_score',
@@ -581,7 +581,7 @@ plt.ylabel('Loan Amount (USD)'); plt.title('Loan Size by Lending Model')
 plt.tight_layout(); plt.show()`},
 {dataset:'microfinance',title:'Repayment rate over loan cycle',question:'trend',chartType:'line',
  vars:['loan_cycle','repayment_rate'],
- insight:'Repayment improves with loan cycle — a key finding in microfinance (selection + learning effects).',
+ insight:'Repayment improves with loan cycle, a key finding in microfinance (selection + learning effects).',
  tip:'Add a shaded confidence band around the mean line. Mark the first-loan dropout rate.',
  code:`df = pd.read_csv('output/microfinance.csv')
 by_cycle = df.groupby('loan_cycle')['repayment_rate'].agg(['mean','sem']).reset_index()
@@ -627,7 +627,7 @@ plt.tight_layout(); plt.show()`},
 // ─── GENDER PROGRAMME ───
 {dataset:'gender_programme',title:'Women\'s decision-making power by domain',question:'compare',chartType:'bar',
  vars:['decides_own_health','decides_major_purchases','decides_visit_family'],
- insight:'Decision-making autonomy varies by domain — women often have more say over daily matters than large purchases.',
+ insight:'Decision-making autonomy varies by domain. Women often have more say over daily matters than large purchases.',
  tip:'Use horizontal bars sorted by rate. A consistent colour for all bars focuses attention on differences.',
  code:`df = pd.read_csv('output/gender_programme.csv')
 domains = ['decides_own_health','decides_major_purchases','decides_visit_family']
@@ -650,9 +650,9 @@ plt.xticks(range(len(rates)), ['Physical','Emotional']); plt.ylabel('Rate')
 plt.tight_layout(); plt.show()`},
 
 // ─── GIRLS' EDUCATION ───
-{dataset:'girls_education',title:'Enrolment by age — the dropout cliff',question:'trend',chartType:'line',
+{dataset:'girls_education',title:'Enrolment by age: the dropout cliff',question:'trend',chartType:'line',
  vars:['age','enrolled_in_school'],
- insight:'Enrolment rates are high for young girls but drop sharply at puberty (age 12-14) — the "dropout cliff".',
+ insight:'Enrolment rates are high for young girls but drop sharply at puberty (age 12-14), the "dropout cliff".',
  tip:'Add a shaded region at puberty age. Annotate the steepest drop point.',
  code:`df = pd.read_csv('output/girls_education.csv')
 by_age = df.groupby('age')['enrolled_in_school'].mean()
@@ -661,7 +661,7 @@ plt.axvspan(12, 14, alpha=0.1, color='red', label='Puberty window')
 plt.xlabel('Age'); plt.ylabel('Enrolment Rate')
 plt.title("Girls' Enrolment by Age"); plt.legend()
 plt.tight_layout(); plt.show()`},
-{dataset:'girls_education',title:'Barriers to education — stacked composition',question:'compose',chartType:'stacked_bar',
+{dataset:'girls_education',title:'Barriers to education: stacked composition',question:'compose',chartType:'stacked_bar',
  vars:['barrier_distance','barrier_cost','barrier_safety','barrier_menstruation'],
  insight:'Cost and distance dominate, but menstruation-related barriers are underappreciated.',
  tip:'Order segments by prevalence. Use colours that are accessible to colour-blind viewers.',
@@ -699,7 +699,7 @@ if avail:
 // ─── AGRI VALUE CHAIN ───
 {dataset:'agri_value_chain',title:'Price margins along the value chain',question:'compare',chartType:'box',
  vars:['value_chain_stage','price_per_kg_usd'],
- insight:'Price increases from farm gate to retail — the margin captured at each stage reveals power dynamics.',
+ insight:'Price increases from farm gate to retail. The margin captured at each stage reveals power dynamics.',
  tip:'Order stages from farm → wholesale → retail. Add horizontal connector lines between medians.',
  code:`df = pd.read_csv('output/agri_value_chain.csv')
 order = ['farm_gate','aggregator','processor','wholesaler','retailer']
@@ -747,7 +747,7 @@ plt.title('Food Consumption Score Distribution'); plt.legend()
 plt.tight_layout(); plt.show()`},
 {dataset:'livelihoods',title:'Income sources composition',question:'compose',chartType:'stacked_bar',
  vars:['income_agriculture','income_wage','income_business','income_transfers'],
- insight:'Diversification matters — households relying on a single source are more vulnerable.',
+ insight:'Diversification matters. Households relying on a single source are more vulnerable.',
  tip:'Normalise to 100%. Sort by share of the most volatile source.',
  code:`df = pd.read_csv('output/livelihoods.csv')
 sources = [c for c in ['income_agriculture','income_wage','income_business','income_transfers'] if c in df.columns]
@@ -760,7 +760,7 @@ if sources:
 // ─── ADVOCACY & RIGHTS ───
 {dataset:'advocacy_rights',title:'Legal awareness vs access to justice',question:'relate',chartType:'scatter',
  vars:['legal_awareness_score','accessed_justice'],
- insight:'Higher awareness doesn\'t always translate to access — structural barriers (cost, distance, bias) intervene.',
+ insight:'Higher awareness doesn\'t always translate to access. Structural barriers (cost, distance, bias) intervene.',
  tip:'Use colour for gender or caste to reveal intersectional barriers. Add a LOWESS line.',
  code:`df = pd.read_csv('output/advocacy_rights.csv')
 sns.regplot(data=df, x='legal_awareness_score', y='accessed_justice',
@@ -818,7 +818,7 @@ plt.tight_layout(); plt.show()`},
 // ─── GOVERNANCE ───
 {dataset:'governance',title:'Institutional trust across dimensions',question:'compare',chartType:'bar',
  vars:['trust_local_govt','trust_national_govt','trust_judiciary','trust_police'],
- insight:'Trust varies sharply across institutions — police and judiciary often score lowest.',
+ insight:'Trust varies sharply across institutions. Police and judiciary often score lowest.',
  tip:'Use a horizontal bar sorted by trust level. Add the neutral midpoint (3/5) as a reference line.',
  code:`df = pd.read_csv('output/governance.csv')
 trust_cols = [c for c in df.columns if c.startswith('trust_')][:6]
@@ -828,7 +828,7 @@ plt.xlabel('Mean Trust Score'); plt.title('Trust in Institutions')
 plt.tight_layout(); plt.show()`},
 
 // ─── BEHAVIOUR CHANGE ───
-{dataset:'behaviour_change',title:'KAP cascade — knowledge > attitude > practice',question:'compare',chartType:'paired_bar',
+{dataset:'behaviour_change',title:'KAP cascade: knowledge > attitude > practice',question:'compare',chartType:'paired_bar',
  vars:['knowledge_score','attitude_score','practice_score'],
  insight:'The KAP cascade always drops: people know more than they believe in, and believe more than they practice.',
  tip:'Use three bars of decreasing intensity. Annotate the drop percentage between each stage.',
@@ -842,7 +842,7 @@ for i,v in enumerate(means): plt.text(i, v+0.1, f'{v:.1f}', ha='center', fontwei
 plt.tight_layout(); plt.show()`},
 {dataset:'behaviour_change',title:'Campaign dose-response curve',question:'relate',chartType:'line',
  vars:['campaign_doses','practice_score'],
- insight:'More campaign exposures yield higher practice scores — but with diminishing returns.',
+ insight:'More campaign exposures yield higher practice scores, but with diminishing returns.',
  tip:'Show means with error bars at each dose. Mark the "saturation point" where additional doses add little.',
  code:`df = pd.read_csv('output/behaviour_change.csv')
 by_dose = df.groupby('campaign_doses')['practice_score'].agg(['mean','sem']).reset_index()
@@ -863,7 +863,7 @@ sns.boxplot(data=df, x='sector', y='cost_per_beneficiary_usd', order=order, pale
 plt.yscale('log'); plt.ylabel('Cost per Beneficiary (USD, log)')
 plt.xticks(rotation=30, ha='right')
 plt.title('Unit Costs by Sector'); plt.tight_layout(); plt.show()`},
-{dataset:'cost_effectiveness',title:'Effect size vs cost — CEA frontier',question:'relate',chartType:'scatter',
+{dataset:'cost_effectiveness',title:'Effect size vs cost: CEA frontier',question:'relate',chartType:'scatter',
  vars:['cost_per_beneficiary_usd','effect_size','sector'],
  insight:'The cost-effectiveness frontier shows which programmes deliver the most impact per dollar.',
  tip:'Colour by sector. Label outliers. Draw a frontier line connecting the most efficient programmes.',
@@ -878,7 +878,7 @@ plt.tight_layout(); plt.show()`},
 // ─── DECENT WORK ───
 {dataset:'decent_work',title:'Gender wage gap by sector',question:'compare',chartType:'paired_bar',
  vars:['sector','gender','monthly_earnings_usd'],
- insight:'The gender pay gap varies by sector — widest in professional services, narrowest in agriculture.',
+ insight:'The gender pay gap varies by sector. It is widest in professional services, narrowest in agriculture.',
  tip:'Show the gap percentage above each pair. Sort by gap size for impact.',
  code:`df = pd.read_csv('output/decent_work.csv')
 gap = df.groupby(['sector','gender'])['monthly_earnings_usd'].median().unstack()
@@ -890,7 +890,7 @@ if 'male' in gap.columns and 'female' in gap.columns:
 {dataset:'decent_work',title:'Social protection coverage: formal vs informal',question:'compare',chartType:'heatmap',
  vars:['employment_status','has_written_contract','has_social_security','has_health_insurance'],
  insight:'Formal workers have near-universal protection; informal workers have almost none.',
- tip:'Use a binary heatmap (dark=covered, light=not). This is more like a table with colour — and that is fine.',
+ tip:'Use a binary heatmap (dark=covered, light=not). This is more like a table with colour, and that is fine.',
  code:`df = pd.read_csv('output/decent_work.csv')
 prot = ['has_written_contract','has_social_security','has_health_insurance','has_pension']
 avail = [c for c in prot if c in df.columns]
@@ -900,7 +900,7 @@ plt.title('Social Protection Coverage by Employment Status')
 plt.tight_layout(); plt.show()`},
 
 // ─── CARE ECONOMY ───
-{dataset:'care_economy',title:'Gender care gap — hours per day',question:'compare',chartType:'paired_bar',
+{dataset:'care_economy',title:'Gender care gap: hours per day',question:'compare',chartType:'paired_bar',
  vars:['gender','unpaid_care_hours','paid_work_hours','domestic_work_hours'],
  insight:'Women spend ~3.4x more time on unpaid care. This is the core care economy finding.',
  tip:'Use horizontal paired bars. Place men and women side-by-side to make the gap obvious.',
@@ -913,7 +913,7 @@ plt.xlabel('Hours per Day'); plt.title('Time Use by Gender')
 plt.legend(fontsize=8); plt.tight_layout(); plt.show()`},
 {dataset:'care_economy',title:'Time poverty by wealth quintile and gender',question:'relate',chartType:'bar',
  vars:['wealth_quintile','gender','time_poor'],
- insight:'Time poverty is highest among poor women — an intersectional burden of care and work.',
+ insight:'Time poverty is highest among poor women, an intersectional burden of care and work.',
  tip:'Use a grouped bar (gender within quintile). Add the overall average as a reference line.',
  code:`df = pd.read_csv('output/care_economy.csv')
 tp = df.groupby(['wealth_quintile','gender'])['time_poor'].mean().unstack()
@@ -922,7 +922,7 @@ plt.ylabel('Time Poverty Rate'); plt.title('Time Poverty by Wealth & Gender')
 plt.xticks(rotation=0); plt.tight_layout(); plt.show()`},
 
 // ─── INTERSECTIONALITY ───
-{dataset:'intersectionality',title:'Income by intersectional group — multiplicative penalty',question:'compare',chartType:'bar',
+{dataset:'intersectionality',title:'Income by intersectional group: multiplicative penalty',question:'compare',chartType:'bar',
  vars:['caste_category','gender','has_disability','monthly_income_usd'],
  insight:'The intersectional penalty: SC + female + disability yields far less income than any single axis predicts.',
  tip:'Show the "expected" additive penalty vs actual. The gap between them IS the intersectional effect.',
@@ -934,7 +934,7 @@ plt.title('Income by Caste & Gender'); plt.xticks(rotation=0)
 plt.tight_layout(); plt.show()`},
 {dataset:'intersectionality',title:'Discrimination experience by identity',question:'compare',chartType:'bar',
  vars:['caste_category','experienced_discrimination'],
- insight:'Discrimination rates vary by identity — SC/ST groups report much higher rates.',
+ insight:'Discrimination rates vary by identity. SC/ST groups report much higher rates.',
  tip:'Sort by rate. Add error bars (bootstrap CI) to show statistical significance.',
  code:`df = pd.read_csv('output/intersectionality.csv')
 disc = df.groupby('caste_category')['experienced_discrimination'].mean().sort_values(ascending=False)
@@ -944,9 +944,9 @@ plt.title('Discrimination by Caste Category')
 plt.tight_layout(); plt.show()`},
 
 // ─── ENVIRONMENTAL JUSTICE ───
-{dataset:'environmental_justice',title:'PM2.5 exposure by wealth — environmental injustice',question:'relate',chartType:'scatter',
+{dataset:'environmental_justice',title:'PM2.5 exposure by wealth: environmental injustice',question:'relate',chartType:'scatter',
  vars:['wealth_quintile','air_quality_pm25'],
- insight:'Poorer households breathe dirtier air — a core environmental justice finding.',
+ insight:'Poorer households breathe dirtier air, a core environmental justice finding.',
  tip:'Add WHO guideline (15 μg/m³) as a horizontal line. Colour by urban/rural.',
  code:`df = pd.read_csv('output/environmental_justice.csv')
 sns.boxplot(data=df, x='wealth_quintile', y='air_quality_pm25', palette='YlOrRd')
@@ -956,7 +956,7 @@ plt.title('Air Quality by Wealth Group'); plt.legend()
 plt.tight_layout(); plt.show()`},
 {dataset:'environmental_justice',title:'Health outcomes by cooking fuel type',question:'compare',chartType:'bar',
  vars:['cooking_fuel_type','respiratory_illness_12m'],
- insight:'Firewood and dung fuels cause dramatically higher respiratory illness — the indoor air pollution crisis.',
+ insight:'Firewood and dung fuels cause dramatically higher respiratory illness. This is the indoor air pollution crisis.',
  tip:'Order fuels from dirtiest to cleanest. Use a gradient colour scale matching pollution level.',
  code:`df = pd.read_csv('output/environmental_justice.csv')
 by_fuel = df.groupby('cooking_fuel_type')['respiratory_illness_12m'].mean().sort_values(ascending=False)
@@ -1007,7 +1007,7 @@ plt.title('Gender Digital Divide by Age'); plt.legend()
 plt.tight_layout(); plt.show()`},
 
 // ─── SOCIAL-EMOTIONAL LEARNING ───
-{dataset:'social_emotional_learning',title:'CASEL domain scores — programme vs control',question:'compare',chartType:'paired_bar',
+{dataset:'social_emotional_learning',title:'CASEL domain scores: programme vs control',question:'compare',chartType:'paired_bar',
  vars:['in_sel_programme','self_awareness','self_management','social_awareness','relationship_skills','responsible_decision_making'],
  insight:'SEL programmes improve all five domains, with largest gains in self-management and social awareness.',
  tip:'Use paired bars (programme/control) for each domain. Annotate effect sizes (Cohen\'s d).',
@@ -1076,7 +1076,7 @@ plt.ylabel('Hours per Week'); plt.title('Media Consumption by Age')
 plt.xticks(rotation=0); plt.tight_layout(); plt.show()`},
 
 // ─── IRT ASSESSMENT ───
-{dataset:'irt_assessment',title:'Item Characteristic Curves — 3PL model',question:'relate',chartType:'line',
+{dataset:'irt_assessment',title:'Item Characteristic Curves: 3PL model',question:'relate',chartType:'line',
  vars:['theta','item_1','item_5','item_15','item_30'],
  insight:'ICCs show how item difficulty, discrimination, and guessing shape response probability at each ability level.',
  tip:'Plot 4-5 items with varying difficulty. Show the guessing floor (c parameter) as a horizontal asymptote.',
@@ -1092,7 +1092,7 @@ plt.title('Empirical Item Characteristic Curves')
 plt.legend(); plt.tight_layout(); plt.show()`},
 {dataset:'irt_assessment',title:'Theta distribution by education level',question:'compare',chartType:'violin',
  vars:['education_level','theta'],
- insight:'Latent ability (theta) is driven by education — the model recovers this relationship.',
+ insight:'Latent ability (theta) is driven by education, and the model recovers this relationship.',
  tip:'Add a box plot inside each violin. Mark the overall mean with a horizontal line.',
  code:`df = pd.read_csv('output/irt_assessment.csv')
 sns.violinplot(data=df, x='education_level', y='theta', inner='box', palette='muted')
@@ -1101,9 +1101,9 @@ plt.title('Ability Distribution by Education')
 plt.tight_layout(); plt.show()`},
 
 // ─── FIELD SURVEY QUALITY ───
-{dataset:'field_survey_quality',title:'Interview duration — normal vs fabricating enumerators',question:'compare',chartType:'density',
+{dataset:'field_survey_quality',title:'Interview duration: normal vs fabricating enumerators',question:'compare',chartType:'density',
  vars:['interview_duration_min','is_fabricator'],
- insight:'Fabricating enumerators cluster at very short durations (~10 min vs ~33 min) — a strong detection signal.',
+ insight:'Fabricating enumerators cluster at very short durations (~10 min vs ~33 min), a strong detection signal.',
  tip:'Overlay two density curves. Add a vertical threshold line where you\'d flag for review.',
  code:`df = pd.read_csv('output/field_survey_quality.csv')
 # Flag fabricators by short duration + high straightlining
@@ -1114,9 +1114,9 @@ for label in [0, 1]:
         sub['interview_duration_min'].dropna().plot(kind='density', label='Fabricator' if label else 'Normal', lw=2)
 plt.xlabel('Interview Duration (min)'); plt.title('Duration: Normal vs Fabricators')
 plt.legend(); plt.tight_layout(); plt.show()`},
-{dataset:'field_survey_quality',title:'GPS distance from cluster center — fraud detection',question:'relate',chartType:'scatter',
+{dataset:'field_survey_quality',title:'GPS distance from cluster center: fraud detection',question:'relate',chartType:'scatter',
  vars:['gps_distance_from_cluster_center_km','straightlining_score'],
- insight:'Fabricators are often far from their assigned cluster AND have high straightlining — two signals combined.',
+ insight:'Fabricators are often far from their assigned cluster AND have high straightlining. Two signals combined.',
  tip:'Use colour intensity for interview duration (short=red). This creates a 3-variable fraud signature.',
  code:`df = pd.read_csv('output/field_survey_quality.csv')
 dist_col = [c for c in df.columns if 'distance' in c and 'cluster' in c]

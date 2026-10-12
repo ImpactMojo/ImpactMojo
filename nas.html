@@ -209,30 +209,30 @@ window.NAS_DIST={"101":{"n":"Kupwara","s":"Jammu & Kashmir","g":{"3":{"lang":59.
     if(S.view==="rank") q.innerHTML=V+" by "+G+" "+SB+" scores in NAS 2021.";
     else if(S.view==="table") q.innerHTML=V+" of every state's "+G+" scores in NAS 2021.";
     else if(S.view==="district"){ ensureDist(); q.innerHTML=V+" of "+blank("state",S.state,dstateOpts())+" by "+G+" "+SB+" scores in NAS 2021."; }
-    else { ensureDist(); q.innerHTML=V+" of "+blank("dist",S.dist,distOpts())+" — the "+G+" "+SB+" skills students struggle with."; }
+    else { ensureDist(); q.innerHTML=V+" of "+blank("dist",S.dist,distOpts())+": the "+G+" "+SB+" skills students struggle with."; }
     [].forEach.call(q.querySelectorAll("select.blank"),function(sel){sel.addEventListener("change",function(){S[sel.dataset.key]=sel.value; if(sel.dataset.key==="state"){ensureDist();} renderQuestion();render();});});
   }
   function renderCaption(){
     ensureSubject();
     var cap=document.getElementById("caption"),g=S.grade,sub=S.subject,ref=NAT[g][sub];
-    if(S.view==="table"){cap.innerHTML="<div class='q'>Every state's Class "+g+" scores — NAS 2021</div><div class='sub'>Average % correct · tap a column to sort</div>";return;}
+    if(S.view==="table"){cap.innerHTML="<div class='q'>Every state's Class "+g+" scores: NAS 2021</div><div class='sub'>Average % correct · tap a column to sort</div>";return;}
     if(S.view==="district"){ ensureDist();
-      cap.innerHTML="<div class='q'>Districts of "+esc(S.state)+" — Class "+g+" "+(SUBJ[sub]||sub)+", NAS 2021</div>"+
+      cap.innerHTML="<div class='q'>Districts of "+esc(S.state)+": Class "+g+" "+(SUBJ[sub]||sub)+", NAS 2021</div>"+
         "<div class='sub'>Derived from district learning-outcome data ("+(STATE_DISTS[S.state]||[]).length+" districts) · state average marked</div>"+
         "<div class='allindia'>"+esc(S.state)+" average: <b>"+fmt(sval(S.state,g,sub))+"</b> · All-India <b>"+fmt(ref)+"</b></div>"+
-        "<div class='why'>These district figures are rolled up from the official learning-outcome data — they track the official subject scores within about half a point.</div>";
+        "<div class='why'>These district figures are rolled up from the official learning-outcome data. They track the official subject scores within about half a point.</div>";
       return;
     }
     if(S.view==="competency"){ ensureDist();
-      cap.innerHTML="<div class='q'>"+esc(DIST[S.dist]?DIST[S.dist].n:'—')+" — where Class "+g+" "+(SUBJ[sub]||sub)+" breaks down</div>"+
+      cap.innerHTML="<div class='q'>"+esc(DIST[S.dist]?DIST[S.dist].n:'—')+": where Class "+g+" "+(SUBJ[sub]||sub)+" breaks down</div>"+
         "<div class='sub'>Exact NAS 2021 performance on each learning outcome · district vs All-India</div>"+
-        "<div class='why'>The specific skills, weakest first — this is the official competency-level data, not a derivation.</div>";
+        "<div class='why'>The specific skills, weakest first. This is the official competency-level data, not a derivation.</div>";
       return;
     }
-    cap.innerHTML="<div class='q'>States ranked by Class "+g+" "+(SUBJ[sub]||sub)+" — NAS 2021</div>"+
+    cap.innerHTML="<div class='q'>States ranked by Class "+g+" "+(SUBJ[sub]||sub)+": NAS 2021</div>"+
       "<div class='sub'>Average % of questions answered correctly · government &amp; aided schools</div>"+
       "<div class='allindia'>All-India (Class "+g+" "+(SUBJ[sub]||sub)+"): <b>"+fmt(ref)+"</b></div>"+
-      "<div class='why'>Try switching the class from 3 to 10 on the same subject — watch how far mastery slips as the syllabus climbs.</div>";
+      "<div class='why'>Try switching the class from 3 to 10 on the same subject. Watch how far mastery slips as the syllabus climbs.</div>";
   }
   function renderRank(){
     ensureSubject(); var g=S.grade,sub=S.subject;

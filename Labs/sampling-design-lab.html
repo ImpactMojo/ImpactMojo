@@ -444,7 +444,7 @@ body.facil-on .facil{display:block}
       <div id="clusterFields" style="display:none">
         <label class="fld">
           <span class="lab">Pick a typical ICC by outcome <small>defensible starting values from published studies</small></span>
-          <select id="iccDomain"><option value="">, choose an outcome domain (optional), </option></select>
+          <select id="iccDomain"><option value="">Choose an outcome domain (optional)</option></select>
           <p class="icc-note" id="iccNote"></p>
         </label>
         <div class="grid cols-2">
@@ -765,7 +765,7 @@ body.facil-on .facil{display:block}
       // single site / few clusters — can often list individuals
       if(stratified){ strat='Stratified random sampling'; }
       else { strat='Simple random sampling (SRS)'; }
-      why.push('Your programme is geographically concentrated, so a list of individuals is realistic — you can sample people directly rather than whole clusters.');
+      why.push('Your programme is geographically concentrated, so a list of individuals is realistic. You can sample people directly rather than whole clusters.');
       howTitle = 'How to draw it';
     } else if(disp>=4){
       strat = stratified ? 'Stratified multistage sampling' : 'Multistage cluster sampling';
@@ -775,16 +775,16 @@ body.facil-on .facil{display:block}
     } else {
       // block / district
       strat = stratified ? 'Stratified cluster sampling' : 'Cluster sampling';
-      why.push('Across a block or district you can list clusters (villages, schools, SHGs) far more easily than every individual — so you sample clusters first, then people within them.');
+      why.push('Across a block or district you can list clusters (villages, schools, SHGs) far more easily than every individual, so you sample clusters first, then people within them.');
       howTitle = 'How to draw it';
     }
     if(stratified){
       why.push(S.stratify==='yes'
-        ? 'You need reliable figures for sub-groups, so you must sample <b>within each stratum</b> — this both guarantees coverage and improves precision.'
+        ? 'You need reliable figures for sub-groups, so you must sample <b>within each stratum</b>. This both guarantees coverage and improves precision.'
         : 'You are measuring more than one stakeholder group, so treat each as its own stratum with its own target sample.');
     }
     if(S.useCluster==='no' && disp>=2){
-      why.push('<span style="color:var(--warning)">You told us you can reach individuals directly. If in reality you can only list clusters, switch “sample in clusters” to <b>Yes</b> in the precision step — it will raise the sample to protect your margin of error.</span>');
+      why.push('<span style="color:var(--warning)">You told us you can reach individuals directly. If in reality you can only list clusters, switch “sample in clusters” to <b>Yes</b> in the precision step. It will raise the sample to protect your margin of error.</span>');
     }
     return {strat:strat, why:why, howTitle:howTitle, stratified:stratified, disp:disp};
   }
@@ -797,7 +797,7 @@ body.facil-on .facil{display:block}
         : ['Obtain or build a single list of all '+unit+'s.','Assign a random number to each and sort, or take every k-th (systematic).','Draw down to the target sample; log replacements from a reserve list.'];
     }
     if(rec.disp>=4){
-      return ['Stratify by state/region'+(rec.stratified?' and by the sub-groups you must report':'')+'.','Stage 1 — randomly select districts (probability proportional to size).','Stage 2 — within each, select blocks, then villages/schools.','Stage 3 — list '+unit+'s in each selected cluster and randomly pick the per-cluster target (m).','Track cluster IDs so you can compute the real design effect afterwards.'];
+      return ['Stratify by state/region'+(rec.stratified?' and by the sub-groups you must report':'')+'.','Stage 1: randomly select districts (probability proportional to size).','Stage 2: within each, select blocks, then villages/schools.','Stage 3: list '+unit+'s in each selected cluster and randomly pick the per-cluster target (m).','Track cluster IDs so you can compute the real design effect afterwards.'];
     }
     return ['List all clusters (villages/schools/SHGs) in the area'+(rec.stratified?', grouped into strata':'')+'.','Randomly select clusters (probability proportional to size is ideal).','In each selected cluster, list '+unit+'s and randomly pick the per-cluster target (m).','Interview replacements from within the same cluster to hold m.'];
   }
@@ -829,14 +829,14 @@ body.facil-on .facil{display:block}
       html += '<div class="grpcard"><h4>'+g.nm+' <span class="badge">frame ≈ '+fmt(N)+'</span></h4>';
       html += '<div class="bignum">';
       if(r.ideal && r.final > r.ideal) html += '<div class="stat"><b style="color:var(--faint)">'+fmt(r.ideal)+'</b><span>statistical ideal</span></div>';
-      html += '<div class="stat"><b>'+fmt(r.final)+'</b><span>'+(S.design==='impact'?'total to enrol':'field target — to approach')+'</span></div>';
+      html += '<div class="stat"><b>'+fmt(r.final)+'</b><span>'+(S.design==='impact'?'total to enrol':'field target, to approach')+'</span></div>';
       if(r.twoArm) html += '<div class="stat"><b>'+fmt(r.twoArm)+'</b><span>per arm (T &amp; C)</span></div>';
       if(r.clusters) html += '<div class="stat"><b>'+fmt(r.clusters)+'</b><span>clusters &times; '+S.mSize+'</span></div>';
       html += '</div>';
       html += '<table class="work">'+r.rows.map(function(row){return '<tr><td>'+row[0]+'</td><td>'+row[1]+'</td></tr>';}).join('')+'</table>';
       // per-group warnings
       if(r.deff>3) html += '<div class="tip"><span class="ic">!</span>Design effect '+r.deff.toFixed(2)+' is high (>3). Fewer people per cluster and more clusters buys back precision.</div>';
-      if(r.clusters && r.clusters<15) html += '<div class="tip"><span class="ic">!</span>Only '+r.clusters+' clusters — under ~15–20, cluster-level estimates get unstable. Add clusters even if it means fewer per cluster.</div>';
+      if(r.clusters && r.clusters<15) html += '<div class="tip"><span class="ic">!</span>Only '+r.clusters+' clusters. Under ~15–20, cluster-level estimates get unstable. Add clusters even if it means fewer per cluster.</div>';
       if(r.ruleOfThumb) html += '<div class="tip info"><span class="ic">i</span>Monitoring mode: this is a pragmatic 10%-capped rule of thumb, not a precision calculation.</div>';
       html += '<b style="font-size:0.85rem;display:block;margin-top:0.7rem">'+rec.howTitle+'</b><ol class="steps-ol">'+steps.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol>';
       html += '<div class="facil"><b>Facilitator:</b> Ask trainees to name the real frame for '+g.nm.toLowerCase()+'. Who holds that list, and how current is it?</div>';
@@ -855,7 +855,7 @@ body.facil-on .facil{display:block}
     var designLabel = {proportion:'Estimate a proportion',mean:'Estimate a mean',impact:'Two-group impact comparison',monitoring:'Routine monitoring'}[S.design];
     var scaleName = (SCALES.filter(function(s){return s.id===S.scale;})[0]||{}).name;
     var L = [];
-    L.push('# Sampling Plan — ImpactMojo Sampling Design Studio');
+    L.push('# Sampling Plan: ImpactMojo Sampling Design Studio');
     L.push('');
     L.push('## 1. Purpose & design');
     L.push('- Evaluation question type: '+designLabel);
@@ -884,7 +884,7 @@ body.facil-on .facil{display:block}
       var g = GROUPS.filter(function(x){return x.id===gid;})[0];
       var N = S.groupPop[gid] != null ? S.groupPop[gid] : defaultPop(g.unitHint);
       var r = computeForGroup(N);
-      L.push('- **'+g.nm+'** — frame ≈ '+fmt(N)+' → statistical ideal '+fmt(r.ideal)+', field target '+fmt(r.final)+(r.clusters?(' across '+r.clusters+' clusters'):'')+(r.twoArm?(' ('+fmt(r.twoArm)+' per arm)'):''));
+      L.push('- **'+g.nm+'**: frame ≈ '+fmt(N)+' → statistical ideal '+fmt(r.ideal)+', field target '+fmt(r.final)+(r.clusters?(' across '+r.clusters+' clusters'):'')+(r.twoArm?(' ('+fmt(r.twoArm)+' per arm)'):''));
     });
     if(groupIds.length>1) L.push('- **Total** ≈ '+fmt(totalFinal)+' respondents'+(totalClusters?(' / '+fmt(totalClusters)+' cluster-visits'):''));
     L.push('');
@@ -892,7 +892,7 @@ body.facil-on .facil{display:block}
     howSteps(rec).forEach(function(s,i){ L.push((i+1)+'. '+s); });
     L.push('');
     L.push('---');
-    L.push('_Generated with the ImpactMojo Sampling Design Studio (impactmojo.in). A defensible first draft — have a statistician review before fielding._');
+    L.push('_Generated with the ImpactMojo Sampling Design Studio (impactmojo.in). A defensible first draft. Have a statistician review before fielding._');
     return L.join('\n');
   }
 
@@ -922,11 +922,11 @@ body.facil-on .facil{display:block}
     $('mSize').value = S.mSize; $('icc').value = S.icc; $('nr').value = S.nr;
     $('unit').value = S.unit; $('stratify').value = S.stratify;
     // ICC reference-library picker
-    $('iccDomain').innerHTML = '<option value="">— choose an outcome domain (optional) —</option>' +
+    $('iccDomain').innerHTML = '<option value="">Choose an outcome domain (optional)</option>' +
       ICC_LIB.map(function(d,i){ return '<option value="'+i+'">'+d.label+' (ρ≈'+d.v+')</option>'; }).join('');
     $('iccDomain').addEventListener('change', function(){
       var d = ICC_LIB[parseInt(this.value,10)];
-      if(d){ S.icc = d.v; $('icc').value = d.v; $('iccNote').textContent = 'Using ρ = '+d.v+' — '+d.note+'. Override the box if you have a local estimate.'; save(); }
+      if(d){ S.icc = d.v; $('icc').value = d.v; $('iccNote').textContent = 'Using ρ = '+d.v+', '+d.note+'. Override the box if you have a local estimate.'; save(); }
       else { $('iccNote').textContent = ''; }
     });
     // typing a manual ICC clears the domain preset (they diverged)
@@ -979,7 +979,7 @@ body.facil-on .facil{display:block}
       var orig = $('copyBtn').innerHTML;
       navigator.clipboard.writeText(S._lastPlan||'').then(function(){
         $('copyBtn').textContent = '✓ Copied'; setTimeout(function(){ $('copyBtn').innerHTML = orig; }, 1600);
-      }).catch(function(){ alert('Copy failed — use Download instead.'); });
+      }).catch(function(){ alert('Copy failed. Use Download instead.'); });
     });
     $('dlBtn').addEventListener('click', function(){
       if(!gateOK()) return;
@@ -997,7 +997,7 @@ body.facil-on .facil{display:block}
     $('defendBtn').addEventListener('click', function(){
       if(!gateOK()) return;
       var groupIds = Object.keys(S.groups);
-      if(!S.design || !groupIds.length){ alert('Complete the steps first — pick what you measure and at least one group.'); return; }
+      if(!S.design || !groupIds.length){ alert('Complete the steps first. Pick what you measure and at least one group.'); return; }
       var html = buildDefendNote(groupIds);
       var blob = new Blob([html], {type:'text/html'});
       var a = document.createElement('a');
@@ -1010,7 +1010,7 @@ body.facil-on .facil{display:block}
       var c1 = parseFloat($('costCluster').value), c2 = parseFloat($('costUnit').value), rho = S.icc;
       var out = $('optOut');
       if(!(c1>0) || !(c2>0)){ out.innerHTML = '<span class="ic">i</span><span>Enter both costs to see the efficient cluster size.</span>'; return; }
-      if(!(rho>0)){ out.innerHTML = '<span class="ic">i</span><span>With ICC = 0 there is no clustering penalty, so larger clusters are efficient — set ρ above 0 to optimise.</span>'; return; }
+      if(!(rho>0)){ out.innerHTML = '<span class="ic">i</span><span>With ICC = 0 there is no clustering penalty, so larger clusters are efficient. Set ρ above 0 to optimise.</span>'; return; }
       var mopt = Math.sqrt((c1/c2)*((1-rho)/rho));
       var mR = Math.max(2, Math.round(mopt));
       var deff = 1 + (mR-1)*rho;
@@ -1022,7 +1022,7 @@ body.facil-on .facil{display:block}
     $('costUnit').addEventListener('input', updOpt);
     $('optApply').addEventListener('click', function(){
       var m = parseInt(this.dataset.m||'0',10);
-      if(m>=2){ S.mSize = m; $('mSize').value = m; save(); this.textContent = '✓ Applied — m = '+m; }
+      if(m>=2){ S.mSize = m; $('mSize').value = m; save(); this.textContent = '✓ Applied, m = '+m; }
     });
     updOpt();
 

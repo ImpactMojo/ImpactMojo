@@ -786,13 +786,13 @@ function checkDonorMatch() {
         fb.innerHTML = '✅ Excellent match. A domestic water foundation and local CSR are the best fits for a community-led, Maharashtra-focused water project at ~₹50L. Multilaterals and Gates need far larger scale; ICSSR funds academic research; USAID no longer exists as a grant channel.';
     } else if (right >= 1 && wrong === 0) {
         fb.classList.add('neutral');
-        fb.innerHTML = '⚠️ On the right track — you picked good fits but missed at least one. Both the domestic foundation and local CSR work well here.';
+        fb.innerHTML = '⚠️ On the right track, you picked good fits but missed at least one. Both the domestic foundation and local CSR work well here.';
     } else if (right >= 1) {
         fb.classList.add('neutral');
         fb.innerHTML = '⚠️ Partly right. You found some good fits but also some mismatches: World Bank and Gates need much larger scale, ICSSR is academic-only, and USAID was dissolved in 2025.';
     } else {
         fb.classList.add('incorrect');
-        fb.innerHTML = '❌ Not quite. For a community-led, Maharashtra-specific project at ₹50L, aim for Indian foundations or local CSR — not multilaterals, academic grants, or a defunct agency.';
+        fb.innerHTML = '❌ Not quite. For a community-led, Maharashtra-specific project at ₹50L, aim for Indian foundations or local CSR, not multilaterals, academic grants, or a defunct agency.';
     }
 }
 
@@ -822,11 +822,11 @@ function checkToC() {
 /* ===== NARRATIVE CHECKER (multi-select checkboxes) ===== */
 var narrativeIssues = [
     { text: "Full of jargon ('leverage synergies', 'catalyse systemic change')", correct: true },
-    { text: "Vague — no specific activities, locations or numbers", correct: true },
-    { text: "Passive/agent-free — who will actually DO these things?", correct: true },
+    { text: "Vague, no specific activities, locations or numbers", correct: true },
+    { text: "Passive/agent-free, who will actually DO these things?", correct: true },
     { text: "No evidence or data behind the claims", correct: true },
     { text: "Actually quite specific and clear", correct: false },
-    { text: "Too short — it just needs to be longer", correct: false }
+    { text: "Too short, it just needs to be longer", correct: false }
 ];
 function renderNarrativeQuiz() {
     document.getElementById('narrativeQuiz').innerHTML = narrativeIssues.map(function(issue, i) {
@@ -842,11 +842,11 @@ function checkNarrative() {
     fb.className = 'feedback show';
     if (score >= 5) {
         fb.classList.add('correct');
-        fb.innerHTML = '✅ Sharp editorial eye. This paragraph is a classic case of writing that sounds impressive but says nothing specific — jargon, vagueness, no agent, no evidence.';
+        fb.innerHTML = '✅ Sharp editorial eye. This paragraph is a classic case of writing that sounds impressive but says nothing specific: jargon, vagueness, no agent, no evidence.';
         document.getElementById('q3next').disabled = false;
     } else {
         fb.classList.add('incorrect');
-        fb.innerHTML = '⚠️ ' + score + '/6 correct. The real problems are jargon, vagueness, missing agency, and no evidence — it is neither specific nor merely "too short".';
+        fb.innerHTML = '⚠️ ' + score + '/6 correct. The real problems are jargon, vagueness, missing agency, and no evidence. It is neither specific nor merely "too short".';
     }
 }
 
@@ -866,8 +866,8 @@ function updateBudget() {
     });
     var personnelPct = (vals.Personnel / denom) * 100;
     var note = '';
-    if (personnelPct > 80) note = ' — ⚠️ Personnel above 80%: looks salary-heavy.';
-    else if (vals.ME === 0) note = ' — ⚠️ No M&E line: donors read this as "we don\'t plan to measure results".';
+    if (personnelPct > 80) note = '. ⚠️ Personnel above 80%: looks salary-heavy.';
+    else if (vals.ME === 0) note = '. ⚠️ No M&E line: donors read this as "we don\'t plan to measure results".';
     document.getElementById('budgetBreakdown').innerHTML =
         'Personnel ' + personnelPct.toFixed(1) + '% · M&amp;E ' + ((vals.ME/denom)*100).toFixed(1) + '% · Admin ' + ((vals.Admin/denom)*100).toFixed(1) + '%' + note;
 }
@@ -896,7 +896,7 @@ function checkME() {
     fb.className = 'feedback show';
     if (score >= 4) {
         fb.classList.add('correct');
-        fb.innerHTML = '✅ ' + score + '/5 correct. You can tell inputs (resources) from outputs (countable products), outcomes (behaviour change) and impact (long-term systemic change) — essential for a credible M&E plan.';
+        fb.innerHTML = '✅ ' + score + '/5 correct. You can tell inputs (resources) from outputs (countable products), outcomes (behaviour change) and impact (long-term systemic change), essential for a credible M&E plan.';
         document.getElementById('q5next').disabled = false;
     } else {
         fb.classList.add('incorrect');
@@ -907,10 +907,10 @@ function checkME() {
 /* ===== PROPOSAL REVIEW CHECKER (multi-select) ===== */
 var reviewIssues = [
     { text: "Problem statement lacks specific data (no numbers on depletion, migration, distances)", correct: true },
-    { text: "Approach is vague — 'participatory approaches', 'stakeholder engagement' with no specifics", correct: true },
+    { text: "Approach is vague: 'participatory approaches', 'stakeholder engagement' with no specifics", correct: true },
     { text: "Activity list is a dump with no link to outcomes", correct: true },
-    { text: "Budget detail is missing — 'available on request' is a red flag", correct: true },
-    { text: "M&E is weak — no indicators, baselines or targets", correct: true },
+    { text: "Budget detail is missing, 'available on request' is a red flag", correct: true },
+    { text: "M&E is weak, no indicators, baselines or targets", correct: true },
     { text: "Sustainability is aspirational, not concrete (no named institution or mechanism)", correct: true },
     { text: "This is actually a well-written, fundable proposal", correct: false },
     { text: "The budget section is appropriately detailed", correct: false }
@@ -929,18 +929,18 @@ function checkReview() {
     fb.className = 'feedback show';
     if (score >= 6) {
         fb.classList.add('correct');
-        fb.innerHTML = '✅ Excellent review — ' + score + '/8 correct. This excerpt has every classic weakness: vague language, missing data, an activity dump, no budget detail, weak M&E, and hand-wavy sustainability. A reviewer would likely reject it.';
+        fb.innerHTML = '✅ Excellent review: ' + score + '/8 correct. This excerpt has every classic weakness: vague language, missing data, an activity dump, no budget detail, weak M&E, and hand-wavy sustainability. A reviewer would likely reject it.';
         document.getElementById('q6next').disabled = false;
     } else {
         fb.classList.add('incorrect');
-        fb.innerHTML = '⚠️ ' + score + '/8 correct. The excerpt is deliberately weak — look for missing data, vague activities, no budget breakdown, empty M&E, and aspirational sustainability. The two "positive" options are traps.';
+        fb.innerHTML = '⚠️ ' + score + '/8 correct. The excerpt is deliberately weak. Look for missing data, vague activities, no budget breakdown, empty M&E, and aspirational sustainability. The two "positive" options are traps.';
     }
 }
 
 /* ===== EXPORT NOTES ===== */
 function exportNotes() {
     var lines = [
-        'ImpactMojo — Grant Writing & Proposal Lab',
+        'ImpactMojo | Grant Writing & Proposal Lab',
         '=========================================',
         '',
         'Key skills practised:',

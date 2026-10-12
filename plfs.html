@@ -358,9 +358,9 @@ window.PLFS_JOB={"status":[{"k":"self","L":"Self-employed","m":53.6,"f":67.4,"p"
     var q=document.getElementById("qline"),h="";
     var V=blank("view",S.view,VIEW_OPTS);
     if(S.view==="rank") h=V+" by "+blank("ind",S.ind,IND_OPTS)+" for "+blank("gender",S.gender,GENDER_OPTS)+", in "+blank("series",S.series,SERIES_OPTS)+(S.series==="2025"?"." : ", with 95% confidence intervals.");
-    else if(S.view==="trend") h=V+" in labour-force participation for "+blank("gender",S.gender,GENDER_OPTS)+" &mdash; both series, 2017&ndash;18 to 2025.";
-    else if(S.view==="pay") h=V+" &mdash; what women and men earn across India, calendar year 2025.";
-    else if(S.view==="quality") h=V+" &mdash; how India works, and the security gaps for regular workers, 2023&ndash;24.";
+    else if(S.view==="trend") h=V+" in labour-force participation for "+blank("gender",S.gender,GENDER_OPTS)+", both series, 2017&ndash;18 to 2025.";
+    else if(S.view==="pay") h=V+": what women and men earn across India, calendar year 2025.";
+    else if(S.view==="quality") h=V+": how India works, and the security gaps for regular workers, 2023&ndash;24.";
     else h=V+" of every state's workforce, in "+blank("series",S.series,SERIES_OPTS)+".";
     q.innerHTML=h;
     [].forEach.call(q.querySelectorAll("select.blank"),function(sel){
@@ -373,24 +373,24 @@ window.PLFS_JOB={"status":[{"k":"self","L":"Self-employed","m":53.6,"f":67.4,"p"
     var cap=document.getElementById("caption");
     if(S.view==="trend"){
       var g=S.gender, first=val(TR["2017-18"],null,g)||TR["2017-18"][g], last=TR["2023-24"][g];
-      cap.innerHTML="<div class='q'>The climb in labour-force participation — "+GENDER[g]+"</div>"+
+      cap.innerHTML="<div class='q'>The climb in labour-force participation: "+GENDER[g]+"</div>"+
         "<div class='sub'>All-India · two separate series · usual status, age 15+</div>"+
         "<div class='allindia'>"+GENDER[g]+": <b>"+TR["2017-18"][g].toFixed(1)+"%</b> (2017-18) → <b>"+last.toFixed(1)+"%</b> (2023-24), then <b>"+N25.trend["2022"][g].toFixed(1)+"%</b> (2022) → <b>"+N25.trend["2025"][g].toFixed(1)+"%</b> (2025)</div>"+
-        "<div class='why'>Women's participation has risen faster than men's — the single biggest movement in India's labour data. The dashed rule marks where the survey changed; the two runs are not a continuous line.</div>";
+        "<div class='why'>Women's participation has risen faster than men's. The single biggest movement in India's labour data. The dashed rule marks where the survey changed; the two runs are not a continuous line.</div>";
       return;
     }
     if(S.view==="table"){cap.innerHTML="<div class='q'>Every state's workforce at a glance</div><div class='sub'>PLFS "+seriesLabel()+" · LFPR, worker ratio &amp; unemployment · tap a column to sort</div>";return;}
-    if(S.view==="pay"){cap.innerHTML="<div class='q'>What India earns — by job type and gender</div>"+
+    if(S.view==="pay"){cap.innerHTML="<div class='q'>What India earns, by job type and gender</div>"+
       "<div class='sub'>All-India · rural and urban combined · calendar year 2025, published as an annual figure</div>"+
       "<div class='why'>The widest gap is among the self-employed, where women's average gross earnings are about 36% of men's.</div>";return;}
     if(S.view==="quality"){cap.innerHTML="<div class='q'>How secure is India's work?</div>"+
-      "<div class='sub'>All-India · usual status, age 15+ · <b>PLFS 2023-24</b> — MoSPI does not publish this breakdown on the calendar series</div>"+
-      "<div class='allindia'>Nearly <b>3 in 5</b> workers are self-employed — and most regular employees have <b>no written contract</b>.</div>";return;}
+      "<div class='sub'>All-India · usual status, age 15+ · <b>PLFS 2023-24</b>. MoSPI does not publish this breakdown on the calendar series</div>"+
+      "<div class='allindia'>Nearly <b>3 in 5</b> workers are self-employed, and most regular employees have <b>no written contract</b>.</div>";return;}
     var k=S.ind,g=S.gender,ref=NAT[k][g];
-    cap.innerHTML="<div class='q'>States ranked by "+IND[k].L.replace(/^the /,'')+" — "+GENDER[g]+"</div>"+
+    cap.innerHTML="<div class='q'>States ranked by "+IND[k].L.replace(/^the /,'')+": "+GENDER[g]+"</div>"+
       "<div class='sub'>PLFS "+seriesLabel()+" · usual status, age 15+ · "+(IND[k].dir===0?"lower is better":"higher = more people in the workforce")+"</div>"+
       "<div class='allindia'>All-India ("+GENDER[g]+"): <b>"+fmt(ref)+"</b></div>"+
-      (k==="lfpr"&&g==="f"?"<div class='why'>Only about two in five women are in the labour force nationally — but look at how far the top states pull ahead.</div>":"");
+      (k==="lfpr"&&g==="f"?"<div class='why'>Only about two in five women are in the labour force nationally, but look at how far the top states pull ahead.</div>":"");
   }
 
   function ciFor(c,k,g){
@@ -535,14 +535,14 @@ window.PLFS_JOB={"status":[{"k":"self","L":"Self-employed","m":53.6,"f":67.4,"p"
     var ratio=function(c){return 'Women earn <b>'+Math.round(100*c.f/c.m)+'%</b> of what men earn';};
     var h='<div class="gap-wrap"><div class="gap-sec"><h3>Monthly earnings</h3>'+
       gapRow(cats[0],monMax,inr,ratio)+gapRow(cats[1],monMax,inr,ratio)+'</div>'+
-      '<div class="gap-sec"><h3>Casual labour — daily wage</h3>'+gapRow(cats[2],cats[2].m,inr,ratio)+'</div></div>'+legendMW();
+      '<div class="gap-sec"><h3>Casual labour: daily wage</h3>'+gapRow(cats[2],cats[2].m,inr,ratio)+'</div></div>'+legendMW();
     document.getElementById("panel").innerHTML=h;
   }
   function renderJobQuality(){
     var allNote=function(c){return 'All workers: <b>'+pctS(c.p)+'</b>';};
-    var h='<div class="gap-wrap"><div class="gap-sec"><h3>How India works — share of workers by type</h3>';
+    var h='<div class="gap-wrap"><div class="gap-sec"><h3>How India works: share of workers by type</h3>';
     JOB.status.forEach(function(c){h+=gapRow(c,100,pctS,allNote);});
-    h+='</div><div class="gap-sec"><h3>Security gaps — regular non-farm workers <em>without</em>&hellip;</h3>';
+    h+='</div><div class="gap-sec"><h3>Security gaps: regular non-farm workers <em>without</em>&hellip;</h3>';
     JOB.security.forEach(function(c){h+=gapRow(c,100,pctS,allNote);});
     h+='</div></div>'+legendMW();
     document.getElementById("panel").innerHTML=h;

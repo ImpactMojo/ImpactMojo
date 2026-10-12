@@ -652,11 +652,11 @@ function updateProgress() {
 var approaches = [
     { id: 'both', name: 'Both tracks', desc: 'Mainstream everything AND run disability-specific actions. The recommended default.' },
     { id: 'mainstream', name: 'Mainstreaming only', desc: 'Disaggregate all indicators by disability; no separate disability-specific work yet.' },
-    { id: 'specific', name: 'Disability-specific only', desc: 'A targeted disability project — still disaggregate its indicators.' }
+    { id: 'specific', name: 'Disability-specific only', desc: 'A targeted disability project, still disaggregate its indicators.' }
 ];
 var approachNotes = {
     both: 'Strongest position: your MEL will carry disaggregated mainstream indicators AND disability-specific ones. Aim for at least one of each.',
-    mainstream: 'A fair start — but mainstreaming without any disability-specific action often means barriers are never directly measured or removed. Consider adding one Track-2 indicator.',
+    mainstream: 'A fair start, but mainstreaming without any disability-specific action often means barriers are never directly measured or removed. Consider adding one Track-2 indicator.',
     specific: 'Targeted work is valuable, but a disability-only project can become a silo. Make sure its results feed back into the mainstream programme.'
 };
 function renderApproaches() {
@@ -702,7 +702,7 @@ function applyWG() {
     el('wgResult').innerHTML = '<div class="result-box" style="border-left:4px solid ' + colour + ';">' +
         '<h4 style="color:' + colour + ';">' + (isDisabled ? 'Counted as having a disability' : 'Not counted under the standard cut-off') + '</h4>' +
         '<p>Recommended cut-off = "a lot of difficulty" or "cannot do at all" in ≥ 1 domain.</p>' +
-        (isDisabled ? '<p>Domains at/above the cut-off: <strong>' + domainList + '</strong>.</p>' : '<p>No domain reached "a lot of difficulty". Note: this person may still face barriers — the cut-off is a comparable threshold, not the whole truth of their experience.</p>') +
+        (isDisabled ? '<p>Domains at/above the cut-off: <strong>' + domainList + '</strong>.</p>' : '<p>No domain reached "a lot of difficulty". Note: this person may still face barriers. The cut-off is a comparable threshold, not the whole truth of their experience.</p>') +
         '<p style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-muted);">This demonstrates the coding for one respondent. In practice you apply it across your whole sample to get a disability-disaggregated denominator.</p></div>';
     updateProgress();
 }
@@ -751,7 +751,7 @@ function calcAccess() {
     var msg, colour = pct >= 60 ? 'var(--success-color)' : 'var(--warning-color)';
     if (pct >= 85) msg = '<strong>Inclusive in practice.</strong> Your method should reach and protect participants with disabilities. Document the residual gaps.';
     else if (pct >= 60) msg = '<strong>On the way.</strong> The core is covered; close the remaining items before you field.';
-    else if (pct >= 35) msg = '<strong>At risk of excluding.</strong> Several essentials are missing — people with disabilities may drop out of your data.';
+    else if (pct >= 35) msg = '<strong>At risk of excluding.</strong> Several essentials are missing. People with disabilities may drop out of your data.';
     else msg = '<strong>Likely to exclude.</strong> As designed, this method probably won\'t see or include people with disabilities.';
     state.accessScore = { done: done, total: total }; persist(); updateProgress();
     el('accessResult').innerHTML = '<div class="result-box" style="text-align:center;"><div class="score-circle" style="border-color:' + colour + ';color:' + colour + ';">' + done + '/' + total + '</div><p style="color:var(--text-secondary);">' + msg + '</p></div>';
@@ -780,7 +780,7 @@ function exportPlan() {
     if (!gateOK()) return;
     saveState();
     var L = [];
-    L.push('ImpactMojo — Disability-Inclusive MEL Plan');
+    L.push('ImpactMojo | Disability-Inclusive MEL Plan');
     L.push('===========================================');
     L.push('Generated: ' + new Date().toISOString().slice(0, 10));
     L.push('');
