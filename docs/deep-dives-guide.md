@@ -4,7 +4,7 @@
 
 Deep Dives are **curated, annotated reading guides**: themed bibliographies with a clear editorial point of view, assembled by named scholars and practitioners. Each one is a working syllabus: 11–32 readings organised into sections that build an argument, with annotations explaining why each reading earns its place and how the pieces talk to each other.
 
-ImpactMojo offers **26 Deep Dives** spanning political economy, evaluation methods, climate, gender, health, education, and technology. All are **free, browser-based, and require no login**.
+ImpactMojo offers **27 Deep Dives** spanning political economy, evaluation methods, climate, gender, health, education, and technology. All are **free, browser-based, and require no login**.
 
 ### How a Deep Dive Differs from a Course or a Reading Companion
 
@@ -14,7 +14,7 @@ ImpactMojo offers **26 Deep Dives** spanning political economy, evaluation metho
 
 ---
 
-## The 26 Deep Dives
+## The 27 Deep Dives
 
 | Deep Dive | Topic | Readings | Link |
 |-----------|-------|----------|------|
@@ -40,6 +40,8 @@ ImpactMojo offers **26 Deep Dives** spanning political economy, evaluation metho
 | **AI and Development** | Technology & Power | 13 | [Open](/DeepDives/ai-and-development.html) |
 | **Platform & Gig Work in India** | Labour & Technology | 26 | [Open](/DeepDives/platform-gig-work-india.html) |
 | **Water, Sanitation, and the Behaviour Gap** | Health & Sanitation | 14 | [Open](/DeepDives/water-sanitation-behaviour-gap.html) |
+| **The Caste Lists** | Caste & Inequality | 12 | [Open](/DeepDives/caste-lists.html) |
+| **What NFHS-6 stopped counting** | Health & Data | 18 | [Open](/DeepDives/nfhs6-stopped-counting.html) |
 
 Browse all Deep Dives at [/DeepDives/](/DeepDives/).
 
