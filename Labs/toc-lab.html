@@ -2372,7 +2372,9 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             });
             ['outcomes', 'outputs', 'assumptions', 'indicators'].forEach(function (k) {
                 tocData[k] = Array.isArray(data[k]) ? data[k].filter(function (i) { return i && typeof i.id === 'number'; }).map(function (i) {
-                    return { id: i.id, text: String(i.text || ''), linkedOutcome: typeof i.linkedOutcome === 'number' ? i.linkedOutcome : null };
+                    const item = { id: i.id, text: String(i.text || '') };
+                    if (k !== 'outcomes') item.linkedOutcome = typeof i.linkedOutcome === 'number' ? i.linkedOutcome : null;
+                    return item;
                 }) : [];
             });
             let maxId = typeof data.idCounter === 'number' ? data.idCounter : 0;
@@ -2806,7 +2808,6 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                 var linked = tocData.outcomes.find(function (o) { return o.id === a.linkedOutcome; });
                 createNode('assumption', 260 + (i % 3) * 260, 80 + rows * 150 + Math.floor(i / 3) * 130, a.text.trim(), linked && linked.text.trim() ? 'For: ' + linked.text.trim() : '');
             });
-            if (tocData.problemStatement.trim()) createNode('input', 20, 40, 'Problem', tocData.problemStatement.trim());
             loading = false;
             drawLinks();
             save();
@@ -2839,7 +2840,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             });
         });
 
-        function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+        function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
         function renderGroups(container, groups) {
             var html = '';
