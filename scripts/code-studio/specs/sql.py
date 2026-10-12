@@ -160,7 +160,7 @@ PAGE = {
                 "FROM households\nGROUP BY district\nORDER BY pct_toilet;"),
             info("<strong>Other databases.</strong> PostgreSQL will not average a true/false value directly. "
                  "Write <code class=\"inline\">AVG(CASE WHEN has_toilet = 'Yes' THEN 1.0 ELSE 0 END)</code>, "
-                 "which works everywhere, including here. Also watch integer division: in PostgreSQL and SQL "
+                 "which works everywhere, including here. Also watch integer division, because in PostgreSQL and SQL "
                  "Server <code class=\"inline\">7 / 2</code> is 3. Multiplying by <code class=\"inline\">100.0</code> "
                  "first keeps the decimals."),
             h3("Filter groups with HAVING"),
@@ -238,7 +238,7 @@ PAGE = {
               "that find a match on both sides. A <strong>left join</strong> keeps every row of the left-hand "
               "table, and fills the right-hand columns with NULL where there is no match."),
             p("Every household's district appears in <code class=\"inline\">districts</code>, so the joins above "
-              "lose nothing. The 16-person <code class=\"inline\">survey</code> is different: it covers only "
+              "lose nothing. The 16-person <code class=\"inline\">survey</code> is different because it covers only "
               "three districts. Count survey respondents per district with an inner join first."),
             sql("SELECT d.district, d.state, COUNT(s.id) AS respondents\n"
                 "FROM districts AS d\nJOIN survey AS s ON s.district = d.district\n"
@@ -249,7 +249,7 @@ PAGE = {
                 "FROM districts AS d\nLEFT JOIN survey AS s ON s.district = d.district\n"
                 "GROUP BY d.district, d.state\nORDER BY respondents DESC, d.district;"),
             p("All ten districts appear, and the seven without a respondent show 0. For a coverage report "
-              "that difference is the whole point: an inner join would make the gaps disappear."),
+              "that difference is the whole point, because an inner join would make the gaps disappear."),
             info("<strong>Count the right thing.</strong> <code class=\"inline\">COUNT(s.id)</code> counts only "
                  "rows where the survey id is not NULL, which is why unmatched districts show 0. "
                  "<code class=\"inline\">COUNT(*)</code> counts rows, and would show 1 for each of them, because "
@@ -261,7 +261,7 @@ PAGE = {
         ]},
         {"tab": "CTEs", "title": "Subqueries and CTEs", "blocks": [
             p("A <strong>subquery</strong> is a query inside another query. This one finds households spending "
-              "more than the overall mean: the inner query computes the mean once, and the outer query uses "
+              "more than the overall mean. The inner query computes the mean once, and the outer query uses "
               "it as a number."),
             sql("SELECT COUNT(*) AS above_mean\nFROM households\n"
                 "WHERE monthly_pc_exp > (SELECT AVG(monthly_pc_exp) FROM households);"),
@@ -305,7 +305,7 @@ PAGE = {
             h3("Number the rows within each group"),
             p("<code class=\"inline\">ROW_NUMBER()</code> numbers rows 1, 2, 3 within each partition, in the "
               "order you give. Wrap it in a CTE and keep numbers 1 to 3 to get the three lowest-spending "
-              "households in every district: a common first step when drawing a list for a field visit."),
+              "households in every district, which is a common first step when drawing a list for a field visit."),
             sql("WITH ranked AS (\n  SELECT hh_id, district, caste, monthly_pc_exp,\n"
                 "         ROW_NUMBER() OVER (PARTITION BY district ORDER BY monthly_pc_exp) AS rn\n"
                 "  FROM households\n)\nSELECT district, rn, hh_id, caste, monthly_pc_exp\n"
@@ -335,7 +335,7 @@ PAGE = {
         {"tab": "NULLs", "title": "Missing values: NULL", "blocks": [
             p("NULL means <em>unknown</em> or <em>not recorded</em>. SQL keeps it apart from zero and from an "
               "empty string, and it follows its own rules. The three teaching tables have no missing values, so this cell "
-              "makes a small table that does: a follow-up visit log where some visits recorded no "
+              "makes a small table that does, a follow-up visit log where some visits recorded no "
               "expenditure. The table is invented."),
             sql("DROP TABLE IF EXISTS followup;\n"
                 "CREATE TEMP TABLE followup (hh_id INTEGER, visit_month TEXT, pc_exp_followup INTEGER);\n"
@@ -377,7 +377,7 @@ PAGE = {
               "of it are the ones in this course: how many, where, how much, who is missing, which rows "
               "repeat."),
             p("The cell below builds a small export from the households table. Every value in it is "
-              "invented, including the amount and the month, and its columns are chosen for teaching: they "
+              "invented, including the amount and the month, and its columns are chosen for teaching and "
               "do not copy any real portal's layout. Run it first; it reports how many rows it made (93)."),
             sql(MIS_BUILD),
             h3("Check for duplicates before you count anything"),

@@ -211,13 +211,13 @@ PAGE = {
              {"t": "p", "html": "Monitoring and MIS exports arrive messy. One enumerator types "
                                 "<em>Purnea</em>, another <em>Purnia</em>, a third <em>PURNIA</em> with a trailing "
                                 "space. A spreadsheet treats those as three districts. OpenRefine is built for "
-                                "exactly this: it shows you every distinct value in a column, groups the ones that "
+                                "exactly this. It shows you every distinct value in a column, groups the ones that "
                                 "are probably the same, and lets you fix thousands of cells in one action."},
              {"t": "info", "html": "<strong>Version and cost, checked 6 October 2026.</strong> The current "
                                    "release on the " + link("https://openrefine.org/download", "OpenRefine download page")
                                    + " is <strong>OpenRefine 3.10.0</strong>, dated 26 February 2026 (3.9.5 and "
                                    "3.8.7 are listed as older versions). OpenRefine is free software under the "
-                                   "BSD 3-clause licence: no price, no account, no licence key."},
+                                   "BSD 3-clause licence, with no price, no account and no licence key."},
              {"t": "h3", "html": "Which file to download"},
              {"t": "ul", "items": [
                  "<strong>Windows:</strong> an installer (EXE) or a ZIP file. Both Windows packages include Java "
@@ -295,7 +295,7 @@ PAGE = {
                                 "Excel (XLS and XLSX), ODS, JSON and XML among the formats it reads, and it can open "
                                 "a ZIP or GZ archive directly."},
              {"t": "info", "html": "<strong>What to look for.</strong> The project opens on a grid that shows the "
-                                   "row count at the top: it should say 240 rows. The "
+                                   "row count at the top, and it should say 240 rows. The "
                                    "<code class=\"inline\">monthly_pc_exp</code> column is text for now, because "
                                    "some cells hold commas and words."},
          ]},
@@ -482,7 +482,7 @@ PAGE = {
              {"t": "p", "html": "Trim and title case take the district column from <strong>29 distinct values to "
                                 "20</strong>. Removing commas takes the non-numeric expenditure cells from "
                                 "<strong>18 to 6</strong>, and the six left all say <em>not asked</em>. Those are "
-                                "missing values, and they should stay missing: do not type a zero."},
+                                "missing values, and they should stay missing, so do not type a zero."},
              {"t": "syntax", "label": "GREL: more expressions you will use",
               "code": ('value.fingerprint()\n'
                        'value.split(",")[0]\n'
@@ -556,7 +556,7 @@ PAGE = {
              ]},
              {"t": "p", "html": "The " + link("https://openrefine.org/docs/manual/reconciling", "reconciling manual")
                                 + " also mentions <em>reconcile-csv</em>, a small tool that builds a reconciliation "
-                                "service from a CSV file. That suits the usual MIS case: reconcile your messy village "
+                                "service from a CSV file. That suits the usual MIS case, where you reconcile your messy village "
                                 "column against the official list your programme already holds, with its codes. If "
                                 "you already have identifiers in a column, <strong>Reconcile &rarr; Use values as "
                                 "identifiers</strong> links them directly."},
@@ -589,9 +589,9 @@ PAGE = {
                  "Next month, create a project from the new export, open Undo / Redo, click "
                  "<strong>Apply&hellip;</strong>, paste the JSON, and every step runs again.",
              ]},
-             {"t": "p", "html": "The manual notes that not every operation can be extracted: edits to a single cell "
+             {"t": "p", "html": "The manual notes that not every operation can be extracted, and that edits to a single cell "
                                 "cannot be replayed. Do one-off corrections with a GREL expression or a cluster merge, "
-                                "so they go into the recipe. Read the JSON before you rely on it: you should find your "
+                                "so they go into the recipe. Read the JSON before you rely on it. You should find your "
                                 "column names and your GREL expressions written out in it."},
              {"t": "h3", "html": "The same idea in Python"},
              {"t": "p", "html": "A cleaning recipe written as code does the same job and can be checked. This cell "

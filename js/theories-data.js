@@ -384,7 +384,7 @@ window.THEORIES = {
       "claim": "Caste is a division of labourers rather than of labour, held in place by endogamy and by religious sanction, and no economic programme that leaves it standing will reach the people at the bottom of it.",
       "summary": [
         "Ambedkar's first published work on the subject, a seminar paper written at Columbia in 1916, is about a mechanism. Caste is not simply occupational specialisation. What makes it self-reproducing is endogamy: a rule of marrying within, superimposed on a society that was previously exogamous, which requires a surplus man and a surplus woman in every generation to be disposed of. Sati, enforced widowhood and the marriage of girls are, in his reading, the means by which the boundary is maintained. A caste is a closed class, and closure is the thing to explain.",
-        "Annihilation of Caste, written twenty years later as an address he was never allowed to deliver, draws the political conclusion. Caste is graded inequality, which is why it is stable: every group except the lowest has someone beneath it and therefore something to defend. It cannot be dissolved by inter-dining, or by economic reform alone, because its sanction is religious. Ambedkar's demand is against the authority of the shastras themselves, and it is the reason the conference that invited him withdrew the invitation.",
+        "Annihilation of Caste, written twenty years later as an address he was never allowed to deliver, draws the political conclusion. Caste is graded inequality, which is why it is stable. Every group except the lowest has someone beneath it and therefore something to defend. It cannot be dissolved by inter-dining, or by economic reform alone, because its sanction is religious. Ambedkar's demand is against the authority of the shastras themselves, and it is the reason the conference that invited him withdrew the invitation.",
         "The economic programme is set out in States and Minorities in 1947, submitted to the Constituent Assembly on behalf of the Scheduled Castes Federation, and it is more radical than anything in the Congress platform. Key industries owned by the state. Insurance a state monopoly. Agriculture a state industry: land taken over, consolidated, and leased to collective farms worked by village residents without distinction of caste or creed. He called it state socialism, and he wanted it written into the constitution so that no legislature could undo it.",
         "The reason for that programme is caste rather than class. A landless Dalit household given formal equality but no land, in a village where land and credit and labour hiring all run along caste lines, is free in a sense that does not bite. Ambedkar's answer is to remove the asset from the field where caste operates, which is also why he had no patience at all for the village as a unit of self-government."
       ],
@@ -395,7 +395,7 @@ window.THEORIES = {
         "agency": 0.5
       },
       "axis_notes": {
-        "allocation": "State socialism, written as a constitutional obligation rather than a policy. Ambedkar distrusted the market for the same reason he distrusted the village: both were arenas where caste already held the positions.",
+        "allocation": "State socialism, written as a constitutional obligation rather than a policy. Ambedkar distrusted the market for the same reason he distrusted the village, because both were arenas where caste already held the positions.",
         "priority": "As far towards redistribute-first as the shelf goes, and explicitly so: political democracy without social democracy beneath it will not last.",
         "hierarchy": "The defining position. Hierarchy is a cause with its own machinery, and a purely economic programme is what he spent his career arguing against.",
         "agency": "Both, uneasily. Organisation of the oppressed themselves, and a state strong enough to act against the society that produced it. He did not think either alone would do."
@@ -642,7 +642,7 @@ window.THEORIES = {
         {
           "name": "Andre Gunder Frank",
           "years": "1929–2005",
-          "note": "Took the argument from trade to structure: underdevelopment is not a starting condition but a product."
+          "note": "Took the argument from trade to structure. In his account underdevelopment is produced by the world system, in the same process that produced development elsewhere."
         },
         {
           "name": "Samir Amin",
@@ -1145,7 +1145,7 @@ window.THEORIES = {
       "summary": [
         "Mahalanobis asked a question the growth models of the time were not asking. Not how much a country invests, but what the investment is made of. Divide output into two departments: one that makes capital goods, meaning machines that make other things, and one that makes consumer goods. Now choose how to split this year's investment between them.",
         "Put more into the consumer goods department and people are better off sooner. Put more into the capital goods department and the country's capacity to build capacity grows, so every later year's investment is larger. The share going to capital goods, which the model calls lambda-k, therefore sets the long-run growth rate, and raising it means accepting lower consumption now for a higher path later.",
-        "The whole argument depends on one assumption, and Mahalanobis was explicit about it: machines cannot simply be bought abroad. If they could, a country would export what it is good at and import capital goods, and the composition of domestic investment would not matter. India assumed foreign exchange was the binding constraint, and given the export outlook of the 1950s and the Prebisch finding then circulating, that was not an unreasonable thing to assume.",
+        "The whole argument depends on one assumption, which Mahalanobis stated openly, that machines cannot simply be bought abroad. If they could, a country would export what it is good at and import capital goods, and the composition of domestic investment would not matter. India assumed foreign exchange was the binding constraint, and given the export outlook of the 1950s and the Prebisch finding then circulating, that was not an unreasonable thing to assume.",
         "The Second Five Year Plan of 1956 to 1961 is the model turned into policy, and the Industrial Policy Resolution of 1956 is its legal form: seventeen industries reserved to the state, twelve more that the state would progressively enter, and the rest left to private firms under licence."
       ],
       "axes": {
@@ -1368,7 +1368,7 @@ window.THEORIES = {
         {
           "name": "W. W. Rostow",
           "years": "1916–2003",
-          "note": "American economic historian, later National Security Advisor to Lyndon Johnson and among the most committed advocates of the war in Vietnam. The two facts belong together: the book's subtitle is A Non-Communist Manifesto."
+          "note": "American economic historian, later National Security Advisor to Lyndon Johnson and among the most committed advocates of the war in Vietnam. The two facts belong together. The book's subtitle is A Non-Communist Manifesto."
         }
       ],
       "year": 1960,
@@ -1381,7 +1381,7 @@ window.THEORIES = {
       ],
       "claim": "Every society passes through the same five stages on the way to a modern economy, and the one that matters is a short take-off in which investment roughly doubles as a share of national income.",
       "summary": [
-        "Rostow's argument is that economic history has a shape, that the shape is the same everywhere, and that a country can be located on it. Five stages: traditional society, the preconditions for take-off, the take-off itself, the drive to maturity, and the age of high mass consumption. The take-off is the hinge. Rostow set three conditions for it, and the first is a number: net investment rises from around five per cent of national income to over ten.",
+        "Rostow's argument is that economic history has a shape, that the shape is the same everywhere, and that a country can be located on it. Five stages: traditional society, the preconditions for take-off, the take-off itself, the drive to maturity, and the age of high mass consumption. The take-off is the hinge. Rostow set three conditions for it, and the first is a number. Net investment rises from around five per cent of national income to over ten.",
         "The appeal to a planner is obvious. If the sequence is universal, then a poor country is not a different kind of thing from a rich one, only an earlier version of it, and the task is to supply the missing ingredient. That ingredient is capital. Aid, in this account, is not charity; it is the push that gets a country over the investment threshold, after which growth becomes self-sustaining.",
         "The subtitle is doing work. Rostow wrote in 1960 against a Marxist account of history that also had stages, also claimed universality, and also promised industrialisation. He was offering the same promise without the revolution, and he was offering it to governments deciding which side of the Cold War to stand on. The theory travelled inside American foreign policy because it was built to."
       ],
@@ -1604,7 +1604,7 @@ window.THEORIES = {
         },
         {
           "claim": "Latecomers repeat the path the first industrialisers took.",
-          "finding": "Alexander Gerschenkron's comparative work on Europe found the opposite pattern: the later a country industrialised, the more it substituted for what it lacked. Britain financed industry from retained profits, Germany used investment banks, Russia used the state budget. The sequence was not repeated; it was replaced.",
+          "finding": "Alexander Gerschenkron's comparative work on Europe found the opposite pattern. The later a country industrialised, the more it substituted for what it lacked. Britain financed industry from retained profits, Germany used investment banks, Russia used the state budget. The sequence was not repeated; it was replaced.",
           "source": "Alexander Gerschenkron, Economic Backwardness in Historical Perspective",
           "year": 1962
         },
@@ -1650,7 +1650,7 @@ window.THEORIES = {
         {
           "name": "Chandi Prasad Bhatt",
           "years": "born 1934",
-          "note": "Organised the first actions from Gopeshwar through the Dasholi Gram Swarajya Sangh. His reading is about local use: the forest should supply the village workshop before it supplies a sports goods firm in Allahabad."
+          "note": "Organised the first actions from Gopeshwar through the Dasholi Gram Swarajya Sangh. His reading is about local use. The forest should supply the village workshop before it supplies a sports goods firm in Allahabad."
         },
         {
           "name": "Sunderlal Bahuguna",
@@ -1685,7 +1685,7 @@ window.THEORIES = {
       ],
       "claim": "Environmental conflict in a poor country is a distributional fight over who may use a resource that people live on, not a contest between growth and nature, and the people defending the resource are usually its poorest users.",
       "summary": [
-        "In March 1973 the villagers of Mandal in Chamoli district stopped a sporting goods firm from felling ash trees the forest department had allotted to it, having themselves been refused the same trees for making farm implements. That refusal is the whole argument in one transaction: the forest was not closed to use, it was closed to their use.",
+        "In March 1973 the villagers of Mandal in Chamoli district stopped a sporting goods firm from felling ash trees the forest department had allotted to it, having themselves been refused the same trees for making farm implements. That refusal is the whole argument in one transaction. The forest stayed open to a firm from outside and was closed to the people who lived beside it.",
         "The technique was to embrace the trees, which is what chipko means, and the most cited action came a year later at Reni on 26 March 1974, when Gaura Devi and the women of the village stood between the contractors and the trees after the men had been drawn away to a compensation hearing. In 1980 the central government ordered a fifteen-year stop on green felling above a thousand metres in the Uttarakhand hills.",
         "The movement contained two readings that were never reconciled. Bahuguna's was conservationist: the trees should stand, and ecology is permanent economy. Bhatt's was about livelihood: the forest should be worked, by the people who live in it, for local industry rather than for distant contractors. The international reception heard the first and largely missed the second.",
         "Ramachandra Guha's history put the movement in a longer line, running back through the forest satyagrahas of the 1920s to the moment the colonial state declared the forests its own property under the Indian Forest Act. Read that way, Chipko is a property dispute a century old, and its environmentalism is a consequence of who was being dispossessed rather than a movement's founding motive. Guha and Juan Martinez-Alier later gave the general form a name: the environmentalism of the poor."
@@ -1894,13 +1894,13 @@ window.THEORIES = {
         },
         {
           "claim": "Local management protects the forest better than state management.",
-          "finding": "Supported in general and not automatically. Elinor Ostrom's comparative work established that commons governed by their users can be sustained where the users can monitor, exclude outsiders and enforce, and that these conditions are institutional rather than natural. Indian evidence from van panchayats in Uttarakhand and from joint forest management is consistent with this and shows the same conditional pattern: local control works where the local body actually holds the power to exclude, and not where it holds only a consultative role.",
+          "finding": "Supported in general and not automatically. Elinor Ostrom's comparative work established that commons governed by their users can be sustained where the users can monitor, exclude outsiders and enforce, and that these conditions are institutional rather than natural. Indian evidence from van panchayats in Uttarakhand and from joint forest management is consistent with this and shows the same conditional pattern. Local control works where the local body actually holds the power to exclude, and not where it holds only a consultative role.",
           "source": "Elinor Ostrom, Governing the Commons; and the Indian van panchayat and joint forest management literature",
           "year": 1990
         }
       ],
       "unsettled": "The split inside the movement was never settled and it is the live question in Indian forest policy. Conservation and local use are treated as the same cause in most writing about Chipko and they point at different laws: the 1980 Act restricts diversion by making the centre the gatekeeper, and the 2006 Act shifts the decision to the gram sabha, and the two have been in tension in practice ever since. What the record does not tell us is what the hills would look like under the arrangement Bhatt wanted, because forest-based local industry at scale was not tried. The conservation outcome was delivered, and the livelihood outcome was legislated and not delivered.",
-      "india": "This is the Indian entry that most changed how environmentalism is defined elsewhere, and the change was to stop assuming that concern for a resource is something people acquire after they are rich. It also sits directly against the growth theories on this shelf, which treat a forest as an input awaiting valuation, and it supplies the missing term in Gandhi and Kumarappa's economy of permanence: not only that extraction is temporary, but that its costs are paid first by the people with the least ability to move away from them.",
+      "india": "This is the Indian entry that most changed how environmentalism is defined elsewhere, and the change was to stop assuming that concern for a resource is something people acquire after they are rich. It also sits directly against the growth theories on this shelf, which treat a forest as an input awaiting valuation, and it supplies the missing term in Gandhi and Kumarappa's economy of permanence. Extraction is temporary, and its costs are paid first by the people with the least ability to move away from them.",
       "compare": "gandhi-village-swaraj",
       "compare_note": "Kumarappa's economy of permanence and the Chipko claim about who the forest is for are the same argument about extraction and who pays for it.",
       "contrast": "washington-consensus",
@@ -2159,8 +2159,8 @@ window.THEORIES = {
           "year": 1995
         }
       ],
-      "unsettled": "The approach is much better at evaluation than at prescription, and its own proponents say so. Knowing that a girl's schooling is blocked by a conversion factor does not say which instrument removes it, and the list of capabilities that matter is either left open, as Sen prefers, which makes it hard to use for policy, or specified, as Nussbaum does, which raises the question of whose list it is. What has not been resolved is the aggregation problem the Human Development Index papered over: the index weights three things equally because there is no principled way to weight them at all, and everyone involved knew that in 1990.",
-      "india": "Two of the three people who built this were from the subcontinent and the Indian material is not an application but a source. The famine work is Bengal. The missing women calculation is South Asian demography. The public action argument was assembled from the difference between Kerala and Uttar Pradesh. It is also the theory with the deepest institutional presence here, through the state human development reports, the National Rural Employment Guarantee Act's rights framing, and the Right to Education, and that presence is itself worth noticing: an approach designed to resist a single number produced a single number, and the number is what travelled.",
+      "unsettled": "The approach is much better at evaluation than at prescription, and its own proponents say so. Knowing that a girl's schooling is blocked by a conversion factor does not say which instrument removes it, and the list of capabilities that matter is either left open, as Sen prefers, which makes it hard to use for policy, or specified, as Nussbaum does, which raises the question of whose list it is. What has not been resolved is the aggregation problem the Human Development Index papered over. The index weights three things equally because there is no principled way to weight them at all, and everyone involved knew that in 1990.",
+      "india": "Two of the three people who built this were from the subcontinent and the Indian material is not an application but a source. The famine work is Bengal. The missing women calculation is South Asian demography. The public action argument was assembled from the difference between Kerala and Uttar Pradesh. It is also the theory with the deepest institutional presence here, through the state human development reports, the National Rural Employment Guarantee Act's rights framing, and the Right to Education, and that presence is itself worth noticing. An approach designed to resist a single number produced a single number, and the number is what travelled.",
       "compare": "ambedkar-annihilation",
       "compare_note": "Conversion factors and caste are the same observation from two directions: the same resource does different work depending on who holds it and where.",
       "contrast": "rostow-stages",
@@ -2670,7 +2670,7 @@ window.THEORIES = {
         },
         {
           "claim": "The list was the complete set of what a country needed.",
-          "finding": "By the mid-2000s the institutions had added financial regulation, corporate governance, anti-corruption, labour market flexibility, targeted poverty reduction, central bank independence and more. Dani Rodrik's count put the augmented list at about twenty items and made the obvious objection: a reform agenda that requires a country to already have the institutions of a rich country is not a route to becoming one.",
+          "finding": "By the mid-2000s the institutions had added financial regulation, corporate governance, anti-corruption, labour market flexibility, targeted poverty reduction, central bank independence and more. Dani Rodrik's count put the augmented list at about twenty items and made the obvious objection that a reform agenda that requires a country to already have the institutions of a rich country is not a route to becoming one.",
           "source": "Dani Rodrik, 'Goodbye Washington Consensus, Hello Washington Confusion?', Journal of Economic Literature",
           "year": 2006
         },
@@ -2758,7 +2758,7 @@ window.THEORIES = {
       "summary": [
         "The argument begins by dismissing the usual candidates. Geography, culture and policy ignorance each fail to explain why two halves of one city, or two sides of one border, diverge. What is left is institutions: whether property rights are secure for most people, whether entry into business and politics is open, and whether power is constrained.",
         "Acemoglu, Johnson and Robinson made this testable with a strategy rather than a correlation. Where Europeans could settle, they built rules that protected their own property and those rules persisted. Where disease made settlement lethal, they built extractive machinery to move resources out, and that persisted too. Settler mortality in the colonial period therefore predicts institutions today while having no plausible direct effect on income today, which is what an instrument requires.",
-        "The companion finding is the reversal of fortune. Among places colonised by Europeans, the ones that were densest and richest around 1500 tend to be the poorer ones now, which is the opposite of what a geographic explanation predicts and exactly what the extraction story predicts: a rich, dense place was worth setting up extraction in.",
+        "The companion finding is the reversal of fortune. Among places colonised by Europeans, the ones that were densest and richest around 1500 tend to be the poorer ones now, which is the opposite of what a geographic explanation predicts and exactly what the extraction story predicts, because a rich, dense place was worth setting up extraction in.",
         "Why Nations Fail generalised it into inclusive and extractive institutions, with critical junctures where a small institutional difference gets amplified. The claim is not that rules matter, which nobody disputes, but that they are the fundamental cause and that geography, culture and policy operate through them or not at all."
       ],
       "axes": {
@@ -2769,9 +2769,9 @@ window.THEORIES = {
       },
       "axis_notes": {
         "allocation": "Markets, but only inside rules the state has to supply and enforce. The theory is about the conditions under which a market works rather than about the market itself.",
-        "priority": "Growth-leaning, with the caveat that inclusive institutions are partly a distributional condition: a rule that protects only elite property is what the theory calls extractive.",
+        "priority": "Growth-leaning, with the caveat that inclusive institutions are partly a distributional condition. A rule that protects only elite property is what the theory calls extractive.",
         "hierarchy": "Institutions are read through elites and the excluded rather than through caste or gender specifically, which is the gap Indian applications of it have had to fill.",
-        "agency": "Elites, at critical junctures, under pressure from broad coalitions. Not planners, and not experts: the theory has notoriously little to say about what a reformer should do on a Monday."
+        "agency": "Elites, at critical junctures, under pressure from broad coalitions. Not planners, and not experts. The theory has notoriously little to say about what a reformer should do on a Monday."
       },
       "layers": [
         {
@@ -2952,7 +2952,7 @@ window.THEORIES = {
         }
       ],
       "unsettled": "The category is doing a great deal of work and is hard to pin down, which is the criticism that has stuck. Inclusive institutions are defined partly by their consequences, so the claim that they produce growth is difficult to separate from a definition, and the theory has no account of the sequence by which a country acquires them. It is also close to silent on the hierarchies that operate inside a formally inclusive arrangement: India has had universal franchise, secure formal property and open entry since 1950, and the Banerjee and Iyer result sits alongside caste-based exclusion that the inclusive and extractive categories do not describe.",
-      "india": "The colonial land tenure result is the most useful thing this literature has produced about India, because it identifies a persistent institution that is specific, dated and mapped, and traces it to outcomes a century and a half later. It also gives the sharpest available answer to a question the growth theories on this shelf mostly avoid, which is why the same national policy produces such different results across Indian states: they did not start from the same rules, and the difference in rules was largely decided before 1857.",
+      "india": "The colonial land tenure result is the most useful thing this literature has produced about India, because it identifies a persistent institution that is specific, dated and mapped, and traces it to outcomes a century and a half later. It also gives the sharpest available answer to a question the growth theories on this shelf mostly avoid, which is why the same national policy produces such different results across Indian states, because they did not start from the same rules, and the difference in rules was largely decided before 1857.",
       "compare": "bardhan-dominant-classes",
       "compare_note": "Both explain outcomes by the arrangement of power rather than by policy choice, and both expect an arrangement that benefits its holders to persist past its justification.",
       "contrast": "dependency",
@@ -2991,7 +2991,7 @@ window.THEORIES = {
         {
           "name": "Esther Duflo",
           "years": "born 1972",
-          "note": "Argued that the economist working on poverty should think of the job as plumbing: the details of how a policy is installed determine whether it works, and they cannot be deduced."
+          "note": "Argued that the economist working on poverty should think of the job as plumbing, because the details of how a policy is installed determine whether it works, and they cannot be deduced."
         },
         {
           "name": "Abhijit Banerjee",
@@ -3017,7 +3017,7 @@ window.THEORIES = {
       "summary": [
         "The starting position is deliberately modest and slightly rude about everything else on this shelf. Nobody can settle whether aid works, whether markets or states develop a country, or whether institutions cause growth, because the units are countries and there are not enough of them and they differ in every respect at once. But whether a second teacher raises learning in this district, whether bed nets are used when they are free rather than sold, whether a nudge raises immunisation, are questions with an answer that can be obtained.",
         "The method borrows from medicine. Assign the programme at random across schools, villages or households, so that treated and untreated groups differ only by the assignment, and any difference in the outcome afterwards is caused by the programme. The apparatus around it, done properly, is large: pre-analysis plans, power calculations, tracking of attrition, and replication in other places.",
-        "The intellectual pay-off is not the individual estimate but what accumulates. Poor Economics argues from many trials at once that poor households behave in ways that are intelligible once the constraints are correctly described, and that the constraints are frequently not the ones policy assumed: not that people do not value schooling, but that the return is concentrated at levels they do not reach; not that they do not want immunisation, but that the marginal cost of the trip on the day exceeds a diffuse future benefit.",
+        "The intellectual pay-off is not the individual estimate but what accumulates. Poor Economics argues from many trials at once that poor households behave in ways that are intelligible once the constraints are correctly described, and that the constraints are frequently not the ones policy assumed. People value schooling, but the return is concentrated at levels they do not reach. They want immunisation, but the marginal cost of the trip on the day exceeds a diffuse future benefit.",
         "The strongest single case is Indian. Trials with Pratham of teaching children at the level they are actually at, rather than at the level the syllabus assumes, produced large learning gains, survived replication, and were then adopted by state governments at a scale the method's critics said it would never reach."
       ],
       "axes": {

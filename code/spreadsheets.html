@@ -102,7 +102,7 @@ names(hh)
 sum(duplicated(hh$hh_id))       # repeated IDs: should be 0
 sapply(hh, class)               # what each column holds</textarea></div>
 <p>The file has 240 rows and 13 columns, no repeated <code class="inline">hh_id</code>, numbers in the numeric columns and text in the rest. In Excel, select column A and look at the status bar: <em>Count</em> should read 241 (240 IDs plus the header).</p>
-<div class="info-box"><strong>Exercise.</strong> In your spreadsheet, type 1 over the <code class="inline">hh_id</code> in A3, then type <code class="inline">=COUNTIF($A$2:$A$241, A2)</code> in N2 and fill down. Sort by column N, largest first: the two rows with a count of 2 are your duplicates. Undo the change afterwards.</div>
+<div class="info-box"><strong>Exercise.</strong> In your spreadsheet, type 1 over the <code class="inline">hh_id</code> in A3, then type <code class="inline">=COUNTIF($A$2:$A$241, A2)</code> in N2 and fill down. Sort by column N, largest first. The two rows with a count of 2 are your duplicates. Undo the change afterwards.</div>
 <div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: Validation &rarr;</button></div>
 </div>
 <div class="tab-panel lesson" data-panel="1" role="tabpanel">
@@ -142,7 +142,7 @@ for (v in c(&quot;district&quot;, &quot;area&quot;, &quot;caste&quot;, &quot;hea
 # The ranges for whole-number and decimal rules
 sapply(hh[, c(&quot;head_edu_years&quot;, &quot;hh_size&quot;, &quot;monthly_pc_exp&quot;, &quot;land_acres&quot;)], range)</textarea></div>
 <p>The file holds 10 districts, two areas (Rural, Urban), four caste groups (General, OBC, SC, ST), and Yes or No for toilets. Household size runs from 1 to 8, years of schooling of the head from 0 to 17, and monthly per capita expenditure from Rs 700 to Rs 20,690.</p>
-<div class="info-box"><strong>Exercise.</strong> Add the custom rule for household size to G2:G241, then try typing 0, 4.5 and 31 into G2. Each should be refused. Ranges come from what is plausible, wider than what this sample happens to contain: a rule of 1 to 8 would refuse the next household of nine.</div>
+<div class="info-box"><strong>Exercise.</strong> Add the custom rule for household size to G2:G241, then try typing 0, 4.5 and 31 into G2. Each should be refused. Ranges come from what is plausible, wider than what this sample happens to contain. A rule of 1 to 8 would refuse the next household of nine.</div>
 <div class="info-box warning"><strong>Validation checks typing, and nothing else.</strong> Data pasted over a validated cell, or already in the sheet before the rule was added, is not rechecked automatically. After a paste, check the column again, for example with the COUNTIF in module 1 or the R and Python cells here.</div>
 <div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: Lookups &rarr;</button></div>
 </div>
@@ -201,8 +201,8 @@ hh$district[hh$hh_id == 100] &lt;- &quot;Purnea&quot;
 hh$state &lt;- d$state[match(hh$district, d$district)]
 sum(is.na(hh$state))                    # rows where an exact lookup finds nothing (#N/A)
 hh[is.na(hh$state), c(&quot;hh_id&quot;, &quot;district&quot;)]</textarea></div>
-<p>Every household finds its state: 72 in Bihar, 48 in Kerala, 72 in Madhya Pradesh and 48 in Rajasthan. After household 100's district is changed to <em>Purnea</em>, exactly one row has no state. In the spreadsheet that row shows #N/A, or your <code class="inline">"not found"</code> text. That is the behaviour you want: a lookup that fails visibly.</p>
-<div class="info-box"><strong>Exercise.</strong> After you fill the lookup down, count the failures with <code class="inline">=COUNTIF(N2:N241, "not found")</code> (or <code class="inline">=SUMPRODUCT(--ISNA(N2:N241))</code> if you did not use the fourth argument). Make that count part of every update: it should be 0 before any table is built on the column.</div>
+<p>Every household finds its state: 72 in Bihar, 48 in Kerala, 72 in Madhya Pradesh and 48 in Rajasthan. After household 100's district is changed to <em>Purnea</em>, exactly one row has no state. In the spreadsheet that row shows #N/A, or your <code class="inline">"not found"</code> text. That is the behaviour you want, because a lookup should fail visibly.</p>
+<div class="info-box"><strong>Exercise.</strong> After you fill the lookup down, count the failures with <code class="inline">=COUNTIF(N2:N241, "not found")</code> (or <code class="inline">=SUMPRODUCT(--ISNA(N2:N241))</code> if you did not use the fourth argument). Make that count part of every update. It should be 0 before any table is built on the column.</div>
 <div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: Indicators &rarr;</button></div>
 </div>
 <div class="tab-panel lesson" data-panel="3" role="tabpanel">

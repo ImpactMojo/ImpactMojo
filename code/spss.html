@@ -119,7 +119,7 @@ DATASET NAME households WINDOW=FRONT.
 
 DISPLAY DICTIONARY.
 LIST VARIABLES=hh_id district caste monthly_pc_exp /CASES=FROM 1 TO 5.</pre>
-<ul><li>The Data Editor should show 240 rows. <code class="inline">DISPLAY DICTIONARY</code> lists the 13 variables with their formats.</li><li>If a column is blank or wrong, check its format: text read as <code class="inline">F</code> comes out as system-missing, shown as a dot.</li><li>Dialogs that read and change data, and most analysis dialogs, have a <strong>Paste</strong> button beside <strong>OK</strong>. The rest of this module explains it.</li></ul>
+<ul><li>The Data Editor should show 240 rows. <code class="inline">DISPLAY DICTIONARY</code> lists the 13 variables with their formats.</li><li>If a column is blank or wrong, check its format, because text read as <code class="inline">F</code> comes out as system-missing, shown as a dot.</li><li>Dialogs that read and change data, and most analysis dialogs, have a <strong>Paste</strong> button beside <strong>OK</strong>. The rest of this module explains it.</li></ul>
 <h3>Paste syntax from any dialog</h3>
 <p>IBM's documentation describes this as the easiest way to build a syntax file: make your selections in a dialog, then click <strong>Paste</strong>. The command goes into the syntax window (a new one opens if none is open), where you can run it, edit it and save it. Pasting at each step of an analysis builds a file that repeats the whole analysis later. Use the menus to find a command, and keep the syntax as your record.</p>
 <div class="info-box"><strong>Exercise.</strong> Choose <strong>Analyze &gt; Descriptive Statistics &gt; Frequencies</strong>, move <code class="inline">caste</code> into the Variable(s) box and click <strong>Paste</strong>. Compare the pasted command with the <code class="inline">FREQUENCIES</code> line in the next module.</div>
@@ -276,7 +276,7 @@ CASESTOVARS /ID=district /INDEX=area.</pre>
 <div class="tab-panel lesson" data-panel="5" role="tabpanel">
 <div class="eyebrow">Module 6 of 8</div>
 <h2>WEIGHT BY, and Complex Samples for NFHS</h2>
-<p><code class="inline">WEIGHT BY</code> makes every following procedure count each case as many times as its weight. Our course file has no sampling weight, but weighting each household by its size shows what a weight does: the per-household average becomes a per-person average.</p>
+<p><code class="inline">WEIGHT BY</code> makes every following procedure count each case as many times as its weight. Our course file has no sampling weight, but weighting each household by its size shows what a weight does, turning the per-household average into a per-person average.</p>
 <div class="syntax-label">SPSS syntax: 06_weight.sps</div><pre class="syntax-block">GET FILE=&#x27;C:\impactmojo\spss\households_clean.sav&#x27;.
 DESCRIPTIVES VARIABLES=monthly_pc_exp /STATISTICS=MEAN.
 WEIGHT BY hh_size.
@@ -333,7 +333,7 @@ REGRESSION
   /METHOD=ENTER obc sc st head_edu_years urban.
 
 GRAPH /BAR(SIMPLE)=MEAN(monthly_pc_exp) BY caste.</pre>
-<p>In the Coefficients table, read the column labelled B: each caste coefficient is the difference from General households with the same schooling and area. The R cell fits the same model with the same dummies, so the B column in your output should match its Estimate column, and R Square should match too.</p>
+<p>In the Coefficients table, read the column labelled B. Each caste coefficient is the difference from General households with the same schooling and area. The R cell fits the same model with the same dummies, so the B column in your output should match its Estimate column, and R Square should match too.</p>
 <div class="code-cell" data-lang="r"><textarea class="code-input" spellcheck="false" aria-label="R code editor">hh &lt;- read.csv(&quot;households.csv&quot;)
 # the dummies SPSS needs you to COMPUTE yourself
 hh$obc   &lt;- as.integer(hh$caste == &quot;OBC&quot;)

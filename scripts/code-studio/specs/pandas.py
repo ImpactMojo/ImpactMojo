@@ -288,7 +288,7 @@ PAGE = {
               "toilet coverage, 50 per cent."),
             py("groupby2"),
             p(IC("as_index=False") + " keeps the group columns as ordinary columns, which is easier to merge or "
-              "save later. Check " + IC("n") + " before reading any median: the SC female-headed group holds 2 "
+              "save later. Check " + IC("n") + " before reading any median. The SC female-headed group holds 2 "
               "households, so its median of &#8377;4,240 says almost nothing. In a real report you would "
               "suppress or flag cells that small."),
             ex("Group by " + IC('["district", "area"]') + " and add " + IC("pct_bank") + " for bank accounts. "
@@ -321,7 +321,7 @@ PAGE = {
             p("240 households times 4 indicators gives 960 rows. The grouped result has one row per district per "
               "indicator, 40 in all; the first eight are shown."),
             p(IC(".pivot()") + " goes the other way, spreading one column's values into new columns. That gives the "
-              "table a report needs: districts down the side, indicators across the top."),
+              "table a report needs, with districts down the side and indicators across the top."),
             py("pivot"),
             p("Rewa has 92 per cent of households with a bank account and 50 per cent with a toilet, and the "
               "lowest SHG membership, 4 per cent. Long form is for computing and charting, wide form is for "
@@ -350,7 +350,7 @@ PAGE = {
               "with probability 1 in 500 stands for 500 households, so its <strong>design weight</strong> is 500. "
               "Unweighted means describe the sample; weighted means estimate the population. pandas has no "
               "weighted mean of its own, so we use " + IC("np.average(values, weights=...)") + "."),
-            p("Our file has no weight column, so we invent a design for teaching: rural households drawn 1 in 500 "
+            p("Our file has no weight column, so we invent a design for teaching, with rural households drawn 1 in 500 "
               "and urban households 1 in 1,000."),
             py("weights"),
             p("Weighting raises mean spending from &#8377;3,400.9 to &#8377;3,856.9 and toilet coverage from 72.5 "
@@ -393,7 +393,7 @@ PAGE = {
             py("facet"),
             p("Small multiples: one panel per district, all on a shared 0 to 100 scale (" + IC("sharey=True") +
               "), so panels can be compared at a glance. Giving each panel its own scale would let a short bar in "
-              "one panel stand for more than a tall bar in another. Kozhikode shows no rural bar because the value is zero: none of its 3 rural households has a toilet. Three households are far too few to report a percentage for."),
+              "one panel stand for more than a tall bar in another. Kozhikode shows no rural bar because the value is zero. None of its 3 rural households has a toilet. Three households are far too few to report a percentage for."),
             {"t": "h3", "html": "Honest axes"},
             py("axes"),
             p("The median is &#8377;2,380 for rural and &#8377;4,515 for urban households, about 1.9 times. In the "

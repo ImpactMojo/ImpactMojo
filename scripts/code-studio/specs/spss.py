@@ -176,7 +176,7 @@ PAGE = {
              {"t": "ul", "items": [
                  "The Data Editor should show 240 rows. <code class=\"inline\">DISPLAY DICTIONARY</code> lists "
                  "the 13 variables with their formats.",
-                 "If a column is blank or wrong, check its format: text read as <code class=\"inline\">F</code> "
+                 "If a column is blank or wrong, check its format, because text read as <code class=\"inline\">F</code> "
                  "comes out as system-missing, shown as a dot.",
                  "Dialogs that read and change data, and most analysis dialogs, have a <strong>Paste</strong> "
                  "button beside <strong>OK</strong>. The rest of this module explains it.",
@@ -376,8 +376,8 @@ PAGE = {
          "blocks": [
              {"t": "p", "html": "<code class=\"inline\">WEIGHT BY</code> makes every following procedure count "
                                 "each case as many times as its weight. Our course file has no sampling weight, "
-                                "but weighting each household by its size shows what a weight does: the "
-                                "per-household average becomes a per-person average."},
+                                "but weighting each household by its size shows what a weight does, turning the "
+                                "per-household average into a per-person average."},
              {"t": "syntax", "label": "SPSS syntax: 06_weight.sps", "code":
                  "GET FILE='C:\\impactmojo\\spss\\households_clean.sav'.\n"
                  "DESCRIPTIVES VARIABLES=monthly_pc_exp /STATISTICS=MEAN.\n"
@@ -470,7 +470,7 @@ PAGE = {
                  "  /METHOD=ENTER obc sc st head_edu_years urban.\n"
                  "\n"
                  "GRAPH /BAR(SIMPLE)=MEAN(monthly_pc_exp) BY caste."},
-             {"t": "p", "html": "In the Coefficients table, read the column labelled B: each caste coefficient is "
+             {"t": "p", "html": "In the Coefficients table, read the column labelled B. Each caste coefficient is "
                                 "the difference from General households with the same schooling and area. The R "
                                 "cell fits the same model with the same dummies, so the B column in your output "
                                 "should match its Estimate column, and R Square should match too."},

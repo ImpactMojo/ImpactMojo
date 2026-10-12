@@ -165,7 +165,7 @@ hh = pd.read_csv(&quot;households.csv&quot;)
 out = (hh.groupby([&quot;caste&quot;, &quot;head_gender&quot;], as_index=False)
          .agg(n=(&quot;hh_id&quot;, &quot;size&quot;), median_exp=(&quot;monthly_pc_exp&quot;, &quot;median&quot;)))
 print(out)</textarea></div>
-<p><code class="inline">as_index=False</code> keeps the group columns as ordinary columns, which is easier to merge or save later. Check <code class="inline">n</code> before reading any median: the SC female-headed group holds 2 households, so its median of &#8377;4,240 says almost nothing. In a real report you would suppress or flag cells that small.</p>
+<p><code class="inline">as_index=False</code> keeps the group columns as ordinary columns, which is easier to merge or save later. Check <code class="inline">n</code> before reading any median. The SC female-headed group holds 2 households, so its median of &#8377;4,240 says almost nothing. In a real report you would suppress or flag cells that small.</p>
 <div class="info-box"><strong>Try it.</strong> Group by <code class="inline">["district", "area"]</code> and add <code class="inline">pct_bank</code> for bank accounts. Which district has the widest rural-urban gap in median spending?</div>
 <div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: merge &rarr;</button></div>
 </div>
@@ -218,7 +218,7 @@ summary = (long.assign(yes=long[&quot;answer&quot;] == &quot;Yes&quot;)
 summary[&quot;pct_yes&quot;] = (100 * summary[&quot;yes&quot;]).round()
 print(summary.head(8))</textarea></div>
 <p>240 households times 4 indicators gives 960 rows. The grouped result has one row per district per indicator, 40 in all; the first eight are shown.</p>
-<p><code class="inline">.pivot()</code> goes the other way, spreading one column's values into new columns. That gives the table a report needs: districts down the side, indicators across the top.</p>
+<p><code class="inline">.pivot()</code> goes the other way, spreading one column's values into new columns. That gives the table a report needs, with districts down the side and indicators across the top.</p>
 <div class="code-cell" data-lang="py" data-pkgs="pandas"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
 hh = pd.read_csv(&quot;households.csv&quot;)
 yn = [&quot;has_toilet&quot;, &quot;has_bank_account&quot;, &quot;shg_member&quot;, &quot;received_transfer&quot;]
@@ -266,7 +266,7 @@ print((100 * hh.groupby(&quot;area&quot;)[yn].mean()).round())</textarea></div>
 <div class="eyebrow">Module 7 of 9</div>
 <h2>Weighted means and survey weights</h2>
 <p>Most large surveys do not give every household the same chance of selection. A household drawn with probability 1 in 500 stands for 500 households, so its <strong>design weight</strong> is 500. Unweighted means describe the sample; weighted means estimate the population. pandas has no weighted mean of its own, so we use <code class="inline">np.average(values, weights=...)</code>.</p>
-<p>Our file has no weight column, so we invent a design for teaching: rural households drawn 1 in 500 and urban households 1 in 1,000.</p>
+<p>Our file has no weight column, so we invent a design for teaching, with rural households drawn 1 in 500 and urban households 1 in 1,000.</p>
 <div class="code-cell" data-lang="py" data-pkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd, numpy as np
 hh = pd.read_csv(&quot;households.csv&quot;)
 # Illustrative design: rural households drawn 1 in 500, urban 1 in 1,000
@@ -358,7 +358,7 @@ axes[1, 0].set_ylabel(&quot;% with toilet&quot;)
 fig.suptitle(&quot;Households with a toilet, by district and area&quot;)
 fig.tight_layout()
 show(fig)</textarea></div>
-<p>Small multiples: one panel per district, all on a shared 0 to 100 scale (<code class="inline">sharey=True</code>), so panels can be compared at a glance. Giving each panel its own scale would let a short bar in one panel stand for more than a tall bar in another. Kozhikode shows no rural bar because the value is zero: none of its 3 rural households has a toilet. Three households are far too few to report a percentage for.</p>
+<p>Small multiples: one panel per district, all on a shared 0 to 100 scale (<code class="inline">sharey=True</code>), so panels can be compared at a glance. Giving each panel its own scale would let a short bar in one panel stand for more than a tall bar in another. Kozhikode shows no rural bar because the value is zero. None of its 3 rural households has a toilet. Three households are far too few to report a percentage for.</p>
 <h3>Honest axes</h3>
 <div class="code-cell" data-lang="py" data-pkgs="pandas,matplotlib"><textarea class="code-input" spellcheck="false" aria-label="Python code editor">import pandas as pd
 import matplotlib

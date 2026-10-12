@@ -241,7 +241,7 @@ PAGE = {
              {"t": "h3", "html": "Opening the attribute table"},
              {"t": "p", "html": "Select a layer in the Layers panel and choose <strong>Layer &#9658; Open Attribute "
                                 "Table</strong>, or right-click it and choose <strong>Open Attribute Table</strong>, "
-                                "or press <strong>F6</strong>. Do this every time you load or join something: the "
+                                "or press <strong>F6</strong>. Do this every time you load or join something, because the "
                                 "table is where mistakes show first."},
          ]},
         {"tab": "Boundaries",
@@ -333,7 +333,7 @@ PAGE = {
              py("mismatch"),
              {"t": "p", "html": "Only <strong>5 of 10</strong> districts match. Betul, Gaya, Kozhikode, Patna and "
                                 "Purnia get no value, because the MIS typed <em>Baitul</em>, <em>Gaya</em> with a "
-                                "trailing space, <em>Calicut</em>, <em>PATNA</em> and <em>Purnea</em>. QGIS would give no warning: those districts would "
+                                "trailing space, <em>Calicut</em>, <em>PATNA</em> and <em>Purnea</em>. QGIS would give no warning. Those districts would "
                                 "simply be blank on the map, which reads as \"no data\" or, with some colour ramps, "
                                 "as \"lowest\"."},
              py("fixjoin"),
@@ -403,7 +403,7 @@ PAGE = {
                  "<strong>Quantile</strong> uses every colour equally, which makes any map look varied. Two "
                  "districts Rs 30 apart can land in different colours, and a reader will assume they differ.",
                  "<strong>Natural breaks</strong> fits this particular dataset, so the classes change when the "
-                 "data change: two survey rounds classed this way cannot be compared colour for colour.",
+                 "data change, so two survey rounds classed this way cannot be compared colour for colour.",
                  "For a series of maps (two rounds, or the same indicator across states), fix the breaks by hand "
                  "with round numbers, and use the same breaks on every map.",
              ]},
@@ -417,7 +417,7 @@ PAGE = {
              {"t": "p", "html": "A legend is part of the claim the map makes. In the Classes list of the Graduated "
                                 "renderer, double-click a label to edit it; the QGIS manual notes you can also set "
                                 "the legend format and its precision. An empty class, like the third equal-interval "
-                                "class in the last module, still shows in the legend: delete it or change the "
+                                "class in the last module, still shows in the legend, so delete it or change the "
                                 "breaks."},
              {"t": "ul", "items": [
                  "<strong>State the unit and the measure</strong>: \"Mean monthly per capita expenditure (Rs), "

@@ -196,7 +196,7 @@ PAGE = {
                  "downloaded to your computer; the documentation says no data is sent to the cloud.",
              ]},
              {"t": "h3", "html": "What it is not"},
-             {"t": "p", "html": "It is not a cleaning tool in the OpenRefine sense: it shows you that "
+             {"t": "p", "html": "It is not a cleaning tool in the OpenRefine sense. It shows you that "
                                 "<em>Purnea</em> and <em>Purnia</em> both appear only if you have told it which "
                                 "values are allowed, and it does not cluster or bulk-merge them. Use "
                                 "<a href=\"/code/openrefine.html\" " + A + ">OpenRefine</a> to clean, and Open Data "
@@ -249,7 +249,7 @@ PAGE = {
                  "The file appears in the sidebar. Click it: ODE validates it and shows it in the grid.",
              ]},
              {"t": "info", "html": "<strong>ODE works on a copy.</strong> The upload guide says ODE does not change "
-                                   "your original file: it copies it into the application's own folder. "
+                                   "your original file and instead copies it into the application's own folder. "
                                    "Right-click the file in the sidebar and choose <strong>Open Location</strong> "
                                    "to see where the copy lives. Your edits go to that copy, so export it when you "
                                    "are done (module 7)."},
@@ -379,7 +379,7 @@ PAGE = {
                  "<strong>Download file with errors</strong>: an Excel workbook with three sheets. "
                  "<em>Data</em> is the table with errors painted red, <em>Errors Description</em> lists each error "
                  "with its row and column, and <em>Blank Rows</em> holds the rows that had no values. Send this to "
-                 "the person who produced the file: it tells them exactly what to fix.",
+                 "the person who produced the file, because it tells them exactly what to fix.",
              ]},
              {"t": "h3", "html": "Publishing"},
              {"t": "p", "html": "The README describes ODE as an application to \"explore, validate and publish "
