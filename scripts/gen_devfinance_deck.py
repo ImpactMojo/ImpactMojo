@@ -340,7 +340,7 @@ sec("Institutions", "Module two summary",
              "IDA and IBRD terms differ enough that graduation is a fiscal event",
              "Conditionality reform is measurably more presentational than substantive",
              "Outcomes come from staff, board and domestic coalition together"]) +
-    p("The thread connecting these is that the institutional detail is not decoration around the politics; it is where the politics happens. Voting weights determine whose preferences survive a contested policy revision. The political-prohibition clause determines the register in which a social standard must be written to be adoptable at all. And the difference between IDA and IBRD terms determines whether a ministry of finance can afford a programme that a line ministry wants. Someone campaigning on any of these without knowing which body decides what will aim at the wrong target, and the institutions are under no obligation to correct them."))
+    p("The thread connecting these is that the institutional detail is where the politics happens. Voting weights determine whose preferences survive a contested policy revision. The political-prohibition clause determines the register in which a social standard must be written to be adoptable at all. And the difference between IDA and IBRD terms determines whether a ministry of finance can afford a programme that a line ministry wants. Someone campaigning on any of these without knowing which body decides what will aim at the wrong target, and the institutions are under no obligation to correct them."))
 
 # ============================================================ 03
 divider(3, "Module Three", "Instruments: What a Loan Actually Is")
@@ -448,7 +448,7 @@ sec("Instruments", "Module three summary",
              "Results-based lending makes measurement quality a financing question",
              "Grant element depends on a chosen discount rate, so the standard is contestable",
              "Most of the documents you need exist; the concession agreement is the hard one"]) +
-    p("If you retain one operational habit from this module, make it the currency question. Interest rates are negotiated in public and scrutinised; currency denomination is treated as a technical detail and settled quietly. A project earning rupees and servicing dollars has an unhedged exposure that no clause in the loan describes as a risk, and a movement of twenty per cent in the exchange rate can convert a comfortable debt service into an impossible one without a single term of the agreement changing. Ask what currency the revenue is in, ask what currency the debt is in, and if they differ, ask who absorbs the gap."))
+    p("If you retain one operational habit from this module, make it the currency question. Interest rates are negotiated in public and scrutinised; currency denomination is treated as a technical detail and settled without debate. A project earning rupees and servicing dollars has an unhedged exposure that no clause in the loan describes as a risk, and a movement of twenty per cent in the exchange rate can convert a comfortable debt service into an impossible one without a single term of the agreement changing. Ask what currency the revenue is in, ask what currency the debt is in, and if they differ, ask who absorbs the gap."))
 
 # ============================================================ 04
 divider(4, "Module Four", "From Lending to De-risking")
@@ -470,7 +470,7 @@ sec("The shift", "The Cascade, as the Bank states it",
       "public financing is the residual, to be justified after the commercial and regulatory-reform options "
       "have been exhausted.") +
     p("Whether that is prudent stewardship of scarce public money or a structural bias against public "
-      "provision is the argument. The sequence itself is not hidden; it is published policy."))
+      "provision is the argument. The sequence itself is published policy."))
 
 sec("The shift", "Gabor's account: the de-risking state",
     p("Daniela Gabor's argument is that Billions to Trillions, Maximizing Finance for Development and the "

@@ -898,7 +898,7 @@ DECK = {
                "Employees <strong>0.40</strong>; workers <strong>0.57</strong>; combined <strong>0.50</strong>. "
                "The format asks for employees and workers separately; a report that gives only the first hides "
                "the higher rate."),
-            B("Workers engaged through contractors often have their hours recorded by the contractor, not by the company. A company that cannot count those hours cannot calculate their rate. Saying so in the report is more useful to a reader than a combined figure that quietly leaves them out.", sm=True),
+            B("Workers engaged through contractors often have their hours recorded by the contractor, not by the company. A company that cannot count those hours cannot calculate their rate. Saying so in the report is more useful to a reader than a combined figure that leaves them out without saying so.", sm=True),
         ]),
 
         S("Exercise", "Gross wages paid to women", [
