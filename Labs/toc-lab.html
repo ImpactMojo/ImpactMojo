@@ -2345,6 +2345,11 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             clearTimeout(persistTimer);
             persistTimer = setTimeout(function () {
                 try {
+                    // Only a real change moves savedAt, so the LogFrame import
+                    // picks whichever of the steps or the canvas was edited last.
+                    let prev = null;
+                    try { prev = JSON.parse(localStorage.getItem(LAB_KEY) || 'null'); } catch (e) {}
+                    if (prev && JSON.stringify(prev, Object.keys(tocData).concat(['id', 'text', 'linkedOutcome'])) === JSON.stringify(tocData, Object.keys(tocData).concat(['id', 'text', 'linkedOutcome']))) return;
                     localStorage.setItem(LAB_KEY, JSON.stringify(Object.assign({ savedAt: Date.now(), idCounter: idCounter }, tocData)));
                     const note = document.getElementById('stepsSaveNote');
                     if (note) note.textContent = 'Saved on this device ' + new Date().toLocaleTimeString();
