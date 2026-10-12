@@ -48,7 +48,6 @@ EXEMPT = {
     ("peer-review.html", "Genuinely"): "an illustrative peer review, quoted as a review",
     ("content-marketing-kit.html", "In today's fast-paced"): "listed as a phrase to avoid",
     ("101-courses/climate-essentials.html", "is not just"): "inside a quotation",
-    ("101-courses/work-labour-livelihoods.html", "is not just"): "inside a quotation",
     ("blog/from-learner-to-leader.html", "Not just 'because the donor wants it' but"): "a learner's testimonial",
     ("DeepDives/platform-gig-work-india.html", "Unlocking the Potential"): "title of a cited BCG report",
     ("blog/animal-welfare-and-the-fifty-rupee-fine.html", "arguably"): "quoting the source's own assessment",
