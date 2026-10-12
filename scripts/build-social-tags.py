@@ -287,7 +287,40 @@ def process(path, text):
     else:
         head = head.rstrip() + "\n" + block
     entry = None if bespoke else {"card": card, "label": label, "title": card_title, "sub": sub, "colour": colour}
-    return head + rest, entry
+    return fix_ld(head + rest), entry
+
+
+
+LDJSON = re.compile(r'(<script[^>]*application/ld\+json[^>]*>)(.*?)(</script>)', re.S | re.I)
+SITE_URL = re.compile(r'https://www\.impactmojo\.in(/[^"\s<>#?]*)([#?][^"\s<>]*)?')
+
+
+def fix_ld(text):
+    """Point the structured data at the same addresses as the canonical links.
+
+    JSON-LD carried the repository path (/Labs/..., /BookSummaries/...), which
+    Netlify answers with a 301. Only links to pages that exist here are
+    rewritten; image and file links are left, because Netlify serves those at
+    either case without a redirect."""
+    from urllib.parse import unquote
+
+    def url(m):
+        raw, tail = m.group(1), m.group(2) or ""
+        path = unquote(raw).lstrip("/")
+        cand = None
+        if path == "" or path.endswith("/"):
+            if (ROOT / path / "index.html").exists():
+                cand = path + "index.html"
+        elif path.endswith(".html") and (ROOT / path).exists():
+            cand = path
+        if not cand:
+            return m.group(0)
+        return canonical(cand) + tail
+
+    def block(m):
+        return m.group(1) + SITE_URL.sub(url, m.group(2)) + m.group(3)
+
+    return LDJSON.sub(block, text)
 
 
 def apply(path, text):

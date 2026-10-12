@@ -2,6 +2,17 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.367.1 — October 12, 2026 (structured data follows the canonical links)
+
+### Fixed
+
+- **Structured data still named addresses that redirect** (#1207). The JSON-LD that search engines read on 252 pages pointed at /Labs/, /BookSummaries/ and other capitalised paths, which the site answers with a redirect. It now uses the same addresses as the canonical links. Image links were left alone because the site serves them at either case.
+
+### Changed
+
+- The 909 share cards are recompressed, from 36 MB to 30 MB, with no visible change.
+- The certificate verification page loaded its configuration script twice; it now loads it once.
+
 ## v10.367.0 — October 12, 2026 (every page shares as itself)
 
 ### For Learners
