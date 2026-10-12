@@ -317,6 +317,28 @@
     if (themeGroup) host.insertBefore(b, themeGroup); else host.appendChild(b);
   }
 
+  // The message names the page being read: its own title, its description and
+  // its address, so a learner sharing a course shares that course. It states no
+  // counts, which go stale, and carries no emoji or em dashes (house style).
+  function waMessage() {
+    var url = location.origin + location.pathname;
+    var canon = document.querySelector('link[rel="canonical"]');
+    if (canon && canon.href) url = canon.href;
+    var path = location.pathname.replace(/\/index\.html?$/, '/');
+    if (path === '/' || path === '') {
+      return 'ImpactMojo has free courses, Studios, datasets and book companions for people working in development in South Asia.\n' + url;
+    }
+    function meta(sel) { var m = document.querySelector(sel); return m ? (m.getAttribute('content') || '').trim() : ''; }
+    var title = meta('meta[property="og:title"]') || document.title || '';
+    // Drop a trailing " | ImpactMojo" or section name (" | Learning Loops").
+    title = title.replace(/\s+[|\u2013\u2014]\s+[^|\u2013\u2014]+$/, '').trim();
+    var desc = meta('meta[property="og:description"]') || meta('meta[name="description"]');
+    var parts = [title || 'ImpactMojo'];
+    if (desc && desc !== title) parts.push(desc);
+    parts.push(url);
+    return parts.join('\n');
+  }
+
   // ── Shared WhatsApp "share ImpactMojo" button — every page, homepage included ──
   // Pre-encoded href (no emoji literals in source) matching the site-standard share
   // message. Guarded against duplicates; skipped if the page already has one.
@@ -324,10 +346,10 @@
     if (!document.body || document.getElementById('im-wa-fab')) return;
     var a = document.createElement('a');
     a.id = 'im-wa-fab';
-    a.href = 'https://wa.me/?text=%F0%9F%8E%93%20I%27ve%20been%20learning%20with%20ImpactMojo%20%E2%80%94%20a%20free%2C%20open-source%20learning%20platform%20for%20the%20development%20sector%2C%20made%20in%20South%20Asia.%0A%0A%F0%9F%93%9A%2069%20free%20courses%20%E2%80%94%20economics%2C%20gender%2C%20policy%2C%20MEL%20%26%20more%0A%F0%9F%A7%AA%2035%20hands-on%20labs%20%2B%20playable%20economics%20games%0A%F0%9F%93%8A%20A%20321-tool%20data%20library%2C%20book%20companions%20%26%20lexicons%0A%F0%9F%94%93%20No%20paywalls%2C%20no%20sign-up%20walls%20%E2%80%94%20genuinely%20free%2C%20forever%0A%0AIf%20you%20work%20in%20development%20%28or%20want%20to%29%2C%20take%20a%20look%20%F0%9F%91%87%0Ahttps%3A%2F%2Fwww.impactmojo.in';
+    a.href = 'https://wa.me/?text=' + encodeURIComponent(waMessage());
     a.target = '_blank'; a.rel = 'noopener noreferrer';
-    a.setAttribute('aria-label', 'Share ImpactMojo on WhatsApp');
-    a.title = 'Share ImpactMojo on WhatsApp';
+    a.setAttribute('aria-label', 'Share this page on WhatsApp');
+    a.title = 'Share this page on WhatsApp';
     // Bottom-RIGHT corner: the bottom-left is the cookie-consent / learning-tools
     // speed-dial stack (see css/cookie.css) — placing the share FAB there covered
     // the cookie button. The language switcher sits higher on the right (bottom:5.5rem),
@@ -339,7 +361,7 @@
     a.addEventListener('mouseleave', function () { a.style.transform = 'scale(1)'; });
     a.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
     var wrap = document.createElement('aside');
-    wrap.setAttribute('aria-label', 'Share ImpactMojo');
+    wrap.setAttribute('aria-label', 'Share this page');
     wrap.appendChild(a);
     document.body.appendChild(wrap);
   }
