@@ -195,6 +195,18 @@ def link_deck(text, slug):
     return deck_with_link(text, slug, title_of(d)) or text
 
 
+
+def _share():
+    """The share-tag pass (scripts/build-social-tags.py), applied to every page
+    this script writes, so a rebuild keeps the canonical, Open Graph and card
+    tags instead of stripping them."""
+    import importlib.util as _u
+    from pathlib import Path as _P
+    _sp = _u.spec_from_file_location("build_social_tags", _P(__file__).resolve().parents[2] / "scripts" / "build-social-tags.py")
+    _m = _u.module_from_spec(_sp)
+    _sp.loader.exec_module(_m)
+    return _m
+
 def main():
     check = "--check" in sys.argv
     decks = json.loads((ROOT / "data/decks.json").read_text(encoding="utf-8"))["decks"]
@@ -257,8 +269,12 @@ def main():
     # each other.
     last = [m.end() for m in re.finditer(r"  <url><loc>https://www\.impactmojo\.in/products/notes-[^<]*</loc>[^\n]*\n", sm)]
     k = last[-1] if last else sm.rindex("</urlset>")
-    want[sm_path] = sm[:k] + "".join(f"  <url><loc>https://www.impactmojo.in{u}</loc><lastmod>2026-10-10</lastmod></url>\n" for u in urls) + sm[k:]
+    want[sm_path] = sm[:k] + "".join(f"  <url><loc>https://www.impactmojo.in{u.lower()}</loc><lastmod>2026-10-10</lastmod></url>\n" for u in urls) + sm[k:]
 
+    share = _share()
+    for p in list(want):
+        if p.suffix == ".html" and "/products/notes-101/" in p.as_posix():
+            want[p] = share.apply(p.relative_to(ROOT).as_posix(), want[p])
     stale = []
     for p, text in want.items():
         cur = p.read_text(encoding="utf-8") if p.exists() else None

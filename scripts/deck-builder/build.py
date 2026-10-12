@@ -329,6 +329,18 @@ def frozen():
     return json.loads(FROZEN_FILE.read_text(encoding="utf-8")) if FROZEN_FILE.exists() else {}
 
 
+def _share():
+    """The share-tag pass (scripts/build-social-tags.py), applied to every page
+    this script writes, so a rebuild keeps the canonical, Open Graph and card
+    tags instead of stripping them."""
+    import importlib.util as _u
+    from pathlib import Path as _P
+    _sp = _u.spec_from_file_location("build_social_tags", _P(__file__).resolve().parents[2] / "scripts" / "build-social-tags.py")
+    _m = _u.module_from_spec(_sp)
+    _sp.loader.exec_module(_m)
+    return _m
+
+
 def build(name):
     _CHARTS.clear()
     deck = load_spec(name)
@@ -396,7 +408,8 @@ def build(name):
     sp = importlib.util.spec_from_file_location("build_101_shop", shop_path)
     shop = importlib.util.module_from_spec(sp)
     sp.loader.exec_module(shop)
-    return shop.link_deck(out, deck["slug"]), total
+    out = shop.link_deck(out, deck["slug"])
+    return _share().apply("101-courses/%s.html" % deck["slug"], out), total
 
 
 def main():

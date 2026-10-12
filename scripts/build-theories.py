@@ -618,6 +618,18 @@ def index_body(meta, theories):
 """
 
 
+
+def _share():
+    """The share-tag pass (scripts/build-social-tags.py), applied to every page
+    this script writes, so a rebuild keeps the canonical, Open Graph and card
+    tags instead of stripping them."""
+    import importlib.util as _u
+    _sp = _u.spec_from_file_location("build_social_tags", ROOT / "scripts" / "build-social-tags.py")
+    _m = _u.module_from_spec(_sp)
+    _sp.loader.exec_module(_m)
+    return _m
+
+
 def build(meta, theories, today, dd_base, dd_entries):
     """Return {relative path: text} for everything this script owns."""
     by_id = {t["id"]: t for t in theories}
@@ -666,6 +678,10 @@ def build(meta, theories, today, dd_base, dd_entries):
         body=index_body(meta, theories),
         scripts=f'<script src="{stamp("/js/theories-index.js")}"></script>',
     )
+    share = _share()
+    for rel in list(out):
+        if rel.endswith(".html"):
+            out[rel] = share.apply(rel, out[rel])
     out.update(shared_files(theories, today))
     return out
 
