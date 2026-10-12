@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.368.0 — October 12, 2026 (one sampling Studio)
+
+### For Learners
+
+- **Sampling Design Studio** — now opens with the plain-language sampling basics (seven short sections and two demonstrations), so the primer and the design steps are one page.
+
+### Changed
+
+- **Sampling Basics and the Sampling Design Studio are one Studio.** The primer is the Studio's opening "Start here" section, closed by default and opened by any link to `#basics`. The old primer address redirects there, and the Sampling Toolkit page, which only linked the two, redirects to the Studio. The Toolkit had been retired once before, in July; a change earlier today brought it back by removing its redirect, and this retires it again. The Studios count is 35.
+
 ## v10.367.2 — October 12, 2026 (ten dead addresses in structured data)
 
 ### Fixed
