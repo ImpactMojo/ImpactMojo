@@ -2,6 +2,24 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.370.0 — October 12, 2026 (NFHS-6, one handout per topic, and the root pages in house style)
+
+### For Learners
+
+- **NFHS-6 figures** — the courses, lexicons and The Long View now give the provisional NFHS-6 (2023-24) India figures where IIPS reports the indicator, beside the NFHS-5 figure.
+- **Handouts** — each topic now has one sequence of handouts instead of two or three overlapping copies.
+
+### Fixed
+
+- **NFHS figures that disagreed with IIPS, and two misleading handout passages** (#1214). Gender and Development 101 gave 71% for married women who take part in three household decisions; the NFHS-5 figure is 88.7%. The gender lexicon gave the sex ratio at birth as 110.5:100; NFHS-5 reports 929 girls per 1,000 boys, and NFHS does not measure labour force participation, which the entry had credited to it. The Gender-MEL lexicon mixed two age bases for spousal violence. A Studio prompt labelled the India child-marriage figure as Rajasthan's. A handout called an invented mnemonic "the RAPID framework", which is the name of ODI's programme. A constitution handout said Directive Principles can be relied on directly; courts enforce the Article 21 right they have been read into.
+
+### Changed
+
+- The NFHS-6 India fact sheet (IIPS, May 2026, provisional) is the source for every new figure. Indicators NFHS-6 did not report, among them anaemia, mortality, the sex ratio and literacy, keep their NFHS-5 figure and say why. Book findings, dated Data Notes, exercise data and state figures were left as they were.
+- The Long View adds an NFHS-6 column to "Two decades of progress" and updates electricity and health cover in "If India were 100 people".
+- Handouts: the Climate Change, Data Literacy, Political Economy and Constitution topics each held two overlapping copies. Six retired handouts redirect to the one that absorbed their content. Across the folder, about 2,900 headings are in sentence case and the "Key takeaways" boxes are summaries.
+- Root and marketing pages: headings and labels in sentence case, no exclamation marks outside quotations, no emoji in text, and about 75 colon-hinged sentences rewritten. The podcast page no longer promises episodes that do not exist yet. 444 existing translations were carried to the renamed English strings so the five language versions keep their reviewed wording.
+
 ## v10.369.0 — October 12, 2026 (sentences hinged on a colon, and a re-read of the house-style pass)
 
 ### Fixed
