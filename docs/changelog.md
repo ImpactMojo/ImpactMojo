@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.374.0 — October 12, 2026 (a Deep Dive on what NFHS-6 stopped counting)
+
+### For Learners
+
+- **What NFHS-6 stopped counting** — a Deep Dive of 18 readings on the forty indicators the new health survey no longer reports for India, the government's stated reasons, the evidence on measuring anaemia, and how far the registration systems and other surveys now cited can stand in for the old figures.
+
+### Added
+
+- `DeepDives/nfhs6-stopped-counting.html`. Its editor's note matches the NFHS-5 and NFHS-6 India fact sheets line by line: 88 indicators continue, 3 continue under a new definition and 40 have no counterpart. It quotes the government's reason from Lok Sabha Unstarred Question 2098 of 31 July 2026, and it notes that the NFHS-6 sheet prints NFHS-5 values that differ from the NFHS-5 sheet, the largest being the second measles dose (31.9 per cent in NFHS-5, 58.6 as restated). Registered in `deep-dives.json`, the index ItemList, the sitemap and search; Deep Dives go from 26 to 27 sitewide, and the Deep Dives guide now lists The Caste Lists as well.
+
 ## v10.373.0 — October 12, 2026 (the travel survey, state by state)
 
 ### For Learners
