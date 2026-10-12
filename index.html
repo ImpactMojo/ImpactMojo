@@ -25,6 +25,22 @@ html.im-first-visit #im-wa-fab,
 html.im-first-visit #im-lang-switch.im-lang-floating {
     display: none !important; /* overrides JS-injected inline styles */
 }
+
+/* Free and paid labels in the Membership panel (2026-10-12). Ink colours
+   measured: #047857 on #ECFDF5 6.4:1, #92400E on #FEF3C7 6.9:1; dark
+   #6EE7B7 and #FCD34D on #1E293B both above 8:1. */
+.plan-badge{display:inline-block;margin:.35rem 0 .4rem;padding:.15rem .55rem;border-radius:999px;font-size:.75rem;font-weight:700;line-height:1.5}
+.plan-badge.plan-free{background:#ECFDF5;color:#047857}
+.plan-badge.plan-member{background:#FEF3C7;color:#92400E}
+body.dark-mode .plan-badge.plan-free,[data-theme="dark"] .plan-badge.plan-free,html.dark .plan-badge.plan-free{background:#1E293B;color:#6EE7B7}
+body.dark-mode .plan-badge.plan-member,[data-theme="dark"] .plan-badge.plan-member,html.dark .plan-badge.plan-member{background:#1E293B;color:#FCD34D}
+
+/* Paid and free markers in the nav menus (2026-10-12) */
+.nav-paid,.nav-free{display:inline-block;margin-left:.35rem;padding:0 .4rem;border-radius:999px;font-size:.68rem;font-weight:700;line-height:1.5;vertical-align:middle}
+.nav-paid{background:#FEF3C7;color:#92400E}
+.nav-free{background:#ECFDF5;color:#047857}
+body.dark-mode .nav-paid,[data-theme="dark"] .nav-paid,html.dark .nav-paid{background:#1E293B;color:#FCD34D}
+body.dark-mode .nav-free,[data-theme="dark"] .nav-free,html.dark .nav-free{background:#1E293B;color:#6EE7B7}
 </style>
 <script>
 /* ============================================================
@@ -646,9 +662,9 @@ window.addEventListener('click', function(e) {
 </a>
 <ul class="dropdown-menu" id="services-dropdown">
 <li id="nav-buildcircles"><a href='/build-circles.html' style='color: #047857; font-weight: 600;' class="nav-accent" data-dark-color="#10B981">Build Circles</a></li>
-<li id="nav-coaching"><a href='/coaching'><span data-i18n="nav.coaching">Coaching</span></a></li>
+<li id="nav-coaching"><a href='/coaching'><span data-i18n="nav.coaching">Coaching</span> <span class="nav-paid">Paid</span></a></li>
 <li id="nav-dojos-service"><a href='/dojos' style='color: #0F766E; font-weight: 600;' class="nav-accent" data-dark-color="#14B8A6">Dojos</a></li>
-<li id="nav-workshops"><a href='/workshops'><span data-i18n="nav.workshops">Workshops</span></a></li>
+<li id="nav-workshops"><a href='/workshops'><span data-i18n="nav.workshops">Workshops</span> <span class="nav-paid">Paid</span></a></li>
 <li id="nav-teach"><a href='/teach.html'><span data-i18n="nav.teach">Teach</span></a></li>
 </ul>
 </li>
@@ -666,8 +682,8 @@ window.addEventListener('click', function(e) {
   </button>
   <ul class="dropdown-section-items">
     <li id="nav-challenges"><a href='/challenges.html' style='color: #B91C1C; font-weight: 600;' class="nav-accent" data-dark-color="#EF4444"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Crosshair_detailed"/></svg> <span data-i18n="nav.challenges">Challenges</span></a></li>
-    <li id="nav-prostudio"><a href='/premium-tools/' style='color: #4F46E5; font-weight: 600;' class="nav-accent" data-dark-color="#6366F1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> Pro Studio</a></li>
-    <li id="nav-practicepacks"><a href='/practice-packs/' style='color: #0369A1; font-weight: 600;' class="nav-accent" data-dark-color="#0EA5E9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> Practice Packs<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+    <li id="nav-prostudio"><a href='/premium-tools/' style='color: #4F46E5; font-weight: 600;' class="nav-accent" data-dark-color="#6366F1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> Pro Studio <span class="nav-free">Free to use</span></a></li>
+    <li id="nav-practicepacks"><a href='/practice-packs/' style='color: #0369A1; font-weight: 600;' class="nav-accent" data-dark-color="#0EA5E9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> Practice Packs <span class="nav-paid">Paid</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
     <li id="nav-facilitatorkits"><a href='/facilitator-kits/' style='color: #047857; font-weight: 600;' class="nav-accent" data-dark-color="#10B981"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Article"/></svg> Facilitator Kits<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
   </ul>
 </li>
@@ -1175,8 +1191,8 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
       </a>
       <a class="tp-tile" href="/premium-tools/" style="--tc:#0EA5E9">
         <span class="tp-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></span>
-        <span class="tp-n">Pro tools <span class="tp-cnt tp-mono">5</span></span>
-        <span class="tp-d">RQ Builder, ToR Builder and Qual Insights are free to use; exporting your work needs a paid plan.</span>
+        <span class="tp-n">Pro Studio <span class="tp-cnt tp-mono">13</span></span>
+        <span class="tp-d">Research tools that are free to use. Exporting or copying your work needs Membership, and each tool says so.</span>
         <span class="tp-go">Try a tool &rarr;</span>
       </a>
       <a class="tp-tile" href="/dataverse-rubrics.html" style="--tc:#6366F1">
@@ -1744,12 +1760,12 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="close" onclick="closeModal('premiumModal')">×</span>
 </div>
 <div class="modal-body">
-<p style="color: var(--text-secondary); margin: 0 0 1rem 0; font-size: 0.9rem;">Access advanced tools based on your membership tier. <a href='/premium' style='color: var(--accent-color);'>View pricing →</a></p>
+<p style="color: var(--text-secondary); margin: 0 0 1rem 0; font-size: 0.9rem;">Every Pro Studio tool is free to use. What needs Membership is marked on each tool: usually exporting or copying your work, and for the DevEconomics Toolkit and the Team plan, the whole thing. <a href='/premium-tools/' style='color: var(--accent-color);'>All 13 Pro Studio tools</a> · <a href='/premium.html' style='color: var(--accent-color);'>Plans and prices →</a></p>
 <div class="modal-grid">
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Convene a panel of AI advisors to debate your dilemma, then synthesise!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><use href="#spr-2"/></svg></div>
 <div class="modal-item-content">
-<a href="/premium-tools/advisory-board-pro.html" data-resource-id="advisory-board-pro" target="_blank" rel="noopener noreferrer">
+<a href="/premium-tools/advisory-board-pro.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">
                         Advisory Board Pro
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
@@ -1760,6 +1776,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
 <span class="imx-star-text">4.9</span>
 </div></div>
+<p class="plan-badge plan-free">Free with your own API key · hosted models need Membership</p>
 <p class="modal-item-description">Pose a development-sector dilemma and a panel of AI advisors (a development economist, a field practitioner, a behavioural scientist, and a critic) debate it from every angle before the moderator synthesises. The seats run on a mix of language models, so the voices differ. Add your own discussion points to steer the debate and export the full transcript. A free read-only preview shows a worked example.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Open -></span>
@@ -1767,10 +1784,10 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 </a>
 </div>
 </div>
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Opens 105 field observations from development fieldwork!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><use href="#imx-star"/></svg></div>
 <div class="modal-item-content">
-<a href="/premium-tools/field-notes.html" data-resource-id="field-notes-pro" target="_blank" rel="noopener noreferrer">
+<a href="/premium-tools/field-notes.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">
                         Field Notes Pro
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
@@ -1781,6 +1798,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <svg class="star-icon" style="opacity:.6" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
 <span class="imx-star-text">4.8</span>
 </div></div>
+<p class="plan-badge plan-free">Free to read · copying a note needs Membership</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Open -></span>
 </div>
@@ -1788,10 +1806,10 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 </div>
 </div>
 
-<div class="modal-item" data-required-tier="practitioner" data-tier-benefits="Practitioner (₹399/mo): Unlock advanced ToC building with assumption mapping, evidence linkage & export!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><use href="#si_Crosshair_detailed"/></svg></div>
 <div class="modal-item-content">
-<a href="/Labs/toc-lab.html" data-resource-id="toc-workshop-pro" target="_blank" rel="noopener noreferrer">
+<a href="/Labs/toc-lab.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">
                         Theory of Change Workbench
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
@@ -1802,6 +1820,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
 <span class="imx-star-text">5.0</span>
 </div></div>
+<p class="plan-badge plan-free">Free · now the free Theory of Change Studio</p>
 <p class="modal-item-description">Build, iterate, and export publication-ready theories of change. Includes assumption mapping, evidence linkage for each causal pathway, version history, and export to PDF/PNG for donor reports and proposals.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Open -></span>
@@ -1812,10 +1831,10 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 
 <!-- Organization Tier Content -->
 
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Unlock AI tools, field transcription & priority support!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
 <div class="modal-item-content">
-<a href="/premium-tools/vaniscribe.html" data-resource-id="vaniscribe" target="_blank" rel="noopener noreferrer">
+<a href="/premium-tools/vaniscribe.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">
                         VaniScribe: AI Transcription for Development
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
@@ -1826,6 +1845,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
 <span class="imx-star-text">4.9</span>
 </div></div>
+<p class="plan-badge plan-free">Free · the notebook needs Membership</p>
 <p class="modal-item-description">Transcribe field interviews, FGDs, and KIIs in Hindi, Tamil, Bengali, and 10+ South Asian languages using Sarvam AI's Saaras v3. Built for development researchers with speaker diarization, auto-timestamping, and exports ready for qualitative analysis. Bring your own Sarvam AI key.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Open -></span>
@@ -1835,10 +1855,10 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 </div>
 
 <!-- DevData Practice: Development Datasets -->
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional: Unlock 36 dataset generators, 840k+ rows of realistic development data!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><use href="#spr-7"/></svg></div>
 <div class="modal-item-content">
-<a href="/premium-tools/devdata-practice.html" data-resource-id="devdata-practice" target="_blank" rel="noopener noreferrer">
+<a href="/premium-tools/devdata-practice.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">DevData Practice: Realistic Development Datasets
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -1849,15 +1869,16 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-free">Free</p>
 <p class="modal-item-description">36 generators producing 840k+ rows of realistic data: household surveys, RCTs, health, education, agriculture, gender, climate, WASH, humanitarian, and more. Includes practice exercises.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
 
 <!-- Visualization Cookbook -->
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional: Unlock question-driven chart recipes with production-ready Python code!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
 <div class="modal-item-content">
-<a href="/premium-tools/viz-cookbook.html" data-resource-id="viz-cookbook" target="_blank" rel="noopener noreferrer">
+<a href="/premium-tools/viz-cookbook.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">Visualization Cookbook: Chart Recipes for Development Data
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -1868,6 +1889,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-free">Free to browse · copying the code needs Membership</p>
 <p class="modal-item-description">14 chart types, question-driven recipes, production-ready Python code. Covers bar, scatter, box plot, violin, heatmap, lollipop, area, bubble, and more.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
@@ -1887,15 +1909,16 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-member">Members only · Professional, ₹999 a month</p>
 <p class="modal-item-description">11 interactive tools: RCT power calculator, DiD simulator, RDD explorer, synthetic control, Gini and MPI tools, CBA, LogFrame builder, and WDI dashboard.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
 
 <!-- Interactive Workshop Templates (Professional Tier) -->
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Unlock interactive workshop templates for team facilitation!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><use href="#si_Crosshair_detailed"/></svg></div>
 <div class="modal-item-content">
-<a href="/Labs/toc-lab.html" data-resource-id="toc-workshop-pro" target="_blank" rel="noopener noreferrer">
+<a href="/Labs/toc-lab.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">Theory of Change Workshop
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -1906,14 +1929,15 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-free">Free · now the free Theory of Change Studio</p>
 <p class="modal-item-description">Interactive ToC framework with drag-and-drop causal pathways, assumption mapping, and evidence linkage. Used in MEL and DevEcon facilitator guides.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
 
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Unlock interactive workshop templates for team facilitation!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
 <div class="modal-item-content">
-<a href="/premium-tools/logframe-pro.html" data-resource-id="logframe-pro" target="_blank" rel="noopener noreferrer">
+<a href="/premium-tools/logframe-pro.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">Logical Framework Builder Pro
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -1924,14 +1948,15 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-free">Free · export needs Membership</p>
 <p class="modal-item-description">Build logical framework matrices with linked indicators, activities, and outcomes. Export for donor proposals and M&E plans.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
 
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Unlock interactive workshop templates for team facilitation!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
 <div class="modal-item-content">
-<a href="/premium-tools/chart-selector-pro.html" data-resource-id="chart-selector-pro" target="_blank" rel="noopener noreferrer">
+<a href="/premium-tools/chart-selector-pro.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">Data Visualization Chart Selector
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -1942,14 +1967,15 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-free">Free</p>
 <p class="modal-item-description">Interactive decision tree for choosing the right visualization. Covers comparison, distribution, composition, relationship, and geospatial chart types.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
 
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Unlock interactive workshop templates for team facilitation!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
 <div class="modal-item-content">
-<a href="/Labs/stakeholder-mapping-lab.html" data-resource-id="stakeholder-pro" target="_blank" rel="noopener noreferrer">
+<a href="/Labs/stakeholder-mapping-lab.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">Stakeholder Mapping Workshop
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -1960,14 +1986,15 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-free">Free · now the free Stakeholder Mapping Studio</p>
 <p class="modal-item-description">Map stakeholder influence and interest with a drag-and-drop power/interest grid. For program design and policy workshops.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
 
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Unlock interactive workshop templates for team facilitation!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><use href="#spr-10"/></svg></div>
 <div class="modal-item-content">
-<a href="/premium-tools/empathy-pro.html" data-resource-id="empathy-pro" target="_blank" rel="noopener noreferrer">
+<a href="/premium-tools/empathy-pro.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">Empathy Mapping Workshop
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -1978,14 +2005,15 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-free">Free · export needs Membership</p>
 <p class="modal-item-description">Build empathy maps for beneficiaries and stakeholders. Capture what they say, think, feel, and do for user-centered program design.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
 
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Unlock interactive workshop templates for team facilitation!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><use href="#spr-7"/></svg></div>
 <div class="modal-item-content">
-<a href="/Labs/policy-analysis-lab.html" data-resource-id="policy-canvas-pro" target="_blank" rel="noopener noreferrer">
+<a href="/Labs/policy-analysis-lab.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">Policy Analysis Canvas
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -1996,14 +2024,15 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-free">Free · now the free Policy Analysis Studio</p>
 <p class="modal-item-description">Structured framework for policy analysis: problem framing, stakeholder interests, trade-offs, evidence synthesis, and recommendation formulation.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
 
-<div class="modal-item" data-required-tier="professional" data-tier-benefits="Professional (₹999/mo): Unlock interactive workshop templates for team facilitation!">
+<div class="modal-item">
 <div class="modal-item-icon"><svg fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
 <div class="modal-item-content">
-<a href="/premium-tools/ai-canvas-pro.html" data-resource-id="ai-canvas-pro" target="_blank" rel="noopener noreferrer">
+<a href="/premium-tools/ai-canvas-pro.html" target="_blank" rel="noopener noreferrer">
 <div class="modal-item-title">AI Strategy Canvas
 <div class="stars" style="display: inline-flex; margin-left: 0.5rem;">
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
@@ -2014,6 +2043,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <span class="imx-star-text">5.0</span>
 </div>
 </div>
+<p class="plan-badge plan-free">Free · export needs Membership</p>
 <p class="modal-item-description">Map AI opportunities for your programs: identify use cases, assess risks and ethics, plan responsible implementation, and build team AI literacy.</p>
 <div class="modal-item-meta"><span class="modal-item-link">Open -></span></div>
 </a></div></div>
@@ -2033,6 +2063,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
 <span class="imx-star-text">5.0</span>
 </div></div>
+<p class="plan-badge plan-member">Team plan · ₹1,499 per user a month</p>
 <p class="modal-item-description">Centralized dashboard to track your entire team's learning progress. Assign courses, monitor completion rates, identify skill gaps, and generate training reports for compliance and donor reporting.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Contact for Access -></span>
@@ -2055,6 +2086,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
 <span class="imx-star-text">5.0</span>
 </div></div>
+<p class="plan-badge plan-member">Team plan · ₹1,499 per user a month</p>
 <p class="modal-item-description">Work with our team to create tailored learning curricula for your organization's specific needs. Include your own case studies, branding, and assessment criteria aligned with your capacity building goals.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Contact for Access -></span>
@@ -2077,6 +2109,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <svg class="star-icon" viewBox="0 0 24 24"><use href="#imx-star"/></svg>
 <span class="imx-star-text">5.0</span>
 </div></div>
+<p class="plan-badge plan-member">Team plan · ₹1,499 per user a month</p>
 <p class="modal-item-description">Get priority email and call support, dedicated onboarding sessions for your team, quarterly review meetings, and direct access to our founders for strategic guidance on your M&E capacity building.</p>
 <div class="modal-item-meta">
 <span class="modal-item-link">Contact for Access -></span>

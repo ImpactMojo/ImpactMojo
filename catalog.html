@@ -1806,6 +1806,13 @@ textarea:focus-visible,
     border: 0;
 }
 body { padding-top: 70px; } /* clear fixed header */
+
+/* Free and paid label on Pro Studio cards (2026-10-12) */
+.card-plan{display:inline-block;margin:0 0 .5rem;padding:.12rem .5rem;border-radius:999px;font-size:.74rem;font-weight:700}
+.card-plan.free{background:#ECFDF5;color:#047857}
+.card-plan.paid{background:#FEF3C7;color:#92400E}
+body.dark-mode .card-plan.free,[data-theme="dark"] .card-plan.free,html.dark .card-plan.free{background:#1E293B;color:#6EE7B7}
+body.dark-mode .card-plan.paid,[data-theme="dark"] .card-plan.paid,html.dark .card-plan.paid{background:#1E293B;color:#FCD34D}
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */
@@ -2205,7 +2212,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
             </div>
             <div class="stat-item">
                 <div class="stat-number" id="statPremium">11</div>
-                <div class="stat-label">Membership</div>
+                <div class="stat-label">Pro tools</div>
             </div>
         </div>
         </div>
@@ -2230,7 +2237,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
             <button class="filter-tab" data-filter="special" aria-pressed="false"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Album.svg" alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;" aria-hidden="true"> Specials (1)</button>
             <button class="filter-tab" data-filter="poster" aria-pressed="false"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Album.svg" alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;" aria-hidden="true"> Research to Action (7)</button>
             <button class="filter-tab" data-filter="handout" aria-pressed="false"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Article.svg" alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;" aria-hidden="true"> Handouts</button>
-            <button class="filter-tab" data-filter="premium" aria-pressed="false">Pro Studio (11)</button>
+            <button class="filter-tab" data-filter="premium" aria-pressed="false">Pro tools (15)</button>
             <button class="filter-tab" data-filter="program" aria-pressed="false"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_User_alt_2.svg" alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;" aria-hidden="true"> Programs (7)</button>
             <button class="filter-tab" data-filter="tool" aria-pressed="false"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Settings.svg" alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;" aria-hidden="true"> Tools & Features (11)</button>
             <button class="filter-tab" data-filter="explorer" aria-pressed="false"><img src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Bar_chart.svg" alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;" aria-hidden="true"> Data Explorers</button>
@@ -2529,7 +2536,7 @@ const allContent = [
     { id: 'l30', type: 'lab', title: 'Livelihoods & Value-Chain', description: 'Map a livelihood system and design interventions: sustainable-livelihoods capitals, a node-by-node value chain, M4P constraints and leverage points, and links to NRLM, FPOs, PMKVY and MGNREGA.', track: 'policy', rating: 4.9, users: 'New', url: '/Labs/livelihoods-value-chain-lab.html' },
     { id: 'tool-code-studio', type: 'tool', title: 'Code Studio', description: 'Hands-on coding courses for development data work. R, Python, tidyverse, pandas and SQL run live in your browser with nothing to install; Shiny apps open in Shinylive; guided courses cover Stata, SPSS, jamovi, JASP, OpenRefine, QGIS, KoboToolbox, spreadsheets, Git and Quarto.', track: 'data-tech', rating: 4.9, users: 'New', url: '/code/' },
     { id: 'l37', type: 'lab', title: 'Sampling Basics (Primer)', description: 'New to sampling? A plain-language, no-maths primer on the ideas behind it — population vs sample, bias and representativeness, margin of error and confidence, clusters, and describing vs comparing — with quick interactive demos. The gentle Level 1 before the Sampling Design Studio.', track: 'mel', rating: 4.9, users: 'New', url: '/Labs/sampling-basics-lab.html' },
-    { id: 'p10', type: 'premium', title: 'ToR Builder', description: 'Free to build — export is on a paid plan. Turn structured prompts into a complete Terms of Reference plus a costing sheet, in your browser — export as Markdown or PDF. The interactive companion to the ToR Template and Practice Pack.', track: 'mel', rating: 4.9, users: 'New', url: '/premium-tools/tor-builder.html' },
+    { id: 'p10', type: 'premium', plan: 'Free · export needs Membership', title: 'ToR Builder', description: 'Free to build — export is on a paid plan. Turn structured prompts into a complete Terms of Reference plus a costing sheet, in your browser — export as Markdown or PDF. The interactive companion to the ToR Template and Practice Pack.', track: 'mel', rating: 4.9, users: 'New', url: '/premium-tools/tor-builder.html' },
     
     // GAMES (18)
     { id: 'g1', type: 'game', title: 'The Real Middle', description: 'Understand who the middle-class really is in India through wealth inequality dynamics.', track: 'policy', rating: 4.0, users: '850', url: '/Games/real-middle-india.html' },
@@ -2552,16 +2559,20 @@ const allContent = [
     { id: 'g18', type: 'game', title: 'Counterfactual: The Evaluation Game', description: 'Eight impact claims from Indian development programmes, eight hidden causal-inference traps. Pick the evaluation design that finds what would have happened anyway — regression to the mean, self-selection, survivorship, spillovers and more.', track: 'mel', rating: 4.9, users: 'New', url: '/Games/counterfactual-game.html' },
 
     // PREMIUM (11)
-    { id: 'p11', type: 'premium', title: 'Advisory Board Pro', description: 'Pose a development-sector dilemma and a panel of AI advisors — economist, field practitioner, behavioural scientist, and critic — debate it from every angle, then synthesise. Multi-model voices; steer the debate and export the transcript.', track: 'policy', rating: 4.9, users: 'New', url: '/premium-tools/advisory-board-pro.html' },
-    { id: 'p1', type: 'premium', title: 'Field Notes from a Development Economist', description: 'Behind-the-scenes analysis of real programs, procurement dynamics, and implementation trade-offs across South Asia.', track: 'policy', rating: 5.0, users: '450', url: 'https://impactmojo-field-notes-pro.netlify.app/', resourceId: 'field-notes-pro' },
-    { id: 'p2', type: 'premium', title: 'Qualitative Insights Studio', description: 'Free to use — export is on a paid plan. Thematic coding, memo generation, and pattern identification for interview and FGD transcripts. Built for researchers without NVivo licensing.', track: 'mel', rating: 4.5, users: '680', url: '/premium-tools/qual-insights-lab.html' },
-    { id: 'p3', type: 'premium', title: 'Statistical Code Converter', description: 'Free to convert — export is on a paid plan. Translate code between R, Stata, SPSS, and Python with regression diagnostics, effect-size calculators, and power analysis.', track: 'data-tech', rating: 4.8, users: '920', url: '/premium-tools/code-converter-pro.html' },
-    { id: 'p4', type: 'premium', title: 'Research Question Builder', description: 'Free to build — export is on a paid plan. Guided research-question builder with PICO/SPIDER framing, method suggestions, and worked examples.', track: 'mel', rating: 4.9, users: '540', url: '/premium-tools/rq-builder.html' },
-    { id: 'p5', type: 'premium', title: 'TOC Workbench Pro', description: 'Advanced Theory of Change building with assumption mapping, evidence linkage, version history, and PDF/PNG export.', track: 'mel', rating: 4.9, users: '720', url: 'https://impactmojo-workshop-pro.netlify.app/toc-pro.html', resourceId: 'toc-workshop-pro' },
-    { id: 'p6', type: 'premium', title: 'VaniScribe: AI Transcription for Development', description: 'Transcribe field interviews, FGDs, and KIIs in Hindi, Tamil, Bengali, and 10+ South Asian languages. Speaker diarization and structured exports.', track: 'data-tech', rating: 4.8, users: 'New', url: '/premium-tools/vaniscribe.html', resourceId: 'vaniscribe' },
-    { id: 'p7', type: 'premium', title: 'DevData Practice', description: '36 realistic dataset generators producing 840K+ rows modelled on DHS, NFHS, ASER, MGNREGA. Each generator includes a data dictionary and analysis exercises.', track: 'data-tech', rating: 4.8, users: 'New', url: 'https://impactmojo-devdata-pro.netlify.app/', resourceId: 'devdata-practice' },
-    { id: 'p8', type: 'premium', title: 'Visualization Cookbook', description: '14 chart types with question-driven recipes — production-ready code in R (ggplot2), Python (matplotlib/seaborn), and Excel.', track: 'data-tech', rating: 4.8, users: 'New', url: 'https://impactmojo-devdata-pro.netlify.app/charts.html', resourceId: 'viz-cookbook' },
-    { id: 'p9', type: 'premium', title: 'DevEconomics Toolkit', description: '11 interactive Shiny apps: RCT power, DiD event study, RDD bandwidth, synthetic control, FGT poverty, Theil/MPI inequality, CEA, and more.', track: 'mel', rating: 4.8, users: 'New', url: 'https://impactmojo-devecon-toolkit.netlify.app/', resourceId: 'devecon-toolkit' },
+    { id: 'p11', type: 'premium', plan: 'Free with your own API key · hosted models need Membership', title: 'Advisory Board Pro', description: 'Pose a development-sector dilemma and a panel of AI advisors — economist, field practitioner, behavioural scientist, and critic — debate it from every angle, then synthesise. Multi-model voices; steer the debate and export the transcript.', track: 'policy', rating: 4.9, users: 'New', url: '/premium-tools/advisory-board-pro.html' },
+    { id: 'p1', type: 'premium', plan: 'Free to read · copying needs Membership', title: 'Field Notes from a Development Economist', description: 'Behind-the-scenes analysis of real programs, procurement dynamics, and implementation trade-offs across South Asia.', track: 'policy', rating: 5.0, users: '450', url: '/premium-tools/field-notes.html' },
+    { id: 'p2', type: 'premium', plan: 'Free · export needs Membership', title: 'Qualitative Insights Studio', description: 'Free to use — export is on a paid plan. Thematic coding, memo generation, and pattern identification for interview and FGD transcripts. Built for researchers without NVivo licensing.', track: 'mel', rating: 4.5, users: '680', url: '/premium-tools/qual-insights-lab.html' },
+    { id: 'p3', type: 'premium', plan: 'Free · export needs Membership', title: 'Statistical Code Converter', description: 'Free to convert — export is on a paid plan. Translate code between R, Stata, SPSS, and Python with regression diagnostics, effect-size calculators, and power analysis.', track: 'data-tech', rating: 4.8, users: '920', url: '/premium-tools/code-converter-pro.html' },
+    { id: 'p4', type: 'premium', plan: 'Free · export needs Membership', title: 'Research Question Builder', description: 'Free to build — export is on a paid plan. Guided research-question builder with PICO/SPIDER framing, method suggestions, and worked examples.', track: 'mel', rating: 4.9, users: '540', url: '/premium-tools/rq-builder.html' },
+    { id: 'p5', type: 'premium', plan: 'Free · now the free Theory of Change Studio', title: 'Theory of Change Workbench', description: 'Theory of Change building with assumption mapping and evidence linkage. The paid Workbench Pro has been folded into the free Theory of Change Studio, export included.', track: 'mel', rating: 4.9, users: '720', url: '/Labs/toc-lab.html' },
+    { id: 'p6', type: 'premium', plan: 'Free · the notebook needs Membership', title: 'VaniScribe: AI Transcription for Development', description: 'Transcribe field interviews, FGDs, and KIIs in Hindi, Tamil, Bengali, and 10+ South Asian languages. Speaker diarization and structured exports.', track: 'data-tech', rating: 4.8, users: 'New', url: '/premium-tools/vaniscribe.html', resourceId: 'vaniscribe' },
+    { id: 'p7', type: 'premium', plan: 'Free', title: 'DevData Practice', description: '36 realistic dataset generators producing 840K+ rows modelled on DHS, NFHS, ASER, MGNREGA. Each generator includes a data dictionary and analysis exercises.', track: 'data-tech', rating: 4.8, users: 'New', url: '/premium-tools/devdata-practice.html' },
+    { id: 'p8', type: 'premium', plan: 'Free to browse · copying the code needs Membership', title: 'Visualization Cookbook', description: '14 chart types with question-driven recipes — production-ready code in R (ggplot2), Python (matplotlib/seaborn), and Excel.', track: 'data-tech', rating: 4.8, users: 'New', url: '/premium-tools/viz-cookbook.html' },
+    { id: 'p9', type: 'premium', plan: 'Members only · Professional, ₹999 a month', title: 'DevEconomics Toolkit', description: '11 interactive Shiny apps: RCT power, DiD event study, RDD bandwidth, synthetic control, FGT poverty, Theil/MPI inequality, CEA, and more.', track: 'mel', rating: 4.8, users: 'New', url: 'https://impactmojo-devecon-toolkit.netlify.app/', resourceId: 'devecon-toolkit' },
+    { id: 'p12', type: 'premium', plan: 'Free · export needs Membership', title: 'Logframe Builder', description: 'Build a logical-framework matrix: indicators, means of verification, assumptions.', track: 'mel', url: '/premium-tools/logframe-pro.html' },
+    { id: 'p13', type: 'premium', plan: 'Free · export needs Membership', title: 'Empathy Mapping', description: 'Map what people say, think, do and feel before you design for them.', track: 'mel', url: '/premium-tools/empathy-pro.html' },
+    { id: 'p14', type: 'premium', plan: 'Free · export needs Membership', title: 'AI Strategy Canvas', description: 'Spot responsible-AI opportunities and risks across a programme.', track: 'data-tech', url: '/premium-tools/ai-canvas-pro.html' },
+    { id: 'p15', type: 'premium', plan: 'Free', title: 'Chart Selector', description: 'Pick the right chart for your data and the point you want to make.', track: 'data-tech', url: '/premium-tools/chart-selector-pro.html' },
 
     // DEEP DIVES (20) - Curated annotated reading lists from named scholars
     { id: 'dd1', type: 'deep-dive', title: 'Reading Indian Political Economy', description: 'From colonial legacies to coalition capitalism — a curated reading list on how power, markets, and the state co-evolve in India. Curated by Sukhmeet Bedi.', track: 'policy', rating: 5.0, users: 'New', url: '/DeepDives/indian-political-economy.html' },
@@ -3168,7 +3179,7 @@ function renderCardHTML(item) {
             return `
         <div class="card card-coming-soon" aria-disabled="true">
             <div class="card-header">
-                <span class="card-type ${item.type}">${item.type}</span>
+                <span class="card-type ${item.type}">${item.type === 'premium' ? 'Pro Studio' : item.type}</span>
                 <span class="card-coming-soon-badge">Coming Soon</span>
             </div>
             <h3 class="card-title">${item.title}</h3>
@@ -3183,10 +3194,11 @@ function renderCardHTML(item) {
         return `
         <a href="${item.url}"${item.resourceId ? ` data-resource-id="${item.resourceId}"` : ``} target="_blank" class="card">
             <div class="card-header">
-                <span class="card-type ${item.type}">${item.type}</span>
+                <span class="card-type ${item.type}">${item.type === 'premium' ? 'Pro Studio' : item.type}</span>
                 ${item.rating ? `<span class="card-rating"> ${item.rating}</span>` : `<span class="card-rating">Free</span>`}
             </div>
             <h3 class="card-title">${item.title}</h3>
+            ${item.plan ? `<p class="card-plan ${/^(Members only|Team plan)/.test(item.plan) ? 'paid' : 'free'}">${item.plan}</p>` : ''}
             <p class="card-description">${item.description}</p>
             ${item.deckMeta ? `<div class="card-deckmeta"><span class="ck">✓</span>${item.deckMeta}</div>` : ''}
             <div class="card-meta">

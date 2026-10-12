@@ -63,28 +63,26 @@
         // Tier features for comparison
         TIER_FEATURES: {
             'explorer': [
-                'All foundational courses',
-                'Progress tracking',
-                'Basic labs access',
-                'Personal notes & bookmarks',
+                'Every course, Studio, game and data explorer',
+                'All 13 Pro Studio tools, free to use',
+                'Progress tracking, notes and bookmarks',
                 'Course comparison tool'
             ],
             'practitioner': [
                 'Everything in Explorer',
-                'Advanced courses & deep dives',
-                'Sample size calculator',
-                'TOC Workbench Pro',
-                'Completion certificates',
-                'Discord & Telegram community'
+                'All 18 Practice Packs in full',
+                'Export from the Research Question Builder and the ToR Builder',
+                'Export from four Studios, including Sampling Design',
+                'Certificates with PDF download',
+                'Discord and Telegram community'
             ],
             'professional': [
                 'Everything in Practitioner',
-                'Priority coaching access',
-                'Power analysis tools',
-                '7 interactive workshop templates',
-                'Downloadable templates',
-                'Monthly expert webinars',
-                'Early access to new content'
+                'Export from the Logframe Builder, Empathy Map, AI Strategy Canvas, Qual Insights Lab and Code Converter',
+                'Copying from Field Notes and the Viz Cookbook',
+                'Advisory Board on hosted models and the VaniScribe notebook',
+                'The DevEconomics Toolkit (11 Shiny apps)',
+                'Priority coaching and early access'
             ],
             'organization': [
                 'Everything in Professional',
