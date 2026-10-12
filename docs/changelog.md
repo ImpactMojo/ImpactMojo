@@ -2,6 +2,19 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.363.0 — October 12, 2026 (India's first household travel survey)
+
+### For Learners
+
+- **Travel Survey Explorer** — India's first National Household Travel Survey (NSO, 2025-26) in the Data Room: how workers and students travel, who makes the trip by sex and age, how long it takes, what it costs each month, other trips and overnight journeys.
+- **The kilometre rule in India's first travel survey** — a blog post on what the survey counts, what its numbers on two-wheelers, women's work travel and unpaid errands mean, and four things to check before quoting it.
+- **National Household Travel Survey 2025-26** — a new Dataverse entry linking to the NSO factsheet.
+
+### Added
+
+- `data/nhts-india.json` holds every all-India figure in the press note of 5 October 2026, and `scripts/build-nhts-explorer-data.py` writes it into `nhts.html` and checks the transcription against the note's own totals and headline numbers. CI runs it as the `nhts-data` job.
+- Dataverse total 332 to 333; Data Room explorers 20 to 21.
+
 ## v10.362.0 — October 10, 2026 (course notes on the closing slide)
 
 ### For Learners

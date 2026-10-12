@@ -280,8 +280,8 @@
       a: () => "**Code Studio** has " + CODE.length + " courses. R, Python, SQL, the tidyverse, pandas and Shiny run in your browser with nothing to install; guided courses cover Stata, SPSS, Power BI, jamovi and JASP, OpenRefine, Open Data Editor, QGIS, KoboToolbox and ODK, spreadsheets, and Git with Quarto.\n\n" + listCode() + "\n\nAll courses: /code/" },
 
     // Data Room
-    { re: /data room|data explorers?|how many explorers|which explorers|all (the )?explorers|caste lists?|exterior caste|obc (central )?list|central list|mandal (commission|list)/i,
-      a: "The **Data Room** holds **20 data explorers**: interactive pages built on India's official surveys, the Union Budget, administrative records and open academic data, from ASER and NFHS to prisons, CSR and air quality. The newest is the **Caste Lists Explorer**, which shows the 1931 Census count of exterior castes, how far today's Scheduled Caste lists trace back to 1931 by name, and how the Central List of OBCs grew after 1993.\n\nAll explorers: /explorers.html\nCaste Lists Explorer: /castes.html" },
+    { re: /data room|data explorers?|how many explorers|which explorers|all (the )?explorers|travel survey|nhts|commut(e|ing)|caste lists?|exterior caste|obc (central )?list|central list|mandal (commission|list)/i,
+      a: "The **Data Room** holds **21 data explorers**: interactive pages built on India's official surveys, the Union Budget, administrative records and open academic data, from ASER and NFHS to prisons, CSR and air quality. The newest is the **Travel Survey Explorer**, built on India's first National Household Travel Survey (NSO, 2025-26): how workers and students travel, who makes the trip, how long it takes and what it costs. Just before it came the **Caste Lists Explorer**, on the 1931 Census count of exterior castes, the Scheduled Caste lists and the Central List of OBCs.\n\nAll explorers: /explorers.html\nTravel Survey Explorer: /nhts.html\nCaste Lists Explorer: /castes.html" },
 
     // Labs count
     { re: /how many.*(lab|studio)|\b(labs|studios)\b.*(list|all|which)|list.*(lab|studio)/i,
