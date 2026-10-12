@@ -174,8 +174,8 @@ DECK = {
                  "color": "cyan", "source": "Government scheme description, PM-JAY (gorakhpur.nic.in; Government of Goa note)"},
                 {"num": "&#8377;5 lakh", "label": "cover per family per year for hospitalisation",
                  "color": "green", "source": "Government scheme description, PM-JAY (gorakhpur.nic.in)"},
-                {"num": "35.5%", "label": "children under five stunted, India",
-                 "color": "amber", "source": "NFHS-5 (2019-21), via DHS Program indicator data"},
+                {"num": "29.3%", "label": "children under five stunted, India, down from 35.5% in NFHS-5 (2019-21)",
+                 "color": "amber", "source": "NFHS-6 (2023-24), provisional results, IIPS, NFHS-6 India Fact Sheet, May 2026"},
             ]),
             hbox("A design that uses an old list, a narrow definition or a costly delivery "
                  "channel carries that choice into every year of the scheme.", "red"),
@@ -329,7 +329,9 @@ DECK = {
             body("A national average hides the places where a problem is worst. NFHS-5 "
                  "(2019-21) puts stunting among children under five at 35.5 per cent for India, "
                  "against 46.5 per cent in Meghalaya, 42.9 in Bihar, 39.7 in Uttar Pradesh and "
-                 "39.6 in Jharkhand, and 23.4 in Kerala and 25.8 in Goa. Design for the "
+                 "39.6 in Jharkhand, and 23.4 in Kerala and 25.8 in Goa. The NFHS-6 (2023-24) figure for India is 29.3 per cent "
+                 "(IIPS, NFHS-6 India Fact Sheet, May 2026). The state figures here are from NFHS-5, "
+                 "so compare them with the NFHS-5 India figure. Design for the "
                  "distribution of the problem: where it is concentrated, among which groups, and "
                  "whether the same cause operates everywhere."),
             tw(pp("cyan", "Questions to answer",
