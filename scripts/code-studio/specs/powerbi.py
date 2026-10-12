@@ -34,7 +34,13 @@ PAGE = {'slug': 'powerbi',
  'modules': [{'tab': 'Set up',
               'title': 'Power BI Desktop, the service and your project folder',
               'blocks': [{'t': 'html',
-                          'html': "<p>Power BI is Microsoft's business intelligence software. Most M&amp;E "
+                          'html': '<div class="info-box"><strong>Which first?</strong> This page is the '
+                                  'hands-on walk-through: build one dashboard in your own Power BI Desktop as '
+                                  'you read. The <a href="/courses/powerBI/powerbi.html" '
+                                  'style="color:var(--accent-color)">Power BI flagship course</a> covers the '
+                                  'same tool in more depth, with the design and judgement behind each step, so '
+                                  'take it first if dashboards are new to you.</div>\n'
+                                  "<p>Power BI is Microsoft's business intelligence software. Most M&amp;E "
                                   'teams meet it as the tool behind a donor dashboard: a page of indicator '
                                   'cards, a district map and a few slicers. Two parts matter. <strong>Power '
                                   'BI Desktop</strong> is the free Windows application in which you load '

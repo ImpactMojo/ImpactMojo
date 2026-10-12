@@ -241,7 +241,7 @@ Browser-based studios under `/Labs/`. Each runs entirely client-side, keeps your
 Everything below is free, runs in the browser, and needs no account.
 
 - **[Teach with ImpactMojo](https://www.impactmojo.in/teach)** (`teach.html`): syllabus mappings, ready-made course kits, and how to run the material in a classroom or a workshop.
-- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`), package any of the 101 courses, plus the 47 practice workbooks, as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
+- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`), package any of the 21 flagship and 80 foundational courses, plus the 47 practice workbooks, as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
 - **Studio submissions** (`js/studio-submit.js`): wraps a Studio's own export in an envelope carrying the student's name, the Studio, a timestamp and a content digest. Studio exports previously carried no identity at all, so thirty files from a class were thirty anonymous JSON blobs. Wired into the LogFrame Builder as the reference implementation; the other Studios take the same two lines.
 - **[Gradebook](https://www.impactmojo.in/gradebook)** (`gradebook.html`): drop a folder of those submissions in and get one CSV, with tampered files flagged by digest mismatch. Entirely client-side: student work is never uploaded anywhere.
 
@@ -324,8 +324,12 @@ Structured credential tracks with milestone progression:
 
 Comprehensive ToC learning and building toolkit:
 
-- **Educational workbench** (`toc-workbench.html`): Foundations, worked examples with BCT annotations, indicator development, 8 problem sets, sector guidance (8 sectors), cross-cutting frameworks, measurement design
-- **Interactive builder** (`toc-builder.html`): Drag-and-drop canvas with 203 BCT techniques, MEL frameworks, cross-cutting lenses, 4 sector templates, connection drawing, PNG export
+All of it lives in one page, `Labs/toc-lab.html` (the Theory of Change Studio). The separate workbench and builder pages were folded into it on 2026-10-12 and now redirect there.
+
+- **Seven guided steps**: problem, goal, outcomes, outputs, assumptions, indicators and a structured diagram, saved on the device
+- **Free canvas** (step 7): drag-and-drop canvas with 203 BCT techniques, MEL frameworks, cross-cutting lenses, 4 sector templates, connection drawing, PNG export
+- **Guide** (below the steps): foundations, worked examples with BCT annotations, indicator development, 8 problem sets, sector guidance (8 sectors), cross-cutting frameworks, measurement design
+- **LogFrame import**: the LogFrame Builder imports whichever of the steps or the canvas was saved last
 - **Coaching/Dojo CTAs** integrated throughout as marketing touchpoints
 
 ---
@@ -446,8 +450,6 @@ ImpactMojo/
 ├── premium.html            # Premium features & registration
 ├── portfolio.html          # Premium portfolio builder
 ├── verify-certificate.html # Public certificate verification + Open Badge display
-├── toc-workbench.html      # Theory of Change educational workbench
-├── toc-builder.html        # Interactive drag-and-drop ToC builder with BCT
 ├── org-dashboard.html      # Organization dashboard with team training, cohorts, analytics
 │
 ├── i18n/

@@ -30,7 +30,7 @@
         
         // Tier display names
         TIER_NAMES: {
-            'explorer': 'Explorer',
+            'explorer': 'Learner',
             'practitioner': 'Practitioner',
             'professional': 'Professional',
             'organization': 'Organization'
@@ -64,13 +64,13 @@
         TIER_FEATURES: {
             'explorer': [
                 'Every course, Studio, game and data explorer',
-                'All 13 Pro Studio tools, free to use',
+                'All 11 Pro Studio tools, free to use',
                 'Verifiable completion certificates',
                 'Progress tracking, notes and bookmarks',
                 'Course comparison tool'
             ],
             'practitioner': [
-                'Everything in Explorer',
+                'Everything in Learner',
                 'All 18 Practice Packs in full',
                 'Export from the Research Question Builder and the ToR Builder',
                 'Export from four Studios, including Sampling Design',

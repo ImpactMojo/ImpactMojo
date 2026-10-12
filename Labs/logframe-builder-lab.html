@@ -233,11 +233,11 @@
 <section class="hero">
 <a id="main-content" tabindex="-1"></a>
     <div class="wrap">
-        <span class="eyebrow">ImpactMojo Studio &middot; MEL</span>
+        <span class="eyebrow">Free Studio &middot; MEL</span>
         <h1>LogFrame Builder</h1>
         <p>Turn your Theory of Change into a donor-ready <strong>Logical Framework</strong>. Climb the results ladder from Goal to Activities, attach SMART indicators and their means of verification, surface the assumptions that hold your logic together, then print or export the classic 4&times;4 matrix. Free, no account, saved to your device, works offline.</p>
         <div class="hero-actions">
-            <button class="btn btn-primary" id="btnImport">&#8681; Import from ToC Builder</button>
+            <button class="btn btn-primary" id="btnImport">&#8681; Import from Theory of Change Studio</button>
             <button class="btn btn-ghost" id="btnExample">Load worked example</button>
             <button class="btn btn-ghost" id="btnReset">Start fresh</button>
         </div>
@@ -366,7 +366,7 @@
 <li><a href="https://github.com/ImpactMojo/ImpactMojo" rel="noopener noreferrer" target="_blank">GitHub</a></li>
 <li><a href="/transparency.html">Transparency</a></li></ul></div>
 <div class="im-footer-section"><h4>MEL Tools</h4><ul>
-<li><a href="/toc-builder.html">Theory of Change Builder</a></li>
+<li><a href="/Labs/toc-lab.html">Theory of Change Studio</a></li>
 <li><a href="/Labs/mel-lab.html">MEL Studio</a></li>
 <li><a href="/Labs/impact-evaluation-lab.html">Impact Evaluation Studio</a></li>
 <li><a href="/practice-packs/logframe-building/">LogFrame Practice Pack</a></li></ul></div>
@@ -390,7 +390,10 @@
 (function(){
   "use strict";
   var STORAGE_KEY = 'impactmojo_logframe_builder';
+  // The Theory of Change Studio saves its six steps to TOC_LAB_KEY and its
+  // free canvas to TOC_KEY, the key the retired ToC Builder page used.
   var TOC_KEY = 'impactmojo_toc_builder';
+  var TOC_LAB_KEY = 'impactmojo_toc_lab';
 
   var LEVELS = [
     { key:'goal',     label:'Goal', plural:'Goal',     single:true,  desc:'The long-term change you contribute to. Usually one statement.' },
@@ -617,19 +620,40 @@
   }
   function slug(){ return (state.project || 'logframe').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'logframe'; }
 
-  // ---- Import from ToC Builder ----
-  function importFromToC(){
-    var raw;
-    try { raw = localStorage.getItem(TOC_KEY); } catch(e){}
-    if(!raw){
-      toast('No saved Theory of Change found on this device. Open the ToC Builder, add nodes, then return.');
-      return;
-    }
-    var data;
-    try { data = JSON.parse(raw); } catch(e){ toast('Could not read the saved Theory of Change.'); return; }
-    var nodes = (data && data.nodes) || [];
-    if(!nodes.length){ toast('Your Theory of Change has no nodes yet.'); return; }
+  // ---- Import from the Theory of Change Studio ----
+  function readJSON(key){
+    var raw = null;
+    try { raw = localStorage.getItem(key); } catch(e){}
+    if(!raw) return null;
+    try { return JSON.parse(raw); } catch(e){ return null; }
+  }
+  function txt(v){ return (typeof v === 'string' ? v : '').trim(); }
 
+  // The six steps: goal, outcomes, outputs, assumptions and indicators linked to outcomes.
+  function levelsFromSteps(d){
+    var next = { goal:[], outcome:[], output:[], activity:[] };
+    var outcomes = (d.outcomes||[]).filter(function(o){ return txt(o.text); });
+    var byId = {};
+    outcomes.forEach(function(o){
+      var it = blankItem(txt(o.text));
+      it.indicators = (d.indicators||[]).filter(function(x){ return x.linkedOutcome === o.id && txt(x.text); }).map(function(x){ return txt(x.text); }).join('\n');
+      it.assumptions = (d.assumptions||[]).filter(function(x){ return x.linkedOutcome === o.id && txt(x.text); }).map(function(x){ return txt(x.text); }).join('\n');
+      byId[o.id] = it;
+      next.outcome.push(it);
+    });
+    (d.outputs||[]).forEach(function(o){ if(txt(o.text)) next.output.push(blankItem(txt(o.text))); });
+    var goal = blankItem(txt(d.longTermGoal));
+    var loose = (d.assumptions||[]).filter(function(x){ return txt(x.text) && !byId[x.linkedOutcome]; }).map(function(x){ return txt(x.text); });
+    var looseInd = (d.indicators||[]).filter(function(x){ return txt(x.text) && !byId[x.linkedOutcome]; }).map(function(x){ return txt(x.text); });
+    goal.assumptions = loose.join('\n');
+    goal.indicators = looseInd.join('\n');
+    next.goal.push(goal);
+    return { levels: next, count: outcomes.length + next.output.length + (txt(d.longTermGoal) ? 1 : 0), problem: txt(d.problemStatement) };
+  }
+
+  // The free canvas (and anything saved by the old ToC Builder page): typed nodes.
+  function levelsFromCanvas(data){
+    var nodes = (data && data.nodes) || [];
     var map = { impact:'goal', outcome:'outcome', output:'output', activity:'activity', input:'activity' };
     var next = { goal:[], outcome:[], output:[], activity:[] };
     var carriedAssumptions = [];
@@ -646,22 +670,35 @@
       if(n.indicator && n.indicator.trim()) it.indicators = n.indicator.trim();
       next[lvl].push(it);
     });
-
-    // Ensure at least one goal
     if(!next.goal.length) next.goal.push(blankItem(state.goalStatement || ''));
-    // Park any loose assumptions on the goal row so nothing is lost
     if(carriedAssumptions.length){ next.goal[0].assumptions = (next.goal[0].assumptions ? next.goal[0].assumptions+'\n' : '') + carriedAssumptions.join('\n'); }
-    // Guarantee non-empty arrays for editing
+    return { levels: next, count: nodes.filter(function(n){ return map[n.type]; }).length, problem: '' };
+  }
+
+  function importFromToC(){
+    var steps = readJSON(TOC_LAB_KEY);
+    var canvas = readJSON(TOC_KEY);
+    var stepsHas = steps && (txt(steps.longTermGoal) || (steps.outcomes||[]).some(function(o){ return txt(o.text); }) || (steps.outputs||[]).some(function(o){ return txt(o.text); }));
+    var canvasHas = canvas && canvas.nodes && canvas.nodes.length;
+    if(!stepsHas && !canvasHas){
+      toast('No saved Theory of Change found on this device. Open the Theory of Change Studio, fill in the steps or the canvas, then return.');
+      return;
+    }
+    // Use whichever was saved most recently. A canvas saved by the old ToC Builder has no date and counts as oldest.
+    var useSteps = stepsHas && (!canvasHas || (steps.savedAt || 0) >= (canvas.savedAt || 0));
+    var res = useSteps ? levelsFromSteps(steps) : levelsFromCanvas(canvas);
+    if(!res.count){ toast('Your Theory of Change has nothing to import yet.'); return; }
+    var next = res.levels;
     LEVELS.forEach(function(L){ if(!next[L.key].length) next[L.key] = [blankItem('')]; });
 
     state.levels = next;
     state.goalStatement = next.goal[0].summary || state.goalStatement;
+    if(res.problem && !state.problem) state.problem = res.problem;
     if(!state.project) state.project = 'Imported from Theory of Change';
     save();
     renderAll();
     goStep(1);
-    var imported = nodes.filter(function(n){ return map[n.type]; }).length;
-    toast('Imported ' + imported + ' result' + (imported===1?'':'s') + ' from your Theory of Change. Review the ladder, then add indicators.');
+    toast('Imported ' + res.count + ' result' + (res.count===1?'':'s') + ' from your Theory of Change ' + (useSteps ? 'steps' : 'canvas') + '. Review the ladder, then add indicators.');
   }
 
   // ---- Worked example ----

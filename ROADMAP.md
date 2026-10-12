@@ -95,7 +95,7 @@ An instructor at a school of social work asked for a kit covering Sustainability
 - [x] **R & Python for Development**: interactive course teaching R and Python from zero with real code running in the browser via WebR + Pyodide (no install). _All 7 modules live (real NFHS/ASER/PLFS/Budget data, wrangling, visualisation, impact evaluation)._
 
 - [x] **Peer review system**: Learners review each other's submissions; Supabase-backed (`peer-review.html`, `peer_reviews` + `challenge_submissions` tables with RLS)
-- [x] **Certificate marketplace**: Employer-facing verification portal (`verify.html`)
+- [x] **Certificate marketplace**: Employer-facing verification portal (`verify-certificate.html`)
 - [x] **API for partners**: REST API for organizations to integrate ImpactMojo content (`api-docs.html` + `netlify/functions/partner-api.mjs`)
 
 ### Shipped so far (Q3)

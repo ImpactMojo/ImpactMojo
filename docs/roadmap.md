@@ -20,7 +20,7 @@ These were previously listed as planned or in progress, and are now live. Each n
 - **Vernacular interface**: the UI and quality-audited page translations ship in 5 languages (Hindi, Tamil, Bengali, Marathi, Telugu); see "Currently In Progress" above for what's still open.
 - **Practitioner voices**: this was listed as a planned "practitioner interview series". It shipped as **Field Radio**, a station of **19 clips**: voice notes and short videos from practitioners, each with a full transcript, playing back-to-back and filterable by track. Every clip is in site search, including its transcript, so a phrase you half-remember finds the clip. ([Listen](/field-radio.html))
 - **Peer review system**: get feedback on your work from other practitioners, and give it. ([/peer-review.html](/peer-review.html))
-- **Certificate verification for employers**: listed as a "certificate marketplace"; what shipped is the part that matters to a hiring manager, a page that checks whether a credential is real. ([/verify.html](/verify.html))
+- **Certificate verification for employers**: listed as a "certificate marketplace"; what shipped is the part that matters to a hiring manager, a page that checks whether a credential is real. ([/verify-certificate.html](/verify-certificate.html))
 - **Partner API**: for organisations integrating ImpactMojo content into their own training platforms. ([/api-docs.html](/api-docs.html))
 - **Community-contributed courses**: practitioners can put a course forward for publication. ([/contribute.html](/contribute.html))
 - **Live workshop listings**: workshops with registration and a calendar file you can add to your own diary. ([/events.html](/events.html))

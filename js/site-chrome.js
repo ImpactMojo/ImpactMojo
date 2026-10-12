@@ -205,7 +205,7 @@
     foot.innerHTML =
       '<div class="im-sc-foot-in">' +
         '<div class="im-sc-foot-brand"><span class="im-sc-site">impactmojo.in</span>' +
-          '<p>Free, open-source development education for South Asia &mdash; flagship courses, 101 decks, labs, games and research tools.</p></div>' +
+          '<p>Free, open-source development education for South Asia: flagship courses, the 101 Series, Free Studio, games, data and research tools.</p></div>' +
         '<div class="im-sc-foot-col"><h3>Learn</h3>' +
           '<a href="' + SITE + '/courses/">Flagship Courses</a><a href="' + SITE + '/101-courses/">101 Series</a>' +
           '<a href="' + SITE + '/Labs/">Free Studio</a><a href="' + SITE + '/code/">Code School</a>' +
@@ -215,14 +215,17 @@
           '<a href="' + SITE + '/catalog.html">Full Catalog</a></div>' +
         '<div class="im-sc-foot-col"><h3>Explore</h3>' +
           '<a href="' + SITE + '/libraries.html"><b>All Libraries</b></a><a href="' + SITE + '/dataverse.html">Dataverse</a>' +
+          '<a href="' + SITE + '/explorers.html">Data Room</a>' +
           '<a href="' + SITE + '/BookSummaries/">Reading Companions</a><a href="' + SITE + '/law-guides/">Law Guides</a>' +
+          '<a href="' + SITE + '/game-library.html">Game Library</a><a href="' + SITE + '/Games/">Simulations</a>' +
+          '<a href="' + SITE + '/handouts.html">Handouts</a>' +
           '<a href="' + SITE + '/law-guides/development-law-docket.html">Law Docket</a>' +
           '<a href="' + SITE + '/fundamentals/">Fundamentals</a>' +
           '<a href="' + SITE + '/dojos.html">Dojos &amp; Practice</a>' +
           '<a href="' + SITE + '/blog.html">Blog</a></div>' +
         '<div class="im-sc-foot-col"><h3>ImpactMojo</h3>' +
           '<a href="' + SITE + '/about.html">About</a><a href="' + SITE + '/premium.html">Membership</a>' +
-          '<a href="' + SITE + '/community.html">Community</a><a href="https://github.com/ImpactMojo/ImpactMojo">GitHub</a></div>' +
+          '<a href="' + SITE + '/community/">Community</a><a href="' + SITE + '/partnerships.html">Partnerships</a><a href="https://github.com/ImpactMojo/ImpactMojo">GitHub</a></div>' +
       '</div>' +
       '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free Forever &middot; &copy; ImpactMojo</span>' +
         '<span>Made for South Asian development practitioners</span></div>';

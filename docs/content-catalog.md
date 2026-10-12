@@ -477,8 +477,6 @@ Thirteen browser tools for research and evaluation work. Seven builders are free
 |---|------|------------------------|------|
 | 1 | Research Question Builder | Export | [Open](/premium-tools/rq-builder.html) |
 | 2 | ToR Builder | Export | [Open](/premium-tools/tor-builder.html) |
-| 3 | Logframe Builder | Export | [Open](/premium-tools/logframe-pro.html) |
-| 4 | Empathy Mapping | Export | [Open](/premium-tools/empathy-pro.html) |
 | 5 | AI Strategy Canvas | Export | [Open](/premium-tools/ai-canvas-pro.html) |
 | 6 | Statistical Code Converter | Export | [Open](/premium-tools/code-converter-pro.html) |
 | 7 | Qualitative Insights Lab | Export | [Open](/premium-tools/qual-insights-lab.html) |

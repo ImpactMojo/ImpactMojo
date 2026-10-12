@@ -363,6 +363,121 @@ body.dark-mode, [data-theme="dark"] {
             .toc-level-items { flex-direction: column; align-items: center; }
             .legend { gap: 0.75rem; }
         }
+
+        .header p a { color: var(--accent-color); text-decoration: underline; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        /* Diagram mode switch (structured diagram or free canvas) */
+        .mode-switch { display: inline-flex; gap: 0.25rem; padding: 0.25rem; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 1.25rem; }
+        .mode-switch button { padding: 0.45rem 0.9rem; border: none; border-radius: 7px; background: transparent; color: var(--text-secondary); font-family: var(--font-sans); font-size: 0.82rem; cursor: pointer; }
+        .mode-switch button[aria-pressed="true"] { background: var(--card-bg); color: var(--text-primary); font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+        .save-note { font-size: 0.75rem; color: var(--text-muted); margin-left: auto; align-self: center; }
+
+        /* Free canvas, ported from the former ToC Builder */
+        :root { --cv-ink-input:#075985; --cv-ink-activity:#4338CA; --cv-ink-output:#92400E; --cv-ink-outcome:#047857; --cv-ink-impact:#9D174D; --cv-ink-assumption:#475569; --cv-ink-strong:#047857; --cv-ink-moderate:#92400E; }
+        @media (prefers-color-scheme: dark) { :root { --cv-ink-input:#7DD3FC; --cv-ink-activity:#A5B4FC; --cv-ink-output:#FCD34D; --cv-ink-outcome:#6EE7B7; --cv-ink-impact:#F9A8D4; --cv-ink-assumption:#CBD5E1; --cv-ink-strong:#6EE7B7; --cv-ink-moderate:#FCD34D; } }
+        [data-theme="light"], body.light-mode { --cv-ink-input:#075985; --cv-ink-activity:#4338CA; --cv-ink-output:#92400E; --cv-ink-outcome:#047857; --cv-ink-impact:#9D174D; --cv-ink-assumption:#475569; --cv-ink-strong:#047857; --cv-ink-moderate:#92400E; }
+        [data-theme="dark"], body.dark-mode { --cv-ink-input:#7DD3FC; --cv-ink-activity:#A5B4FC; --cv-ink-output:#FCD34D; --cv-ink-outcome:#6EE7B7; --cv-ink-impact:#F9A8D4; --cv-ink-assumption:#CBD5E1; --cv-ink-strong:#6EE7B7; --cv-ink-moderate:#FCD34D; }
+        .cv-toolbar { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+        .cv-btn { padding: 0.4rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-primary); font-size: 0.78rem; font-weight: 600; font-family: var(--font-sans); cursor: pointer; }
+        .cv-btn:hover { border-color: var(--accent-color); }
+        .cv-btn-primary { background: #0369A1; color: #fff; border-color: #0369A1; }
+        .cv-hint { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+        .cv-layout { display: flex; height: 640px; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+        .cv-sidebar { width: 270px; background: var(--card-bg); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; flex-shrink: 0; }
+        .cv-sidebar[hidden] { display: none; }
+        .cv-sidebar-tabs { display: flex; border-bottom: 1px solid var(--border-color); }
+        .cv-sidebar-tab { flex: 1; padding: 0.5rem; text-align: center; font-size: 0.72rem; font-weight: 600; cursor: pointer; color: var(--text-muted); background: none; border: none; border-bottom: 2px solid transparent; font-family: var(--font-sans); }
+        .cv-sidebar-tab.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+        .cv-sidebar-header { padding: 0.6rem; border-bottom: 1px solid var(--border-color); }
+        .cv-sidebar-header input { width: 100%; padding: 0.4rem 0.6rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.8rem; background: var(--primary-bg); color: var(--text-primary); }
+        .cv-sidebar-panel { display: none; flex: 1; overflow-y: auto; padding: 0.5rem; }
+        .cv-sidebar-panel.active { display: block; }
+        .cv-cat { margin-bottom: 0.4rem; }
+        .cv-cat-header { width: 100%; text-align: left; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); padding: 0.35rem 0.4rem; cursor: pointer; background: none; border: none; font-family: var(--font-sans); }
+        .cv-cat-header:hover { color: var(--text-primary); }
+        .cv-cat-list { display: none; }
+        .cv-cat-list.open { display: block; }
+        .cv-item { padding: 0.35rem 0.5rem; font-size: 0.78rem; border-radius: 6px; cursor: grab; margin-bottom: 2px; border: 1px solid transparent; display: flex; align-items: center; gap: 0.4rem; user-select: none; color: var(--text-primary); }
+        .cv-item:hover { background: var(--hover-bg); border-color: var(--border-color); }
+        .cv-item .cv-tag { font-size: 0.62rem; padding: 0.1rem 0.3rem; border-radius: 4px; font-weight: 600; margin-left: auto; flex-shrink: 0; border: 1px solid currentColor; }
+        .cv-tag.strong { color: var(--cv-ink-strong); }
+        .cv-tag.moderate { color: var(--cv-ink-moderate); }
+        .cv-tag.type { color: var(--cv-ink-activity); }
+        .cv-wrap { flex: 1; position: relative; overflow: auto; background: var(--primary-bg); background-image: radial-gradient(circle, var(--border-color) 1px, transparent 1px); background-size: 24px 24px; }
+        .cv-canvas { position: relative; width: 3000px; height: 2000px; }
+        .cv-links { position: absolute; top: 0; left: 0; width: 3000px; height: 2000px; pointer-events: none; z-index: 1; }
+        .cv-links line { stroke: var(--text-muted); stroke-width: 2; }
+        .cv-links line:hover { stroke: var(--accent-color); }
+        .cv-node { position: absolute; background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 10px; min-width: 160px; max-width: 240px; cursor: move; user-select: none; z-index: 2; }
+        .cv-node:hover, .cv-node.selected { border-color: var(--accent-color); }
+        .cv-node-header { padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--border-color); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center; }
+        .cv-node[data-type="input"] .cv-node-header { color: var(--cv-ink-input); }
+        .cv-node[data-type="activity"] .cv-node-header { color: var(--cv-ink-activity); }
+        .cv-node[data-type="output"] .cv-node-header { color: var(--cv-ink-output); }
+        .cv-node[data-type="outcome"] .cv-node-header { color: var(--cv-ink-outcome); }
+        .cv-node[data-type="impact"] .cv-node-header { color: var(--cv-ink-impact); }
+        .cv-node[data-type="assumption"] .cv-node-header { color: var(--cv-ink-assumption); }
+        .cv-node-body { padding: 0.5rem 0.6rem; }
+        .cv-node-title { font-size: 0.85rem; font-weight: 600; outline: none; min-height: 1.2em; color: var(--text-primary); }
+        .cv-node-desc { font-size: 0.74rem; color: var(--text-secondary); margin-top: 0.25rem; outline: none; min-height: 1em; }
+        .cv-node-indicator { font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.3rem; padding-top: 0.3rem; border-top: 1px dashed var(--border-color); outline: none; min-height: 0.8em; }
+        .cv-node [contenteditable]:empty::before { content: attr(data-placeholder); color: var(--text-muted); }
+        .cv-node-bcts { display: flex; flex-wrap: wrap; gap: 0.2rem; margin-top: 0.4rem; }
+        .cv-node-bct { font-size: 0.64rem; padding: 0.1rem 0.35rem; border-radius: 8px; border: 1px solid var(--border-color); color: var(--accent-color); font-weight: 600; cursor: pointer; background: none; font-family: var(--font-sans); }
+        .cv-node-bct:hover { text-decoration: line-through; }
+        .cv-node-delete { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1rem; padding: 0; line-height: 1; }
+        .cv-node-delete:hover { color: var(--danger-color); }
+        .cv-handle { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 12px; height: 12px; background: var(--accent-color); border-radius: 50%; cursor: crosshair; z-index: 3; opacity: 0; transition: opacity 0.15s; }
+        .cv-node:hover .cv-handle { opacity: 1; }
+        @media (max-width: 768px) { .cv-layout { height: 520px; } .cv-sidebar { width: 200px; } }
+        @media print { #canvasPanel { display: none !important; } }
+
+        /* Guide, folded in from the former Theory of Change Workbench */
+        .guide-section { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
+        .guide-section > h2 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .guide-section > p { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .guide-block { border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 0.75rem; background: var(--card-bg); }
+        .guide-block > summary { padding: 0.85rem 1rem; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 0.95rem; color: var(--text-primary); }
+        .guide-block > summary:hover { color: var(--accent-color); }
+        .guide-body { padding: 0 1rem 1rem; font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; }
+        .guide-body a { color: var(--accent-color); text-decoration: underline; }
+        .guide-body h3 { font-family: var(--font-heading); font-size: 0.95rem; color: var(--text-primary); margin: 0.5rem 0 0.4rem; }
+        .guide-body h4, .guide-body h5 { font-family: var(--font-heading); font-size: 0.88rem; color: var(--text-primary); margin: 0.4rem 0 0.25rem; }
+        .guide-body p { margin-bottom: 0.5rem; }
+        .guide-body ul, .guide-body ol { margin: 0.25rem 0 0.75rem 1.25rem; }
+        .wb-section-subtitle { color: var(--text-secondary); margin-bottom: 1rem; }
+        .wb-card, .wb-case, .wb-bct-box { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; margin-bottom: 0.85rem; }
+        .wb-card p, .wb-case p, .wb-problem p { color: var(--text-secondary); }
+        .wb-grid { display: grid; gap: 0.85rem; }
+        .wb-grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+        .wb-grid-3 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        .wb-table-scroll { overflow-x: auto; }
+        .wb-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 0.75rem 0; }
+        .wb-table th, .wb-table td { padding: 0.45rem 0.65rem; border: 1px solid var(--border-color); text-align: left; vertical-align: top; color: var(--text-secondary); }
+        .wb-table th { background: var(--hover-bg); color: var(--text-primary); font-weight: 600; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; }
+        .wb-tag { display: inline-block; padding: 0.1rem 0.45rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600; margin: 0.1rem; border: 1px solid currentColor; }
+        .wb-tag-bct { color: var(--cv-ink-input); }
+        .wb-tag-method { color: var(--cv-ink-activity); }
+        .wb-tag-tool { color: var(--cv-ink-outcome); }
+        .wb-tag-sector { color: var(--cv-ink-impact); }
+        .wb-tag-ethics { color: var(--cv-ink-output); }
+        .wb-toggle { border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 0.5rem; }
+        .wb-toggle-header { width: 100%; text-align: left; padding: 0.65rem 0.9rem; font-weight: 600; font-size: 0.86rem; cursor: pointer; color: var(--text-primary); background: none; border: none; font-family: var(--font-sans); }
+        .wb-toggle-header:hover { color: var(--accent-color); }
+        .wb-toggle-arrow { display: inline-block; transition: transform 0.2s; font-size: 0.7rem; }
+        .wb-toggle.open .wb-toggle-arrow { transform: rotate(90deg); }
+        .wb-toggle-body { display: none; padding: 0.25rem 0.9rem 0.9rem; }
+        .wb-toggle.open .wb-toggle-body { display: block; }
+        .wb-checklist { list-style: none; padding: 0; margin-left: 0 !important; }
+        .wb-checklist li { padding: 0.3rem 0; display: flex; gap: 0.5rem; }
+        .wb-checklist li::before { content: "\2610"; flex-shrink: 0; color: var(--text-muted); }
+        .wb-divider { border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0; }
+        .wb-problem { border-left: 3px solid var(--secondary-accent); padding-left: 1rem; margin-bottom: 1rem; }
+        .wb-problem-status { font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.45rem; border-radius: 8px; display: inline-block; margin-top: 0.3rem; border: 1px solid currentColor; }
+        .wb-problem-status.solved { color: var(--cv-ink-outcome); }
+        .wb-problem-status.unsolved { color: var(--cv-ink-output); }
+        .wb-builder-btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; background: #0369A1; color: #fff !important; border-radius: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none !important; }
+        @media print { .guide-section { display: none; } }
     
 /* Ink, not fill: the saturated token stays for backgrounds. */
 :root{--im-ink-bad:#991B1B;--im-ink-good:#047857;--im-ink-info:#4F46E5;--im-ink-warn:#92400E;}
@@ -553,7 +668,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Theory of Change Studio", "url": "https://www.impactmojo.in/labs/toc-lab.html", "description": "Interactive Theory of Change builder: map activities to outputs, outcomes and impact, surface assumptions, and export a structured ToC for proposals and MEL frameworks.", "applicationCategory": "EducationalApplication", "operatingSystem": "Any (web browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the difference between a theory of change and a logframe?", "acceptedAnswer": {"@type": "Answer", "text": "A theory of change explains how and why change happens: the full causal pathway with assumptions, feedback loops and context. A logframe is a structured 4×4 summary (goal, outcomes, outputs, activities against indicators, means of verification and assumptions) used for planning and reporting. In practice you develop the theory of change first, then derive the logframe from it."}}, {"@type": "Question", "name": "How do I build a theory of change for an NGO programme?", "acceptedAnswer": {"@type": "Answer", "text": "Start from the long-term change you want, work backwards through preconditions (outcomes), then map what the programme actually does (activities and outputs) to those outcomes. Make assumptions explicit at every link, identify which are evidence-backed versus untested, and revisit the map as evidence arrives. The Workbench guides this sequence and exports the result."}}, {"@type": "Question", "name": "What makes a good assumption in a theory of change?", "acceptedAnswer": {"@type": "Answer", "text": "A good assumption is specific, testable, and load-bearing: if it fails, the causal link fails. Vague assumptions like 'community participates' hide risk; a sharper version states who must do what, under what conditions, and what evidence exists that they will."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the difference between a theory of change and a logframe?", "acceptedAnswer": {"@type": "Answer", "text": "A theory of change explains how and why change happens: the full causal pathway with assumptions, feedback loops and context. A logframe is a structured 4×4 summary (goal, outcomes, outputs, activities against indicators, means of verification and assumptions) used for planning and reporting. In practice you develop the theory of change first, then derive the logframe from it."}}, {"@type": "Question", "name": "How do I build a theory of change for an NGO programme?", "acceptedAnswer": {"@type": "Answer", "text": "Start from the long-term change you want, work backwards through preconditions (outcomes), then map what the programme actually does (activities and outputs) to those outcomes. Make assumptions explicit at every link, identify which are evidence-backed versus untested, and revisit the map as evidence arrives. The Theory of Change Studio guides this sequence and exports the result."}}, {"@type": "Question", "name": "What makes a good assumption in a theory of change?", "acceptedAnswer": {"@type": "Answer", "text": "A good assumption is specific, testable, and load-bearing: if it fails, the causal link fails. Vague assumptions like 'community participates' hide risk; a sharper version states who must do what, under what conditions, and what evidence exists that they will."}}]}</script>
 </head>
 <body>
 <a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
@@ -603,7 +718,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                 Studio Tool
             </div>
             <h1>Theory of Change Studio</h1>
-            <p>Build a structured Theory of Change step by step. Define your causal pathway from problem to impact, complete with assumptions and indicators.</p>
+            <p>Build a structured Theory of Change step by step. Define your causal pathway from problem to impact, complete with assumptions and indicators. Step 7 also has a free canvas with sector templates and 203 behaviour change techniques, and the <a href="#guide">guide</a> below carries worked examples, problem sets and sector guidance. Your work saves on this device, and the <a href="/Labs/logframe-builder-lab.html">LogFrame Builder</a> can import it.</p>
         </section>
 
         <!-- Steps navigation -->
@@ -739,6 +854,12 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 
         <!-- Step 7: Diagram & Export -->
         <div class="step-panel" id="step-6" data-print-title="7. Theory of Change Diagram">
+            <div class="mode-switch" role="group" aria-label="Diagram view">
+                <button type="button" id="modeStructured" aria-pressed="true">Structured diagram</button>
+                <button type="button" id="modeCanvas" aria-pressed="false">Free canvas</button>
+            </div>
+
+            <div id="structuredPanel">
             <div id="validationArea"></div>
 
             <div class="legend">
@@ -762,6 +883,8 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                     Print View
                 </button>
+                <button class="export-btn" onclick="startOver()">Start over</button>
+                <span class="save-note" id="stepsSaveNote" aria-live="polite"></span>
             </div>
 
             <div class="diagram-container" id="diagramContainer">
@@ -770,6 +893,62 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                     <p>Your Theory of Change diagram will appear here as you fill in the steps above.</p>
                 </div>
                 <div class="toc-diagram" id="tocDiagram" style="display:none;"></div>
+            </div>
+            </div>
+
+            <div id="canvasPanel" hidden>
+                <p class="cv-hint">Lay your theory out freely. Drag nodes to move them, drag the dot under a node onto another node to connect them, and double-click a line to remove it. Drag a behaviour change technique onto a node to tag it, or onto empty space to make a new activity. The canvas saves on this device as you work, and the LogFrame Builder can import it.</p>
+                <div class="cv-toolbar">
+                    <button type="button" class="cv-btn" id="cvFromSteps">Build from my steps</button>
+                    <label class="sr-only" for="cvTemplate">Load a sector template</label>
+                    <select class="cv-btn" id="cvTemplate">
+                        <option value="">Load a sector template</option>
+                        <option value="health">Health programme</option>
+                        <option value="education">Education programme</option>
+                        <option value="wash">WASH programme</option>
+                        <option value="livelihoods">Livelihoods programme</option>
+                        <option value="blank">Blank canvas</option>
+                    </select>
+                    <label class="sr-only" for="cvNodeType">Node type</label>
+                    <select class="cv-btn" id="cvNodeType">
+                        <option value="input">Input</option>
+                        <option value="activity">Activity</option>
+                        <option value="output">Output</option>
+                        <option value="outcome">Outcome</option>
+                        <option value="impact">Impact</option>
+                        <option value="assumption">Assumption</option>
+                    </select>
+                    <button type="button" class="cv-btn" id="cvAddNode">+ Add node</button>
+                    <button type="button" class="cv-btn" id="cvToggleSidebar" aria-expanded="true" aria-controls="cvSidebar">Techniques</button>
+                    <button type="button" class="cv-btn cv-btn-primary" id="cvExport">Download PNG</button>
+                    <span class="save-note" id="cvSaveNote" aria-live="polite"></span>
+                </div>
+                <div class="cv-layout">
+                    <div class="cv-sidebar" id="cvSidebar">
+                        <div class="cv-sidebar-tabs" role="tablist">
+                            <button type="button" class="cv-sidebar-tab active" data-panel="cvPanelBct">BCTs</button>
+                            <button type="button" class="cv-sidebar-tab" data-panel="cvPanelFw">Frameworks</button>
+                            <button type="button" class="cv-sidebar-tab" data-panel="cvPanelCross">Cross-cutting</button>
+                        </div>
+                        <div class="cv-sidebar-header">
+                            <label class="sr-only" for="cvSearch">Search techniques</label>
+                            <input type="search" id="cvSearch" placeholder="Search techniques...">
+                        </div>
+                        <div class="cv-sidebar-panel active" id="cvPanelBct"><p class="cv-hint" style="padding:0.5rem">Loading behaviour change techniques...</p></div>
+                        <div class="cv-sidebar-panel" id="cvPanelFw"></div>
+                        <div class="cv-sidebar-panel" id="cvPanelCross"></div>
+                    </div>
+                    <div class="cv-wrap" id="cvWrap" aria-label="Theory of change canvas">
+                        <svg class="cv-links" id="cvLinks" aria-hidden="true">
+                            <defs>
+                                <marker id="cvArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#94A3B8"/>
+                                </marker>
+                            </defs>
+                        </svg>
+                        <div class="cv-canvas" id="cvCanvas"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -828,6 +1007,683 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                 </a>
             </div>
         </div>
+
+        <!-- Guide: folded in from the former Theory of Change Workbench page -->
+        <section class="guide-section" id="guide" aria-labelledby="guideTitle">
+            <h2 id="guideTitle">Theory of Change Guide</h2>
+            <p>Foundations, worked examples, behaviour change techniques, problem sets and sector guidance. Open any section while you build. For a second pair of eyes, book a <a href="/coaching.html">ToC coaching call</a>, join a <a href="/dojos.html">ToC Design Dojo</a>, or <a href="/workshops.html">request a workshop</a> for your team. The full list of techniques, with South Asian examples, is in the <a href="/bct-repository.html">BCT Repository</a>.</p>
+            <details class="guide-block" id="foundations">
+              <summary>Foundations</summary>
+              <div class="guide-body">
+              <p class="wb-section-subtitle">Core concepts for building rigorous Theories of Change</p>
+
+              <div class="wb-card">
+                <h3>What is a Theory of Change?</h3>
+                <p>A Theory of Change (ToC) is a comprehensive description and illustration of how and why a desired change is expected to happen in a particular context. It maps the causal logic from <strong>inputs</strong> through <strong>activities</strong>, <strong>outputs</strong>, <strong>outcomes</strong>, to long-term <strong>impact</strong>, and makes explicit the assumptions and evidence underlying each causal link.</p>
+                <p>Unlike a simple logical framework, a ToC explains <em>why</em> each step leads to the next, grounds causal claims in evidence, and surfaces the assumptions that must hold for the program to succeed.</p>
+              </div>
+
+              <div class="wb-grid wb-grid-2">
+                <div class="wb-card">
+                  <h3>Results chain</h3>
+                  <p>The standard causal pathway:</p>
+                  <p style="font-weight:600;color:var(--accent);font-size:0.9rem;margin-top:0.5rem">
+                    Input &rarr; Activity &rarr; Output &rarr; Outcome &rarr; Impact
+                  </p>
+                  <p style="margin-top:0.5rem">Each link requires a <strong>causal mechanism</strong> (why does this lead to that?) and <strong>evidence</strong> (what tells us this mechanism works?).</p>
+                </div>
+                <div class="wb-card">
+                  <h3>Key components</h3>
+                  <ul class="wb-checklist">
+                    <li>Long-term change (impact statement)</li>
+                    <li>Preconditions and pathways of change</li>
+                    <li>Causal linkages with evidence</li>
+                    <li>Assumptions at each level</li>
+                    <li>Indicators for each outcome</li>
+                    <li>Interventions mapped to the pathway</li>
+                    <li>Context and stakeholder analysis</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="wb-card">
+                <h3>ToC vs. logframe</h3>
+                <div class="wb-table-scroll"><table class="wb-table">
+                  <thead>
+                    <tr><th>Dimension</th><th>Theory of Change</th><th>Logical Framework</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Focus</td><td>Why and how change happens</td><td>What will be delivered and measured</td></tr>
+                    <tr><td>Structure</td><td>Non-linear, multiple pathways</td><td>Linear hierarchy (4 levels)</td></tr>
+                    <tr><td>Assumptions</td><td>Central, tested explicitly</td><td>Listed but often untested</td></tr>
+                    <tr><td>Evidence</td><td>Supports each causal link</td><td>Indicators verify achievement</td></tr>
+                    <tr><td>Adaptability</td><td>Living document, updated regularly</td><td>Usually fixed at design stage</td></tr>
+                    <tr><td>Best for</td><td>Complex, systemic programs</td><td>Straightforward, linear programs</td></tr>
+                  </tbody>
+                </table></div>
+              </div>
+
+              <div class="wb-card">
+                <h3>Common pitfalls in ToC design</h3>
+                <ol style="font-size:0.85rem;padding-left:1.2rem;color:var(--text-muted)">
+                  <li style="margin-bottom:0.4rem"><strong>Confusion of outputs with outcomes</strong>: Counting workshops conducted (output) vs. actual skill adoption (outcome)</li>
+                  <li style="margin-bottom:0.4rem"><strong>Missing assumptions</strong>: Failing to articulate what must hold true for each causal link</li>
+                  <li style="margin-bottom:0.4rem"><strong>Overly linear thinking</strong>: Ignoring feedback loops, interaction effects, and unintended consequences</li>
+                  <li style="margin-bottom:0.4rem"><strong>No evidence grounding</strong>: Causal claims based on hope rather than research evidence</li>
+                  <li style="margin-bottom:0.4rem"><strong>Ignoring context</strong>: Transplanting a ToC from one setting without adaptation to local realities</li>
+                </ol>
+              </div>
+              </div>
+            </details>
+
+
+            <details class="guide-block" id="bct">
+              <summary>Behavior change techniques for ToC</summary>
+              <div class="guide-body">
+              <p class="wb-section-subtitle">Integrate evidence-based BCTs from the 203-technique taxonomy into your causal pathways. <a href="#canvas">Drag BCTs onto your nodes in the free canvas &rarr;</a></p>
+
+              <div class="wb-bct-box">
+                <h5>Why BCTs matter for Theory of Change</h5>
+                <p style="font-size:0.85rem;color:var(--text-muted)">Behavior change is often the critical "black box" between program activities and outcomes. Specifying which BCTs you will deploy, and the evidence for their effectiveness, strengthens your causal logic and makes your ToC testable. The <a href="https://doi.org/10.1007/s12160-013-9486-6" target="_blank">BCT Taxonomy v1 (Michie et al., 2013)</a> provides a standardized vocabulary of 93 techniques, extended to 203 in the ImpactMojo repository with South Asian contextualizations.</p>
+              </div>
+
+              <p style="font-size:0.85rem;margin-bottom:1rem">Below are key BCT categories most relevant to ToC design. <strong>Browse all 203 techniques</strong> in the <a href="#canvas">technique panel of the free canvas</a>.</p>
+
+              <div class="wb-toggle" id="bct-goals">
+                <button type="button" class="wb-toggle-header" aria-expanded="false"><span class="wb-toggle-arrow" aria-hidden="true">&#x25B6;</span> Goals & planning <span class="wb-tag wb-tag-bct">9 techniques</span></button>
+                <div class="wb-toggle-body">
+                  <p>Techniques for setting goals, action planning, and problem-solving. Critical for ToC activity-to-output links.</p>
+                  <div class="wb-table-scroll"><table class="wb-table">
+                    <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+                    <tbody>
+                      <tr><td>Goal setting (behavior)</td><td>SHG members set weekly savings targets</td><td>Strong</td></tr>
+                      <tr><td>Action planning</td><td>Farmers create step-by-step plans for adopting new seeds</td><td>Strong</td></tr>
+                      <tr><td>Problem solving</td><td>CHWs identify barriers to ANC attendance with mothers</td><td>Strong</td></tr>
+                      <tr><td>Review behavior goals</td><td>Monthly SHG review of savings and loan targets</td><td>Moderate</td></tr>
+                      <tr><td>Behavioral contract</td><td>Signed commitment to latrine construction by village leaders</td><td>Moderate</td></tr>
+                    </tbody>
+                  </table></div>
+                </div>
+              </div>
+
+              <div class="wb-toggle" id="bct-social">
+                <button type="button" class="wb-toggle-header" aria-expanded="false"><span class="wb-toggle-arrow" aria-hidden="true">&#x25B6;</span> Social support & modeling <span class="wb-tag wb-tag-bct">12 techniques</span></button>
+                <div class="wb-toggle-body">
+                  <p>Using social dynamics for behavior change, which matters a great deal in South Asian community-based programs.</p>
+                  <div class="wb-table-scroll"><table class="wb-table">
+                    <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+                    <tbody>
+                      <tr><td>Social support (practical)</td><td>Peer support groups for new mothers practicing exclusive breastfeeding</td><td>Strong</td></tr>
+                      <tr><td>Demonstration of behavior</td><td>Lead farmer demonstrates improved cultivation techniques</td><td>Strong</td></tr>
+                      <tr><td>Social comparison</td><td>Village scorecard comparing ODF progress across hamlets</td><td>Moderate</td></tr>
+                      <tr><td>Information from credible source</td><td>ASHA worker sharing health information during home visits</td><td>Strong</td></tr>
+                      <tr><td>Restructuring social environment</td><td>Forming mothers' groups to shift norms around child nutrition</td><td>Moderate</td></tr>
+                    </tbody>
+                  </table></div>
+                </div>
+              </div>
+
+              <div class="wb-toggle" id="bct-feedback">
+                <button type="button" class="wb-toggle-header" aria-expanded="false"><span class="wb-toggle-arrow" aria-hidden="true">&#x25B6;</span> Feedback & monitoring <span class="wb-tag wb-tag-bct">7 techniques</span></button>
+                <div class="wb-toggle-body">
+                  <p>Essential for the output-to-outcome link: how do participants know they're making progress?</p>
+                  <div class="wb-table-scroll"><table class="wb-table">
+                    <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+                    <tbody>
+                      <tr><td>Self-monitoring of behavior</td><td>Growth monitoring cards tracked by mothers</td><td>Strong</td></tr>
+                      <tr><td>Feedback on behavior</td><td>CHW gives feedback on handwashing practice during home visits</td><td>Strong</td></tr>
+                      <tr><td>Self-monitoring of outcome</td><td>Farmers track crop yield improvements season over season</td><td>Moderate</td></tr>
+                      <tr><td>Biofeedback</td><td>Water quality testing kits showing contamination levels</td><td>Moderate</td></tr>
+                    </tbody>
+                  </table></div>
+                </div>
+              </div>
+
+              <div class="wb-toggle" id="bct-reward">
+                <button type="button" class="wb-toggle-header" aria-expanded="false"><span class="wb-toggle-arrow" aria-hidden="true">&#x25B6;</span> Reward & incentives <span class="wb-tag wb-tag-bct">10 techniques</span></button>
+                <div class="wb-toggle-body">
+                  <p>Reinforcement mechanisms that sustain changed behavior over time.</p>
+                  <div class="wb-table-scroll"><table class="wb-table">
+                    <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+                    <tbody>
+                      <tr><td>Social reward</td><td>Public recognition of ODF villages at gram sabha</td><td>Strong</td></tr>
+                      <tr><td>Material reward (behavior)</td><td>Token incentives for completing ANC visits</td><td>Moderate</td></tr>
+                      <tr><td>Non-specific reward</td><td>Certificate of completion for SHG financial literacy training</td><td>Moderate</td></tr>
+                      <tr><td>Self-reward</td><td>Encouraging mothers to celebrate immunization milestones</td><td>Moderate</td></tr>
+                    </tbody>
+                  </table></div>
+                </div>
+              </div>
+
+              <div class="wb-toggle" id="bct-environment">
+                <button type="button" class="wb-toggle-header" aria-expanded="false"><span class="wb-toggle-arrow" aria-hidden="true">&#x25B6;</span> Environmental restructuring <span class="wb-tag wb-tag-bct">6 techniques</span></button>
+                <div class="wb-toggle-body">
+                  <p>Changing the context to make desired behaviors easier, through structural interventions in the ToC.</p>
+                  <div class="wb-table-scroll"><table class="wb-table">
+                    <thead><tr><th>Technique</th><th>Example in ToC</th><th>Evidence</th></tr></thead>
+                    <tbody>
+                      <tr><td>Adding objects to environment</td><td>Installing handwashing stations at school entrances</td><td>Strong</td></tr>
+                      <tr><td>Prompts/cues</td><td>Reminder stickers on water storage containers for treatment</td><td>Strong</td></tr>
+                      <tr><td>Restructuring physical environment</td><td>Improved cookstoves placed in existing kitchen areas</td><td>Moderate</td></tr>
+                      <tr><td>Avoidance/reducing exposure to cues</td><td>Removing open defecation spots via CLTS triggering</td><td>Moderate</td></tr>
+                    </tbody>
+                  </table></div>
+                </div>
+              </div>
+
+              <div style="text-align:center;margin-top:1.5rem">
+                <a href="#canvas" class="wb-builder-btn">Browse all 203 BCTs in the free canvas &rarr;</a>
+              </div>
+              </div>
+            </details>
+
+
+            <details class="guide-block" id="examples">
+              <summary>Worked examples</summary>
+              <div class="guide-body">
+              <p class="wb-section-subtitle">Full Theory of Change case studies with BCT annotations and indicator mapping</p>
+
+              <!-- Example 1: SHGs Bihar -->
+              <div class="wb-case">
+                <h4>Case study 1: Self-help groups for women's empowerment, Bihar</h4>
+                <p>A livelihoods program forming SHGs in rural Bihar to improve household income and women's decision-making power.</p>
+              </div>
+
+              <div class="wb-card">
+                <h3>Impact statement</h3>
+                <p>Women in target communities exercise greater economic agency and household decision-making power, contributing to poverty reduction (SDG 1) and gender equality (SDG 5).</p>
+
+                <h3 style="margin-top:1rem">Causal pathway</h3>
+                <div class="wb-table-scroll"><table class="wb-table">
+                  <thead><tr><th>Level</th><th>Statement</th><th>BCTs Applied</th><th>Indicator</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-bct">Input</span></td>
+                      <td>Trained community mobilizers and seed capital for SHG formation</td>
+                      <td>—</td>
+                      <td># mobilizers trained; seed capital disbursed</td>
+                    </tr>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-method">Activity</span></td>
+                      <td>Weekly SHG meetings with savings, credit, and financial literacy</td>
+                      <td>
+                        <span class="wb-tag wb-tag-bct">Goal setting</span>
+                        <span class="wb-tag wb-tag-bct">Action planning</span>
+                        <span class="wb-tag wb-tag-bct">Social support (practical)</span>
+                      </td>
+                      <td># meetings held; attendance rate</td>
+                    </tr>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-tool">Output</span></td>
+                      <td>200 SHGs formed with 2,400 members; ₹12L cumulative savings</td>
+                      <td>
+                        <span class="wb-tag wb-tag-bct">Self-monitoring of behavior</span>
+                        <span class="wb-tag wb-tag-bct">Social comparison</span>
+                      </td>
+                      <td># SHGs formed; total savings; repayment rate</td>
+                    </tr>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-sector">Outcome</span></td>
+                      <td>Increased household income; women make financial decisions</td>
+                      <td>
+                        <span class="wb-tag wb-tag-bct">Behavioral contract</span>
+                        <span class="wb-tag wb-tag-bct">Social reward</span>
+                      </td>
+                      <td>% income increase; women's decision-making index</td>
+                    </tr>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-ethics">Impact</span></td>
+                      <td>Reduced poverty; improved gender equity in target villages</td>
+                      <td>—</td>
+                      <td>Poverty headcount ratio; GDI change</td>
+                    </tr>
+                  </tbody>
+                </table></div>
+
+                <h3 style="margin-top:1rem">Key assumptions</h3>
+                <ul class="wb-checklist">
+                  <li>Women have time and social permission to attend weekly meetings</li>
+                  <li>Local money lenders don't actively undermine SHG credit operations</li>
+                  <li>Bank linkage (SHG-Bank Linkage Programme) is accessible and functional</li>
+                  <li>Male family members are supportive or at minimum non-obstructive</li>
+                </ul>
+
+                <div class="wb-bct-box" style="margin-top:1rem">
+                  <h5>BCT design note</h5>
+                  <p style="font-size:0.83rem;color:var(--text-muted)">The <strong>Social support (practical)</strong> BCT is the backbone of SHG models: peer savings pressure, collective credit decisions, and social accountability. Combined with <strong>Goal setting</strong> (weekly savings targets) and <strong>Self-monitoring</strong> (passbook records), these three BCTs create a powerful feedback loop. Evidence from NABARD evaluations shows this combination yields 23% higher repayment rates than credit-only programs.</p>
+                </div>
+              </div>
+
+              <!-- Example 2: Digital Education Jharkhand -->
+              <div class="wb-case">
+                <h4>Case study 2: Digital education for foundational literacy, Jharkhand</h4>
+                <p>A technology-enabled education program using tablets and adaptive learning software to improve reading outcomes in government primary schools.</p>
+              </div>
+
+              <div class="wb-card">
+                <h3>Impact statement</h3>
+                <p>Children in Grades 1-3 in target schools achieve grade-level foundational literacy and numeracy (FLN), contributing to equitable quality education (SDG 4).</p>
+
+                <h3 style="margin-top:1rem">Causal pathway</h3>
+                <div class="wb-table-scroll"><table class="wb-table">
+                  <thead><tr><th>Level</th><th>Statement</th><th>BCTs Applied</th><th>Indicator</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-bct">Input</span></td>
+                      <td>Tablets with adaptive learning software; teacher training on blended pedagogy</td>
+                      <td>—</td>
+                      <td># tablets procured; # teachers trained</td>
+                    </tr>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-method">Activity</span></td>
+                      <td>Daily 45-min tablet sessions with adaptive content; weekly teacher review of dashboards</td>
+                      <td>
+                        <span class="wb-tag wb-tag-bct">Graded tasks</span>
+                        <span class="wb-tag wb-tag-bct">Feedback on behavior</span>
+                        <span class="wb-tag wb-tag-bct">Prompts/cues</span>
+                      </td>
+                      <td>Avg. minutes/student/day; teacher dashboard logins</td>
+                    </tr>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-tool">Output</span></td>
+                      <td>5,000 students completing 80%+ of learning modules</td>
+                      <td>
+                        <span class="wb-tag wb-tag-bct">Self-monitoring of outcome</span>
+                        <span class="wb-tag wb-tag-bct">Non-specific reward</span>
+                      </td>
+                      <td>Module completion rate; quiz pass rates</td>
+                    </tr>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-sector">Outcome</span></td>
+                      <td>Students read at grade level; improved numeracy scores</td>
+                      <td>
+                        <span class="wb-tag wb-tag-bct">Demonstration of behavior</span>
+                      </td>
+                      <td>ASER reading level; NAS numeracy scores</td>
+                    </tr>
+                    <tr>
+                      <td><span class="wb-tag wb-tag-ethics">Impact</span></td>
+                      <td>Grade-level FLN achievement in target schools</td>
+                      <td>—</td>
+                      <td>% students at grade-level FLN (endline vs. baseline)</td>
+                    </tr>
+                  </tbody>
+                </table></div>
+
+                <h3 style="margin-top:1rem">Key assumptions</h3>
+                <ul class="wb-checklist">
+                  <li>Electricity and charging infrastructure available in schools</li>
+                  <li>Teachers have sufficient digital literacy and motivation</li>
+                  <li>Children attend school regularly enough for dosage effect</li>
+                  <li>Adaptive software content is culturally and linguistically appropriate</li>
+                </ul>
+
+                <div class="wb-bct-box" style="margin-top:1rem">
+                  <h5>BCT design note</h5>
+                  <p style="font-size:0.83rem;color:var(--text-muted)">The <strong>Graded tasks</strong> BCT (adaptive difficulty) is the core mechanism of edtech interventions. It keeps learners in their zone of proximal development. Combined with <strong>Feedback on behavior</strong> (immediate quiz feedback) and <strong>Self-monitoring of outcome</strong> (progress dashboards), these BCTs create a self-reinforcing learning loop. RCT evidence from Mindspark (Muralidharan et al., 2019) shows 0.37σ improvement in math when this BCT combination is deployed.</p>
+                </div>
+              </div>
+              </div>
+            </details>
+
+
+            <details class="guide-block" id="indicators">
+              <summary>Indicator development</summary>
+              <div class="guide-body">
+              <p class="wb-section-subtitle">How to build measurable, meaningful indicators for each level of your ToC</p>
+
+              <div class="wb-card">
+                <h3>SMART indicator framework</h3>
+                <div class="wb-table-scroll"><table class="wb-table">
+                  <thead><tr><th>Criterion</th><th>Question</th><th>Common Pitfall</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>S</strong>pecific</td><td>Does it clearly describe what is being measured?</td><td>Vague indicators like "improved awareness"</td></tr>
+                    <tr><td><strong>M</strong>easurable</td><td>Can it be quantified or verified objectively?</td><td>Subjective assessments without validated scales</td></tr>
+                    <tr><td><strong>A</strong>chievable</td><td>Is the target realistic given resources and timeline?</td><td>Aspirational targets with no basis in evidence</td></tr>
+                    <tr><td><strong>R</strong>elevant</td><td>Does it actually measure the stated outcome?</td><td>Proxy indicators too distant from actual change</td></tr>
+                    <tr><td><strong>T</strong>ime-bound</td><td>By when should the target be achieved?</td><td>No timeline specified for target achievement</td></tr>
+                  </tbody>
+                </table></div>
+              </div>
+
+              <div class="wb-card">
+                <h3>Indicator mapping by ToC level</h3>
+                <div class="wb-table-scroll"><table class="wb-table">
+                  <thead><tr><th>ToC Level</th><th>Indicator Type</th><th>Data Source</th><th>Frequency</th></tr></thead>
+                  <tbody>
+                    <tr><td>Input</td><td>Resource tracking (budget spent, staff deployed)</td><td>Financial MIS, HR records</td><td>Monthly</td></tr>
+                    <tr><td>Activity</td><td>Process monitoring (sessions conducted, reach)</td><td>Activity registers, digital tracking</td><td>Weekly/Monthly</td></tr>
+                    <tr><td>Output</td><td>Immediate deliverables (# trained, # built)</td><td>Program MIS, registers</td><td>Quarterly</td></tr>
+                    <tr><td>Outcome</td><td>Behavior/practice change (adoption rates, knowledge scores)</td><td>Surveys, assessments, observations</td><td>Semi-annual</td></tr>
+                    <tr><td>Impact</td><td>Long-term population-level change</td><td>NFHS, Census, panel surveys</td><td>Endline/2-3 years</td></tr>
+                  </tbody>
+                </table></div>
+              </div>
+
+              <div class="wb-card">
+                <h3>Exercise: Write your indicators</h3>
+                <p>For each outcome in your ToC, complete this template:</p>
+                <div style="background:var(--section-bg);padding:1rem;border-radius:8px;font-size:0.83rem;margin-top:0.5rem">
+                  <p><strong>Outcome:</strong> [Your outcome statement]</p>
+                  <p><strong>Indicator:</strong> [What exactly will you measure?]</p>
+                  <p><strong>Baseline:</strong> [Current value] &rarr; <strong>Target:</strong> [Expected value by when]</p>
+                  <p><strong>Data source:</strong> [Survey / MIS / admin data / observation]</p>
+                  <p><strong>Collection frequency:</strong> [Monthly / Quarterly / Annual]</p>
+                  <p><strong>Disaggregation:</strong> [Gender / age / caste / geography / disability]</p>
+                </div>
+              </div>
+              </div>
+            </details>
+
+
+            <details class="guide-block" id="problems">
+              <summary>Problem sets</summary>
+              <div class="guide-body">
+              <p class="wb-section-subtitle">Practice building and critiquing Theories of Change. Try them in the steps above, or in the <a href="#canvas">free canvas</a>.</p>
+
+              <div class="wb-problem">
+                <h4>Problem 1: Maternal health, Uttarakhand</h4>
+                <p>A mountain-district health program aims to increase institutional deliveries from 35% to 70%. Design a ToC identifying at least 3 BCTs that address supply-side and demand-side barriers. Consider terrain, distance to facilities, and cultural practices around childbirth.</p>
+                <span class="wb-problem-status solved">Solved example available</span>
+              </div>
+
+              <div class="wb-problem">
+                <h4>Problem 2: Farmer producer organizations, Maharashtra</h4>
+                <p>An FPO program wants to improve smallholder farmers' price realization by 25%. Build a ToC that maps from FPO formation through collective bargaining to market linkages. Include assumptions about market access and social capital.</p>
+                <span class="wb-problem-status solved">Solved example available</span>
+              </div>
+
+              <div class="wb-problem">
+                <h4>Problem 3: Adolescent SRH, Rajasthan</h4>
+                <p>Design a ToC for an adolescent sexual and reproductive health program in a conservative setting. Identify BCTs for behavior change, address social norm barriers, and specify how you'd measure outcomes while maintaining ethical safeguards.</p>
+                <span class="wb-problem-status unsolved">Unsolved: try it yourself</span>
+              </div>
+
+              <div class="wb-problem">
+                <h4>Problem 4: Urban WASH, informal settlements, Bengaluru</h4>
+                <p>Build a ToC for improving sanitation in urban informal settlements. Consider tenure insecurity, shared facilities, municipal coordination, and community-level collective action.</p>
+                <span class="wb-problem-status unsolved">Unsolved: try it yourself</span>
+              </div>
+
+              <div class="wb-problem">
+                <h4>Problem 5: Digital financial inclusion, North-East India</h4>
+                <p>A fintech-NGO partnership aims to increase digital payment adoption among rural women. Design a ToC that addresses digital literacy, trust barriers, and infrastructure constraints. Identify which BCTs can overcome initial resistance to technology adoption.</p>
+                <span class="wb-problem-status unsolved">Unsolved: try it yourself</span>
+              </div>
+
+              <div class="wb-problem">
+                <h4>Problem 6: Climate-resilient agriculture, Odisha</h4>
+                <p>Develop a ToC for promoting climate-smart agricultural practices among marginal farmers in cyclone-prone coastal Odisha. Map the pathway from training through adoption to resilience outcomes. Include environmental and gender cross-cutting considerations.</p>
+                <span class="wb-problem-status unsolved">Unsolved: try it yourself</span>
+              </div>
+
+              <div class="wb-problem">
+                <h4>Problem 7: School dropout prevention, Telangana</h4>
+                <p>A state government program aims to reduce secondary school dropouts by 40%, especially among SC/ST girls. Build a ToC spanning community engagement, school-level interventions, and social protection. Specify 4+ BCTs and identify the weakest assumption in your chain.</p>
+                <span class="wb-problem-status solved">Solved example available</span>
+              </div>
+
+              <div class="wb-problem">
+                <h4>Problem 8: Mental health in conflict-affected areas, J&K</h4>
+                <p>Design a ToC for a community mental health program in a conflict-affected region. Address stigma, limited clinical workforce, cultural idioms of distress, and the Do No Harm framework. Specify BCTs for help-seeking behavior change.</p>
+                <span class="wb-problem-status unsolved">Unsolved: try it yourself</span>
+              </div>
+
+              <div style="text-align:center;margin-top:1.5rem">
+                <a href="#canvas" class="wb-builder-btn">Build your solution in the free canvas &rarr;</a>
+              </div>
+              </div>
+            </details>
+
+
+            <details class="guide-block" id="sectors">
+              <summary>Sector guidance</summary>
+              <div class="guide-body">
+              <p class="wb-section-subtitle">Sector-specific tips, frameworks and BCTs for Theory of Change design</p>
+
+              <div class="wb-grid wb-grid-2">
+
+                <div class="wb-card">
+                  <h3>Gender & women's economic empowerment</h3>
+                  <p>Apply a gender lens throughout the causal chain, not just as a cross-cutting afterthought.</p>
+                  <ul class="wb-checklist">
+                    <li>Conduct gender analysis before ToC design</li>
+                    <li>Map gendered barriers at each pathway level</li>
+                    <li>Include women's agency as an intermediate outcome</li>
+                    <li>Use GESI-sensitive indicators (decision-making, mobility, asset ownership)</li>
+                    <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Social support</span> <span class="wb-tag wb-tag-bct">Restructuring social environment</span></li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>Health & nutrition</h3>
+                  <p>Health ToCs often need both supply-side (service delivery) and demand-side (behavior change) pathways.</p>
+                  <ul class="wb-checklist">
+                    <li>Map the health system pathway: facility → CHW → household</li>
+                    <li>Specify BCTs for each behavior change objective</li>
+                    <li>Include service quality as an intermediate outcome</li>
+                    <li>Use WHO/UNICEF standard indicators where possible</li>
+                    <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Information from credible source</span> <span class="wb-tag wb-tag-bct">Prompts/cues</span></li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>Education & FLN</h3>
+                  <p>Education ToCs must distinguish between access, enrollment, attendance, and learning outcomes.</p>
+                  <ul class="wb-checklist">
+                    <li>Don't conflate enrollment with learning</li>
+                    <li>Map teacher behavior change as a separate pathway</li>
+                    <li>Include household demand-side factors</li>
+                    <li>Use ASER/NAS-aligned measurement frameworks</li>
+                    <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Graded tasks</span> <span class="wb-tag wb-tag-bct">Feedback on behavior</span></li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>Livelihoods & market systems</h3>
+                  <p>Market systems ToCs require understanding of supply chains, value addition, and systemic change.</p>
+                  <ul class="wb-checklist">
+                    <li>Map the market system (input supply → production → aggregation → market)</li>
+                    <li>Distinguish individual vs. systemic change outcomes</li>
+                    <li>Include sustainability beyond project period</li>
+                    <li>Address power dynamics in value chains</li>
+                    <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Goal setting</span> <span class="wb-tag wb-tag-bct">Action planning</span></li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>WASH & environmental health</h3>
+                  <p>WASH ToCs combine infrastructure (hardware) with behavior change (software) pathways.</p>
+                  <ul class="wb-checklist">
+                    <li>Map hardware (infrastructure) and software (behavior) separately</li>
+                    <li>Include O&M sustainability as a key outcome</li>
+                    <li>Use CLTS community-level indicators alongside household</li>
+                    <li>Address equity in access (women, disabled, elderly)</li>
+                    <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Adding objects to environment</span> <span class="wb-tag wb-tag-bct">Social comparison</span></li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>Climate & resilience</h3>
+                  <p>Climate ToCs must account for uncertainty, adaptive pathways, and systems-level change.</p>
+                  <ul class="wb-checklist">
+                    <li>Include climate scenarios in assumptions</li>
+                    <li>Map both mitigation and adaptation pathways</li>
+                    <li>Use adaptive management as a design principle</li>
+                    <li>Include ecosystem health as an outcome</li>
+                    <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Problem solving</span> <span class="wb-tag wb-tag-bct">Information about consequences</span></li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>Governance & social accountability</h3>
+                  <p>Governance ToCs must account for the political economy and the distribution of power.</p>
+                  <ul class="wb-checklist">
+                    <li>Conduct political economy analysis before design</li>
+                    <li>Map both citizen engagement and state responsiveness pathways</li>
+                    <li>Include accountability mechanisms as outcomes, not just activities</li>
+                    <li>Address sustainability of governance reforms</li>
+                    <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Social support (practical)</span> <span class="wb-tag wb-tag-bct">Restructuring social environment</span></li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>SRHR & adolescent health</h3>
+                  <p>Sensitive programs requiring careful ethical design and social norm navigation.</p>
+                  <ul class="wb-checklist">
+                    <li>Apply Do No Harm throughout the ToC</li>
+                    <li>Map social norms as both barriers and levers</li>
+                    <li>Include privacy and confidentiality in service delivery pathway</li>
+                    <li>Distinguish knowledge, attitudes, and practices as separate outcomes</li>
+                    <li>Apply BCTs: <span class="wb-tag wb-tag-bct">Social support</span> <span class="wb-tag wb-tag-bct">Information from credible source</span></li>
+                  </ul>
+                </div>
+              </div>
+              </div>
+            </details>
+
+
+            <details class="guide-block" id="crosscutting">
+              <summary>Cross-cutting considerations</summary>
+              <div class="guide-body">
+              <p class="wb-section-subtitle">Lenses to apply across your entire Theory of Change</p>
+
+              <div class="wb-grid wb-grid-2">
+                <div class="wb-card">
+                  <h3>Gender equality & social inclusion (GESI)</h3>
+                  <p>Apply at every ToC level, not just as a tag-on.</p>
+                  <ul class="wb-checklist">
+                    <li>Gender analysis of barriers and enablers at each level</li>
+                    <li>Intersectional lens (gender × caste × class × disability)</li>
+                    <li>GESI-specific outcomes and indicators</li>
+                    <li>Meaningful participation in design and monitoring</li>
+                    <li>Women's agency as a pathway, not just a target</li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>Climate & environmental sustainability</h3>
+                  <p>Screen your ToC for climate risks and environmental co-benefits.</p>
+                  <ul class="wb-checklist">
+                    <li>Climate risk screening for each assumption</li>
+                    <li>Environmental co-benefits and risks mapped</li>
+                    <li>Adaptation pathways for climate-sensitive outcomes</li>
+                    <li>Carbon footprint of program activities</li>
+                    <li>Green transition as a cross-cutting outcome</li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>Do no harm & ethics</h3>
+                  <p>Ensure your program doesn't inadvertently cause harm.</p>
+                  <ul class="wb-checklist">
+                    <li>Conflict sensitivity analysis at design stage</li>
+                    <li>Power dynamics and unintended consequences mapped</li>
+                    <li>Safeguarding policies for vulnerable populations</li>
+                    <li>Informed consent protocols for data collection</li>
+                    <li>Grievance redress mechanisms in place</li>
+                  </ul>
+                </div>
+
+                <div class="wb-card">
+                  <h3>Digital & innovation</h3>
+                  <p>Use technology thoughtfully. It is no silver bullet.</p>
+                  <ul class="wb-checklist">
+                    <li>Digital readiness assessment before tech-based interventions</li>
+                    <li>Data protection and privacy safeguards</li>
+                    <li>Digital divide considerations (gender, age, location)</li>
+                    <li>Human-centered design for technology adoption</li>
+                    <li>Sustainability of digital infrastructure post-project</li>
+                  </ul>
+                </div>
+              </div>
+              </div>
+            </details>
+
+
+            <details class="guide-block" id="measurement">
+              <summary>Measurement design</summary>
+              <div class="guide-body">
+              <p class="wb-section-subtitle">Designing rigorous evaluation strategies that test your ToC</p>
+
+              <div class="wb-card">
+                <h3>Evaluation methods mapped to ToC</h3>
+                <div class="wb-table-scroll"><table class="wb-table">
+                  <thead><tr><th>Method</th><th>Best For</th><th>Limitation</th><th>ToC Application</th></tr></thead>
+                  <tbody>
+                    <tr><td>RCT</td><td>Causal attribution of impact</td><td>Expensive; ethical constraints; external validity</td><td>Testing the overall impact pathway</td></tr>
+                    <tr><td>Difference-in-Differences</td><td>Quasi-experimental comparison</td><td>Parallel trends assumption</td><td>Evaluating outcome-level change</td></tr>
+                    <tr><td>Most Significant Change</td><td>Understanding qualitative pathways</td><td>Subjective; not generalizable</td><td>Unpacking HOW change happened</td></tr>
+                    <tr><td>Contribution Analysis</td><td>Complex, multi-actor programs</td><td>Weaker causal claims</td><td>Verifying contribution, not attribution</td></tr>
+                    <tr><td>Outcome Harvesting</td><td>Emergent, non-linear change</td><td>Resource-intensive</td><td>Identifying unexpected outcomes and pathways</td></tr>
+                    <tr><td>Process Tracing</td><td>Tracing causal mechanisms</td><td>Case-specific; limited generalizability</td><td>Testing specific causal links in the ToC</td></tr>
+                  </tbody>
+                </table></div>
+              </div>
+
+              <div class="wb-card">
+                <h3>Data collection toolkit</h3>
+                <div class="wb-grid wb-grid-3" style="margin-top:0.5rem">
+                  <div style="padding:0.5rem">
+                    <p style="font-weight:600;font-size:0.85rem">Quantitative</p>
+                    <ul style="font-size:0.8rem;color:var(--text-muted);padding-left:1rem">
+                      <li>Household surveys</li>
+                      <li>Facility assessments</li>
+                      <li>Administrative data (MIS)</li>
+                      <li>Digital trace data</li>
+                    </ul>
+                  </div>
+                  <div style="padding:0.5rem">
+                    <p style="font-weight:600;font-size:0.85rem">Qualitative</p>
+                    <ul style="font-size:0.8rem;color:var(--text-muted);padding-left:1rem">
+                      <li>Key Informant Interviews</li>
+                      <li>Focus Group Discussions</li>
+                      <li>Case studies</li>
+                      <li>Participatory methods (PRA)</li>
+                    </ul>
+                  </div>
+                  <div style="padding:0.5rem">
+                    <p style="font-weight:600;font-size:0.85rem">Mixed</p>
+                    <ul style="font-size:0.8rem;color:var(--text-muted);padding-left:1rem">
+                      <li>Sequential explanatory</li>
+                      <li>Concurrent triangulation</li>
+                      <li>Embedded design</li>
+                      <li>Participatory statistics</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </details>
+
+
+            <details class="guide-block" id="adaptive">
+              <summary>Adaptive Theory of Change</summary>
+              <div class="guide-body">
+              <p class="wb-section-subtitle">Your ToC is a living document. This section shows how to keep it current</p>
+
+              <div class="wb-card">
+                <h3>When to update your ToC</h3>
+                <ul class="wb-checklist">
+                  <li><strong>Monitoring data</strong> shows an assumption isn't holding</li>
+                  <li><strong>Midterm review</strong> reveals unexpected pathways or barriers</li>
+                  <li><strong>Context shifts</strong>: policy change, COVID, climate event, conflict</li>
+                  <li><strong>New evidence</strong>: published research changes your causal logic</li>
+                  <li><strong>Stakeholder feedback</strong>: communities identify missing pathways</li>
+                  <li><strong>Annually</strong>: as a minimum, conduct annual ToC review</li>
+                </ul>
+              </div>
+
+              <div class="wb-card">
+                <h3>Adaptive management cycle</h3>
+                <p style="font-size:0.88rem;text-align:center;font-weight:600;color:var(--accent);margin:1rem 0">
+                  Plan (ToC) &rarr; Do (Implement) &rarr; Study (Monitor & Learn) &rarr; Act (Adapt ToC) &rarr; Repeat
+                </p>
+                <p>Each cycle should revisit and potentially revise: causal assumptions, BCT selection, indicator targets, and implementation strategy. Redraw your ToC in the <a href="#canvas">free canvas</a> each time it changes, and download a PNG of each version.</p>
+              </div>
+              </div>
+            </details>
+        </section>
 
         <footer class="footer">
             <p>Theory of Change Studio -- part of <a href="/">ImpactMojo</a> learning tools for development practitioners.</p>
@@ -893,6 +1749,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             // Step 6: indicators
             if (tocData.indicators.length > 0 && tocData.indicators.some(i => i.text.trim())) btns[5].classList.add('completed');
             else btns[5].classList.remove('completed');
+            persist();
         }
 
         // ==========================================
@@ -998,6 +1855,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
         function updateItemLink(listType, id, outcomeId) {
             const item = tocData[listType].find(i => i.id === id);
             if (item) item.linkedOutcome = outcomeId ? parseInt(outcomeId) : null;
+            persist();
         }
 
         // ==========================================
@@ -1050,6 +1908,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 
             if (list.length === 0) {
                 container.innerHTML = '';
+                persist();
                 return;
             }
 
@@ -1085,6 +1944,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 
             // Attach drag events
             container.querySelectorAll('.item-card').forEach(attachDragEvents);
+            persist();
         }
 
         function escHtml(str) {
@@ -1471,6 +2331,111 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             });
         }
 
+        // ==========================================
+        // Saving on this device
+        // The steps save to LAB_KEY. The free canvas saves to the key the
+        // former ToC Builder used, in the same shape, so the LogFrame
+        // Builder's "Import from ToC" reads whichever was saved last.
+        // ==========================================
+        const LAB_KEY = 'impactmojo_toc_lab';
+        let restoring = false;
+        let persistTimer = null;
+        function persist() {
+            if (restoring) return;
+            clearTimeout(persistTimer);
+            persistTimer = setTimeout(function () {
+                try {
+                    localStorage.setItem(LAB_KEY, JSON.stringify(Object.assign({ savedAt: Date.now(), idCounter: idCounter }, tocData)));
+                    const note = document.getElementById('stepsSaveNote');
+                    if (note) note.textContent = 'Saved on this device ' + new Date().toLocaleTimeString();
+                } catch (e) {}
+            }, 400);
+        }
+
+        function restoreSteps() {
+            let raw = null;
+            try { raw = localStorage.getItem(LAB_KEY); } catch (e) {}
+            if (!raw) return;
+            let data;
+            try { data = JSON.parse(raw); } catch (e) { return; }
+            if (!data || typeof data !== 'object') return;
+            restoring = true;
+            ['problemStatement', 'targetPopulation', 'geoContext', 'longTermGoal'].forEach(function (k) {
+                tocData[k] = typeof data[k] === 'string' ? data[k] : '';
+                const el = document.getElementById(k);
+                if (el) el.value = tocData[k];
+            });
+            ['outcomes', 'outputs', 'assumptions', 'indicators'].forEach(function (k) {
+                tocData[k] = Array.isArray(data[k]) ? data[k].filter(function (i) { return i && typeof i.id === 'number'; }).map(function (i) {
+                    return { id: i.id, text: String(i.text || ''), linkedOutcome: typeof i.linkedOutcome === 'number' ? i.linkedOutcome : null };
+                }) : [];
+            });
+            let maxId = typeof data.idCounter === 'number' ? data.idCounter : 0;
+            ['outcomes', 'outputs', 'assumptions', 'indicators'].forEach(function (k) { tocData[k].forEach(function (i) { if (i.id > maxId) maxId = i.id; }); });
+            idCounter = maxId;
+            ['outcomes', 'outputs', 'assumptions', 'indicators'].forEach(renderList);
+            updateStepCompletion();
+            restoring = false;
+        }
+
+        function startOver() {
+            if (!confirm('Clear every step and start a new Theory of Change? The free canvas is kept.')) return;
+            ['problemStatement', 'targetPopulation', 'geoContext', 'longTermGoal'].forEach(function (k) {
+                tocData[k] = '';
+                document.getElementById(k).value = '';
+            });
+            ['outcomes', 'outputs', 'assumptions', 'indicators'].forEach(function (k) { tocData[k] = []; renderList(k); });
+            idCounter = 0;
+            try { localStorage.removeItem(LAB_KEY); } catch (e) {}
+            updateStepCompletion();
+            showStep(0);
+        }
+
+        // ==========================================
+        // Structured diagram or free canvas
+        // ==========================================
+        function setDiagramMode(mode) {
+            const canvasOn = mode === 'canvas';
+            document.getElementById('structuredPanel').hidden = canvasOn;
+            document.getElementById('canvasPanel').hidden = !canvasOn;
+            document.getElementById('modeStructured').setAttribute('aria-pressed', String(!canvasOn));
+            document.getElementById('modeCanvas').setAttribute('aria-pressed', String(canvasOn));
+            if (canvasOn && window.TocCanvas) window.TocCanvas.redraw();
+        }
+        function openCanvasFromHash() {
+            if (location.hash === '#canvas') {
+                showStep(6);
+                setDiagramMode('canvas');
+                document.getElementById('step-6').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        document.getElementById('modeStructured').addEventListener('click', function () { setDiagramMode('structured'); });
+        document.getElementById('modeCanvas').addEventListener('click', function () { setDiagramMode('canvas'); });
+        window.addEventListener('hashchange', openCanvasFromHash);
+        document.querySelectorAll('a[href="#canvas"]').forEach(function (a) {
+            a.addEventListener('click', function (e) { e.preventDefault(); history.replaceState(null, '', '#canvas'); openCanvasFromHash(); });
+        });
+
+        // Guide accordions
+        document.querySelectorAll('.wb-toggle-header').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const open = btn.parentElement.classList.toggle('open');
+                btn.setAttribute('aria-expanded', String(open));
+            });
+        });
+        // A link to a guide section (for example #problems) opens it
+        function openGuideFromHash() {
+            const id = location.hash.slice(1);
+            if (!id) return;
+            const el = document.getElementById(id);
+            if (el && el.tagName === 'DETAILS') { el.open = true; el.scrollIntoView({ block: 'start' }); }
+        }
+        window.addEventListener('hashchange', openGuideFromHash);
+
+        restoreSteps();
+        openCanvasFromHash();
+        openGuideFromHash();
+
         /* THEME (3-button: system / light / dark) */
         (function initTheme() {
             var saved = localStorage.getItem('impactmojo-theme') || 'system';
@@ -1500,6 +2465,511 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
         document.addEventListener('DOMContentLoaded', function() {
             updateStepCompletion();
         });
+    </script>
+    <script>
+    /* Free canvas for step 7. Ported from the former ToC Builder page
+       (retired 2026-10-12). It saves to the same
+       localStorage key in the same shape, so a canvas saved there opens
+       here and the LogFrame Builder can import it. */
+    (function () {
+        'use strict';
+        var STORAGE_KEY = 'impactmojo_toc_builder';
+        var LABELS = { input: 'Input', activity: 'Activity', output: 'Output', outcome: 'Outcome', impact: 'Impact', assumption: 'Assumption' };
+        var canvas = document.getElementById('cvCanvas');
+        var wrap = document.getElementById('cvWrap');
+        var svg = document.getElementById('cvLinks');
+        var note = document.getElementById('cvSaveNote');
+        var nodes = [];
+        var links = [];
+        var counter = 0;
+        var selected = null;
+        var connectingFrom = null;
+        var loading = false;
+        var bctData = null;
+
+        function bctName(id) {
+            var name = id;
+            if (bctData) bctData.categories.forEach(function (c) { c.techniques.forEach(function (t) { if (t.id === id) name = t.name; }); });
+            return name;
+        }
+
+        // ---- Nodes ----
+        function createNode(type, x, y, title, desc, indicator) {
+            var id = 'node_' + (++counter);
+            var el = document.createElement('div');
+            el.className = 'cv-node';
+            el.dataset.type = LABELS[type] ? type : 'activity';
+            el.dataset.id = id;
+            el.style.left = Math.round(x) + 'px';
+            el.style.top = Math.round(y) + 'px';
+            el.innerHTML =
+                '<div class="cv-node-header"><span></span><button type="button" class="cv-node-delete" aria-label="Delete node">&times;</button></div>' +
+                '<div class="cv-node-body">' +
+                    '<div class="cv-node-title" contenteditable="true" data-placeholder="Title..."></div>' +
+                    '<div class="cv-node-desc" contenteditable="true" data-placeholder="Description..."></div>' +
+                    '<div class="cv-node-bcts"></div>' +
+                    '<div class="cv-node-indicator" contenteditable="true" data-placeholder="Indicator..."></div>' +
+                '</div>' +
+                '<div class="cv-handle" title="Drag to connect"></div>';
+            el.querySelector('.cv-node-header span').textContent = LABELS[el.dataset.type];
+            el.querySelector('.cv-node-title').textContent = title || '';
+            el.querySelector('.cv-node-desc').textContent = desc || '';
+            el.querySelector('.cv-node-indicator').textContent = indicator || '';
+            canvas.appendChild(el);
+            var node = { id: id, el: el, type: el.dataset.type, bcts: [] };
+            nodes.push(node);
+
+            makeDraggable(el);
+            el.querySelector('.cv-node-delete').addEventListener('click', function () { removeNode(id); });
+            el.addEventListener('click', function (e) {
+                if (e.target.closest('.cv-node-delete') || e.target.closest('.cv-handle') || e.target.isContentEditable) return;
+                selectNode(id);
+            });
+            el.addEventListener('input', save);
+            el.querySelector('.cv-handle').addEventListener('mousedown', function (e) {
+                e.stopPropagation();
+                connectingFrom = id;
+                document.body.style.cursor = 'crosshair';
+            });
+            el.addEventListener('dragover', function (e) { e.preventDefault(); el.classList.add('selected'); });
+            el.addEventListener('dragleave', function () { el.classList.remove('selected'); });
+            el.addEventListener('drop', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                el.classList.remove('selected');
+                var data = readDrag(e);
+                if (data && data.type === 'bct') addBct(id, data.id, data.name);
+            });
+            save();
+            return node;
+        }
+
+        function makeDraggable(el) {
+            el.addEventListener('mousedown', function (e) {
+                if (e.target.isContentEditable || e.target.closest('.cv-node-delete') || e.target.closest('.cv-handle') || e.target.closest('.cv-node-bct')) return;
+                var sx = e.clientX, sy = e.clientY;
+                var ox = parseInt(el.style.left, 10) || 0, oy = parseInt(el.style.top, 10) || 0;
+                function onMove(ev) {
+                    el.style.left = Math.max(0, ox + ev.clientX - sx) + 'px';
+                    el.style.top = Math.max(0, oy + ev.clientY - sy) + 'px';
+                    drawLinks();
+                }
+                function onUp() {
+                    document.removeEventListener('mousemove', onMove);
+                    document.removeEventListener('mouseup', onUp);
+                    save();
+                }
+                document.addEventListener('mousemove', onMove);
+                document.addEventListener('mouseup', onUp);
+            });
+        }
+
+        function removeNode(id) {
+            var i = nodes.findIndex(function (n) { return n.id === id; });
+            if (i === -1) return;
+            nodes[i].el.remove();
+            nodes.splice(i, 1);
+            links = links.filter(function (l) { return l.from !== id && l.to !== id; });
+            drawLinks();
+            save();
+        }
+
+        function selectNode(id) {
+            canvas.querySelectorAll('.cv-node.selected').forEach(function (n) { n.classList.remove('selected'); });
+            var node = nodes.find(function (n) { return n.id === id; });
+            if (node) { node.el.classList.add('selected'); selected = id; }
+        }
+
+        function addBct(nodeId, id, name) {
+            var node = nodes.find(function (n) { return n.id === nodeId; });
+            if (!node || node.bcts.indexOf(id) !== -1) return;
+            node.bcts.push(id);
+            var tag = document.createElement('button');
+            tag.type = 'button';
+            tag.className = 'cv-node-bct';
+            tag.textContent = name || bctName(id);
+            tag.title = 'Remove this technique';
+            tag.addEventListener('click', function () {
+                node.bcts = node.bcts.filter(function (b) { return b !== id; });
+                tag.remove();
+                save();
+            });
+            node.el.querySelector('.cv-node-bcts').appendChild(tag);
+            save();
+        }
+
+        // ---- Connections ----
+        document.addEventListener('mouseup', function (e) {
+            if (!connectingFrom) return;
+            document.body.style.cursor = '';
+            var target = e.target.closest && e.target.closest('.cv-node');
+            if (target && target.dataset.id !== connectingFrom) {
+                var from = connectingFrom, to = target.dataset.id;
+                if (!links.some(function (l) { return l.from === from && l.to === to; })) {
+                    links.push({ from: from, to: to });
+                    drawLinks();
+                    save();
+                }
+            }
+            connectingFrom = null;
+        });
+
+        function drawLinks() {
+            svg.querySelectorAll('line').forEach(function (l) { l.remove(); });
+            links.forEach(function (c) {
+                var a = nodes.find(function (n) { return n.id === c.from; });
+                var b = nodes.find(function (n) { return n.id === c.to; });
+                if (!a || !b) return;
+                var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', parseInt(a.el.style.left, 10) + a.el.offsetWidth / 2);
+                line.setAttribute('y1', parseInt(a.el.style.top, 10) + a.el.offsetHeight);
+                line.setAttribute('x2', parseInt(b.el.style.left, 10) + b.el.offsetWidth / 2);
+                line.setAttribute('y2', parseInt(b.el.style.top, 10));
+                line.setAttribute('marker-end', 'url(#cvArrow)');
+                line.style.pointerEvents = 'auto';
+                line.style.cursor = 'pointer';
+                line.addEventListener('dblclick', function () {
+                    links = links.filter(function (l) { return l.from !== c.from || l.to !== c.to; });
+                    drawLinks();
+                    save();
+                });
+                svg.appendChild(line);
+            });
+        }
+
+        // ---- Drops from the technique panel ----
+        function readDrag(e) {
+            try { return JSON.parse(e.dataTransfer.getData('text/plain')); } catch (err) { return null; }
+        }
+        wrap.addEventListener('dragover', function (e) { e.preventDefault(); });
+        wrap.addEventListener('drop', function (e) {
+            e.preventDefault();
+            var data = readDrag(e);
+            if (!data) return;
+            var r = wrap.getBoundingClientRect();
+            var x = e.clientX - r.left + wrap.scrollLeft, y = e.clientY - r.top + wrap.scrollTop;
+            if (data.type === 'bct') {
+                var node = createNode('activity', x, y, data.name, '');
+                addBct(node.id, data.id, data.name);
+            } else if (data.type === 'framework') {
+                createNode('activity', x, y, data.name, data.desc || '');
+            }
+        });
+
+        // ---- Save and load ----
+        function serialize() {
+            return {
+                nodes: nodes.map(function (n) {
+                    return {
+                        id: n.id, type: n.type, bcts: n.bcts.slice(),
+                        x: parseInt(n.el.style.left, 10), y: parseInt(n.el.style.top, 10),
+                        title: n.el.querySelector('.cv-node-title').textContent,
+                        desc: n.el.querySelector('.cv-node-desc').textContent,
+                        indicator: n.el.querySelector('.cv-node-indicator').textContent
+                    };
+                }),
+                connections: links.slice(),
+                nodeIdCounter: counter,
+                savedAt: Date.now(),
+                source: 'toc-lab'
+            };
+        }
+        var saveTimer = null;
+        function save() {
+            if (loading) return;
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(function () {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(serialize()));
+                    note.textContent = 'Saved on this device ' + new Date().toLocaleTimeString();
+                } catch (e) {}
+            }, 400);
+        }
+        function clear() {
+            nodes.forEach(function (n) { n.el.remove(); });
+            nodes = [];
+            links = [];
+            drawLinks();
+        }
+        function load(data) {
+            loading = true;
+            clear();
+            counter = data.nodeIdCounter || 0;
+            var map = {};
+            (data.nodes || []).forEach(function (n) {
+                var node = createNode(n.type, n.x || 0, n.y || 0, n.title, n.desc, n.indicator);
+                map[n.id] = node.id;
+                (n.bcts || []).forEach(function (b) { addBct(node.id, b, bctName(b)); });
+            });
+            (data.connections || []).forEach(function (c) {
+                links.push({ from: map[c.from] || c.from, to: map[c.to] || c.to });
+            });
+            loading = false;
+            drawLinks();
+        }
+
+        // ---- Sector templates ----
+        var TEMPLATES = {
+            health: { nodes: [
+                ['input', 50, 50, 'Funding and staff', 'Programme budget, CHW recruitment'],
+                ['input', 50, 200, 'Training materials', 'BCC materials, clinical protocols'],
+                ['activity', 300, 50, 'Community health sessions', 'Weekly health education sessions in villages'],
+                ['activity', 300, 200, 'Home visits', 'ASHA/CHW home visits for counselling'],
+                ['output', 550, 50, '# Sessions conducted', 'Target: 200 sessions/quarter'],
+                ['output', 550, 200, '# Families reached', 'Target: 5000 HH/year'],
+                ['outcome', 800, 80, 'Improved health knowledge', 'Knowledge of nutrition, hygiene, MCH'],
+                ['outcome', 800, 230, 'Behaviour change', 'Handwashing, ANC attendance, dietary diversity'],
+                ['impact', 1050, 150, 'Reduced maternal and child mortality', 'Contribution to SDG 3'],
+                ['assumption', 550, 380, 'Key assumptions', 'CHWs are trusted; families are reachable; cultural barriers addressed'] ] },
+            education: { nodes: [
+                ['input', 50, 50, 'Teacher training', 'Pedagogy, SEL, inclusive education'],
+                ['input', 50, 200, 'Learning materials', 'Textbooks, digital content, labs'],
+                ['activity', 300, 50, 'Classroom instruction', 'Activity-based, student-centred'],
+                ['activity', 300, 200, 'Remedial support', 'After-school tutoring for struggling learners'],
+                ['output', 550, 50, '# Teachers trained', '200 teachers across 50 schools'],
+                ['output', 550, 200, '# Students enrolled', '5000 students in remedial programme'],
+                ['outcome', 800, 80, 'Improved learning outcomes', 'Reading, numeracy, foundational skills'],
+                ['outcome', 800, 230, 'Reduced dropout rates', 'Especially for girls and marginalised groups'],
+                ['impact', 1050, 150, 'Equitable quality education', 'Contribution to SDG 4'],
+                ['assumption', 550, 380, 'Assumptions', 'Teachers are motivated; parents support education; infrastructure adequate'] ] },
+            wash: { nodes: [
+                ['input', 50, 50, 'Infrastructure funding', 'Wells, latrines, water treatment'],
+                ['input', 50, 200, 'CLTS facilitators', 'Community-Led Total Sanitation team'],
+                ['activity', 300, 50, 'Water point construction', 'Install handpumps, piped water'],
+                ['activity', 300, 200, 'Hygiene campaigns', 'Handwashing, menstrual hygiene, water treatment'],
+                ['output', 550, 50, '# Water points built', '100 water points serving 10,000 people'],
+                ['output', 550, 200, '# ODF villages', '50 villages declared Open Defecation Free'],
+                ['outcome', 800, 80, 'Access to clean water', 'Under 30 minutes round trip to safe water'],
+                ['outcome', 800, 230, 'Sanitation behaviour change', 'Latrine use, handwashing at critical times'],
+                ['impact', 1050, 150, 'Reduced waterborne disease', 'Contribution to SDG 6'],
+                ['assumption', 550, 380, 'Assumptions', 'Water table adequate; community ownership; supply chain for spare parts'] ] },
+            livelihoods: { nodes: [
+                ['input', 50, 50, 'Seed capital and training', 'SHG formation, enterprise skills'],
+                ['input', 50, 200, 'Market linkages', 'Value chain analysis, buyer connections'],
+                ['activity', 300, 50, 'SHG formation and training', 'Financial literacy, business planning'],
+                ['activity', 300, 200, 'Enterprise development', 'Product development, quality control'],
+                ['output', 550, 50, '# SHGs formed', '200 SHGs with 2000+ members'],
+                ['output', 550, 200, '# Enterprises launched', '500 micro-enterprises'],
+                ['outcome', 800, 80, 'Increased income', '30% increase in household income'],
+                ['outcome', 800, 230, "Women's economic empowerment", 'Asset ownership, financial decision-making'],
+                ['impact', 1050, 150, 'Poverty reduction', 'Contribution to SDG 1 and 5'],
+                ['assumption', 550, 380, 'Assumptions', 'Markets accessible; women have time; social norms supportive'] ] },
+            blank: { nodes: [] }
+        };
+        var TEMPLATE_LINKS = [[0, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7], [6, 8], [7, 8]];
+
+        document.getElementById('cvTemplate').addEventListener('change', function () {
+            var t = TEMPLATES[this.value];
+            this.value = '';
+            if (!t) return;
+            if (nodes.length && !confirm('This will replace what is on the canvas. Continue?')) return;
+            loading = true;
+            clear();
+            var ids = t.nodes.map(function (n) { return createNode(n[0], n[1], n[2], n[3], n[4]).id; });
+            if (ids.length) TEMPLATE_LINKS.forEach(function (c) { links.push({ from: ids[c[0]], to: ids[c[1]] }); });
+            loading = false;
+            drawLinks();
+            save();
+        });
+
+        // ---- Build the canvas from the six steps ----
+        function buildFromSteps() {
+            if (typeof tocData === 'undefined') return;
+            var outcomes = tocData.outcomes.filter(function (o) { return o.text.trim(); });
+            var outputs = tocData.outputs.filter(function (o) { return o.text.trim(); });
+            if (!tocData.longTermGoal.trim() && !outcomes.length && !outputs.length) {
+                alert('Fill in the goal, outcomes or outputs in steps 2 to 4 first.');
+                return;
+            }
+            if (nodes.length && !confirm('This will replace what is on the canvas with your steps. Continue?')) return;
+            loading = true;
+            clear();
+            var outcomeNode = {};
+            var impact = tocData.longTermGoal.trim() ? createNode('impact', 820, 60 + Math.max(0, outcomes.length - 1) * 75, tocData.longTermGoal.trim(), '') : null;
+            outcomes.forEach(function (o, i) {
+                var inds = tocData.indicators.filter(function (x) { return x.linkedOutcome === o.id && x.text.trim(); }).map(function (x) { return x.text.trim(); });
+                var n = createNode('outcome', 540, 40 + i * 150, o.text.trim(), '', inds.join('; '));
+                outcomeNode[o.id] = n.id;
+                if (impact) links.push({ from: n.id, to: impact.id });
+            });
+            outputs.forEach(function (o, i) {
+                var n = createNode('output', 260, 40 + i * 150, o.text.trim(), '');
+                if (o.linkedOutcome && outcomeNode[o.linkedOutcome]) links.push({ from: n.id, to: outcomeNode[o.linkedOutcome] });
+            });
+            var rows = Math.max(outcomes.length, outputs.length, 1);
+            tocData.assumptions.filter(function (a) { return a.text.trim(); }).forEach(function (a, i) {
+                var linked = tocData.outcomes.find(function (o) { return o.id === a.linkedOutcome; });
+                createNode('assumption', 260 + (i % 3) * 260, 80 + rows * 150 + Math.floor(i / 3) * 130, a.text.trim(), linked && linked.text.trim() ? 'For: ' + linked.text.trim() : '');
+            });
+            if (tocData.problemStatement.trim()) createNode('input', 20, 40, 'Problem', tocData.problemStatement.trim());
+            loading = false;
+            drawLinks();
+            save();
+        }
+        document.getElementById('cvFromSteps').addEventListener('click', buildFromSteps);
+
+        document.getElementById('cvAddNode').addEventListener('click', function () {
+            createNode(document.getElementById('cvNodeType').value, wrap.scrollLeft + 100 + Math.random() * 200, wrap.scrollTop + 80 + Math.random() * 100, '', '');
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Delete' && selected && !e.target.isContentEditable && !document.getElementById('canvasPanel').hidden) {
+                removeNode(selected);
+                selected = null;
+            }
+        });
+
+        // ---- Technique panel ----
+        var sidebar = document.getElementById('cvSidebar');
+        document.getElementById('cvToggleSidebar').addEventListener('click', function () {
+            sidebar.hidden = !sidebar.hidden;
+            this.setAttribute('aria-expanded', String(!sidebar.hidden));
+        });
+        document.querySelectorAll('.cv-sidebar-tab').forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.cv-sidebar-tab').forEach(function (t) { t.classList.remove('active'); });
+                document.querySelectorAll('.cv-sidebar-panel').forEach(function (p) { p.classList.remove('active'); });
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.panel).classList.add('active');
+            });
+        });
+
+        function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+
+        function renderGroups(container, groups) {
+            var html = '';
+            groups.forEach(function (g, gi) {
+                html += '<div class="cv-cat"><button type="button" class="cv-cat-header" aria-expanded="false">&#x25B6; ' + esc(g.title) + ' (' + g.items.length + ')</button><div class="cv-cat-list">';
+                g.items.forEach(function (it) {
+                    html += '<div class="cv-item" draggable="true" data-drag="' + esc(JSON.stringify(it.drag)) + '"><span>' + esc(it.label) + '</span>' + (it.tag ? '<span class="cv-tag ' + it.tagClass + '">' + esc(it.tag) + '</span>' : '') + '</div>';
+                });
+                html += '</div></div>';
+            });
+            container.innerHTML = html;
+            container.querySelectorAll('.cv-cat-header').forEach(function (h) {
+                h.addEventListener('click', function () {
+                    var open = h.nextElementSibling.classList.toggle('open');
+                    h.setAttribute('aria-expanded', String(open));
+                    h.innerHTML = (open ? '&#x25BC; ' : '&#x25B6; ') + esc(h.textContent.replace(/^[▶▼]\s*/, ''));
+                });
+            });
+            container.querySelectorAll('.cv-item').forEach(function (item) {
+                item.addEventListener('dragstart', function (e) { e.dataTransfer.setData('text/plain', item.dataset.drag); });
+            });
+        }
+
+        fetch('/data/bct-repository.json').then(function (r) { return r.json(); }).then(function (data) {
+            bctData = data;
+            renderGroups(document.getElementById('cvPanelBct'), data.categories.map(function (c) {
+                return { title: c.name, items: c.techniques.map(function (t) {
+                    return { label: t.name, tag: t.evidenceLevel, tagClass: t.evidenceLevel === 'Strong' ? 'strong' : 'moderate', drag: { type: 'bct', id: t.id, name: t.name } };
+                }) };
+            }));
+            nodes.forEach(function (n) {
+                n.el.querySelectorAll('.cv-node-bct').forEach(function (tag, i) { if (n.bcts[i]) tag.textContent = bctName(n.bcts[i]); });
+            });
+        }).catch(function () {
+            document.getElementById('cvPanelBct').innerHTML = '<p class="cv-hint" style="padding:0.5rem">The technique list could not be loaded.</p>';
+        });
+
+        var FRAMEWORKS = [
+            { title: 'Logical framework', items: [['Logframe matrix', 'Framework', 'Standard 4x4 matrix: objectives, indicators, MoV, assumptions'], ['Results chain', 'Framework', 'Input, activity, output, outcome, impact'], ['Results framework', 'Framework', 'Hierarchical structure of programme objectives and indicators'], ['SMART indicators', 'Tool', 'Specific, Measurable, Achievable, Relevant, Time-bound']] },
+            { title: 'Evaluation methods', items: [['RCT design', 'Method', 'Randomised controlled trial with treatment and control groups'], ['Difference-in-differences', 'Method', 'Compare changes over time between treatment and comparison'], ['Propensity score matching', 'Method', 'Match treated units with comparable untreated units'], ['Regression discontinuity', 'Method', 'Use eligibility thresholds for causal identification'], ['Most Significant Change', 'Method', 'Participatory qualitative evaluation through storytelling'], ['Outcome harvesting', 'Method', 'Identify and verify outcomes, then work backward to contribution'], ['Contribution analysis', 'Method', 'Assess whether an intervention contributed to observed outcomes']] },
+            { title: 'Data collection', items: [['KII guide', 'Tool', 'Key informant interview semi-structured guide'], ['FGD protocol', 'Tool', 'Focus group discussion facilitation protocol'], ['Household survey', 'Tool', 'Structured questionnaire for household-level data'], ['Observation checklist', 'Tool', 'Systematic observation tool for programme monitoring'], ['Participatory mapping', 'Tool', 'Community-led spatial and social mapping exercise']] },
+            { title: 'Quality and ethics', items: [['Do No Harm checklist', 'Ethics', 'Conflict sensitivity and ethical safeguarding review'], ['Data quality assessment', 'Tool', 'Validity, reliability, timeliness, precision, integrity checks'], ['Informed consent template', 'Ethics', 'Template for obtaining consent from participants'], ['IRB protocol', 'Ethics', 'Institutional Review Board submission template']] }
+        ];
+        var CROSSCUTTING = [
+            { title: 'Gender and inclusion', items: [['Gender analysis', 'Assess differential impacts on women, men and non-binary people'], ['Intersectional lens', 'Consider overlapping inequalities (caste, class, gender, disability)'], ['GESI mainstreaming', 'Gender Equality and Social Inclusion integration checklist'], ['Do No Harm: gender', 'Gender-sensitive conflict and power analysis'], ["Women's participation index", 'Measure meaningful participation in programme decisions']] },
+            { title: 'Climate and environment', items: [['Climate risk screening', 'Assess climate vulnerabilities in programme design'], ['Green ToC lens', 'Map environmental co-benefits and risks in your ToC'], ['Adaptation pathways', 'Sequence of adaptation decisions under uncertainty'], ['Carbon footprint assessment', 'Estimate programme carbon impact']] },
+            { title: 'Governance and accountability', items: [['Social accountability', 'Citizen engagement in monitoring public services'], ['Grievance redress mechanism', 'Accessible complaint and feedback channels'], ['Power analysis', 'Map stakeholder power and influence'], ['Rights-based approach', 'Frame outcomes as fulfilment of human rights']] },
+            { title: 'Digital and innovation', items: [['Digital readiness assessment', 'Evaluate tech infrastructure and digital literacy'], ['Data-driven decision making', 'Use real-time dashboards for adaptive management'], ['Human-centred design', 'User research and prototyping for programme design'], ['Lean impact canvas', 'Rapid hypothesis testing for programme assumptions']] }
+        ];
+        renderGroups(document.getElementById('cvPanelFw'), FRAMEWORKS.map(function (g) {
+            return { title: g.title, items: g.items.map(function (i) { return { label: i[0], tag: i[1], tagClass: 'type', drag: { type: 'framework', name: i[0], desc: i[2] } }; }) };
+        }));
+        renderGroups(document.getElementById('cvPanelCross'), CROSSCUTTING.map(function (g) {
+            return { title: g.title, items: g.items.map(function (i) { return { label: i[0], drag: { type: 'framework', name: i[0], desc: i[1] } }; }) };
+        }));
+
+        document.getElementById('cvSearch').addEventListener('input', function (e) {
+            var q = e.target.value.toLowerCase().trim();
+            document.querySelectorAll('#cvSidebar .cv-item').forEach(function (it) {
+                it.style.display = !q || it.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+            });
+            if (q) document.querySelectorAll('#cvSidebar .cv-cat-list').forEach(function (l) { l.classList.add('open'); });
+        });
+
+        // ---- PNG export ----
+        function wrapText(ctx, text, x, y, maxW, lineH, maxLines) {
+            var words = String(text || '').split(/\s+/), line = '', n = 0;
+            for (var i = 0; i < words.length; i++) {
+                var test = line ? line + ' ' + words[i] : words[i];
+                if (ctx.measureText(test).width > maxW && line) {
+                    ctx.fillText(line, x, y + n * lineH); n++; line = words[i];
+                    if (n >= maxLines) return;
+                } else line = test;
+            }
+            if (line && n < maxLines) ctx.fillText(line, x, y + n * lineH);
+        }
+        document.getElementById('cvExport').addEventListener('click', function () {
+            if (!nodes.length) { alert('Add some nodes first.'); return; }
+            var minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
+            nodes.forEach(function (n) {
+                var x = parseInt(n.el.style.left, 10), y = parseInt(n.el.style.top, 10);
+                minX = Math.min(minX, x); minY = Math.min(minY, y);
+                maxX = Math.max(maxX, x + n.el.offsetWidth); maxY = Math.max(maxY, y + n.el.offsetHeight);
+            });
+            var pad = 40, cw = maxX - minX + pad * 2, ch = maxY - minY + pad * 2 + 20;
+            var off = document.createElement('canvas');
+            off.width = cw * 2; off.height = ch * 2;
+            var ctx = off.getContext('2d');
+            ctx.scale(2, 2);
+            ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cw, ch);
+            ctx.strokeStyle = '#64748b'; ctx.fillStyle = '#64748b'; ctx.lineWidth = 2;
+            links.forEach(function (c) {
+                var a = nodes.find(function (n) { return n.id === c.from; }), b = nodes.find(function (n) { return n.id === c.to; });
+                if (!a || !b) return;
+                var x1 = parseInt(a.el.style.left, 10) + a.el.offsetWidth / 2 - minX + pad, y1 = parseInt(a.el.style.top, 10) + a.el.offsetHeight - minY + pad;
+                var x2 = parseInt(b.el.style.left, 10) + b.el.offsetWidth / 2 - minX + pad, y2 = parseInt(b.el.style.top, 10) - minY + pad;
+                ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+                var ang = Math.atan2(y2 - y1, x2 - x1);
+                ctx.beginPath(); ctx.moveTo(x2, y2);
+                ctx.lineTo(x2 - 8 * Math.cos(ang - 0.5), y2 - 8 * Math.sin(ang - 0.5));
+                ctx.lineTo(x2 - 8 * Math.cos(ang + 0.5), y2 - 8 * Math.sin(ang + 0.5));
+                ctx.closePath(); ctx.fill();
+            });
+            var colors = { input: '#075985', activity: '#4338CA', output: '#92400E', outcome: '#047857', impact: '#9D174D', assumption: '#475569' };
+            nodes.forEach(function (n) {
+                var x = parseInt(n.el.style.left, 10) - minX + pad, y = parseInt(n.el.style.top, 10) - minY + pad;
+                var w = n.el.offsetWidth, h = n.el.offsetHeight, col = colors[n.type] || '#475569';
+                ctx.fillStyle = '#ffffff'; ctx.strokeStyle = col; ctx.lineWidth = 2;
+                ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, 8); else ctx.rect(x, y, w, h); ctx.fill(); ctx.stroke();
+                ctx.fillStyle = col; ctx.font = '600 10px system-ui, sans-serif';
+                ctx.fillText(LABELS[n.type].toUpperCase(), x + 8, y + 16);
+                ctx.fillStyle = '#0f172a'; ctx.font = '600 12px system-ui, sans-serif';
+                wrapText(ctx, n.el.querySelector('.cv-node-title').textContent, x + 8, y + 34, w - 16, 15, 3);
+                ctx.fillStyle = '#475569'; ctx.font = '11px system-ui, sans-serif';
+                wrapText(ctx, n.el.querySelector('.cv-node-desc').textContent, x + 8, y + 80, w - 16, 13, Math.max(1, Math.floor((h - 86) / 13)));
+            });
+            ctx.fillStyle = '#475569'; ctx.font = '10px system-ui, sans-serif';
+            ctx.fillText('Built with the ImpactMojo Theory of Change Studio', pad, ch - 12);
+            off.toBlob(function (blob) {
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'theory-of-change-canvas.png';
+                document.body.appendChild(a); a.click(); a.remove();
+                setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+            });
+        });
+
+        // ---- Start: open whatever was saved on this device ----
+        try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) load(JSON.parse(raw));
+        } catch (e) { loading = false; }
+
+        window.TocCanvas = { redraw: drawLinks, buildFromSteps: buildFromSteps };
+    })();
     </script>
 
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->

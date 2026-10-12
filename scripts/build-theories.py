@@ -327,6 +327,17 @@ def page_shell(title, description, keywords, og_title, og_desc, path, body, scri
 """
 
 
+def related_block(t):
+    """Optional "related" list in a theory's JSON: pages elsewhere on the site
+    that do a related job, each with one plain sentence saying what it is for."""
+    rel = t.get("related") or []
+    if not rel:
+        return ""
+    items = " ".join('<a href="%s">%s</a> %s' % (esc(r["href"]), esc(r["title"]), esc(r["note"])) for r in rel)
+    return ('  <div class="notice">\n    <h3>Elsewhere on ImpactMojo</h3>\n'
+            f'    <p>{items}</p>\n  </div>\n')
+
+
 def discourses_block(t, base, entries):
     """Named entries in Development Discourses, or an honest sentence when there
     is none.
@@ -510,7 +521,7 @@ def theory_body(meta, t, by_id, dd_base, dd_entries):
     </ul>
 {discourses_block(t, dd_base, dd_entries)}
   </div>
-</section>
+{related_block(t)}</section>
 """
 
 
@@ -559,6 +570,7 @@ def index_body(meta, theories):
     <h1>How development is supposed to work.<br><span class="accent">{len(theories)} answers, drawn as causal chains.</span></h1>
     <p>Development policy runs on theories about why some places are poor, and most of them are argued about without anybody drawing what they actually claim. Each entry here is one theory turned into a diagram you can step through, placed on four axes with the reason for each placement, and then set against the record: what it predicted, what happened, and what is still open.</p>
     <p>Global canon and South Asian traditions in one catalogue, so that Rostow and Nehru, or Ambedkar and Gandhi, can be read side by side rather than in separate literatures.</p>
+    <p class="hero-credit">Theories sets out the big arguments about how development happens. <a href="/fundamentals/">Fundamentals</a> takes the working frameworks practitioners draw, such as the results chain and the power cube, and checks each one against Indian evidence.</p>
     <nav class="series-nav" aria-label="Related libraries">
       <a href="/fundamentals/">Fundamentals: the diagrams</a>
       <a href="/bct-repository.html">Behaviour change techniques</a>

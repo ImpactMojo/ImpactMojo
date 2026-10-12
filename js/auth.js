@@ -1196,12 +1196,12 @@ const ImpactMojoAuth = {
     // Get subscription tier display name
     getTierDisplayName() {
         const tierNames = {
-            'explorer': 'Explorer (Free)',
+            'explorer': 'Learner (Free)',
             'practitioner': 'Practitioner',
             'professional': 'Professional',
             'organization': 'Organization'
         };
-        return tierNames[this.profile?.subscription_tier] || 'Explorer (Free)';
+        return tierNames[this.profile?.subscription_tier] || 'Learner (Free)';
     },
 
     // =====================================================
@@ -1539,8 +1539,8 @@ window.supabaseClient = supabaseClient;
                         el.textContent = cached.display_name || cached.full_name || 'Account';
                     });
                     document.querySelectorAll('.auth-user-tier').forEach(function (el) {
-                        var tierNames = { explorer: 'Explorer (Free)', practitioner: 'Practitioner', professional: 'Professional', organization: 'Organization' };
-                        el.textContent = tierNames[cached.subscription_tier] || 'Explorer (Free)';
+                        var tierNames = { explorer: 'Learner (Free)', practitioner: 'Practitioner', professional: 'Professional', organization: 'Organization' };
+                        el.textContent = tierNames[cached.subscription_tier] || 'Learner (Free)';
                     });
                 }
             } catch (_) {}

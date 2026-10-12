@@ -283,6 +283,7 @@ LABEL_KEYS = [
     ("game library", "games"),
     ("practice packs", "practice-packs"),
     ("deep dives", "deep-dives"),
+    ("annotated reading lists", "deep-dives"),
     ("data notes", "data-notes"),
     ("dataverse tools", "dataverse"),
     ("data tools", "dataverse"),
@@ -343,7 +344,10 @@ def in_range(line, start, end):
 #   <span class="tp-n">Courses <span class="tp-cnt tp-mono">70</span></span>
 TILE_TERMS = {
     "courses": "courses",
+    "game library": "games",
     "games": "games",
+    "simulations": "game-simulations",
+    "flagship courses": "flagship-courses",
     "labs": "labs",
     "studios": "labs",
     "free studio": "labs",
