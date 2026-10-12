@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.365.0 — October 12, 2026 (what each certificate is)
+
+### Fixed
+
+- **The Practitioner plan advertised certificate PDF downloads that do not exist** (#1201). The pricing page, FAQ, Mojini, the upgrade notice and letter, four flagship course pages and the course-completion message now say what is true. Every signed-in learner earns a verifiable completion certificate free. Practitioner adds a public portfolio page that displays it. A certificate of assessment is the separate ₹2,499 Assessed Credential, with a capstone reviewed by Varna and Vandana. Mojini also stopped naming the retired Theory of Change Workbench Pro as a paid benefit.
+
+### Changed
+
+- Copy edits to the travel survey post and explorer: plain sentences in place of bold-led bullets, and one unsupported clause removed.
+
 ## v10.364.0 — October 12, 2026 (what is free and what is paid, said the same way everywhere)
 
 ### For Learners
