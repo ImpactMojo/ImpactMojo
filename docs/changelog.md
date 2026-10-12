@@ -2,6 +2,17 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.364.0 — October 12, 2026 (what is free and what is paid, said the same way everywhere)
+
+### For Learners
+
+- **Every paid or partly paid tool now says so before you click** — the Membership panel, the Pro Studio page, the catalogue and the Studios page label each tool "Free", "Free · export needs Membership", or "Members only" with its plan and price.
+- **Sampling Toolkit** — Sampling Basics and the Sampling Design Studio now share one card on the Studios page, in the order to use them.
+
+### Fixed
+
+- **Free and paid labels contradicted each other across the site** (#1199). The homepage panel locked fourteen tools in full, most of which are free to use with only export or copy paid. The pricing page, FAQ, upgrade letter and upgrade notice still listed the retired Theory of Change Workbench Pro as a paid benefit. The panel and catalogue now point those retired tools to the free Studios they became. Four Studios labelled free now say their export needs Membership, and the pricing page lists the exports each plan opens. The "Pro tools 5" tile on the homepage now reads Pro Studio 13. Coaching, Workshops and Practice Packs carry a Paid marker in the menus.
+
 ## v10.363.0 — October 12, 2026 (India's first household travel survey)
 
 ### For Learners
