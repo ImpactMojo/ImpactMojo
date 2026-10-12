@@ -209,6 +209,25 @@ jobs:
       - name: Scan for stock phrases
         run: python3 scripts/check-copy-tells.py
 
+  script-em-dashes:
+    name: Em dashes inside script strings only go down
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # check-no-em-dashes reads page text and skips <script>, where the
+      # companions' DATA, the lexicons, game dialogue and the catalogue live.
+      # The 2026-10-12 pass took those from 3,653 em dashes to 310, all of
+      # them quotations, attributions, placeholders or model prompts. This is
+      # a per-page ratchet: a page may lose em dashes but never gain one.
+      - name: Check the ratchet
+        run: python3 scripts/check-script-em-dashes.py
+
   inline-css:
     name: Every inline stylesheet closes what it opens
     runs-on: ubuntu-latest
