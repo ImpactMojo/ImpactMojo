@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.371.0 — October 12, 2026 (a fact-check of forty pages against their sources)
+
+### Fixed
+
+- **Wrong figures, misattributed quotations and stale counts on 40 pages** (#1216). About 400 claims on the most-reached pages were checked against primary sources. The Election Explorer counted a national total row as a state, which doubled India's electorate to 195 crore; it now shows 97.6 crore electors, 64.2 crore votes and 543 constituencies, which reproduce the published 65.79% turnout. The Higher Education Explorer gave the Scheduled Caste GER (27.8%) as the all-India figure, which is 30.0% for 2023-24. The Migration Explorer credited NSS 78th round figures to a separate PLFS report. The Long View corrected 22 claims, among them Nigeria's population rank, a literacy series credited to the wrong survey, the arithmetic of under-five mortality and an internet figure with no source. Data Notes and Deep Dives corrected a misstated comparison of Kerala's anaemia rate, a state pension total, a paper's year and the NEP's wording. Quotations that could not be found in their stated sources now read as summaries, and one USAID note is credited to the right document. Course, module, explorer and handout counts are current: 84 handouts across 10 tracks.
+
+### Changed
+
+- The travel survey post now says the NSO's state and UT tables exist and are not yet in the explorer.
+
 ## v10.370.0 — October 12, 2026 (NFHS-6, one handout per topic, and the root pages in house style)
 
 ### For Learners

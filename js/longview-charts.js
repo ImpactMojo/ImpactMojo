@@ -1252,17 +1252,17 @@ window.LV = (function() {
         ref: { v: 4.7, label: 'world avg' }, axisLabel: 'tonnes CO₂ per person, per year (2023)' });
 
     funnel('c-pipeline',
-      [{label:'Primary (1–5)',v:104.8},{label:'Upper primary',v:94.9},{label:'Secondary',v:79.4},{label:'Higher secondary',v:57.6},{label:'Higher education',v:28.5}],
+      [{label:'Primary (1–5)',v:104.8},{label:'Upper primary',v:94.9},{label:'Secondary',v:79.4},{label:'Higher secondary',v:58.2},{label:'Higher education',v:28.5}],
       { vMax: 104.8, colors: ['#0d9488','#22a06b','#eab308','#f97316','#e11d48'] });
 
     donut('c-energy',
-      [{label:'Coal',v:73,color:'#475569'},{label:'Hydro',v:8,color:'#2563eb'},{label:'Solar',v:7,color:'#f59e0b'},
-       {label:'Wind',v:5,color:'#0ea5a4'},{label:'Nuclear',v:3,color:'#7c3aed'},{label:'Gas',v:2,color:'#94a3b8'},{label:'Bioenergy',v:2,color:'#16a34a'}],
-      { centerBig: '73%', centerSub: 'still fossil' });
+      [{label:'Coal',v:75,color:'#475569'},{label:'Hydro',v:8,color:'#2563eb'},{label:'Solar',v:7,color:'#f59e0b'},
+       {label:'Wind',v:3,color:'#0ea5a4'},{label:'Nuclear',v:3,color:'#7c3aed'},{label:'Gas',v:2,color:'#94a3b8'},{label:'Bioenergy',v:2,color:'#16a34a'}],
+      { centerBig: '77%', centerSub: 'still fossil' });
 
     dumbbell('c-gender',
       [{label:'Adult literacy',m:84.7,f:70.3},{label:'College enrolment',m:28.3,f:28.5},
-       {label:'In the labour force',m:78.8,f:41.7},{label:'Seats in the Lok Sabha',m:86.6,f:13.4}],
+       {label:'In the labour force',m:78.8,f:41.7},{label:'Seats in the Lok Sabha',m:86.4,f:13.6}],
       { mColor: '#1971c2', fColor: '#d6336c' });
 
     heatmap('c-nfhs',
@@ -1303,15 +1303,15 @@ window.LV = (function() {
     climateChart('c-climate');
 
     lineChart('c-le',
-      [{x:1960,y:45.2},{x:1970,y:49.3},{x:1980,y:53.9},{x:1990,y:58.6},{x:2000,y:62.6},{x:2010,y:66.7},{x:2019,y:70.9}],
+      [{x:1960,y:45.6},{x:1970,y:48.6},{x:1980,y:53.6},{x:1990,y:58.6},{x:2000,y:62.7},{x:2010,y:67.2},{x:2019,y:70.7}],
       { yMax: 78, color: '#0d9488', area: true, valfmt: function(v){return Math.round(v);}, xfmt: function(x){return "'"+String(x).slice(2);} });
 
     lineChart('c-solar',
-      [{x:2014,y:2.6},{x:2016,y:9.0},{x:2018,y:21.7},{x:2020,y:34.6},{x:2022,y:54.0},{x:2024,y:87.2}],
+      [{x:2014,y:2.6},{x:2016,y:6.8},{x:2018,y:21.7},{x:2020,y:34.6},{x:2022,y:54.0},{x:2024,y:81.8}],
       { yMax: 95, color: '#f59e0b', area: true, valfmt: function(v){return Math.round(v)+' GW';}, xfmt: function(x){return "'"+String(x).slice(2);} });
 
     lineChart('c-urban',
-      [{x:1960,y:17.9},{x:1980,y:23.1},{x:2000,y:27.7},{x:2010,y:30.9},{x:2020,y:34.9},{x:2023,y:36.4}],
+      [{x:1960,y:17.9},{x:1980,y:23.5},{x:2000,y:27.6},{x:2010,y:30.9},{x:2020,y:34.1},{x:2023,y:35.1}],
       { yMax: 42, color: '#6366f1', area: true, valfmt: function(v){return v.toFixed(1)+'%';}, xfmt: function(x){return "'"+String(x).slice(2);} });
 
     donut('c-gdp',
@@ -1319,8 +1319,8 @@ window.LV = (function() {
       { centerBig: '54%', centerSub: 'services' });
 
     hbarChart('c-literacy',
-      [{label:'Kerala',y:96.2,color:'#0d9488'},{label:'Delhi',y:88.7,color:'#22a06b'},{label:'Maharashtra',y:84.8,color:'#4f46e5'},{label:'Tamil Nadu',y:82.9,color:'#6366f1'},{label:'Rajasthan',y:71.6,color:'#f97316'},{label:'Bihar',y:61.8,color:'#e11d48'}],
-      { xMax: 100, valfmt: function(v){return v+'%';}, refLine: { value: 80.2, label: 'national 80%' } });
+      [{label:'Kerala',y:96.2,color:'#0d9488'},{label:'Delhi',y:88.7,color:'#22a06b'},{label:'Maharashtra',y:84.8,color:'#4f46e5'},{label:'Tamil Nadu',y:82.9,color:'#6366f1'},{label:'Bihar',y:70.9,color:'#f97316'},{label:'Rajasthan',y:69.7,color:'#e11d48'}],
+      { xMax: 100, valfmt: function(v){return v+'%';}, refLine: { value: 77.7, label: 'national 78%' } });
 
     beeswarm('c-womenparl',
       [{n:'Rwanda',v:61.3,label:'Rwanda'},{n:'Cuba',v:55.7},{n:'Nicaragua',v:53.9},{n:'Mexico',v:50.4},
@@ -1412,8 +1412,8 @@ window.LV = (function() {
         { label:'Electricity', pct:98, color:'#f59e0b' },
         { label:'A toilet', pct:70, color:'#0d9488' },
         { label:'Clean fuel', pct:59, color:'#e11d48' },
-        { label:'A bank a/c', pct:78, color:'#4f46e5' },
-        { label:'The internet', pct:46, color:'#7c3aed' },
+        { label:'A bank a/c', pct:89, color:'#4f46e5' },
+        { label:'The internet', pct:65, color:'#7c3aed' },
         { label:'Health cover', pct:60, color:'#2563eb' }
       ] });
 
@@ -1540,9 +1540,9 @@ window.LV = (function() {
       { years: [1990, 2010, 2023, 2050], rankMax: 10, series: [
         { name: 'India',      color: COL.teal,   ranks: [2, 2, 1, 1] },
         { name: 'China',      color: COL.blue,   ranks: [1, 1, 2, 2] },
-        { name: 'Nigeria',    color: COL.green,  ranks: [10, 7, 6, 3] },
-        { name: 'United States', color: COL.red, ranks: [3, 3, 3, 4] },
-        { name: 'Pakistan',   color: COL.amber,  ranks: [8, 6, 5, 5] },
+        { name: 'Nigeria',    color: COL.green,  ranks: [10, 7, 6, 5] },
+        { name: 'United States', color: COL.red, ranks: [3, 3, 3, 3] },
+        { name: 'Pakistan',   color: COL.amber,  ranks: [8, 6, 5, 4] },
         { name: 'Indonesia',  color: COL.purple, ranks: [4, 4, 4, 6] }
       ] });
 
@@ -1782,13 +1782,13 @@ window.LV = (function() {
   var ORDER = ['c-bump','c-gapminder','c-monsoon','c-gender','c-wealth','c-caste','c-co2','c-energy','c-nfhs','c-upset-deprivation','c-upset-backwards','c-forest','c-decline','c-transition','c-migration','c-where','c-ghg','c-ghg3','c-rupee','c-waffle','c-stream','c-pyramid','c-states','c-poor-dots','c-seats','c-tilegram','c-poverty','c-u5mr','c-flfp','c-pipeline','c-climate','c-le','c-solar','c-urban','c-gdp','c-literacy','c-womenparl'];
   var DETAILS = {
     'c-bump': { tag:'Population', title:'The new giants',
-      takeaway:"India passed China to become the world's most populous country in 2023. Look further out and the order keeps shifting: the UN projects Nigeria to climb past the United States by 2050.",
+      takeaway:"India passed China to become the world's most populous country in 2023. Look further out and the order keeps shifting. By 2050 the UN projects Pakistan and Nigeria to sit just behind the United States, and by 2100 both pass it.",
       source:"UN World Population Prospects 2024: country population rankings for 1990, 2010, 2023 and the 2050 projection.",
       why:"A bump chart is built for ranks that change over time: each line is one country, and what you read is the crossings (who overtakes whom, and when) not the raw millions.",
       how:"Each country's global population rank is plotted at four dates and joined into a line; rank 1 is at the top. Ranks are from the UN's 2024 revision, with 2050 a projection.",
-      look:"The India–China cross around 2023, and Nigeria's steep climb from tenth toward third." },
+      look:"The India–China cross around 2023, and the climb of Pakistan and Nigeria toward the United States." },
     'c-gapminder': { tag:'Development', title:'The wealth and health of nations',
-      takeaway:"Richer countries tend to live longer, but the link bends and breaks: India and Bangladesh reach lives nearly as long as far richer places, while oil-poor Nigeria and Ethiopia sit low on both.",
+      takeaway:"Richer countries tend to live longer, but the link bends and breaks: India and Bangladesh reach lives nearly as long as far richer places, while Nigeria and Ethiopia sit low on both.",
       source:"World Bank Open Data, 2022: GDP per capita (PPP, current international $), life expectancy at birth, and total population, pulled from the World Bank API.",
       why:"A bubble chart carries four variables at once (wealth on a log x-axis, health on the y, population as size, region as colour) so a whole world of countries fits in one frame. It's the shape Hans Rosling made famous.",
       how:"Each bubble is a country in 2022, placed by GDP per person (log scale) and life expectancy, sized by population and coloured by region. Drawn in SVG from World Bank figures.",
@@ -1842,14 +1842,14 @@ window.LV = (function() {
       how:"One circle per state, area proportional to its 2011 population, coloured by population per Lok Sabha seat. Circles start at their approximate geographic position and are pushed apart until none overlap, so the layout is readable without being a real map.",
       look:"That the darkest circles (Rajasthan, Bihar, Haryana, Uttar Pradesh, Madhya Pradesh) are mostly northern, and the palest (Kerala, Tamil Nadu, Andhra Pradesh) are mostly southern. That pattern is what the delimitation debate is about." },
     'c-tilegram': { tag:'Population', title:'India, one hexagon at a time',
-      takeaway:"Give every crore of Indians one hexagon and the country's real weight appears: 121 hexagons, of which Uttar Pradesh alone claims 20, more than the whole south's five states put together would need if you removed Tamil Nadu. The North, Central and East zones hold about three in every four hexagons.",
+      takeaway:"Give every crore of Indians one hexagon and the country's real weight appears: 121 hexagons, of which Uttar Pradesh alone claims 20, more than the whole south's five states put together would need if you removed Tamil Nadu. The North, Central and East zones hold 74 of them, about three in every five.",
       source:"Census of India 2011: population by state, one hexagon per crore (10 million), rounded to the nearest crore. The rounding is why the grid comes to 121, India's 2011 population in crore.",
       why:"A hex cartogram gives every state one tile regardless of size; a tilegram gives each state as many tiles as it has people. So the map itself becomes the bar chart: you can count the population of a region by eye, in units, without reading a single axis. It is the form the NPR and FiveThirtyEight election maps made familiar.",
       how:"Each state is a block of hexagons, one per crore of population, laid out on a grid that keeps states roughly in their real positions and next to their real neighbours. Blocks are coloured by zone and the legend counts the hexes in each.",
       look:"The size of the Uttar Pradesh block against everything around it, and how much of the grid the North and East together take up." },
     'c-waffle': { tag:'Access', title:'If India were 100 people',
       takeaway:"Almost everyone has electricity, but far fewer have clean cooking fuel, the internet, or health cover.",
-      source:"NFHS-6 (2023–24, provisional) for electricity and health cover; NFHS-5 (2019–21) for toilets and clean fuel, which NFHS-6 did not report; Global Findex 2021 for bank accounts.",
+      source:"NFHS-6 (2023–24, provisional) for electricity and health cover; NFHS-5 (2019–21) for toilets and clean fuel, which NFHS-6 did not report; Global Findex 2025 (2024 data) for bank accounts; ITU via World Bank (IT.NET.USER.ZS, 2024) for internet use.",
       why:"A waffle turns a percentage into a hundred squares, so 'X in 100' is something you can count, not just read. A grid of them compares several access gaps at once.",
       how:"Each block is a 10×10 grid; coloured squares fill from the bottom up to the share who have that thing.",
       look:"How full each grid is: electricity nearly complete, health cover at three in five." },
@@ -1885,7 +1885,7 @@ window.LV = (function() {
       look:"Every path heads up and to the left. Korea and China raced; Nigeria is still early on the same road." },
     'c-gender': { tag:'Gender', title:'The same gap, four ways',
       takeaway:"Women have caught up with men in college enrolment, and slightly passed them. In paid work and Parliament, they're still far behind.",
-      source:"NFHS-5 (literacy), AISHE 2021–22 (college GER), PLFS 2023–24 (labour force), Lok Sabha 2024 (seats).",
+      source:"NSS 75th round, 2017–18 (literacy, age 7+), AISHE 2021–22 (college GER), PLFS 2023–24 (labour force), Lok Sabha 2024 (seats: 74 of 543).",
       why:"A dumbbell chart puts two values on one line so the gap between them is the first thing you read. Stacking four indicators lets you compare gaps at a glance, and spot the one place the gap reverses.",
       how:"Drawn in plain SVG: a faint connecting line per row, a dot for each sex, values at the ends. No charting library: just the figures and a little geometry.",
       look:"The length of each grey line is the gap. Look at college, where the women's dot sits to the right of the men's." },
@@ -1897,7 +1897,7 @@ window.LV = (function() {
       look:"How the Top 1% block barely registers in 'People' yet dominates 'Wealth', and how thin the bottom half's wealth band is." },
     'c-caste': { tag:'Caste & Equity', title:'Poverty is not caste-blind',
       takeaway:"A Scheduled Tribe household is about three times as likely to be poor as an 'Other' household.",
-      source:"NFHS-4 (2015–16), multidimensional poverty headcount by social group. National headcount has since fallen to about 15% (NFHS-5).",
+      source:"Pradhan, Kandapan & Pradhan (2022), PLOS ONE 17(7): e0271806, multidimensional poverty headcount by social group from NFHS-4 (2015–16). National line: NITI Aayog National MPI (24.85% in NFHS-4), which has since fallen to about 15% (NFHS-5).",
       why:"A bar chart is the honest choice for comparing a few categories: length is easy to judge. A single dark-to-light red scale reinforces the ranking without adding a second variable.",
       how:"Horizontal bars from zero, with a dashed line at the national average so each group reads as above or below it.",
       look:"How far each bar sits past the dashed national line. The drop from Scheduled Tribes to 'Others' is the point." },
@@ -1908,8 +1908,8 @@ window.LV = (function() {
       how:"Each country is placed at its value, then nudged up just enough to avoid overlapping its neighbours. India is highlighted; a dashed line marks the world average.",
       look:"How crowded the left side is, and how far Qatar sits alone on the right." },
     'c-energy': { tag:'Energy', title:'How India keeps the lights on',
-      takeaway:"About three-quarters of India's electricity still comes from coal; solar and wind together are about 12%.",
-      source:"Ember / Central Electricity Authority: share of electricity generation, 2024.",
+      takeaway:"About three-quarters of India's electricity still comes from coal; solar and wind together are about 10%.",
+      source:"Ember / Central Electricity Authority: share of electricity generation, 2024 (Ember, Global Electricity Review 2025: clean sources 22%, wind and solar 10%). Split by source approximate.",
       why:"For a part-to-whole split, a ring works when one slice dominates and you mainly want the headline share: here, how much is still fossil. The centre carries that number.",
       how:"Each source is an arc sized to its share, with a legend listing the exact percentages.",
       look:"The size of the coal slice against everything else." },
@@ -1939,12 +1939,12 @@ window.LV = (function() {
       look:"Where each whisker sits relative to the two dashed Paris lines." },
     'c-poverty': { tag:'Poverty', title:'The great escape',
       takeaway:"The share of people in extreme poverty fell from about 38% to under 9% in one generation.",
-      source:"World Bank Poverty & Inequality Platform, via Our World in Data ($2.15/day, 2017 PPP).",
+      source:"World Bank Poverty & Inequality Platform, via Our World in Data ($2.15/day, 2017 PPP). Since June 2025 the World Bank's headline line is $3.00/day at 2021 PPP, which puts more people below it.",
       why:"A line over time is the clearest way to show a trend. The filled area under it gives the fall some weight without adding any new information.",
       how:"A smooth line through the data points, endpoints labelled, axis starting at zero so the drop isn't exaggerated.",
       look:"The steady fall, and the two endpoint numbers." },
     'c-u5mr': { tag:'Child Survival', title:'India’s children, 1990–2022',
-      takeaway:"Under-five deaths fell from 127 to about 30 per 1,000: a child today is roughly four times as likely to reach age five.",
+      takeaway:"Under-five deaths fell from 127 to about 30 per 1,000. A child born today is about a quarter as likely to die before age five as one born in 1990.",
       source:"UN Inter-agency Group for Child Mortality Estimation / World Bank (SH.DYN.MORT).",
       why:"A line over time, the right tool for one number falling across decades. Eight survey years keep the real shape rather than just joining two ends.",
       how:"A smooth line with a marker at each survey year and the first and last values labelled.",
@@ -1968,14 +1968,14 @@ window.LV = (function() {
       how:"A coloured gradient with the headline anomaly, and the same year shown against three different baselines.",
       look:"How the same warming reads as +0.65, +0.78 or +0.98 depending on the comparison period." },
     'c-le': { tag:'Health', title:'Living longer',
-      takeaway:"A child born in India in 1960 could expect to live to about 45. By 2019 that had reached nearly 71: a full human generation added in six decades.",
+      takeaway:"A child born in India in 1960 could expect to live to about 46. By 2019 that had reached nearly 71: a full human generation added in six decades.",
       source:"World Bank Open Data: life expectancy at birth, India (SP.DYN.LE00.IN), 1960–2019. The series stops at 2019 to keep the pandemic dip from distorting the trend.",
       why:"A line over time is the clearest way to read a long, steady climb. The filled area gives the gain some weight without adding any new information; the axis starts near the earliest value so the rise is neither exaggerated nor hidden.",
       how:"A smooth line through decadal values, ending in 2019, with each point plotted on a shared vertical scale.",
       look:"The steady, almost straight climb, and how much of it came before 2000." },
     'c-solar': { tag:'Energy', title:'The solar surge',
-      takeaway:"India's installed solar capacity has grown more than thirty-fold in a decade: from under 3 GW in 2014 to about 87 GW in 2024.",
-      source:"Ministry of New & Renewable Energy (MNRE): installed grid-connected solar capacity, 2014–2024 (approximate).",
+      takeaway:"India's installed solar capacity has grown more than thirty-fold in a decade: from under 3 GW in March 2014 to about 82 GW in March 2024.",
+      source:"Ministry of New & Renewable Energy (MNRE): installed grid-connected solar capacity at the end of March, 2014–2024.",
       why:"A line makes an exponential-looking climb legible, and the area beneath it conveys the sheer scale of build-out. Gigawatts on a zero-based axis keep the steepness honest.",
       how:"Installed capacity in gigawatts plotted every two years and joined into a line, area filled beneath.",
       look:"How the curve steepens after 2018: the build-out is accelerating, not just continuing." },
@@ -1992,8 +1992,8 @@ window.LV = (function() {
       how:"Each sector is an arc sized to its share of gross value added, with the services share called out in the centre.",
       look:"How large the services arc is next to agriculture, and remember that employment splits almost the opposite way." },
     'c-literacy': { tag:'Education', title:'Literacy, state by state',
-      takeaway:"The national average hides a wide spread: Kerala is near-universal at 96%, while Bihar sits around 62%, the same country, a generation apart in schooling.",
-      source:"NSO Household Social Consumption / Periodic Labour Force Survey estimates, 2022–23 (adult literacy, approximate).",
+      takeaway:"The national average hides a wide spread: Kerala is near-universal at 96%, while Bihar and Rajasthan sit around 70%, the same country, a generation apart in schooling.",
+      source:"NSO, Household Social Consumption: Education in India, NSS 75th round (2017–18): literacy rate, persons aged 7 and above.",
       why:"A bar chart is the honest choice for comparing a handful of places, length is easy to judge, and a dashed line at the national average lets each state read as above or below it at a glance.",
       how:"Horizontal bars from zero, ordered high to low, with a dashed line marking the national average.",
       look:"The distance between the top and bottom bars, and which side of the national line each state falls on." },

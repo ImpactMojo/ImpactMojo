@@ -12,7 +12,7 @@ Four principles guide everything we build:
 
 1. **Practical over theoretical.** Every concept connects to something you can use in your work: a framework, a method, a tool.
 2. **Applied in context.** Examples, data, and case studies come from South Asian development programs, not textbook abstractions.
-3. **Free and open.** All 21 flagship courses, 80 foundational courses, 135 games, 35 labs, and 90 handouts are free. No paywall on learning.
+3. **Free and open.** All 21 flagship courses, 80 foundational courses, 135 games, 35 labs, and 84 handouts are free. No paywall on learning.
 4. **Built for real conditions.** Works on mobile, works offline, works on slow connections. No login required to start learning.
 
 ## How Courses Are Designed
@@ -92,7 +92,7 @@ Labs run entirely in the browser: no server, no account required to use them. Pa
 
 ## The Role of Handouts
 
-ImpactMojo has over 90 handouts. These are single-page reference materials designed for three uses:
+ImpactMojo has over 84 handouts. These are single-page reference materials designed for three uses:
 
 1. **Workshop facilitation.** Print them for participants. They summarize key frameworks, checklists, and definitions on one page.
 2. **Self-study.** Use them as quick-reference guides alongside a course.
