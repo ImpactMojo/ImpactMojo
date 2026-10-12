@@ -9,8 +9,8 @@
  *
  * Auth-aware completion flow:
  * - Anonymous users: prompted to sign up to claim certificate
- * - Explorer (free): certificate auto-issued, web-viewable
- * - Practitioner+: certificate + PDF download + portfolio display
+ * - Explorer (free): certificate auto-issued, verifiable online
+ * - Practitioner+: the same certificate, plus the public portfolio page
  *
  * Progress migration: localStorage progress is synced to Supabase
  * when a user logs in, so anonymous progress is preserved.
@@ -481,7 +481,7 @@
                 '<h3>Course Complete!</h3>' +
                 '<p>' + (name ? 'Well done, <strong>' + name + '</strong>! ' : 'Congratulations! ') +
                     'You\'ve completed all modules in <strong>' + COURSE_NAMES[courseId] + '</strong>.</p>' +
-                '<p class="cpb-completion-sub">Your certificate is being issued now. You can download the PDF and add it to your portfolio from your account page.</p>' +
+                '<p class="cpb-completion-sub">Your certificate is being issued now. You can view it on your account page and add it to your portfolio.</p>' +
                 '<a href="/account.html" class="cpb-completion-btn">View Certificate</a>' +
                 '<a href="/portfolio.html" class="cpb-completion-btn cpb-btn-secondary">Add to Portfolio</a>';
         } else {
@@ -493,7 +493,7 @@
                     'You\'ve completed all modules in <strong>' + COURSE_NAMES[courseId] + '</strong>.</p>' +
                 '<p class="cpb-completion-sub">Your certificate has been issued! View it on your account page.</p>' +
                 '<a href="/account.html" class="cpb-completion-btn">View Certificate</a>' +
-                '<p class="cpb-completion-upgrade">Upgrade to <strong>Practitioner</strong> for PDF download & portfolio display. ' +
+                '<p class="cpb-completion-upgrade">Practitioner adds a public portfolio page that displays it. ' +
                     '<a href="/upgrade.html?from=course-completion">See what you unlock</a></p>';
         }
 

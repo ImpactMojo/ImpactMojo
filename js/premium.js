@@ -65,6 +65,7 @@
             'explorer': [
                 'Every course, Studio, game and data explorer',
                 'All 13 Pro Studio tools, free to use',
+                'Verifiable completion certificates',
                 'Progress tracking, notes and bookmarks',
                 'Course comparison tool'
             ],
@@ -73,7 +74,7 @@
                 'All 18 Practice Packs in full',
                 'Export from the Research Question Builder and the ToR Builder',
                 'Export from four Studios, including Sampling Design',
-                'Certificates with PDF download',
+                'A public portfolio page for your certificates',
                 'Discord and Telegram community'
             ],
             'professional': [
