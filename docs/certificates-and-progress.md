@@ -26,7 +26,7 @@ As you work through ImpactMojo content, you can save items for later:
 
 - **Bookmarks.** Save any course module, handout, case study, or DevDiscourses paper to your bookmarks. Access them from your dashboard.
 - **Notes.** Add personal notes to any module. These are private: only you can see them. Use them to capture thoughts, connect ideas to your work, or note questions to follow up on.
-- **Reading lists.** Create themed reading lists from the DevDiscourses library (500+ papers and books). Useful for building a syllabus or preparing for a research project.
+- **Reading lists.** Create themed reading lists from the DevDiscourses library (687 papers, books and reports). Useful for building a syllabus or preparing for a research project.
 
 All of these features require a free account.
 

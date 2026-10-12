@@ -57,7 +57,7 @@ Every resource is designed to be used in group training, not just self-study:
 
 ### 6. Rigorous but accessible
 
-Content is designed by Dr. Varna Sri Raman, a development economist with field experience across South Asia. Courses are academically rigorous (interactive lexicons, curated reading lists from 500+ papers) but written for practitioners, not academics.
+Content is designed by Dr. Varna Sri Raman, a development economist with field experience across South Asia. Courses are academically rigorous (interactive lexicons, curated reading lists from 687 papers) but written for practitioners, not academics.
 
 ---
 

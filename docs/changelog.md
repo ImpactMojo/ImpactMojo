@@ -19,6 +19,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - The Pro Studio grid on the homepage lists the 11 current tools. The site footer links the Data Room, Simulations, Handouts and Partnerships.
 - Work samples, two internal marketing pages, a post-payment page and an old copy of a 101 deck are no longer in the sitemap or site search.
 - The Climate TRACE dashboard address now goes to its own site, climatetrace.impactmojo.in.
+- Library counts brought up to date from each library's own data: DevDiscourses holds 687 papers, books and reports, FieldCases 208 case studies from 117 countries, and ImpactLex 494 terms. The libraries page now shows the DevDiscourses and ImpactLex counts.
+- The sign-up and invite emails, the certificate email and the welcome emails now give current counts and link to the upgrade page.
 
 ### Fixed
 

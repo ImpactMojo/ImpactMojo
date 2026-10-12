@@ -146,9 +146,9 @@ Shareable poster series that turn research, evaluation, and policy concepts into
 
 ---
 
-## ImpactLex (390+ terms)
+## ImpactLex (494 terms)
 
-ImpactLex is a **development sector dictionary**: a searchable, browsable collection of 390+ terms, formulas, and case studies with clear, practitioner-friendly definitions. It's hosted on ImpactMojo at [/impactlex/](https://www.impactmojo.in/impactlex/) and works as a Progressive Web App (PWA), which means:
+ImpactLex is a **development sector dictionary**: a searchable, browsable collection of 494 terms, formulas, and case studies with clear, practitioner-friendly definitions. It's hosted on ImpactMojo at [/impactlex/](https://www.impactmojo.in/impactlex/) and works as a Progressive Web App (PWA), which means:
 
 - It **works offline** once you've loaded it: useful when you're in the field without reliable internet
 - You can **add it to your phone's home screen** like a regular app
@@ -174,7 +174,7 @@ Each case study is tagged by:
 
 ---
 
-## DevDiscourses (500+ papers and books)
+## DevDiscourses (687 papers, books and reports)
 
 DevDiscourses is a curated reading list of over **500 academic papers, books, and reports** that matter for development practice. This isn't a random database: every entry has been selected because it's genuinely useful for practitioners, not just academics.
 

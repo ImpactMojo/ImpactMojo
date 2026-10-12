@@ -395,7 +395,7 @@ serve(async (req: Request) => {
 <ul style="padding-left:20px;margin:12px 0">
 <li><strong>Take a course</strong> — <a href="https://www.impactmojo.in/courses/mel/index.html" style="color:#F59E0B">Monitoring, Evaluation &amp; Learning</a> is our most popular, and Module 1 is completely free</li>
 <li><strong>Play a game</strong> — <a href="https://www.impactmojo.in/Games/public-good-game.html" style="color:#F59E0B">The Public Good Game</a> teaches collective action in about 10 minutes</li>
-<li><strong>Browse 400+ handouts</strong> — ready-to-use templates you can actually take to your next project</li>
+<li><strong>Browse 84 handouts</strong> — ready-to-use templates you can actually take to your next project</li>
 <li><strong>Grab the <a href="https://www.impactmojo.in/starter-kit.html" style="color:#F59E0B">Practitioner Starter Kit</a></strong> — our 10 most essential handouts, hand-picked for development practitioners</li>
 </ul>
 <p>Everything on ImpactMojo is free. No paywalls, no tricks — just learn at your own pace.</p>
@@ -457,10 +457,10 @@ serve(async (req: Request) => {
             `<p>Hi ${name},</p>
 <p>Quick heads up — most people don't realise that ImpactMojo is a lot more than just courses. Here's what else is waiting for you:</p>
 <ul style="padding-left:20px;margin:12px 0">
-<li><strong>16 Interactive Games</strong> — learn economics by playing, not reading. Seriously fun. (<a href="https://www.impactmojo.in/#games" style="color:#F59E0B">Browse games</a>)</li>
-<li><strong>11 Browser Labs</strong> — build a Theory of Change, design an M&amp;E plan, map your stakeholders — all in your browser (<a href="https://www.impactmojo.in/#labs" style="color:#F59E0B">Try a lab</a>)</li>
-<li><strong>400+ Handouts</strong> — practical templates you can download and use in your real projects (<a href="https://www.impactmojo.in/handouts.html" style="color:#F59E0B">Browse handouts</a>)</li>
-<li><strong>20+ Book Summaries</strong> — the key insights from development economics classics, without reading 300 pages (<a href="https://www.impactmojo.in/BookSummaries/" style="color:#F59E0B">Read summaries</a>)</li>
+<li><strong>135 games</strong>, including 18 strategy simulations — learn economics by playing, not reading. Seriously fun. (<a href="https://www.impactmojo.in/#games" style="color:#F59E0B">Browse games</a>)</li>
+<li><strong>35 Free Studio tools</strong> — build a Theory of Change, design an M&amp;E plan, map your stakeholders — all in your browser (<a href="https://www.impactmojo.in/#labs" style="color:#F59E0B">Try a lab</a>)</li>
+<li><strong>84 Handouts</strong> — practical templates you can download and use in your real projects (<a href="https://www.impactmojo.in/handouts.html" style="color:#F59E0B">Browse handouts</a>)</li>
+<li><strong>184 Reading Companions</strong> — the key insights from development economics classics, without reading 300 pages (<a href="https://www.impactmojo.in/BookSummaries/" style="color:#F59E0B">Read summaries</a>)</li>
 </ul>
 <p>All of it is free. All of it is designed specifically for South Asian development practitioners like you.</p>
 <p>Have a poke around — you might be surprised what you find!</p>`,
@@ -471,7 +471,7 @@ serve(async (req: Request) => {
             p_user_id: user.id,
             p_type: "welcome",
             p_title: "Games, labs, handouts — way more to explore",
-            p_body: "Did you know there are interactive games, browser labs, and 400+ handouts?",
+            p_body: "Did you know there are interactive games, browser labs, and 84 handouts?",
             p_link: "/",
             p_metadata: { drip_stage: "day7_showcase" },
           });
@@ -522,7 +522,7 @@ serve(async (req: Request) => {
 <p>You've been on ImpactMojo for a few weeks now, so you've probably explored the courses, games, and handouts. Hopefully some of it's been useful!</p>
 <p>We wanted to let you know about something we've built for practitioners who want to take things further. <strong>ImpactMojo Premium</strong> gives you access to professional-grade tools that we use in our own work:</p>
 <ul style="padding-left:20px;margin:12px 0">
-<li><strong>Research Question Builder Pro</strong> &amp; <strong>Theory of Change Workbench</strong> — go from vague ideas to rigorous frameworks</li>
+<li><strong>Research Question Builder Pro</strong> &amp; <strong>ToR Builder</strong> — go from vague ideas to rigorous research and terms of reference</li>
 <li><strong>VaniScribe AI</strong> — transcribe interviews in Hindi, Tamil, Bengali, and 10+ South Asian languages</li>
 <li><strong>DevData Practice</strong> — work with 840,000+ rows of realistic development datasets</li>
 <li><strong>Statistical Code Converter</strong> — translate between R, Stata, SPSS, and Python instantly</li>
