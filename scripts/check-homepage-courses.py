@@ -78,7 +78,9 @@ def main() -> int:
     slugs = course_slugs()
 
     ld = jsonld_block(text)
-    listed = set(re.findall(r"impactmojo\.in/courses/([^/\"]+)", ld))
+    # Netlify lowercases paths, so the JSON-LD may name /courses/powerbi/
+    # for the powerBI folder; compare case-folded.
+    listed = {m.lower() for m in re.findall(r"impactmojo\.in/courses/([^/\"]+)", ld)}
     declared = re.search(r'"numberOfItems":\s*(\d+)', ld)
     actual = len(re.findall(r'"position":', ld))
 
@@ -92,7 +94,7 @@ def main() -> int:
             f'JSON-LD says "numberOfItems": {declared.group(1)} but lists {actual} items'
         )
 
-    for slug in sorted(slugs - listed - set(EXEMPT)):
+    for slug in sorted(s for s in slugs - set(EXEMPT) if s.lower() not in listed):
         problems.append(f"{slug}: missing from the JSON-LD flagship ItemList")
     for slug in sorted(slugs - mapped - set(EXEMPT)):
         problems.append(f"{slug}: missing from the resume course map")

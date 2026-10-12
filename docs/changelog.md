@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.367.2 — October 12, 2026 (ten dead addresses in structured data)
+
+### Fixed
+
+- **Ten addresses search engines read answered 404** (#1210). Five Labs pages described themselves at /Studios/, a folder that does not exist; three flagship courses named images that were never drawn; and the homepage and the Power BI page pointed at a Power BI folder with no index page. Each now names the page or image that exists.
+
+### Changed
+
+- A new check, `scripts/check-self-links.py`, fails if any page links to an impactmojo.in address that is not on disk.
+
 ## v10.367.1 — October 12, 2026 (structured data follows the canonical links)
 
 ### Fixed
