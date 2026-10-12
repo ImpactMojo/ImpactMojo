@@ -2,6 +2,20 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.373.0 — October 12, 2026 (the travel survey, state by state)
+
+### For Learners
+
+- **Travel Survey Explorer, state by state** — the main measures of the National Household Travel Survey for all 36 states and union territories: who travels to work and school, by what mode, how long it takes and what it costs, in rural areas, urban areas or both.
+
+### Added
+
+- A State by state chart in the Travel Survey Explorer with thirteen measures, read from the 17 State/UT tables the NSO published as spreadsheets alongside the factsheet of 5 October 2026. The build refuses to write unless each table's all-India row equals the factsheet figure the page already shows, and checks the urban metro shares the factsheet quotes for Maharashtra, West Bengal and Delhi against their state cells. The page names the five smallest samples. The NSO's Table 1 lists 190 fewer rural people across the states than in its all-India row, and the page says so.
+
+### Changed
+
+- The travel survey post, its Dataverse entry and its search entry now say the state tables are in the explorer.
+
 ## v10.372.0 — October 12, 2026 (five charts on the revision of the electoral rolls)
 
 ### For Learners
