@@ -265,6 +265,25 @@ jobs:
       - name: Rebuild the caste lists data and compare
         run: python3 scripts/build-castes-explorer-data.py --check
 
+  nhts-data:
+    name: Travel survey explorer data is current
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Rebuilds nhts.html's inline data from data/nhts-india.json and fails
+      # if the page's copy is stale. It also checks the hand transcription of
+      # the NSO press note: person figures between male and female, the
+      # overnight and departure shares adding to the totals the note states,
+      # and the note's headline numbers equal to the table cells they quote.
+      - name: Rebuild the travel survey data and compare
+        run: python3 scripts/build-nhts-explorer-data.py --check
+
   origin-relative-links:
     name: In-site links work on any origin
     runs-on: ubuntu-latest

@@ -178,6 +178,12 @@ Before considering any change complete:
 
     **The renderer needs the charts' libraries locally.** Every deck loads Chart.js or ECharts from jsDelivr, which the agent sandbox cannot reach; pass local copies in `CHARTJS` and `ECHARTS`. The renderer fails a deck if any chart canvas is blank, and if the page count is not one cover plus half the slides. Writing it found #1193: stepping through seven decks froze the tab at a chart slide, so a renderer that times out on a deck is reporting a bug in the deck, not in the renderer.
 
+33. **Travel survey explorer data**: After any change to `data/nhts-india.json`, `scripts/build-nhts-explorer-data.py`, or the inline data block in `nhts.html`, run `python3 scripts/build-nhts-explorer-data.py` — then `--check` must print `PASS`. Enforced in CI via the `nhts-data` job.
+
+    **The figures are a hand transcription of a press note**, the NSO's note of 5 October 2026 on the first National Household Travel Survey, and the only check against a misread digit is the note itself. So the script asserts what the note lets it: every person figure lies between the male and female figures beside it, the overnight bus and rail shares add to the 73.5% the text states and the departure bands to its 82.0% and 94.9%, and every headline number in the text (42.6% of workers by two-wheeler, 61.9% and 41.9% of men and women who travel to work, ₹785 a month) equals the table cell it quotes.
+
+    **The mode tables add to about 101%, not 100%,** in every column of Tables 2 and 4 as printed. The note does not say why. The page shows the shares as printed and says so; do not rescale them. The note also publishes no state table, so the page is all-India only; when the state tables come out, add them to the JSON rather than to the page.
+
 ### A note on the retired maintenance Routines
 
 Between 2026-07-19 and 2026-08-04 this repo was maintained by ~12 scheduled Claude Routines (daily Supabase health, count drift, content wiring; weekly backend/i18n/link/forms/SEO; monthly fact-check). **They no longer exist**, and they left a mess worth remembering: each run pushed a `claude/routine-<name>-<date>` branch and never opened a PR, so 41 such branches accumulated carrying work that never reached `main`. The Supabase routine spent eleven days re-deriving its own history from unmerged branches and recording, in its own snapshot file, that "none of the 11 daily PRs 20260721-20260802 have ever been merged to main".
