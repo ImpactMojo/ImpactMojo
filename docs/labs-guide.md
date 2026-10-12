@@ -72,7 +72,7 @@ All studios are **free, browser-based, and require no login**.
 
 > **R & Python for Development** used to sit here. It is a seven-module course with live code and now lives in [Code School](/code/r-python.html).
 
-> The **Indian Data Navigator**, a guided field-guide to India's major public datasets, now lives in the [Dataverse](/dataverse-india.html), not Studios, since it's a guide to data sources rather than a build-something workbench.
+> India's major public datasets (Census, NSS, PLFS, NFHS and the rest) are in the [Dataverse](/dataverse.html), under the India Data category, not in Studios, since they are data sources rather than build-something workbenches.
 
 ---
 

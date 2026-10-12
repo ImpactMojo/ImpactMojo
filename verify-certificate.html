@@ -950,9 +950,11 @@ body.dark-mode .theme-btn.active, [data-theme="dark"] .theme-btn.active, html.da
 // Theme Management
 
 
-// Supabase config (loaded from js/config.js)
-var SUPABASE_URL = window.ImpactMojoConfig.SUPABASE_URL;
-var SUPABASE_ANON_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
+// Supabase config (loaded from js/config.js). Named apart from the
+// SUPABASE_URL constant that js/auth.js declares, which a second
+// declaration here would break.
+var CERT_API_URL = window.ImpactMojoConfig.SUPABASE_URL;
+var CERT_API_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
 
 function showState(stateId) {
     ['loadingState', 'foundState', 'notFoundState', 'errorState'].forEach(function(id) {
@@ -1014,11 +1016,11 @@ async function verifyCertificate(e) {
 
     try {
         // Query certificates table via Supabase REST API
-        var url = SUPABASE_URL + '/rest/v1/certificates?certificate_number=eq.' + encodeURIComponent(certNum) + '&select=course_name,certificate_number,issued_at,user_id';
+        var url = CERT_API_URL + '/rest/v1/certificates?certificate_number=eq.' + encodeURIComponent(certNum) + '&select=course_name,certificate_number,issued_at,user_id';
         var resp = await fetch(url, {
             headers: {
-                'apikey': SUPABASE_ANON_KEY,
-                'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                'apikey': CERT_API_KEY,
+                'Authorization': 'Bearer ' + CERT_API_KEY,
                 'Content-Type': 'application/json'
             }
         });
@@ -1036,11 +1038,11 @@ async function verifyCertificate(e) {
             var recipientName = 'Verified Learner';
             try {
                 if (!cert.user_id) throw new Error('no user');
-                var profileUrl = SUPABASE_URL + '/rest/v1/profiles?id=eq.' + encodeURIComponent(cert.user_id) + '&select=full_name,display_name';
+                var profileUrl = CERT_API_URL + '/rest/v1/profiles?id=eq.' + encodeURIComponent(cert.user_id) + '&select=full_name,display_name';
                 var profileResp = await fetch(profileUrl, {
                     headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                        'apikey': CERT_API_KEY,
+                        'Authorization': 'Bearer ' + CERT_API_KEY,
                         'Content-Type': 'application/json'
                     }
                 });

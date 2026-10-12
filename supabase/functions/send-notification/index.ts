@@ -529,10 +529,10 @@ serve(async (req: Request) => {
 <li><strong>7 Workshop Pro templates</strong> — facilitation-ready canvases for ToC, stakeholder mapping, and more</li>
 </ul>
 <p>It starts at just <strong>\u20B9399/month</strong> (about $5). And honestly, if you're a development practitioner working in South Asia, these tools will save you hours every week.</p>
-<p>We wrote a longer page explaining everything — <a href="https://www.impactmojo.in/premium-letter.html" style="color:#F59E0B">have a read when you get a chance</a>.</p>
+<p>We wrote a longer page explaining everything — <a href="https://www.impactmojo.in/upgrade.html" style="color:#F59E0B">have a read when you get a chance</a>.</p>
 <hr style="border:none;border-top:1px solid #E2E8F0;margin:24px 0">
 <p style="color:#64748B;font-size:14px"><strong>Not ready for a subscription?</strong> That's completely fine. If ImpactMojo has been useful to you and you'd like to support what we're building, you can also make a one-time contribution of any amount — it goes directly towards keeping the platform free for everyone. <a href="https://www.impactmojo.in/index.html#support" style="color:#F59E0B">Support ImpactMojo</a></p>`,
-            "/premium-letter.html"
+            "/upgrade.html"
           );
 
           await admin.rpc("notify_user", {
@@ -540,7 +540,7 @@ serve(async (req: Request) => {
             p_type: "welcome",
             p_title: "Ready to go deeper? Meet ImpactMojo Premium",
             p_body: "Professional-grade tools for serious development practitioners.",
-            p_link: "/premium-letter.html",
+            p_link: "/upgrade.html",
             p_metadata: { drip_stage: "day21_premium" },
           });
 
