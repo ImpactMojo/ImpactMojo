@@ -1221,7 +1221,7 @@ window.LV = (function() {
 
   function renderAll() {
     lineChart('c-poverty',
-      [{x:1990,y:35.5},{x:2000,y:27.4},{x:2010,y:14.3},{x:2015,y:8.8},{x:2019,y:7.6}],
+      [{x:1990,y:37.9},{x:2000,y:29.7},{x:2010,y:16.7},{x:2015,y:10.4},{x:2019,y:8.4}],
       { yMax: 44, color: '#0d9488', area: true, valfmt: function(v){return v+'%';}, xfmt: function(x){return "'"+String(x).slice(2);} });
 
     lineChart('c-u5mr',
@@ -1258,7 +1258,7 @@ window.LV = (function() {
     donut('c-energy',
       [{label:'Coal',v:75,color:'#475569'},{label:'Hydro',v:8,color:'#2563eb'},{label:'Solar',v:7,color:'#f59e0b'},
        {label:'Wind',v:3,color:'#0ea5a4'},{label:'Nuclear',v:3,color:'#7c3aed'},{label:'Gas',v:2,color:'#94a3b8'},{label:'Bioenergy',v:2,color:'#16a34a'}],
-      { centerBig: '75%', centerSub: 'still fossil' });
+      { centerBig: '77%', centerSub: 'still fossil' });
 
     dumbbell('c-gender',
       [{label:'Adult literacy',m:84.7,f:70.3},{label:'College enrolment',m:28.3,f:28.5},
@@ -1938,8 +1938,8 @@ window.LV = (function() {
       how:"Each scenario is a row: a dot for the best estimate, a whisker for the very likely range, with the Paris 1.5°C and 2°C lines marked.",
       look:"Where each whisker sits relative to the two dashed Paris lines." },
     'c-poverty': { tag:'Poverty', title:'The great escape',
-      takeaway:"The share of people in extreme poverty fell from about 36% to under 8% in one generation.",
-      source:"World Bank Poverty & Inequality Platform ($2.15/day, 2017 PPP), current PIP release.",
+      takeaway:"The share of people in extreme poverty fell from about 38% to under 9% in one generation.",
+      source:"World Bank Poverty & Inequality Platform, via Our World in Data ($2.15/day, 2017 PPP). Since June 2025 the World Bank's headline line is $3.00/day at 2021 PPP, which puts more people below it.",
       why:"A line over time is the clearest way to show a trend. The filled area under it gives the fall some weight without adding any new information.",
       how:"A smooth line through the data points, endpoints labelled, axis starting at zero so the drop isn't exaggerated.",
       look:"The steady fall, and the two endpoint numbers." },

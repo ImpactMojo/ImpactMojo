@@ -52,7 +52,7 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **Dataverse** | 333 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories: dark mode, category filters, responsive cards |
 | **184 Reading Companions** | Interactive study companions for development economics, political economy, statistics, leadership, and productivity texts |
 | **12 AI Study Companions** | NotebookLM-powered study notebooks covering the flagship courses |
-| **90 Handouts** | Downloadable resources across 6 learning tracks |
+| **84 Handouts** | Downloadable resources across 6 learning tracks |
 | **26 Deep Dives** | Curated, annotated reading guides: working syllabi on contested development questions |
 | **6 Timelines** | Citation-backed visual histories (113 nodes / 44 eras): development thinking, Indian policy, MEL methods, climate, rights, gender & work |
 | **18 Practice Packs** | 4-module applied workbooks with capstone builders: 9 subject + 9 method packs |
@@ -287,7 +287,7 @@ Interactive simulations powered by **MiroFish AI agents** with **Indian folk art
 - [**PolicyDhara**](https://github.com/Varnasr/PolicyDhara), Auto-updating tracker of Indian development policies across 22 sectors
 - **BCT Repository**: 203 behavior change techniques with definitions, examples, and evidence ratings
 - **Dataverse**: 333 curated tools, datasets, APIs, MCP servers, and platforms for social impact research
-- **90 Handouts**: Downloadable HTML resources across 6 learning tracks
+- **84 Handouts**: Downloadable HTML resources across 6 learning tracks
 - **Learning Loops Blog**: Articles, tutorials, case studies, platform updates
 - **Between the Logframes Podcast**: Development conversations on MEAL, ToC, and impact work
 
