@@ -1,4 +1,4 @@
-/* Code Studio engine: shared by every page under /code/.
+/* Code School engine: shared by every page under /code/.
  *
  * Runs code in the visitor's browser, nothing on a server:
  *   R       WebR (webr.r-wasm.org), packages from repo.r-wasm.org

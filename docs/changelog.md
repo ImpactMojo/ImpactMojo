@@ -2,6 +2,20 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.375.0 — October 12, 2026 (Free Studio, Pro Studio and Code School)
+
+### For Learners
+
+- **Free Studio and Pro Studio** — the 35 free interactive tools are now called Free Studio, so the name says what separates them from the 13 paid Pro Studio tools.
+- **Code School** — the coding and data-tool courses, until now called Code Studio, have a name that no longer sounds like either Studio. The address is unchanged at /code/.
+
+### Changed
+
+- "Studios" and "Interactive Studios" became Free Studio in the navigation, hub pages, back-links, catalogue filter, search and share cards, and counts read "35 Free Studio tools". Free Studio share cards now carry their own label, and Pro Studio cards a different colour. The counts check recognises the new phrasing.
+- "Code Studio" became Code School across its 17 pages, the navigation, search, the FAQ and the pages that link to it. The old name stays searchable.
+- The Code School landing page was rewritten: its intro no longer opens on a fragment, the badge above the heading no longer repeats the heading, and the section notes are full sentences.
+- The Free Studio hub and catalogue filter said 36 in four places after the two sampling Studios were merged. They now say 35.
+
 ## v10.374.0 — October 12, 2026 (a Deep Dive on what NFHS-6 stopped counting)
 
 ### For Learners

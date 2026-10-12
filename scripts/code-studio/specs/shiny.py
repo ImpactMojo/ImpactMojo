@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Shiny Dashboards for Development Data: R and Python Shiny apps that open in Shinylive."""
 
-# District summaries computed from the Code Studio households table (invented data).
+# District summaries computed from the Code School households table (invented data).
 # Module 5 recomputes them on the page; keep the two in step if the table changes.
 ROWS = [
     ("Bihar", "Gaya", 2698, 70.8, 87.5, 33.3),
@@ -29,7 +29,7 @@ def r_data(cols):
         vals = [_fmt(r[i]) for r in ROWS]
         lines.append("  %s = c(%s,\n        %s)" % (c, ", ".join(vals[:5]), ", ".join(vals[5:])))
     return ("# Illustrative data, invented for teaching: one row per district,\n"
-            "# summarised from the Code Studio households table.\n"
+            "# summarised from the Code School households table.\n"
             "districts <- data.frame(\n" + ",\n".join(lines) + "\n)")
 
 
@@ -40,7 +40,7 @@ def py_data(cols):
         vals = [_fmt(r[i]) for r in ROWS]
         lines.append('    "%s": [%s,\n        %s],' % (c, ", ".join(vals[:5]), ", ".join(vals[5:])))
     return ("# Illustrative data, invented for teaching: one row per district,\n"
-            "# summarised from the Code Studio households table.\n"
+            "# summarised from the Code School households table.\n"
             "districts = pd.DataFrame({\n" + "\n".join(lines) + "\n})")
 
 
@@ -460,7 +460,7 @@ PAGE = {
     "card": "Build a filterable district dashboard in R and Python Shiny, opened in Shinylive.",
     "datasets": ["households", "districts"],
     "engine_note": ("<strong>Two kinds of cell on this page.</strong> Ordinary R and Python cells run here, as in "
-                    "the other Code Studio courses. The first Run downloads the engine once (R about 7&nbsp;MB, "
+                    "the other Code School courses. The first Run downloads the engine once (R about 7&nbsp;MB, "
                     "Python about 10&nbsp;MB), with <code class=\"inline\">households.csv</code> and <code "
                     "class=\"inline\">districts.csv</code> loaded for you. Shiny cells carry an <strong>Open in "
                     "Shinylive</strong> button instead. It opens the app on Posit's Shinylive site in a new tab. "

@@ -178,6 +178,8 @@ TERMS = [
     (r"premium\s+tools?", "premium-tools"),
     # Renamed: the tools are Pro Studio now, and the count is the same 13.
     (r"pro\s+studio\s+tools?", "premium-tools"),
+    # And the free ones are Free Studio, counted as "35 Free Studio tools".
+    (r"free\s+studio\s+tools?", "labs"),
     (r"flagship\s+courses?", "flagship-courses"),
     (r"foundational\s+courses?", "foundational-courses"),
     # The site rarely writes the full phrase. "19 flagship + 51 foundational",
@@ -267,6 +269,8 @@ LABEL_KEYS = [
     ("dataverse", "dataverse"),
     ("premium tools", "premium-tools"),
     ("pro studio tools", "premium-tools"),
+    ("free studio tools", "labs"),
+    ("free studio", "labs"),
     ("reading companions", "reading-companions"),
     ("book companions", "reading-companions"),
     ("facilitator kits", "facilitator-kits"),
@@ -342,6 +346,7 @@ TILE_TERMS = {
     "games": "games",
     "labs": "labs",
     "studios": "labs",
+    "free studio": "labs",
     "reading companions": "reading-companions",
     "deep dives": "deep-dives",
     "data notes": "data-notes",

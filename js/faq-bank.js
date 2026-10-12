@@ -275,9 +275,9 @@
     { re: /whatsapp|plc|community|peer.*learn/i,
       a: "Join our **WhatsApp Professional Learning Community**! Connect with practitioners, researchers, and changemakers across South Asia. Share resources, discuss fieldwork challenges, and grow together. Look for the green WhatsApp section on the homepage." },
 
-    // Code Studio
-    { re: /code studio|\bcoding\b|\bstata\b|\bspss\b|power ?bi|\bdax\b|tidyverse|pandas|\bsql\b|\bqgis\b|openrefine|kobo|\bodk\b/i,
-      a: () => "**Code Studio** has " + CODE.length + " courses. R, Python, SQL, the tidyverse, pandas and Shiny run in your browser with nothing to install; guided courses cover Stata, SPSS, Power BI, jamovi and JASP, OpenRefine, Open Data Editor, QGIS, KoboToolbox and ODK, spreadsheets, and Git with Quarto.\n\n" + listCode() + "\n\nAll courses: /code/" },
+    // Code School
+    { re: /code s(?:tudio|chool)|\bcoding\b|\bstata\b|\bspss\b|power ?bi|\bdax\b|tidyverse|pandas|\bsql\b|\bqgis\b|openrefine|kobo|\bodk\b/i,
+      a: () => "**Code School** has " + CODE.length + " courses. R, Python, SQL, the tidyverse, pandas and Shiny run in your browser with nothing to install; guided courses cover Stata, SPSS, Power BI, jamovi and JASP, OpenRefine, Open Data Editor, QGIS, KoboToolbox and ODK, spreadsheets, and Git with Quarto.\n\n" + listCode() + "\n\nAll courses: /code/" },
 
     // Data Room
     { re: /data room|data explorers?|how many explorers|which explorers|all (the )?explorers|travel survey|nhts|commut(e|ing)|caste lists?|exterior caste|obc (central )?list|central list|mandal (commission|list)/i,
@@ -289,7 +289,7 @@
 
     // Flagship count
     { re: /how many.*course|flagship|all.*course/i,
-      a: () => "We have **21 flagship courses** and **80 foundational courses**, 101 in all, plus " + CODE.length + " Code Studio courses. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
+      a: () => "We have **21 flagship courses** and **80 foundational courses**, 101 in all, plus " + CODE.length + " Code School courses. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
 
     // PoA specific
     { re: /poa|politics.*aspiration|nrega|rti|nfsa|forest.*right/i,
