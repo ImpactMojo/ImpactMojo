@@ -290,6 +290,18 @@ def render_index(page, others):
        "lede": page["lede"], "intro": page.get("intro", ""), "sections": "\n".join(sections), "footer": FOOTER}
 
 
+
+def _share():
+    """The share-tag pass (scripts/build-social-tags.py), applied to every page
+    this script writes, so a rebuild keeps the canonical, Open Graph and card
+    tags instead of stripping them."""
+    import importlib.util as _u
+    _sp = _u.spec_from_file_location("build_social_tags", ROOT / "scripts" / "build-social-tags.py")
+    _m = _u.module_from_spec(_sp)
+    _sp.loader.exec_module(_m)
+    return _m
+
+
 def main():
     check = "--check" in sys.argv
     pages = [load(p) for p in sorted(SPECS.glob("*.py")) if not p.name.startswith("_")]
@@ -300,6 +312,9 @@ def main():
         out["%s.html" % p["slug"]] = render_lesson(p)
     if index:
         out["index.html"] = render_index(index[0], others)
+    share = _share()
+    for name in list(out):
+        out[name] = share.apply("code/" + name, out[name])
     stale = []
     OUT.mkdir(exist_ok=True)
     for name, text in out.items():

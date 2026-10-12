@@ -228,6 +228,26 @@ jobs:
       - name: Check the ratchet
         run: python3 scripts/check-script-em-dashes.py
 
+  social-tags:
+    name: Every page has its share tags and its own card
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Every indexable page carries one share block: a canonical the live
+      # site answers 200 for (Netlify lowercases paths), Open Graph and
+      # Twitter tags, and a card drawn for that page. A page whose title
+      # changes points at a card that does not exist yet, so this fails until
+      # render-social-cards.mjs has drawn it. The card is not drawn here: CI
+      # has no reason to install a browser for it.
+      - name: Check the share tags and cards
+        run: python3 scripts/build-social-tags.py --check
+
   inline-css:
     name: Every inline stylesheet closes what it opens
     runs-on: ubuntu-latest

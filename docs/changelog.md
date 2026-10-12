@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.367.0 — October 12, 2026 (every page shares as itself)
+
+### For Learners
+
+- **Every page now has its own preview card** — a link to a course, handout, book companion, Studio or game shows that page's title and section in WhatsApp, LinkedIn and X, instead of one picture shared by the whole site.
+
+### Fixed
+
+- **Canonical links and sitemap rows pointed at addresses that redirect, share previews were identical and out of date, and the Sampling Toolkit page could not be reached** (#1207). The site now tells search engines the address each page actually answers at, every page carries complete Open Graph and Twitter tags with its own card, the old shared card no longer advertises counts from months ago, and the Studios card for Sampling Toolkit opens its own page.
+
 ## v10.366.0 — October 12, 2026 (the house style, applied across the site)
 
 ### Fixed

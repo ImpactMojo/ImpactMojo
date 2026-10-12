@@ -69,11 +69,17 @@ def include(path):
 
 
 def to_url(path):
+    """The address the live site answers 200 for. Netlify lowercases every
+    path, so /Labs/x.html is a 301 to /labs/x.html; a sitemap row that
+    redirects is reported in Search Console as a page with a redirect. Spaces
+    (the Handouts folders) must be percent-encoded in a sitemap."""
+    from urllib.parse import quote
+    path = path.lower()
     if path == "index.html":
         return SITE + "/"
     if path.endswith("/index.html"):
-        return SITE + "/" + path[: -len("index.html")]
-    return SITE + "/" + path
+        return SITE + "/" + quote(path[: -len("index.html")], safe="/,")
+    return SITE + "/" + quote(path, safe="/,")
 
 
 def main():
