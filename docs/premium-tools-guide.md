@@ -18,8 +18,6 @@ You build in the page without signing in. Exporting or printing the result asks 
 |---|---|
 | [Research Question Builder](/premium-tools/rq-builder.html) | A research question framed with PICO or SPIDER |
 | [ToR Builder](/premium-tools/tor-builder.html) | A structured Terms of Reference for an evaluation or study, with a costing sheet |
-| [Logframe Builder](/premium-tools/logframe-pro.html) | A logical-framework matrix: indicators, means of verification, assumptions |
-| [Empathy Mapping](/premium-tools/empathy-pro.html) | A map of what people say, think, do and feel before you design for them |
 | [AI Strategy Canvas](/premium-tools/ai-canvas-pro.html) | A responsible-AI opportunities and risks canvas for a programme |
 | [Statistical Code Converter](/premium-tools/code-converter-pro.html) | Analysis code translated between R, Python and Stata, in the browser |
 | [Qualitative Insights Lab](/premium-tools/qual-insights-lab.html) | Coded and themed qualitative data, without leaving the page |

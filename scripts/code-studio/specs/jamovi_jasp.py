@@ -68,6 +68,11 @@ PAGE = {
         {"tab": "What they are",
          "title": "Two free statistics programs built on R",
          "blocks": [
+             {"t": "info", "html": "<strong>Which first?</strong> This page is the hands-on walk-through: open "
+                                   "jamovi or JASP and do each analysis as you read. The "
+                                   "<a href=\"/101-courses/stats-without-code.html\" style=\"color:var(--accent-color)\">"
+                                   "Statistics Without Code 101</a> deck covers the same ground as concepts and "
+                                   "judgement, so take it first if the tests themselves are new to you."},
              {"t": "p", "html": "jamovi and JASP look like SPSS: a spreadsheet of data, menus of analyses, and "
                                 "tables of results that update as you tick options. Both are free, both are open "
                                 "source, and both run R underneath. For a district team, a small NGO or a "
@@ -409,7 +414,7 @@ PAGE = {
         {"href": "/code/stata.html", "title": "Stata Syntax for Development Data",
          "desc": "Do-files, merges and svyset for NFHS-style surveys."},
         {"href": "/101-courses/stats-without-code.html", "title": "Statistics Without Code 101",
-         "desc": "The ideas behind t-tests, ANOVA and regression, without software."},
+         "desc": "The same ground as a slide deck: which test to choose, and how to read and report it."},
         {"href": "/101-courses/bi-analysis.html", "title": "Bivariate Analysis 101",
          "desc": "Crosstabs, correlation and comparing means, explained."},
     ],

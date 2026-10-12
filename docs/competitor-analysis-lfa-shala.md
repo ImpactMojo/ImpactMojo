@@ -38,7 +38,7 @@ ImpactMojo is **broader and deeper** across the whole MEL lifecycle. Direct comp
 
 | Capability | LFA Shala | ImpactMojo |
 |------------|-----------|------------|
-| Theory of Change builder | ❌ none | ✅ `toc-builder.html` + `toc-workbench.html` (interactive, save/export/print) + `Labs/toc-lab.html` |
+| Theory of Change builder | ❌ none | ✅ `Labs/toc-lab.html` (guided steps, free canvas with BCTs, guide, save/export/print) |
 | Full MEL framework tool | ❌ | ✅ `Labs/mel-lab.html`, MEL Framework, Indicator Development, Data Collection, Analysis & Use, **Indicator Matrix**, MEL Calendar & Budget, Reporting & Learning (export/print/localStorage) |
 | LogFrame guided practice | ⚠️ builder-only | ✅ `practice-packs/logframe-building/`, "Building a Logframe That Actually Tracks" (4 modules, ~100 min, DAC-compatible) |
 | Impact evaluation | ❌ | ✅ `Labs/impact-evaluation-lab.html`, `DeepDives/impact-measurement-foundations.html` |

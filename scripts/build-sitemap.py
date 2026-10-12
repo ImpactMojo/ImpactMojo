@@ -25,6 +25,14 @@ EXCLUDE_FILES = {
     "404.html", "offline.html", "login.html", "signup.html",
     "forgot-password.html", "reset-password.html", "account.html",
     "org-dashboard.html", "PAGE-TEMPLATE.html",
+    # Not for search engines (2026-10-12 sweep): a client's work samples, two
+    # internal marketing pages, a post-payment thank-you, and a superseded
+    # copy of a 101 deck.
+    "work-samples/03_mel_architecture_diagram.html",
+    "work-samples/04_thinking_note.html",
+    "work-samples/05_wage_gap_visualisation.html",
+    "content-marketing-kit.html", "linkedin-claude-code-visual.html",
+    "SupportGifts/thankyou.html", "101-courses/native/dev-economics.html",
 }
 EXCLUDE_SUBSTRINGS = ("_template", "template.html", "-TEMPLATE")
 

@@ -26,7 +26,7 @@
     dataverse: { icon: sargamImg('si_Bar_chart'),   label: 'Dataverse',     color: '#6366F1' },
     course:    { icon: sargamImg('si_Book'),         label: 'Course',        color: '#0EA5E9' },
     game:      { icon: sargamImg('si_Activity'),     label: 'Game',          color: '#F59E0B' },
-    lab:       { icon: sargamImg('si_Wrench'),          label: 'Studio',           color: '#10B981' },
+    lab:       { icon: sargamImg('si_Wrench'),          label: 'Free Studio',      color: '#10B981' },
     page:      { icon: sargamImg('si_Article'),      label: 'Page',          color: '#8B5CF6' },
     'book-summary':  { icon: sargamImg('si_Book'),          label: 'Reading Companion', color: '#D97706' },
     blog:            { icon: sargamImg('si_Article'),       label: 'Blog Post',         color: '#0891B2' },
@@ -42,7 +42,8 @@
     challenge:       { icon: sargamImg('si_Flag'),          label: 'Challenge',         color: '#DC2626' },
     showcase:        { icon: sargamImg('si_Image'),          label: 'Work Sample',       color: '#7C2D12' },
     special:         { icon: sargamImg('si_Library_books'), label: 'Special',           color: '#9333EA' },
-    'field-radio':   { icon: sargamImg('si_Mic'),           label: 'Field Radio',       color: '#0EA5E9' }
+    'field-radio':   { icon: sargamImg('si_Mic'),           label: 'Field Radio',       color: '#0EA5E9' },
+    explorer:        { icon: sargamImg('si_Bar_chart'),     label: 'Data Room',         color: '#0F766E' }
   };
 
   /* ---- Load Fuse.js ---- */

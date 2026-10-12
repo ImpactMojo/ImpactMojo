@@ -2,15 +2,15 @@
 
 ## What Is The Long View?
 
-The Long View is **ImpactMojo's data-visualization studio**, a page of original charts built by hand from real, cited evidence on the things we teach: poverty, child survival, caste, climate, gender and women's work. It is not a slideshow of stock graphics. Every chart is drawn live in your browser from a named dataset, with the source printed underneath so you can check it.
+The Long View is **ImpactMojo's data-visualization gallery**, a page of original charts built by hand from real, cited evidence on the things we teach: poverty, child survival, caste, climate, gender and women's work. It is not a slideshow of stock graphics. Every chart is drawn live in your browser from a named dataset, with the source printed underneath so you can check it.
 
 The Long View is **free, browser-based, and requires no login**. There is nothing to install and no build step: the charts are hand-coded SVG that render on the page and adapt to your light or dark theme.
 
-Open the studio at [/the-long-view.html](/the-long-view.html).
+Open the gallery at [/the-long-view.html](/the-long-view.html).
 
 ---
 
-## What's in the Studio
+## What's in the gallery
 
 The page is organised into two "wings", with a gallery of classics and modern greats one click further on.
 
@@ -27,7 +27,7 @@ Each chart is built from a public dataset and captioned with its source. They de
 
 The four map forms sit together on purpose. A hex cartogram gives every state one tile and colours it by a *rate*; a dot-density map draws the *count* as scattered dots; a Dorling cartogram sizes each state as a circle and throws the coastline away; a tilegram gives each state as many tiles as it has people, so the map itself becomes a bar chart. Read in sequence they are a short course in what a map decides to encode, and in how differently the same country can look depending on that decision.
 
-A twenty-sixth panel, **"How to read a chart honestly,"** is a method note rather than a data chart: it shows the same three numbers on a truncated axis and a zero axis to demonstrate Tufte's "lie factor." Every chart in the studio starts its axis at zero.
+A twenty-sixth panel, **"How to read a chart honestly,"** is a method note rather than a data chart: it shows the same three numbers on a truncated axis and a zero axis to demonstrate Tufte's "lie factor." Every chart in the gallery starts its axis at zero.
 
 ### The Frameworks Wing: the ideas behind the numbers
 
@@ -43,7 +43,7 @@ A separate gallery at [/the-long-view/gallery.html](/the-long-view/gallery.html)
 
 Each Data Wing chart is a card with three parts: the **chart** itself, a plain-language **insight** ("what to take away"), and a **source** line naming the dataset. Click any chart to open a dedicated page ([/the-long-view/chart.html](/the-long-view/chart.html)) with a fuller breakdown: the takeaway, the source, *why this chart form was chosen*, *how it was built*, and *what to look for*.
 
-The studio is meant to be read as much as browsed. Use it to:
+The gallery is meant to be read as much as browsed. Use it to:
 
 - **Teach with honest evidence**: every figure is cited and every axis starts at zero.
 - **Learn chart craft**: the "why this form" and "how it's built" notes make each chart a small lesson in matching a visualization to its data.

@@ -140,18 +140,18 @@ TEMPLATE = r"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The ImpactMojo 101 Deck Library — {{TOTAL}} Native Interactive Courses</title>
-<meta name="description" content="The ImpactMojo 101 Deck Library — {{TOTAL}} free, native, ~100-slide interactive course decks on development methods, theory and practice for South Asia. CC BY-NC-ND, free forever.">
+<title>The ImpactMojo 101 Series — {{TOTAL}} Native Interactive Courses</title>
+<meta name="description" content="The ImpactMojo 101 Series — {{TOTAL}} free, native, ~100-slide interactive course decks on development methods, theory and practice for South Asia. CC BY-NC-ND, free forever.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.impactmojo.in/101-courses/decks.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="The ImpactMojo 101 Deck Library">
+<meta property="og:title" content="The ImpactMojo 101 Series">
 <meta property="og:description" content="{{TOTAL}} free, native, ~100-slide interactive course decks for development practitioners across South Asia.">
 <meta property="og:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
 <meta property="og:url" content="https://www.impactmojo.in/101-courses/decks.html">
 <meta property="og:site_name" content="ImpactMojo">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The ImpactMojo 101 Deck Library">
+<meta name="twitter:title" content="The ImpactMojo 101 Series">
 <meta name="twitter:description" content="{{TOTAL}} free, native, ~100-slide interactive course decks.">
 <meta name="twitter:image" content="https://www.impactmojo.in/assets/images/ImpactMojo%20Logo.png">
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
@@ -230,7 +230,7 @@ main{max-width:1180px;margin:0 auto;padding:44px 24px 20px}
 <section class="hero">
   <div class="hero-in">
     <div class="hero-eyebrow">ImpactMojo 101 Series &middot; Free Forever</div>
-    <h1 class="hero-title">The 101 Deck Library</h1>
+    <h1 class="hero-title">The 101 Series</h1>
     <p class="hero-sub">{{TOTAL}} native, interactive, ~100-slide course decks on development methods, theory and practice &mdash; built for South Asia, with charts, diagrams and cited sources throughout. No embeds, no logins, free forever.</p>
     <div class="hero-stats">
       <div class="hstat"><b>{{TOTAL}}</b><span>Native Decks</span></div>

@@ -365,7 +365,7 @@ async function issueCertificate(
       const isExplorer = tierProfile?.subscription_tier === "explorer";
       const premiumPitch = isExplorer
         ? `<hr style="border:none;border-top:1px solid #E2E8F0;margin:24px 0">
-<p style="color:#64748B;font-size:14px"><strong>Want to keep the momentum going?</strong> ImpactMojo Premium gives you professional-grade tools like VaniScribe AI transcription, realistic datasets, and workshop templates — starting at just \u20B9399/month. <a href="https://www.impactmojo.in/premium-letter.html" style="color:#F59E0B">Learn more</a></p>`
+<p style="color:#64748B;font-size:14px"><strong>Want to keep the momentum going?</strong> ImpactMojo Premium gives you professional-grade tools like VaniScribe AI transcription, realistic datasets, and workshop templates — starting at just \u20B9399/month. <a href="https://www.impactmojo.in/upgrade.html" style="color:#F59E0B">Learn more</a></p>`
         : "";
 
       const html = `<!DOCTYPE html>

@@ -146,9 +146,9 @@ Shareable poster series that turn research, evaluation, and policy concepts into
 
 ---
 
-## ImpactLex (390+ terms)
+## ImpactLex (494 terms)
 
-ImpactLex is a **development sector dictionary**: a searchable, browsable collection of 390+ terms, formulas, and case studies with clear, practitioner-friendly definitions. It's hosted on ImpactMojo at [/impactlex/](https://www.impactmojo.in/impactlex/) and works as a Progressive Web App (PWA), which means:
+ImpactLex is a **development sector dictionary**: a searchable, browsable collection of 494 terms, formulas, and case studies with clear, practitioner-friendly definitions. It's hosted on ImpactMojo at [/impactlex/](https://www.impactmojo.in/impactlex/) and works as a Progressive Web App (PWA), which means:
 
 - It **works offline** once you've loaded it: useful when you're in the field without reliable internet
 - You can **add it to your phone's home screen** like a regular app
@@ -174,7 +174,7 @@ Each case study is tagged by:
 
 ---
 
-## DevDiscourses (500+ papers and books)
+## DevDiscourses (687 papers, books and reports)
 
 DevDiscourses is a curated reading list of over **500 academic papers, books, and reports** that matter for development practice. This isn't a random database: every entry has been selected because it's genuinely useful for practitioners, not just academics.
 
@@ -188,7 +188,7 @@ Entries are organized by topic and tagged for easy browsing.
 
 Dataverse is your starting point for development data. It includes:
 
-- **333 datasets, tools, and APIs** from sources like the World Bank, DHS, NFHS, NSSO, and more
+- **343 datasets, tools, and APIs** from sources like the World Bank, DHS, NFHS, NSSO, and more
 - **APIs** for programmatic data access
 - **Tools** for data analysis and visualization
 - **MCP servers** for AI-assisted development research
@@ -248,7 +248,7 @@ ImpactMojo has a **Model Context Protocol (MCP) server** that lets any AI assist
 **11 tools available:**
 - `search_content`, Full-text search across all 700+ content items
 - `lookup_bct` / `search_bcts` / `list_bct_categories`, 203 BCT techniques with South Asian context and case studies
-- `browse_dataverse` / `search_dataverse`, 333 tools, datasets, APIs
+- `browse_dataverse` / `search_dataverse`, 343 tools, datasets, APIs
 - `list_challenges` / `get_challenge`, Practice exercises with rubrics
 - `list_courses`, 101 courses across 6 learning tracks
 - `get_game_info`, 18 simulation games with AI agent personas

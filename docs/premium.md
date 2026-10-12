@@ -12,10 +12,10 @@ Everything you need to learn, teach, and facilitate:
 - **All games**: 16 economics simulations, perfect for workshops
 - **All labs**: 19 interactive workbenches (Theory of Change builder, research design tools, etc.)
 - **All handouts**: 400+ downloadable reference sheets
-- **ImpactLex**: 390+ development terms dictionary (now hosted on ImpactMojo)
+- **ImpactLex**: 494 development terms dictionary (now hosted on ImpactMojo)
 - **Dev Case Studies**: 200 curated cases from 117 countries
 - **DevDiscourses**: 500+ curated research papers and books
-- **Dataverse**: 333 data tools, APIs, and datasets
+- **Dataverse**: 343 data tools, APIs, and datasets
 - **Field Notes & Podcast**. The Margin Muse (field observations) and Between the Logframes (podcast)
 - **Multilingual content**: English, Hindi, Tamil, Bengali, Telugu, Marathi
 

@@ -449,6 +449,19 @@ body.light-mode .v3-inline-icon { filter: none; }
 :root{--im-ink-bad:#991B1B;--im-ink-warn:#92400E;}
 @media (prefers-color-scheme: dark){:root{--im-ink-bad:#FCA5A5;--im-ink-warn:#FCD34D;}}
 [data-theme="dark"],body.dark-mode,html.dark{--im-ink-bad:#FCA5A5;--im-ink-warn:#FCD34D;}
+
+/* Folded in from the former employer verification page */
+.verify-card label.field-label { display: block; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+.verify-form.stacked { flex-direction: column; gap: 0.75rem; }
+.verify-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.verify-row .verify-input { min-width: 0; }
+.form-hint { margin-top: 0.1rem; font-size: 0.85rem; color: var(--text-secondary); }
+.form-error { font-size: 0.88rem; color: var(--im-ink-bad, #991B1B); font-weight: 600; display: none; }
+.form-error.visible { display: block; }
+.verify-steps { list-style: none; counter-reset: step; margin-bottom: 1rem; }
+.verify-steps li { position: relative; padding: 0.5rem 0 0.5rem 2.5rem; color: var(--text-secondary); }
+.verify-steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0.5rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: #0369A1; color: #fff; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; }
+.info-section h4 { font-size: 1rem; margin: 1.25rem 0 0.5rem; color: var(--text-primary); }
 </style>
 <script src="/js/config.js?v=7e6af861"></script>
 <style>
@@ -742,15 +755,20 @@ body.dark-mode .theme-btn.active, [data-theme="dark"] .theme-btn.active, html.da
     <section class="ib-hero"><div class="ib-hero-in">
         <span class="ib-eyebrow">Verification</span>
         <h1>Verify certificate</h1>
-        <p class="ib-tagline">Enter a certificate number to verify its authenticity.</p>
+        <p class="ib-tagline">Check that an ImpactMojo certificate is genuine. Employers and recruiters can paste the certificate ID or the verification link from a candidate's CV or profile.</p>
     </div></section>
 
     <div class="container">
         <!-- Search -->
         <div class="verify-card">
-            <form class="verify-form" onsubmit="verifyCertificate(event)">
-                <input type="text" class="verify-input" id="certInput" placeholder="e.g. IM-DEVECON-2026-A3F7B2" autocomplete="off" spellcheck="false">
-                <button type="submit" class="verify-btn" id="verifyBtn">Verify</button>
+            <form class="verify-form stacked" id="verifyForm" onsubmit="verifyCertificate(event)">
+                <label class="field-label" for="certInput">Certificate ID or verification link</label>
+                <div class="verify-row">
+                    <input type="text" class="verify-input" id="certInput" placeholder="e.g. IM-DEVECON-2026-A3F7B2 or a full verify link" autocomplete="off" spellcheck="false" aria-describedby="formHint formError">
+                    <button type="submit" class="verify-btn" id="verifyBtn">Verify</button>
+                </div>
+                <p class="form-hint" id="formHint">You can paste the whole link a candidate shared. The ID is read from it automatically.</p>
+                <p class="form-error" id="formError" role="alert"></p>
             </form>
         </div>
 
@@ -767,7 +785,7 @@ body.dark-mode .theme-btn.active, [data-theme="dark"] .theme-btn.active, html.da
             <div class="certificate-display">
                 <div class="cert-status-bar">
                     <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>Certificate Verified</span>
+                    <span>Valid: Certificate Verified</span>
                 </div>
                 <div class="cert-body">
                     <div class="cert-header">
@@ -830,7 +848,8 @@ body.dark-mode .theme-btn.active, [data-theme="dark"] .theme-btn.active, html.da
                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
                 </div>
                 <h3>Certificate not found</h3>
-                <p>No certificate matches this number. Please double-check the certificate number and try again.</p>
+                <p>No certificate matches this number. Please double-check it (the format is <strong>IM-COURSE-YEAR-XXXXXX</strong>) and try again.</p>
+                <p>If the candidate gave you a link, paste the whole link instead of typing the ID by hand.</p>
             </div>
         </div>
 
@@ -844,7 +863,13 @@ body.dark-mode .theme-btn.active, [data-theme="dark"] .theme-btn.active, html.da
 
         <!-- Info -->
         <div class="info-section" style="margin-top: 2rem;">
-            <h3>About ImpactMojo certificates</h3>
+            <h3>How verification works</h3>
+            <ol class="verify-steps">
+                <li>The candidate shares their certificate ID or verification link from their CV, email or LinkedIn profile.</li>
+                <li>You paste it above and select <strong>Verify</strong>. No account or sign-in is needed.</li>
+                <li>If the certificate is genuine, a green card shows the holder's name, the course and the issue date. If it is not, you see a Not Found message.</li>
+            </ol>
+            <h4>About ImpactMojo certificates</h4>
             <ul class="info-list">
                 <li>
                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
@@ -925,9 +950,11 @@ body.dark-mode .theme-btn.active, [data-theme="dark"] .theme-btn.active, html.da
 // Theme Management
 
 
-// Supabase config (loaded from js/config.js)
-var SUPABASE_URL = window.ImpactMojoConfig.SUPABASE_URL;
-var SUPABASE_ANON_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
+// Supabase config (loaded from js/config.js). Named apart from the
+// SUPABASE_URL constant that js/auth.js declares, which a second
+// declaration here would break.
+var CERT_API_URL = window.ImpactMojoConfig.SUPABASE_URL;
+var CERT_API_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
 
 function showState(stateId) {
     ['loadingState', 'foundState', 'notFoundState', 'errorState'].forEach(function(id) {
@@ -936,10 +963,51 @@ function showState(stateId) {
     if (stateId) document.getElementById(stateId).classList.add('visible');
 }
 
+function setError(msg) {
+    var el = document.getElementById('formError');
+    el.textContent = msg || '';
+    el.classList.toggle('visible', !!msg);
+}
+
+// Read a certificate ID out of a bare ID, a query string or a full link.
+// Older employer links carry ?id=, newer ones ?cert=.
+function parseCertificateId(raw) {
+    if (!raw) return '';
+    var input = String(raw).trim();
+    if (!input) return '';
+    if (/[?&](id|cert|certificate_number)=/i.test(input) || /https?:\/\//i.test(input)) {
+        var qs = input.indexOf('?') !== -1 ? input.slice(input.indexOf('?') + 1) : input;
+        try {
+            var params = new URLSearchParams(qs);
+            var val = params.get('cert') || params.get('id') || params.get('certificate_number');
+            if (val) input = val.trim();
+        } catch (_) { /* fall through to the pattern below */ }
+        if (/https?:\/\//i.test(input)) {
+            var m = input.match(/IM-[A-Z0-9]+-\d{4}-[A-Z0-9]+/i);
+            if (m) input = m[0];
+        }
+    }
+    return input.trim().toUpperCase();
+}
+
+function looksLikeCertId(id) {
+    return /^IM-[A-Z0-9]+-\d{4}-[A-Z0-9]+$/.test(id);
+}
+
 async function verifyCertificate(e) {
-    e.preventDefault();
-    var certNum = document.getElementById('certInput').value.trim().toUpperCase();
-    if (!certNum) return;
+    if (e && e.preventDefault) e.preventDefault();
+    setError('');
+    var certNum = parseCertificateId(document.getElementById('certInput').value);
+    if (!certNum) {
+        setError('Please enter a certificate ID or paste a verification link.');
+        return;
+    }
+    if (!looksLikeCertId(certNum)) {
+        setError('That does not look like an ImpactMojo certificate ID. The format is IM-COURSE-YEAR-XXXXXX.');
+        return;
+    }
+    // Show the parsed ID in the field so the reader sees what was checked.
+    document.getElementById('certInput').value = certNum;
 
     var btn = document.getElementById('verifyBtn');
     btn.disabled = true;
@@ -948,11 +1016,11 @@ async function verifyCertificate(e) {
 
     try {
         // Query certificates table via Supabase REST API
-        var url = SUPABASE_URL + '/rest/v1/certificates?certificate_number=eq.' + encodeURIComponent(certNum) + '&select=course_name,certificate_number,issued_at,user_id';
+        var url = CERT_API_URL + '/rest/v1/certificates?certificate_number=eq.' + encodeURIComponent(certNum) + '&select=course_name,certificate_number,issued_at,user_id';
         var resp = await fetch(url, {
             headers: {
-                'apikey': SUPABASE_ANON_KEY,
-                'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                'apikey': CERT_API_KEY,
+                'Authorization': 'Bearer ' + CERT_API_KEY,
                 'Content-Type': 'application/json'
             }
         });
@@ -961,7 +1029,7 @@ async function verifyCertificate(e) {
 
         var data = await resp.json();
 
-        if (data.length === 0) {
+        if (!Array.isArray(data) || data.length === 0) {
             showState('notFoundState');
         } else {
             var cert = data[0];
@@ -969,11 +1037,12 @@ async function verifyCertificate(e) {
             // Try to get the user's display name
             var recipientName = 'Verified Learner';
             try {
-                var profileUrl = SUPABASE_URL + '/rest/v1/profiles?id=eq.' + cert.user_id + '&select=full_name,display_name';
+                if (!cert.user_id) throw new Error('no user');
+                var profileUrl = CERT_API_URL + '/rest/v1/profiles?id=eq.' + encodeURIComponent(cert.user_id) + '&select=full_name,display_name';
                 var profileResp = await fetch(profileUrl, {
                     headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                        'apikey': CERT_API_KEY,
+                        'Authorization': 'Bearer ' + CERT_API_KEY,
                         'Content-Type': 'application/json'
                     }
                 });
@@ -985,12 +1054,12 @@ async function verifyCertificate(e) {
                 }
             } catch (_) { /* profile lookup is best-effort */ }
 
-            document.getElementById('certCourse').textContent = cert.course_name;
+            document.getElementById('certCourse').textContent = cert.course_name || 'ImpactMojo Course';
             document.getElementById('certRecipient').textContent = recipientName;
             document.getElementById('certNumber').textContent = cert.certificate_number;
-            document.getElementById('certDate').textContent = new Date(cert.issued_at).toLocaleDateString('en-IN', {
+            document.getElementById('certDate').textContent = cert.issued_at ? new Date(cert.issued_at).toLocaleDateString('en-IN', {
                 year: 'numeric', month: 'long', day: 'numeric'
-            });
+            }) : 'Not recorded';
             showState('foundState');
 
             // Populate Open Badge data
@@ -1036,10 +1105,10 @@ async function verifyCertificate(e) {
     }
 }
 
-// Auto-verify if cert param in URL
+// Auto-verify if the address carries a certificate (?cert=, or ?id= from older links)
 document.addEventListener('DOMContentLoaded', function() {
     var params = new URLSearchParams(window.location.search);
-    var cert = params.get('cert');
+    var cert = params.get('cert') || params.get('id');
     if (cert) {
         document.getElementById('certInput').value = cert;
         verifyCertificate(new Event('submit'));
@@ -1050,7 +1119,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src="js/open-badges.js"></script>
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
-<script src="/js/search.js?v=436f22a8" defer></script>
+<script src="/js/search.js?v=c1c68c68" defer></script>
 <script defer src="js/auto-refresh.js"></script>
 <!-- ImpactMojo Theme Toggle JS -->
 <script src="/js/theme.js?v=ca787a55"></script>
@@ -1067,8 +1136,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- Supabase Auth -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
 <script src="/js/state-manager.js?v=62445627"></script>
-<script src="/js/auth.js?v=57fe7e3d"></script>
+<script src="/js/auth.js?v=8899618e"></script>
 <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=b741dd35" defer></script>
+  <script src="/js/site-chrome.js?v=eba39700" defer></script>
 </body>
 </html>

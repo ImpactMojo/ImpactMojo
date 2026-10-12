@@ -9,7 +9,7 @@
  *
  * Auth-aware completion flow:
  * - Anonymous users: prompted to sign up to claim certificate
- * - Explorer (free): certificate auto-issued, verifiable online
+ * - Learner (free): certificate auto-issued, verifiable online
  * - Practitioner+: the same certificate, plus the public portfolio page
  *
  * Progress migration: localStorage progress is synced to Supabase

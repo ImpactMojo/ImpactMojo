@@ -16,9 +16,9 @@ No sign-in, no card, no trial clock:
 - **35 labs** and **135 games** (18 simulations + 117 puzzles)
 - **184 reading companions** and **27 deep dives**
 - **12 data notes** and **Field Radio**: 23 clips of practitioner voice notes and shorts, each with a transcript
-- **200 case studies**, **500+ Dev Discourses**, and the **ImpactLex** glossary
+- **208 case studies**, **687 Dev Discourses readings**, and the **ImpactLex** glossary
 - **AI study companions** (NotebookLM notebooks)
-- **Pro Studio builders that are free to *use***: Research Question Builder, ToR Builder, Logframe Builder, Empathy Mapping, AI Strategy Canvas, Statistical Code Converter and Qualitative Insights Lab (seven of the 13 Pro Studio tools; four more are free to open, and two AI tools run on your own API key)
+- **Pro Studio builders that are free to *use***: Research Question Builder, ToR Builder, AI Strategy Canvas, Statistical Code Converter and Qualitative Insights Lab (five of the 11 Pro Studio tools; four more are free to open, and two AI tools run on your own API key)
 - A **free two-module preview** of every Practice Pack
 
 If you never pay a rupee, ImpactMojo is still one of the largest free development-education libraries in South Asia.

@@ -35,10 +35,6 @@ SM_NS = "{http://www.sitemaps.org/schemas/sitemap/0.9}loc"
 
 EXEMPT = {
     "/": "the homepage; a search result pointing home is noise",
-    "/handouts": "pretty-URL duplicate of /handouts.html, which is indexed",
-    "/supportgifts/thankyou.html": "post-transaction page; a search hit on it is a dead end",
-    "/linkedin-claude-code-visual.html": "a dev-setup artefact, not platform content",
-    "/101-courses/native/dev-economics.html": "16KB alternate rendering of /101-courses/dev-economics.html, already indexed under the same title",
 }
 
 

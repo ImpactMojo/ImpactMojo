@@ -477,8 +477,6 @@ Thirteen browser tools for research and evaluation work. Seven builders are free
 |---|------|------------------------|------|
 | 1 | Research Question Builder | Export | [Open](/premium-tools/rq-builder.html) |
 | 2 | ToR Builder | Export | [Open](/premium-tools/tor-builder.html) |
-| 3 | Logframe Builder | Export | [Open](/premium-tools/logframe-pro.html) |
-| 4 | Empathy Mapping | Export | [Open](/premium-tools/empathy-pro.html) |
 | 5 | AI Strategy Canvas | Export | [Open](/premium-tools/ai-canvas-pro.html) |
 | 6 | Statistical Code Converter | Export | [Open](/premium-tools/code-converter-pro.html) |
 | 7 | Qualitative Insights Lab | Export | [Open](/premium-tools/qual-insights-lab.html) |
@@ -498,7 +496,7 @@ Thirteen browser tools for research and evaluation work. Seven builders are free
 | **ImpactLex** | 494 development terms dictionary (PWA, hosted on ImpactMojo) | Free: [Browse](/impactlex/) |
 | **FieldCases** | 200 curated development cases from 117 countries | Free |
 | **NudgeKit** | 203 behaviour change techniques (BCTs) with South Asian context | Free: [Browse](/bct-repository) |
-| **Dataverse** | 333 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
+| **Dataverse** | 343 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
 | **DevDiscourses** | 500+ curated research papers and books | Free |
 | **PolicyDhara** | Indian policy tracking and analysis | Free: [Browse](/policydhara) |
 | **NotebookLM Study Companions** | 12 AI study companion notebooks | Free |

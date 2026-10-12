@@ -60,5 +60,5 @@ ImpactMojo's flagship courses reference specific papers and books. DevDiscourses
 
 - **Open-access prioritised**: most resources in the collection can be read for free, unlike paywalled academic databases.
 - **Curated, not comprehensive**: DevDiscourses isn't trying to be Google Scholar. The value is in the curation: every resource was selected for relevance to South Asian development practice.
-- **500+ resources and growing**: suggest additions at hello@impactmojo.in.
+- **687 resources and growing**: suggest additions at hello@impactmojo.in.
 - **Combine with FieldCases**: DevDiscourses provides the theory and evidence; FieldCases provides the practice examples.

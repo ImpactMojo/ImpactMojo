@@ -56,7 +56,7 @@ const FROZEN_NOW = Date.UTC(2026, 0, 15, 12, 0, 0);
 const PAGES = [
   { name: 'home', path: '/' },
   { name: 'course-mel', path: '/courses/mel/' },
-  { name: 'lab-toc', path: '/toc-workbench.html' },
+  { name: 'lab-toc', path: '/Labs/toc-lab.html' },
   { name: 'premium', path: '/premium.html' },
   { name: 'catalog', path: '/catalog.html' },
   { name: 'account', path: '/account.html' },

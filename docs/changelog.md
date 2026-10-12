@@ -2,6 +2,34 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.376.0 — October 12, 2026 (one name for each thing, and fewer duplicates)
+
+### For Learners
+
+- **Simulations** — the 18 strategy games now have their own page at /Games/. They are still part of the Game Library, which holds all 135 games.
+- **One Theory of Change Studio** — the ToC Builder and the ToC Workbench are now one Studio, with a free canvas in step 7 and the guide below the steps.
+- **India datasets in the Dataverse** — the Indian Data Navigator is now the India Data section of the Dataverse, with ten more national surveys and censuses (PLFS, HCES, NAS, SRS, HMIS, SECC, IHDS, CMIE, the Agriculture Census and the Economic Census). It holds 343 entries in all.
+- **Which tool for which job** — the policy Studios, the evaluation design and sampling Studios, the social-dilemma games, the practice packs and several Fundamentals pages now say which neighbour to open instead.
+
+### Changed
+
+- Logframe Pro and Empathy Pro were retired in favour of the free LogFrame Builder and Design Thinking Studio, which do the same work. Their addresses redirect there, and Pro Studio now has 11 tools.
+- The free membership tier is called Learner. Footers on the reading companions say Membership, the Data Room explorers carry a Data Room label, the 80 shorter courses are the 101 Series, and the total is written as 21 flagship and 80 foundational courses wherever it appeared as "101 courses".
+- The premium letter was merged into the upgrade page, and verify.html into verify-certificate.html. Links carrying an id still open the right certificate.
+- The Pro Studio grid on the homepage lists the 11 current tools. The site footer links the Data Room, Simulations, Handouts and Partnerships.
+- Work samples, two internal marketing pages, a post-payment page and an old copy of a 101 deck are no longer in the sitemap or site search.
+- The Climate TRACE dashboard address now goes to its own site, climatetrace.impactmojo.in.
+- Library counts brought up to date from each library's own data: DevDiscourses holds 687 papers, books and reports, FieldCases 208 case studies from 117 countries, and ImpactLex 494 terms. The libraries page now shows the DevDiscourses and ImpactLex counts.
+- The sign-up and invite emails, the certificate email and the welcome emails now give current counts and link to the upgrade page.
+
+### Fixed
+
+- **The certificate page broke sign-in** (#1223). It declared `SUPABASE_URL` a second time, which threw inside js/auth.js.
+- **Repository files answered at public addresses** (#1224). Build scripts, tests, function source, the schema file, notes and page templates now answer 404.
+- **The sitemap page and some listings carried old names and counts** (#1225). It now lists 27 Deep Dives, 11 Pro Studio tools and the 101 Series, and has no admin section. The Press Kit and the libraries page were corrected too.
+- **Footers linked to the unpublished podcast page** (#1226). The links are gone and /podcast goes straight to Updates.
+- **Site search could not find ten India datasets or list the explorers as Data Room** (#1227).
+
 ## v10.375.0 — October 12, 2026 (Free Studio, Pro Studio and Code School)
 
 ### For Learners
