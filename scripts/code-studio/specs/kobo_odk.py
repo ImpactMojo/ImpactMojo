@@ -426,7 +426,7 @@ PAGE = {
              ]},
              {"t": "syntax", "label": "XLSForm: a calculation shown back to the enumerator", "code": CALC_SHEET},
              {"t": "p", "html": "Showing a derived figure in a " + IC("note") + " is one of the cheapest checks "
-                                "you can add: an enumerator who sees \"Spending per person: 23 rupees\" knows "
+                                "you can add, because an enumerator who sees \"Spending per person: 23 rupees\" knows "
                                 "something was typed wrong. In ODK expressions, " + IC("div") + " is division."},
              {"t": "h3", "html": "Repeat groups: one set of questions per household member"},
              {"t": "p", "html": "Wrap questions between " + IC("begin repeat") + " and " + IC("end repeat") +
@@ -485,7 +485,7 @@ PAGE = {
                      "https://support.kobotoolbox.org/xlsform_with_kobotoolbox.html", "XLSForm guide") + " says "
                  "translating it produces an error.",
              ]},
-             {"t": "p", "html": "A translation added by hand is easy to leave half-finished: someone adds a "
+             {"t": "p", "html": "A translation added by hand is easy to leave half-finished. Someone adds a "
                                 "question in English during the pilot and forgets the Hindi. The cell finds "
                                 "every row with English text and no Hindi."},
              py("lang"),
@@ -547,8 +547,8 @@ PAGE = {
                  "coordinates (KML) or media attachments (ZIP).",
                  "Choose the value and header format. <strong>Labels</strong> is the default: question text as "
                  "headers and choice labels as values. <strong>XML values and headers</strong> gives the "
-                 + IC("name") + " columns and choice names. Pick XML values for analysis: question text makes poor "
-                 "column names, and labels change between languages.",
+                 + IC("name") + " columns and choice names. Pick XML values for analysis, because question text makes poor "
+                 "column names and labels change between languages.",
                  "Click <strong>EXPORT</strong>, then <strong>DOWNLOAD</strong> when the file appears in the list.",
              ]},
              {"t": "h3", "html": "A daily check by field team"},
@@ -559,7 +559,7 @@ PAGE = {
              py("daily"),
              {"t": "p", "html": "All 240 rows join, with no unmatched districts. Team A covers four districts "
                                 "and 96 interviews; Teams B and C cover three districts and 72 interviews each. "
-                                "Read the three percentages side by side: here the bank account share runs from "
+                                "Read the three percentages side by side. Here the bank account share runs from "
                                 "84.4% to 88.9% across teams and the transfer share from 33.3% to 41.7%. In "
                                 "real fieldwork, a gap far wider than this deserves a phone call to the "
                                 "supervisor."},
@@ -648,7 +648,7 @@ PAGE = {
                                 "place of " + IC("hh_id") + ", every pid is unique, and land is reported in four "
                                 "bands. The key table linking pid to hh_id stays with the data manager."},
              {"t": "info", "html": "<strong>Exercise.</strong> Change one character of " + IC("KEY") + " and run "
-                                   "again: every pid changes. That is why the key must be kept, and kept apart "
+                                   "again, and every pid changes. That is why the key must be kept, and kept apart "
                                    "from the data. A keyed code makes the file pseudonymous; a village name, a "
                                    "household size and a caste together can still point to one family, so check "
                                    "small groups before you publish anything."},

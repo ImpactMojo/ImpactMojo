@@ -272,7 +272,7 @@ PAGE = {
                                 "the status bar: <em>Count</em> should read 241 (240 IDs plus the header)."},
              {"t": "info", "html": "<strong>Exercise.</strong> In your spreadsheet, type 1 over the "
                                    + IC("hh_id") + " in A3, then type " + IC("=COUNTIF($A$2:$A$241, A2)") + " in "
-                                   "N2 and fill down. Sort by column N, largest first: the two rows with a count "
+                                   "N2 and fill down. Sort by column N, largest first. The two rows with a count "
                                    "of 2 are your duplicates. Undo the change afterwards."},
          ]},
         {"tab": "Validation",
@@ -312,7 +312,7 @@ PAGE = {
                                 "expenditure from Rs 700 to Rs 20,690."},
              {"t": "info", "html": "<strong>Exercise.</strong> Add the custom rule for household size to G2:G241, "
                                    "then try typing 0, 4.5 and 31 into G2. Each should be refused. Ranges come "
-                                   "from what is plausible, wider than what this sample happens to contain: a "
+                                   "from what is plausible, wider than what this sample happens to contain. A "
                                    "rule of 1 to 8 would refuse the next household of nine."},
              {"t": "info", "tone": "warning",
               "html": "<strong>Validation checks typing, and nothing else.</strong> Data pasted over a validated "
@@ -358,12 +358,12 @@ PAGE = {
              {"t": "p", "html": "Every household finds its state: 72 in Bihar, 48 in Kerala, 72 in Madhya "
                                 "Pradesh and 48 in Rajasthan. After household 100's district is changed to "
                                 "<em>Purnea</em>, exactly one row has no state. In the spreadsheet that row shows "
-                                "#N/A, or your " + IC("\"not found\"") + " text. That is the behaviour you want: a "
-                                "lookup that fails visibly."},
+                                "#N/A, or your " + IC("\"not found\"") + " text. That is the behaviour you want, because a "
+                                "lookup should fail visibly."},
              {"t": "info", "html": "<strong>Exercise.</strong> After you fill the lookup down, count the failures "
                                    "with " + IC("=COUNTIF(N2:N241, \"not found\")") + " (or "
                                    + IC("=SUMPRODUCT(--ISNA(N2:N241))") + " if you did not use the fourth "
-                                   "argument). Make that count part of every update: it should be 0 before any "
+                                   "argument). Make that count part of every update. It should be 0 before any "
                                    "table is built on the column."},
          ]},
         {"tab": "Indicators",

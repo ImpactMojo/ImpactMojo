@@ -192,7 +192,7 @@ PAGE = {
         ]},
         {"tab": "Limits", "title": "What a match can and cannot tell you", "blocks": [
             p("Every match here is a match of spellings. A Mandal entry with no match has not been shown to be "
-              "dropped from the Central List: it may be listed under a name neither list prints, or folded into "
+              "dropped from the Central List. It may be listed under a name neither list prints, or folded into "
               "another entry. A match has not been shown to be the same people either: two communities in "
               "different parts of a state can share a name."),
             {"t": "ul", "items": [

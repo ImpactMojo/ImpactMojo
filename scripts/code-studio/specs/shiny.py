@@ -460,7 +460,7 @@ PAGE = {
     "card": "Build a filterable district dashboard in R and Python Shiny, opened in Shinylive.",
     "datasets": ["households", "districts"],
     "engine_note": ("<strong>Two kinds of cell on this page.</strong> Ordinary R and Python cells run here, as in "
-                    "the other Code Studio courses: the first Run downloads the engine once (R about 7&nbsp;MB, "
+                    "the other Code Studio courses. The first Run downloads the engine once (R about 7&nbsp;MB, "
                     "Python about 10&nbsp;MB), with <code class=\"inline\">households.csv</code> and <code "
                     "class=\"inline\">districts.csv</code> loaded for you. Shiny cells carry an <strong>Open in "
                     "Shinylive</strong> button instead. It opens the app on Posit's Shinylive site in a new tab. "
@@ -649,7 +649,7 @@ PAGE = {
               "<a href=\"https://shiny.posit.co/py/get-started/shinylive.html\" rel=\"noopener\" target=\"_blank\" "
               "style=\"color:var(--accent-color)\">Shiny for Python Shinylive guide</a>, both read in October "
               "2026."),
-            info("<strong>A Shinylive app has no secrets.</strong> Posit's Shinylive guide says it plainly: the "
+            info("<strong>A Shinylive app has no secrets.</strong> Posit's Shinylive guide says plainly that the "
                  "code and data must be sent to the browser, so they cannot be kept from the user. Anything you "
                  "embed in a Shinylive app, or in its link, can be read by anyone who opens it. Put only "
                  "aggregated, non-identifying figures in one: district percentages, never beneficiary names, "

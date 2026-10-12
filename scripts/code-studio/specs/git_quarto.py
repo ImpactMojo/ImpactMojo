@@ -360,7 +360,7 @@ PAGE = {
                  "short ID you can refer to.",
              ]},
              {"t": "h3", "html": "Reading a diff"},
-             {"t": "p", "html": "Git shows changes in the unified diff format: a line starting with " + IC("-") +
+             {"t": "p", "html": "Git shows changes in the unified diff format, in which a line starting with " + IC("-") +
                                 " was removed and a line starting with " + IC("+") + " was added, with unchanged "
                                 "lines around them for context. Python's " + IC("difflib") + " writes the same "
                                 "format, so the cell shows what " + IC("git diff") + " would report after a "
@@ -369,7 +369,7 @@ PAGE = {
              py("diff"),
              {"t": "p", "html": "The output names the old and new file, then shows the Purnia row twice: once "
                                 "with " + IC("-") + " and 75.0, once with " + IC("+") + " and 79.2. Barmer and "
-                                "Rewa appear unmarked, as context. This is why Git suits CSV tables and code: "
+                                "Rewa appear unmarked, as context. Git suits CSV tables and code because "
                                 "a reviewer sees exactly which number moved."},
              {"t": "info", "html": "<strong>Exercise.</strong> In the " + IC("after") + " text, also change "
                                    "Rewa's mean spending from 2557 to 2575, and run again. Both changes appear. "
@@ -395,7 +395,7 @@ PAGE = {
              ]},
              {"t": "info", "html": "<strong>Exercise.</strong> In a practice folder, commit a file with one line, "
                                    "create a branch, change the line and commit. Switch back to " + IC("main") +
-                                   " and open the file: it shows the old line. Merge the branch and open it "
+                                   " and open the file, and it shows the old line. Merge the branch and open it "
                                    "again. Run " + IC("git log --oneline") + " at each step to see where you "
                                    "are."},
          ]},
@@ -516,7 +516,7 @@ PAGE = {
                                    "a folder with " + DL + ", run " + IC("quarto render profile.qmd --to html") +
                                    ", and open the HTML file. Look for the sentence \"Households surveyed: 240.\" "
                                    "and a table of ten district percentages. Then render " + IC("--to docx") +
-                                   " and open the Word file: the same numbers, no copying."},
+                                   " and open the Word file, which has the same numbers with no copying."},
          ]},
         {"tab": "Parameters",
          "title": "Parameterised reports: one template, ten district profiles",

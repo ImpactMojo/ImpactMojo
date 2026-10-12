@@ -275,7 +275,7 @@ PAGE = {
               "50 per cent."),
             r("summ2"),
             p(IC('.groups = "drop"') + " removes the grouping after summarising, so the next step does not "
-              "quietly run within groups. Check the " + IC("n") + " column before reading any median: the SC "
+              "quietly run within groups. Check the " + IC("n") + " column before reading any median. The SC "
               "female-headed cell holds 2 households, so its median of &#8377;4,240 says almost nothing. In a "
               "real report you would suppress or flag cells that small."),
             ex("Group by " + IC("district, area") + " instead, and add " + IC("pct_bank") + " for bank accounts. "
@@ -305,13 +305,13 @@ PAGE = {
         ]},
         {"tab": "Reshape", "title": "Reshaping indicator tables with tidyr", "blocks": [
             p("The four yes/no indicators sit in four columns. That is <strong>wide</strong> form. To summarise all "
-              "four with one line of code, turn them into <strong>long</strong> form: one row per household per "
+              "four with one line of code, turn them into <strong>long</strong> form, with one row per household per "
               "indicator. " + IC("pivot_longer()") + " does this."),
             r("longer"),
             p("240 households times 4 indicators gives 960 rows. Each row now holds a household, an indicator name "
               "and its answer, so a single " + IC("group_by(district, indicator)") + " computes every share at "
               "once: 40 rows, one per district per indicator."),
-            p("Reports want the opposite shape: districts down the side, indicators across the top. "
+            p("Reports want the opposite shape, with districts down the side and indicators across the top. "
               + IC("pivot_wider()") + " spreads the long table back out."),
             r("wider"),
             p("This is the standard indicator table. Rewa has 92 per cent of households with a bank account and "
@@ -345,7 +345,7 @@ PAGE = {
               "with probability 1 in 500 stands for 500 households in the population, so its "
               "<strong>design weight</strong> is 500. Unweighted means describe the sample; weighted means "
               "estimate the population."),
-            p("Our illustrative file has no weight column, so we invent a design for teaching: rural households "
+            p("Our illustrative file has no weight column, so we invent a design for teaching, with rural households "
               "drawn 1 in 500 and urban households 1 in 1,000. Urban households are under-sampled, so each one "
               "carries a weight of 1,000."),
             r("weights"),
@@ -378,14 +378,14 @@ PAGE = {
               ". The first run of this module downloads ggplot2 and its dependencies, so give it a minute."),
             r("bar"),
             p(IC("geom_col()") + " draws bars from values you computed. Bars always start at zero in ggplot2, "
-              "which is right: a bar's length is its value."),
+              "which is right because a bar's length is its value."),
             r("scatter"),
             p("Each point is a household. Spending is skewed, so a log scale spreads out the crowded lower end; "
               "say so in the axis label, as here, because a reader will otherwise read the gaps as equal."),
             r("facet"),
             p(IC("facet_wrap(~ district)") + " draws one small panel per district on a shared scale, so the "
               "panels can be compared at a glance. Avoid " + IC('scales = "free_y"') + " when readers will "
-              "compare panels: it gives each panel its own axis, and a short bar in one panel can stand for a "
+              "compare panels, because it gives each panel its own axis, and a short bar in one panel can stand for a "
               "larger value than a tall bar in another. Kozhikode shows no rural bar because the value is zero: none of its 3 rural households has a toilet. Three households are far too few to report a percentage for."),
             {"t": "h3", "html": "Honest axes"},
             r("axes"),

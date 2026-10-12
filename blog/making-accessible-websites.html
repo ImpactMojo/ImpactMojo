@@ -374,13 +374,13 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <figure class="article-illustration" role="group" aria-labelledby="fig1-caption">
 <img loading="lazy" src="../assets/images/blog/making-accessible-websites/illustration-1.png"
      alt="Bar chart of scanner errors falling from 393 at the start to 77 after pass 1, 21 after pass 2, 14 after pass 3, 1 after pass 4 and 0 after pass 5">
-<figcaption id="fig1-caption">From 393 errors to zero in five passes: four hours, two people. Pass 1, a single button colour on the dataverse page, accounted for the largest single reduction.</figcaption>
+<figcaption id="fig1-caption">From 393 errors to zero in five passes, in four hours, with two people. Pass 1, a single button colour on the dataverse page, accounted for the largest single reduction.</figcaption>
 </figure>
 
 <h2>The five lessons that travel</h2>
 
 <h3>1. Your CI is probably lying to you about something</h3>
-<p>The deepest bug was in the checking itself: for weeks we had been adding features and shipping pull requests while believing our accessibility tests were passing. The workflow was structured in a way that was easy to miss in code review (a piped command, an exit code check, a wrapper script that posted "All pages passed" if it took the wrong branch). Telling a team to be more careful would not have caught this. Assuming that a green check might be lying, and testing the failure path, would. The workflow now reads the audit's own exit code, and a separate step fails the job when that code is non-zero. We now have a test that intentionally introduces a violation and confirms CI catches it.</p>
+<p>The deepest bug was in the checking itself. For weeks we had been adding features and shipping pull requests while believing our accessibility tests were passing. The workflow was structured in a way that was easy to miss in code review (a piped command, an exit code check, a wrapper script that posted "All pages passed" if it took the wrong branch). Telling a team to be more careful would not have caught this. Assuming that a green check might be lying, and testing the failure path, would. The workflow now reads the audit's own exit code, and a separate step fails the job when that code is non-zero. We now have a test that intentionally introduces a violation and confirms CI catches it.</p>
 
 <h3>2. Most accessibility bugs are caused by a small number of root causes</h3>
 <p>When you see "393 violations," it sounds like a project. But 271 of those came from one colour on one button class, repeated across roughly 260 cards on a single page. Most of the rest traced to a handful of shared causes: brand colours used as text, unlabelled form fields, an inverted theme default and a selector bug. The work was to find those five patterns, and the 393 followed from them.</p>
@@ -558,12 +558,12 @@ body.dark-mode .article-tag, [data-theme="dark"] .article-tag, html.dark .articl
 <li><strong>14 form fields</strong> across multiple pages got proper <code>aria-label</code> attributes (including five JavaScript-injected modal search inputs that we fixed in one place in <code>js/learning-tracks.js</code>).</li>
 <li><strong>23 brand-colour text uses</strong> got bumped from sky-500, indigo-500, emerald-500, amber-500, etc. to their darker AA-compliant variants, through CSS overrides in 24 files.</li>
 <li><strong>1 axe-core configuration update</strong> to exclude third-party widgets (Intro.js tour, UserWay, Google Translate) that we do not control.</li>
-<li><strong>13 of 13</strong> tested pages passed pa11y-ci when the work finished. <strong>5 of 5</strong> tested pages passed axe-core with zero serious violations. Both lists have since grown: the repository now audits 16 pages with axe-core and 23 with pa11y-ci. The CI gate is honest.</li>
+<li><strong>13 of 13</strong> tested pages passed pa11y-ci when the work finished. <strong>5 of 5</strong> tested pages passed axe-core with zero serious violations. Both lists have since grown, and the repository now audits 16 pages with axe-core and 23 with pa11y-ci. The CI gate is honest.</li>
 </ul>
 
 <h2>If you take one thing away from this post</h2>
-<p>It is this: accessibility is a property of your development process. If your process catches violations the moment they are introduced, you stay accessible. If it does not, you drift. There is no in-between, and there is no "we'll get to it later" that actually happens.</p>
-<p>Set up the gate. Verify the gate works. Then trust the gate. The roughly one in six of your users who need it will never write you a bug report: they will just stop visiting. The work to keep them is small if you do it continuously, and impossible if you do not.</p>
+<p>It is that accessibility is a property of your development process. If your process catches violations the moment they are introduced, you stay accessible. If it does not, you drift. There is no in-between, and there is no "we'll get to it later" that actually happens.</p>
+<p>Set up the gate. Verify the gate works. Then trust the gate. The roughly one in six of your users who need it will never write you a bug report. They will just stop visiting. The work to keep them is small if you do it continuously, and impossible if you do not.</p>
 <p>If you are a development organisation building digital tools for the people you serve, this is the bare minimum, because the people you say you serve deserve to be able to use what you build.</p>
 <p>Accessibility in development work goes beyond websites. Our free <a href="/101-courses/disability-inclusion.html">Disability Inclusion 101</a> deck covers the wider practice of building programmes that disabled people can actually use.</p>
 

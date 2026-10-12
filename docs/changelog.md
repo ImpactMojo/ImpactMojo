@@ -2,6 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.369.0 — October 12, 2026 (sentences hinged on a colon, and a re-read of the house-style pass)
+
+### Fixed
+
+- **Two worked derivations, a CSR misstatement and several misattributed quotations** (#1212). The Debraj Ray companion stated the trade-diversion condition two contradictory ways and left draft working in its proof that P2 falls with a transfer to the poorer person; both are rewritten, and the proof now states its condition. CSR and ESG 101 said an impact assessment charged to CSR does not take money from the programme; under Rule 8(3)(c) it counts towards the CSR obligation and comes from the same budget, up to the cap. Crenshaw's 1989 sentence is shown as a quotation again. Text credited to Ambedkar, Ela Bhatt and ILO Recommendation 202 that is not a verifiable quotation, and eight more blocks of ImpactMojo's own words, now read as labelled summaries without quotation marks. A quotation in the Wages for Housework companion that the earlier pass had altered is restored word for word.
+
+### Changed
+
+- About 1,080 sentences across 370 pages no longer hinge on a colon. Colons that introduce a list, a label, a definition, a question or a quotation were left alone, and so were the bold labels in the 101 decks.
+- The roughly 2,000 sentences the v10.366.0 house-style pass rewrote in the book companions and 101 decks were each compared with their earlier wording. About 420 were corrected for comma splices, dropped qualifiers, broken parentheses and changed meanings.
+- The theories pages and two law guides were changed in their source data, so a rebuild keeps the edits.
+
 ## v10.368.0 — October 12, 2026 (one sampling Studio)
 
 ### For Learners

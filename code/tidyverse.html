@@ -158,7 +158,7 @@ hh |&gt;
   summarise(n = n(),
             median_exp = median(monthly_pc_exp),
             .groups = &quot;drop&quot;)</textarea></div>
-<p><code class="inline">.groups = "drop"</code> removes the grouping after summarising, so the next step does not quietly run within groups. Check the <code class="inline">n</code> column before reading any median: the SC female-headed cell holds 2 households, so its median of &#8377;4,240 says almost nothing. In a real report you would suppress or flag cells that small.</p>
+<p><code class="inline">.groups = "drop"</code> removes the grouping after summarising, so the next step does not quietly run within groups. Check the <code class="inline">n</code> column before reading any median. The SC female-headed cell holds 2 households, so its median of &#8377;4,240 says almost nothing. In a real report you would suppress or flag cells that small.</p>
 <div class="info-box"><strong>Try it.</strong> Group by <code class="inline">district, area</code> instead, and add <code class="inline">pct_bank</code> for bank accounts. Which district has the widest rural-urban gap in median spending?</div>
 <div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: Joins &rarr;</button></div>
 </div>
@@ -199,7 +199,7 @@ hh |&gt;
 <div class="tab-panel lesson" data-panel="4" role="tabpanel">
 <div class="eyebrow">Module 5 of 9</div>
 <h2>Reshaping indicator tables with tidyr</h2>
-<p>The four yes/no indicators sit in four columns. That is <strong>wide</strong> form. To summarise all four with one line of code, turn them into <strong>long</strong> form: one row per household per indicator. <code class="inline">pivot_longer()</code> does this.</p>
+<p>The four yes/no indicators sit in four columns. That is <strong>wide</strong> form. To summarise all four with one line of code, turn them into <strong>long</strong> form, with one row per household per indicator. <code class="inline">pivot_longer()</code> does this.</p>
 <div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,tidyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(tidyr)})
 hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
 long &lt;- hh |&gt;
@@ -212,7 +212,7 @@ long |&gt;
   group_by(district, indicator) |&gt;
   summarise(pct_yes = round(100 * mean(answer == &quot;Yes&quot;)), .groups = &quot;drop&quot;)</textarea></div>
 <p>240 households times 4 indicators gives 960 rows. Each row now holds a household, an indicator name and its answer, so a single <code class="inline">group_by(district, indicator)</code> computes every share at once: 40 rows, one per district per indicator.</p>
-<p>Reports want the opposite shape: districts down the side, indicators across the top. <code class="inline">pivot_wider()</code> spreads the long table back out.</p>
+<p>Reports want the opposite shape, with districts down the side and indicators across the top. <code class="inline">pivot_wider()</code> spreads the long table back out.</p>
 <div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,tidyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(tidyr)})
 hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
 hh |&gt;
@@ -261,7 +261,7 @@ hh |&gt;
 <div class="eyebrow">Module 7 of 9</div>
 <h2>Weighted summaries and survey weights</h2>
 <p>Most large surveys do not give every household the same chance of selection. A household drawn with probability 1 in 500 stands for 500 households in the population, so its <strong>design weight</strong> is 500. Unweighted means describe the sample; weighted means estimate the population.</p>
-<p>Our illustrative file has no weight column, so we invent a design for teaching: rural households drawn 1 in 500 and urban households 1 in 1,000. Urban households are under-sampled, so each one carries a weight of 1,000.</p>
+<p>Our illustrative file has no weight column, so we invent a design for teaching, with rural households drawn 1 in 500 and urban households 1 in 1,000. Urban households are under-sampled, so each one carries a weight of 1,000.</p>
 <div class="code-cell" data-lang="r" data-pkgs="readr,dplyr"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr)})
 hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
 # Illustrative design: rural households drawn 1 in 500, urban 1 in 1,000
@@ -305,7 +305,7 @@ ggplot(by_caste, aes(x = caste, y = median_exp)) +
        subtitle = &quot;Illustrative data, 240 households&quot;,
        x = NULL, y = &quot;Rupees per person per month&quot;) +
   theme_minimal()</textarea></div>
-<p><code class="inline">geom_col()</code> draws bars from values you computed. Bars always start at zero in ggplot2, which is right: a bar's length is its value.</p>
+<p><code class="inline">geom_col()</code> draws bars from values you computed. Bars always start at zero in ggplot2, which is right because a bar's length is its value.</p>
 <div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,ggplot2"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(ggplot2)})
 hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)
 ggplot(hh, aes(x = head_edu_years, y = monthly_pc_exp, colour = area)) +
@@ -329,7 +329,7 @@ hh |&gt;
   labs(title = &quot;Households with a toilet, by district and area&quot;,
        x = NULL, y = &quot;Per cent of households&quot;) +
   theme_minimal()</textarea></div>
-<p><code class="inline">facet_wrap(~ district)</code> draws one small panel per district on a shared scale, so the panels can be compared at a glance. Avoid <code class="inline">scales = "free_y"</code> when readers will compare panels: it gives each panel its own axis, and a short bar in one panel can stand for a larger value than a tall bar in another. Kozhikode shows no rural bar because the value is zero: none of its 3 rural households has a toilet. Three households are far too few to report a percentage for.</p>
+<p><code class="inline">facet_wrap(~ district)</code> draws one small panel per district on a shared scale, so the panels can be compared at a glance. Avoid <code class="inline">scales = "free_y"</code> when readers will compare panels, because it gives each panel its own axis, and a short bar in one panel can stand for a larger value than a tall bar in another. Kozhikode shows no rural bar because the value is zero: none of its 3 rural households has a toilet. Three households are far too few to report a percentage for.</p>
 <h3>Honest axes</h3>
 <div class="code-cell" data-lang="r" data-pkgs="readr,dplyr,ggplot2"><textarea class="code-input" spellcheck="false" aria-label="R code editor">suppressPackageStartupMessages({library(readr); library(dplyr); library(ggplot2)})
 hh &lt;- read_csv(&quot;households.csv&quot;, show_col_types = FALSE)

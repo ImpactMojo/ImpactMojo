@@ -145,7 +145,7 @@ PAGE = {
              {"t": "h3", "html": "Check the variable types"},
              {"t": "p", "html": "Both programs guess a type for each column, and a wrong guess changes which "
                                 "analyses accept it. JASP's getting-started page lists three types (Nominal, "
-                                "Ordinal, Scale) and its rules: a numeric column with 3 to 10 distinct whole "
+                                "Ordinal, Scale) and its rules. A numeric column with 3 to 10 distinct whole "
                                 "numbers becomes Ordinal. In our file <code class=\"inline\">hh_size</code> runs "
                                 "from 1 to 8, so check whether it arrived as Ordinal and set it to Scale if you "
                                 "want its mean. In jamovi, double-click a column header (or press F3) to open the "
@@ -334,8 +334,8 @@ PAGE = {
                                 "predicted by the alternative (a difference) than by the null (no difference). "
                                 "BF<sub>10</sub> = 5 means the data are five times as likely under the "
                                 "alternative; BF<sub>10</sub> = 0.2 means five times as likely under the null. "
-                                "That second reading is something a p-value cannot give you: evidence "
-                                "<em>for</em> no difference, which matters when a programme report needs to say "
+                                "That second reading gives evidence "
+                                "<em>for</em> no difference, which a p-value cannot give you. It matters when a programme report needs to say "
                                 "two districts did not differ."},
              {"t": "steps", "items": [
                  "In JASP, open <strong>T-Tests</strong> and choose the Bayesian "

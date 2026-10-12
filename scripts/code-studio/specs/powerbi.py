@@ -250,7 +250,7 @@ PAGE = {'slug': 'powerbi',
                                   'class="inline">shg</code> that is 1 when <code '
                                   'class="inline">shg_member</code> is "Yes". Then right-click the <code '
                                   'class="inline">has_toilet</code> column and choose '
-                                  '<strong>Remove</strong>: you no longer need the text once the 1/0 column '
+                                  '<strong>Remove</strong>, because you no longer need the text once the 1/0 column '
                                   'exists. Close Power Query with <strong>Home &gt; Close &amp; '
                                   'Apply</strong>.</div>'}]},
              {'tab': 'The data model',
@@ -551,7 +551,7 @@ PAGE = {'slug': 'powerbi',
                                   '<div class="info-box warning"><strong>Publish to web makes a report '
                                   "public.</strong> Microsoft's documentation says that anyone on the "
                                   'internet can view a report published this way, with no sign-in, and that '
-                                  'this includes detail-level data the report aggregates: anyone can reach '
+                                  'this includes detail-level data the report aggregates, so anyone can reach '
                                   'the underlying data in the model even if no visual shows it. A household '
                                   'survey with names, phone numbers or GPS points must never be published '
                                   'this way, even if the visuals show only district totals. Remove personal '

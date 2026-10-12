@@ -112,7 +112,7 @@ PAGE = {
                                    "before it shows a price, and buyers in many countries go through an "
                                    "<a href=\"https://www.stata.com/worldwide/\" rel=\"noopener\" target=\"_blank\" "
                                    "style=\"color:var(--accent-color)\">authorised international reseller</a>. "
-                                   "Check with your university or organisation before you buy: many hold a "
+                                   "Check with your university or organisation before you buy, because many hold a "
                                    "site licence."},
              {"t": "h3", "html": "The five main windows"},
              {"t": "p", "html": "Stata's own <em>Getting Started</em> manual names five main windows: "
@@ -148,7 +148,7 @@ PAGE = {
                  "dir *.csv             // you should see households.csv and districts.csv"},
              {"t": "p", "html": "Lines starting with <code class=\"inline\">*</code> are comments, and "
                                 "<code class=\"inline\">//</code> starts a comment at the end of a line. "
-                                "Look in the Results window: <code class=\"inline\">pwd</code> should print your "
+                                "Look in the Results window, where <code class=\"inline\">pwd</code> should print your "
                                 "folder, and <code class=\"inline\">dir</code> should list both CSV files. If "
                                 "<code class=\"inline\">cd</code> fails, the path is wrong; copy it from your "
                                 "file manager's address bar."},
@@ -396,7 +396,7 @@ PAGE = {
                                 "sampling weights, the kind a survey supplies) and "
                                 "<code class=\"inline\">[aw=...]</code> (analytic weights, used for averages of "
                                 "group means). Our course file has no sampling weight, but it shows why weights "
-                                "matter: each row is a household, and a household of eight people counts for "
+                                "matter. Each row is a household, and a household of eight people counts for "
                                 "more people than a household of one. Weighting by household size turns a "
                                 "per-household average into a per-person average."},
              {"t": "syntax", "label": "Stata do-file: 06_weights.do", "code":
