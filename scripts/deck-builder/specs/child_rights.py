@@ -154,8 +154,10 @@ SLIDES += [
     C("Scale", "Three numbers that frame child rights in India",
       ST([CARD("472 million", "children up to 18 in India, almost 39 per cent of the population",
                "cyan", "PIB explainer on Mission Vatsalya, 11 August 2023"),
-          CARD("35.5%", "children under five stunted in India", "amber",
-               "NFHS-5 (2019-21), DHS Program API, CN_NUTS_C_HA2"),
+          CARD("29.3%", "children under five stunted in India in NFHS-6 (2023-24), down from "
+               "35.5% in NFHS-5 (2019-21)", "amber",
+               "IIPS, NFHS-6 India Fact Sheet, May 2026 (provisional results); NFHS-5 from "
+               "DHS Program API, CN_NUTS_C_HA2"),
           CARD("1,87,702", "crimes against children registered in India in 2024, up from "
                "1,77,335 in 2023; 42.3 per lakh children", "red",
                "NCRB, Crime in India 2024, Vol. I, Tables 4A.1 and 4A.2")]),
@@ -335,7 +337,8 @@ SLIDES += [
             "safe water. It is also behind Article 7, registration immediately after birth, "
             "because a child who is not recorded is invisible to every scheme that follows.",
             sm=True)]),
-      ST([CARD("35.5%", "stunted under-fives, India", "amber", "NFHS-5 (2019-21), DHS Program API"),
+      ST([CARD("29.3%", "stunted under-fives, India", "amber",
+               "NFHS-6 (2023-24), IIPS, NFHS-6 India Fact Sheet, May 2026; 35.5% in NFHS-5 (2019-21)"),
           CARD("24.8%", "stunted under-fives, Nepal", "cyan", "Nepal DHS 2022, DHS Program API"),
           CARD("23.6%", "stunted under-fives, Bangladesh", "green", "Bangladesh DHS 2022, DHS Program API")]),
       compact=True),
@@ -1200,7 +1203,8 @@ SLIDES += [
       B("Survey rounds are grouped into periods for display: India 1992-93, 1998-99, 2005-06, "
         "2015-16, 2019-21; Bangladesh 1993-94, 1999-2000, 2007, 2011, 2017-18, 2022; Nepal 2001, "
         "2006, 2011, 2016, 2022; Pakistan 1990-91, 2006-07, 2012-13, 2017-18. The NFHS-5 fact "
-        "sheet's own headline figure for India is about 23 per cent (PRS).", sm=True),
+        "sheet's own headline figure for India is about 23 per cent (PRS). The NFHS-6 (2023-24) "
+        "fact sheet puts it at 20.1 per cent (IIPS, NFHS-6 India Fact Sheet, May 2026).", sm=True),
       compact=True),
 
     C("Who marries early", "Inside India, the gradient is steep",

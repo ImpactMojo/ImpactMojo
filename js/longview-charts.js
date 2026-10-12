@@ -1266,10 +1266,10 @@ window.LV = (function() {
       { mColor: '#1971c2', fColor: '#d6336c' });
 
     heatmap('c-nfhs',
-      { cols: ['NFHS-3 ’05', 'NFHS-4 ’15', 'NFHS-5 ’21'],
+      { cols: ['NFHS-3 ’05', 'NFHS-4 ’15', 'NFHS-5 ’21', 'NFHS-6 ’24'],
         rows: ['Institutional births', 'Full immunisation', 'Woman uses a bank a/c', 'Child not stunted', 'Woman not anaemic'],
-        values: [[39,79,89],[44,62,76],[null,53,79],[52,62,64],[45,47,43]] },
-      { min: 38, max: 90 });
+        values: [[39,79,89,91],[44,62,76,83],[null,53,79,89],[52,62,64,71],[45,47,43,null]] },
+      { min: 38, max: 92 });
 
     if (window.LV_UPSET) {
       upset('c-upset-deprivation', window.LV_UPSET.deprivation,
@@ -1409,12 +1409,12 @@ window.LV = (function() {
 
     waffle('c-waffle',
       { items: [
-        { label:'Electricity', pct:97, color:'#f59e0b' },
+        { label:'Electricity', pct:98, color:'#f59e0b' },
         { label:'A toilet', pct:70, color:'#0d9488' },
         { label:'Clean fuel', pct:59, color:'#e11d48' },
         { label:'A bank a/c', pct:78, color:'#4f46e5' },
         { label:'The internet', pct:46, color:'#7c3aed' },
-        { label:'Health cover', pct:41, color:'#2563eb' }
+        { label:'Health cover', pct:60, color:'#2563eb' }
       ] });
 
     streamGraph('c-stream',
@@ -1849,10 +1849,10 @@ window.LV = (function() {
       look:"The size of the Uttar Pradesh block against everything around it, and how much of the grid the North and East together take up." },
     'c-waffle': { tag:'Access', title:'If India were 100 people',
       takeaway:"Almost everyone has electricity, but far fewer have clean cooking fuel, the internet, or health cover.",
-      source:"NFHS-5 (2019–21) for household amenities; Global Findex 2021 for bank accounts.",
+      source:"NFHS-6 (2023–24, provisional) for electricity and health cover; NFHS-5 (2019–21) for toilets and clean fuel, which NFHS-6 did not report; Global Findex 2021 for bank accounts.",
       why:"A waffle turns a percentage into a hundred squares, so 'X in 100' is something you can count, not just read. A grid of them compares several access gaps at once.",
       how:"Each block is a 10×10 grid; coloured squares fill from the bottom up to the share who have that thing.",
-      look:"How full each grid is: electricity nearly complete, health cover barely two-fifths." },
+      look:"How full each grid is: electricity nearly complete, health cover at three in five." },
     'c-stream': { tag:'Population', title:'The world’s shifting weight',
       takeaway:"Asia is still most populous, but Africa is the fastest-growing band: the world's centre of gravity is moving.",
       source:"World Bank: population by region (SP.POP.TOTL), 1960–2023, via the World Bank API.",
@@ -1914,8 +1914,8 @@ window.LV = (function() {
       how:"Each source is an arc sized to its share, with a legend listing the exact percentages.",
       look:"The size of the coal slice against everything else." },
     'c-nfhs': { tag:'Health & Nutrition', title:"Two decades of progress, and one row that won't move",
-      takeaway:"Services improved a lot across three surveys. Women's anaemia did not, and by the latest round it is slightly worse.",
-      source:"National Family Health Survey rounds 3 (2005–06), 4 (2015–16) and 5 (2019–21).",
+      takeaway:"Services improved a lot across four surveys. Women's anaemia did not: by NFHS-5 it was slightly worse, and NFHS-6 did not report it.",
+      source:"National Family Health Survey rounds 3 (2005–06), 4 (2015–16), 5 (2019–21) and 6 (2023–24, provisional; IIPS, NFHS-6 India Fact Sheet, May 2026). NFHS-6 did not report anaemia.",
       why:"A heatmap is good for a small grid you want to scan in both directions. Every indicator is framed in the positive direction, so one green scale reads accurately: greener is always better.",
       how:"Each cell is coloured by its value on a single green scale, with the number printed in the cell so colour and figure agree.",
       look:"Most rows turn greener from left to right. The bottom row doesn't." },

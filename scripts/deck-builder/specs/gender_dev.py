@@ -185,7 +185,10 @@ DECK = {
                  "violence. A population that has more women than men in its households can "
                  "still be one where girls are missing at birth, which is why the survey "
                  "also tracks the sex ratio among young children (928 for ages 0-6 in "
-                 "NFHS-5).", sm=True),
+                 "NFHS-5). NFHS-6 (2023-24) published provisional India results in May 2026 "
+                 "(IIPS, NFHS-6 India Fact Sheet, May 2026). Its fact sheet does not report "
+                 "these five figures in the form shown here, so this slide keeps NFHS-5. Later "
+                 "slides give the NFHS-6 figure where the fact sheet has one.", sm=True),
         ], compact=True),
 
         C("Levels", "Where gender operates: four levels", [
@@ -420,15 +423,16 @@ DECK = {
 
         C("From ideas to indicators", "How the frameworks show up in survey questions", [
             table(["Kabeer dimension", "NFHS-5 indicator (women 15-49)", "India value"],
-                  [["Resource", "Has a bank or savings account she uses", "79%"],
+                  [["Resource", "Has a bank or savings account she uses", "79% (NFHS-6: 89%)"],
                    ["Resource", "Owns land alone or jointly", "32% (men 42%)"],
-                   ["Resource", "Has a mobile phone she uses", "54%"],
+                   ["Resource", "Has a mobile phone she uses", "54% (NFHS-6: 64%)"],
                    ["Agency", "Participates in three household decisions "
-                    "(currently married)", "71%"],
+                    "(currently married)", "88.7% (NFHS-6: 89%)"],
                    ["Agency", "Has money she alone decides how to use", "51%"]]),
             body("Source: " + NFHS + ", Chapter 14. Bank account use rose from 53% in "
                  "NFHS-4 (2015-16) to 79%, largely after the expansion of no-frills "
-                 "accounts. Decision-making changed much less. That gap between a "
+                 "accounts. NFHS-6 (2023-24) puts it at 89% (IIPS, NFHS-6 India Fact Sheet, "
+                 "May 2026). Decision-making changed much less. That gap between a "
                  "resource and its use is exactly what Kabeer's framework asks a "
                  "practitioner to check before reporting success.", sm=True),
             hbox("When you read a gender indicator, name which of the three dimensions it "
@@ -1040,10 +1044,12 @@ DECK = {
         C("Education", "Girls' schooling: large gains, remaining gaps", [
             stats([card("72% vs 84%", "women and men aged 15-49 who are literate", "cyan",
                         NFHS + ", Ch. 3"),
-                   card("41% vs 50%", "women and men with 10 or more years of schooling",
-                        "indigo", NFHS + ", Ch. 3"),
-                   card("33% vs 51%", "women and men aged 15-49 who have ever used the "
-                        "internet", "amber", NFHS + ", Ch. 3")], cols=3),
+                   card("46.4% vs 54.6%", "women and men aged 15-49 with 10 or more years of "
+                        "schooling in NFHS-6 (2023-24), up from 41% vs 50% in NFHS-5",
+                        "indigo", "IIPS, NFHS-6 India Fact Sheet, May 2026"),
+                   card("64.3% vs 80.5%", "women and men aged 15-49 who have ever used the "
+                        "internet in NFHS-6 (2023-24), up from 33% vs 51% in NFHS-5", "amber",
+                        "IIPS, NFHS-6 India Fact Sheet, May 2026")], cols=3),
             body("The gap is widest among older women and in poorer and rural households, "
                  "and narrows sharply among the young. In higher education the All India "
                  "Survey on Higher Education 2021-22 counted 2.07 crore women enrolled, up "
@@ -1066,24 +1072,27 @@ DECK = {
                     "Separate functional toilets and menstrual supplies"],
                    ["Low returns", "Few jobs for educated women nearby",
                     "Information on jobs, as in Jensen's study"]]),
-            body("Child marriage is the barrier with the clearest legal answer. NFHS-5 finds "
-                 "that 23% of women aged 20-24 married before 18, the legal minimum for "
-                 "women, compared with 47% of women aged 45-49. The decline is large but "
-                 "leaves nearly one in four young women married as children.", sm=True),
-            hbox("Source: " + NFHS + ", Chapter 6. Education Policy 101 and Child Rights "
+            body("Child marriage is the barrier with the clearest legal answer. NFHS-5 (2019-21) "
+                 "found that 23% of women aged 20-24 married before 18, the legal minimum for "
+                 "women, compared with 47% of women aged 45-49. In NFHS-6 (2023-24) the figure "
+                 "for women aged 20-24 is 20.1%. The decline is large but still leaves about "
+                 "one in five young women married as children.", sm=True),
+            hbox("Source: " + NFHS + ", Chapter 6; IIPS, NFHS-6 India Fact Sheet, May 2026. Education Policy 101 and Child Rights "
                  "101 go further.", "indigo"),
         ], compact=True),
 
         C("Health", "Women's health: anaemia, nutrition and maternal mortality", [
             stats([card("57% vs 25%", "women and men aged 15-49 with anaemia", "red",
                         NFHS + ", Ch. 10"),
-                   card("19% vs 16%", "women and men aged 15-49 who are thin", "amber",
-                        NFHS + ", Ch. 10"),
+                   card("19.7% vs 19.7%", "women and men aged 15-49 who are thin in NFHS-6 "
+                        "(2023-24), against 19% vs 16% in NFHS-5", "amber",
+                        "IIPS, NFHS-6 India Fact Sheet, May 2026"),
                    card("93", "maternal deaths per 1,00,000 live births in 2019-21, down from "
                         "130 in 2014-16",
                         "cyan", "SRS 2021 via All India Radio News, May 2025")], cols=3),
             body("Anaemia among women rose between NFHS-4 and NFHS-5, and is more than "
-                 "twice the male rate. It reflects diet, menstrual blood loss, repeated "
+                 "twice the male rate. NFHS-6 did not report anaemia, so NFHS-5 (2019-21) "
+                 "remains the latest NFHS figure. It reflects diet, menstrual blood loss, repeated "
                  "pregnancies and the norm that women eat last and least. Maternal "
                  "mortality has fallen steeply with institutional delivery and emergency "
                  "obstetric care, but remains far higher in some states than others."),
@@ -1132,12 +1141,14 @@ DECK = {
         ], compact=True),
 
         C("Digital divide", "The gender gap in phones and the internet", [
-            stats([card("54%", "women aged 15-49 who have a mobile phone they themselves "
-                        "use", "cyan", NFHS + ", Ch. 14"),
+            stats([card("63.6%", "women aged 15-49 who have a mobile phone they themselves "
+                        "use in NFHS-6 (2023-24), up from 54% in NFHS-5", "cyan",
+                        "IIPS, NFHS-6 India Fact Sheet, May 2026"),
                    card("71%", "women with a mobile phone who can read text messages",
                         "indigo", NFHS + ", Ch. 14"),
-                   card("33% vs 51%", "women and men aged 15-49 who have ever used the "
-                        "internet", "amber", NFHS + ", Ch. 3")], cols=3),
+                   card("64.3% vs 80.5%", "women and men aged 15-49 who have ever used the "
+                        "internet in NFHS-6 (2023-24), up from 33% vs 51% in NFHS-5", "amber",
+                        "IIPS, NFHS-6 India Fact Sheet, May 2026")], cols=3),
             tw(pp("cyan", "Why it matters for programmes",
                   "Information, payments, scheme enrolment and helplines now run through "
                   "phones. A programme that sends messages to 'the household number' "
@@ -1160,7 +1171,10 @@ DECK = {
                    ["Anaemic", "57%", "25%", "32 points"],
                    ["Currently employed", "25%", "75%", "50 points"]]),
             body("Source: " + NFHS + ", Chapters 3 and 10. Gaps are calculated from the "
-                 "rounded figures in the report. The largest gap is in employment, which "
+                 "rounded figures in the report. In NFHS-6 (2023-24) the schooling figures are "
+                 "46.4% and 54.6%, a gap of about 8 points, and the internet figures are 64.3% "
+                 "and 80.5%, a gap of about 16 points (IIPS, NFHS-6 India Fact Sheet, May "
+                 "2026). NFHS-6 does not report literacy or anaemia. The largest gap is in employment, which "
                  "connects the two sections before this one: schooling has risen faster "
                  "than paid work, and unpaid care absorbs the difference.", sm=True),
             hbox("Use this kind of side-by-side table in any gender analysis: same "
@@ -1173,8 +1187,9 @@ DECK = {
         C("Prevalence", "Violence by husbands is the most common form", [
             stats([card("32%", "ever-married women 18-49 who have experienced spousal "
                         "physical, sexual or emotional violence", "red", NFHS + ", Ch. 15"),
-                   card("29%", "experienced spousal physical or sexual violence, down from "
-                        "31% in NFHS-4", "amber", NFHS + ", Ch. 15"),
+                   card("22.3%", "experienced spousal physical or sexual violence in NFHS-6 "
+                        "(2023-24), down from 29% in NFHS-5 and 31% in NFHS-4", "amber",
+                        "IIPS, NFHS-6 India Fact Sheet, May 2026"),
                    card("14%", "women who experienced physical or sexual violence who "
                         "sought help to stop it", "cyan", NFHS + ", Ch. 15")], cols=3),
             body("NFHS-5 selected only one woman per household for the domestic violence "
