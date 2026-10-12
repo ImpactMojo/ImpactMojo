@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the Code Studio pages under /code/ from small content specs.
+"""Build the Code School pages under /code/ from small content specs.
 
 Each page is a spec module in scripts/code-studio/specs/<name>.py defining PAGE.
 The shell (head, top bar, tabs, footer, scripts) is written here once, so every
@@ -69,7 +69,7 @@ FOOTER = """<footer class="im-footer" role="contentinfo">
 <p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
 <div class="im-footer-grid">
 <div class="im-footer-section"><h4>Learn</h4><ul>
-<li><a href="/code/">Code Studio</a></li>
+<li><a href="/code/">Code School</a></li>
 <li><a href="/101-courses/">101 Series</a></li>
 <li><a href="/courses/">Courses</a></li>
 <li><a href="/catalog.html">Full Catalog</a></li>
@@ -216,7 +216,7 @@ def render_lesson(page):
             next_btn = ('<button class="btn btn-primary" type="button" data-goto="%d">Next: %s &rarr;</button>'
                         % (i + 1, esc(mods[i + 1]["tab"])))
         else:
-            next_btn = '<a class="btn btn-primary" href="/code/">All Code Studio courses &rarr;</a>'
+            next_btn = '<a class="btn btn-primary" href="/code/">All Code School courses &rarr;</a>'
         panels.append('<div class="tab-panel lesson%s" data-panel="%d" role="tabpanel">\n'
                       '<div class="eyebrow">Module %d of %d</div>\n<h2>%s</h2>\n%s\n'
                       '<div class="nav-row">%s%s</div>\n</div>'
@@ -231,9 +231,9 @@ def render_lesson(page):
 <a id="main-content" tabindex="-1"></a>
 <div class="container" id="main">
     %(plane)s
-    <a href="/code/" class="back-link">%(back)s Back to Code Studio</a>
+    <a href="/code/" class="back-link">%(back)s Back to Code School</a>
     <div class="header">
-        <div class="header-badge">Code Studio &middot; %(kind)s</div>
+        <div class="header-badge">Code School &middot; %(kind)s</div>
         <h1>%(h1)s</h1>
         <p>%(lede)s</p>
     </div>
@@ -273,7 +273,7 @@ def render_index(page, others):
     %(plane)s
     <a href="/" class="back-link">%(back)s Back to ImpactMojo</a>
     <div class="header">
-        <div class="header-badge">Code Studio</div>
+        <div class="header-badge">Free courses in data and code</div>
         <h1>%(h1)s</h1>
         <p>%(lede)s</p>
     </div>
@@ -330,10 +330,10 @@ def main():
             path.write_text(text, encoding="utf-8")
     if check:
         if stale:
-            print("FAIL - Code Studio pages out of date: %s. Run python3 scripts/build-code-studio.py"
+            print("FAIL - Code School pages out of date: %s. Run python3 scripts/build-code-studio.py"
                   % ", ".join(stale))
             sys.exit(1)
-        print("PASS - %d Code Studio pages match their specs." % len(out))
+        print("PASS - %d Code School pages match their specs." % len(out))
     else:
         print("wrote %d pages to code/" % len(out))
 

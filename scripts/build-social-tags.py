@@ -82,9 +82,9 @@ SECTIONS = [
     ("Handouts/", "Handout", "#0891b2"),
     ("BookSummaries/", "Book Companion", "#c026d3"),
     ("BookCompanionTools/", "Companion Tool", "#c026d3"),
-    ("Labs/", "Studio", "#059669"),
-    ("premium-tools/", "Pro Studio", "#059669"),
-    ("code/", "Code Studio", "#0f766e"),
+    ("Labs/", "Free Studio", "#059669"),
+    ("premium-tools/", "Pro Studio", "#4f46e5"),
+    ("code/", "Code School", "#0f766e"),
     ("Games/", "Game", "#e11d48"),
     ("DeepDives/", "Deep Dive", "#2563eb"),
     ("DataNotes/", "Data Note", "#0284c7"),
@@ -260,7 +260,7 @@ def process(path, text):
         img_url, alt = image, found.get("og:image:alt", "")
         w, hh = found.get("og:image:width", ""), found.get("og:image:height", "")
     else:
-        img_url, alt, w, hh = SITE + "/" + card, "%s, %s, ImpactMojo" % (card_title, label), "1200", "630"
+        img_url, alt, w, hh = SITE + "/" + card, ("%s, %s, ImpactMojo" % (card_title, label) if card_title != label else "%s, ImpactMojo" % label), "1200", "630"
     url = canonical(path)
     og_type = found.get("og:type") or ("article" if path.startswith(("blog/", "DeepDives/", "DataNotes/", "BookSummaries/", "specials/")) else "website")
 

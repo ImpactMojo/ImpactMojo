@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""R & Python for Development: moved from 101-courses/r-python-dev.html into Code Studio, text unchanged."""
+"""R & Python for Development: moved from 101-courses/r-python-dev.html into Code School, text unchanged."""
 
 PAGE = {'slug': 'r-python',
  'order': 1,

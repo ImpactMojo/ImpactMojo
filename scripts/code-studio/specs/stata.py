@@ -140,7 +140,7 @@ PAGE = {
                  "highlight some lines first, the same button runs only those lines.",
              ]},
              {"t": "syntax", "label": "Stata do-file: 01_setup.do", "code":
-                 "* 01_setup.do : first do-file for the Code Studio Stata course\n"
+                 "* 01_setup.do : first do-file for the Code School Stata course\n"
                  "version 19            // run as Stata 19, even in a later Stata\n"
                  "clear all             // start with nothing in memory\n"
                  "cd \"C:\\impactmojo\\stata\"   // change to YOUR project folder\n"
