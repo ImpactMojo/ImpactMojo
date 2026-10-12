@@ -248,6 +248,23 @@ jobs:
       - name: Check the share tags and cards
         run: python3 scripts/build-social-tags.py --check
 
+  self-links:
+    name: Every absolute self-link resolves
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # JSON-LD url and image fields are read by search engines and by no
+      # visitor, so a dead address there renders a normal page. On 2026-10-12
+      # ten of them answered 404 (#1210).
+      - name: Check absolute links to impactmojo.in
+        run: python3 scripts/check-self-links.py
+
   inline-css:
     name: Every inline stylesheet closes what it opens
     runs-on: ubuntu-latest

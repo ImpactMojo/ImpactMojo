@@ -2,13 +2,13 @@
 
 ## What Are the ImpactMojo Studios?
 
-ImpactMojo offers **36 interactive studios**: hands-on workbenches where you build, design, and practice real development skills. Unlike courses (which teach concepts) or games (which simulate dynamics), studios produce **tangible outputs** (a Theory of Change diagram, a MEL plan, a policy brief) that you can export and use in your actual work.
+ImpactMojo offers **35 interactive studios**: hands-on workbenches where you build, design, and practice real development skills. Unlike courses (which teach concepts) or games (which simulate dynamics), studios produce **tangible outputs** (a Theory of Change diagram, a MEL plan, a policy brief) that you can export and use in your actual work.
 
 All studios are **free, browser-based, and require no login**.
 
 ---
 
-## The 36 Studios
+## The 35 Studios
 
 ### MEL & Research Studios
 
@@ -17,8 +17,7 @@ All studios are **free, browser-based, and require no login**.
 | **Theory of Change Studio** | A structured ToC with assumptions, indicators, and causal pathways | [Open](/Labs/toc-lab.html) |
 | **MEL Studio** | A complete MEL system end to end: design the framework, indicators, data collection and analysis, then build the operational plan (indicator matrix, calendar & budget, reporting) | [Open](/Labs/mel-lab.html) |
 | **LogFrame Builder** | A donor-ready Logical Framework: climb the results ladder (Goal → Outcomes → Outputs → Activities), add SMART indicators and their means of verification, surface the assumptions, then print or export the classic 4×4 matrix. Imports straight from the Theory of Change Builder | [Open](/Labs/logframe-builder-lab.html) |
-| **Sampling Basics (Primer)** | Plain-language grounding in the ideas (population vs sample, bias, margin of error, clusters) the Level 1 before the Studio | [Open](/Labs/sampling-basics-lab.html) |
-| **Sampling Design Studio** | A defensible sampling strategy (SRS, stratified, cluster or multistage) with sample sizes, design effect, and a printable plan | [Open](/Labs/sampling-design-lab.html) |
+| **Sampling Design Studio** | A defensible sampling strategy (SRS, stratified, cluster or multistage) with sample sizes, design effect, and a printable plan. Opens with a ten-minute primer for anyone new to sampling | [Open](/Labs/sampling-design-lab.html) |
 | **Survey Design Studio** | A survey instrument that measures what it claims: question wording, scales, and bias testing | [Open](/Labs/survey-design-lab.html) |
 | **Ethics & Research Integrity Studio** | Worked judgements on informed consent, data privacy, positionality, and real fieldwork dilemmas | [Open](/Labs/ethics-research-lab.html) |
 | **Participatory Methods Studio** | Practice with PRA, community mapping, focus-group facilitation, and participatory analysis | [Open](/Labs/participatory-methods-lab.html) |

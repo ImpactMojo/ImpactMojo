@@ -45,13 +45,30 @@ import json
 import re
 import sys
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://www.impactmojo.in"
 MANIFEST = ROOT / "data" / "social-cards.json"
 CARD_DIR = "assets/og"
 GENERIC = ("og-card.png", "ImpactMojo%20Logo.png", "ImpactMojo Logo.png", "/assets/og/")
+
+
+def missing_local(url):
+    """True for an image on this site that is not on disk. A preview pointing
+    at a file that does not exist shows no picture at all, so such a page gets
+    a drawn card instead of keeping the dead address as if it were bespoke."""
+    m = re.match(r"https?://(?:www\.)?impactmojo\.in(/[^?#]*)", url)
+    if not m:
+        return False
+    global _FILES
+    if _FILES is None:   # Netlify answers images in any case, so compare folded
+        _FILES = {str(f.relative_to(ROOT)).lower() for f in (ROOT / "assets").rglob("*") if f.is_file()}
+    rel = unquote(m.group(1)).lstrip("/").lower()
+    return rel.startswith("assets/") and rel not in _FILES
+
+
+_FILES = None
 START, END = "<!-- share:start -->", "<!-- share:end -->"
 
 # Path prefix -> (section label, accent colour). First match wins.
@@ -237,7 +254,7 @@ def process(path, text):
     h = hashlib.sha1(("%s|%s|%s|%s" % (label, card_title, sub, colour)).encode()).hexdigest()[:8]
 
     image = found.get("og:image") or found.get("twitter:image") or ""
-    bespoke = bool(image) and not any(g in image for g in GENERIC)
+    bespoke = bool(image) and not any(g in image for g in GENERIC) and not missing_local(image)
     card = "%s/%s-%s.jpg" % (CARD_DIR, slug(path), h)
     if bespoke:
         img_url, alt = image, found.get("og:image:alt", "")

@@ -212,29 +212,28 @@ Hands-on workbenches where you build, design, and practice real skills.
 | 11 | Gender Analysis Studio | Gender & Equity | [Open](/Labs/gender-studies-lab.html) |
 | 12 | Teacher Evidence Explorer | Research & Methods | [Open](/Labs/teacher-evidence-lab.html) |
 | 13 | Policy Analysis Studio | Philosophy & Governance | [Open](/Labs/policy-analysis-lab.html) |
-| 14 | Sampling Basics (Primer) | Research & Methods | [Open](/Labs/sampling-basics-lab.html) |
-| 15 | Sampling Design Studio | Research & Methods | [Open](/Labs/sampling-design-lab.html) |
-| 16 | Budget & Fiscal Analysis Studio | Governance & Digital | [Open](/Labs/budget-fiscal-lab.html) |
-| 17 | Climate Risk & Adaptation Studio | Climate & Environment | [Open](/Labs/climate-adaptation-lab.html) |
-| 18 | Conflict-Sensitive Programming Studio | Governance & Digital | [Open](/Labs/conflict-sensitive-lab.html) |
-| 19 | Data Feminism & Intersectional Analysis Studio | Gender & Equity | [Open](/Labs/data-feminism-lab.html) |
-| 20 | Digital Public Infrastructure Studio | Governance & Digital | [Open](/Labs/dpi-lab.html) |
-| 21 | Ethics & Research Integrity Studio | Research & Methods | [Open](/Labs/ethics-research-lab.html) |
-| 22 | Grant Writing & Proposal Studio | Research & Methods | [Open](/Labs/grant-writing-lab.html) |
-| 23 | Participatory Methods Studio | Research & Methods | [Open](/Labs/participatory-methods-lab.html) |
-| 24 | Policy Brief Writing Studio | Philosophy & Governance | [Open](/Labs/policy-brief-lab.html) |
-| 25 | Stakeholder Mapping & Power Analysis Studio | Governance & Digital | [Open](/Labs/stakeholder-mapping-lab.html) |
-| 26 | Survey Design Studio | Research & Methods | [Open](/Labs/survey-design-lab.html) |
-| 27 | Systems Thinking & Complexity Studio | Research & Methods | [Open](/Labs/systems-thinking-lab.html) |
-| 27 | Before We Fall Apart: Group Conflict-Preparedness Studio | Philosophy & Governance | [Open](/Labs/before-we-fall-apart-lab.html) |
-| 28 | Disability-Inclusive MEL Studio | MEL | [Open](/Labs/disability-inclusive-mel-lab.html) |
-| 29 | Impact Evaluation Designer | MEL | [Open](/Labs/impact-evaluation-lab.html) |
-| 30 | Livelihoods & Value-Chain Studio | Policy & Economics | [Open](/Labs/livelihoods-value-chain-lab.html) |
-| 31 | LogFrame Builder | MEL | [Open](/Labs/logframe-builder-lab.html) |
-| 32 | MEL Rosetta Lab | MEL | [Open](/Labs/mel-rosetta-lab.html) |
-| 33 | NVC & Mediation Practice | Philosophy & Governance | [Open](/Labs/nvc-mediation-lab.html) |
-| 34 | RCT Readiness Diagnostic | MEL | [Open](/Labs/rct-readiness-lab.html) |
-| 35 | Why City Boundaries Lie | Policy & Economics | [Open](/Labs/urban-boundaries-lab.html) |
+| 14 | Sampling Design Studio | Research & Methods | [Open](/Labs/sampling-design-lab.html) |
+| 15 | Budget & Fiscal Analysis Studio | Governance & Digital | [Open](/Labs/budget-fiscal-lab.html) |
+| 16 | Climate Risk & Adaptation Studio | Climate & Environment | [Open](/Labs/climate-adaptation-lab.html) |
+| 17 | Conflict-Sensitive Programming Studio | Governance & Digital | [Open](/Labs/conflict-sensitive-lab.html) |
+| 18 | Data Feminism & Intersectional Analysis Studio | Gender & Equity | [Open](/Labs/data-feminism-lab.html) |
+| 19 | Digital Public Infrastructure Studio | Governance & Digital | [Open](/Labs/dpi-lab.html) |
+| 20 | Ethics & Research Integrity Studio | Research & Methods | [Open](/Labs/ethics-research-lab.html) |
+| 21 | Grant Writing & Proposal Studio | Research & Methods | [Open](/Labs/grant-writing-lab.html) |
+| 22 | Participatory Methods Studio | Research & Methods | [Open](/Labs/participatory-methods-lab.html) |
+| 23 | Policy Brief Writing Studio | Philosophy & Governance | [Open](/Labs/policy-brief-lab.html) |
+| 24 | Stakeholder Mapping & Power Analysis Studio | Governance & Digital | [Open](/Labs/stakeholder-mapping-lab.html) |
+| 25 | Survey Design Studio | Research & Methods | [Open](/Labs/survey-design-lab.html) |
+| 26 | Systems Thinking & Complexity Studio | Research & Methods | [Open](/Labs/systems-thinking-lab.html) |
+| 26 | Before We Fall Apart: Group Conflict-Preparedness Studio | Philosophy & Governance | [Open](/Labs/before-we-fall-apart-lab.html) |
+| 27 | Disability-Inclusive MEL Studio | MEL | [Open](/Labs/disability-inclusive-mel-lab.html) |
+| 28 | Impact Evaluation Designer | MEL | [Open](/Labs/impact-evaluation-lab.html) |
+| 29 | Livelihoods & Value-Chain Studio | Policy & Economics | [Open](/Labs/livelihoods-value-chain-lab.html) |
+| 30 | LogFrame Builder | MEL | [Open](/Labs/logframe-builder-lab.html) |
+| 31 | MEL Rosetta Lab | MEL | [Open](/Labs/mel-rosetta-lab.html) |
+| 32 | NVC & Mediation Practice | Philosophy & Governance | [Open](/Labs/nvc-mediation-lab.html) |
+| 33 | RCT Readiness Diagnostic | MEL | [Open](/Labs/rct-readiness-lab.html) |
+| 34 | Why City Boundaries Lie | Policy & Economics | [Open](/Labs/urban-boundaries-lab.html) |
 
 ---
 

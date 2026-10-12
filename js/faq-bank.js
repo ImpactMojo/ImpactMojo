@@ -155,7 +155,7 @@
     { t:"RCT Readiness Diagnostic", u:"/Labs/rct-readiness-lab.html" },
     { t:"Resource Sustainability Studio", u:"/Labs/resource-sustainability-lab.html" },
     { t:"Risk & Mitigation Studio", u:"/Labs/risk-mitigation-lab.html" },
-    { t:"Sampling Basics: A Plain-Language Primer", u:"/Labs/sampling-basics-lab.html" },
+    { t:"Sampling basics: a plain-language primer", u:"/Labs/sampling-design-lab.html#basics" },
     { t:"Sampling Design Studio", u:"/Labs/sampling-design-lab.html" },
     { t:"Stakeholder Mapping & Power Analysis Studio", u:"/Labs/stakeholder-mapping-lab.html" },
     { t:"Impact Storytelling Studio", u:"/Labs/storytelling-lab.html" },
@@ -285,7 +285,7 @@
 
     // Labs count
     { re: /how many.*(lab|studio)|\b(labs|studios)\b.*(list|all|which)|list.*(lab|studio)/i,
-      a: () => "We have **36 Labs** (also called Studios): browser-based tools you work through yourself.\n\n" + listLabs() + "\n\nAll Labs: /Labs/" },
+      a: () => "We have **35 Labs** (also called Studios): browser-based tools you work through yourself.\n\n" + listLabs() + "\n\nAll Labs: /Labs/" },
 
     // Flagship count
     { re: /how many.*course|flagship|all.*course/i,

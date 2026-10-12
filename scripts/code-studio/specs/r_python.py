@@ -286,7 +286,7 @@ PAGE = {'slug': 'r-python',
                                   'style="color:var(--text-primary)">Code Convert Pro</a></h4><p>Translate '
                                   'your code between R, Python, Stata and SPSS.</p></div></div>\n'
                                   '            <div class="road-item"><div '
-                                  'class="road-num">→</div><div><h4><a href="/Labs/sampling-toolkit.html" '
-                                  'style="color:var(--text-primary)">Sampling Toolkit</a></h4><p>Design the '
+                                  'class="road-num">→</div><div><h4><a href="/Labs/sampling-design-lab.html" '
+                                  'style="color:var(--text-primary)">Sampling Design Studio</a></h4><p>Design the '
                                   'survey your code will analyse.</p></div></div>\n'
                                   '        </div>'}]}]}
