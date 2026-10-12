@@ -2,6 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.365.1 — October 12, 2026 (the last three certificate answers)
+
+### Fixed
+
+- **Three FAQ answers still promised a certificate PDF** (#1201). Two on the FAQ page, one of them in the structured data search engines read, and one on the pricing page used different wording and were missed by v10.365.0. They now say the same as the rest of the site.
+
 ## v10.365.0 — October 12, 2026 (what each certificate is)
 
 ### Fixed
