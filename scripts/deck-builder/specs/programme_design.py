@@ -1542,7 +1542,7 @@ DECK = {
             table(["Failure", "What it looks like", "Prevention"], [
                 ["Solution first", "Programme designed around a favoured intervention", "Problem analysis before options"],
                 ["Wrong cause", "Acting on a cause that is not binding here", "Check causes against data"],
-                ["Ignored incentives", "Officials or staff quietly undermine it", "Political economy analysis"],
+                ["Ignored incentives", "Officials or staff undermine it without saying so", "Political economy analysis"],
                 ["Thin dosage", "Budget spread too widely to work", "Reach fewer people properly"],
                 ["Pilot-only conditions", "Works with founders, fails at scale", "Pilot with the scaling implementer"],
                 ["Exclusion by design", "Paperwork or channels shut out the poorest", "Map steps to receipt"],

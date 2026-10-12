@@ -157,7 +157,7 @@ window.SOCIAL_MODEL = (function () {
                  second: "~16%", secondLabel: "the global prevalence estimate" },
       barriers: [
         { kind: "institutional", weight: 86, text: "A definition built on specified conditions and a forty per cent threshold, so the count measures who qualifies rather than who is disabled by their surroundings." },
-        { kind: "attitudinal", weight: 70, text: "Non-disclosure within the household, which is not evasion: reporting a disability can affect a daughter's marriage prospects, and the survey has no way to see what it costs to answer honestly." },
+        { kind: "attitudinal", weight: 70, text: "Non-disclosure within the household, which is not evasion: reporting a disability can affect a daughter's marriage prospects, and the survey has no way to see what it costs to answer truthfully." },
         { kind: "communication", weight: 48, text: "Questions asked in terms of conditions rather than functioning, so a person who cannot climb the steps to the office does not recognise themselves in the question." },
         { kind: "environmental", weight: 20, text: "Enumeration that does not reach the households least able to travel to it." }
       ],

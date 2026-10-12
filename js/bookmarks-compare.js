@@ -26,7 +26,7 @@ var IMPACTMOJO_COURSE_DATA = {
         rating: '4.9',
         learners: '350+',
         description: 'Monitoring, Evaluation, Accountability and Learning frameworks for impact measurement',
-        objectives: ['Design robust M&E frameworks', 'Create effective indicators', 'Implement accountability mechanisms', 'Build learning loops'],
+        objectives: ['Design sound M&E frameworks', 'Create effective indicators', 'Implement accountability mechanisms', 'Build learning loops'],
         audience: 'All levels',
         duration: '6-8 hours',
         format: 'Self-paced online',
@@ -121,7 +121,7 @@ var IMPACTMOJO_COURSE_DATA = {
         type: 'Game',
         rating: '4.8',
         learners: '380+',
-        description: 'Navigate strategic decisions where individual rationality conflicts with collective benefit',
+        description: 'Work through strategic decisions where individual rationality conflicts with collective benefit',
         objectives: ['Understand the classic dilemma', 'Explore cooperation strategies', 'Analyze repeated games', 'Apply to coordination problems'],
         audience: 'All levels',
         duration: '15-25 minutes',
@@ -292,14 +292,14 @@ IMX.DailyTip = {
         "Capacity building isn't just training. It's about creating systems that sustain after the project ends.",
         "Mixed methods research combines the best of quantitative and qualitative. Use them together for richer insights.",
         "Randomized Controlled Trials (RCTs) are the gold standard, but not always feasible. Know your alternatives.",
-        "Social accountability mechanisms empower communities to hold service providers responsible.",
+        "Social accountability mechanisms give communities the means to hold service providers responsible.",
         "Gender analysis should happen at design stage, not be retrofitted later.",
         "Systems thinking helps you see the interconnections that simple logic models miss.",
         "Behavior change takes time. Design your program timelines and expectations accordingly.",
         "Local ownership is the key to sustainability. Build it from day one.",
         "Data visualization can tell a story that numbers alone cannot. Learn the basics.",
         "Ethical considerations in research protect vulnerable populations. Never compromise on informed consent.",
-        "Network effects can amplify your impact. Think about how change spreads through communities."
+        "Network effects can multiply your impact. Think about how change spreads through communities."
     ],
     
     currentIndex: 0,
@@ -924,7 +924,7 @@ IMX.exportCompareToCSV = function() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    IMX.showToast('Rich comparison exported to CSV');
+    IMX.showToast('Detailed comparison exported to CSV');
 };
 
 // ========================================

@@ -494,7 +494,7 @@
                 '<p class="cpb-completion-sub">Your certificate has been issued! View it on your account page.</p>' +
                 '<a href="/account.html" class="cpb-completion-btn">View Certificate</a>' +
                 '<p class="cpb-completion-upgrade">Practitioner adds a public portfolio page that displays it. ' +
-                    '<a href="/upgrade.html?from=course-completion">See what you unlock</a></p>';
+                    '<a href="/upgrade.html?from=course-completion">See what paid plans include</a></p>';
         }
 
         var overlay = document.createElement('div');

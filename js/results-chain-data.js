@@ -155,7 +155,7 @@ window.RESULTSCHAIN = (function () {
           source: "Independent studies", year: "various" }
       },
       breaks: "impact",
-      breakNote: "This is the one programme on the page whose outcome is genuinely measured, and it shows what measurement alone cannot do. The stunting series moves and the wasting series does not, across four surveys and twenty-two years, and nothing in the measurement can say which part of either belongs to the largest child nutrition programme in the world."
+      breakNote: "This is the one programme on the page whose outcome is actually measured, and it shows what measurement alone cannot do. The stunting series moves and the wasting series does not, across four surveys and twenty-two years, and nothing in the measurement can say which part of either belongs to the largest child nutrition programme in the world."
     },
     {
       id: "pmjay", name: "Ayushman Bharat PM-JAY", since: "2018", colour: "#047857",

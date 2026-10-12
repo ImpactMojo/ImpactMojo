@@ -48,7 +48,7 @@ window.CUBE = (function () {
           complication: "Most organised participation happens in invited spaces, and the invitation sets its limits. Taking a seat can give a decision legitimacy without changing it, which is why the cube asks you to look at the other two spaces before deciding what a seat is worth."
         },
         { id: "claimed", name: "Claimed", color: "#a78bfa",
-          definition: "Less powerful people claim these spaces from or against the powerholders, or create them on their own. They range from social movements and community associations to ordinary places where people gather to discuss, debate and resist outside institutional policy arenas.",
+          definition: "Less powerful people claim these spaces from or against the powerholders, or create them on their own. They range from social movements and community associations to ordinary places where people gather to discuss, debate and resist outside formal policy-making bodies.",
           cite: AFTER_GAVENTA,
           evidence: [
             { stat: "1990s", detail: "The Mazdoor Kisan Shakti Sangathan began holding public hearings in rural Rajasthan in the mid-1990s, where payment records for local works were read out and compared with what villagers had received. The campaign for a right to see those records led to the Rajasthan Right to Information Act, 2000 and the national Right to Information Act, 2005.", source: "Mazdoor Kisan Shakti Sangathan; Rajasthan Right to Information Act, 2000; Right to Information Act, 2005", year: "1990s to 2005" },
