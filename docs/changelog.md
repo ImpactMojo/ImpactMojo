@@ -2,6 +2,20 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.372.0 — October 12, 2026 (five charts on the revision of the electoral rolls)
+
+### For Learners
+
+- **Five Long View charts on the Special Intensive Revision** — where the most names were left off the draft rolls, the reasons officers recorded, the states where women were removed more often than men, removals against winning margins, and forty years of the roll against the population of voting age.
+
+### Added
+
+- Five charts in The Long View under Democracy & Representation, each with its own detail page. The figures come from the Chief Electoral Officers' published draft-roll returns, the Election Commission's Atlas 2024 and the UN World Population Prospects 2024, as compiled by offtheroll.in with data as of 10 October 2026. Each chart carries that site's caveats: a reason is what the officer wrote down, a count over the margin could have decided a seat without showing that it did, and a roll smaller than the voting-age population is not a count of missing voters. The homepage now says 42 charts.
+
+### Fixed
+
+- **The tilegram's takeaway misstated the comparison it was drawing** (#1218). It now says Uttar Pradesh's 20 hexagons come close to the 25 held by the five southern states together, which is what the chart's own tiles show.
+
 ## v10.371.0 — October 12, 2026 (a fact-check of forty pages against their sources)
 
 ### Fixed

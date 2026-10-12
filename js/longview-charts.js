@@ -69,15 +69,19 @@ window.LV = (function() {
     var svg = frame(id); if (!svg) return;
     var mL = 30, mR = 54, mT = 30, mB = 36;
     var xs = data.map(function(d){ return d.x; });
-    var xmin = Math.min.apply(null, xs), xmax = Math.max.apply(null, xs), yMax = o.yMax;
+    var xmin = Math.min.apply(null, xs), xmax = Math.max.apply(null, xs), yMax = o.yMax, yMin = o.yMin || 0;
     function X(x){ return mL + (x - xmin) / (xmax - xmin) * (W - mL - mR); }
-    function Y(y){ return H - mB - (y / yMax) * (H - mT - mB); }
+    function Y(y){ return H - mB - ((y - yMin) / (yMax - yMin)) * (H - mT - mB); }
     var pts = data.map(function(p){ return [X(p.x), Y(p.y)]; });
-    svg.appendChild(mk('line', { x1: mL, y1: Y(0), x2: W - mR, y2: Y(0), stroke: gridc(), 'stroke-width': 1 }));
+    svg.appendChild(mk('line', { x1: mL, y1: Y(yMin), x2: W - mR, y2: Y(yMin), stroke: gridc(), 'stroke-width': 1 }));
+    if (o.refLine) {
+      svg.appendChild(mk('line', { x1: mL, y1: Y(o.refLine.y), x2: W - mR, y2: Y(o.refLine.y), stroke: ink(), 'stroke-width': 1.2, 'stroke-dasharray': '4 4' }));
+      svg.appendChild(mk('text', { x: W - mR + 4, y: Y(o.refLine.y) + 4, 'font-size': 11, fill: ink(), 'font-family': 'Inter, sans-serif' }, o.refLine.label));
+    }
     var lineD = smooth(pts);
     if (o.area) {
       var fill = vGrad(svg, id + '-area', o.color, 0.32, 0.015);
-      svg.appendChild(mk('path', { d: lineD + ' L' + X(xmax).toFixed(1) + ',' + Y(0).toFixed(1) + ' L' + X(xmin).toFixed(1) + ',' + Y(0).toFixed(1) + ' Z', fill: fill }));
+      svg.appendChild(mk('path', { d: lineD + ' L' + X(xmax).toFixed(1) + ',' + Y(yMin).toFixed(1) + ' L' + X(xmin).toFixed(1) + ',' + Y(yMin).toFixed(1) + ' Z', fill: fill }));
     }
     var path = mk('path', { d: lineD, fill: 'none', stroke: o.color, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' });
     svg.appendChild(path); animPath(path);
@@ -120,7 +124,7 @@ window.LV = (function() {
   function hbarChart(id, data, o) {
     var svg = frame(id); if (!svg) return;
     var mL = 108, mR = 50, mT = 24, mB = 28;
-    var xMax = o.xMax, n = data.length, gap = 18;
+    var xMax = o.xMax, n = data.length, gap = (o.gap != null ? o.gap : 18);
     var bh = (H - mT - mB - gap * (n - 1)) / n;
     function Xv(v){ return mL + (v / xMax) * (W - mL - mR); }
     data.forEach(function(dd, i){
@@ -267,16 +271,17 @@ window.LV = (function() {
     var svg = frame(id); if (!svg) return;
     var mL = 134, mR = 26, mT = 44, mB = 30;
     var n = data.length, rowH = (H - mT - mB) / n;
-    function X(v){ return mL + (v / 100) * (W - mL - mR); }
-    [0, 25, 50, 75, 100].forEach(function(t){
+    var lo = (o.lo != null ? o.lo : 0), hi = (o.hi != null ? o.hi : 100);
+    function X(v){ return mL + ((v - lo) / (hi - lo)) * (W - mL - mR); }
+    (o.ticks || [0, 25, 50, 75, 100]).forEach(function(t){
       svg.appendChild(mk('line', { x1: X(t), y1: mT - 6, x2: X(t), y2: H - mB, stroke: gridc(), 'stroke-width': 1 }));
       tick(svg, X(t), H - mB + 15, t + '%');
     });
     // legend
     svg.appendChild(mk('circle', { cx: mL + 2, cy: 22, r: 5, fill: o.fColor }));
-    svg.appendChild(mk('text', { x: mL + 12, y: 26, 'font-size': 11, 'font-weight': 700, fill: o.fColor, 'font-family': 'Inter, sans-serif' }, 'Women'));
-    svg.appendChild(mk('circle', { cx: mL + 78, cy: 22, r: 5, fill: o.mColor }));
-    svg.appendChild(mk('text', { x: mL + 88, y: 26, 'font-size': 11, 'font-weight': 700, fill: o.mColor, 'font-family': 'Inter, sans-serif' }, 'Men'));
+    svg.appendChild(mk('text', { x: mL + 12, y: 26, 'font-size': 11, 'font-weight': 700, fill: o.fColor, 'font-family': 'Inter, sans-serif' }, o.fLabel || 'Women'));
+    svg.appendChild(mk('circle', { cx: mL + (o.mOffset || 78), cy: 22, r: 5, fill: o.mColor }));
+    svg.appendChild(mk('text', { x: mL + (o.mOffset || 78) + 10, y: 26, 'font-size': 11, 'font-weight': 700, fill: o.mColor, 'font-family': 'Inter, sans-serif' }, o.mLabel || 'Men'));
     data.forEach(function(d, i){
       var y = mT + i * rowH + rowH / 2;
       svg.appendChild(mk('text', { x: mL - 12, y: y + 4, 'text-anchor': 'end', 'font-size': 11.5, fill: ink(), 'font-family': 'Amaranth, sans-serif' }, d.label));
@@ -1480,6 +1485,39 @@ window.LV = (function() {
         {code:'KL',col:2,row:6,v:0.02},{code:'TN',col:3,row:6,v:0.17}
       ] });
 
+    // The Special Intensive Revision of electoral rolls, 2025-26. Figures from
+    // the SIR analyses hub (offtheroll.in, INDIA-DATA repository, data as of
+    // 10 October 2026): Chief Electoral Officers' draft-roll returns and the
+    // Election Commission's results. Tamil Nadu's split by sex is unverified and
+    // Kerala's is a proxy, so neither is in c-sir-women.
+    hbarChart('c-sir-states',
+      [{label:'Delhi',y:32.8,color:'#7d0d23'},{label:'DNH & DD',y:29.6,color:'#7d0d23'},{label:'Telangana',y:21.7,color:'#7d0d23'},
+       {label:'Maharashtra',y:21.1,color:'#7d0d23'},{label:'A&N Islands',y:20.6,color:'#b81d36'},{label:'Karnataka',y:19.5,color:'#7d0d23'},
+       {label:'Arunachal',y:19.1,color:'#7d0d23'},{label:'Uttar Pradesh',y:18.7,color:'#b81d36'},{label:'Jharkhand',y:16.5,color:'#7d0d23'},
+       {label:'Haryana',y:16.4,color:'#7d0d23'}],
+      { xMax: 36, gap: 6, valfmt: function(v){return v.toFixed(1);}, refLine: { value: 14.1, label: '31 states 14.1' } });
+
+    donut('c-sir-reasons',
+      [{label:'Shifted, absent or other',v:71.5,color:'#b81d36'},{label:'Dead',v:20.9,color:'#475569'},{label:'Duplicate',v:7.6,color:'#f59e0b'}],
+      { centerBig: '13.4 cr', centerSub: 'names left off' });
+
+    dumbbell('c-sir-women',
+      [{label:'Odisha',f:57.0,m:49.4},{label:'Bihar',f:55.5,m:47.9},{label:'Madhya Pradesh',f:55.3,m:48.8},
+       {label:'Uttar Pradesh',f:53.6,m:46.8},{label:'West Bengal',f:53.5,m:49.2},{label:'Gujarat',f:51.4,m:48.8},
+       {label:'Karnataka',f:49.7,m:50.2},{label:'Chandigarh',f:48.3,m:48.9},{label:'Delhi',f:42.8,m:46.9}],
+      { lo: 40, hi: 60, ticks: [40, 45, 50, 55, 60], fColor: '#b81d36', mColor: '#64748b',
+        fLabel: 'Share of names removed', mLabel: 'Share of the roll', mOffset: 168 });
+
+    barChart('c-sir-margins',
+      [{label:'Tamil Nadu',y:90.2,color:'#7d0d23',highlight:true},{label:'Bihar',y:71.6,color:'#7d0d23',highlight:true},
+       {label:'West Bengal',y:47.3,color:'#94a3b8'},{label:'Kerala',y:27.1,color:'#94a3b8'}],
+      { yMax: 100, valfmt: function(v){return Math.round(v)+'%';} });
+
+    lineChart('c-sir-roll',
+      [{x:1985,y:109.5},{x:1989,y:107.2},{x:1991,y:104.4},{x:1996,y:106.6},{x:1998,y:103.7},{x:1999,y:103.4},
+       {x:2004,y:98.9},{x:2009,y:94.1},{x:2014,y:98.2},{x:2019,y:97.3},{x:2024,y:96.3}],
+      { yMin: 85, yMax: 115, refLine: { y: 100, label: '100' }, color: '#7d0d23', area: false, labelEvery: 2, valfmt: function(v){return v.toFixed(1);}, xfmt: function(x){return "'"+String(x).slice(2);} });
+
     dorling('c-seats',
       { k: 9.2, min: 16.7, max: 27.4, lowColor: '#fde68a', highColor: '#9f1239',
         minLabel: '16.7 lakh', maxLabel: '27.4 lakh', legend: 'people per MP →',
@@ -1779,7 +1817,7 @@ window.LV = (function() {
 
   function drawMasters(){ drawRose(); drawMinard(); drawSnow(); drawDuBois(); }
 
-  var ORDER = ['c-bump','c-gapminder','c-monsoon','c-gender','c-wealth','c-caste','c-co2','c-energy','c-nfhs','c-upset-deprivation','c-upset-backwards','c-forest','c-decline','c-transition','c-migration','c-where','c-ghg','c-ghg3','c-rupee','c-waffle','c-stream','c-pyramid','c-states','c-poor-dots','c-seats','c-tilegram','c-poverty','c-u5mr','c-flfp','c-pipeline','c-climate','c-le','c-solar','c-urban','c-gdp','c-literacy','c-womenparl'];
+  var ORDER = ['c-bump','c-gapminder','c-monsoon','c-gender','c-wealth','c-caste','c-co2','c-energy','c-nfhs','c-upset-deprivation','c-upset-backwards','c-forest','c-decline','c-transition','c-migration','c-where','c-ghg','c-ghg3','c-rupee','c-waffle','c-stream','c-pyramid','c-states','c-poor-dots','c-seats','c-sir-states','c-sir-reasons','c-sir-women','c-sir-margins','c-sir-roll','c-tilegram','c-poverty','c-u5mr','c-flfp','c-pipeline','c-climate','c-le','c-solar','c-urban','c-gdp','c-literacy','c-womenparl'];
   var DETAILS = {
     'c-bump': { tag:'Population', title:'The new giants',
       takeaway:"India passed China to become the world's most populous country in 2023. Look further out and the order keeps shifting. By 2050 the UN projects Pakistan and Nigeria to sit just behind the United States, and by 2100 both pass it.",
@@ -1841,8 +1879,38 @@ window.LV = (function() {
       why:"A Dorling cartogram throws away the map's real shapes and draws each state as a circle sized by its people, nudged apart but kept roughly where it belongs. Land area stops competing with population for your attention, which is the whole point when the subject is how many people sit behind each seat.",
       how:"One circle per state, area proportional to its 2011 population, coloured by population per Lok Sabha seat. Circles start at their approximate geographic position and are pushed apart until none overlap, so the layout is readable without being a real map.",
       look:"That the darkest circles (Rajasthan, Bihar, Haryana, Uttar Pradesh, Madhya Pradesh) are mostly northern, and the palest (Kerala, Tamil Nadu, Andhra Pradesh) are mostly southern. That pattern is what the delimitation debate is about." },
+    'c-sir-states': { tag:'Democracy & Representation', title:'Who was left off the draft rolls',
+      takeaway:"Across the 31 states and union territories revised so far, 14.1 of every 100 names on the roll were left off the draft. In Delhi it was nearly one in three.",
+      source:"Chief Electoral Officers' draft-roll figures for the Special Intensive Revision, 2025-26, compiled by the SIR analyses hub (offtheroll.in), data as of 10 October 2026. Maharashtra's figures are rounded, and the rest are exact. Dark bars are phase 3 states, lighter bars phase 2.",
+      why:"A ranked bar chart answers the first question a reader has, which is where the rate was highest, and the dashed line shows how far each state sits from the overall rate.",
+      how:"Names left off the draft roll per 100 electors on the roll before the revision, for the ten highest states. Every state is on offtheroll.in.",
+      look:"How far the top of the list sits above the 14.1 line, and that the rates come from both phases of the revision." },
+    'c-sir-reasons': { tag:'Democracy & Representation', title:'Why names came off',
+      takeaway:"Of 13.4 crore names left off the draft rolls, 71.5% were entered as shifted, absent or other, 20.9% as dead and 7.6% as duplicates.",
+      source:"Chief Electoral Officers' draft-roll figures, compiled by offtheroll.in, data as of 10 October 2026. A reason is what the booth-level officer wrote down, and nobody checked it. Shifted, absent and other are combined because most states reported them together.",
+      why:"A ring shows parts of one whole, and here the parts are the reasons recorded against the same set of removals.",
+      how:"Each segment is a reason's share of all names left off where the state reported a split by reason.",
+      look:"How much of the ring is 'shifted, absent or other', the reason resting on the least evidence." },
+    'c-sir-women': { tag:'Democracy & Representation', title:'More women than men came off the rolls',
+      takeaway:"In six of the nine states that publish a split by sex, women were a larger share of the names removed than of the roll itself. In Bihar women were 55.5% of those removed and 47.9% of the roll.",
+      source:"Chief Electoral Officers' figures by sex, compiled by offtheroll.in. Uttar Pradesh and Gujarat are rounded figures, and Bihar is counted from the deletion lists. Tamil Nadu (unverified) and Kerala (a proxy) are left out.",
+      why:"A dumbbell sets two shares side by side for each state, so the gap between them is the thing you see.",
+      how:"For each state, the red dot is women's share of the names removed at the draft and the grey dot is women's share of the roll before the revision.",
+      look:"Which way each line points. Where the red dot sits to the right, women were over-represented among those removed." },
+    'c-sir-margins': { tag:'Democracy & Representation', title:'Removals against winning margins',
+      takeaway:"In 211 of Tamil Nadu's 234 seats and 174 of Bihar's 243, more names came off the roll than the winning margin at the next election. The removals were large enough to decide those seats. The figures cannot show whether they did.",
+      source:"offtheroll.in, from the Election Commission's results and the Chief Electoral Officers' figures. Tamil Nadu and Bihar count names removed. West Bengal (139 of 294) and Kerala (38 of 140) count the fall in the roll before the election, a different measure, shown in grey.",
+      why:"Four bars are enough for four states, and colour separates the two measures so they are not read as one.",
+      how:"Each bar is the share of assembly seats in which the count exceeded the winner's margin.",
+      look:"The difference between the dark bars and the grey ones. They measure different things and should not be compared directly." },
+    'c-sir-roll': { tag:'Democracy & Representation', title:'Forty years of the electoral roll',
+      takeaway:"In 1984-85 the roll held 109.5 electors for every 100 people of voting age. By 2024 it held 96.3. The roll ran ahead of the population until 1999 and has run behind it since 2004.",
+      source:"Election Commission of India, Atlas 2024 (electors), and UN World Population Prospects 2024 (population of voting age, 21 and over for 1984-85, 18 and over after the 61st Amendment), compiled by offtheroll.in. The population counts residents who are not citizens, so a figure below 100 cannot be read as a count of missing voters.",
+      why:"A line over four decades shows the turn from a roll larger than the adult population to one smaller than it.",
+      how:"Electors in each Lok Sabha election per 100 people of voting age on 1 July of that year.",
+      look:"Where the line crosses 100, between 1999 and 2004." },
     'c-tilegram': { tag:'Population', title:'India, one hexagon at a time',
-      takeaway:"Give every crore of Indians one hexagon and the country's real weight appears: 121 hexagons, of which Uttar Pradesh alone claims 20, more than the whole south's five states put together would need if you removed Tamil Nadu. The North, Central and East zones hold 74 of them, about three in every five.",
+      takeaway:"Give every crore of Indians one hexagon and the country's real weight appears: 121 hexagons, of which Uttar Pradesh alone claims 20, close to the 25 held by the five southern states together. The North, Central and East zones hold 74 of them, about three in every five.",
       source:"Census of India 2011: population by state, one hexagon per crore (10 million), rounded to the nearest crore. The rounding is why the grid comes to 121, India's 2011 population in crore.",
       why:"A hex cartogram gives every state one tile regardless of size; a tilegram gives each state as many tiles as it has people. So the map itself becomes the bar chart: you can count the population of a region by eye, in units, without reading a single axis. It is the form the NPR and FiveThirtyEight election maps made familiar.",
       how:"Each state is a block of hexagons, one per crore of population, laid out on a grid that keeps states roughly in their real positions and next to their real neighbours. Blocks are coloured by zone and the legend counts the hexes in each.",
