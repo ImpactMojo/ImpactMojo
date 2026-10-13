@@ -1012,7 +1012,7 @@ for i, (kind, payload) in enumerate(slides):
     if kind == 'title':
         body = ('<div class="title-screen"><div class="title-bg"></div><div class="title-bar"></div>'
                 '<div class="title-content"><div class="title-series">ImpactMojo 101 Series &middot; Free Forever</div>'
-                '<div class="title-main">Data<br>Visualization<br>101</div>'
+                '<h1 class="title-main">Data<br>Visualization<br>101</h1>'
                 '<div class="title-sub">How to turn numbers into honest, clear pictures &mdash; a foundational course '
                 'for development practitioners in South Asia, and the companion to ImpactMojo&rsquo;s '
                 '<em>The Long View</em>.</div>'

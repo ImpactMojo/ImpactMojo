@@ -162,7 +162,8 @@ def render_slide(s, num, total, deck_title):
             '<div class="title-screen"><div class="title-bg"></div><div class="title-bar"></div>'
             '<div class="title-content">'
             '<div class="title-series">ImpactMojo 101 Series &middot; Free Forever</div>'
-            f'<div class="title-main">{s["main"]}</div>'
+            # The deck's title is its one page heading: an <h1>, styled by .title-main.
+            f'<h1 class="title-main">{s["main"]}</h1>'
             f'<div class="title-sub">{s["sub"]}</div>'
             f'<div class="title-tags">{tags}</div></div>'
             '<div class="title-geo"><svg viewBox="0 0 300 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">'
