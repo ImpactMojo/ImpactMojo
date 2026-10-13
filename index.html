@@ -487,7 +487,12 @@ window.addEventListener('click', function(e) {
   ]
 }
 </script>
-<style>html{scroll-padding-top:88px;}</style>
+<style>html{scroll-padding-top:88px;}
+/* Desktop dropdowns opened on hover only, so a keyboard user tabbing onto
+   Courses, Practise or Read & data reached a menu they could not see. */
+@media (min-width:769px){
+  .nav-links > li.has-dropdown:focus-within .dropdown-menu{opacity:1;visibility:visible;margin-top:0.25rem}
+}</style>
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="spr-1" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></symbol><symbol id="spr-2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol><symbol id="spr-3" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol><symbol id="spr-4" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol><symbol id="spr-5" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol><symbol id="spr-6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol><symbol id="spr-7" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol><symbol id="spr-8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol><symbol id="spr-9" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol><symbol id="spr-10" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol><symbol id="spr-11" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></symbol><symbol id="spr-12" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></symbol><symbol id="spr-13" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></symbol></svg>
@@ -635,28 +640,81 @@ window.addEventListener('click', function(e) {
 
 <div class="nav-with-badge">
 <ul class="nav-links" id="navLinks">
-<li id="nav-home"><a href="#home">Home</a></li>
-
 <!-- Catalogue (top-level, master catalogue) -->
 <li id="nav-catalogue-top"><a href='/catalog'><span data-i18n="nav.catalog">Catalogue</span></a></li>
 
-<!-- Learn Dropdown -->
+<!-- Courses Dropdown (id kept as nav-learn for js/tours.js) -->
 <li class="has-dropdown" id="nav-learn">
-<a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)"><span data-i18n="nav.learn">Learn</span>
+<a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)" aria-haspopup="true">Courses
 <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#spr-1"/></svg>
 </a>
-<ul class="dropdown-menu specials-grouped" id="learn-dropdown">
-<li id="nav-courses"><a href="/101-courses/"><span data-i18n="nav.courses">101 Decks</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
-<li id="nav-flagships"><a href="/courses/"><span data-i18n="nav.flagships">Flagships</span></a></li>
-<li id="nav-resources"><a href='/handouts'><span data-i18n="nav.handouts">Handouts</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
-<li id="nav-labs"><a href="/Labs/"><span data-i18n="nav.labs">Free Studio</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+<ul class="dropdown-menu" id="learn-dropdown">
+<li id="nav-flagships"><a href="/courses/">Flagship courses</a></li>
+<li id="nav-courses"><a href="/101-courses/">101 Series<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
 <li id="nav-codestudio"><a href="/code/">Code School<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
 <li id="nav-peer-review"><a href="/peer-review.html"><span data-i18n="nav.peerreview">Peer Review</span> <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="sign-in required" style="opacity:0.6;vertical-align:baseline;margin-left:0.15rem"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
-<li id="nav-premium"><a href='/premium'><span data-i18n="nav.premium">Membership</span></a></li>
-<li id="nav-products"><a href='/products'>Products</a></li>
 <li id="nav-events"><a href="/events.html"><span data-i18n="nav.events">Events</span></a></li>
 </ul>
 </li>
+
+<!-- Practise Dropdown -->
+<li class="has-dropdown" id="nav-practise">
+<a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)" aria-haspopup="true">Practise
+<svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#spr-1"/></svg>
+</a>
+<ul class="dropdown-menu" id="practise-dropdown">
+<li id="nav-labs"><a href="/Labs/"><span data-i18n="nav.labs">Free Studio</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+<li id="nav-prostudio"><a href='/premium-tools/'>Pro Studio <span class="nav-free">Free to use</span></a></li>
+<li id="nav-practicepacks"><a href='/practice-packs/'>Practice Packs <span class="nav-paid">Paid</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+<li id="nav-simulations"><a href="/Games/">Simulations</a></li>
+<li id="nav-gamelibrary"><a href="/game-library.html">Game Library</a></li>
+<li id="nav-challenges"><a href='/challenges.html'><span data-i18n="nav.challenges">Challenges</span></a></li>
+<li id="nav-facilitatorkits"><a href='/facilitator-kits/'>Facilitator Kits<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+</ul>
+</li>
+
+<!-- Read & data Dropdown (id kept as nav-specials for js/tours.js) -->
+<li class="has-dropdown" id="nav-specials">
+<a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)" aria-haspopup="true">Read &amp; data
+<svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#spr-1"/></svg>
+</a>
+<ul class="dropdown-menu specials-grouped" id="specials-dropdown">
+<li class="dropdown-section" data-default-open="true">
+  <button type="button" class="dropdown-section-toggle" onclick="toggleSpecialsSection(event, this)" aria-expanded="true">
+    <span>Read and data</span>
+    <svg class="dropdown-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#spr-1"/></svg>
+  </button>
+  <ul class="dropdown-section-items">
+    <li id="nav-readingcompanions"><a href="/BookSummaries/">Reading Companions</a></li>
+    <li id="nav-deepdives"><a href='/DeepDives/'>Deep Dives<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+    <li id="nav-dataroom"><a href='/explorers.html'>Data Room<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+    <li id="nav-libraries"><a href='/libraries'><span data-i18n="nav.libraries">Libraries</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Library_books"/></svg><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+    <li id="nav-resources"><a href='/handouts'><span data-i18n="nav.handouts">Handouts</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+  </ul>
+</li>
+<li class="dropdown-section">
+  <button type="button" class="dropdown-section-toggle" onclick="toggleSpecialsSection(event, this)" aria-expanded="false">
+    <span>More to explore</span>
+    <svg class="dropdown-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#spr-1"/></svg>
+  </button>
+  <ul class="dropdown-section-items">
+    <li id="nav-fieldradio"><a href='/field-radio'><span data-i18n="nav.fieldradio">Field Radio</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+    <li id="nav-datanotes"><a href='/DataNotes/'>Data Notes</a></li>
+    <li id="nav-lawguides"><a href='/law-guides/'>Law Guides</a></li>
+    <li id="nav-lawdocket"><a href='/law-guides/development-law-docket.html'>Law Docket<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
+    <li id="nav-marginalia"><a href='/specials/marginalia/'>Marginalia</a></li>
+    <li id="nav-longview"><a href='/the-long-view.html'>Long View</a></li>
+    <li id="nav-maps"><a href='/maps/'>Maps <span style="background:#7C3AED;color:#fff;font-size:0.65rem;padding:0.1rem 0.35rem;border-radius:4px;margin-left:0.3rem;text-transform:uppercase;letter-spacing:0.5px;vertical-align:middle">New</span></a></li>
+    <li id="nav-timelines"><a href='/timelines/'>Timelines</a></li>
+    <li id="nav-research-to-action"><a href='/research-to-action/'>Posters</a></li>
+    <li id="nav-live-projects"><a href='/live-projects.html'>Projects</a></li>
+  </ul>
+</li>
+</ul>
+</li>
+
+<!-- Membership (top level) -->
+<li id="nav-premium"><a href='/premium'><span data-i18n="nav.premium">Membership</span></a></li>
 
 <!-- Services Dropdown -->
 <li class="has-dropdown" id="nav-services">
@@ -668,47 +726,8 @@ window.addEventListener('click', function(e) {
 <li id="nav-coaching"><a href='/coaching'><span data-i18n="nav.coaching">Coaching</span> <span class="nav-paid">Paid</span></a></li>
 <li id="nav-dojos-service"><a href='/dojos' style='color: #0F766E; font-weight: 600;' class="nav-accent" data-dark-color="#14B8A6">Dojos</a></li>
 <li id="nav-workshops"><a href='/workshops'><span data-i18n="nav.workshops">Workshops</span> <span class="nav-paid">Paid</span></a></li>
+<li id="nav-products"><a href='/products'>Products</a></li>
 <li id="nav-teach"><a href='/teach.html'><span data-i18n="nav.teach">Teach</span></a></li>
-</ul>
-</li>
-
-<!-- Specials Dropdown -->
-<li class="has-dropdown" id="nav-specials">
-<a href="javascript:void(0)" onclick="toggleMobileDropdown(event, this)"><span data-i18n="nav.specials">Specials</span>
-<svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#spr-1"/></svg>
-</a>
-<ul class="dropdown-menu specials-grouped" id="specials-dropdown">
-<li class="dropdown-section">
-  <button type="button" class="dropdown-section-toggle" onclick="toggleSpecialsSection(event, this)" aria-expanded="false">
-    <span>Practice &amp; Programs</span>
-    <svg class="dropdown-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#spr-1"/></svg>
-  </button>
-  <ul class="dropdown-section-items">
-    <li id="nav-challenges"><a href='/challenges.html' style='color: #B91C1C; font-weight: 600;' class="nav-accent" data-dark-color="#EF4444"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Crosshair_detailed"/></svg> <span data-i18n="nav.challenges">Challenges</span></a></li>
-    <li id="nav-prostudio"><a href='/premium-tools/' style='color: #4F46E5; font-weight: 600;' class="nav-accent" data-dark-color="#6366F1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> Pro Studio <span class="nav-free">Free to use</span></a></li>
-    <li id="nav-practicepacks"><a href='/practice-packs/' style='color: #0369A1; font-weight: 600;' class="nav-accent" data-dark-color="#0EA5E9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> Practice Packs <span class="nav-paid">Paid</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
-    <li id="nav-facilitatorkits"><a href='/facilitator-kits/' style='color: #047857; font-weight: 600;' class="nav-accent" data-dark-color="#10B981"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Article"/></svg> Facilitator Kits<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
-  </ul>
-</li>
-<li class="dropdown-section">
-  <button type="button" class="dropdown-section-toggle" onclick="toggleSpecialsSection(event, this)" aria-expanded="false">
-    <span>Highlights</span>
-    <svg class="dropdown-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#spr-1"/></svg>
-  </button>
-  <ul class="dropdown-section-items">
-    <li id="nav-live-projects"><a href='/live-projects.html' style='color: #0369A1; font-weight: 600;' class="nav-accent" data-dark-color="#0EA5E9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Target"/></svg> Projects</a></li>
-    <li id="nav-datanotes"><a href='/DataNotes/' style='color: #047857; font-weight: 600;' class="nav-accent" data-dark-color="#10B981"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Search"/></svg> Data Notes</a></li>
-    <li id="nav-deepdives"><a href='/DeepDives/' style='color: #4F46E5; font-weight: 600;' class="nav-accent" data-dark-color="#6366F1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Article"/></svg> Deep Dives<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
-    <li id="nav-lawguides"><a href='/law-guides/' style='color: #B45309; font-weight: 600;' class="nav-accent" data-dark-color="#F59E0B"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Fact_check"/></svg> Law Guides</a></li>
-    <li id="nav-lawdocket"><a href='/law-guides/development-law-docket.html' style='color: #B45309; font-weight: 600;' class="nav-accent" data-dark-color="#F59E0B"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Fact_check"/></svg> Law Docket<span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
-    <li id="nav-marginalia"><a href='/specials/marginalia/' style='color: #BE185D; font-weight: 600;' class="nav-accent" data-dark-color="#EC4899"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Book"/></svg> Marginalia</a></li>
-    <li id="nav-longview"><a href='/the-long-view.html' style='color: #6B3FA0; font-weight: 600;' class="nav-accent" data-dark-color="#764ba2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> Long View</a></li>
-    <li id="nav-dataroom"><a href='/explorers.html' style='color: #0369A1; font-weight: 600;' class="nav-accent" data-dark-color="#38BDF8"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Database"/></svg> Data Room <span style="background:#0EA5E9;color:#fff;font-size:0.62rem;padding:0.08rem 0.32rem;border-radius:4px;margin-left:0.3rem;font-weight:700;letter-spacing:0.4px;vertical-align:middle">19</span><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
-    <li id="nav-maps"><a href='/maps/' style='color: #6D28D9; font-weight: 600;' class="nav-accent" data-dark-color="#7C3AED"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Globe_detailed"/></svg> Maps <span style="background:#7C3AED;color:#fff;font-size:0.65rem;padding:0.1rem 0.35rem;border-radius:4px;margin-left:0.3rem;text-transform:uppercase;letter-spacing:0.5px;vertical-align:middle">New</span></a></li>
-    <li id="nav-timelines"><a href='/timelines/' style='color: #0369A1; font-weight: 600;' class="nav-accent" data-dark-color="#0EA5E9"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Activity"/></svg> Timelines</a></li>
-    <li id="nav-research-to-action"><a href='/research-to-action/' style='color: #C2410C; font-weight: 600;' class="nav-accent" data-dark-color="#F97316"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Album"/></svg> Posters</a></li>
-  </ul>
-</li>
 </ul>
 </li>
 
@@ -757,14 +776,9 @@ window.addEventListener('click', function(e) {
 </ul>
 </li>
 
-<!-- Libraries Link -->
-<li id="nav-libraries"><a href='/libraries'><span data-i18n="nav.libraries">Libraries</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Library_books"/></svg><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
-
 <!-- Blog Link -->
 <li id="nav-blog"><a href='/blog'><span data-i18n="nav.blog">Blog</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Article"/></svg><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
 
-<!-- Field Radio Link -->
-<li id="nav-fieldradio"><a href='/field-radio'><span data-i18n="nav.fieldradio">Field Radio</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Album"/></svg><span title="Recently updated" aria-label="Recently updated" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:4px;vertical-align:middle"></span></a></li>
 
 <!-- Mobile Auth Buttons (inside nav-links so they appear in the fixed mobile menu overlay) -->
 <li class="mobile-auth-section" id="mobileAuthSection">
@@ -886,6 +900,40 @@ window.addEventListener('authStateChanged', function(e) {
 </div>
 </div>
 </nav>
+<noscript>
+<style>
+.im-noscript-nav{display:none}
+@media (max-width:768px){
+  header.header{position:static!important}
+  header.header #mobile-menu-btn.mobile-menu-toggle{display:none!important}
+  .im-noscript-nav{display:block;padding:0.25rem 1rem 0.75rem}
+  .im-noscript-nav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:0.35rem 0.9rem}
+  .im-noscript-nav a{color:var(--nav-text,#0F172A);font-size:0.9rem;font-weight:600;text-decoration:underline}
+}
+</style>
+<nav class="im-noscript-nav" aria-label="Main navigation (no JavaScript)">
+<ul>
+<li><a href="/catalog">Catalogue</a></li>
+<li><a href="/courses/">Flagship courses</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/code/">Code School</a></li>
+<li><a href="/Labs/">Free Studio</a></li>
+<li><a href="/premium-tools/">Pro Studio</a></li>
+<li><a href="/practice-packs/">Practice Packs</a></li>
+<li><a href="/Games/">Simulations</a></li>
+<li><a href="/game-library.html">Game Library</a></li>
+<li><a href="/BookSummaries/">Reading Companions</a></li>
+<li><a href="/DeepDives/">Deep Dives</a></li>
+<li><a href="/explorers.html">Data Room</a></li>
+<li><a href="/libraries">Libraries</a></li>
+<li><a href="/handouts">Handouts</a></li>
+<li><a href="/premium">Membership</a></li>
+<li><a href="/blog">Blog</a></li>
+<li><a href="/about">About</a></li>
+<li><a href="/login">Log in</a></li>
+</ul>
+</nav>
+</noscript>
 </header>
 <!-- Mobile Menu Overlay -->
 <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
@@ -953,7 +1001,9 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <main id="main-content" role="main">
 <section class="hero v3-hero" id="home">
 <div class="v3-hero-content">
-    <div class="v3-hero-eyebrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon"><use href="#si_Flare"/></svg> <span data-i18n="hero.eyebrow">Development Know-How</span></div>
+    <!-- First-screen entry for a newcomer. This replaces the decorative "Development Know-How" eyebrow,
+         which repeated the logo tagline, so the hero stays the same height. -->
+    <a class="v3-hero-eyebrow" href="/101-courses/mel-basics.html" style="text-transform:none;letter-spacing:0.02em;text-decoration:underline;text-underline-offset:3px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-inline-icon" aria-hidden="true"><use href="#si_Flare"/></svg> New to M&amp;E? Start with MEL Basics 101 &rarr;</a>
     <h1 class="v3-hero-title">
         <span data-i18n="hero.title_line1">Explore.</span><br>
         <span data-i18n="hero.title_line2">Learn.</span><br>
@@ -965,7 +1015,7 @@ body.has-fixed-header .v3-hero { padding-top: 2rem; }
 <!-- Hero CTAs - V3 Layout with Speech Bubble -->
 <div class="v3-hero-cta-wrapper">
     <div class="v3-hero-buttons">
-        <a href="#flagship-courses" class="v3-btn-primary">
+        <a href="#free-resources" class="v3-btn-primary">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="v3-btn-icon"><use href="#si_Direction_alt"/></svg>
             <span data-i18n="hero.cta_explore">Start Exploring →</span>
         </a>
