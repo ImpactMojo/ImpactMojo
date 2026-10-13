@@ -41,29 +41,18 @@ export default async (request: Request, context: Context) => {
   let desc = "";
   try {
     const certResp = await fetch(
-      `${SUPABASE_URL}/rest/v1/certificates?certificate_number=eq.${encodeURIComponent(certNum)}&select=course_name,issued_at,user_id`,
-      { headers },
+      `${SUPABASE_URL}/rest/v1/rpc/verify_certificate`,
+      {
+        method: "POST",
+        headers: { ...headers, "Content-Type": "application/json" },
+        body: JSON.stringify({ p_number: certNum }),
+      },
     );
     if (!certResp.ok) return context.next();
     const certs = await certResp.json();
     if (!Array.isArray(certs) || certs.length === 0) return context.next();
     const cert = certs[0];
-
-    let name = "";
-    try {
-      const profResp = await fetch(
-        `${SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(cert.user_id)}&select=full_name,display_name`,
-        { headers },
-      );
-      if (profResp.ok) {
-        const profs = await profResp.json();
-        if (Array.isArray(profs) && profs.length > 0) {
-          name = profs[0].full_name || profs[0].display_name || "";
-        }
-      }
-    } catch (_) {
-      /* name is best-effort */
-    }
+    const name = cert.holder_name || "";
 
     const issued = cert.issued_at
       ? new Date(cert.issued_at).toLocaleDateString("en-IN", {
@@ -73,7 +62,7 @@ export default async (request: Request, context: Context) => {
       : "";
     title = clean(
       name
-        ? `${name} — Certificate: ${cert.course_name}`
+        ? `${name}, certificate in ${cert.course_name}`
         : `Certificate: ${cert.course_name}`,
     );
     desc = clean(

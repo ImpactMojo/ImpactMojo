@@ -128,8 +128,22 @@
         body: JSON.stringify({ lang: lang, q: batch })
       });
       if (r.ok) { var d = await r.json(); return d.t || {}; }
+      if (r.status === 429) busyNotice();
     } catch (e) { /* network — leave untranslated */ }
     return {};
+  }
+
+  // Shown once when the translation service is rate-limited, so a reader knows
+  // why part of the page stayed in English.
+  var busyShown = false;
+  function busyNotice() {
+    if (busyShown) return; busyShown = true;
+    var n = document.createElement("div");
+    n.setAttribute("role", "status");
+    n.textContent = "Live translation is busy right now, so some of this page stays in English. Please try again later.";
+    n.style.cssText = "position:fixed;left:16px;right:16px;bottom:16px;max-width:520px;margin:0 auto;padding:10px 14px;border-radius:8px;background:#0F172A;color:#F8FAFC;font:14px/1.5 system-ui,sans-serif;z-index:10000;box-shadow:0 4px 16px rgba(0,0,0,.25)";
+    document.body.appendChild(n);
+    setTimeout(function () { if (n.parentNode) n.parentNode.removeChild(n); }, 9000);
   }
 
   // Apply whatever translations are known so far (idempotent). Lets us render

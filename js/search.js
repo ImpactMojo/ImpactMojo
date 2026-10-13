@@ -271,7 +271,10 @@
       /* --text-secondary is defined in dark mode but --surface-color is not,
          so the button kept its light fallback background under light text:
          1.42:1. Pin both sides for dark rather than relying on the vars. */
-      '[data-theme="dark"] .ims-nav-btn{background:#1e293b;color:#e2e8f0;border-color:#334155}';
+      '[data-theme="dark"] .ims-nav-btn{background:#1e293b;color:#e2e8f0;border-color:#334155}' +
+      /* Same gap for the highlighted result: --surface-color is undefined in
+         dark, so the light fallback painted a pale row under light text. */
+      '[data-theme="dark"] .ims-result:hover,[data-theme="dark"] .ims-result.ims-active{background:#1e293b}';
     document.head.appendChild(css);
   }
 

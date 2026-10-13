@@ -21,12 +21,9 @@ const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const SITE = (process.env.URL || "https://www.impactmojo.in").replace(/\/$/, "");
 
 // Prices as premium.html, upgrade.html and js/premium.js state them.
-// "Organisation" is what /subscribe/ offers today, at the amounts that page
-// charges. It is kept so that form keeps working.
 export const PRICES = {
   practitioner: { name: "Practitioner", monthly: 399, annual: 3990 },
   professional: { name: "Professional", monthly: 999, annual: 9990 },
-  organisation: { name: "Organisation", monthly: 999, annual: 9990 },
   team: { name: "Team", perSeatMonthly: 1499, maxSeats: 500 },
 };
 

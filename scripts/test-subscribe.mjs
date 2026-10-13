@@ -43,7 +43,8 @@ ck('Practitioner monthly 399', S.priceFor('Practitioner', 'monthly', 399).amount
 ck('Practitioner annual 3990', S.priceFor('practitioner', 'annual', 3990).amount === 3990);
 ck('Professional monthly 999', S.priceFor('Professional', 'monthly', 999).amount === 999);
 ck('Professional annual 9990', S.priceFor('Professional', 'annual', 9990).amount === 9990);
-ck('Organisation as /subscribe/ sells it (999)', S.priceFor('Organisation', 'monthly', 999).amount === 999);
+ck('Professional as /subscribe/ sells it (999)', S.priceFor('Professional', 'monthly', 999).amount === 999);
+ck('retired Organisation plan refused', !!S.priceFor('Organisation', 'monthly', 999).error);
 ck('Team 1,499 a seat', S.priceFor('Team', 'monthly', 1499 * 4).amount === 5996);
 ck('Team annual refused', !!S.priceFor('Team', 'annual', 1499).error);
 ck('Team partial seat refused', !!S.priceFor('Team', 'monthly', 2000).error);

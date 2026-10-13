@@ -102,6 +102,7 @@ def page(d, n):
     <a class="btn buy" href="#buy">Buy now →</a>
     <a class="btn ghost" href="#inside">See what's inside</a>
   </div>
+<p class="note im-prod-sep" style="margin:.3rem 0 .8rem">Products are sold separately and are not included in Membership. <a href="/premium.html">See what Membership covers</a>.</p>
   <p class="note">PDF · {d['slides']} slides · {n} pages · delivered to your inbox within 24 hours of payment. The deck stays <a href="{E(d['url'])}">free to study online</a>; this is the copy to print and keep.</p>
   <div class="statgrid"><div class="s"><b>{d['slides']}</b> slides</div><div class="s"><b>{len(secs)}</b> sections</div><div class="s"><b>2</b> slides a page</div><div class="s">ruled <b>notes</b> space</div><div class="s"><b>Print-ready</b> A4</div></div>
 
