@@ -1719,7 +1719,7 @@ S12 = [
              "cited here are under appeal or revision.", sm=True),
     ]),
 
-    C("Where next", "Where next: related 101 decks", [
+    C("Where next", "Where next: related 101 Series courses", [
         tw([panel("cyan", "Go deeper on digital topics", [body(
                 link("digital-ethics.html", "Digital Ethics") + " for privacy by design, Aadhaar and "
                 "misinformation. " +

@@ -75,11 +75,11 @@
                 'Export from the Research Question Builder and the ToR Builder',
                 'Export from four Studios, including Sampling Design',
                 'A public portfolio page for your certificates',
-                'Discord and Telegram community'
+                'The moderated Discord community'
             ],
             'professional': [
                 'Everything in Practitioner',
-                'Export from the Logframe Builder, Empathy Map, AI Strategy Canvas, Qual Insights Lab and Code Converter',
+                'Export from the AI Strategy Canvas, Qual Insights Lab and Code Converter',
                 'Copying from Field Notes and the Viz Cookbook',
                 'Advisory Board on hosted models and the VaniScribe notebook',
                 'The DevEconomics Toolkit (11 Shiny apps)',

@@ -1,0 +1,24 @@
+/* ImpactMojo site chrome: space reservation for the top bar.
+
+   js/site-chrome.js is deferred, so it inserts its 46px bar after the page has
+   painted, and everything below moves down by 46px. Measured at 1280x900 on a
+   cold load that one move scored 0.52 of cumulative layout shift on aser.html,
+   five times the 0.1 that counts as good.
+
+   Link this file in <head>, before the page's own styles:
+     <link rel="stylesheet" href="/css/site-chrome.css">
+   It holds the bar's height as body padding until the script adds
+   body.im-sc-on, at which point the script zeroes the padding and the bar takes
+   the same 46px. Nothing moves.
+
+   Leave it off the homepage, which keeps its own header and would gain a 46px
+   gap. A page that opts out of the chrome (data-im-home, or
+   <meta name="im-chrome" content="off">) is skipped by the selector below, so
+   linking it there by mistake does no harm. A browser without :has() ignores
+   the rule and behaves as before. */
+html:not([data-im-home]):not(:has(meta[name="im-chrome"][content="off"])) body:not(.im-sc-on):not([data-im-home]) {
+  padding-top: 46px;
+}
+@media print {
+  html body:not(.im-sc-on) { padding-top: 0; }
+}

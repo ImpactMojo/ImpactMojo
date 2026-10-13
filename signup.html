@@ -77,6 +77,7 @@ function toggleMobileDropdown(event, element) {
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
   gtag('config', 'G-JRCMEB9TBW');
 </script>
 
@@ -117,8 +118,19 @@ window.addEventListener('pageshow', function(event) {
 
 <!-- Self-hosted fonts -->
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+<link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 
 <style>
+:root {
+    /* Light values for tokens the dark block also sets. */
+    --danger-color: #B91C1C;
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
+    --secondary-accent: #4F46E5;
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    --success-color: #047857;
+    --warning-color: #B45309;
+}
+
 /* ========================================
    CSS RESET
    ======================================== */
@@ -1860,6 +1872,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
 
             <div class="auth-body">
                 <div id="alertBox" class="alert"></div>
+                <noscript><p class="auth-noscript" style="margin:0 0 1rem;padding:.75rem 1rem;border-radius:10px;border:1px solid #991B1B;background:#FEF2F2;color:#7F1D1D;font-size:.9rem;line-height:1.5">Creating an account needs JavaScript. Turn it on in your browser and reload this page.</p></noscript>
 
                 <div class="benefits-list">
                     <div class="benefits-title">Your free account includes:</div>
@@ -1874,7 +1887,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
                         </li>
                         <li>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                            Basic labs & interactive tools
+                            All 35 Free Studio tools
                         </li>
                         <li>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1906,7 +1919,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
                     <div class="step-dot" id="stepDot2"></div>
                 </div>
 
-                <form id="signupForm" class="auth-form">
+                <form id="signupForm" class="auth-form" method="post" action="/signup.html">
                     <!-- STEP 1: Account -->
                     <div class="form-step active" id="step1">
                         <div class="step-header">
@@ -2119,7 +2132,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
 <!-- State Manager (must load before auth.js for profile caching) -->
 <script src="js/state-manager.js"></script>
 <!-- Supabase JS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
+<script src="/js/vendor/supabase-js-2.114.0.js"></script>
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
 
@@ -2138,6 +2151,31 @@ function showAlert(message, type = 'error') {
     alertBox.className = 'alert alert-' + type + ' show';
     alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+
+// Sign-in needs the Supabase SDK from jsDelivr. When it does not load, or the
+// network drops mid-request, say so plainly and give the button back rather
+// than leaving it on a spinner.
+const AUTH_UNAVAILABLE = 'Sign-in is unavailable right now. Check your connection and try again.';
+function authAvailable() {
+    return !!(window.ImpactMojoAuth && !window.ImpactMojoAuth.unavailable);
+}
+async function callAuth(fn) {
+    if (!authAvailable()) return { success: false, message: AUTH_UNAVAILABLE };
+    try {
+        const r = await fn(window.ImpactMojoAuth);
+        if (!r) return { success: false, message: AUTH_UNAVAILABLE };
+        if (!r.success && /failed to fetch|networkerror|load failed|network request failed/i.test(r.message || '')) {
+            r.message = AUTH_UNAVAILABLE;
+        }
+        return r;
+    } catch (err) {
+        console.error('Auth call failed:', err);
+        return { success: false, message: AUTH_UNAVAILABLE };
+    }
+}
+document.addEventListener('DOMContentLoaded', function () {
+    if (!authAvailable()) showAlert(AUTH_UNAVAILABLE);
+});
 
 function hideAlert() {
     const alertBox = document.getElementById('alertBox');
@@ -2338,7 +2376,7 @@ async function submitSignup(includeExtras) {
     btn.disabled = true;
     btn.innerHTML = '<div class="loading-spinner"></div><span>Creating account...</span>';
 
-    const result = await ImpactMojoAuth.signUp(email, password, fullName);
+    const result = await callAuth(a => a.signUp(email, password, fullName));
 
     if (result.success) {
         // Store extra fields in sessionStorage for account.html to pick up
@@ -2374,7 +2412,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
 // Google Sign Up
 // =====================================================
 document.getElementById('googleBtn').addEventListener('click', async function() {
-    const result = await ImpactMojoAuth.signInWithGoogle();
+    const result = await callAuth(a => a.signInWithGoogle());
     if (!result.success) {
         showAlert(result.message);
     }
@@ -2413,11 +2451,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
-<script src="/js/search.js?v=c1c68c68" defer></script>
+<script src="/js/search.js?v=fe7acefb" defer></script>
 <script defer src="js/auto-refresh.js"></script>
 <!-- ImpactMojo Theme Toggle JS -->
 <script src="/js/theme.js?v=ca787a55"></script>
-<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=eba39700" defer></script>
+<script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
+  <script src="/js/site-chrome.js?v=8c5e48b9" defer></script>
 </body>
 </html>

@@ -1650,7 +1650,7 @@ DECK = {
                  "section when a design review raises a question.", "indigo"),
         ], compact=True),
 
-        C("Where next", "Where next: related 101 decks", [
+        C("Where next", "Where next: related 101 Series courses", [
             tw([panel("cyan", "Design and results", [body(
                     "<a href=\"/101-courses/toc-workbench.html\">Theory of Change 101</a> for "
                     "building and testing the causal chain. "

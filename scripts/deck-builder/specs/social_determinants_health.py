@@ -1884,7 +1884,7 @@ DECK = {
                  "O'Donnell et al. (2008) and the WHO Global Health Observatory.", sm=True),
         ], compact=True),
 
-        C("Where next", "Where next: related 101 decks", [
+        C("Where next", "Where next: related 101 Series courses", [
             tw([panel("cyan", "Health and nutrition", [body(
                     "<a href=\"/101-courses/pub-health-basics.html\">Public Health 101</a> for "
                     "epidemiology and health systems. "

@@ -265,6 +265,28 @@ jobs:
       - name: Check absolute links to impactmojo.in
         run: python3 scripts/check-self-links.py
 
+  old-names:
+    name: No retired section names in page text
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Sections were renamed (Free Studio, the 101 Series, Data Room). A page
+      # still using an old name sends a reader looking for a section that is
+      # not in the menu.
+      - name: Check for retired names
+        run: python3 scripts/check-old-names.py
+
+      # site-chrome.js removes footers at runtime, so a content card placed
+      # inside one is deleted with it and never seen.
+      - name: Check no content card sits in removed chrome
+        run: python3 scripts/check-cards-outside-footer.py
+
   inline-css:
     name: Every inline stylesheet closes what it opens
     runs-on: ubuntu-latest
@@ -1104,6 +1126,12 @@ jobs:
 
       - name: Test the generic form-submit endpoint's allowlist and caps
         run: node scripts/test-form-submit-endpoint.mjs
+
+      - name: Test origin checks and rate limits on the public functions
+        run: node scripts/test-function-guard.mjs
+
+      - name: Test the subscribe endpoint's price table and escaping
+        run: node scripts/test-subscribe.mjs
 
   judgment-sources:
     name: Judgment source PDFs resolve

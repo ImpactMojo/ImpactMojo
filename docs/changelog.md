@@ -2,6 +2,32 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.378.0 — October 13, 2026 (menus, colours and consent)
+
+### For Learners
+
+- **A site menu on every page** — the Menu button in the top bar opens the site's sections, and "Log in" becomes "My account" once you are signed in. The footer gained a Help & legal column.
+- **Easier to read in either theme** — the Data Room, the flagship courses, the blog, the law guides, the practice packs and the store were checked in light and dark mode at phone and laptop widths and brought up to readable contrast.
+
+### Changed
+
+- Google Analytics now waits until a visitor accepts the cookie notice. Every page that does not have its own notice shows a short one with Accept and Decline.
+- The Supabase sign-in library is served from impactmojo.in itself and no longer loaded from a third-party CDN.
+- Certificate checks and certificate share cards look up one certificate number at a time.
+- The upgrade page offers Practitioner and Professional. Teams contact us for a quote. Products are sold separately and are not part of Membership.
+- The public functions refuse requests from other sites, limit how often one visitor can call them, and return plain errors.
+- Every 101 deck opens with a page heading, and the NFHS map names each district for screen readers.
+- Build and test dependencies were updated, and an unused test tool was removed.
+
+### Fixed
+
+- **Colours were missing in light mode on blog posts and eight pages** (#1230), including the Substack button on every post.
+- **Dark-mode contrast fell short across the Data Room, the flagship courses and a dozen other sections** (#1231).
+- **Some controls, scroll areas and chart targets were hard to use with a keyboard or on a phone** (#1232).
+- **Course pages and decks still used retired section names** (#1233).
+- **The shared top bar had no site menu on most pages and forgot the theme choice on reload** (#1234). It also no longer shifts the page as it loads.
+- **Analytics ran before visitors gave consent** (#1235).
+
 ## v10.377.0 — October 13, 2026 (organisation invitations)
 
 ### Changed

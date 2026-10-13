@@ -29,7 +29,8 @@ export default async () => {
       components: state?.components || {},
     }), { headers });
   } catch (e) {
-    return new Response(JSON.stringify({ updatedAt: null, days: {}, components: {}, error: e.message }), { headers });
+    console.log("[status-history] read failed:", e && e.message);
+    return new Response(JSON.stringify({ updatedAt: null, days: {}, components: {}, error: "history unavailable" }), { headers });
   }
 };
 

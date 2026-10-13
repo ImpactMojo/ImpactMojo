@@ -1818,7 +1818,7 @@ DECK = {
                ["Learning poverty", "Share of 10-year-olds unable to read and understand a simple text"]]),
         ], compact=True),
 
-        S("Where next", "Related ImpactMojo 101 decks", [
+        S("Where next", "Related ImpactMojo 101 Series courses", [
             B("Foundational learning connects to child development, education systems, rights and "
               "evaluation methods. These decks take each thread further, in the same format and "
               "with the same South Asian focus."),

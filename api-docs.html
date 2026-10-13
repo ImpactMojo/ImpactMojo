@@ -6,7 +6,7 @@
 <title>Partner API | ImpactMojo</title>
 <!-- share:start -->
 <link rel="canonical" href="https://www.impactmojo.in/api-docs.html">
-<meta name="description" content="Free, read-only REST API for organizations to integrate ImpactMojo's open development-education catalog: courses, games, labs, and reading companions. No API key required.">
+<meta name="description" content="Free, read-only REST API for organizations to integrate ImpactMojo's open development-education catalog: courses, games, Free Studio tools, and reading companions. No API key required.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ImpactMojo">
 <meta property="og:title" content="Partner API | ImpactMojo">
@@ -25,7 +25,7 @@
 
 <!-- Google tag (gtag.js) - G-JRCMEB9TBW -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>
 
 <!-- Open Graph -->
 
@@ -35,6 +35,7 @@
 
 <!-- Self-hosted fonts -->
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+<link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -208,8 +209,10 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
    chrome paints the body #0F172A while these tokens stay. The inks above are
    right on the light surface and about 3:1 on the dark one, so the dark theme
    takes the brighter pair. */
-@media (prefers-color-scheme: dark){:root{--accent-color:#FCD34D;--success-color:#6EE7B7;}}
-[data-theme="dark"],body.dark-mode,html.dark{--accent-color:#FCD34D;--success-color:#6EE7B7;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--accent-color:#FCD34D;--accent-hover:#FCD34D;--accent-blue:#7DD3FC;--success-color:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--accent-color:#FCD34D;--accent-hover:#FCD34D;--accent-blue:#7DD3FC;--success-color:#6EE7B7;}
+/* Links in running text had no colour rule, so dark mode left them browser blue. */
+p a:not([class]), .note a:not([class]) { color: var(--accent-blue); }
 
 /* Ink, not fill: the saturated token stays for backgrounds. */
 :root{--im-ink-good:#047857;}
@@ -253,7 +256,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
 
 <section class="hero">
     <h1>Partner API</h1>
-    <p>A free, read-only REST API for organizations to integrate ImpactMojo's open development-education catalog: courses, games, labs, and interactive reading companions.</p>
+    <p>A free, read-only REST API for organizations to integrate ImpactMojo's open development-education catalog: courses, games, Free Studio tools, and interactive reading companions.</p>
     <div class="badges">
         <span class="badge green">No API key required</span>
         <span class="badge">Read-only (GET)</span>
@@ -287,7 +290,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
             <div class="endpoint-body">
                 <p>API index: name, version, the list of available endpoints, the license/attribution note, and the rate-limit note.</p>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1"><code>{
   "name": "ImpactMojo Partner API",
   "version": "1.0",
   "base_url": "https://www.impactmojo.in/api/v1",
@@ -311,7 +314,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
                 <span class="method">GET</span><span class="path">/api/v1/catalog</span>
             </div>
             <div class="endpoint-body">
-                <p>The full content catalog (courses, games, labs, and reading companions) derived from the site's search index.</p>
+                <p>The full content catalog (courses, games, Free Studio tools, and reading companions) derived from the site's search index.</p>
                 <table class="params">
                     <thead><tr><th>Query param</th><th>Description</th></tr></thead>
                     <tbody>
@@ -321,9 +324,9 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
                     </tbody>
                 </table>
                 <div class="example-label">Example request</div>
-                <pre><code>GET https://www.impactmojo.in/api/v1/catalog?type=game&amp;q=auction&amp;limit=50</code></pre>
+                <pre tabindex="0" role="region" aria-label="Example request for GET /api/v1/catalog"><code>GET https://www.impactmojo.in/api/v1/catalog?type=game&amp;q=auction&amp;limit=50</code></pre>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1/catalog"><code>{
   "count": 1,
   "total": 1,
   "limit": 50,
@@ -353,7 +356,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
             <div class="endpoint-body">
                 <p>Courses only, both 101 foundational decks and flagship courses, enriched with slide counts, level, format, license, sections, and feature flags where available.</p>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1/courses"><code>{
   "count": 106,
   "courses": [
     {
@@ -386,9 +389,9 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
             <div class="endpoint-body">
                 <p>A single course's detail, looked up by its <code>slug</code> (the value returned in the <code>courses</code> list, e.g. <code>mel</code>, <code>gandhi</code>, <code>dev-economics</code>). Returns <code>404</code> with a JSON error body if no course matches.</p>
                 <div class="example-label">Example request</div>
-                <pre><code>GET https://www.impactmojo.in/api/v1/courses/gandhi</code></pre>
+                <pre tabindex="0" role="region" aria-label="Example request for GET /api/v1/courses/{slug}"><code>GET https://www.impactmojo.in/api/v1/courses/gandhi</code></pre>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1/courses/{slug}"><code>{
   "course": {
     "slug": "gandhi",
     "id": "gandhi",
@@ -406,7 +409,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
   "license": "CC BY-NC-ND 4.0 — attribution to ImpactMojo (impactmojo.in) required; ..."
 }</code></pre>
                 <div class="example-label">404 response</div>
-                <pre><code>{ "error": "No course found with slug \"does-not-exist\"." }</code></pre>
+                <pre tabindex="0" role="region" aria-label="404 response for GET /api/v1/courses/{slug}"><code>{ "error": "No course found with slug \"does-not-exist\"." }</code></pre>
             </div>
         </div>
 
@@ -418,7 +421,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
             <div class="endpoint-body">
                 <p>Aggregate content counts by type, plus a flagship / 101-foundational course breakdown.</p>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1/stats"><code>{
   "total_items": 709,
   "by_type": {
     "course": 106,
@@ -515,7 +518,7 @@ document.querySelectorAll('[data-copy]').forEach(function(btn){
 </script>
 <!-- ImpactMojo Theme Toggle JS -->
 <script src="/js/theme.js?v=ca787a55"></script>
-  <script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=eba39700" defer></script>
+  <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
+  <script src="/js/site-chrome.js?v=8c5e48b9" defer></script>
 </body>
 </html>

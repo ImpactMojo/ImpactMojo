@@ -67,6 +67,9 @@
     if (!CONFIG.instantDbAppId) return;
     try {
       // Lazy-load the SDK only when configured. Kept as an ES module import.
+      // A dynamic import() cannot carry Subresource Integrity, and esm.sh
+      // builds the module on request, so this pinned version is trusted as
+      // served. Vendoring a built copy under /impactlex/ would remove that.
       const { init, tx, i } = await import('https://esm.sh/@instantdb/core@0.14.22');
       const db = init({ appId: CONFIG.instantDbAppId });
       window.__impactlexDb = db;
@@ -187,7 +190,7 @@
       const chips = [`<button class="filter-chip${activeAll}" data-filter-type="course" data-filter-value="all">All courses</button>`]
         .concat(courses.map((c) => {
           const active = state.filter.course === c ? ' active' : '';
-          return `<button class="filter-chip${active}" data-filter-type="course" data-filter-value="${c}">${courseLabel[c] || c}<span class="count">${courseCounts[c]}</span></button>`;
+          return `<button class="filter-chip${active}" data-filter-type="course" data-filter-value="${escapeHtml(c)}">${escapeHtml(courseLabel[c] || c)}<span class="count">${courseCounts[c]}</span></button>`;
         }));
       $('course-filters').innerHTML = chips.join('');
     }
@@ -228,20 +231,22 @@
   }
 
   function termCard(t) {
+    // Every field from the glossary store is escaped: entries can come from
+    // InstantDB, so none of them is trusted markup.
     const courseBadges = (t.courses || []).slice(0, 3)
-      .map((c) => `<span class="course-badge">${c}</span>`).join('');
+      .map((c) => `<span class="course-badge">${escapeHtml(c)}</span>`).join('');
     const bookmarked = state.bookmarks.has(t.id) ? ' active' : '';
     const acronym = t.acronym ? `<span class="term-card-acronym">${escapeHtml(t.acronym)}</span>` : '';
     return `
-      <button class="term-card" data-term-id="${t.id}" type="button">
+      <button class="term-card" data-term-id="${escapeHtml(t.id)}" type="button">
         <div class="term-card-header">
           <span class="term-card-title">${escapeHtml(t.term)}</span>
           ${acronym}
         </div>
-        <span class="term-card-category">${t.category}</span>
+        <span class="term-card-category">${escapeHtml(t.category)}</span>
         <p class="term-card-def">${escapeHtml(t.definition || '')}</p>
         <div class="term-card-courses">${courseBadges}</div>
-        <span class="bookmark-btn${bookmarked}" data-bookmark-id="${t.id}" aria-label="Bookmark">
+        <span class="bookmark-btn${bookmarked}" data-bookmark-id="${escapeHtml(t.id)}" aria-label="Bookmark">
           <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </span>
       </button>
@@ -274,8 +279,8 @@
     $('modal-title').textContent = t.term;
     $('modal-acronym').textContent = t.acronym || '';
     $('modal-meta').innerHTML = `
-      <span class="term-card-category">${t.category}</span>
-      ${(t.courses || []).map((c) => `<span class="course-badge">${c}</span>`).join('')}
+      <span class="term-card-category">${escapeHtml(t.category)}</span>
+      ${(t.courses || []).map((c) => `<span class="course-badge">${escapeHtml(c)}</span>`).join('')}
     `;
     $('modal-definition').textContent = t.definition || '';
     const exSec = $('modal-example-section');
@@ -308,7 +313,7 @@
           x.id === slugify(rel)
         );
         const targetId = match ? match.id : slugify(rel);
-        return `<button class="related-pill" data-related-id="${targetId}" type="button">${escapeHtml(rel)}</button>`;
+        return `<button class="related-pill" data-related-id="${escapeHtml(targetId)}" type="button">${escapeHtml(rel)}</button>`;
       }).join('');
       rSec.hidden = false;
     } else rSec.hidden = true;
@@ -359,7 +364,7 @@
     else state.bookmarks.add(id);
     localStorage.setItem('impactlex:bookmarks', JSON.stringify([...state.bookmarks]));
     // Update card badges + modal button without full re-render.
-    document.querySelectorAll(`[data-bookmark-id="${id}"]`).forEach((el) => el.classList.toggle('active'));
+    document.querySelectorAll(`[data-bookmark-id="${CSS.escape(String(id))}"]`).forEach((el) => el.classList.toggle('active'));
     const modalBm = $('modal-bookmark');
     if (modalBm.dataset.termId === id) {
       modalBm.classList.toggle('btn-primary', state.bookmarks.has(id));
@@ -403,7 +408,7 @@
       .trim().replace(/\s+/g, '-').replace(/-+/g, '-');
   }
   function escapeHtml(s) {
-    return String(s)
+    return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }

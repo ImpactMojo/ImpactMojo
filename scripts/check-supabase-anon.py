@@ -56,17 +56,17 @@ PROBES = [
      "course_content_backup_20260821b?select=id&limit=1", 401,
      "locked in 20260901_lock_course_content_backup_tables.sql"),
 
-    # Sensitive columns must stay denied even though the table is readable.
+    # Closed to anon on 2026-10-13. Certificate checks go through the
+    # verify_certificate RPC, which answers for one certificate number at a
+    # time, so neither table needs to be listable without a sign-in.
     ("profiles(phone,address,email,bio)",
      "profiles?select=phone,address,email,bio&limit=1", 401,
-     "profiles is column-limited for anon; these columns are not granted"),
-
-    # Intentionally public — a 401 here means we broke a live feature.
-    ("certificates(select=*)", "certificates?select=*&limit=1", 200,
-     "public certificate verification depends on this staying readable"),
+     "anon has no SELECT on profiles"),
     ("profiles(id,full_name,display_name)",
-     "profiles?select=id,full_name,display_name&limit=1", 200,
-     "the granted anon columns power public profile display"),
+     "profiles?select=id,full_name,display_name&limit=1", 401,
+     "anon has no SELECT on profiles; names reach the public only via verify_certificate"),
+    ("certificates(select=*)", "certificates?select=*&limit=1", 401,
+     "anon has no SELECT on certificates; verify-certificate.html uses the RPC"),
 ]
 
 
@@ -98,6 +98,14 @@ RPC_PROBES = [
     # Intentionally public -- a 401/404 here means a live feature broke.
     ("get_public_stats",          "get_public_stats",          200,
      "transparency.html and js/live-stats.js read it unauthenticated"),
+]
+
+# RPCs that need an argument to resolve at all. A number that matches no
+# certificate returns 200 and an empty list, so this checks the lookup is
+# reachable without revealing any holder.
+RPC_ARG_PROBES = [
+    ("verify_certificate", "verify_certificate", b'{"p_number":"IM-PROBE-NONE"}', 200,
+     "verify-certificate.html and the certificate share card call it unauthenticated"),
 ]
 
 
@@ -134,11 +142,11 @@ def probe(base, key, path):
     return f"unreachable ({last})"
 
 
-def probe_rpc(base, key, fn):
-    """POST an empty body to an RPC. Retries so a blip is not a breach."""
+def probe_rpc(base, key, fn, body=b"{}"):
+    """POST a body (empty by default) to an RPC. Retries so a blip is not a breach."""
     req = urllib.request.Request(
         f"{base}/rest/v1/rpc/{fn}",
-        data=b"{}",
+        data=body,
         method="POST",
         headers={"apikey": key, "Authorization": f"Bearer {key}",
                  "Content-Type": "application/json"},
@@ -175,6 +183,15 @@ def main():
 
     for label, fn, expected, why in RPC_PROBES:
         got = probe_rpc(base, key, fn)
+        ok = got == expected
+        print(f"  {'ok  ' if ok else 'FAIL'}  rpc {label:<36} expected {expected}, got {got}")
+        if verbose and ok:
+            print(f"          ({why})")
+        if not ok:
+            failures.append((f"rpc {label}", expected, got, why))
+
+    for label, fn, body, expected, why in RPC_ARG_PROBES:
+        got = probe_rpc(base, key, fn, body)
         ok = got == expected
         print(f"  {'ok  ' if ok else 'FAIL'}  rpc {label:<36} expected {expected}, got {got}")
         if verbose and ok:

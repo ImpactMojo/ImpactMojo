@@ -115,6 +115,7 @@ function toggleMobileDropdown(event, element) {
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
   gtag('config', 'G-JRCMEB9TBW');
 </script>
 
@@ -168,9 +169,18 @@ window.addEventListener('pageshow', function(event) {
 
 <!-- Self-hosted fonts (Amaranth, Inter, JetBrains Mono) -->
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+<link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 <link rel="stylesheet" href="/css/impact-bold.css?v=0c411841">
 
 <style>
+:root {
+    /* Light values for tokens the dark block also sets. */
+    --gradient-hero: linear-gradient(180deg, rgba(14, 165, 233, 0.08) 0%, transparent 50%);
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
+    --secondary-accent: #4F46E5;
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+}
+
 /* ========================================
    CSS RESET
    ======================================== */
@@ -1404,7 +1414,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
             <h2 id="conformance-heading">Conformance status</h2>
             <p><strong>Target:</strong> <a href="https://www.w3.org/TR/WCAG21/" rel="noopener">Web Content Accessibility Guidelines (WCAG) 2.1</a>, Level AA.</p>
             <p><strong>Current status:</strong> Partially conformant. The core public pages of impactmojo.in meet WCAG 2.1 Level AA as measured by automated tooling (see below). Some third-party embedded content and legacy pages have known limitations that we are working through.</p>
-            <p><strong>Scope:</strong> This statement covers everything under <code>https://www.impactmojo.in/</code>, including the homepage, course catalog, 21 flagship courses, 80 foundational 101 decks, 135 games, 35 labs, book summaries, blog, and policy pages. It does <em>not</em> cover external sites we link to.</p>
+            <p><strong>Scope:</strong> This statement covers everything under <code>https://www.impactmojo.in/</code>, including the homepage, the catalog, 21 flagship courses, 80 foundational courses in the 101 Series, 135 games, 35 Free Studio tools, book summaries, blog, and policy pages. It does <em>not</em> cover external sites we link to.</p>
             <p><strong>Statement last updated:</strong> 14 September 2026.</p>
         </section>
 
@@ -1448,7 +1458,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
             <ul>
                 <li><strong>Native 101 course slide decks.</strong> All of our foundational 101 courses are now self-hosted native HTML slide decks, replacing the third-party Gamma.app iframes we previously embedded. This removes the iframe keyboard traps and gives us full control over colour contrast, screen-reader labelling, and theming (including a dark mode). The slide-deck format itself still presents inherent challenges for screen-reader linearisation, which we continue to improve.</li>
                 <li><strong>Course lexicons built with Parcel bundling.</strong> 17 book-companion pages were originally shipped without a full <code>&lt;head&gt;</code> tag because of the bundler. Meta tags have since been restored, but keyboard focus order on these pages may still feel inconsistent.</li>
-                <li><strong>Interactive games and labs.</strong> Some of our 135 games and 35 labs use custom canvas-based interactions (drag and drop, charts, timed simulations) that are challenging to make fully screen-reader accessible. We provide text alternatives and keyboard fallbacks where we can, but coverage is not yet complete.</li>
+                <li><strong>Interactive games and Free Studio tools.</strong> Some of our 135 games and 35 Free Studio tools use custom canvas-based interactions (drag and drop, charts, timed simulations) that are challenging to make fully screen-reader accessible. We provide text alternatives and keyboard fallbacks where we can, but coverage is not yet complete.</li>
                 <li><strong>Embedded third-party widgets.</strong> The UserWay accessibility widget itself, the Intro.js tour system, and Google Translate are excluded from our automated audits because they are out of our source control. We audit manually where feasible.</li>
                 <li><strong>Automated tool coverage.</strong> Even a perfect axe-core + pa11y-ci pass only tests about a third to a half of the WCAG success criteria. Issues involving meaningful reading order, cognitive load, and equivalent alternatives for visual content can only be found by humans.</li>
             </ul>
@@ -1507,7 +1517,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
             <div class="footer-section">
                 <h4>Quick links</h4>
                 <ul>
-                    <li><a href="catalog.html">Course Catalog</a></li>
+                    <li><a href="catalog.html">Catalog</a></li>
                     <li><a href="premium.html">Membership</a></li>
                     <li><a href="faq.html">FAQ</a></li>
                 </ul>
@@ -1750,12 +1760,12 @@ document.addEventListener('click', function(e) {
 
 
 <!-- Supabase Auth -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
+<script src="/js/vendor/supabase-js-2.114.0.js"></script>
 <script src="/js/state-manager.js?v=62445627"></script>
 <script src="/js/config.js?v=7e6af861"></script>
-<script src="/js/auth.js?v=8899618e"></script>
-<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=eba39700" defer></script>
-<script src="/js/mojini-ai.js?v=db5170eb" defer></script>
+<script src="/js/auth.js?v=6990b881"></script>
+<script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
+  <script src="/js/site-chrome.js?v=8c5e48b9" defer></script>
+<script src="/js/mojini-ai.js?v=d120c762" defer></script>
 </body>
 </html>

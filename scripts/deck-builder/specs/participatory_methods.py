@@ -1211,7 +1211,7 @@ SLIDES += [
           "Agreement and disagreement between groups"]]),
       H("indigo", "The rule across all four: participants' interpretation is data, and the "
         "researcher's interpretation is a second layer. Report both. The Visual Ethnography "
-        "101 and Qualitative Methods 101 decks cover coding and analysis in depth."),
+        "101 and Qualitative Methods 101 courses cover coding and analysis in depth."),
       compact=True),
 ]
 
@@ -1433,7 +1433,7 @@ SLIDES += [
             "co-researcher to review interpretations. Report these reflections in the method "
             "section of the report.")]),
       H("amber", "Positionality is a methods issue, so it belongs in the report. The Feminist "
-        "Research 101 and Decolonial Development 101 decks take it further.")),
+        "Research 101 and Decolonial Development 101 courses take it further.")),
 
     C("A worked example", "Illustrative: a participatory needs assessment in Pipalgaon",
       FLOW("Week 1: meet panchayat, hamlets, women's groups; agree purpose and consent",
@@ -1650,11 +1650,11 @@ SLIDES += [
             "authority that ordered the audit.")]),
       H("amber", "A participatory exercise that exposes people to harm and then leaves has "
         "taken their information and their risk. The Research Ethics 101 and Safeguarding and "
-        "PSEA 101 decks cover these duties in more detail.")),
+        "PSEA 101 courses cover these duties in more detail.")),
 
     C("Where next", "Where next",
       B("Participatory methods sit where research methods, community practice and governance "
-        "meet. These ImpactMojo 101 decks take each strand further, and the Lab gives you "
+        "meet. These ImpactMojo 101 Series courses take each strand further, and the Lab gives you "
         "practice."),
       TW([BL(["<a href=\"/101-courses/community-dev.html\">Community Development 101</a>: "
               "organising, self-help groups and panchayati raj",

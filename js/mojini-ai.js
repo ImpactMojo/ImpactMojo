@@ -74,6 +74,9 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: text, page: location.pathname }),
       });
+      if (r.status === 429) {
+        return "You've asked a lot of questions in a short time, so I'm taking a short break. Please try again in a while, or use the search, which has no limit.";
+      }
       if (!r.ok) return null;
       var d = await r.json();
       return d && typeof d.answer === "string" && d.answer.trim() ? d.answer.trim() : null;

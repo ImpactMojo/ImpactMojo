@@ -1812,7 +1812,7 @@ S12 = [
              "workplaces and camps where development programmes already work. " + HELP),
     ]),
 
-    C("Where next", "Where next: related 101 decks", [
+    C("Where next", "Where next: related 101 Series courses", [
         tw([panel("cyan", "Health and people", [body(
                 "<a href=\"/101-courses/pub-health-basics.html\">Public Health 101</a> for "
                 "health systems and primary care. "

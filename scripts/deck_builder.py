@@ -71,7 +71,7 @@ def build(course, out_name, meta_desc, title_main_html, title_sub_html, title_ta
             tags = ''.join('<span class="title-tag">%s</span>' % t for t in title_tags)
             body = ('<div class="title-screen"><div class="title-bg"></div><div class="title-bar"></div>'
                     '<div class="title-content"><div class="title-series">ImpactMojo 101 Series &middot; Free Forever</div>'
-                    '<div class="title-main">' + title_main_html + '</div>'
+                    '<h1 class="title-main">' + title_main_html + '</h1>'
                     '<div class="title-sub">' + title_sub_html + '</div>'
                     '<div class="title-tags">' + tags + '</div></div>' + TITLE_GEO + '</div>')
         elif kind == 'toc':
@@ -124,7 +124,7 @@ def build(course, out_name, meta_desc, title_main_html, title_sub_html, title_ta
             + CSS + '\n'
             '<!-- Google Analytics -->\n'
             '<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>\n'
-            "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>\n"
+            "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>\n"
             '<!-- SEO meta -->\n'
             '<meta name="description" content="' + meta_desc + '">\n'
             '<meta name="robots" content="index, follow">\n'

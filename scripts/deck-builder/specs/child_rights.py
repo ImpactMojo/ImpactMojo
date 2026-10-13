@@ -1823,12 +1823,12 @@ SLIDES += [
             "Article 2 cannot be monitored without data by sex, age, caste, disability, "
             "residence and wealth. The NFHS-5 gradients in Section 08 are only visible because "
             "the survey records them.")]),
-      H("indigo", "The Research Ethics 101 and Data Protection and the DPDP Act 101 decks go "
+      H("indigo", "The Research Ethics 101 and Data Protection and the DPDP Act 101 courses go "
         "deeper on review boards, consent design and data security.")),
 
     C("Where next", "Where next",
       B("Child rights sit where law, development practice and research meet. These ImpactMojo "
-        "101 decks take each strand further."),
+        "101 Series courses take each strand further."),
       TW([BL(["<a href=\"/101-courses/human-rights.html\">Human Rights 101</a>: the treaty "
               "system, Indian constitutional rights and remedies",
               "<a href=\"/101-courses/child-development.html\">Child Development 101</a>: "

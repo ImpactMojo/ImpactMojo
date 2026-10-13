@@ -1893,7 +1893,7 @@ SLIDES_C = [
              "periods and the DPDP timetable all move.", sm=True),
     ], compact=True),
 
-    C("Where next", "Where next: related 101 decks", [
+    C("Where next", "Where next: related 101 Series courses", [
         tw([panel("cyan", "Health and early childhood", [body(
                 "<a href=\"/101-courses/maternal-health.html\">Maternal Health 101</a> for "
                 "antenatal care and the continuum of care. "

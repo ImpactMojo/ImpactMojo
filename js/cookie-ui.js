@@ -152,6 +152,10 @@
 
         function acceptCookies() {
             localStorage.setItem('cookieConsent', 'true');
+            try { localStorage.setItem('im-analytics-consent', 'granted'); } catch (e) {}
+            if (typeof window.gtag === 'function') {
+                try { window.gtag('consent', 'update', { analytics_storage: 'granted' }); } catch (e) {}
+            }
             var cookieEl = document.getElementById('cookieConsent');
             if (cookieEl) {
                 cookieEl.classList.remove('expanded');

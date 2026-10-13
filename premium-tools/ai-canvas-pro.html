@@ -23,6 +23,7 @@
 <!-- share:end -->
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 <link rel="stylesheet" href="/css/fonts.css">
+<link rel="stylesheet" href="/css/site-chrome.css">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
@@ -110,6 +111,7 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
 .total-score .score-num { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 700; color: var(--accent-color); }
 .total-score .score-label { font-size: 0.85rem; color: var(--text-secondary); }
 .verdict { font-size: 0.9rem; font-weight: 600; margin-top: 0.5rem; }
+.verdict.is-good { color: var(--cv-good); } .verdict.is-warn { color: var(--cv-warn); } .verdict.is-bad { color: var(--cv-bad); }
 
 @media (max-width: 768px) {
     .canvas-grid { grid-template-columns: 1fr; }
@@ -128,7 +130,7 @@ body.dark-mode .header { background: rgba(15,23,42,0.95); }
 .tool-name { font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600; padding-left: 0.75rem; border-left: 2px solid var(--border-color); }
 .pro-pill { display: inline-flex; align-items: center; gap: 0.2rem; background: linear-gradient(135deg,#F59E0B,#EF4444); color: #fff; font-weight: 700; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.4px; padding: 0.15rem 0.45rem; border-radius: 5px; white-space: nowrap; }
 .freemium-note { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; padding: 0.6rem 0.9rem; background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; font-size: 0.82rem; color: var(--text-secondary); }
-.freemium-note a { color: #F59E0B; font-weight: 700; text-decoration: none; }
+.freemium-note a { color: var(--cv-warn); font-weight: 700; text-decoration: none; }
 .freemium-note a:hover { text-decoration: underline; }
 @media (max-width: 640px) { .tool-name { font-size: 0.9rem; padding-left: 0.5rem; } .header-brand .brand-name { display: none; } }
 @media print { .freemium-note { display: none !important; } }
@@ -325,12 +327,17 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
    chrome paints the body #0F172A while these tokens stay. The inks above are
    right on the light surface and about 3:1 on the dark one, so the dark theme
    takes the brighter pair. */
+/* Verdict and note inks. The saturated green, amber and red read 2.1 to 3.8:1
+   as text on white, so each takes a darker ink in light and a lighter one in dark. */
+:root{--cv-good:#047857;--cv-warn:#92400E;--cv-bad:#B91C1C;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--cv-good:#6EE7B7;--cv-warn:#FCD34D;--cv-bad:#FCA5A5;}}
+[data-theme="dark"],body.dark-mode,html.dark{--cv-good:#6EE7B7;--cv-warn:#FCD34D;--cv-bad:#FCA5A5;}
 @media (prefers-color-scheme: dark){:root{--accent-color:#38BDF8;--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}}
 [data-theme="dark"],body.dark-mode,html.dark{--accent-color:#38BDF8;--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>
 </head>
 <body>
 
@@ -370,9 +377,9 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
     </div>
 
     <div class="project-bar">
-        <input type="text" id="projectName" placeholder="Project / Initiative name" data-field="projectName">
-        <input type="text" id="orgName" placeholder="Organization" data-field="orgName">
-        <input type="text" id="dateFilled" placeholder="Date" data-field="dateFilled">
+        <input type="text" id="projectName" placeholder="Project / Initiative name" aria-label="Project or initiative name" data-field="projectName">
+        <input type="text" id="orgName" placeholder="Organization" aria-label="Organization" data-field="orgName">
+        <input type="text" id="dateFilled" placeholder="Date" aria-label="Date" data-field="dateFilled">
     </div>
 
     <div class="canvas-grid" id="canvasGrid"></div>
@@ -430,6 +437,7 @@ function init() {
         ta.className = 'note-area';
         ta.value = data[s.id] || '';
         ta.dataset.field = s.id;
+        ta.setAttribute('aria-label', s.num + '. ' + s.title);
         ta.addEventListener('input', function() { data[this.dataset.field] = this.value; save(); });
         section.appendChild(ta);
         grid.appendChild(section);
@@ -447,7 +455,7 @@ function init() {
     SCORES.forEach(function(sc) {
         var item = document.createElement('div');
         item.className = 'score-item';
-        item.innerHTML = '<label>' + sc.label + '</label><input type="range" min="1" max="5" value="' + (data['score_' + sc.id] || 3) + '" data-score="' + sc.id + '"><div class="score-val">' + (data['score_' + sc.id] || 3) + '/5</div>';
+        item.innerHTML = '<label>' + sc.label + '</label><input type="range" min="1" max="5" aria-label="' + sc.label + '" value="' + (data['score_' + sc.id] || 3) + '" data-score="' + sc.id + '"><div class="score-val">' + (data['score_' + sc.id] || 3) + '/5</div>';
         var slider = item.querySelector('input[type="range"]');
         var val = item.querySelector('.score-val');
         slider.addEventListener('input', function() {
@@ -467,9 +475,9 @@ function updateTotal() {
     SCORES.forEach(function(sc) { total += (data['score_' + sc.id] || 3); });
     document.getElementById('totalScore').textContent = total;
     var verdict = document.getElementById('verdict');
-    if (total >= 25) { verdict.textContent = 'Strong candidate for AI'; verdict.style.color = '#10B981'; }
-    else if (total >= 18) { verdict.textContent = 'Promising: address gaps before proceeding'; verdict.style.color = '#F59E0B'; }
-    else { verdict.textContent = 'Reconsider: significant barriers exist'; verdict.style.color = '#EF4444'; }
+    if (total >= 25) { verdict.textContent = 'Strong candidate for AI'; verdict.className = 'verdict is-good'; }
+    else if (total >= 18) { verdict.textContent = 'Promising: address gaps before proceeding'; verdict.className = 'verdict is-warn'; }
+    else { verdict.textContent = 'Reconsider: significant barriers exist'; verdict.className = 'verdict is-bad'; }
 }
 
 function clearAll() {
@@ -527,7 +535,7 @@ init();
 </script>
 
 <!-- ImpactMojo auth + premium (Pro Studio freemium gate) -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
+<script src="/js/vendor/supabase-js-2.114.0.js"></script>
 <script src="/js/state-manager.js"></script>
 <script src="/js/config.js"></script>
 <script src="/js/auth.js"></script>

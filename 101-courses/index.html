@@ -25,9 +25,10 @@
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>
 
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+<link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -211,7 +212,7 @@ body.deck-filtering .deck-group-head{display:none}
 
 <div class="filter-bar">
   <span class="filter-label">Filter:</span>
-  <button class="filter-chip active" data-filter="all">All (79)</button>
+  <button class="filter-chip active" data-filter="all">All (80)</button>
   <button class="filter-chip" data-filter="quiz">Self-check drills (17)</button>
   <button class="filter-chip" data-filter="charts">Interactive charts (7)</button>
   <button class="filter-chip" data-filter="glossary">With glossary (6)</button>
@@ -1697,6 +1698,13 @@ body.deck-filtering .deck-group-head{display:none}
   let activeFilter = 'all';
   let q = '';
 
+  // Chip counts come from the cards on the page, so they cannot drift.
+  chips.forEach(chip => {
+    const f = chip.dataset.filter;
+    const n = f === 'all' ? cards.length : cards.filter(c => c.dataset[f] === '1').length;
+    chip.textContent = chip.textContent.replace(/\(\d+\)/, '(' + n + ')');
+  });
+
   function matchesFilter(card){
     if (activeFilter === 'all') return true;
     return card.dataset[activeFilter] === '1';
@@ -1727,7 +1735,7 @@ body.deck-filtering .deck-group-head{display:none}
 </script>
 
 <script src="/js/theme.js?v=ca787a55"></script>
-<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=eba39700" defer></script>
+<script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
+  <script src="/js/site-chrome.js?v=8c5e48b9" defer></script>
 </body>
 </html>

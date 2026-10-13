@@ -17,7 +17,15 @@
  *
  * Env (Netlify): SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  */
+import { originAllowed, clientIp, rateLimit } from "../lib/guard.mjs";
+
 const SUPABASE_URL = (process.env.SUPABASE_URL || "https://ddyszmfffyedolkcugld.supabase.co").replace(/\/$/, "");
+// Only pages on this site may post here, and each caller may store a bounded
+// number of rows an hour. Two people registering for three events each are
+// well inside it. If the counter store fails the row is still stored (fail
+// open), because losing a genuine submission is the failure this path exists
+// to prevent.
+const PER_IP_HOUR = 30;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Allowlist rather than free-form: an open endpoint writing arbitrary form_name
@@ -59,8 +67,9 @@ const j = (o, s = 200) => new Response(JSON.stringify(o), {
 
 const looksLikeEmail = (v) => typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 
-export default async function handler(req) {
+export default async function handler(req, context) {
   if (req.method !== "POST") return j({ error: "method_not_allowed" }, 405);
+  if (!originAllowed(req)) return j({ error: "forbidden" }, 403);
   if (!SERVICE_KEY) {
     console.log("[form-submit] SUPABASE_SERVICE_ROLE_KEY missing");
     return j({ error: "not_configured" }, 500);
@@ -98,6 +107,14 @@ export default async function handler(req) {
   }
 
   const email = looksLikeEmail(data.email) ? data.email.trim() : null;
+
+  const limit = await rateLimit({ bucket: "form-submit-ip", id: clientIp(req, context), limit: PER_IP_HOUR, windowSec: 3600 });
+  if (!limit.ok) {
+    return new Response(JSON.stringify({ error: "rate_limited" }), {
+      status: 429,
+      headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "Retry-After": String(limit.retryAfter || 3600) },
+    });
+  }
 
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/form_submissions`, {

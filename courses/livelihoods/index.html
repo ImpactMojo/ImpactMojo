@@ -59,6 +59,7 @@
 
     <!-- Fonts -->
     <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+<link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
     <link rel="stylesheet" href="/css/course-components.css?v=13136279">
     
     <style>
@@ -2815,19 +2816,18 @@ body.dark-mode, [data-theme="dark"] {
 .resource-card li{font-family:'Amaranth',Georgia,serif;font-size:13px}
 .resource-card a{color:#0369A1;text-decoration:none;font-weight:600}
 .resource-card a:hover{text-decoration:underline}
-@media(prefers-color-scheme:dark){
-  .resources-section{background:linear-gradient(135deg,#1E293B 0%,#0F172A 100%)}
-  .resources-h2{color:#F1F5F9}
-  .resources-lead{color:#CBD5E1}
-  .resource-card-title{color:#F8FAFC}
-  .resource-card li{color:#CBD5E1}
-  .resource-card a{color:#7DD3FC}
-  .resource-card-body{color:#CBD5E1}
-  .resource-card{background:#1E293B;border-color:#334155}
-  .resource-card.premium{background:linear-gradient(135deg,#451a03 0%,#7c2d12 100%)}
-  .resource-card.premium .resource-card-eyebrow,.resource-card.book .resource-card-eyebrow{color:#FCD34D}
-  .resource-card.handout .resource-card-eyebrow{color:#CBD5E1}
-}
+/* Dark resources section, keyed to the theme the reader chose. */
+html[data-theme="dark"] .resources-section{background:linear-gradient(135deg,#1E293B 0%,#0F172A 100%)}
+html[data-theme="dark"] .resources-h2{color:#F1F5F9}
+html[data-theme="dark"] .resources-lead{color:#CBD5E1}
+html[data-theme="dark"] .resource-card-title{color:#F8FAFC}
+html[data-theme="dark"] .resource-card li{color:#CBD5E1}
+html[data-theme="dark"] .resource-card a{color:#7DD3FC}
+html[data-theme="dark"] .resource-card-body{color:#CBD5E1}
+html[data-theme="dark"] .resource-card{background:#1E293B;border-color:#334155}
+html[data-theme="dark"] .resource-card.premium{background:linear-gradient(135deg,#451a03 0%,#7c2d12 100%)}
+html[data-theme="dark"] .resource-card.premium .resource-card-eyebrow,html[data-theme="dark"] .resource-card.book .resource-card-eyebrow{color:#FCD34D}
+html[data-theme="dark"] .resource-card.handout .resource-card-eyebrow{color:#CBD5E1}
 
         /* Theme-aware conceptual diagrams (Excalidraw-style inline SVG) */
         .dag-figure{margin:var(--spacing-xl,2rem) 0;text-align:center;overflow-x:auto;-webkit-overflow-scrolling:touch}.dag-figure svg{display:block;height:auto;width:100%;max-width:560px;min-width:min(100%,480px);margin:0 auto}
@@ -3227,6 +3227,21 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
     }
     </script>
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
+<style id="course-theme-repair">
+/* Dark values for inks the template only wrote for light. The page sets
+   data-theme on <html> before first paint, so that is the switch used here. */
+html[data-theme="dark"] .resource-card.lab .resource-card-eyebrow{color:#6EE7B7}
+html[data-theme="dark"] .resource-card.notebooklm .resource-card-eyebrow{color:#A5B4FC}
+html[data-theme="dark"] .resource-card.course101 .resource-card-eyebrow{color:#7DD3FC}
+html[data-theme="dark"] .resource-card.dojo .resource-card-eyebrow{color:#FCA5A5}
+html[data-theme="dark"] .resource-card.book .resource-card-eyebrow,html[data-theme="dark"] .resource-card.premium .resource-card-eyebrow{color:#FCD34D}
+html[data-theme="dark"] .resource-card.handout .resource-card-eyebrow{color:#CBD5E1}
+html[data-theme="dark"] .question-type{color:#CBD5E1}
+html[data-theme="dark"] .sidebar-nav .nav-link.active,html[data-theme="dark"] .nav-link.active{color:#7DD3FC}
+/* A link inside a sentence is underlined, so colour is not the only thing
+   that marks it out from the words around it. */
+main p a:not([class]),main li a:not([class]),main td a:not([class]),main .card-text a:not([class]),main .lead a:not([class]){text-decoration:underline;text-underline-offset:.15em}
+</style>
 </head>
 <body>
 <div class="im-topbar" id="imTopbar" role="navigation" aria-label="Site navigation">
@@ -3273,7 +3288,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
     <div class="page-wrapper">
         <aside class="sidebar" id="sidebar">
             <button class="sidebar-collapse-btn" aria-label="Toggle sidebar" id="sidebar-collapse-btn" title="Collapse sidebar"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg></button>
-            <div class="sidebar-header"><a href="/" class="sidebar-logo"><div class="sidebar-logo-icon"><img src="/assets/images/ImpactMojo%20Logo.png" alt="" style="width: 32px; height: 32px; border-radius: 6px;"></div><span class="sidebar-logo-text">ImpactMojo</span></a></div>
+            <div class="sidebar-header"><a href="/" class="sidebar-logo"><div class="sidebar-logo-icon"><img width="1600" height="1600" src="/assets/images/ImpactMojo%20Logo.png" alt="" style="width: 32px; height: 32px; border-radius: 6px;"></div><span class="sidebar-logo-text">ImpactMojo</span></a></div>
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Overview</div>
@@ -3583,7 +3598,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
       <div class="resources-inner">
         <div class="resources-eyebrow">Connected resources</div>
         <h2 class="resources-h2">Practise the material and continue learning</h2>
-        <p class="resources-lead">Every flagship course is part of a wider open-source learning network. The cards below cross-link this livelihoods course with hands-on labs, foundational 101 decks, book summaries, reference handouts, live dojos, and Pro Studio tools.</p>
+        <p class="resources-lead">Every flagship course is part of a wider open-source learning network. The cards below cross-link this livelihoods course with hands-on labs, the 101 Series, book summaries, reference handouts, live dojos, and Pro Studio tools.</p>
         <div class="resources-grid">
           <div class="resource-card notebooklm">
                         <div class="resource-card-eyebrow">Reference &middot; Lexicon</div>
@@ -3592,15 +3607,15 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
                       </div><div class="resource-card lab">
         <div class="resource-card-eyebrow">Practise &middot; Lab</div>
         <div class="resource-card-title">Resource &amp; Sustainability Lab</div>
-        <p class="resource-card-body">Model the natural-capital base households depend on (commons, water, soil and forests) and trace how resource decisions shape rural livelihoods.</p><ul><li><a href="/Labs/resource-sustainability-lab.html">Open the Lab &rarr;</a></li><li><a href="/Labs/">All Labs &rarr;</a></li></ul>
+        <p class="resource-card-body">Model the natural-capital base households depend on (commons, water, soil and forests) and trace how resource decisions shape rural livelihoods.</p><ul><li><a href="/Labs/resource-sustainability-lab.html">Open the Lab &rarr;</a></li><li><a href="/Labs/">All Free Studio tools &rarr;</a></li></ul>
       </div><div class="resource-card course101">
         <div class="resource-card-eyebrow">Continue &middot; 101 Series</div>
-        <div class="resource-card-title">Foundational 101 decks</div>
+        <div class="resource-card-title">101 Series</div>
         <p class="resource-card-body">Free 100-slide foundational primers that pair well with this flagship:</p><ul><li><a href="/101-courses/work-labour-livelihoods.html">Work, Labour &amp; Livelihoods 101</a></li><li><a href="/101-courses/community-dev.html">Community Development 101</a></li><li><a href="/101-courses/inequality-basics.html">Inequality Basics 101</a></li></ul>
       </div><div class="resource-card book">
         <div class="resource-card-eyebrow">Read &middot; BookSummaries</div>
         <div class="resource-card-title">Field Companions</div>
-        <p class="resource-card-body">Interactive book companions across the ImpactMojo library, from poverty and labour to development economics, that deepen this course.</p><ul><li><a href="/BookSummaries/">Browse all Summaries &rarr;</a></li></ul>
+        <p class="resource-card-body">Interactive Reading Companions across the ImpactMojo library, from poverty and labour to development economics, that deepen this course.</p><ul><li><a href="/BookSummaries/">Browse all Summaries &rarr;</a></li></ul>
       </div><div class="resource-card handout">
         <div class="resource-card-eyebrow">Reference &middot; Handouts</div>
         <div class="resource-card-title">Print-friendly reference cards</div>
@@ -3628,7 +3643,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             <div class="footer-content">
                 <div class="footer-logo">
                     <a href="/">
-                        <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" height="40">
+                        <img width="40" src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" height="40">
                     </a>
                     <p>Free development education for everyone.</p>
                 </div>
@@ -3935,6 +3950,7 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
             gtag('config', 'G-JRCMEB9TBW');
         </script>
         
@@ -4022,18 +4038,18 @@ code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !imp
 <!-- ImpactMojo Theme Toggle JS -->
 <script src="/js/theme.js?v=ca787a55"></script>
 <!-- Supabase + deferred site scripts -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
+<script src="/js/vendor/supabase-js-2.114.0.js"></script>
 <script src="/js/state-manager.js?v=62445627"></script>
 <script src="/js/config.js?v=7e6af861"></script>
-<script src="/js/auth.js?v=8899618e"></script>
+<script src="/js/auth.js?v=6990b881"></script>
 <script defer src="../../js/course-loader.js"></script>
 <script defer src="../../js/course-progress.js"></script>
 <script defer src="/js/paper-excerpt.js?v=55de7c20"></script>
-<script src="/js/search.js?v=c1c68c68" defer></script>
+<script src="/js/search.js?v=fe7acefb" defer></script>
 <script src="/js/pwa.js?v=15431586" defer></script>
 <script src="/js/offline.js?v=dc4b1b3a" defer></script>
 <script defer src="../../js/auto-refresh.js"></script>
-<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=eba39700" defer></script>
+<script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
+  <script src="/js/site-chrome.js?v=8c5e48b9" defer></script>
 </body>
 </html>

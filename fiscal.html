@@ -29,14 +29,16 @@
 <style>
 :root{
   --bg:#F6F8FB; --panel:#FFFFFF; --ink:#0F172A; --mut:#5A6B82; --faint:#5F708A;
-  --bd:#E4EAF1; --acc:#0D9488; --acc2:#7C3AED; --good:#047857; --bad:#991B1B;
+  --bd:#E4EAF1; --acc:#0F766E; --acc2:#7C3AED; --good:#047857; --bad:#991B1B;
   --chip:#EEF3F9; --rg-ink:#0F766E; --barlo:#CCFBF1; --barhi:#0F766E;
 }
 html[data-theme="dark"]{
+  --acc:#5EEAD4; --acc2:#C4B5FD;
   --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#7387A0;
   --bd:#25314A; --chip:#1C2740; --rg-ink:#2DD4BF; --barlo:#134E4A; --barhi:#5EEAD4;
 }
 @media(prefers-color-scheme:dark){html:not([data-theme]){
+  --acc:#5EEAD4; --acc2:#C4B5FD;
   --bg:#0B1120; --panel:#131C2E; --ink:#F1F5F9; --mut:#9DB0C7; --faint:#7387A0;
   --bd:#25314A; --chip:#1C2740; --rg-ink:#2DD4BF; --barlo:#134E4A; --barhi:#5EEAD4;
 }}
@@ -62,7 +64,7 @@ h1,h2,h3,.ui{font-family:'Inter',system-ui,sans-serif}
 .qline{font-family:'Inter';font-weight:600;font-size:clamp(1.05rem,2.4vw,1.35rem);line-height:1.9;color:var(--ink);margin:0;letter-spacing:-.2px}
 input.blank{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:inherit;color:var(--acc);background:transparent;border:0;border-bottom:2px dashed var(--acc);width:8ch;padding:0 2px;text-align:right}
 input.blank:focus{outline:2px solid var(--acc);outline-offset:3px;border-radius:2px}
-select.blank{-webkit-appearance:none;appearance:none;font-family:'Inter';font-weight:800;font-size:inherit;color:var(--acc);background:transparent;border:0;border-bottom:2px dashed var(--acc);padding:0 2px;cursor:pointer}
+select.blank{max-width:100%;-webkit-appearance:none;appearance:none;font-family:'Inter';font-weight:800;font-size:inherit;color:var(--acc);background:transparent;border:0;border-bottom:2px dashed var(--acc);padding:0 2px;cursor:pointer}
 select.blank:focus{outline:2px solid var(--acc);outline-offset:3px;border-radius:2px}
 .qhint{font-family:'Inter';font-size:12.5px;color:var(--faint);margin:14px 0 0}
 .caption{font-size:.95rem;color:var(--mut);margin:16px 0 10px;min-height:1.4em}
@@ -114,6 +116,7 @@ a{color:var(--acc)}
 :root{--im-fill-sky:#0369A1;}
 </style>
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+<link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 </head>
 <body>
 
@@ -158,8 +161,8 @@ a{color:var(--acc)}
     a particular road is telling you something the budget cannot show.</p>
   </div>
 
-  <div class="tabs" id="tabs"></div>
-  <section class="panel" id="panel"></section>
+  <div class="tabs" id="tabs" role="tablist" aria-label="Views of the budget"></div>
+  <section class="panel" id="panel" role="tabpanel" tabindex="0"></section>
 
   <section class="panel" id="rgPanel" hidden aria-labelledby="rg-h">
     <h2 id="rg-h" style="font-family:'Amaranth',sans-serif;font-size:1.05rem;margin:0 0 4px;color:var(--ink)">Ministry briefs on these heads</h2>
@@ -311,7 +314,7 @@ a{color:var(--acc)}
     h+='<td><span class="mono">'+line(HIST.grand_total)+'</span></td></tr>';
     $('panel').innerHTML=h+'</tbody></table>';
     var t=$('tabs').children;
-    for(var q=0;q<t.length;q++) t[q].setAttribute('aria-selected', t[q].dataset.k===TAB?'true':'false');
+    for(var q=0;q<t.length;q++){ var on=t[q].dataset.k===TAB; t[q].setAttribute('aria-selected', on?'true':'false'); t[q].tabIndex=on?0:-1; if(on) $('panel').setAttribute('aria-labelledby', t[q].id); }
   }
 
   function render(){
@@ -352,7 +355,7 @@ a{color:var(--acc)}
     }
     $('panel').innerHTML=h+'</tbody></table>';
     var t=$('tabs').children;
-    for(var q=0;q<t.length;q++) t[q].setAttribute('aria-selected', t[q].dataset.k===TAB?'true':'false');
+    for(var q=0;q<t.length;q++){ var on=t[q].dataset.k===TAB; t[q].setAttribute('aria-selected', on?'true':'false'); t[q].tabIndex=on?0:-1; if(on) $('panel').setAttribute('aria-labelledby', t[q].id); }
   }
 
   // Named HIST, not H: the load callback below already declares `var H = heads()`
@@ -463,11 +466,20 @@ a{color:var(--acc)}
 
     var tb='';
     for(var t=0;t<TABS.length;t++)
-      tb+='<button class="tab ui" role="tab" data-k="'+TABS[t][0]+'" aria-selected="'+
-          (TABS[t][0]===TAB)+'">'+esc(TABS[t][1])+'</button>';
+      tb+='<button class="tab ui" role="tab" id="tab-'+TABS[t][0]+'" aria-controls="panel" data-k="'+TABS[t][0]+'" aria-selected="'+
+          (TABS[t][0]===TAB)+'" tabindex="'+(TABS[t][0]===TAB?'0':'-1')+'">'+esc(TABS[t][1])+'</button>';
     $('tabs').innerHTML=tb;
     $('tabs').addEventListener('click',function(e){
       var b=e.target.closest('.tab'); if(!b) return; TAB=b.dataset.k; render();
+    });
+    // Arrow keys move between tabs, as the tab pattern expects.
+    $('tabs').addEventListener('keydown',function(e){
+      var keys={ArrowRight:1,ArrowLeft:-1,Home:'first',End:'last'};
+      if(!(e.key in keys)) return;
+      var bs=[].slice.call($('tabs').querySelectorAll('.tab')), i=bs.indexOf(document.activeElement);
+      if(i<0) return;
+      var k=keys[e.key], j=k==='first'?0:k==='last'?bs.length-1:(i+k+bs.length)%bs.length;
+      e.preventDefault(); TAB=bs[j].dataset.k; render(); bs[j].focus();
     });
     ['tax','year','head'].forEach(function(id){
       $(id).addEventListener('input',calc); $(id).addEventListener('change',calc);
@@ -479,6 +491,6 @@ a{color:var(--acc)}
 })();
 </script>
 
-<script src="/js/site-chrome.js?v=eba39700" defer></script>
+<script src="/js/site-chrome.js?v=8c5e48b9" defer></script>
 </body>
 </html>

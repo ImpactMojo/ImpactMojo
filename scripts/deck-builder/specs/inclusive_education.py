@@ -1719,7 +1719,7 @@ SLIDES += [
 
     C("Where next", "Where next",
       B("Inclusive education connects to disability rights, to child rights, to the politics of "
-        "language and caste and to the measurement of learning. These ImpactMojo 101 decks take each "
+        "language and caste and to the measurement of learning. These ImpactMojo 101 Series courses take each "
         "strand further."),
       TW([BL(["<a href=\"/101-courses/disability-inclusion.html\">Disability Inclusion 101</a>: "
               "disability rights and inclusion across sectors",

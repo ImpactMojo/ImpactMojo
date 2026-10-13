@@ -55,6 +55,7 @@ function toggleMobileDropdown(event, element) {
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
   gtag('config', 'G-JRCMEB9TBW');
 </script>
 
@@ -85,9 +86,19 @@ function toggleMobileDropdown(event, element) {
 <meta name="theme-color" content="#0EA5E9">
 
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+<link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 <link rel="stylesheet" href="/css/impact-bold.css?v=0c411841">
 
 <style>
+:root {
+    /* Light values for tokens the dark block also sets. */
+    --danger-color: #B91C1C;
+    --gradient-primary: linear-gradient(135deg, #0369A1 0%, #4338CA 100%);
+    --secondary-accent: #4F46E5;
+    --success-color: #047857;
+    --warning-color: #B45309;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -1015,14 +1026,17 @@ async function verifyCertificate(e) {
     showState('loadingState');
 
     try {
-        // Query certificates table via Supabase REST API
-        var url = CERT_API_URL + '/rest/v1/certificates?certificate_number=eq.' + encodeURIComponent(certNum) + '&select=course_name,certificate_number,issued_at,user_id';
+        // One call: the verify_certificate RPC returns the course and the
+        // holder's name for this number only, so no profile or user id is public.
+        var url = CERT_API_URL + '/rest/v1/rpc/verify_certificate';
         var resp = await fetch(url, {
+            method: 'POST',
             headers: {
                 'apikey': CERT_API_KEY,
                 'Authorization': 'Bearer ' + CERT_API_KEY,
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({ p_number: certNum })
         });
 
         if (!resp.ok) throw new Error('API error');
@@ -1033,26 +1047,7 @@ async function verifyCertificate(e) {
             showState('notFoundState');
         } else {
             var cert = data[0];
-
-            // Try to get the user's display name
-            var recipientName = 'Verified Learner';
-            try {
-                if (!cert.user_id) throw new Error('no user');
-                var profileUrl = CERT_API_URL + '/rest/v1/profiles?id=eq.' + encodeURIComponent(cert.user_id) + '&select=full_name,display_name';
-                var profileResp = await fetch(profileUrl, {
-                    headers: {
-                        'apikey': CERT_API_KEY,
-                        'Authorization': 'Bearer ' + CERT_API_KEY,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                if (profileResp.ok) {
-                    var profiles = await profileResp.json();
-                    if (profiles.length > 0) {
-                        recipientName = profiles[0].full_name || profiles[0].display_name || 'Verified Learner';
-                    }
-                }
-            } catch (_) { /* profile lookup is best-effort */ }
+            var recipientName = cert.holder_name || 'Verified Learner';
 
             document.getElementById('certCourse').textContent = cert.course_name || 'ImpactMojo Course';
             document.getElementById('certRecipient').textContent = recipientName;
@@ -1119,7 +1114,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src="js/open-badges.js"></script>
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
-<script src="/js/search.js?v=c1c68c68" defer></script>
+<script src="/js/search.js?v=fe7acefb" defer></script>
 <script defer src="js/auto-refresh.js"></script>
 <!-- ImpactMojo Theme Toggle JS -->
 <script src="/js/theme.js?v=ca787a55"></script>
@@ -1134,10 +1129,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </svg>
 
 <!-- Supabase Auth -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
+<script src="/js/vendor/supabase-js-2.114.0.js"></script>
 <script src="/js/state-manager.js?v=62445627"></script>
-<script src="/js/auth.js?v=8899618e"></script>
-<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-  <script src="/js/site-chrome.js?v=eba39700" defer></script>
+<script src="/js/auth.js?v=6990b881"></script>
+<script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
+  <script src="/js/site-chrome.js?v=8c5e48b9" defer></script>
 </body>
 </html>

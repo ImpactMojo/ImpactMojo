@@ -1012,7 +1012,7 @@ for i, (kind, payload) in enumerate(slides):
     if kind == 'title':
         body = ('<div class="title-screen"><div class="title-bg"></div><div class="title-bar"></div>'
                 '<div class="title-content"><div class="title-series">ImpactMojo 101 Series &middot; Free Forever</div>'
-                '<div class="title-main">Data<br>Visualization<br>101</div>'
+                '<h1 class="title-main">Data<br>Visualization<br>101</h1>'
                 '<div class="title-sub">How to turn numbers into honest, clear pictures &mdash; a foundational course '
                 'for development practitioners in South Asia, and the companion to ImpactMojo&rsquo;s '
                 '<em>The Long View</em>.</div>'
@@ -1127,7 +1127,7 @@ HEAD = ('<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n'
         + CSS + '\n'
         '<!-- Google Analytics -->\n'
         '<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>\n'
-        "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>\n"
+        "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>\n"
         '<!-- SEO meta -->\n'
         '<meta name="description" content="' + META_DESC + '">\n'
         '<meta name="robots" content="index, follow">\n'

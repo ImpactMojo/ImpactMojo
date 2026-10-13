@@ -15,6 +15,8 @@
  *   ADMIN_KEY                                — a secret you choose; without it
  *                                              the endpoint refuses to run.
  */
+import { safeEqual } from "../lib/guard.mjs";
+
 const SUPABASE_URL = (process.env.SUPABASE_URL || "https://ddyszmfffyedolkcugld.supabase.co").replace(/\/$/, "");
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ADMIN_KEY = process.env.ADMIN_KEY;
@@ -25,7 +27,7 @@ export default async (req) => {
 
   if (!ADMIN_KEY) return json({ error: "ADMIN_KEY not configured" }, 503);
   if (!SERVICE_KEY) return json({ error: "service key missing" }, 500);
-  if ((req.headers.get("x-admin-key") || "") !== ADMIN_KEY) return json({ error: "unauthorized" }, 401);
+  if (!safeEqual(req.headers.get("x-admin-key") || "", ADMIN_KEY)) return json({ error: "unauthorized" }, 401);
 
   const file = new URL(req.url).searchParams.get("file");
   if (!file) return json({ error: "?file= required" }, 400);
@@ -36,11 +38,15 @@ export default async (req) => {
       headers: { Authorization: `Bearer ${SERVICE_KEY}`, apikey: SERVICE_KEY, "Content-Type": "application/json" },
       body: JSON.stringify({ expiresIn: EXPIRES }),
     });
-    if (!res.ok) return json({ error: "sign failed", status: res.status, detail: await res.text() }, 502);
+    if (!res.ok) {
+      console.log("[mint-download] sign failed:", res.status, (await res.text()).slice(0, 400));
+      return json({ error: "sign failed", status: res.status }, 502);
+    }
     const data = await res.json();
     return json({ file, url: `${SUPABASE_URL}/storage/v1${data.signedURL}`, expires_in_days: 7 });
   } catch (e) {
-    return json({ error: String(e) }, 500);
+    console.log("[mint-download] failed:", e && e.message);
+    return json({ error: "something went wrong" }, 500);
   }
 };
 

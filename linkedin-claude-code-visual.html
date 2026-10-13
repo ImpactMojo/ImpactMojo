@@ -13,14 +13,24 @@
   body {
     font-family: 'Inter', sans-serif;
     background: #0f0f1a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    padding: 2rem;
   }
 
+  /* The visual is drawn at a fixed 1200px for export. On a narrower screen it
+     scrolls sideways inside this frame, so the page and the site bar keep the
+     width of the screen. */
+  .stage {
+    padding: 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .stage:focus-visible { outline: 2px solid #A5B4FC; outline-offset: -4px; }
+  /* The site footer is translucent in the light theme. Over this page's dark ground it needs a solid white. */
+  @media not (prefers-color-scheme: dark) { html:not(.dark):not([data-theme="dark"]) body .im-sc-foot { background: #FFFFFF; } }
+  @media (prefers-color-scheme: dark) { html[data-theme="light"]:not(.dark) body .im-sc-foot { background: #FFFFFF; } }
+
   .card {
+    margin: 0 auto;
     width: 1200px;
     background: linear-gradient(135deg, #0f0f2e 0%, #1a1a3e 50%, #0f0f2e 100%);
     border-radius: 24px;
@@ -264,11 +274,13 @@
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>
 
+<link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 </head>
 <link rel="canonical" href="https://www.impactmojo.in/linkedin-claude-code-visual.html">
 <body>
+  <div class="stage" role="region" aria-label="Global Claude Code setup visual" tabindex="0">
   <div class="card">
     <div class="header">
       <div class="header-icon">~</div>
@@ -392,6 +404,7 @@
       </div>
     </div>
   </div>
-  <script src="/js/site-chrome.js?v=eba39700" defer></script>
+  </div>
+  <script src="/js/site-chrome.js?v=8c5e48b9" defer></script>
 </body>
 </html>

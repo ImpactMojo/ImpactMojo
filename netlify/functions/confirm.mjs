@@ -33,8 +33,14 @@ const page = (title, body) => new Response(
   `<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
    <title>${title}</title><body style="font-family:Inter,system-ui,Arial;background:#0F172A;color:#F1F5F9;display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0">
    <div style="max-width:460px;padding:2rem;text-align:center"><h1 style="color:#0EA5E9;font-size:1.4rem">${title}</h1><p style="color:#CBD5E1;line-height:1.6">${body}</p>
-   <p><a href="/api/sub-admin" style="color:#94A3B8;font-size:.85rem">admin</a></p></div>`,
-  { headers: { "Content-Type": "text/html", "Cache-Control": "no-store" } });
+   </div>`,
+  { headers: {
+    "Content-Type": "text/html; charset=utf-8",
+    "Cache-Control": "no-store",
+    // The page is static text: no script, no frame, nothing loaded.
+    "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "Referrer-Policy": "no-referrer",
+  } });
 
 const sb = (path, opts = {}) => fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
   ...opts, headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json", ...(opts.headers || {}) },
@@ -69,7 +75,10 @@ export default async (req) => {
         method: "POST", headers: { Authorization: `Bearer ${SERVICE_KEY}`, apikey: SERVICE_KEY, "Content-Type": "application/json" },
         body: JSON.stringify({ expiresIn: 7 * 24 * 3600 }),
       });
-      if (!r.ok) return page("Could not sign file", esc(await r.text()));
+      if (!r.ok) {
+        console.log("[confirm] sign failed:", r.status, (await r.text()).slice(0, 400));
+        return page("Could not sign file", "The download link could not be created, so nothing was sent. Check that the file is in the products store, then use this link again.");
+      }
       const url = `${SUPABASE_URL}/storage/v1${(await r.json()).signedURL}`;
       await mail(email, "Your ImpactMojo download", `<p>Thank you for your purchase!</p><p><a href="${url}" style="background:#0369A1;color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:700;font-family:Inter,Arial">Download your file →</a></p><p>This link works for 7 days. Reply to this email if you have any trouble.</p>`);
       await markUsed();
@@ -87,7 +96,8 @@ export default async (req) => {
     }
     return page("Unknown action", "Nothing to do.");
   } catch (e) {
-    return page("Error", esc(String(e)));
+    console.log("[confirm] failed:", e && e.message);
+    return page("Error", "Something went wrong and the order may not have been completed. Check the function log before trying again.");
   }
 };
 

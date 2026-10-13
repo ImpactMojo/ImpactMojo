@@ -31,7 +31,6 @@ SKIP_DIRS = {'Backups', 'node_modules', '.git', 'docs', 'tests'}
 
 DARK_SEL = re.compile(r'(body\.dark-mode|\[data-theme=["\']?dark["\']?\]|prefers-color-scheme:\s*dark)')
 STYLE = re.compile(r'<style[^>]*>(.*?)</style>', re.S)
-RULE = re.compile(r'([^{}]+)\{([^{}]*)\}')
 DECL = re.compile(r'(--[\w-]+)\s*:')
 # A bare var(--x): no comma before the closing paren.
 BARE_VAR = re.compile(r'var\(\s*(--[\w-]+)\s*\)')
@@ -48,18 +47,52 @@ def pages():
                 yield os.path.join(dirpath, f)
 
 
+COMMENT = re.compile(r'/\*.*?\*/', re.S)
+
+
+def blocks(css):
+    """Yield (preludes, body) for every innermost declaration block.
+
+    `preludes` is the selector of the block plus every enclosing at-rule
+    prelude, outermost first. This is the point of the walk. Until 2026-10-13
+    the check matched `selector { body }` with a flat regex, so in
+
+        @media (prefers-color-scheme: dark) { :root { --gradient-primary: ... } }
+
+    the inner rule's selector was read as `:root` alone and the declaration
+    was counted as a light one. That is exactly how 44 blog posts and
+    blog.html declared `--gradient-primary` only for dark and passed: the
+    Substack button painted white on #F8FAFC in the light theme while this
+    check printed PASS.
+    """
+    stack = []
+    start = 0
+    for i, ch in enumerate(css):
+        if ch == '{':
+            stack.append(css[start:i].strip())
+            start = i + 1
+        elif ch == '}':
+            body = css[start:i]
+            if stack:
+                prelude = stack.pop()
+                if ':' in body or not body.strip():
+                    yield stack + [prelude], body
+            start = i + 1
+
+
 def dark_only(path):
     """Tokens this page's own <style> uses bare, but declares only in dark."""
     with open(path, encoding='utf-8', errors='replace') as fh:
         src = fh.read()
-    css = ''.join(m.group(1) for m in STYLE.finditer(src))
+    css = COMMENT.sub('', ''.join(m.group(1) for m in STYLE.finditer(src)))
     if not css:
         return set()
     light, dark = set(), set()
-    for m in RULE.finditer(css):
-        props = set(DECL.findall(m.group(2)))
+    for preludes, body in blocks(css):
+        props = set(DECL.findall(body))
         if props:
-            (dark if DARK_SEL.search(m.group(1)) else light).update(props)
+            is_dark = any(DARK_SEL.search(p) for p in preludes)
+            (dark if is_dark else light).update(props)
     used = set(BARE_VAR.findall(css))
     return (used & dark) - light
 

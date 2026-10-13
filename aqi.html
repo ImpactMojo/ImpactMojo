@@ -104,6 +104,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+<link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 </head>
 <body>
 <div class="wrap">
@@ -219,7 +220,10 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     var svg=document.getElementById(o.svg), tip=document.getElementById(o.tip);
     var rows=o.rows, unit=o.unit||'', d=o.d||0;
     var W=Math.min(1000,svg.parentNode.clientWidth||760);
-    var BH=W<560?19:21;
+    // On a phone each row sits 28px apart and carries a transparent hit area
+    // across the whole chart, so the tap target clears 24px. The bar keeps
+    // its 15px thickness, so the picture does not change.
+    var narrowHit=W<560, BH=narrowHit?28:21, BT=narrowHit?15:BH-4;
     var mName=measurer(svg,'glab'), mVal=measurer(svg,'dlab');
     var longest=rows.reduce(function(a,r){ return Math.max(a,mName(r.n)); },0);
     var widest=rows.reduce(function(a,r){ return Math.max(a,mVal(fmt(r.v,d)+unit)); },0);
@@ -230,12 +234,14 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     var g=[];
     rows.forEach(function(r,i){
       var y=M.t+i*BH, w=Math.max(2,(r.v||0)/max*(W-M.l-M.r));
-      g.push('<rect class="bar" x="'+M.l+'" y="'+(y+2)+'" width="'+w+'" height="'+(BH-4)+'" rx="4" '+
-             'tabindex="0" role="img" aria-label="'+esc(r.n)+': '+fmt(r.v,d)+unit+'" '+
-             'data-n="'+esc(r.n)+'" data-v="'+(r.v||0)+'" data-e="'+esc(r.extra||'')+'"/>');
+      var hitA='tabindex="0" role="img" aria-label="'+esc(r.n)+': '+fmt(r.v,d)+unit+'" '+
+             'data-n="'+esc(r.n)+'" data-v="'+(r.v||0)+'" data-e="'+esc(r.extra||'')+'"';
+      g.push('<rect class="bar" x="'+M.l+'" y="'+(y+(BH-BT)/2)+'" width="'+w+'" height="'+BT+'" rx="4"'+
+             (narrowHit?' aria-hidden="true"':' '+hitA)+'/>');
       g.push('<text class="glab" x="'+(M.l-8)+'" y="'+(y+BH/2+4)+'" text-anchor="end">'+
              esc(clip(r.n,M.l-10,mName))+'</text>');
       g.push('<text class="dlab" x="'+(M.l+w+7)+'" y="'+(y+BH/2+4)+'">'+fmt(r.v,d)+unit+'</text>');
+      if(narrowHit) g.push('<rect class="hit" x="0" y="'+y+'" width="'+W+'" height="'+BH+'" fill="transparent" '+hitA+'/>');
     });
     mName.done(); mVal.done();
     svg.setAttribute('viewBox','0 0 '+W+' '+H);
@@ -244,7 +250,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     // overwriting innerHTML without it leaves the chart with no name.
     var ttl=svg.querySelector('title');
     svg.innerHTML=(ttl?ttl.outerHTML:'')+g.join('');
-    svg.querySelectorAll('rect').forEach(function(b){
+    svg.querySelectorAll('rect[tabindex]').forEach(function(b){
       function go(){
         var r=svg.getBoundingClientRect(), p=svg.parentNode.getBoundingClientRect();
         tip.innerHTML='<b>'+b.dataset.n+'</b><br><span class="n">'+fmt(+b.dataset.v,d)+unit+
@@ -383,7 +389,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     cityChart(); covChart(); },180); });
 })();
 </script>
-<script src="/js/translate-sarvam.js?v=de32c2b0" defer></script>
-<script src="/js/site-chrome.js?v=eba39700" defer></script>
+<script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
+<script src="/js/site-chrome.js?v=8c5e48b9" defer></script>
 </body>
 </html>

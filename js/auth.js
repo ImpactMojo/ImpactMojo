@@ -36,7 +36,7 @@
  * - Storage keys now match index.html (impactmojo_bookmarks, etc.)
  * 
  * Include this file in your HTML pages:
- * <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"></script>
+ * <script src="/js/vendor/supabase-js-2.114.0.js"></script>
  * <script src="js/auth.js"></script>
  */
 
@@ -80,15 +80,51 @@ const SUPABASE_ANON_KEY = window.ImpactMojoConfig.SUPABASE_ANON_KEY;
 })();
 
 // Initialize Supabase client (using different name to avoid conflict with window.supabase library)
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-        storageKey: 'impactmojo-auth',
-        storage: window.localStorage
+//
+// The SDK comes from jsDelivr. When that script does not load (blocked, offline, slow network),
+// window.supabase is undefined and calling createClient at the top level threw, so this whole file
+// stopped: ImpactMojoAuth never existed and the sign-in button sat on "Signing in..." with no
+// message. Now the client is created only if the SDK is there. Otherwise every call on it throws
+// one plain error, ImpactMojoAuth.unavailable is true, and each method's own catch returns that
+// message to the page, which shows it.
+var IMX_AUTH_UNAVAILABLE = 'Sign-in is unavailable right now. Check your connection and try again.';
+
+function imxUnavailableClient() {
+    var handler = {
+        get: function (target, prop) {
+            if (prop === 'then') return undefined; // never look like a promise
+            return new Proxy(function () {}, handler);
+        },
+        apply: function () {
+            var e = new Error(IMX_AUTH_UNAVAILABLE);
+            e.code = 'auth_unavailable';
+            throw e;
+        }
+    };
+    return new Proxy(function () {}, handler);
+}
+
+var imxAuthUnavailable = false;
+const supabaseClient = (function () {
+    try {
+        if (window.supabase && typeof window.supabase.createClient === 'function') {
+            return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                auth: {
+                    persistSession: true,
+                    autoRefreshToken: true,
+                    detectSessionInUrl: true,
+                    storageKey: 'impactmojo-auth',
+                    storage: window.localStorage
+                }
+            });
+        }
+        console.warn('ImpactMojo auth: the Supabase SDK did not load; sign-in is unavailable.');
+    } catch (e) {
+        console.warn('ImpactMojo auth: could not create the Supabase client', e);
     }
-});
+    imxAuthUnavailable = true;
+    return imxUnavailableClient();
+})();
 
 // =====================================================
 // LOCALSTORAGE KEYS
@@ -177,6 +213,10 @@ function imxShowPwnedNotice() {
 }
 
 const ImpactMojoAuth = {
+    // True when the Supabase SDK did not load. Pages check it to say so
+    // instead of waiting on a sign-in that cannot happen.
+    unavailable: imxAuthUnavailable,
+    unavailableMessage: IMX_AUTH_UNAVAILABLE,
     user: null,
     profile: null,
     isInitialized: false,
@@ -1498,7 +1538,9 @@ window.addEventListener('beforeunload', () => {
 
 // Export for use in other scripts
 window.ImpactMojoAuth = ImpactMojoAuth;
-window.supabaseClient = supabaseClient;
+// Only a working client is shared: other scripts test window.supabaseClient
+// before using it, and the stand-in above would pass that test and then throw.
+if (!imxAuthUnavailable) window.supabaseClient = supabaseClient;
 
 // Inject auth CSS immediately so .auth-logged-in elements are hidden
 // by default (prevents flash of both logged-in and logged-out buttons)

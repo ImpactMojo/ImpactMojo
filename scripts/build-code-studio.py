@@ -176,9 +176,11 @@ def head(page, canonical):
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
   gtag('config', 'G-JRCMEB9TBW');
 </script>
     <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/site-chrome.css">
     <link rel="stylesheet" href="/css/code-studio.css">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="%(title)s">
