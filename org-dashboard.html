@@ -2832,6 +2832,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         }[res];
         if (msg) { alert(msg); return; }
         closeModal('inviteModal');
+        alert('Invitation saved. ' + email + ' joins your team once they accept it from their account page on ImpactMojo.');
         document.getElementById('inviteEmail').value = '';
         document.getElementById('inviteTeam').value = '';
         await loadMembers();
@@ -2899,7 +2900,8 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         // The RPC returns the id only: profiles rows are not broadly readable after the 2026-07 RLS fix.
         var { data: inviteeId } = await supabaseClient.rpc('lookup_profile_id_by_email', { p_email: email });
         if (!inviteeId) return 'noaccount';
-        var row = { role: role === 'manager' ? 'manager' : 'member', status: 'active', joined_at: new Date().toISOString(), invited_by: ImpactMojoAuth.getUser().id };
+        // The member joins only when they accept on their account page; the database enforces this.
+        var row = { role: role === 'manager' ? 'manager' : 'member', status: 'invited', invited_by: ImpactMojoAuth.getUser().id };
         if (teamsSupported && team) row.team = String(team).trim().slice(0, 60);
         var { data: existing } = await supabaseClient.from('organization_members').select('id, status').eq('org_id', orgData.id).eq('user_id', inviteeId).maybeSingle();
         if (existing && existing.status !== 'removed') return 'exists';
@@ -2967,7 +2969,7 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
         await loadMembers();
         updateStats();
         box.textContent = '';
-        var lines = [tally.added + ' added, ' + tally.exists + ' already on your team.'];
+        var lines = [tally.added + ' invited, ' + tally.exists + ' already on your team. Invited people join once they accept from their account page.'];
         if (tally.noaccount.length) lines.push(tally.noaccount.length + (tally.noaccount.length === 1 ? ' has' : ' have') + ' no ImpactMojo account yet. Ask them to sign up at impactmojo.in/signup, then import again: ' + tally.noaccount.join(', '));
         if (tally.invalid.length) lines.push(tally.invalid.length + (tally.invalid.length === 1 ? ' row had' : ' rows had') + ' no valid email: ' + tally.invalid.join(', '));
         if (tally.seats.length) lines.push('You have reached your seat limit, so the import stopped at ' + tally.seats[0] + '. Contact hello@impactmojo.in to add seats.');
