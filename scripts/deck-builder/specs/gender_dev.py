@@ -1793,7 +1793,7 @@ DECK = {
                  "who benefits, for every activity in a programme.", "indigo"),
         ], compact=True),
 
-        C("Where next", "Where next: related 101 decks", [
+        C("Where next", "Where next: related 101 Series courses", [
             tw([panel("cyan", "Go deeper on gender", [body(
                     "<a href=\"/101-courses/gender-mainstreaming.html\">Gender Mainstreaming "
                     "101</a> for gender budgeting and mainstreaming in institutions. "

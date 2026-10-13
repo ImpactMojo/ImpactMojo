@@ -121,7 +121,7 @@ def build(slug, title, topic, tagline, chips, curator, curator_role, curator_bio
             '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
             '<link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n'
             '<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>\n'
-            "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>\n"
+            "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>\n"
             '<link rel="stylesheet" href="/DeepDives/dd-shared.css">\n'
             '</head>\n<body>\n<a href="#main-content" class="im-skip-link">Skip to content</a>\n\n')
 

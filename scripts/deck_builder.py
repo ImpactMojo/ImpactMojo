@@ -124,7 +124,7 @@ def build(course, out_name, meta_desc, title_main_html, title_sub_html, title_ta
             + CSS + '\n'
             '<!-- Google Analytics -->\n'
             '<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>\n'
-            "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JRCMEB9TBW');</script>\n"
+            "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>\n"
             '<!-- SEO meta -->\n'
             '<meta name="description" content="' + meta_desc + '">\n'
             '<meta name="robots" content="index, follow">\n'

@@ -1759,7 +1759,7 @@ DECK = {
               "years.", sm=True),
         ]),
 
-        S("Where next", "Related ImpactMojo 101 decks", [
+        S("Where next", "Related ImpactMojo 101 Series courses", [
             B("Education policy connects to almost every other part of development practice. These "
               "decks go deeper on the methods, rights and systems this course touched."),
             TC([BL(["Learning in classrooms: " + L("fln.html", "Foundational Literacy &amp; "

@@ -202,6 +202,7 @@ def page_shell(title, description, keywords, og_title, og_desc, path, body, scri
   window.dataLayer = window.dataLayer || [];
   function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
+  gtag('consent','default',{{analytics_storage:(function(){{try{{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}}catch(e){{}}return 'denied'}})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'}});
   gtag('config', 'G-JRCMEB9TBW');
 </script>
 
@@ -232,6 +233,7 @@ def page_shell(title, description, keywords, og_title, og_desc, path, body, scri
 
 <!-- Self-hosted fonts -->
 <link rel="stylesheet" href="{stamp('/css/fonts.css')}">
+<link rel="stylesheet" href="{stamp('/css/site-chrome.css')}">
 <link rel="stylesheet" href="{stamp('/css/fundamentals.css')}">
 <link rel="stylesheet" href="{stamp('/css/theories.css')}">
 </head>

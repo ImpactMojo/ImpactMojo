@@ -1685,7 +1685,7 @@ S12 = [
         ]),
     ], compact=True),
 
-    C("Where next", "Where next: related 101 decks", [
+    C("Where next", "Where next: related 101 Series courses", [
         tw([panel("cyan", "Communication and evidence", [body(
                 "<a href=\"/101-courses/bcc-comms.html\">Behaviour Change Communication 101</a> for "
                 "campaigns aimed at practice change. "

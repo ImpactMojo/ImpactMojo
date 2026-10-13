@@ -44,7 +44,7 @@ fi
 # 3. Check for merge conflict markers
 if [ -n "$STAGED_FILES" ]; then
   while IFS= read -r file; do
-    if [ -f "$file" ] && grep -rn '<<<<<<<\|=======\|>>>>>>>' "$file" > /dev/null 2>&1; then
+    if [ -f "$file" ] && grep -nE '^(<<<<<<< |=======$|>>>>>>> )' "$file" > /dev/null 2>&1; then
       echo -e "${RED}BLOCKED:${NC} Merge conflict markers found in $file"
       exit 1
     fi

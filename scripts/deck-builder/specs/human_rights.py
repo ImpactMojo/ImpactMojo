@@ -1559,7 +1559,7 @@ S12 = [
              "October 2026.", "amber"),
     ]),
 
-    C("Where next", "Where next: related 101 decks", [
+    C("Where next", "Where next: related 101 Series courses", [
         tw([panel("cyan", "Law and institutions", [body(
                 "<a href=\"/101-courses/ind-constitution.html\">Indian Constitution 101</a> for Parts III and "
                 "IV in depth. "
