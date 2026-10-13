@@ -11,13 +11,17 @@ const { default: h } = await import(new URL('../netlify/functions/form-submit.mj
 
 let calls = [];
 global.fetch = async (u, o) => { calls.push({ u, o: JSON.parse(o.body) }); return { ok: true, status: 201, json: async () => [{ id: 'r1' }] }; };
-const post = (b) => h(new Request('http://x/api/form-submit', { method: 'POST', body: JSON.stringify(b) }));
+// The endpoint only takes posts from pages on this site (see netlify/lib/guard.mjs).
+const SITE = { Origin: 'https://www.impactmojo.in' };
+const post = (b, headers = SITE) => h(new Request('http://x/api/form-submit', { method: 'POST', headers, body: JSON.stringify(b) }));
 
 let pass = 0, fail = 0;
 const ck = (n, c) => { c ? (pass++, console.log('  PASS ' + n)) : (fail++, console.log('  FAIL ' + n)); };
 
 ck('GET rejected', (await h(new Request('http://x', { method: 'GET' }))).status === 405);
-ck('malformed json rejected', (await h(new Request('http://x', { method: 'POST', body: '{oops' }))).status === 400);
+ck('cross-site post rejected', (await post({ form_name: 'contact', data: { a: 'b' } }, { Origin: 'https://evil.example' })).status === 403);
+ck('post with no browser headers rejected', (await post({ form_name: 'contact', data: { a: 'b' } }, {})).status === 403);
+ck('malformed json rejected', (await h(new Request('http://x', { method: 'POST', headers: SITE, body: '{oops' }))).status === 400);
 ck('unknown form rejected', (await post({ form_name: 'not-a-form', data: { a: 'b' } })).status === 400);
 ck('missing data rejected', (await post({ form_name: 'event-registration' })).status === 400);
 ck('empty data rejected', (await post({ form_name: 'event-registration', data: {} })).status === 400);

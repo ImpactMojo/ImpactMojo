@@ -10,6 +10,7 @@
  * Env: ADMIN_KEY, STATUS_ALERT_EMAIL, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, URL
  */
 import crypto from "node:crypto";
+import { rateLimit } from "../lib/guard.mjs";
 
 const SITE = (process.env.URL || "https://www.impactmojo.in").replace(/\/$/, "");
 const SUPABASE_URL = (process.env.SUPABASE_URL || "https://ddyszmfffyedolkcugld.supabase.co").replace(/\/$/, "");
@@ -195,8 +196,8 @@ async function sendMail(to, subject, html) {
 }
 
 export const handler = async (event) => {
-  let data, form;
-  try { const b = JSON.parse(event.body); data = b.payload.data || {}; form = b.payload.form_name; }
+  let data, form, ip;
+  try { const b = JSON.parse(event.body); data = b.payload.data || {}; form = b.payload.form_name; ip = String(data.ip || b.payload.ip || ""); }
   catch { return { statusCode: 200 }; }
   if (!ADMIN_KEY) { console.log("[submission] ADMIN_KEY unset"); return { statusCode: 200 }; }
 
@@ -224,7 +225,19 @@ export const handler = async (event) => {
     const institution = (data.institution || "").trim();
     const description = (data.course_description || "").trim();
 
-    if (looksLikeEmail(email)) {
+    // The receipt goes to an address the submitter typed, from the ImpactMojo
+    // sender, so it is limited per address and per caller. If the counter
+    // store is unavailable no receipt is sent. The brief below still is.
+    let receiptOk = looksLikeEmail(email) && !/[<>"']/.test(email);
+    if (receiptOk) {
+      const perTo = await rateLimit({ bucket: "kit-receipt-to", id: email.toLowerCase(), limit: 2, windowSec: 86400, failClosed: true });
+      const perIp = perTo.ok && ip
+        ? await rateLimit({ bucket: "kit-receipt-ip", id: ip, limit: 5, windowSec: 3600, failClosed: true })
+        : perTo;
+      receiptOk = perTo.ok && perIp.ok;
+      if (!receiptOk) console.log("[submission] instructor-kit receipt skipped:", perTo.reason || perIp.reason);
+    }
+    if (receiptOk) {
       await sendMail(email, "Your ImpactMojo instructor kit: on its way",
         `<p>${name ? "Hi " + esc(name) + "," : "Hello,"}</p>
          <p>Thanks for asking for an instructor kit${course ? ` for <strong>${esc(course)}</strong>` : ""}. This is an automatic receipt so you know it arrived.</p>
