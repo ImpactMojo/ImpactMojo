@@ -18,6 +18,17 @@ Must print `PASS — production deploy ready`. Then spot-check 1-2 live markers
 from the release (curl with -L; remember Netlify's lowercase/pretty-URL
 redirects). Never announce a release as live on version.json age alone.
 
+**Since 13 October 2026 a merge builds but does not go live.** That day the
+Netlify team ran out of credits and all 35 of its sites, this one included,
+went offline. Netlify charges 15 credits for every production deploy it
+publishes, and this site had published 57 in a week, one per merged PR. A
+build that is never published costs nothing, so auto-publishing is locked and
+the "Publish locked sites" workflow in the Democracy-by-Design repository
+(`tools/publish-locked.py`) publishes the newest build at 07:47 and 19:47 IST.
+`verify-deploy.py` still passes, because the build is ready; the live-marker
+check will not, until the next publish. To publish at once, run that workflow
+by hand with the site `impactmojo`. Gather a day's work and merge it once.
+
 ## Manual verification checklist
 
 Before considering any change complete:
