@@ -10,8 +10,15 @@
 // short + on-topic; declines anything that isn't about ImpactMojo or the
 // development sector.
 
+import { originAllowed, clientIp, rateLimit, tooMany } from "../lib/guard.mjs";
+
 const MAX_Q = 600;          // reject over-long questions (abuse guard)
 const MAX_TOKENS = 320;     // keep replies short + costs near-zero
+// Abuse limits. The page calls this only when the local FAQ bank has no
+// answer, so a reader asking questions by hand stays far below these.
+// If the counter store fails the assistant keeps answering (fail open).
+const PER_IP_HOUR = 30;
+const GLOBAL_PER_DAY = 3000;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function json(obj, status = 200) {
@@ -136,8 +143,9 @@ async function answer(system, user) {
 }
 
 // ---- Handler ---------------------------------------------------------------
-export default async (req) => {
+export default async (req, context) => {
   if (req.method !== "POST") return json({ error: "POST only" }, 405);
+  if (!originAllowed(req)) return json({ error: "forbidden" }, 403);
 
   let body;
   try { body = await req.json(); } catch { return json({ error: "bad json" }, 400); }
@@ -146,6 +154,11 @@ export default async (req) => {
   const page = String(body?.page || "").slice(0, 200);
   if (!question) return json({ error: "question required" }, 400);
   if (question.length > MAX_Q) return json({ error: "That's a long one: try a shorter question." }, 400);
+
+  const mine = await rateLimit({ bucket: "mojini-ip", id: clientIp(req, context), limit: PER_IP_HOUR, windowSec: 3600 });
+  if (!mine.ok) return tooMany("You have asked a lot of questions this hour. Please try again later, or browse the catalog (/catalog.html).", mine.retryAfter);
+  const all = await rateLimit({ bucket: "mojini-all", id: "all", limit: GLOBAL_PER_DAY, windowSec: 86400 });
+  if (!all.ok) return tooMany("The assistant has reached its limit for today. Please try again tomorrow, or browse the catalog (/catalog.html).", all.retryAfter);
 
   const user = page
     ? `The visitor is on the page "${page}".\n\nTheir question: ${question}`

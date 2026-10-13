@@ -13,7 +13,13 @@
  * Request:  POST { "lang": "hi", "q": ["Text one", "Text two", ...] }
  * Response: { "t": { "Text one": "...", "Text two": "..." } }
  */
+import { originAllowed, clientIp, rateLimit, tooMany } from "../lib/guard.mjs";
+
 const SARVAM_URL = "https://api.sarvam.ai/translate";
+// Abuse limits on the paid upstream. Requests answered wholly from the cache
+// do not count. If the counter store fails, translation carries on (fail open).
+const PER_IP_HOUR = 60;               // requests that need Sarvam, per caller
+const GLOBAL_STRINGS_PER_DAY = 20000; // strings sent to Sarvam, all callers
 const KEY = process.env.SARVAM_API_KEY;
 const LANG = { hi: "hi-IN", ta: "ta-IN", bn: "bn-IN", mr: "mr-IN", te: "te-IN" };
 const MAX_BATCH = 12;     // strings per request (keep cold calls under Netlify ~10s fn timeout)
@@ -48,8 +54,9 @@ async function sarvam(text, code) {
 }
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
-export default async (req) => {
+export default async (req, context) => {
   if (req.method !== "POST") return json({ error: "POST only" }, 405);
+  if (!originAllowed(req)) return json({ error: "forbidden" }, 403);
   if (!KEY) return json({ error: "translation unavailable" }, 503);
 
   let body;
@@ -58,7 +65,7 @@ export default async (req) => {
   const code = LANG[lang];
   if (!code || !Array.isArray(q)) return json({ error: "lang + q[] required" }, 400);
 
-  const items = [...new Set(q.map((s) => (s || "").trim()).filter(Boolean))].slice(0, MAX_BATCH);
+  const items = [...new Set(q.map((s) => String(s || "").trim()).filter((s) => s && s.length <= MAX_LEN))].slice(0, MAX_BATCH);
   let store = null;
   try { const { getStore } = await import("@netlify/blobs"); store = getStore("translations"); }
   catch { /* Blobs unavailable — translate live without server cache */ }
@@ -76,7 +83,24 @@ export default async (req) => {
     } catch { misses.push(s); }
   }));
 
-  // 2) translate misses (bounded concurrency) + cache write
+  // 2) Only strings that need Sarvam are limited, so cached translations are
+  // always served. A caller over its hourly limit, or a day over the global
+  // budget, gets the cached part and the rest stays in English.
+  if (misses.length) {
+    const mine = await rateLimit({ bucket: "translate-ip", id: clientIp(req, context), limit: PER_IP_HOUR, windowSec: 3600 });
+    const all = mine.ok
+      ? await rateLimit({ bucket: "translate-all", id: "all", limit: GLOBAL_STRINGS_PER_DAY, windowSec: 86400, cost: misses.length })
+      : mine;
+    if (!mine.ok || !all.ok) {
+      const message = !mine.ok
+        ? "Too many translation requests this hour. Please try again later."
+        : "Live translation has reached its limit for today. Please try again tomorrow.";
+      if (Object.keys(out).length) return json({ t: out, limited: true, error: message });
+      return tooMany(message, (mine.ok ? all : mine).retryAfter);
+    }
+  }
+
+  // 3) translate misses (bounded concurrency) + cache write
   for (let i = 0; i < misses.length; i += CONCURRENCY) {
     const chunk = misses.slice(i, i + CONCURRENCY);
     await Promise.all(chunk.map(async (s) => {

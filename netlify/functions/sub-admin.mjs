@@ -7,6 +7,8 @@
  *
  * Env: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ADMIN_KEY
  */
+import { safeEqual } from "../lib/guard.mjs";
+
 const SUPABASE_URL = (process.env.SUPABASE_URL || "https://ddyszmfffyedolkcugld.supabase.co").replace(/\/$/, "");
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ADMIN_KEY = process.env.ADMIN_KEY;
@@ -19,7 +21,9 @@ const sb = (path, opts = {}) => fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
 export default async (req) => {
   if (!ADMIN_KEY) return j({ error: "ADMIN_KEY not configured" }, 503);
   if (!SERVICE_KEY) return j({ error: "service key missing" }, 500);
-  if ((req.headers.get("x-admin-key") || new URL(req.url).searchParams.get("key") || "") !== ADMIN_KEY) return j({ error: "unauthorized" }, 401);
+  // The key is accepted from the header only. A key in the query string ends
+  // up in browser history and request logs.
+  if (!safeEqual(req.headers.get("x-admin-key") || "", ADMIN_KEY)) return j({ error: "unauthorized" }, 401);
 
   if (req.method === "GET") {
     const subs = await (await sb("subscriptions?select=*&order=created_at.desc")).json();

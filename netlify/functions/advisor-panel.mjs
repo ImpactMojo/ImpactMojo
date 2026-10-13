@@ -55,6 +55,9 @@ const MAX_TOPIC = 600; // chars
 const MAX_STEER = 300; // chars
 const MAX_TRANSCRIPT = 40; // entries (≈ 8 rounds of a 5-seat panel)
 const MAX_TURNS_PER_DAY = 150; // per user — ≈ 6–7 full discussions/day
+const MAX_FIELD = 2000; // chars per transcript text
+const MAX_NAME = 120; // chars per transcript name or lens
+const MAX_HISTORY = 24000; // chars of discussion history sent to the model
 
 // ---- The panel ----------------------------------------------------------
 // Each seat: { provider, model }. provider ∈ groq | deepseek | gemini.
@@ -238,23 +241,43 @@ async function authorize(req) {
 
 // ---- Per-user daily quota via Netlify Blobs -----------------------------
 async function checkQuota(uid) {
+  // Every turn is a paid model call, so the quota fails closed: if the store
+  // cannot be read, the turn is refused with a 503 instead of going uncounted.
   let store;
   try {
     const { getStore } = await import("@netlify/blobs");
-    store = getStore("advisory-board-quota");
-  } catch {
-    return { ok: true }; // Blobs unavailable → don't block
+    store = getStore({ name: "advisory-board-quota", consistency: "strong" });
+  } catch (e) {
+    console.log("[advisor-panel] quota store unavailable:", e && e.message);
+    return { ok: false, unavailable: true };
   }
   const day = new Date().toISOString().slice(0, 10);
   const key = `${day}:${uid}`;
   try {
-    const used = parseInt((await store.get(key)) || "0", 10);
+    const used = parseInt((await store.get(key)) || "0", 10) || 0;
     if (used >= MAX_TURNS_PER_DAY) return { ok: false };
     await store.set(key, String(used + 1));
     return { ok: true };
-  } catch {
-    return { ok: true };
+  } catch (e) {
+    console.log("[advisor-panel] quota check failed:", e && e.message);
+    return { ok: false, unavailable: true };
   }
+}
+
+// Each transcript field is clipped, and the history keeps the most recent
+// turns that fit in MAX_HISTORY, so one call cannot carry an oversized prompt.
+const clip = (v, n) => String(v == null ? "" : v).slice(0, n);
+export function buildHistory(transcript) {
+  const lines = transcript.map((t) =>
+    `${clip(t && t.name, MAX_NAME)} (${clip(t && t.lens, MAX_NAME)}): ${clip(t && t.text, MAX_FIELD)}`);
+  const kept = [];
+  let total = 0;
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (total + lines[i].length > MAX_HISTORY) break;
+    kept.unshift(lines[i]);
+    total += lines[i].length + 2;
+  }
+  return kept.join("\n\n");
 }
 
 // ---- Handler ------------------------------------------------------------
@@ -275,14 +298,15 @@ export default async (req) => {
   if (topic.length > MAX_TOPIC) return json({ error: `topic too long (max ${MAX_TOPIC})` }, 400);
   if (!Array.isArray(transcript)) return json({ error: "transcript[] required" }, 400);
   if (transcript.length > MAX_TRANSCRIPT) return json({ error: "discussion limit reached" }, 429);
-  if (steer && steer.length > MAX_STEER) return json({ error: "steer too long" }, 400);
+  if (steer && (typeof steer !== "string" || steer.length > MAX_STEER)) return json({ error: "steer too long" }, 400);
 
   const quota = await checkQuota(auth.uid);
+  if (!quota.ok && quota.unavailable) return json({ error: "The Advisory Board is briefly unavailable. Please try again in a few minutes." }, 503);
   if (!quota.ok) return json({ error: "daily limit reached: please come back tomorrow" }, 429);
 
   // Build the discussion context for this persona's turn.
   const history = transcript.length
-    ? transcript.map((t) => `${t.name} (${t.lens}): ${t.text}`).join("\n\n")
+    ? buildHistory(transcript)
     : "(You are opening the discussion.)";
 
   let task;

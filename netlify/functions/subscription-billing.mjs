@@ -28,7 +28,10 @@ export default async () => {
   const today = new Date().toISOString().slice(0, 10);
   const period = today.slice(0, 7);
   const res = await sb(`subscriptions?status=neq.cancelled&next_due=lte.${today}&select=*`);
-  if (!res.ok) return new Response("query failed: " + (await res.text()), { status: 502 });
+  if (!res.ok) {
+    console.log("[billing] query failed:", res.status, (await res.text()).slice(0, 400));
+    return new Response("query failed", { status: 502 });
+  }
   const due = await res.json();
   let billed = 0;
   for (const s of due) {

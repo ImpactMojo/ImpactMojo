@@ -7,6 +7,8 @@
 // secret (GA4_INGEST_TOKEN) and writes with the Supabase service-role key, so the
 // powerful key never leaves the server. The admin page then reads via /api/ga4.
 
+import { safeEqual } from "../lib/guard.mjs";
+
 const SUPABASE_URL = (process.env.SUPABASE_URL || "https://ddyszmfffyedolkcugld.supabase.co").replace(/\/$/, "");
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const INGEST_TOKEN = process.env.GA4_INGEST_TOKEN;
@@ -26,7 +28,7 @@ export default async (req) => {
   // auth: shared bearer token
   const auth = req.headers.get("authorization") || "";
   const token = auth.replace(/^Bearer\s+/i, "").trim();
-  if (token !== INGEST_TOKEN) return json({ error: "unauthorized" }, 401);
+  if (!safeEqual(token, INGEST_TOKEN)) return json({ error: "unauthorized" }, 401);
 
   let body;
   try { body = await req.json(); } catch (e) { return json({ error: "invalid JSON" }, 400); }
@@ -51,8 +53,8 @@ export default async (req) => {
     body: JSON.stringify({ id: "latest", data: snapshot, updated_at: new Date().toISOString() }),
   });
   if (!res.ok) {
-    const t = await res.text();
-    return json({ error: "store failed: " + t.slice(0, 200) }, 502);
+    console.log("[ga4-ingest] store failed:", res.status, (await res.text()).slice(0, 400));
+    return json({ error: "store failed" }, 502);
   }
   return json({ ok: true, stored: Object.keys(snapshot.overview).length + " metrics, " + snapshot.geography.length + " countries" });
 };
