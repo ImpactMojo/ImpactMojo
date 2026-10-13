@@ -258,7 +258,10 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     var svg=document.getElementById(o.svg), tip=document.getElementById(o.tip);
     var rows=o.rows, unit=o.unit||'', suffix=o.suffix||'', d=o.d||0;
     var W=Math.min(1000,svg.parentNode.clientWidth||760);
-    var BH=W<560?19:21;
+    // On a phone each row sits 28px apart and carries a transparent hit area
+    // across the whole chart, so the tap target clears 24px. The bar keeps
+    // its 15px thickness, so the picture does not change.
+    var narrowHit=W<560, BH=narrowHit?28:21, BT=narrowHit?15:BH-4;
     var mName=measurer(svg,'glab'), mVal=measurer(svg,'dlab');
     var longest=rows.reduce(function(a,r){ return Math.max(a,mName(r.n)); },0);
     var widest=rows.reduce(function(a,r){
@@ -276,12 +279,14 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     }
     rows.forEach(function(r,i){
       var y=M.t+i*BH, w=Math.max(2,(r.v||0)/max*(W-M.l-M.r));
-      g.push('<rect class="bar" x="'+M.l+'" y="'+(y+2)+'" width="'+w+'" height="'+(BH-4)+'" rx="4" '+
-             'tabindex="0" role="img" aria-label="'+esc(r.n)+': '+unit+fmt(r.v,d)+suffix+'" '+
-             'data-n="'+esc(r.n)+'" data-v="'+(r.v||0)+'" data-e="'+esc(r.extra||'')+'"/>');
+      var hitA='tabindex="0" role="img" aria-label="'+esc(r.n)+': '+unit+fmt(r.v,d)+suffix+'" '+
+             'data-n="'+esc(r.n)+'" data-v="'+(r.v||0)+'" data-e="'+esc(r.extra||'')+'"';
+      g.push('<rect class="bar" x="'+M.l+'" y="'+(y+(BH-BT)/2)+'" width="'+w+'" height="'+BT+'" rx="4"'+
+             (narrowHit?' aria-hidden="true"':' '+hitA)+'/>');
       g.push('<text class="glab" x="'+(M.l-8)+'" y="'+(y+BH/2+4)+'" text-anchor="end">'+
              esc(clip(r.n,M.l-10,mName))+'</text>');
       g.push('<text class="dlab" x="'+(M.l+w+7)+'" y="'+(y+BH/2+4)+'">'+unit+fmt(r.v,d)+suffix+'</text>');
+      if(narrowHit) g.push('<rect class="hit" x="0" y="'+y+'" width="'+W+'" height="'+BH+'" fill="transparent" '+hitA+'/>');
     });
     mName.done(); mVal.done();
     svg.setAttribute('viewBox','0 0 '+W+' '+H);
@@ -292,7 +297,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     var ttl=svg.querySelector('title');
     svg.innerHTML=(ttl?ttl.outerHTML:'')+g.join('');
     var show=tipFor(svg,tip,W,H,M.l);
-    svg.querySelectorAll('rect').forEach(function(b){
+    svg.querySelectorAll('rect[tabindex]').forEach(function(b){
       function go(){ show(b,'<b>'+b.dataset.n+'</b><br><span class="n">'+unit+
         fmt(+b.dataset.v,d)+suffix+'</span>'+(b.dataset.e?'<br>'+b.dataset.e:''),
         +b.getAttribute('y')); }
@@ -313,7 +318,9 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     var svg=document.getElementById(o.svg), tip=document.getElementById(o.tip);
     var rows=o.rows, d=o.d||0;
     var W=Math.min(1000,svg.parentNode.clientWidth||760);
-    var BH=W<560?26:30;
+    // On a phone the two bars of a row share one transparent hit area as tall
+    // as the row (26px), and its tip shows both figures.
+    var narrowHit=W<560, BH=narrowHit?26:30;
     var mName=measurer(svg,'glab'), mVal=measurer(svg,'dlab');
     var longest=rows.reduce(function(a,r){ return Math.max(a,mName(r.n)); },0);
     var widest=rows.reduce(function(a,r){
@@ -327,13 +334,16 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
       var y=M.t+i*BH, hh=(BH-6)/2;
       [['a',o.aLabel,'bar'],['b',o.bLabel,'bar2']].forEach(function(s,j){
         var v=r[s[0]]||0, w=Math.max(2,v/max*(W-M.l-M.r)), yy=y+2+j*(hh+2);
-        g.push('<rect class="'+s[2]+'" x="'+M.l+'" y="'+yy+'" width="'+w+'" height="'+hh+'" rx="3" '+
-               'tabindex="0" role="img" aria-label="'+esc(r.n)+', '+esc(s[1])+': '+fmt(v,d)+'" '+
-               'data-n="'+esc(r.n)+'" data-s="'+esc(s[1])+'" data-v="'+v+'"/>');
+        g.push('<rect class="'+s[2]+'" x="'+M.l+'" y="'+yy+'" width="'+w+'" height="'+hh+'" rx="3"'+
+               (narrowHit?' aria-hidden="true"':' tabindex="0" role="img" aria-label="'+esc(r.n)+', '+esc(s[1])+': '+fmt(v,d)+'" '+
+               'data-n="'+esc(r.n)+'" data-s="'+esc(s[1])+'" data-v="'+v+'"')+'/>');
         g.push('<text class="dlab" x="'+(M.l+w+7)+'" y="'+(yy+hh/2+4)+'">'+fmt(v,d)+'</text>');
       });
       g.push('<text class="glab" x="'+(M.l-8)+'" y="'+(y+BH/2+4)+'" text-anchor="end">'+
              esc(clip(r.n,M.l-10,mName))+'</text>');
+      if(narrowHit) g.push('<rect class="hit" x="0" y="'+y+'" width="'+W+'" height="'+BH+'" fill="transparent" '+
+             'tabindex="0" role="img" aria-label="'+esc(r.n)+', '+esc(o.aLabel)+': '+fmt(r.a||0,d)+', '+esc(o.bLabel)+': '+fmt(r.b||0,d)+'" '+
+             'data-n="'+esc(r.n)+'" data-a="'+(r.a||0)+'" data-b="'+(r.b||0)+'"/>');
     });
     mName.done(); mVal.done();
     svg.setAttribute('viewBox','0 0 '+W+' '+H);
@@ -341,9 +351,10 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     var ttl=svg.querySelector('title');
     svg.innerHTML=(ttl?ttl.outerHTML:'')+g.join('');
     var show=tipFor(svg,tip,W,H,M.l);
-    svg.querySelectorAll('rect').forEach(function(b){
-      function go(){ show(b,'<b>'+b.dataset.n+'</b><br>'+b.dataset.s+': <span class="n">'+
-        fmt(+b.dataset.v,d)+'</span>', +b.getAttribute('y')); }
+    svg.querySelectorAll('rect[tabindex]').forEach(function(b){
+      function go(){ show(b,'<b>'+b.dataset.n+'</b><br>'+(b.dataset.a!=null
+        ? esc(o.aLabel)+': <span class="n">'+fmt(+b.dataset.a,d)+'</span><br>'+esc(o.bLabel)+': <span class="n">'+fmt(+b.dataset.b,d)+'</span>'
+        : b.dataset.s+': <span class="n">'+fmt(+b.dataset.v,d)+'</span>'), +b.getAttribute('y')); }
       b.addEventListener('mouseenter',go); b.addEventListener('focus',go);
       b.addEventListener('mouseleave',function(){tip.style.opacity=0;});
       b.addEventListener('blur',function(){tip.style.opacity=0;});
@@ -396,8 +407,12 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     }
     pts.forEach(function(p){
       p.cx=X(p.x); p.cy=Y(p.y);
-      g.push('<circle cx="'+p.cx+'" cy="'+p.cy+'" r="6" fill="var(--bar)" fill-opacity=".85" '+
-             'stroke="var(--panel)" stroke-width="2" tabindex="0" role="img" '+
+      // On a phone the dot is drawn as before and a transparent 24px circle on
+      // top of it takes the tap and the focus.
+      if(narrow) g.push('<circle cx="'+p.cx+'" cy="'+p.cy+'" r="6" fill="var(--bar)" fill-opacity=".85" '+
+             'stroke="var(--panel)" stroke-width="2" aria-hidden="true"/>');
+      g.push('<circle cx="'+p.cx+'" cy="'+p.cy+'" '+(narrow?'r="12.5" fill="transparent" ':'r="6" fill="var(--bar)" fill-opacity=".85" '+
+             'stroke="var(--panel)" stroke-width="2" ')+'tabindex="0" role="img" '+
              'aria-label="'+esc(p.n)+': '+fmt(p.y,1)+'% of undertrials, '+fmt(p.x,1)+'% of people" '+
              'data-n="'+esc(p.n)+'" data-x="'+p.x+'" data-y="'+p.y+'"/>');
       placed.push({x0:p.cx-7,x1:p.cx+7,y0:p.cy-7,y1:p.cy+7});
@@ -426,7 +441,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     svg.setAttribute('width',W); svg.setAttribute('height',H);
     var ttl=svg.querySelector('title');
     svg.innerHTML=(ttl?ttl.outerHTML:'')+g.join('');
-    svg.querySelectorAll('circle').forEach(function(c){
+    svg.querySelectorAll('circle[tabindex]').forEach(function(c){
       function go(){
         var b=svg.getBoundingClientRect(), p=svg.parentNode.getBoundingClientRect();
         tip.innerHTML='<b>'+c.dataset.n+'</b><br><span class="n">'+fmt(+c.dataset.y,1)+

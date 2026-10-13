@@ -336,8 +336,12 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     // states the surrounding text names ahead of the ones it does not.
     pts.forEach(function(p){
       p.cx=X(p.x); p.cy=Y(p.y);
-      g.push('<circle cx="'+p.cx+'" cy="'+p.cy+'" r="6" fill="var(--dot)" fill-opacity=".85" '+
-             'stroke="var(--panel)" stroke-width="2" tabindex="0" role="img" '+
+      // On a phone the dot is drawn as before and a transparent 24px circle on
+      // top of it takes the tap and the focus.
+      if(narrow) g.push('<circle cx="'+p.cx+'" cy="'+p.cy+'" r="6" fill="var(--dot)" fill-opacity=".85" '+
+             'stroke="var(--panel)" stroke-width="2" aria-hidden="true"/>');
+      g.push('<circle cx="'+p.cx+'" cy="'+p.cy+'" '+(narrow?'r="12.5" fill="transparent" ':'r="6" fill="var(--dot)" fill-opacity=".85" '+
+             'stroke="var(--panel)" stroke-width="2" ')+'tabindex="0" role="img" '+
              'aria-label="'+esc(p.n)+': ₹'+fmt(p.y)+' per person" '+
              'data-n="'+esc(p.n)+'" data-y="'+Math.round(p.y)+'" data-x="'+Math.round(p.x)+'" data-c="'+Math.round(p.c)+'"/>');
       placed.push({x0:p.cx-7,x1:p.cx+7,y0:p.cy-7,y1:p.cy+7});
@@ -376,7 +380,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
       yearLabel(year)+'. A positive number means richer states receive more CSR per resident, not less. '+
       'States without a published income or population figure are not plotted; they still appear in the ranking below.';
 
-    svg.querySelectorAll('circle').forEach(function(c){
+    svg.querySelectorAll('circle[tabindex]').forEach(function(c){
       function show(){
         var b=svg.getBoundingClientRect(), p=svg.parentNode.getBoundingClientRect();
         tip.innerHTML='<b>'+c.dataset.n+'</b><br><span class="n">₹'+fmt(+c.dataset.y)+
@@ -396,7 +400,10 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
   function bars(svgId,tipId,rows,unit,tableId,cols){
     var svg=document.getElementById(svgId), tip=document.getElementById(tipId);
     var W=Math.min(1000,svg.parentNode.clientWidth||760);
-    var BH=W<560?19:21;
+    // On a phone each row sits 28px apart and carries a transparent hit area
+    // across the whole chart, so the tap target clears 24px. The bar keeps
+    // its 15px thickness, so the picture does not change.
+    var narrowHit=W<560, BH=narrowHit?28:21, BT=narrowHit?15:BH-4;
     // The name column is sized to the longest name, capped at a share of the
     // box. A fixed 172px silently beheaded the long sector names -- 'Livelihood
     // Enhancement Projects' was drawn as 'ihood Enhancement Projects'.
@@ -412,12 +419,14 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     rows.forEach(function(r,i){
       var y=M.t+i*BH, w=Math.max(2,(r.v||0)/max*(W-M.l-M.r));
       // 2px surface gap between adjacent bars
-      g.push('<rect class="bar" x="'+M.l+'" y="'+(y+2)+'" width="'+w+'" height="'+(BH-4)+'" rx="4" '+
-             'tabindex="0" role="img" aria-label="'+esc(r.n)+': '+unit+fmt(r.v,r.d)+'" '+
-             'data-n="'+esc(r.n)+'" data-v="'+(r.v||0)+'" data-e="'+esc(r.extra||'')+'"/>');
+      var hitA='tabindex="0" role="img" aria-label="'+esc(r.n)+': '+unit+fmt(r.v,r.d)+'" '+
+             'data-n="'+esc(r.n)+'" data-v="'+(r.v||0)+'" data-e="'+esc(r.extra||'')+'"';
+      g.push('<rect class="bar" x="'+M.l+'" y="'+(y+(BH-BT)/2)+'" width="'+w+'" height="'+BT+'" rx="4"'+
+             (narrowHit?' aria-hidden="true"':' '+hitA)+'/>');
       g.push('<text class="glab" x="'+(M.l-8)+'" y="'+(y+BH/2+4)+'" text-anchor="end">'+
              esc(clip(r.n,M.l-10,mName))+'</text>');
       g.push('<text class="dlab" x="'+(M.l+w+7)+'" y="'+(y+BH/2+4)+'">'+unit+fmt(r.v,r.d)+'</text>');
+      if(narrowHit) g.push('<rect class="hit" x="0" y="'+y+'" width="'+W+'" height="'+BH+'" fill="transparent" '+hitA+'/>');
     });
     mName.done(); mVal.done();
     svg.setAttribute('viewBox','0 0 '+W+' '+H);
@@ -429,7 +438,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     // paint. axe caught it; nothing on screen would have.
     var ttl=svg.querySelector('title');
     svg.innerHTML=(ttl?ttl.outerHTML:'')+g.join('');
-    svg.querySelectorAll('rect').forEach(function(b){
+    svg.querySelectorAll('rect[tabindex]').forEach(function(b){
       function show(){
         var r=svg.getBoundingClientRect(), p=svg.parentNode.getBoundingClientRect();
         // Two decimals on a per-person rupee figure is detail; on a

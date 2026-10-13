@@ -35,7 +35,7 @@
 .nn-intro-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:.7rem; margin-top:1.6rem; }
 .nn-jump { display:flex; align-items:center; gap:.55rem; font-family:var(--font-mono); font-size:.78rem; color:var(--color-text); text-decoration:none; padding:.6rem .75rem; border:1px solid var(--color-border); border-radius:10px; background:var(--color-bg-card); transition:border-color .15s, transform .15s; }
 .nn-jump:hover { border-color:var(--color-primary); transform:translateY(-2px); }
-.nn-jump .nn-jnum { font-weight:700; color:var(--color-primary); }
+.nn-jump .nn-jnum { font-weight:700; color:var(--color-link); }
 
 .nn-list { margin-top:.5rem; }
 .nn-card { position:relative; background:var(--color-bg-card); border:1px solid var(--color-border); border-radius:18px; padding:1.9rem 1.8rem 2rem; margin-bottom:1.6rem; box-shadow:0 10px 30px rgba(15,23,42,0.05); scroll-margin-top:64px; }
@@ -43,10 +43,13 @@
 .nn-head { display:flex; align-items:flex-start; gap:1rem; margin-bottom:.6rem; }
 .nn-badge { flex:0 0 auto; width:46px; height:46px; border-radius:12px; background:linear-gradient(135deg,var(--color-primary),var(--color-primary-2)); color:#fff; font-family:var(--font-mono); font-weight:700; font-size:1.1rem; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(102,126,234,.35); }
 .nn-htext { flex:1; }
-.nn-kicker { font-family:var(--font-mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent-pink); font-weight:600; }
+/* The pink is a fill. As text it read 2.04:1 on white, so text takes a deeper
+   pink in light and a paler one in dark. */
+:root{--nn-pink-ink:#A21CAF;} [data-theme="dark"]{--nn-pink-ink:#F0ABFC;}
+.nn-kicker { font-family:var(--font-mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--nn-pink-ink); font-weight:600; }
 .nn-card h3 { font-family:var(--font-heading); font-size:clamp(1.2rem,3vw,1.5rem); margin:.15rem 0 0; line-height:1.2; color:var(--color-text); }
 .nn-trap { font-size:1.02rem; color:var(--color-text); margin:.2rem 0 1.1rem; }
-.nn-trap em { color:var(--color-primary); font-style:normal; font-weight:700; }
+.nn-trap em { color:var(--color-link); font-style:normal; font-weight:700; }
 
 .nn-widget { background:var(--color-bg); border:1px solid var(--color-border); border-radius:14px; padding:1.3rem; margin:1.1rem 0; }
 .nn-controls { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-bottom:1.1rem; }
@@ -65,7 +68,7 @@
 .nn-result .ico svg { width:17px; height:17px; }
 .nn-result .body { font-size:.96rem; line-height:1.6; color:var(--color-text); }
 .nn-result .body b { color:var(--color-primary); }
-.nn-result .body .flip { color:var(--color-accent-pink); font-weight:700; }
+.nn-result .body .flip { color:var(--nn-pink-ink); font-weight:700; }
 .nn-result.warn { border-left-color:var(--color-accent-pink); }
 .nn-result.warn .ico { background:rgba(240,147,251,.16); color:#d6336c; }
 
@@ -82,10 +85,10 @@
 .nn-bar-lbl { font-family:var(--font-mono); font-size:.72rem; color:var(--color-text-muted); text-align:center; line-height:1.25; }
 .nn-baseline { height:2px; background:var(--color-text-muted); opacity:.5; margin:0 .2rem; border-radius:2px; }
 .nn-axisnote { font-family:var(--font-mono); font-size:.74rem; color:var(--color-text-muted); margin-top:.7rem; line-height:1.55; }
-.nn-axisnote .flip { color:var(--color-accent-pink); }
+.nn-axisnote .flip { color:var(--nn-pink-ink); }
 
 .nn-takeaway { font-size:.98rem; border-left:3px solid var(--color-accent-pink); padding:.25rem 0 .25rem 1.05rem; margin:1.2rem 0 0; color:var(--color-text); }
-.nn-takeaway b { color:var(--color-accent-pink); }
+.nn-takeaway b { color:var(--nn-pink-ink); }
 .nn-note { font-family:var(--font-mono); font-size:.72rem; color:var(--color-text-muted); }
 
 /* survivorship plane */
@@ -172,8 +175,8 @@
         <p class="nn-trap">A drug that takes your risk from 2% to 4% has <em>doubled</em> it (+100%, relative) and raised it by <em>2 percentage points</em> (absolute). Both are true. One sells papers. Enter any two rates and see both framings.</p>
         <div class="nn-widget">
           <div class="nn-controls">
-            <span class="nn-label">from</span><input class="nn-input" id="nnPctA" type="number" value="2" min="0" max="100" step="0.1" oninput="nnPct()"><span class="nn-label">%</span>
-            <span class="nn-label">to</span><input class="nn-input" id="nnPctB" type="number" value="4" min="0" max="100" step="0.1" oninput="nnPct()"><span class="nn-label">%</span>
+            <span class="nn-label">from</span><input class="nn-input" id="nnPctA" aria-label="From, in percent" type="number" value="2" min="0" max="100" step="0.1" oninput="nnPct()"><span class="nn-label">%</span>
+            <span class="nn-label">to</span><input class="nn-input" id="nnPctB" aria-label="To, in percent" type="number" value="4" min="0" max="100" step="0.1" oninput="nnPct()"><span class="nn-label">%</span>
           </div>
           <div class="nn-result" id="nnPctOut"></div>
         </div>
@@ -275,7 +278,7 @@
     </div>
 
     <div class="nn-checklist" style="margin-top:2.5rem;">
-      <span class="kicker" style="color:var(--color-accent-pink);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;">The pocket checklist</span>
+      <span class="kicker" style="color:var(--nn-pink-ink);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;">The pocket checklist</span>
       <h2 style="font-family:var(--font-heading);font-size:1.5rem;margin:.4rem 0 .3rem;color:var(--color-text);">Eight questions for any number</h2>
       <ul>
         <li><span class="qn">01</span><b>Out of how many?</b>: a count needs a denominator to mean anything.</li>
