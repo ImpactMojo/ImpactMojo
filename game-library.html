@@ -49,7 +49,7 @@
   --color-accent-pink: #f093fb;
   --color-accent-blue: #4facfe;
   --color-text: #2d3748;
-  --color-text-muted: #718096;
+  --color-text-muted: #4A5568; /* ink: #718096 read 4.01:1 on the cards */
   --color-bg: #f7fafc;
   --color-bg-card: #ffffff;
   --color-success: #48bb78;
@@ -162,14 +162,17 @@ section.section { padding: 1.5rem 0 2.5rem; }
 .chip b { font-family: var(--font-mono); font-weight: 500; font-size: 0.72rem; opacity: 0.7; }
 .chip:hover { border-color: var(--color-primary); }
 .chip.active { background: #4D69E7; color: #fff; border-color: var(--color-primary); }
-.chip.active b { opacity: 0.85; }
+.chip.active b { opacity: 1; } /* white count on the active chip: 0.85 read 3.86:1 */
 
 /* ---------- Track sections ---------- */
 .track-section { margin: 0 0 2.75rem; }
 .track-head { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.1rem; }
 .th-dot { width: 14px; height: 14px; border-radius: 4px; background: var(--track); flex-shrink: 0; box-shadow: 0 0 0 4px color-mix(in srgb, var(--track) 22%, transparent); }
 .th-text { display: flex; flex-direction: column; }
-.th-art { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--track); }
+.th-art { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--track, var(--color-primary)) 45%, var(--color-text)); }
+/* A track colour is a fill. As small text it read as low as 2.27:1 (gold), so the
+   label (and .ptype-label below) takes the track hue mixed toward the body ink,
+   which flips with the theme. */
 .track-head h3 { margin: 0; font-size: 1.3rem; }
 .th-count { margin-left: auto; font-family: var(--font-mono); font-size: 0.8rem; color: #66758A; background: var(--color-bg-card); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 999px; }
 
@@ -187,7 +190,7 @@ section.section { padding: 1.5rem 0 2.5rem; }
 .pcard-top { display: flex; align-items: center; gap: 0.6rem; }
 .ptype-badge { width: 38px; height: 38px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; background: #4D69E7; color: #fff; flex-shrink: 0; }
 .ptype-badge svg { width: 20px; height: 20px; }
-.ptype-label { font-family: var(--font-heading); font-weight: 700; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--track, var(--color-primary)); }
+.ptype-label { font-family: var(--font-heading); font-weight: 700; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: color-mix(in srgb, var(--track, var(--color-primary)) 45%, var(--color-text)); }
 .pcard h3 { font-size: 1.08rem; margin: 0.15rem 0 0; line-height: 1.3; }
 .pcard .pcourse { font-size: 0.78rem; color: var(--color-text-muted); font-family: var(--font-mono); }
 .pcard .pblurb { font-size: 0.9rem; color: var(--color-text-muted); margin: 0.15rem 0 0; }

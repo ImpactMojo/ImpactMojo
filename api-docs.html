@@ -208,8 +208,10 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
    chrome paints the body #0F172A while these tokens stay. The inks above are
    right on the light surface and about 3:1 on the dark one, so the dark theme
    takes the brighter pair. */
-@media (prefers-color-scheme: dark){:root{--accent-color:#FCD34D;--success-color:#6EE7B7;}}
-[data-theme="dark"],body.dark-mode,html.dark{--accent-color:#FCD34D;--success-color:#6EE7B7;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--accent-color:#FCD34D;--accent-hover:#FCD34D;--accent-blue:#7DD3FC;--success-color:#6EE7B7;}}
+[data-theme="dark"],body.dark-mode,html.dark{--accent-color:#FCD34D;--accent-hover:#FCD34D;--accent-blue:#7DD3FC;--success-color:#6EE7B7;}
+/* Links in running text had no colour rule, so dark mode left them browser blue. */
+p a:not([class]), .note a:not([class]) { color: var(--accent-blue); }
 
 /* Ink, not fill: the saturated token stays for backgrounds. */
 :root{--im-ink-good:#047857;}
@@ -287,7 +289,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
             <div class="endpoint-body">
                 <p>API index: name, version, the list of available endpoints, the license/attribution note, and the rate-limit note.</p>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1"><code>{
   "name": "ImpactMojo Partner API",
   "version": "1.0",
   "base_url": "https://www.impactmojo.in/api/v1",
@@ -321,9 +323,9 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
                     </tbody>
                 </table>
                 <div class="example-label">Example request</div>
-                <pre><code>GET https://www.impactmojo.in/api/v1/catalog?type=game&amp;q=auction&amp;limit=50</code></pre>
+                <pre tabindex="0" role="region" aria-label="Example request for GET /api/v1/catalog"><code>GET https://www.impactmojo.in/api/v1/catalog?type=game&amp;q=auction&amp;limit=50</code></pre>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1/catalog"><code>{
   "count": 1,
   "total": 1,
   "limit": 50,
@@ -353,7 +355,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
             <div class="endpoint-body">
                 <p>Courses only, both 101 foundational decks and flagship courses, enriched with slide counts, level, format, license, sections, and feature flags where available.</p>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1/courses"><code>{
   "count": 106,
   "courses": [
     {
@@ -386,9 +388,9 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
             <div class="endpoint-body">
                 <p>A single course's detail, looked up by its <code>slug</code> (the value returned in the <code>courses</code> list, e.g. <code>mel</code>, <code>gandhi</code>, <code>dev-economics</code>). Returns <code>404</code> with a JSON error body if no course matches.</p>
                 <div class="example-label">Example request</div>
-                <pre><code>GET https://www.impactmojo.in/api/v1/courses/gandhi</code></pre>
+                <pre tabindex="0" role="region" aria-label="Example request for GET /api/v1/courses/{slug}"><code>GET https://www.impactmojo.in/api/v1/courses/gandhi</code></pre>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1/courses/{slug}"><code>{
   "course": {
     "slug": "gandhi",
     "id": "gandhi",
@@ -406,7 +408,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
   "license": "CC BY-NC-ND 4.0 — attribution to ImpactMojo (impactmojo.in) required; ..."
 }</code></pre>
                 <div class="example-label">404 response</div>
-                <pre><code>{ "error": "No course found with slug \"does-not-exist\"." }</code></pre>
+                <pre tabindex="0" role="region" aria-label="404 response for GET /api/v1/courses/{slug}"><code>{ "error": "No course found with slug \"does-not-exist\"." }</code></pre>
             </div>
         </div>
 
@@ -418,7 +420,7 @@ pre code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: 
             <div class="endpoint-body">
                 <p>Aggregate content counts by type, plus a flagship / 101-foundational course breakdown.</p>
                 <div class="example-label">Example response <button class="copy-btn" data-copy>Copy</button></div>
-                <pre><code>{
+                <pre tabindex="0" role="region" aria-label="Example response for GET /api/v1/stats"><code>{
   "total_items": 709,
   "by_type": {
     "course": 106,

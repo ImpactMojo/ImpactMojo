@@ -257,7 +257,10 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
   function hbars(svgId,tipId,rows,valueText){
     var svg=document.getElementById(svgId), tip=document.getElementById(tipId);
     var W=Math.min(1000,svg.parentNode.clientWidth||760), narrow=W<560;
-    var BH=narrow?20:22;
+    // On a phone each row sits 28px apart and carries a transparent hit area
+    // across the whole chart, so the tap target clears 24px. The bar keeps
+    // its 14px thickness, so the picture does not change.
+    var BH=narrow?28:22, BT=narrow?14:BH-6;
     var mName=measurer(svg,'glab'), mVal=measurer(svg,'dlab');
     var longest=rows.reduce(function(a,r){ return Math.max(a,mName(r.n)); },0);
     var widest=rows.reduce(function(a,r){ return Math.max(a,mVal(valueText(r))); },0);
@@ -270,12 +273,13 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
       r.segs.forEach(function(s,k){
         var w=Math.max(s.v>0?1.5:0,s.v/max*span);
         if(w<=0) return;
-        g.push('<rect class="'+s.cls+'" x="'+x+'" y="'+(y+3)+'" width="'+w+'" height="'+(BH-6)+'"'+
-          (k===0?' tabindex="0" role="img" aria-label="'+esc(r.label)+'" data-tip="'+esc(r.tip)+'"':'')+'/>');
+        g.push('<rect class="'+s.cls+'" x="'+x+'" y="'+(y+(BH-BT)/2)+'" width="'+w+'" height="'+BT+'"'+
+          (k===0&&!narrow?' tabindex="0" role="img" aria-label="'+esc(r.label)+'" data-tip="'+esc(r.tip)+'"':'')+'/>');
         x+=w;
       });
       g.push('<text class="glab" x="'+(M.l-8)+'" y="'+(y+BH/2+4)+'" text-anchor="end">'+esc(clip(r.n,M.l-10,mName))+'</text>');
       g.push('<text class="dlab" x="'+(x+7)+'" y="'+(y+BH/2+4)+'">'+esc(valueText(r))+'</text>');
+      if(narrow) g.push('<rect class="hit" x="0" y="'+y+'" width="'+W+'" height="'+BH+'" fill="transparent" tabindex="0" role="img" aria-label="'+esc(r.label)+'" data-tip="'+esc(r.tip)+'"/>');
     });
     mName.done(); mVal.done();
     finish(svg,W,H,g);
