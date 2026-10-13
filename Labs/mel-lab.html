@@ -1094,7 +1094,34 @@ function loadState() {
     } catch(e) {}
 }
 
-function exportResults() {
+// A visible, announced message for exports. Before this, Export on a blank
+// workspace downloaded two empty .txt files and said nothing at all.
+function melToast(msg) {
+    let el = document.getElementById('melToast');
+    if (!el) {
+        el = document.createElement('div');
+        el.id = 'melToast';
+        el.setAttribute('role', 'status');
+        el.setAttribute('aria-live', 'polite');
+        el.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);max-width:min(92vw,480px);padding:0.75rem 1.1rem;border-radius:10px;background:#0F172A;color:#FFFFFF;font-size:0.92rem;line-height:1.4;box-shadow:0 8px 24px rgba(0,0,0,0.25);z-index:10000;opacity:0;transition:opacity .2s ease;pointer-events:none;';
+        document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.style.opacity = '1';
+    clearTimeout(melToast._t);
+    melToast._t = setTimeout(() => { el.style.opacity = '0'; }, 4500);
+}
+function melFilled(ids) { return ids.some(id => ((document.getElementById(id) || {}).value || '').trim() !== ''); }
+function designIsEmpty() {
+    return !melFilled(['progName', 'sampleSize', 'learningQs'])
+        && !state.keqs.length && !state.indicators.length && !state.timeline.length && !state.reports.length
+        && !document.querySelector('#methods input:checked');
+}
+function exportResults(quiet) {
+    if (designIsEmpty()) {
+        if (!quiet) melToast('Nothing to export yet. Add a programme name, a question or an indicator to the MEL design first.');
+        return false;
+    }
     let t = 'MEL DESIGN DOCUMENT\n===================\n\n';
     t += 'Programme: ' + (document.getElementById('progName')?.value || 'N/A') + '\n';
     t += 'Purpose: ' + (document.getElementById('purpose')?.value || 'N/A') + '\n';
@@ -1116,8 +1143,16 @@ function exportResults() {
     state.reports.forEach(r => t += '  ' + r.type + ' | ' + r.audience + ' | ' + r.frequency + '\n');
     const blob = new Blob([t], { type: 'text/plain' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mel-design.txt'; a.click();
+    if (!quiet) melToast('Exported your MEL design as mel-design.txt.');
+    return true;
 }
-function exportAll() { exportResults(); if (window.MELPlan) MELPlan.exportResults(); }
+function exportAll() {
+    const files = [];
+    if (exportResults(true)) files.push('mel-design.txt');
+    if (window.MELPlan && MELPlan.exportResults(true)) files.push('mel-plan.txt');
+    if (!files.length) melToast('Nothing to export yet. Both the MEL design and the MEL plan are empty.');
+    else melToast('Exported ' + files.join(' and ') + '.' + (files.length === 1 ? ' The other part is empty, so it was left out.' : ''));
+}
 
 loadState(); renderKEQs(); renderIndicators(); renderTimeline(); renderReports(); updateProgress();
 </script>
@@ -1248,7 +1283,15 @@ function loadState() {
     } catch(e) {}
 }
 
-function exportResults() {
+function planIsEmpty() {
+    return !melFilled(['projName', 'donor', 'duration', 'geography', 'targetPop', 'goal', 'p_learningQs', 'p_dqa'])
+        && !state.objectives.length && !state.matrix.length && !state.calendar.length && !state.reports.length;
+}
+function exportResults(quiet) {
+    if (planIsEmpty()) {
+        if (!quiet) melToast('Nothing to export yet. Add a project name, an objective or an indicator to the MEL plan first.');
+        return false;
+    }
     let t = 'MEL PLAN\n========\n\n';
     t += 'Project: ' + (document.getElementById('projName')?.value || 'N/A') + '\n';
     t += 'Donor: ' + (document.getElementById('donor')?.value || 'N/A') + '\n';
@@ -1269,6 +1312,8 @@ function exportResults() {
     t += 'DQA: ' + (document.getElementById('p_dqa')?.value || 'N/A') + '\n';
     const blob = new Blob([t], { type: 'text/plain' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mel-plan.txt'; a.click();
+    if (!quiet) melToast('Exported your MEL plan as mel-plan.txt.');
+    return true;
 }
 loadState(); renderObjectives(); renderMatrix(); renderCalendar(); renderReports();
 return { state, addObjective, renderObjectives, addMatrixRow, renderMatrix, addCalendarItem, renderCalendar, addReport, renderReports, saveState, loadState, exportResults, progressCount };
