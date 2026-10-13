@@ -71,7 +71,7 @@ def build(course, out_name, meta_desc, title_main_html, title_sub_html, title_ta
             tags = ''.join('<span class="title-tag">%s</span>' % t for t in title_tags)
             body = ('<div class="title-screen"><div class="title-bg"></div><div class="title-bar"></div>'
                     '<div class="title-content"><div class="title-series">ImpactMojo 101 Series &middot; Free Forever</div>'
-                    '<div class="title-main">' + title_main_html + '</div>'
+                    '<h1 class="title-main">' + title_main_html + '</h1>'
                     '<div class="title-sub">' + title_sub_html + '</div>'
                     '<div class="title-tags">' + tags + '</div></div>' + TITLE_GEO + '</div>')
         elif kind == 'toc':
