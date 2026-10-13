@@ -1337,7 +1337,7 @@ body.dark-mode .file-link:hover, [data-theme="dark"] .file-link:hover, html.dark
             <section class="ib-hero"><div class="ib-hero-in">
             <span class="ib-eyebrow">Learning Tracks</span>
             <h1 class="page-title">Learning tracks & handouts</h1>
-            <p class="ib-tagline">89 free, downloadable resources for development professionals, organised into 6 learning tracks.</p>
+            <p class="ib-tagline"><span id="handoutCountText">84</span> free, downloadable resources for development professionals, organised into 6 learning tracks.</p>
             </div></section>
 
             <!-- Track jump-nav (WCAG AA: darker brand text on tinted bgs;
@@ -1440,7 +1440,7 @@ body.dark-mode .file-link:hover, [data-theme="dark"] .file-link:hover, html.dark
                 <h4>Quick links</h4>
                 <ul>
                     <li><a href="/catalog">All Courses</a></li>
-                    <li><a href="/#labs">All Labs</a></li>
+                    <li><a href="/Labs/">Free Studio</a></li>
                     <li><a href="/#games">All Games</a></li>
                     <li><a href="/premium">Membership</a></li>
                     <li><a href="/coaching">Coaching Services</a></li>
@@ -1884,6 +1884,8 @@ async function loadHandouts() {
         Object.values(groups).forEach(g => { g.subs = [...g.subs]; });
         totalCategories.textContent = Object.keys(groups).length;
         totalFiles.textContent = totalFileCount;
+        var hct = document.getElementById('handoutCountText');
+        if (hct && totalFileCount > 0) hct.textContent = totalFileCount;
         allGroups = groups;
         renderCards(groups);
     }
