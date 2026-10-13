@@ -1860,6 +1860,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
 
             <div class="auth-body">
                 <div id="alertBox" class="alert"></div>
+                <noscript><p class="auth-noscript" style="margin:0 0 1rem;padding:.75rem 1rem;border-radius:10px;border:1px solid #991B1B;background:#FEF2F2;color:#7F1D1D;font-size:.9rem;line-height:1.5">Creating an account needs JavaScript. Turn it on in your browser and reload this page.</p></noscript>
 
                 <div class="benefits-list">
                     <div class="benefits-title">Your free account includes:</div>
@@ -1906,7 +1907,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
                     <div class="step-dot" id="stepDot2"></div>
                 </div>
 
-                <form id="signupForm" class="auth-form">
+                <form id="signupForm" class="auth-form" method="post" action="/signup.html">
                     <!-- STEP 1: Account -->
                     <div class="form-step active" id="step1">
                         <div class="step-header">
@@ -2139,6 +2140,31 @@ function showAlert(message, type = 'error') {
     alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
+// Sign-in needs the Supabase SDK from jsDelivr. When it does not load, or the
+// network drops mid-request, say so plainly and give the button back rather
+// than leaving it on a spinner.
+const AUTH_UNAVAILABLE = 'Sign-in is unavailable right now. Check your connection and try again.';
+function authAvailable() {
+    return !!(window.ImpactMojoAuth && !window.ImpactMojoAuth.unavailable);
+}
+async function callAuth(fn) {
+    if (!authAvailable()) return { success: false, message: AUTH_UNAVAILABLE };
+    try {
+        const r = await fn(window.ImpactMojoAuth);
+        if (!r) return { success: false, message: AUTH_UNAVAILABLE };
+        if (!r.success && /failed to fetch|networkerror|load failed|network request failed/i.test(r.message || '')) {
+            r.message = AUTH_UNAVAILABLE;
+        }
+        return r;
+    } catch (err) {
+        console.error('Auth call failed:', err);
+        return { success: false, message: AUTH_UNAVAILABLE };
+    }
+}
+document.addEventListener('DOMContentLoaded', function () {
+    if (!authAvailable()) showAlert(AUTH_UNAVAILABLE);
+});
+
 function hideAlert() {
     const alertBox = document.getElementById('alertBox');
     alertBox.className = 'alert';
@@ -2338,7 +2364,7 @@ async function submitSignup(includeExtras) {
     btn.disabled = true;
     btn.innerHTML = '<div class="loading-spinner"></div><span>Creating account...</span>';
 
-    const result = await ImpactMojoAuth.signUp(email, password, fullName);
+    const result = await callAuth(a => a.signUp(email, password, fullName));
 
     if (result.success) {
         // Store extra fields in sessionStorage for account.html to pick up
@@ -2374,7 +2400,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
 // Google Sign Up
 // =====================================================
 document.getElementById('googleBtn').addEventListener('click', async function() {
-    const result = await ImpactMojoAuth.signInWithGoogle();
+    const result = await callAuth(a => a.signInWithGoogle());
     if (!result.success) {
         showAlert(result.message);
     }

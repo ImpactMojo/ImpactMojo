@@ -1723,6 +1723,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
 
             <div class="auth-body">
                 <div id="alertBox" class="alert"></div>
+                <noscript><p class="auth-noscript" style="margin:0 0 1rem;padding:.75rem 1rem;border-radius:10px;border:1px solid #991B1B;background:#FEF2F2;color:#7F1D1D;font-size:.9rem;line-height:1.5">Signing in needs JavaScript. Turn it on in your browser and reload this page.</p></noscript>
 
                 <div class="auth-tabs">
                     <button class="auth-tab active" data-tab="password">Password</button>
@@ -1731,7 +1732,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
 
                 <!-- Password Login -->
                 <div id="password-tab" class="tab-content active">
-                    <form id="loginForm" class="auth-form">
+                    <form id="loginForm" class="auth-form" method="post" action="/login.html">
                         <div class="form-group">
                             <label class="form-label" for="email">Email address</label>
                             <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required autocomplete="email">
@@ -1766,7 +1767,7 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
 
                 <!-- Magic Link Login -->
                 <div id="magic-tab" class="tab-content">
-                    <form id="magicForm" class="auth-form">
+                    <form id="magicForm" class="auth-form" method="post" action="/login.html">
                         <div class="form-group">
                             <label class="form-label" for="magicEmail">Email address</label>
                             <input type="email" id="magicEmail" name="email" class="form-input" placeholder="you@example.com" required autocomplete="email">
@@ -1899,6 +1900,31 @@ function showAlert(message, type = 'error') {
     }
 }
 
+// Sign-in needs the Supabase SDK from jsDelivr. When it does not load, or the
+// network drops mid-request, say so plainly and give the button back rather
+// than leaving it on a spinner.
+const AUTH_UNAVAILABLE = 'Sign-in is unavailable right now. Check your connection and try again.';
+function authAvailable() {
+    return !!(window.ImpactMojoAuth && !window.ImpactMojoAuth.unavailable);
+}
+async function callAuth(fn) {
+    if (!authAvailable()) return { success: false, message: AUTH_UNAVAILABLE };
+    try {
+        const r = await fn(window.ImpactMojoAuth);
+        if (!r) return { success: false, message: AUTH_UNAVAILABLE };
+        if (!r.success && /failed to fetch|networkerror|load failed|network request failed/i.test(r.message || '')) {
+            r.message = AUTH_UNAVAILABLE;
+        }
+        return r;
+    } catch (err) {
+        console.error('Auth call failed:', err);
+        return { success: false, message: AUTH_UNAVAILABLE };
+    }
+}
+document.addEventListener('DOMContentLoaded', function () {
+    if (!authAvailable()) showAlert(AUTH_UNAVAILABLE);
+});
+
 // Toggle password visibility
 function togglePassword() {
     const passwordInput = document.getElementById('password');
@@ -1924,12 +1950,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     btn.disabled = true;
     btn.innerHTML = '<div class="loading-spinner"></div><span>Signing in...</span>';
 
-    const result = await ImpactMojoAuth.signIn(email, password);
+    const result = await callAuth(a => a.signIn(email, password));
 
     if (result.success) {
         showAlert('Welcome back. Redirecting...', 'success');
         setTimeout(() => {
-            ImpactMojoAuth.redirectAfterLogin();
+            window.ImpactMojoAuth.redirectAfterLogin();
         }, 1000);
     } else {
         showAlert(result.message);
@@ -1948,7 +1974,7 @@ document.getElementById('magicForm').addEventListener('submit', async (e) => {
     btn.disabled = true;
     btn.innerHTML = '<div class="loading-spinner"></div><span>Sending...</span>';
 
-    const result = await ImpactMojoAuth.signInWithMagicLink(email);
+    const result = await callAuth(a => a.signInWithMagicLink(email));
 
     if (result.success) {
         showAlert(result.message, 'success');
@@ -1962,7 +1988,7 @@ document.getElementById('magicForm').addEventListener('submit', async (e) => {
 
 // Handle Google login
 document.getElementById('googleBtn').addEventListener('click', async () => {
-    const result = await ImpactMojoAuth.signInWithGoogle();
+    const result = await callAuth(a => a.signInWithGoogle());
     if (!result.success) {
         showAlert(result.message);
     }

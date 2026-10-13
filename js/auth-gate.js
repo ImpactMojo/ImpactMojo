@@ -82,6 +82,42 @@
         }
       }
 
+      // Helper: auth could not start (the Supabase SDK did not load, or the
+      // network is down). Redirecting to /login.html here would send a signed-in
+      // reader to a sign-in page that cannot work either, and leaving the
+      // full-screen overlay up left them looking at a spinner for ever. Hide the
+      // overlay and say what happened, with a way to try again.
+      function unavailable() {
+        if (pageReady) return;
+        pageReady = true;
+        clearTimeout(safetyTimer);
+        clearTimeout(hardTimeout);
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (document.getElementById('authgate-unavailable')) return;
+        var box = document.createElement('div');
+        box.id = 'authgate-unavailable';
+        box.setAttribute('role', 'alert');
+        box.style.cssText = 'max-width:32rem;margin:6rem auto 2rem;padding:1.25rem 1.5rem;' +
+          'border:1px solid var(--border-color,#cbd5e1);border-radius:12px;' +
+          'background:var(--card-bg,#ffffff);color:var(--text-primary,#1e293b);' +
+          'font:inherit;line-height:1.5;text-align:center';
+        var msg = document.createElement('p');
+        msg.style.margin = '0 0 1rem';
+        msg.textContent = 'This page could not load your account. Check your connection and try again.';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = 'Try again';
+        btn.style.cssText = 'padding:.6rem 1.2rem;border-radius:8px;border:0;cursor:pointer;' +
+          'background:var(--im-fill-info,#0369A1);color:#ffffff;font:inherit;font-weight:600';
+        btn.addEventListener('click', function () { window.location.reload(); });
+        box.appendChild(msg);
+        box.appendChild(btn);
+        // Where the overlay was: the page's own content may still be hidden
+        // behind the gate, so a box inside <main> could be invisible.
+        if (loadingEl && loadingEl.parentNode) loadingEl.parentNode.insertBefore(box, loadingEl);
+        else document.body.insertBefore(box, document.body.firstChild);
+      }
+
       // Helper: check user + tier and call succeed/deny
       function checkAndProceed(user, profile) {
         if (!user) {
@@ -97,6 +133,11 @@
           }
         }
         succeed(user, profile);
+      }
+
+      if (typeof window.ImpactMojoAuth === 'undefined' || window.ImpactMojoAuth.unavailable) {
+        unavailable();
+        return;
       }
 
       // ------- Safety timeout -------
@@ -150,6 +191,8 @@
         await ImpactMojoAuth.waitForAuthReady();
       } catch (e) {
         console.error('[AuthGate] Auth ready wait failed:', e);
+        unavailable();
+        return;
       }
 
       if (pageReady) return; // authStateChanged already handled it

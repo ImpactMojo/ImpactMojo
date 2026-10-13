@@ -546,11 +546,13 @@ body.dark-mode .skip-link, [data-theme="dark"] .skip-link, html.dark .skip-link 
    real HTTP status + latency; cross-origin APIs expose CORS endpoints we can
    read; the translation function is judged healthy on any non-5xx response.
    ========================================================================= */
-const SUPABASE_URL = 'https://ddyszmfffyedolkcugld.supabase.co';
+// Named STATUS_SB_* because js/auth.js, loaded later on this page, declares
+// SUPABASE_URL itself, and two top-level consts of one name stop auth.js.
+const STATUS_SB_URL = 'https://ddyszmfffyedolkcugld.supabase.co';
 // Public anonymous key — already shipped to the browser in /js/config.js.
 // Supabase's /auth/v1/health endpoint returns 401 ("No API key found") without it,
 // so it must be sent or the backend reads as "down" when it is actually healthy.
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkeXN6bWZmZnllZG9sa2N1Z2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MzMxMzEsImV4cCI6MjA4MDMwOTEzMX0.vPLlFkC3pqOBtofZ8B6_FBLbRfOKwlyv3DzLvJBS16w';
+const STATUS_SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkeXN6bWZmZnllZG9sa2N1Z2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MzMxMzEsImV4cCI6MjA4MDMwOTEzMX0.vPLlFkC3pqOBtofZ8B6_FBLbRfOKwlyv3DzLvJBS16w';
 const TIMEOUT_MS = 10000;   // hard timeout -> down
 const SLOW_MS = 2000;       // slower than this -> degraded
 
@@ -572,7 +574,7 @@ const GROUPS = [
             { id: 'search',    name: 'Search Index',        desc: 'Site-wide search data',         url: '/data/search-index.json', type: 'json' },
             { id: 'deploy',    name: 'Hosting & CDN',       desc: 'Netlify edge delivery',         url: '/version.json',           type: 'json' },
             { id: 'translate', name: 'Translation Service', desc: 'Hindi · Tamil · Bengali · Marathi', url: '/.netlify/functions/translate', type: 'fn' },
-            { id: 'supabase',  name: 'Accounts & Backend',  desc: 'Supabase auth & database',      url: SUPABASE_URL + '/auth/v1/health', type: 'fn', headers: { apikey: SUPABASE_ANON } },
+            { id: 'supabase',  name: 'Accounts & Backend',  desc: 'Supabase auth & database',      url: STATUS_SB_URL + '/auth/v1/health', type: 'fn', headers: { apikey: STATUS_SB_ANON } },
             { id: 'github',    name: 'Source & Content',    desc: 'GitHub repository',             url: 'https://api.github.com/repos/ImpactMojo/ImpactMojo', type: 'fn' }
         ]
     }

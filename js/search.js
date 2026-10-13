@@ -10,6 +10,96 @@
 
   var fuse = null;
   var searchData = null;
+  /* Set when Fuse.js or the index cannot be fetched (jsDelivr blocked, offline,
+     a 404). Without it the panel kept showing its idle prompt whatever was
+     typed, so a visitor could not tell a broken search from an empty one. */
+  var loadFailed = false;
+  var loading = false;
+
+  /* The main index config. Exposed below as _options so the ranking can be
+     replayed in node against the real index. */
+  var FUSE_OPTIONS = {
+    keys: [
+      { name: 'title', weight: 0.45 },
+      { name: 'description', weight: 0.25 },
+      { name: 'tags', weight: 0.15 },
+      { name: 'category', weight: 0.1 },
+      { name: 'id', weight: 0.05 }
+    ],
+    threshold: 0.35,
+    distance: 200,
+    includeScore: true,
+    minMatchCharLength: 2,
+    limit: 20
+  };
+
+  /* Synonyms. Each rule matches the lowercased query and names a second query
+     that is run alongside it. People search with the words they use at work
+     ("M&E", "pricing", "login"); the index is written with the site's own
+     names ("MEL", "Membership", "Log in"). Whole-query rules are anchored so
+     that, for example, "cost effectiveness" is not read as a price question. */
+  var SYNONYMS = [
+    [/(^|\s)(m\s*&\s*e|m\s+and\s+e|monitoring\s*(and|&)?\s*evaluation)(\s|$)/, 'monitoring and evaluation'],
+    [/^labs?$/, 'free studio'],
+    [/^(membership\s+|subscription\s+)?(price|prices|pricing|cost|costs|fees?|plans?)$/, 'membership'],
+    [/^(log\s*-?\s*in|sign\s*-?\s*in|signin)$/, 'log in'],
+    [/^(sign\s*-?\s*up|register|create\s+(an\s+)?account)$/, 'create a free account'],
+    [/^r$/, 'R language'],
+    [/^(hindi|tamil|bengali|bangla|telugu|marathi|languages?|translations?|translate)$/, 'languages'],
+    [/^(beginners?|start\s+here|basics)$/, 'start here']
+  ];
+
+  function synonymFor(query) {
+    var q = query.toLowerCase().trim();
+    for (var i = 0; i < SYNONYMS.length; i++) {
+      if (SYNONYMS[i][0].test(q)) {
+        var alt = SYNONYMS[i][1];
+        return alt.toLowerCase() === q ? null : alt;
+      }
+    }
+    return null;
+  }
+
+  /* Paid products and the Marginalia specials matched free courses and tools
+     word for word, so "logframe" put a paid template beside the free builder
+     and "monitoring and evaluation" led with three specials. A small penalty
+     moves them below a free item of near-equal score and leaves a clearly
+     better match where it was. */
+  var TYPE_PENALTY = { product: 0.08, special: 0.08 };
+  var SYNONYM_BONUS = 0.05;
+
+  function rank(f, query) {
+    var alt = synonymFor(query);
+    var lists = alt ? [f.search(alt, { limit: 30 }), f.search(query, { limit: 30 })]
+                    : [f.search(query, { limit: 30 })];
+    var best = {}, order = [];
+    lists.forEach(function (list, li) {
+      // A synonym is a curated reading of what the person meant, so its hits
+      // get a small bonus: "M&E" should reach the MEL courses ahead of pages
+      // that merely contain the letters.
+      var bonus = alt && li === 0 ? SYNONYM_BONUS : 0;
+      list.forEach(function (r) {
+        var id = r.item.id || r.item.url;
+        var s = (r.score || 0) + (TYPE_PENALTY[r.item.type] || 0) - bonus;
+        if (!(id in best)) { best[id] = { item: r.item, score: s }; order.push(id); }
+        else if (s < best[id].score) best[id].score = s;
+      });
+    });
+    // Array.prototype.sort is stable, so on a tie the synonym's hits (searched
+    // first) stay ahead of the literal query's.
+    return order.map(function (id) { return best[id]; })
+      .sort(function (a, b) { return a.score - b.score; })
+      .slice(0, 15);
+  }
+
+  function priceOf(item) {
+    if (item.price) return item.price;
+    var tags = item.tags || [];
+    for (var i = 0; i < tags.length; i++) {
+      if (/^₹\s?[0-9][0-9,]*$/.test(tags[i])) return tags[i];
+    }
+    return '';
+  }
   var modal = null;
   var input = null;
   var resultsList = null;
@@ -52,7 +142,10 @@
     var s = document.createElement('script');
     s.src = FUSE_CDN;
     s.onload = cb;
-    s.onerror = function () { console.warn('ImpactMojo Search: Failed to load Fuse.js'); };
+    s.onerror = function () {
+      console.warn('ImpactMojo Search: Failed to load Fuse.js');
+      markFailed();
+    };
     document.head.appendChild(s);
   }
 
@@ -64,28 +157,25 @@
     fetch(INDEX_URL, controller ? { signal: controller.signal } : {})
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (data) { searchData = data; cb(data); })
-      .catch(function (e) { console.warn('ImpactMojo Search: Failed to load index', e); })
+      .catch(function (e) { console.warn('ImpactMojo Search: Failed to load index', e); markFailed(); })
       .finally(function () { if (timeoutId) clearTimeout(timeoutId); });
+  }
+
+  function markFailed() {
+    loadFailed = true;
+    loading = false;
+    if (visible && input) renderResults(input.value.trim());
   }
 
   /* ---- Initialize Fuse instance ---- */
   function initFuse() {
+    loadFailed = false;
+    loading = true;
     loadFuse(function () {
       loadIndex(function (data) {
-        fuse = new window.Fuse(data, {
-          keys: [
-            { name: 'title', weight: 0.45 },
-            { name: 'description', weight: 0.25 },
-            { name: 'tags', weight: 0.15 },
-            { name: 'category', weight: 0.1 },
-            { name: 'id', weight: 0.05 }
-          ],
-          threshold: 0.35,
-          distance: 200,
-          includeScore: true,
-          minMatchCharLength: 2,
-          limit: 20
-        });
+        loading = false;
+        fuse = new window.Fuse(data, FUSE_OPTIONS);
+        if (visible && input) renderResults(input.value.trim());
       });
     });
   }
@@ -152,6 +242,9 @@
       '.ims-empty-icon{font-size:2rem;margin-bottom:8px}' +
       '.ims-empty-text{font-size:0.9rem}' +
       '.ims-empty-hint{font-size:0.78rem;margin-top:4px}' +
+      '.ims-error{color:var(--text-primary,#1e293b)}' +
+      '.ims-error a{color:inherit;text-decoration:underline;font-weight:600}' +
+      '.ims-price{background:#9D174D}' +
       /* Navbar search button */
       '.ims-nav-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;border:1px solid var(--border-color,#e2e8f0);background:var(--surface-color,#f8fafc);color:var(--text-secondary,#475569);cursor:pointer;font-size:0.82rem;font-family:inherit;transition:all 0.2s;margin-left:8px}' +
       '.ims-nav-btn:hover{border-color:var(--accent-color,#6366F1);color:var(--text-primary,#1e293b);box-shadow:0 2px 8px rgba(99,102,241,0.15)}' +
@@ -239,6 +332,22 @@
 
   /* ---- Render results ---- */
   function renderResults(query) {
+    if (loadFailed && !fuse) {
+      resultsList.innerHTML =
+        '<div class="ims-empty" role="alert">' +
+          '<div class="ims-empty-text ims-error">Search could not load. Try the <a href="/sitemap.html">site map</a>.</div>' +
+        '</div>';
+      document.getElementById('ims-count').textContent = '';
+      selectedIndex = -1;
+      return;
+    }
+    if (!fuse && query && query.length >= 2) {
+      resultsList.innerHTML =
+        '<div class="ims-empty"><div class="ims-empty-text">Search is loading.</div></div>';
+      document.getElementById('ims-count').textContent = '';
+      selectedIndex = -1;
+      return;
+    }
     if (!fuse || !query || query.length < 2) {
       resultsList.innerHTML =
         '<div class="ims-empty">' +
@@ -251,7 +360,7 @@
       return;
     }
 
-    var results = fuse.search(query, { limit: 15 });
+    var results = rank(fuse, query);
     // Clips whose spoken words match go after the title/description matches:
     // a phrase someone half-remembers from a voice note should find it, but
     // should not outrank a course whose title is what they asked for.
@@ -272,6 +381,8 @@
     results.forEach(function (r, i) {
       var item = r.item;
       var meta = TYPE_META[item.type] || { icon: sargamImg('si_Article'), label: item.type, color: '#64748b' };
+      var price = item.type === 'product' ? priceOf(item) : '';
+      var label = price ? 'Paid' : meta.label;
       html +=
         '<a class="ims-result' + (i === 0 ? ' ims-active' : '') + '" href="' + escapeHTML(item.url) + '" data-idx="' + i + '"' +
         (item.url.indexOf('http') === 0 ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' +
@@ -280,7 +391,8 @@
             '<div class="ims-result-title">' + highlightMatch(item.title, query) + '</div>' +
             '<div class="ims-result-desc">' + escapeHTML(item.description) + '</div>' +
             '<div class="ims-result-meta">' +
-              '<span class="ims-result-badge" style="background:' + meta.color + '">' + meta.label + '</span>' +
+              '<span class="ims-result-badge" style="background:' + meta.color + '">' + label + '</span>' +
+              (price ? '<span class="ims-result-badge ims-price">' + escapeHTML(price) + '</span>' : '') +
               (item.category ? '<span class="ims-result-badge" style="background:#64748b">' + escapeHTML(item.category) + '</span>' : '') +
             '</div>' +
           '</div>' +
@@ -345,7 +457,7 @@
   function openSearch() {
     if (visible) return;
     if (!modal) createModal();
-    if (!fuse) initFuse();
+    if (!fuse && !loading) initFuse();   // also retries after a failed load
     loadTranscripts();   // fetched when someone opens search, not on every page load
     visible = true;
     modal.classList.add('ims-open');
@@ -456,5 +568,5 @@
     initFuse();
   }
 
-  window.ImpactMojoSearch = { open: openSearch, close: closeSearch };
+  window.ImpactMojoSearch = { open: openSearch, close: closeSearch, _rank: rank, _options: FUSE_OPTIONS };
 })();
