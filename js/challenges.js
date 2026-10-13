@@ -569,13 +569,18 @@
         // Resolve the session rather than reading the cached currentUser: it is
         // populated by an async call that may not have run yet, which would file
         // a signed-in learner's work as anonymous and break their upsert.
-        var user = null;
-        try { user = await getUser(); } catch (e) { user = null; }
-        if (user && user.id) payload.user_id = user.id;
+        // The server reads who you are from the session token, not from the body.
+        var headers = { 'Content-Type': 'application/json' };
+        try {
+            var sb = getSupabase();
+            var got = sb && sb.auth ? await sb.auth.getSession() : null;
+            var token = got && got.data && got.data.session && got.data.session.access_token;
+            if (token) headers.Authorization = 'Bearer ' + token;
+        } catch (e) { /* anonymous submission */ }
 
         return fetch('/api/challenge-submit', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(payload)
         }).then(function (res) {
             if (!res.ok) throw new Error('challenge-submit returned ' + res.status);

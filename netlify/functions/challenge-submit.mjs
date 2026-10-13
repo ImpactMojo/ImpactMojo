@@ -49,7 +49,20 @@ export default async function handler(req) {
   const challengeId = clip(body.challenge_id, 120);
   const text = typeof body.submission_text === "string" ? body.submission_text.trim() : "";
   const email = clip(body.email);
-  const userId = clip(body.user_id, 64);
+  // The user is taken from the signed-in session, never from the request body,
+  // so nobody can file (or overwrite) work under another learner's id.
+  let userId = null;
+  const auth = req.headers.get("authorization") || "";
+  if (/^Bearer\s+\S+/i.test(auth)) {
+    try {
+      const u = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+        headers: { apikey: SERVICE_KEY, Authorization: auth },
+        signal: AbortSignal.timeout(8000),
+      });
+      if (u.ok) { const who = await u.json(); userId = clip(who && who.id, 64); }
+    } catch (e) { console.log("[challenge-submit] session check failed:", e.message); }
+    if (!userId) return j({ error: "session_invalid" }, 401);
+  }
 
   if (!challengeId) return j({ error: "missing_challenge_id" }, 400);
   if (text.length < MIN_TEXT) return j({ error: "too_short", min: MIN_TEXT }, 400);

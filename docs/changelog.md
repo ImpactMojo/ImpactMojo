@@ -8,6 +8,10 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - Adding someone to an organisation now sends them an invitation. They join the team, and the organisation can see their profile and progress, only once they accept it from a new Organisation invitations card on their account page. The organisation dashboard says "invited" until then.
 - The scheduled reminder and welcome emails can be started only by the site's own daily job.
+- Challenge submissions are filed under the signed-in learner's account as read from their session, and no longer from what the page sends.
+- The one-click "Confirm & deliver" link in order emails now works once and expires after 30 days, and an order with an invalid email address goes to manual handling.
+- The source files of the four 500-question banks moved to the private products store. Buyers still receive the PDF as before.
+- The Advisory Board daily limit, translation caching and the status history now run in production. They depended on a storage package the site was not installing.
 
 ## v10.376.0 — October 12, 2026 (one name for each thing, and fewer duplicates)
 

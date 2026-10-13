@@ -254,7 +254,7 @@ export const handler = async (event) => {
   if (form === "product-order") {
     const title = (data.product || "").replace(/\s*\(₹.*$/, "").trim();
     const file = fileFor(title);
-    if (!file) { await sendMail(ADMIN_EMAIL, `Order needs manual handling: ${data.product}`, `<p>Unknown product "${data.product}" from ${email} (UPI ref ${upiRef}). Deliver manually.</p>`); return { statusCode: 200 }; }
+    if (!file) { await sendMail(ADMIN_EMAIL, `Order needs manual handling: ${data.product}`, `<p>Unknown product "${esc(data.product)}" from ${esc(email)} (UPI ref ${esc(upiRef)}). Deliver manually.</p>`); return { statusCode: 200 }; }
     type = "product"; key = file; label = data.product;
   } else if (form === "subscription-payment") {
     type = "sub"; key = (data.reference || "").trim(); label = `${data.plan || "Subscription"} (${key})`;
@@ -262,14 +262,20 @@ export const handler = async (event) => {
     return { statusCode: 200 }; // not a payment form
   }
 
-  const sig = sign([type, email, key]);
-  const url = `${SITE}/api/confirm?type=${type}&email=${encodeURIComponent(email)}&key=${encodeURIComponent(key)}&sig=${sig}`;
-  const html = `<p><strong>${label}</strong></p>
-    <p>From: ${email}<br>UPI reference quoted: <strong>${upiRef || ", "}</strong></p>
+  // A one-click link is only built for an address we can safely put in a page.
+  if (!looksLikeEmail(email) || /[<>"']/.test(email)) {
+    await sendMail(ADMIN_EMAIL, `Order needs manual handling: ${label}`, `<p>${esc(label)}: the buyer's email "${esc(email)}" is not valid (UPI ref ${esc(upiRef)}). Check the payment and deliver by hand.</p>`);
+    return { statusCode: 200 };
+  }
+  const ts = String(Date.now());
+  const sig = sign([type, email, key, ts]);
+  const url = `${SITE}/api/confirm?type=${type}&email=${encodeURIComponent(email)}&key=${encodeURIComponent(key)}&ts=${ts}&sig=${sig}`;
+  const html = `<p><strong>${esc(label)}</strong></p>
+    <p>From: ${esc(email)}<br>UPI reference quoted: <strong>${esc(upiRef) || ", "}</strong></p>
     <p>Check this payment landed in your UPI app, then:</p>
-    <p style="margin:22px 0"><a href="${url}" style="display:inline-block;background:#16A34A;color:#fff;text-decoration:none;padding:14px 26px;border-radius:8px;font-weight:700;font-family:Inter,Arial;font-size:15px">✓ Confirm &amp; deliver</a></p>
+    <p style="margin:22px 0"><a href="${esc(url)}" style="display:inline-block;background:#16A34A;color:#fff;text-decoration:none;padding:14px 26px;border-radius:8px;font-weight:700;font-family:Inter,Arial;font-size:15px">✓ Confirm &amp; deliver</a></p>
     <p style="font-size:12px;color:#94A3B8">Clicking ${type === "product" ? "emails the file to the buyer" : "activates the subscription"}. Ignore if the payment didn't arrive.</p>
-    <p style="font-size:12px;color:#94A3B8">Button not showing? Copy this link into your browser:<br><span style="word-break:break-all;color:#64748B">${url}</span></p>`;
+    <p style="font-size:12px;color:#94A3B8">Button not showing? Copy this link into your browser:<br><span style="word-break:break-all;color:#64748B">${esc(url)}</span></p>`;
   await sendMail(ADMIN_EMAIL, `Confirm payment: ${label}`, html);
   return { statusCode: 200 };
 };

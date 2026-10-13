@@ -12,8 +12,18 @@ process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-key';
 const { default: h } = await import(new URL('../netlify/functions/challenge-submit.mjs', import.meta.url));
 
 let calls = [];
-global.fetch = async (u, o) => { calls.push({ u, o }); return { ok: true, status: 201, json: async () => [{ id: 'row-1' }] }; };
-const post = (b) => h(new Request('http://x/api/challenge-submit', { method: 'POST', body: JSON.stringify(b) }));
+// The session check (/auth/v1/user) knows one token, 'good-token', for user u-1.
+global.fetch = async (u, o) => {
+  if (String(u).includes('/auth/v1/user')) {
+    const ok = (o && o.headers && o.headers.Authorization) === 'Bearer good-token';
+    return { ok, status: ok ? 200 : 401, json: async () => (ok ? { id: 'u-1' } : {}) };
+  }
+  calls.push({ u, o }); return { ok: true, status: 201, json: async () => [{ id: 'row-1' }] };
+};
+const post = (b, token) => h(new Request('http://x/api/challenge-submit', {
+  method: 'POST', body: JSON.stringify(b),
+  headers: token ? { Authorization: 'Bearer ' + token } : {},
+}));
 const long = 'x'.repeat(250);
 
 let pass = 0, fail = 0;
@@ -32,8 +42,21 @@ ck('valid anonymous accepted', (await post({ challenge_id: 'c', submission_text:
 ck('anonymous insert does not upsert', calls[0] && !calls[0].u.includes('on_conflict'));
 
 calls = [];
-ck('signed-in without email accepted', (await post({ challenge_id: 'c', submission_text: long, user_id: 'u-1' })).status === 200);
+ck('signed-in without email accepted', (await post({ challenge_id: 'c', submission_text: long }, 'good-token')).status === 200);
 ck('signed-in resubmission upserts', calls[0] && calls[0].u.includes('on_conflict=challenge_id,user_id'));
+ck('user taken from the session', calls[0] && JSON.parse(calls[0].o.body).user_id === 'u-1');
+
+// A user id in the body is ignored: it cannot be used to write under someone else.
+calls = [];
+ck('body user_id without session is anonymous (needs email)', (await post({ challenge_id: 'c', submission_text: long, user_id: 'victim' })).status === 400);
+calls = [];
+await post({ challenge_id: 'c', submission_text: long, email: 'a@b.co', user_id: 'victim' });
+ck('body user_id never written', calls[0] && !('user_id' in JSON.parse(calls[0].o.body)) && !calls[0].u.includes('on_conflict'));
+calls = [];
+await post({ challenge_id: 'c', submission_text: long, user_id: 'victim' }, 'good-token');
+ck('session wins over body user_id', calls[0] && JSON.parse(calls[0].o.body).user_id === 'u-1');
+calls = [];
+ck('invalid session rejected', (await post({ challenge_id: 'c', submission_text: long }, 'forged')).status === 401 && calls.length === 0);
 
 global.fetch = async () => ({ ok: false, status: 400, text: async () => 'boom' });
 ck('supabase failure surfaces as 502', (await post({ challenge_id: 'c', submission_text: long, email: 'a@b.co' })).status === 502);
