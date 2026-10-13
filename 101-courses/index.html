@@ -211,7 +211,7 @@ body.deck-filtering .deck-group-head{display:none}
 
 <div class="filter-bar">
   <span class="filter-label">Filter:</span>
-  <button class="filter-chip active" data-filter="all">All (79)</button>
+  <button class="filter-chip active" data-filter="all">All (80)</button>
   <button class="filter-chip" data-filter="quiz">Self-check drills (17)</button>
   <button class="filter-chip" data-filter="charts">Interactive charts (7)</button>
   <button class="filter-chip" data-filter="glossary">With glossary (6)</button>
@@ -1696,6 +1696,13 @@ body.deck-filtering .deck-group-head{display:none}
   const search = document.querySelector('.filter-search');
   let activeFilter = 'all';
   let q = '';
+
+  // Chip counts come from the cards on the page, so they cannot drift.
+  chips.forEach(chip => {
+    const f = chip.dataset.filter;
+    const n = f === 'all' ? cards.length : cards.filter(c => c.dataset[f] === '1').length;
+    chip.textContent = chip.textContent.replace(/\(\d+\)/, '(' + n + ')');
+  });
 
   function matchesFilter(card){
     if (activeFilter === 'all') return true;

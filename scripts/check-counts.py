@@ -23,6 +23,8 @@ totals — enforcing "current" here would corrupt real content):
     supabase e-mail templates.
   * Dynamic dashboards — org-dashboard.html (per-organisation learning-path
     sizes) and game-library.html (a "0 of 0 games" JS placeholder).
+  * sitemap.html is scanned on its hero stat strip only (PARTIAL_HTML): its
+    section tallies count links, not platform totals.
   * Translated docs (docs/bn|hi|mr|ta/…) — kept in sync manually.
   A line can also opt out inline with the token "count-ignore", and any
   line containing an arrow (→ / ->) is treated as historical prose.
@@ -64,13 +66,17 @@ EXCLUDE_HTML = {
     "PAGE-TEMPLATE.html",    # page skeleton
     "org-dashboard.html",    # per-organisation learning-path counts (dynamic)
     "game-library.html",     # "0 of 0 games" progress placeholder (JS)
-    # Its <span class="cnt"> tallies count the links in each section of the
-    # sitemap, not the platform totals -- "Games 18" is 18 listed links, not the
-    # 135-game library. Verified: every section tally matches the links beneath
-    # it. (That check also showed the sitemap is missing entries -- 17 of 19
-    # flagship courses, 31 of 35 labs, 21 of 22 deep dives -- which is a content
-    # gap to fix in the page, not a count to rewrite.)
-    "sitemap.html",
+}
+
+# Root-level pages scanned only on the lines that state platform totals.
+# sitemap.html: its <span class="cnt"> tallies count the links in each section
+# of the map (section by section, and the page script recounts them from the
+# links), not the platform totals, so only the hero stat strip is checked. That
+# strip said 36 Labs, 13 Pro Studio tools and 25 Deep dives on 2026-10-13 while
+# the sections below it listed 35, 11 and 27, because the whole page was
+# excluded. The map itself is complete now; only its strip had drifted.
+PARTIAL_HTML = {
+    "sitemap.html": re.compile(r'<div class="stats">'),
 }
 
 # Present-tense docs that DO make current platform claims (changelogs,
@@ -289,6 +295,9 @@ LABEL_KEYS = [
     ("data tools", "dataverse"),
     ("law guides", "law-guides"),
     ("foundational", "foundational-courses"),
+    # "80 101 Series courses": the 101 Series is the foundational set, so the
+    # label must not fall through to the 101-course total below.
+    ("101 series", "foundational-courses"),
     ("explorers", "data-explorers"),
     ("simulations", "game-simulations"),
     ("datasets", "dataverse"),
@@ -511,6 +520,8 @@ def main(argv):
             line = raw.rstrip("\n")
             newline_suffix = raw[len(line):]
             if SKIP_LINE.search(line):
+                continue
+            if rel in PARTIAL_HTML and not PARTIAL_HTML[rel].search(line):
                 continue
             prev_line = lines[i - 1].rstrip("\n") if i else ""
             next_line = lines[i + 1].rstrip("\n") if i + 1 < len(lines) else ""
