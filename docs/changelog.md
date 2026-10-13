@@ -2,6 +2,13 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.377.0 — October 13, 2026 (organisation invitations)
+
+### Changed
+
+- Adding someone to an organisation now sends them an invitation. They join the team, and the organisation can see their profile and progress, only once they accept it from a new Organisation invitations card on their account page. The organisation dashboard says "invited" until then.
+- The scheduled reminder and welcome emails can be started only by the site's own daily job.
+
 ## v10.376.0 — October 12, 2026 (one name for each thing, and fewer duplicates)
 
 ### For Learners

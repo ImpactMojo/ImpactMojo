@@ -131,6 +131,11 @@ ${cta}
 </div></body></html>`;
 }
 
+function esc(v: unknown): string {
+  return String(v ?? "").replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
+}
+
 function streakReminderEmail(name: string, streakDays: number): string {
   return wrapEmail(
     "Keep Your Streak Alive!",
@@ -154,7 +159,7 @@ function cohortDeadlineEmail(
   return wrapEmail(
     `Cohort Deadline Approaching`,
     `<p>Hi ${name},</p>
-<p>Your cohort <strong>${cohortName}</strong> ${urgency}.</p>
+<p>Your cohort <strong>${esc(cohortName)}</strong> ${urgency}.</p>
 <p>Your current progress: <strong>${progress}%</strong></p>
 ${progress < 100 ? "<p>Complete your remaining modules to earn your certificate before the deadline.</p>" : "<p>Great work — you've completed the cohort! Your certificate will be issued shortly.</p>"}`,
     "/org-dashboard.html"
@@ -168,10 +173,10 @@ function cohortDiscussionEmail(
   preview: string
 ): string {
   return wrapEmail(
-    `New Discussion in ${cohortName}`,
+    `New Discussion in ${esc(cohortName)}`,
     `<p>Hi ${name},</p>
-<p><strong>${authorName}</strong> posted in your cohort:</p>
-<blockquote style="border-left:3px solid #F59E0B;padding:8px 16px;margin:12px 0;color:#475569;background:#FFFBEB;border-radius:0 6px 6px 0">${preview}</blockquote>`,
+<p><strong>${esc(authorName)}</strong> posted in your cohort:</p>
+<blockquote style="border-left:3px solid #F59E0B;padding:8px 16px;margin:12px 0;color:#475569;background:#FFFBEB;border-radius:0 6px 6px 0">${esc(preview)}</blockquote>`,
     "/org-dashboard.html"
   );
 }
@@ -188,6 +193,15 @@ serve(async (req: Request) => {
 
   const url = new URL(req.url);
   const path = url.pathname.split("/").pop();
+
+  // The scheduled mailers are called by the daily Netlify job with the
+  // service-role key, and by nothing else.
+  if (path === "streak-reminders" || path === "cohort-deadlines" || path === "engagement-drip") {
+    const bearer = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
+    if (!bearer || bearer !== serviceRoleKey) {
+      return json({ error: "Service role required" }, 403);
+    }
+  }
 
   try {
     // ── Automated: Streak Reminders ──────────────────────────────────
@@ -217,7 +231,7 @@ serve(async (req: Request) => {
           .eq("user_id", user.id)
           .single();
 
-        const name = user.full_name || user.display_name || "Learner";
+        const name = esc(user.full_name || user.display_name || "Learner");
 
         // In-app notification
         if (!prefs || prefs.in_app_enabled !== false) {
@@ -301,7 +315,7 @@ serve(async (req: Request) => {
             .single();
 
           const name =
-            profile.full_name || profile.display_name || "Learner";
+            esc(profile.full_name || profile.display_name || "Learner");
 
           // In-app
           if (!prefs || prefs.in_app_enabled !== false) {
@@ -367,7 +381,7 @@ serve(async (req: Request) => {
         const daysSinceSignup = Math.floor(
           (now.getTime() - new Date(user.created_at).getTime()) / (24 * 60 * 60 * 1000)
         );
-        const name = user.full_name || user.display_name || "there";
+        const name = esc(user.full_name || user.display_name || "there");
         const coursesCompleted = user.courses_completed?.length || 0;
 
         // Check if we already sent this drip stage
@@ -595,7 +609,7 @@ serve(async (req: Request) => {
 
       let sent = 0;
       for (const user of users || []) {
-        const name = user.full_name || user.display_name || "there";
+        const name = esc(user.full_name || user.display_name || "there");
         const html = wrapEmail(
           subject,
           `<p>Hi ${name},</p>
