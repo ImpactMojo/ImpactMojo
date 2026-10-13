@@ -44,7 +44,12 @@
   // script cannot run before the page's own gtag('config'), so pages that want
   // the default applied to the first hit need it in their head snippet too.
   var CONSENT_KEY = 'im-analytics-consent';
-  function consentChoice() { var v = store(CONSENT_KEY); return v === 'granted' || v === 'denied' ? v : null; }
+  function consentChoice() {
+    var v = store(CONSENT_KEY);
+    if (v === 'granted' || v === 'denied') return v;
+    // The homepage's older widget stored only an acceptance, under its own key.
+    return store('cookieConsent') === 'true' ? 'granted' : null;
+  }
   (function consentDefault() {
     if (typeof window.gtag !== 'function') return;
     var c = consentChoice();
