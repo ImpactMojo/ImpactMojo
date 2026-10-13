@@ -181,7 +181,7 @@ def index_page(rows, pages):
     </tbody>
   </table></div>
   <p class="note" id="none" hidden>No course matches that search.</p>
-  <style>.n101{{width:100%;border-collapse:collapse;margin-top:1rem}}.n101 th,.n101 td{{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--bd)}}.n101 th{{font-family:Inter;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}}.n101 td:nth-child(2),.n101 td:nth-child(3){{font-family:'JetBrains Mono';font-size:.85rem;color:var(--tx2)}}.btn.sm{{padding:.35rem .8rem;font-size:.82rem}}.tblwrap{{overflow-x:auto}}.sr-only{{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}#none[hidden]{{display:none}}</style>
+  <style>.n101{{width:100%;border-collapse:collapse;margin-top:1rem}}.n101 th,.n101 td{{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--bd)}}.n101 th{{font-family:Inter;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}}.n101 td:nth-child(2),.n101 td:nth-child(3){{font-family:'JetBrains Mono';font-size:.85rem;color:var(--tx2)}}.n101 td a{{color:#075985}}[data-theme="dark"] .n101 td a{{color:#7DD3FC}}@media (prefers-color-scheme: dark){{:root:not([data-theme="light"]) .n101 td a{{color:#7DD3FC}}}}.btn.sm{{padding:.35rem .8rem;font-size:.82rem}}.tblwrap{{overflow-x:auto}}.sr-only{{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}#none[hidden]{{display:none}}</style>
   <script>function filt(v){{v=v.trim().toLowerCase();var n=0;document.querySelectorAll('.n101 tbody tr').forEach(function(r){{var s=!v||r.dataset.q.indexOf(v)>-1;r.hidden=!s;if(s)n++;}});document.getElementById('none').hidden=n>0;}}</script>
 </main>'''
 
