@@ -2,6 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.383.0 — October 14, 2026 (Vandana's bio restored)
+
+### Changed
+
+- Vandana Soni's bio on the home page and the About page describes her work again (15+ years designing learning programmes and large-scale education initiatives across India) in place of a list of tasks.
+
 ## v10.382.0 — October 14, 2026 (corrected citations, the last Dropbox links, and course pages that fit a phone)
 
 ### For Learners
