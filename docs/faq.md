@@ -102,9 +102,9 @@ Here is a straightforward comparison:
 
 | Feature | Explorer (Free) | Practitioner (₹399/mo) | Professional (₹999/mo) | Organization (₹1,499/user/mo) |
 |---------|----------------|------------------------|------------------------|-------------------------------|
-| All 101 courses | Yes | Yes | Yes | Yes |
+| All 21 flagship and 80 foundational courses | Yes | Yes | Yes | Yes |
 | 135 games | Yes | Yes | Yes | Yes |
-| 35 studios | Yes | Yes | Yes | Yes |
+| 35 Free Studio tools | Yes | Yes | Yes | Yes |
 | 84 handouts | Yes | Yes | Yes | Yes |
 | ImpactLex, DevDiscourses, Case Studies | Yes | Yes | Yes | Yes |
 | Progress tracking and certificates | – | Yes | Yes | Yes |

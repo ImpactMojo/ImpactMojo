@@ -4,11 +4,11 @@
 
 Live Case Challenges **वास्तविक साझेदार संगठनों के प्रामाणिक केस स्टडीज़** हैं जहाँ आप वास्तविक विकास समस्याओं को हल करने के लिए अपने कौशल लागू करते हैं। प्रत्येक चैलेंज आपको एक यथार्थवादी परिदृश्य, उत्पादन करने के लिए deliverables का एक सेट, और मूल्यांकन के लिए एक rubric देता है।
 
-ImpactMojo **6 सीखने के ट्रैक्स में 9 चैलेंज** प्रदान करता है, जो Beginner से Advanced कठिनाई तक हैं। पूर्ण किए गए कार्य को peer feedback के लिए जमा किया जा सकता है और यह portfolio badges अर्जित करता है।
+ImpactMojo **6 सीखने के ट्रैक्स में 15 चैलेंज** प्रदान करता है, जो Beginner से Advanced कठिनाई तक हैं। पूर्ण किए गए कार्य को peer feedback के लिए जमा किया जा सकता है और यह portfolio badges अर्जित करता है।
 
 ---
 
-## 9 चैलेंज
+## 15 चैलेंज
 
 ### MEL (Monitoring, Evaluation & Learning)
 
@@ -83,7 +83,7 @@ ImpactMojo **6 सीखने के ट्रैक्स में 9 चै�
 | Tier | पहुँच |
 |------|--------|
 | Explorer (free) | Explorer tier के रूप में चिह्नित चुनिंदा चैलेंज |
-| Practitioner+ (paid) | पूर्ण submission और feedback सुविधाओं के साथ सभी 9 चैलेंज |
+| Practitioner+ (paid) | पूर्ण submission और feedback सुविधाओं के साथ सभी 15 चैलेंज |
 
 ---
 

@@ -44,13 +44,13 @@ We provide accessible, high-quality educational materials grounded in South Asia
 | **101 Courses** | 21 flagship + 80 foundational courses across 6 learning tracks (all foundational decks self-hosted as native HTML slide decks). Every flagship ends with an auto-graded "Assess Yourself" self-check |
 | **35 Interactive Studios** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
 | **135 Game Library** | 18 interactive simulations (MiroFish AI agents, Indian folk art: Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) + 117 crosswords, quizzes & word searches |
-| **ImpactLex Dictionary** | 390+ development terms with contextual definitions, formulas, and case studies (PWA, hosted on ImpactMojo) |
+| **ImpactLex Dictionary** | 490+ development terms with contextual definitions, formulas, and case studies (PWA, hosted on ImpactMojo) |
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
 | **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export: dark mode, filters, CSV export |
 | **Dataverse** | 343 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories: dark mode, category filters, responsive cards |
-| **184 Reading Companions** | Interactive study companions for development economics, political economy, statistics, leadership, and productivity texts |
+| **185 Reading Companions** | Interactive study companions for development economics, political economy, statistics, leadership, and productivity texts |
 | **12 AI Study Companions** | NotebookLM-powered study notebooks covering the flagship courses |
 | **84 Handouts** | Downloadable resources across 6 learning tracks |
 | **27 Deep Dives** | Curated, annotated reading guides: working syllabi on contested development questions |

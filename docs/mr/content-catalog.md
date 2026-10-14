@@ -4,7 +4,7 @@
 
 ---
 
-## Flagship Courses (14)
+## Flagship Courses (21)
 
 प्रत्येकी 12–13 मॉड्यूल्स, परस्परसंवादी लेक्सिकन, दक्षिण आशियाई केस स्टडीज आणि AI अभ्यास सहकाऱ्यांसह सखोल, बहु-मॉड्यूल अभ्यासक्रम.
 
@@ -22,7 +22,7 @@
 
 ---
 
-## BookSummaries (134)
+## BookSummaries (184)
 
 Specials अंतर्गत परस्परसंवादी पुस्तक सहकारी — डेटा साधने आणि AI-चालित प्रश्नोत्तरांसह सखोल, प्रकरण-दर-प्रकरण अन्वेषण. संपूर्ण तपशीलांसाठी [Book Companions Guide](book-summaries-guide.md) पहा.
 
@@ -38,7 +38,7 @@ Specials अंतर्गत परस्परसंवादी पुस्
 
 ---
 
-## Foundational Courses (38)
+## Foundational Courses (80)
 
 अत्यावश्यक विकास विषय समाविष्ट करणारे एकल-पृष्ठ अभ्यासक्रम. सर्व विनामूल्य, लॉगिन आवश्यक नाही.
 
@@ -115,7 +115,7 @@ Specials अंतर्गत परस्परसंवादी पुस्
 
 ---
 
-## Interactive Labs (11)
+## Interactive Labs (35)
 
 प्रत्यक्ष workbench जिथे तुम्ही खरी कौशल्ये तयार करता, डिझाइन करता आणि सराव करता.
 
@@ -134,7 +134,7 @@ Specials अंतर्गत परस्परसंवादी पुस्
 
 ---
 
-## Learning Games (16)
+## Learning Games (135)
 
 अर्थशास्त्र सिम्युलेशन आणि परस्परसंवादी खेळ — कार्यशाळा आणि वर्गातील वापरासाठी आदर्श.
 
@@ -161,7 +161,7 @@ Specials अंतर्गत परस्परसंवादी पुस्
 
 ---
 
-## Handouts (80+ HTML pages)
+## Handouts (84 HTML pages)
 
 शिक्षण ट्रॅकनुसार आयोजित डाउनलोड करण्यायोग्य संदर्भ पत्रके. सर्व पहा [Handouts Index](/Handouts/index.html) येथे.
 
@@ -242,7 +242,7 @@ Specials अंतर्गत परस्परसंवादी पुस्
 
 ---
 
-## Premium Tools (7)
+## Premium Tools (11)
 
 संशोधक आणि प्रॅक्टिशनर्ससाठी प्रगत साधने. सशुल्क सदस्यत्व आवश्यक.
 
@@ -264,10 +264,10 @@ Specials अंतर्गत परस्परसंवादी पुस्
 
 | संसाधन | वर्णन | प्रवेश |
 |----------|-------------|--------|
-| **ImpactLex** | 390+ विकास संज्ञांचा शब्दकोश (PWA, ImpactMojo वर होस्ट केलेला) | विनामूल्य |
-| **Dev Case Studies** | 117 देशांमधील 200 निवडक केसेस | विनामूल्य |
+| **ImpactLex** | 490+ विकास संज्ञांचा शब्दकोश (PWA, ImpactMojo वर होस्ट केलेला) | विनामूल्य |
+| **Dev Case Studies** | 117 देशांमधील 208 निवडक केसेस | विनामूल्य |
 | **DevDiscourses** | 500+ निवडक संशोधन शोधनिबंध आणि पुस्तके | विनामूल्य |
-| **Dataverse** | 324 डेटा साधने, API आणि datasets | विनामूल्य — [Browse](/dataverse.html) |
+| **Dataverse** | 343 डेटा साधने, API आणि datasets | विनामूल्य — [Browse](/dataverse.html) |
 | **Blog: Learning Loops** | विकास सरावावरील लेख | विनामूल्य — [Read](/blog.html) |
 | **Podcast: Between the Logframes** | Spotify वरील ऑडिओ भाग | विनामूल्य |
 | **Dojos** | 35+ सराव-आधारित कौशल्य सत्रे | सशुल्क |
@@ -279,16 +279,16 @@ Specials अंतर्गत परस्परसंवादी पुस्
 
 | श्रेणी | संख्या |
 |----------|-------|
-| Flagship courses | 14 |
-| Foundational courses | 39 |
-| Interactive labs | 11 |
-| Learning games | 16 |
-| BookSummaries | 5 |
-| Premium tools | 9 |
-| Handout pages | 80+ |
-| Dataverse entries | 270 |
-| Dev case studies | 200 |
+| Flagship courses | 21 |
+| Foundational courses | 80 |
+| Interactive labs | 35 |
+| Learning games | 135 |
+| BookSummaries | 184 |
+| Premium tools | 11 |
+| Handout pages | 84 |
+| Dataverse entries | 343 |
+| Dev case studies | 208 |
 | DevDiscourses entries | 500+ |
-| ImpactLex terms | 390+ |
+| ImpactLex terms | 490+ |
 | समर्थित भाषा | 6 (English, Hindi, Tamil, Bengali, Telugu, Marathi) |
 | शिक्षण ट्रॅक | 6 |

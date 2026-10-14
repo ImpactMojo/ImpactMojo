@@ -58,7 +58,7 @@ Interactive reading companions: deep, chapter-by-chapter explorations with data 
 | 16 | The 4-Hour Workweek | [Open](/BookSummaries/four-hour-workweek-companion.html) |
 | 17 | The Great Greenwashing | [Open](/BookSummaries/gog-companion.html) |
 | 18 | Grit | [Open](/BookSummaries/grit-companion.html) |
-| 19 | The Handbook of Social Protection | [Open](/BookSummaries/handbook-social-protection.html) |
+| 19 | The Handbook of Social Protection | [Open](/BookSummaries/handbook-social-protection-companion.html) |
 | 20 | Handbook for IPCC Authors on Climate Communications | [Open](/BookSummaries/ipcc-climate-communication-companion.html) |
 | 21 | Health Economics: An Introduction to Economic Evaluation | [Open](/BookSummaries/kobelt-companion.html) |
 | 22 | History of Economic Thought | [Open](/BookSummaries/history-economic-thought-companion.html) |

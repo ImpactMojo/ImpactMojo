@@ -14,12 +14,12 @@ ImpactMojo कडे एक **Model Context Protocol (MCP) server** आहे �
 | `lookup_bct` | संपूर्ण BCT तंत्राचा तपशील मिळवा (दक्षिण आशियाई संदर्भ, केस स्टडीज) |
 | `search_bcts` | 203 Behavior Change Techniques शोधा/फिल्टर करा |
 | `list_bct_categories` | सर्व 26 BCT श्रेणी मोजणीसह सूचीबद्ध करा |
-| `browse_dataverse` | श्रेणीनुसार 270 टूल्स, डेटासेट, APIs ब्राउझ करा |
+| `browse_dataverse` | श्रेणीनुसार 343 टूल्स, डेटासेट, APIs ब्राउझ करा |
 | `search_dataverse` | dataverse आयटम्समध्ये कीवर्ड शोध |
 | `list_challenges` | track/कठीणतेनुसार practice challenges सूचीबद्ध करा |
 | `get_challenge` | केस संदर्भ आणि रुब्रिकसह संपूर्ण challenge |
-| `list_courses` | 6 learning tracks मध्ये 70 courses |
-| `get_game_info` | AI एजंट पर्सोनासह 16 economics games |
+| `list_courses` | 21 फ्लॅगशिप आणि 80 फाउंडेशनल courses |
+| `get_game_info` | AI एजंट पर्सोनासह 18 economics games |
 | `query_climate_data` | Climate TRACE मधून भारताचे GHG उत्सर्जन |
 
 ## उपलब्ध Resources (3)

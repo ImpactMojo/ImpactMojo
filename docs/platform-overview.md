@@ -77,7 +77,7 @@ Each game:
 
 ---
 
-## Interactive Studios (35 studios)
+## Interactive Studios (35 Free Studio tools)
 
 Studios are browser-based workbenches where you build something. Unlike courses (where you read and reflect), studios are hands-on: you follow a guided workflow and produce a real output.
 
@@ -203,7 +203,7 @@ Resources cover poverty, health, education, gender, governance, climate, and mor
 
 Interactive reading companions that go far beyond a summary. Each BookSummary offers chapter-by-chapter navigation, evidence explorers, data playgrounds with interactive simulators, programme comparison tools, concept glossaries, and AI-powered Q&A. Currently available under Specials. See the [Reading Companions Guide](book-summaries-guide.md) for full details.
 
-**Current entries: 184 reading companions** spanning development economics (Poor Economics, Why Nations Fail, Development as Freedom, Debraj Ray), econometrics and statistics (Gujarati, Naked Statistics, Learning Statistics with R), data visualization (Tufte, Storytelling with Data, The Truthful Art), research methods, communication, leadership, and productivity. See the full list in the [Content Catalog](content-catalog.md).
+**Current entries: 185 reading companions** spanning development economics (Poor Economics, Why Nations Fail, Development as Freedom, Debraj Ray), econometrics and statistics (Gujarati, Naked Statistics, Learning Statistics with R), data visualization (Tufte, Storytelling with Data, The Truthful Art), research methods, communication, leadership, and productivity. See the full list in the [Content Catalog](content-catalog.md).
 
 ---
 
@@ -250,7 +250,7 @@ ImpactMojo has a **Model Context Protocol (MCP) server** that lets any AI assist
 - `lookup_bct` / `search_bcts` / `list_bct_categories`, 203 BCT techniques with South Asian context and case studies
 - `browse_dataverse` / `search_dataverse`, 343 tools, datasets, APIs
 - `list_challenges` / `get_challenge`, Practice exercises with rubrics
-- `list_courses`, 101 courses across 6 learning tracks
+- `list_courses`, 21 flagship and 80 foundational courses
 - `get_game_info`, 18 simulation games with AI agent personas
 - `query_climate_data`, India GHG emissions from Climate TRACE
 
@@ -306,7 +306,7 @@ Switch languages from the platform interface. This makes ImpactMojo usable for t
 
 ## What's free and what needs a paid plan?
 
-The vast majority of ImpactMojo is **completely free**: this is a genuine commitment, not a marketing strategy. All 101 courses, 135 games, 35 studios, handouts, ImpactLex, case studies, DevDiscourses, and Dataverse are available at no cost.
+The vast majority of ImpactMojo is **completely free**, and it will stay that way. All 21 flagship and 80 foundational courses, 135 games, 35 Free Studio tools, handouts, ImpactLex, case studies, DevDiscourses, and Dataverse are available at no cost.
 
 Paid memberships (starting at ₹399/month) unlock additional tools, PDF/PNG export from studios, certificates, and priority access to coaching and workshops.
 

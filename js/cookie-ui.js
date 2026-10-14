@@ -156,6 +156,7 @@
             if (typeof window.gtag === 'function') {
                 try { window.gtag('consent', 'update', { analytics_storage: 'granted' }); } catch (e) {}
             }
+            if (typeof window.imLoadGA === 'function') window.imLoadGA();
             var cookieEl = document.getElementById('cookieConsent');
             if (cookieEl) {
                 cookieEl.classList.remove('expanded');
