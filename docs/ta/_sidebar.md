@@ -19,7 +19,6 @@
   - [அடிக்கடி கேட்கப்படும் கேள்விகள்](faq.md)
 
 - **கருவிகள் & வளங்கள்**
-  - [Mojini (தள உதவியாளர்)](mojini-guide.md)
   - [ImpactLex (சொற்களஞ்சியம்)](impactlex-guide.md)
   - [FieldCases (வழக்கு நூலகம்)](fieldcases-guide.md)
   - [DevDiscourses (ஆராய்ச்சி)](devdiscourses-guide.md)

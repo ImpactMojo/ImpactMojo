@@ -9,7 +9,6 @@
     ║  ✓ UserWay Accessibility Widget (account: EksmhlPg9k)                        ║
     ║  ✓ Theme Toggle (Sun/Moon) with localStorage sync                            ║
     ║  ✓ Auto-refresh on back/forward navigation                                   ║
-    ║  ✓ Mojini Chatbot                                                            ║
     ║  ✓ Google Calendar Booking Integration                                       ║
     ║  ✓ Sliding Scale Pricing                                                     ║
     ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -687,212 +686,11 @@ body {
     text-decoration: none;
 }
 
-/* Mojini Chatbot */
-.mojini-fab {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-
-    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    z-index: 9000;
-    transition: all 0.3s ease;
-}
-
-.mojini-fab:hover {
-    transform: scale(1.1);
-}
-
-.mojini-fab svg {
-    width: 24px;
-    height: 24px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.chatbot-modal {
-    display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 24px;
-    width: 380px;
-    max-width: calc(100vw - 48px);
-    max-height: 500px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    box-shadow: var(--shadow-xl);
-    z-index: 9001;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.chatbot-modal.active {
-    display: flex;
-}
-
-.chat-header {
-    background: var(--gradient-primary);
-
-    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
-    color: white;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.chat-header h3 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.chat-header svg {
-    width: 20px;
-    height: 20px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.chat-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    opacity: 0.85;
-}
-
-.chat-close:hover {
-    opacity: 1;
-}
-
-.chat-messages {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    max-height: 350px;
-}
-
-.message {
-    margin-bottom: 16px;
-}
-
-.bot-message {
-    display: flex;
-    gap: 12px;
-}
-
-.bot-avatar {
-    width: 32px;
-    height: 32px;
-    background: var(--gradient-primary);
-
-    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.bot-avatar svg {
-    width: 16px;
-    height: 16px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.bot-bubble {
-    background: var(--hover-bg);
-    padding: 12px 16px;
-    border-radius: 12px;
-    border-top-left-radius: 4px;
-    max-width: 280px;
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-.quick-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.quick-option {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--text-primary);
-}
-
-.quick-option:hover {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-}
-
 .chat-input-container {
     display: flex;
     gap: 8px;
     padding: 16px;
     border-top: 1px solid var(--border-color);
-}
-
-.chat-input {
-    flex: 1;
-    background: var(--hover-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
-    padding: 12px 16px;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-}
-
-.chat-input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-}
-
-.chat-send {
-    background: var(--gradient-primary);
-
-    background-color: #0369A1; /* WCAG AA fallback for pa11y — override gradient-reset */
-    border: none;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.chat-send svg {
-    width: 18px;
-    height: 18px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
 }
 
 /* Mobile Responsive */
@@ -1559,56 +1357,7 @@ body.dark-mode .badge-free, body.dark-mode .badge-status-live, body.dark-mode .s
     </div>
 </footer>
 
-<!-- Mojini Chatbot -->
-<button class="mojini-fab" onclick="openChatbot()" title="Chat with Mojini">
-    <svg viewBox="0 0 24 24">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-    </svg>
-</button>
 
-<div class="chatbot-modal" id="chatbotModal">
-    <div class="chat-header">
-        <h3>
-            <svg viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-            Mojini, ImpactMojo assistant
-        </h3>
-        <button class="chat-close" aria-label="Close chat" onclick="closeChatbot()">×</button>
-    </div>
-    <div class="chat-messages" id="chatMessages">
-        <div class="message bot-message">
-            <div class="bot-avatar">
-                <svg viewBox="0 0 24 24">
-                    <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-                    <circle cx="12" cy="5" r="2"></circle>
-                    <path d="M12 7v4"></path>
-                </svg>
-            </div>
-            <div>
-                <div class="bot-bubble">
-                    Hi, I'm Mojini. Looking for coaching services? I can help you understand our offerings or book a session.
-                </div>
-                <div class="quick-options">
-                    <button class="quick-option" onclick="selectOption('pricing')">Pricing Info</button>
-                    <button class="quick-option" onclick="selectOption('services')">Services</button>
-                    <button class="quick-option" onclick="selectOption('booking')">How to Book</button>
-                    <button class="quick-option" onclick="selectOption('contact')">Contact</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="chat-input-container">
-        <label for="chatInput" class="sr-only">Ask about coaching services</label>
-        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about coaching services..." aria-label="Ask about coaching services" onkeypress="handleKeyPress(event)">
-        <button class="chat-send" aria-label="Send message" onclick="sendMessage()">
-            <svg viewBox="0 0 24 24">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-        </button>
-    </div>
-</div>
 
 <!-- Supabase & Auth -->
 <script src="/js/vendor/supabase-js-2.114.0.js"></script>
@@ -1649,94 +1398,11 @@ body.dark-mode .badge-free, body.dark-mode .badge-status-live, body.dark-mode .s
 
 // Mobile Menu
 
-// Mojini Chatbot
-function openChatbot() {
-    document.getElementById('chatbotModal').classList.add('active');
-}
 
-function closeChatbot() {
-    document.getElementById('chatbotModal').classList.remove('active');
-}
 
-function handleKeyPress(e) {
-    if (e.key === 'Enter') {
-        sendMessage();
-    }
-}
 
-function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const message = input.value.trim();
-    if (!message) return;
-    
-    const messagesContainer = document.getElementById('chatMessages');
-    
-    // Add user message (textContent — never inject user input via innerHTML)
-    const userMessageEl = document.createElement('div');
-    userMessageEl.className = 'message';
-    userMessageEl.style.textAlign = 'right';
-    const userBubble = document.createElement('div');
-    userBubble.className = 'bot-bubble';
-    userBubble.style.cssText = 'background: var(--accent-color); color: white; margin-left: auto; border-radius: 12px; border-top-right-radius: 4px;';
-    userBubble.textContent = message;
-    userMessageEl.appendChild(userBubble);
-    messagesContainer.appendChild(userMessageEl);
-    
-    input.value = '';
-    
-    // Generate response
-    setTimeout(() => {
-        const response = generateResponse(message);
-        messagesContainer.innerHTML += `
-            <div class="message bot-message">
-                <div class="bot-avatar">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path></svg>
-                </div>
-                <div class="bot-bubble">${response}</div>
-            </div>
-        `;
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 500);
-}
 
-function selectOption(option) {
-    const responses = {
-        'pricing': 'One-on-one coaching uses sliding-scale pricing: Career counselling ₹400-2,000, Research Design ₹1,000-3,000, Data Analysis ₹800-2,500. Team workshops are a separate product priced per cohort. See impactmojo.in/workshops.html.',
-        'services': 'We offer: 1) Career Counselling (60 min) for development sector guidance, 2) Research Design Consultation (90 min) for methodology support, 3) Data Analysis Consultation (90 min) for statistical help, and 4) Three-Day Intensive Workshops on any course topic.',
-        'booking': 'Click the "Book an appointment" button on any service card to schedule directly via Google Calendar. For workshops, use the Contact form and mention your preferred topic and dates.',
-        'contact': 'You can reach us at hello@impactmojo.in for coaching inquiries, or use our Contact page for general questions. We typically respond within 24-48 hours.'
-    };
-    
-    const messagesContainer = document.getElementById('chatMessages');
-    messagesContainer.innerHTML += `
-        <div class="message bot-message">
-            <div class="bot-avatar">
-                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path></svg>
-            </div>
-            <div class="bot-bubble">${responses[option]}</div>
-        </div>
-    `;
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
 
-function generateResponse(message) {
-    const lower = message.toLowerCase();
-    
-    if (lower.includes('price') || lower.includes('cost') || lower.includes('fee')) {
-        return 'One-on-one coaching is sliding scale: Career counselling ₹400-2,000, Research design ₹1,000-3,000, Data analysis ₹800-2,500. Team workshops are priced per cohort on the Workshops page.';
-    }
-    if (lower.includes('book') || lower.includes('schedule') || lower.includes('appointment')) {
-        return 'Click the "Book an appointment" button on any service card to schedule via Google Calendar. For workshops, please contact us directly.';
-    }
-    if (lower.includes('workshop')) {
-        return 'Our 3-day intensive workshops (6 hours/day) cover any ImpactMojo course topic in depth. They suit teams well. Contact us with your preferred topic.';
-    }
-    if (lower.includes('sliding') || lower.includes('scale')) {
-        return 'Yes. All our services use sliding scale pricing based on your circumstances. We believe quality guidance should be accessible to everyone in the development sector.';
-    }
-    
-    return 'I can help with information about our coaching services, pricing, and booking. For specific inquiries, please contact us at hello@impactmojo.in or use our Contact page.';
-}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
@@ -1792,12 +1458,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
-<script src="/js/search.js?v=e4b820bd" defer></script>
+<script src="/js/search.js?v=a8b15de1" defer></script>
 <script defer src="js/auto-refresh.js"></script>
 <!-- ImpactMojo Theme Toggle JS -->
 <script src="/js/theme.js?v=ca787a55"></script>
 <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
   <script src="/js/site-chrome.js?v=611274c1" defer></script>
-<script src="/js/mojini-ai.js?v=d120c762" defer></script>
 </body>
 </html>

@@ -10,7 +10,6 @@
     |  - Added V3 decorative elements (paper planes, gradient blobs)               |
     |  - Updated navigation with dropdowns                                         |
     |  - Updated 4-section footer                                                  |
-    |  - Added Mojini chatbot with 404-specific quick options                      |
     |  - Added cookie consent banner                                               |
     |  - Mobile responsive design with fixed menu                                  |
     |  - Preserved all original 404 functionality                                  |
@@ -888,256 +887,11 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
     color: var(--accent-color);
 }
 
-/* ========================================
-   MOJINI CHATBOT
-   ======================================== */
-.chatbot-fab {
-    position: fixed;
-    border: 0;
-    padding: 0;
-    color: #FFFFFF;
-    font: inherit;
-    bottom: 24px;
-    right: 24px;
-    width: 60px;
-    height: 60px;
-    background: var(--gradient-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
-    z-index: 999;
-    transition: all 0.3s ease;
-}
-
-.chatbot-fab:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 25px rgba(14, 165, 233, 0.5);
-}
-
-.chatbot-fab svg {
-    width: 28px;
-    height: 28px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.chatbot-modal {
-    position: fixed;
-    bottom: 100px;
-    right: 24px;
-    width: 380px;
-    max-width: calc(100vw - 48px);
-    max-height: 500px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    box-shadow: var(--shadow-xl);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px) scale(0.95);
-    transition: all 0.3s ease;
-}
-
-.chatbot-modal.open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-}
-
-.chat-header {
-    padding: 16px 20px;
-    background: var(--gradient-primary);
-    border-radius: 16px 16px 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.chat-header h3 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.chat-header svg {
-    width: 24px;
-    height: 24px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.chat-close {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    font-size: 1.25rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
-}
-
-.chat-close:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.chat-messages {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.message {
-    display: flex;
-    gap: 10px;
-}
-
-.bot-message {
-    align-items: flex-start;
-}
-
-.bot-avatar {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    background: var(--gradient-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.bot-avatar svg {
-    width: 20px;
-    height: 20px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.bot-bubble {
-    background: var(--hover-bg);
-    padding: 12px 16px;
-    border-radius: 12px;
-    border-top-left-radius: 4px;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    max-width: 280px;
-}
-
-.bot-bubble a {
-    color: var(--accent-color);
-    text-decoration: none;
-}
-
-.bot-bubble a:hover {
-    text-decoration: underline;
-}
-
-.user-bubble {
-    margin-left: auto;
-    background: var(--gradient-primary);
-    color: white;
-    padding: 12px 16px;
-    border-radius: 12px;
-    border-top-right-radius: 4px;
-    font-size: 0.9rem;
-    max-width: 280px;
-}
-
-.quick-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.quick-option {
-    padding: 8px 14px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.quick-option:hover {
-    background: var(--accent-solid, #0369A1);
-    border-color: var(--accent-color);
-    color: white;
-}
-
 .chat-input-container {
     padding: 16px;
     border-top: 1px solid var(--border-color);
     display: flex;
     gap: 10px;
-}
-
-.chat-input {
-    flex: 1;
-    padding: 12px 16px;
-    background: var(--hover-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s ease;
-}
-
-.chat-input:focus {
-    border-color: var(--accent-color);
-}
-
-.chat-input::placeholder {
-    color: var(--text-muted);
-}
-
-.chat-send {
-    width: 44px;
-    height: 44px;
-    background: var(--gradient-primary);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.chat-send:hover {
-    transform: scale(1.05);
-}
-
-.chat-send svg {
-    width: 20px;
-    height: 20px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
 }
 
 /* ========================================
@@ -1276,20 +1030,8 @@ body.dark-mode .blob-2 { background: rgba(99, 102, 241, 0.08); opacity: 0.5; }
         justify-content: center;
     }
     
-    /* Chatbot */
-    .chatbot-modal {
-        right: 12px;
-        left: 12px;
-        width: auto;
-        bottom: 90px;
-    }
     
-    .chatbot-fab {
-        right: 16px;
-        bottom: 16px;
-        width: 56px;
-        height: 56px;
-    }
+
     
     
 }
@@ -1788,43 +1530,7 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
     </div>
 </footer>
 
-<!-- Mojini Chatbot -->
-<button type="button" class="chatbot-fab" onclick="openChatbot()" aria-label="Open chat">
-    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-</button>
 
-<div class="chatbot-modal" id="chatbotModal">
-    <div class="chat-header">
-        <h3>
-            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Mojini, ImpactMojo assistant
-        </h3>
-        <button class="chat-close" aria-label="Close chat" onclick="closeChatbot()">&times;</button>
-    </div>
-    <div class="chat-messages" id="chatMessages">
-        <div class="message bot-message">
-            <div class="bot-avatar">
-                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
-            </div>
-            <div>
-                <div class="bot-bubble">
-                    Hi, I'm Mojini. This page does not exist, but I can help you find what you were looking for.
-                </div>
-                <div class="quick-options">
-                    <button class="quick-option" onclick="selectOption('home')">Take me home</button>
-                    <button class="quick-option" onclick="selectOption('courses')">Browse courses</button>
-                    <button class="quick-option" onclick="selectOption('help')">I need help</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="chat-input-container">
-        <input type="text" class="chat-input" id="chatInput" placeholder="What are you looking for?" onkeypress="handleChatKeyPress(event)">
-        <button class="chat-send" aria-label="Send message" onclick="sendChatMessage()">
-            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
-    </div>
-</div>
 
 <!-- UserWay Accessibility Widget -->
 <script>
@@ -1843,105 +1549,10 @@ main li a[href]:not([class*="btn"]):not([class*="button"]):not([role="button"]) 
 // Theme Management
 
 
-// Chatbot
-function openChatbot() {
-    document.getElementById('chatbotModal').classList.add('open');
-}
 
-function closeChatbot() {
-    document.getElementById('chatbotModal').classList.remove('open');
-}
 
-function selectOption(option) {
-    const messages = document.getElementById('chatMessages');
-    let response = '';
-    let userText = '';
-    
-    switch(option) {
-        case 'home':
-            userText = 'Take me to the homepage';
-            response = "Sure. Click <a href='index.html'>here</a> to go to our homepage where you can explore all our free courses, labs, and games.";
-            break;
-        case 'courses':
-            userText = 'I want to browse courses';
-            response = "Visit our <a href='catalog.html'>course catalog</a> to browse all 22 flagship and 84 foundational courses on MEAL, Theory of Change, and more.";
-            break;
-        case 'help':
-            userText = 'I need help finding something';
-            response = "I'm here to help. You can check our <a href='faq.html'>FAQ</a>, browse the <a href='sitemap.html'>sitemap</a>, or email us at <a href='mailto:hello@impactmojo.in'>hello@impactmojo.in</a>.";
-            break;
-        default:
-            response = 'How can I help you today?';
-    }
-    
-    const userMsg = document.createElement('div');
-    userMsg.className = 'message';
-    userMsg.innerHTML = `<div class="user-bubble">${userText}</div>`;
-    messages.appendChild(userMsg);
-    
-    setTimeout(() => {
-        const botMsg = document.createElement('div');
-        botMsg.className = 'message bot-message';
-        botMsg.innerHTML = `
-            <div class="bot-avatar">
-                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
-            </div>
-            <div class="bot-bubble">${response}</div>
-        `;
-        messages.appendChild(botMsg);
-        messages.scrollTop = messages.scrollHeight;
-    }, 500);
-}
 
-function handleChatKeyPress(event) {
-    if (event.key === 'Enter') {
-        sendChatMessage();
-    }
-}
 
-function sendChatMessage() {
-    const input = document.getElementById('chatInput');
-    const message = input.value.trim();
-    
-    if (!message) return;
-    
-    const messages = document.getElementById('chatMessages');
-    
-    const userMsg = document.createElement('div');
-    userMsg.className = 'message';
-    userMsg.innerHTML = `<div class="user-bubble">${message}</div>`;
-    messages.appendChild(userMsg);
-    
-    input.value = '';
-    
-    setTimeout(() => {
-        let response = "I understand you're looking for something specific. Try our <a href='sitemap.html'>sitemap</a> for a complete list of pages, or <a href='mailto:hello@impactmojo.in'>email us</a> if you need help finding something.";
-        
-        const lowerMsg = message.toLowerCase();
-        if (lowerMsg.includes('course') || lowerMsg.includes('learn')) {
-            response = "We offer free courses on MEAL, Theory of Change, Research Methods, and more. Check our <a href='catalog.html'>Catalog</a> for all courses.";
-        } else if (lowerMsg.includes('workshop') || lowerMsg.includes('training')) {
-            response = "We offer customized workshops for NGOs and development teams. Visit our <a href='workshops.html'>Workshops page</a> for details.";
-        } else if (lowerMsg.includes('blog') || lowerMsg.includes('article')) {
-            response = "Visit our <a href='blog.html'>Learning Loops blog</a> for insights on MEAL, Theory of Change, and development practice.";
-        } else if (lowerMsg.includes('free') || lowerMsg.includes('cost') || lowerMsg.includes('price')) {
-            response = "All core educational content on ImpactMojo is completely free. We follow a 'pay what you think is fair' philosophy.";
-        } else if (lowerMsg.includes('contact') || lowerMsg.includes('email')) {
-            response = "You can reach us at <a href='mailto:hello@impactmojo.in'>hello@impactmojo.in</a> or visit our <a href='contact.html'>Contact page</a>.";
-        }
-        
-        const botMsg = document.createElement('div');
-        botMsg.className = 'message bot-message';
-        botMsg.innerHTML = `
-            <div class="bot-avatar">
-                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
-            </div>
-            <div class="bot-bubble">${response}</div>
-        `;
-        messages.appendChild(botMsg);
-        messages.scrollTop = messages.scrollHeight;
-    }, 800);
-}
 
 // Initialization
 
@@ -1958,7 +1569,7 @@ document.addEventListener('click', function(e) {
 
 
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
-<script src="/js/search.js?v=e4b820bd" defer></script>
+<script src="/js/search.js?v=a8b15de1" defer></script>
 <!-- ImpactMojo Theme Toggle JS -->
 <script src="/js/theme.js?v=ca787a55"></script>
 
@@ -1969,6 +1580,5 @@ document.addEventListener('click', function(e) {
 <script src="/js/auth.js?v=07971316"></script>
 <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
   <script src="/js/site-chrome.js?v=611274c1" defer></script>
-<script src="/js/mojini-ai.js?v=d120c762" defer></script>
 </body>
 </html>

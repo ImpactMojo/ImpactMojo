@@ -51,7 +51,7 @@ Beyond the one-on-one sessions, Coaching offers **three-day intensive workshops*
 
 - **One-on-one sessions:** click the **Book an appointment** button on any service card to schedule directly through Google Calendar.
 - **Workshops:** there is no direct calendar booking, use the [Contact page](/contact.html) and mention your preferred course topic and dates.
-- **Not sure which service fits?** Use the "Have Questions?" contact call-to-action, write to `hello@impactmojo.in`, or ask **Mojini**, the on-page assistant, for pricing, service, and booking help.
+- **Not sure which service fits?** Use the "Have Questions?" contact call-to-action, write to `hello@impactmojo.in`, or search the site (Ctrl+K) for short answers on pricing, services and booking.
 
 ---
 

@@ -19,7 +19,6 @@
   - [తరచుగా అడిగే ప్రశ్నలు](faq.md)
 
 - **సాధనాలు & వనరులు**
-  - [Mojini (ప్లాట్‌ఫారమ్ అసిస్టెంట్)](mojini-guide.md)
   - [ImpactLex (పదకోశం)](impactlex-guide.md)
   - [FieldCases (కేస్ లైబ్రరీ)](fieldcases-guide.md)
   - [DevDiscourses (పరిశోధన)](devdiscourses-guide.md)

@@ -46,12 +46,6 @@ When AI is involved in content creation, it goes through a multi-stage review:
 
 ---
 
-## What About Mojini?
-
-Mojini, ImpactMojo's platform assistant chatbot, is **not AI-powered**. It's a structured FAQ system that matches your question to pre-written answers. It doesn't use a large language model, doesn't generate text, and doesn't learn from your conversations. See the [Mojini Guide](mojini-guide.md) for details.
-
----
-
 ## How Often We Review This Policy
 
 The AI policy is reviewed **quarterly** (every 3 months). When changes are made, they're communicated via the ImpactMojo newsletter and posted on the website.

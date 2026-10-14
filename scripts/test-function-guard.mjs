@@ -1,7 +1,7 @@
 /**
  * Contract test for netlify/lib/guard.mjs and the functions that use it:
  * the Origin check, the Blobs rate limiter (with an in-memory store), the
- * constant-time comparison, and the limits on /api/mojini, /api/translate,
+ * constant-time comparison, and the limits on /api/translate,
  * /api/form-submit and the instructor-kit receipt in submission-created.
  *
  * Every one of these failures is silent in production: an open LLM proxy
@@ -70,28 +70,6 @@ ck('store down, fail closed refuses', !closed.ok && closed.reason === 'unavailab
 
 // ---- functions ------------------------------------------------------------
 const ORIGIN = { Origin: 'https://www.impactmojo.in', 'x-nf-client-connection-ip': '203.0.113.9' };
-
-console.log('/api/mojini');
-reset();
-process.env.GROQ_API_KEY = 'g';
-let llmCalls = 0;
-global.fetch = async () => { llmCalls++; return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: 'An answer.' } }] }) }; };
-const { default: mojini } = await import(new URL('../netlify/functions/mojini.mjs', import.meta.url));
-ck('cross-site request refused', (await mojini(req({ Origin: 'https://evil.example' }, { question: 'hi' }))).status === 403);
-ck('request with no browser headers refused', (await mojini(req({}, { question: 'hi' }))).status === 403);
-ck('refused requests reach no model', llmCalls === 0);
-let last;
-for (let i = 0; i < 30; i++) last = await mojini(req(ORIGIN, { question: 'What is MEL?' }));
-ck('30 questions an hour answered', last.status === 200);
-const over = await mojini(req(ORIGIN, { question: 'What is MEL?' }));
-ck('31st question is a 429', over.status === 429 && /hour/.test((await over.json()).error));
-ck('a 429 carries Retry-After', over.headers.get('Retry-After') !== null);
-ck('the 31st reached no model', llmCalls === 30);
-reset();
-const { createHash } = await import('node:crypto');
-mem.set(`mojini-all/${Math.floor(Date.now() / 86400000)}/${createHash('sha256').update('all').digest('hex').slice(0, 32)}`, '3000');
-const budget = await mojini(req(ORIGIN, { question: 'What is MEL?' }));
-ck('daily budget spent gives a clear 429', budget.status === 429 && /today/.test((await budget.json()).error));
 
 console.log('/api/translate');
 reset();
