@@ -364,8 +364,8 @@ SLIDES += [
             "follow-up and review. It sits alongside the Paris Agreement, the Addis Ababa "
             "Action Agenda, the New Urban Agenda and the Sustainable Development Goals.")],
          [T(["Feature", "Hyogo 2005-2015", "Sendai 2015-2030"],
-            [["Focus", "Building resilience of nations and communities", "Managing risk, not "
-              "only managing disasters"],
+            [["Focus", "Building resilience of nations and communities", "Managing risk as well "
+              "as disasters"],
              ["Targets", "None quantified at global level", "Seven global targets, 38 indicators"],
              ["Hazards covered", "Mainly natural", "Natural and man-made, including "
               "environmental, technological and biological"],
@@ -396,7 +396,7 @@ SLIDES += [
           H("cyan", "The goal names exposure and vulnerability explicitly. It says nothing about "
             "stopping hazards, because most cannot be stopped.")])),
 
-    C("Seven targets", "The seven global targets, verbatim in substance",
+    C("Seven targets", "The seven global targets",
       T(["Target", "What it asks for", "By"],
         [["(a) Mortality", "Substantially reduce global disaster mortality, aiming to lower the "
           "average per 100,000 mortality rate in 2020-2030 compared with 2005-2015", "2030"],
@@ -409,7 +409,7 @@ SLIDES += [
           "facilities, including by developing their resilience", "2030"],
          ["(e) Strategies", "Substantially increase the number of countries with national and "
           "local disaster risk reduction strategies", "2020"],
-         ["(f) Cooperation", "Substantially enhance international cooperation to developing "
+         ["(f) Cooperation", "Substantially increase international cooperation with developing "
           "countries through adequate and sustainable support", "2030"],
          ["(g) Early warning", "Substantially increase the availability of and access to "
           "multi-hazard early warning systems and disaster risk information and assessments "
@@ -974,7 +974,7 @@ SLIDES += [
     C("The record", "Deaths in Odisha's major cyclones since 1999",
       TW([CH("dhOdishaChart", "bar", "Deaths in Odisha, by cyclone (log scale)",
              FANI + ", executive summary and ch. 15. 1999 is the report's figure of nearly "
-             "10,000; Hudhud (2014) recorded 0 deaths in Odisha and cannot be shown on a log scale.",
+             "10,000. Hudhud (2014) recorded 0 deaths in Odisha and cannot be shown on a log scale.",
              {"labels": ["Super cyclone 1999", "Phailin 2013", "Titli 2018", "Fani 2019"],
               "datasets": [{"label": "Deaths", "data": [10000, 44, 61, 64],
                             "backgroundColor": ["#EF4444", "#0EA5E9", "#0EA5E9", "#0EA5E9"]}]},
@@ -997,7 +997,7 @@ SLIDES += [
 
     C("Fani, step by step", "Cyclone Fani: eleven days of warning",
       FLOW("25 April 2019: IMD identifies a low pressure area",
-           "Storm meanders over the Bay of Bengal for 11 days; forecast track revised 9 times",
+           "Storm meanders over the Bay of Bengal for 11 days and its forecast track is revised 9 times",
            "29 April: landfall in Odisha confirmed",
            "30 April, 1 PM: IMD cyclone watch for the Odisha coast",
            "1 May: Collectors told to move vulnerable people, older, disabled people, women and children",
@@ -1123,7 +1123,7 @@ SLIDES += [
       TW([B("Floods accounted for 55.09 per cent of what States spent on notified disasters from "
             "2019-20 to 2023-24, far more than any other hazard (" + FC16 + ", Figure 11.5). "
             "They are frequent, they cover large areas, and most of their cost is in lost crops, "
-            "damaged houses and broken roads rather than in deaths."),
+            "damaged houses and broken roads. Deaths are a smaller part."),
           B("Flood risk has four sources that call for different responses. Riverine floods "
             "build over days and can be forecast from upstream gauges. Flash floods and "
             "cloudbursts in the hills give minutes of warning. Urban floods happen when drains "
@@ -1325,7 +1325,7 @@ SLIDES += [
             [["s. 7(1)", "A State may recommend special operational relaxations during natural "
               "calamities or extraordinary circumstances"],
              ["s. 7(2)", "The Centre may allow temporary expansion of permissible works, relaxed "
-              "documentation, or enhanced wage employment"],
+              "documentation, or more wage employment"],
              ["s. 5(4)", "Work beyond the guaranteed days may be provided within economic "
               "capacity"],
              ["Schedule I, Category IV", "Works to mitigate extreme weather: shelters, "
@@ -1401,7 +1401,7 @@ SLIDES += [
             "people die at lower temperatures where it is humid, where nights stay hot, and "
             "where people are not used to the heat."),
           TERM("Warm night (IMD)", "Considered only when the maximum stays at 40°C or more. A warm "
-               "night is a minimum temperature 4.5°C to 6.4°C above normal; a very warm night is "
+               "night is a minimum temperature 4.5°C to 6.4°C above normal. A very warm night is "
                "more than 6.4°C above normal."),
           H("amber", "Many city heat action plans set their own lower, local thresholds based on "
             "when deaths rise in that city. Pillai and Dalal found only ten of 37 plans did so "
@@ -1409,7 +1409,7 @@ SLIDES += [
 
     C("Heat in India", "Hotter days, and nights that do not cool",
       TW([B("The Sixteenth Finance Commission records that the frequency and intensity of hot "
-            "days in India increased significantly over 1981 to 2022, with notable heatwaves in "
+            "days in India increased significantly over 1981 to 2022, with major heatwaves in "
             "2013, 2016, 2019, 2022 and 2024, and a marked rise in very warm nights in the last "
             "decade. It explains why nights matter: warm nights stop the body recovering from "
             "daytime heat, which raises the risk of heat illness such as heatstroke "
@@ -1642,3 +1642,557 @@ SLIDES += [
             "Labour and Livelihoods 101</a>.")]),
       compact=True),
 ]
+
+# ===================== SECTION 09: EARLY WARNING AND ANTICIPATORY ACTION =====================
+SLIDES += [
+    D("09", "Section Nine", "Early warning and anticipatory action"),
+
+    C("The chain", "A warning works only if every link holds",
+      FLOW("Forecast: the hazard is detected and its path or intensity predicted",
+           "Warning: an authority decides what it means and who must act",
+           "Dissemination: the message reaches people by channels they use",
+           "Understanding: people trust it and know what to do",
+           "Action: people and officials act in time, with the means to act"),
+      TW([B("Sendai target (g) asks countries to substantially increase the availability of and "
+            "access to multi-hazard early warning systems and disaster risk information by 2030 "
+            "(" + SENDAI + ", para 18). The phrase access to is important. A forecast that is "
+            "accurate but reaches only people with smartphones, in English, is not an early "
+            "warning system for most of rural South Asia."),
+          B("Fani shows the full chain working. IMD tracked the storm for eleven days. The State "
+            "turned the forecast into instructions to Collectors. Messages went out in Odia by "
+            "SMS, sirens, FM and community radio. Volunteers and NGOs went door to door. "
+            "Shelters, transport and food were ready, so people had somewhere to go "
+            "(" + FANI + ").")],
+         [T(["Link", "Typical failure"],
+            [["Forecast", "Too coarse for a district; no humidity in heat forecasts"],
+             ["Warning", "No one has the authority or the trigger to act"],
+             ["Dissemination", "Messages in the wrong language or channel"],
+             ["Understanding", "People do not trust it after past false alarms"],
+             ["Action", "No shelter nearby, no transport, or leaving costs a day's wage"]]),
+          B("Illustrative.", sm=True)]),
+      compact=True),
+
+    C("The last mile", "Who does not receive the warning",
+      TW([B("Warnings travel along the lines of ordinary inequality. Phones are more often owned "
+            "and controlled by men. People who are deaf or blind need warnings in forms they can "
+            "receive. Migrant workers may not speak the local language and are often not "
+            "registered in the village. People working in fields hear sirens but not SMS. Older "
+            "people living alone may hear the warning and have no one to help them move."),
+          B("Odisha's Collectors were told on 1 May 2019 to identify all vulnerable people and "
+            "move them, with special care for older people, physically challenged people, women "
+            "and children (" + FANI + ", ch. 15). An instruction like that works only if a list "
+            "of those people, by village, already exists."),
+          B("Illustrative analysis.", sm=True)],
+         [T(["Group", "Channel that reaches them"],
+            [["Fisherfolk at sea", "Radio, boat-to-boat, harbour announcements"],
+             ["Farm labourers in fields", "Sirens, loudspeakers, employer and supervisor"],
+             ["Women without phones", "Self-help groups, anganwadi workers, door-to-door"],
+             ["Deaf and hard of hearing people", "Text, visual signals, a named neighbour"],
+             ["Blind and low-vision people", "Voice calls, a named neighbour"],
+             ["Migrant workers", "Employers, worksite announcements, their own language"],
+             ["Older people living alone", "A named volunteer who checks on them"]]),
+          H("cyan", "The Sendai Framework asks that older persons be included in designing early "
+            "warning (para 36(a)(iv)). The simplest form is a register of who needs a visit.")])),
+
+    C("Anticipatory action", "Acting on the forecast, before the disaster",
+      TW([TERM("Anticipatory action",
+               "Pre-agreed actions, with money set aside in advance, that are released when a "
+               "forecast crosses a threshold and before the hazard strikes, to reduce its impact. "
+               "Sendai's fourth priority asks countries to take action in anticipation of "
+               "events (" + SENDAI + ")."),
+          B("Most disaster finance waits for damage to be assessed. Anticipatory action reverses "
+            "the order: decide in advance what will be done and who pays, then act on the "
+            "forecast. The cost is that sometimes the hazard is weaker than forecast and the "
+            "money is spent on a disaster that did not happen.")],
+         [T(["Anticipatory step taken before Fani", "What it protected"],
+            [["Fishing suspended two days before landfall", "Lives at sea"],
+             ["Food grains placed in fair price shops", "Food access when roads closed"],
+             ["Take-home rations and eggs to pregnant and lactating women and children under "
+              "three by 1 May", "Nutrition through the disruption"],
+             ["About 600 pregnant women moved to Maa Gruhas and delivery points",
+              "Safe births during the storm"],
+             ["Polythene sheets stocked at district and sub-district level", "Shelter for "
+              "those whose houses fell"]]),
+          B("Source: " + FANI + ". The Ahmedabad heat plan works the same way, triggered by a "
+            "7-day forecast (" + KNOW + ").", sm=True)])),
+
+    C("Designing triggers", "A trigger is a forecast, a threshold and an action",
+      T(["Hazard", "Forecast used", "Lead time", "Pre-agreed action", "Cost if forecast is wrong"],
+        [["Cyclone", "IMD track and intensity", "2 to 5 days", "Suspend fishing; open shelters; "
+          "move people", "Lost fishing days; shelter costs"],
+         ["Riverine flood", "Upstream gauge levels", "1 to 4 days", "Cash to households in the "
+          "flood path; move livestock", "Cash paid to households not flooded"],
+         ["Heatwave", "District temperature and humidity forecast", "3 to 7 days", "Shift work "
+          "hours; open cooling spaces; alert hospitals", "Lost work hours on a normal day"],
+         ["Landslide", "Accumulated rainfall threshold", "Hours to a day", "Evacuate slope-foot "
+          "houses; close roads", "Disruption, loss of trust"],
+         ["Drought", "Seasonal rainfall and vegetation", "Weeks to months", "Expand public "
+          "works; fodder; school meals in vacation", "Spending in a year that recovers"]]),
+      TW([B("Illustrative. Lead times are typical orders of magnitude, not guarantees.", sm=True)],
+         [H("amber", "Write down the cost of acting in vain before the season. A system with no "
+            "false alarms is probably acting too late.")]),
+      compact=True),
+
+    C("Trust", "False alarms, missed alarms and trust",
+      TW([B("Every warning system trades two errors. A low threshold gives more false alarms: "
+            "people leave homes, lose wages and come back to find nothing happened. A high "
+            "threshold gives more missed events: people stay home and the hazard arrives. After "
+            "a few false alarms people stop leaving, so the second error starts to follow from "
+            "the first."),
+          B("Fani's forecast track was revised nine times while the storm meandered over the "
+            "Bay of Bengal, and Odisha was expected to be spared in the early days (" + FANI +
+            ", ch. 15). The response was still timely because evacuation began only once "
+            "landfall in Odisha was confirmed, with enough lead time left to move people.")],
+         [BL(["Explain uncertainty plainly: say how likely the event is and when it will be "
+              "known for sure.",
+              "Compensate people for the cost of acting: food in shelters, wage protection for "
+              "workers who stop in heat.",
+              "After every event, publish what was forecast, what happened and what was done.",
+              "Keep warning language the same across seasons so people recognise it.",
+              "Involve the people warned in setting the thresholds that affect them."], "cyan"),
+          B("Illustrative good practice.", sm=True)])),
+
+    C("Measuring warnings", "How to tell whether an early warning system works",
+      T(["Question", "Indicator", "Source"],
+        [["Did the warning reach people?", "Share of households that received it, by sex, "
+          "caste, disability, migrant status", "Post-event household survey"],
+         ["How early?", "Hours between the first warning received and the hazard's impact",
+          "Survey; SMS and siren logs"],
+         ["Did people understand?", "Share who could say what the warning asked them to do",
+          "Survey"],
+         ["Did they act?", "Share who evacuated or took the protective step, and reasons for not "
+          "acting", "Survey; shelter registers"],
+         ["Who was left out?", "Deaths and injuries among people who did not receive or could "
+          "not act on the warning", "Death audits; case reviews"],
+         ["Was it accurate?", "Hits, misses and false alarms over several seasons",
+          "Forecast verification"]]),
+      TW([B("Illustrative indicator set. Sendai's target (g) is reported at national level. These "
+            "questions bring it down to the people the system is meant to reach.", sm=True)],
+         [H("cyan", "The disaggregation is the hard part and the useful part. An average "
+            "coverage of 90 per cent can hide a hamlet that received nothing.")]),
+      compact=True),
+]
+
+# ===================== SECTION 10: RELIEF, RECOVERY, EXCLUSION =====================
+SLIDES += [
+    D("10", "Section Ten", "Relief, recovery and who relief misses"),
+
+    C("Phases", "Response, relief, recovery and reconstruction mean different things",
+      TW([T(["Term (DM Act, s. 2, as amended)", "Meaning"],
+            [["Response, s. 2(pa)", "Action taken directly before, during or after a disaster to "
+              "save lives, reduce injury and health impact, ensure public safety and meet basic "
+              "subsistence needs"],
+             ["Rehabilitation, s. 2(ob)", "Restoration of basic services, facilities and capacity "
+              "for the functioning of an affected community"],
+             ["Recovery, s. 2(oa)", "Restoration or improvement of the economic, physical, social, "
+              "cultural and environmental assets, systems and activities of an affected "
+              "community"],
+             ["Reconstruction, s. 2(o)", "Rebuilding and restoring infrastructure, services, "
+              "buildings and facilities required for the community to function"]]),
+          B("Source: " + DMA25 + ", s. 2.", sm=True)],
+         [B("Relief is fast, visible and mostly paid by the State response fund. Recovery is "
+            "slow, harder to see and easy to underfund. Under the Fifteenth Commission's "
+            "national fund, the Response and Relief window had released ₹14,855 crore of its "
+            "₹27,385 crore by 31 July 2025, while the Recovery and Reconstruction window had "
+            "released ₹818.74 crore of ₹20,539 crore (" + FC16 + ", Table 11.1)."),
+          B("Recovery decides whether a household returns to where it was. A family that has "
+            "sold its livestock, taken a high-interest loan and pulled a child out of school "
+            "may be counted as relieved and still be poorer for a decade."),
+          H("amber", "The definition of recovery in the Act includes improvement as well as "
+            "restoration. That is the legal hook for Build Back Better.")])),
+
+    C("Caste", "The 2004 tsunami: Dalits blocked from relief",
+      TW([B("The December 2004 tsunami killed at least 10,273 people in India, 8,010 of them in "
+            "Tamil Nadu, and displaced at least 6,47,556 into emergency shelters. Human Rights "
+            "Watch reported consistent accounts of caste discrimination in the distribution of "
+            "aid. Fishing communities, who regard themselves as a higher caste, often blocked "
+            "relief from reaching Dalits."),
+          B("In one case a fishing community refused to share water provided by UNICEF and other "
+            "relief organisations, claiming the Dalits would pollute it. A Dalit rights activist "
+            "told HRW that relief materials could not be taken to Dalit areas because the "
+            "fishing community refused to let them pass. Coastal farm labourers, sharecroppers "
+            "and tenants, many of them Dalits, lost their crops and wages to seawater but were "
+            "ignored in the first relief because they had suffered fewer deaths."),
+          B("Source: " + HRW + ".", sm=True)],
+         [Q("We had problems earlier as relief materials could not be taken to Dalit areas "
+            "because the fishing community refused to let us pass.",
+            "Murlidharan, Dalit rights activist, quoted in " + HRW),
+          B("The government changed some policies when told of discrimination, and later "
+            "assessed damage in Dalit communities and distributed rations to them. HRW's "
+            "conclusion was that the greatest source of trouble was discrimination against "
+            "Dalits by other victims of the tsunami, and that rooting it out required proactive "
+            "measures from the government."),
+          H("red", "Fifteen years later, the Fani assessment recorded segregated food and "
+            "facilities in cyclone shelters and recommended placing new shelters closer to "
+            "Dalit hamlets (" + FANI + ").")])),
+
+    C("Women", "When relief is paid to the head of household",
+      TW([B("After the tsunami, Human Rights Watch found that women's access to aid was brokered "
+            "through husbands, fathers or other male relatives, because ration cards, the main "
+            "proof of identity and residence, were issued in the name of the male head of the "
+            "household. Women complained that relief and compensation were distributed through "
+            "male heads, and press reports described cash relief that did not reach families. "
+            "Unmarried, widowed and divorced women were often absorbed into the households of "
+            "relatives instead of being counted as independent households."),
+          B("The government did not treat women from fishing communities as workers, although "
+            "most cleaned, sold and processed fish before the tsunami. Vocational offers of "
+            "basket weaving or sewing gave low, irregular income and reinforced stereotypes "
+            "about women's work (" + HRW + ").")],
+         [T(["Practice", "Effect on women", "Alternative"],
+            [["Relief paid to the ration card holder", "Women depend on male relatives",
+              "Register adults individually"],
+             ["Livelihood support only for boat owners", "Women fish workers get nothing",
+              "Count women's work in the fishery"],
+             ["Shelters without private toilets", "Risk to privacy and safety", "Separate, lit, "
+              "lockable facilities"],
+             ["Housing rebuilt in the husband's name", "Women's tenure insecure", "Joint title"],
+             ["Male-only relief committees", "Women's needs missed", "Women on every committee"]]),
+          B("HRW recommended registering men, women and children individually and involving "
+            "women at all levels of planning and distribution. The Fani assessment recommended "
+            "priority housing assistance for women-led households.", sm=True)])),
+
+    C("Migrants", "People who are not on the list",
+      TW([B("Relief systems in India run on lists: ration cards, voter rolls, land records, "
+            "panchayat household registers. A person who is not on the local list is invisible "
+            "to relief. After Fani, the ₹2,000 cash transfer and 50 kg of rice went only to ration "
+            "card holders, which excluded many migrants and brick kiln workers who were not "
+            "residents but were equally affected (" + FANI + ")."),
+          B("The new rural employment law contains a model provision. In a national calamity "
+            "such as a flood, cyclone, tsunami or earthquake that dislocates rural people, "
+            "adults from affected areas may register and get a job card from the Gram Panchayat "
+            "or Programme Officer where they have temporarily relocated, apply for work there, "
+            "and get lost cards reissued. Work done there counts towards the 125 days "
+            "(" + VBG + ", Schedule II, para 10).")],
+         [T(["Who falls off the list", "Why"],
+            [["Seasonal migrant workers", "Registered in the home village, working elsewhere"],
+             ["Brick kiln and salt pan workers", "Live at the worksite, often with families"],
+             ["Tenants and sharecroppers", "Crop relief follows land records"],
+             ["Urban renters and pavement dwellers", "No address proof"],
+             ["Nomadic and pastoral groups", "Move between districts"],
+             ["Single women in relatives' households", "Counted within another household"]]),
+          H("cyan", "Sendai says migrants contribute to the resilience of communities and should "
+            "be engaged in designing disaster risk reduction (paras 7, 36(a)(vi)). The first "
+            "practical step is to count them before the disaster.")])),
+
+    C("Disability and age", "People who cannot reach the shelter",
+      TW([B("Human Rights Watch noted after the tsunami that disasters hurt persons with existing "
+            "disabilities disproportionately and create new disabilities among the injured. "
+            "People lose assistive devices such as crutches, artificial limbs and hearing or "
+            "visual aids, and their usual caregivers may be killed, injured or diverted to "
+            "other tasks. It recommended that shelters, health centres, housing and schools "
+            "rebuilt after the disaster be accessible (" + HRW + ")."),
+          B("The Fani assessment found that people with disabilities were among the most "
+            "affected despite the evacuation, and recommended supplying assistive devices and "
+            "giving self-help groups of persons with disabilities better market links "
+            "(" + FANI + ").")],
+         [BL(["Keep a village register of people who need help to evacuate, and name the "
+              "person responsible for each.",
+              "Make at least one shelter per cluster accessible: ramps, accessible toilets, "
+              "space for wheelchairs.",
+              "Include organisations of persons with disabilities in drawing up the plan, as "
+              "Sendai para 36(a)(iii) asks.",
+              "Stock replacement assistive devices and medicines for chronic illness.",
+              "For heat, check on older people living alone during every alert."], "cyan"),
+          H("amber", "Section 61 of the Act, which bans discrimination in relief, names sex, "
+            "caste, community, descent and religion. It does not name disability or age.")])),
+
+    C("Inclusive relief", "A checklist for relief that reaches everyone",
+      T(["Principle", "What it means in practice", "Source of the lesson"],
+        [["No discrimination", "Monitor distribution by caste, religion and sex; act on "
+          "complaints at once", "DM Act s. 61; HRW 2005; Fani DLNA"],
+         ["Individual entitlement", "Register adults individually; pay women directly", "HRW 2005"],
+         ["No residence test", "Give relief to everyone affected, including migrants and "
+          "non-residents", "Fani DLNA"],
+         ["Family size", "Scale food to household size", "Fani DLNA"],
+         ["Count indirect losses", "Include labourers, traders and others who lost income, as well "
+          "as those who lost family members or boats", "HRW 2005"],
+         ["Accessible shelters", "Ramps, toilets, privacy, lighting", "HRW 2005; Sendai para 36"],
+         ["Voice in recovery", "Low-income communities and women on reconstruction "
+          "committees", "Fani DLNA; HRW 2005"]]),
+      TW([B("Synthesised from the documents cited. Each row is a failure that has been recorded "
+            "in India.", sm=True)],
+         [H("green", "For environmental injustice more broadly, see "
+            "<a href=\"https://www.impactmojo.in/101-courses/env-justice.html\">Environmental "
+            "Justice 101</a>.")]),
+      compact=True),
+]
+
+# ===================== SECTION 11: INSURANCE AND SOCIAL PROTECTION =====================
+SLIDES += [
+    D("11", "Section Eleven", "Insurance and social protection in a shock"),
+
+    C("Risk layering", "Different layers of risk need different money",
+      TW([B("Disaster risk finance divides losses into layers by how often they happen and how "
+            "large they are. Small, frequent losses are cheapest to absorb from savings, budgets "
+            "and social protection. Medium losses are what State response funds are for. Rare, "
+            "very large losses are where insurance, reinsurance and catastrophe bonds can move "
+            "risk off the public budget."),
+          B("India relies mostly on public funds. The Sixteenth Finance Commission found that "
+            "insurance as a supplement to public disaster finance remains at a nascent stage, "
+            "except for crop insurance, because of few products, low penetration, low awareness "
+            "and high cost, and because governments prefer post-disaster payouts to buying cover "
+            "in advance (" + FC16 + ", para 11.88).")],
+         [T(["Layer", "Frequency", "Who usually pays"],
+            [["Household shocks", "Every year", "Savings, loans, family, social protection"],
+             ["Local disasters", "Every few years", "SDRF, scheme relaxations"],
+             ["Severe disasters", "Once in a decade or so", "NDRF, after IMCT assessment"],
+             ["Catastrophes", "Rare", "Budget reallocation, borrowing; insurance or catastrophe "
+              "bonds where they exist"]]),
+          B("Illustrative. NDMA has asked for risk pools: hazard-mortality and captive insurance, "
+            "a national catastrophic risk insurance pool and a national catastrophe bond (" +
+            FC16 + ", para 11.31).", sm=True)])),
+
+    C("Crop insurance", "Pradhan Mantri Fasal Bima Yojana",
+      TW([B("The Sixteenth Finance Commission describes PMFBY as the world's largest crop "
+            "insurance scheme. The Union and State governments together pay 85 to 90 per cent "
+            "of the premium. Even so, farmer penetration had reached 40 per cent over eight "
+            "years. Of farmer applications enrolled in 2024-25, 6.5 per cent were from tenant "
+            "farmers, 17.6 per cent from marginal farmers and 48 per cent from loanee farmers "
+            "(" + FC16 + ", para 11.89)."),
+          B("The Commission names technology-based assessment of crop losses and timely "
+            "payment of claims as the keys to the scheme's future. For a disaster practitioner "
+            "the enrolment figures are the warning: crop insurance protects people who have land "
+            "and loans. Tenant farmers are a small share of enrolment and landless labourers are "
+            "not covered at all.")],
+         [ST([CARD("85-90%", "of PMFBY premium paid by governments", "cyan", "FC-16 para 11.89"),
+              CARD("40%", "farmer penetration after eight years", "amber", "FC-16 para 11.89"),
+              CARD("6.5%", "of 2024-25 enrolled applications from tenant farmers", "red",
+                   "FC-16 para 11.89")], 1),
+          H("amber", "Loanee farmers made up almost half of enrolled applications. Insurance tied "
+            "to credit reaches borrowers first.")])),
+
+    C("Parametric cover", "Insurance that pays on a measurement, not on a loss survey",
+      TW([TERM("Parametric insurance",
+               "Cover that pays a pre-agreed amount when a measured index crosses a threshold, "
+               "such as rainfall at a weather station, wind speed or temperature, without a "
+               "survey of each policyholder's loss. It pays fast. Its weakness is basis risk: a "
+               "household can suffer a loss when the index does not trigger, or receive money "
+               "when it suffered none."),
+          B("Nagaland is the Sixteenth Commission's example. Its Disaster Risk Transfer "
+            "Parametric Insurance Solution is described as the first initiative in India to "
+            "insure an entire State against extreme rainfall, using automated weather stations "
+            "to set triggers, in a partnership of the Nagaland SDMA, SBI General Insurance, Munich "
+            "Re and GIC Re. The Commission calls it a success that remains isolated and limited "
+            "in scale (" + FC16 + ", para 11.90).")],
+         [T(["Design question", "Why it matters"],
+            [["Who holds the policy?", "A State policy pays the government; a household policy "
+              "pays the family"],
+             ["What is the index?", "Rainfall, wind or temperature must match the harm"],
+             ["How dense are the stations?", "Sparse stations increase basis risk"],
+             ["Where does the payout go?", "A State payout helps people only if a plan says how "
+              "it will be spent"],
+             ["Who pays the premium?", "Affordability decides coverage"]]),
+          B("The Commission also notes that the Department of Financial Services and NDMA are "
+            "working on a single-peril parametric insurance product, and recommends that "
+            "insurance and catastrophe bonds be studied for affordability, applicability and "
+            "scope for customisation (para 11.91).", sm=True)])),
+
+    C("Social protection", "Social protection that scales up in a shock",
+      TW([B("Shock-responsive social protection uses programmes that already exist to deliver "
+            "help when a disaster strikes. A programme can pay more to people already enrolled "
+            "(vertical expansion), add affected people who were not enrolled (horizontal "
+            "expansion), relax its rules for a time, or lend its payment system and lists to a "
+            "relief operation. Each route is faster than building a new relief scheme after the "
+            "event."),
+          B("Pakistan's 2022 response used a flood relief cash transfer that gave PKR 25,000 to "
+            "1.1 million targeted households to meet emergency needs (" + PDNA + ", ch. 3). "
+            "After Fani, Odisha paid ₹2,000 and 50 kg of rice to ration card holders, and the "
+            "assessment recommended advance payment of social security entitlements and cash "
+            "for work (" + FANI + ").")],
+         [T(["Route", "Indian example", "Who it misses"],
+            [["Vertical: pay more to existing beneficiaries", "Advance social security payments "
+              "after Fani (recommended)", "People not already enrolled"],
+             ["Horizontal: add new people", "Relief to all affected without proof of residency "
+              "(recommended after Fani)", "Requires a way to identify them fast"],
+             ["Relax rules", "VB-G RAM G s. 7: temporary expansion of works, relaxed "
+              "documentation, more employment", "Depends on the Centre agreeing"],
+             ["Portability", "VB-G RAM G Schedule II para 10: job cards at the place of "
+              "relocation", "People who do not know the right exists"]]),
+          B("The four routes are standard categories from the social protection literature, "
+            "used here for teaching.", sm=True)])),
+
+    C("Design", "Choosing a financial response for a disaster programme",
+      T(["Need", "Instrument", "Strength", "Limit"],
+        [["Immediate cash after a disaster", "Social protection top-up or relief transfer",
+          "Fast if lists and payment systems exist", "Lists exclude migrants and the unregistered"],
+         ["Income through a long drought", "Rural employment guarantee", "Self-targeting; "
+          "builds assets", "Needs work to be opened in time; peak season pause"],
+         ["Crop loss for cultivators", "PMFBY", "Large scale; subsidised premium",
+          "Low tenant coverage; claims delays"],
+         ["Fast liquidity for a State", "Parametric cover", "Pays in days", "Basis risk; premium "
+          "cost"],
+         ["Reconstruction of public assets", "SDRF, NDRF recovery window", "Statutory",
+          "Slow release in practice"],
+         ["Reducing future losses", "SDMF, NDMF", "Money exists", "Under-used; needs good "
+          "proposals"]]),
+      TW([B("Illustrative comparison drawing on the evidence in this section and section 04.",
+            sm=True)],
+         [H("cyan", "Combine instruments. A family hit by a cyclone may need a social protection "
+            "top-up in week one, employment in month two, and a rebuilt house in year one.")]),
+      compact=True),
+]
+
+# ===================== SECTION 12: MONITORING AND SOURCES =====================
+SLIDES += [
+    D("12", "Section Twelve", "Monitoring preparedness, and sources"),
+
+    C("What to measure", "Measuring preparedness before the disaster",
+      TW([B("Preparedness is hard to evaluate because its success is a disaster that did less "
+            "harm than it would have. The 2025 amendment gives NDMA two new evaluation powers: "
+            "to undertake disaster preparedness assessments of each State periodically, and to "
+            "undertake post-disaster audits of a State's preparedness and response after a "
+            "severe disaster (" + DMA25 + ", s. 6(2)(t), (u)). States must maintain disaster "
+            "databases that feed a national one (s. 18(2)(p), s. 6(2)(v))."),
+          B("The Sixteenth Finance Commission recommended turning the MHA's National Disaster "
+            "Management Information System into a comprehensive system for the Union and the "
+            "States, capturing real-time, transaction-level disaster data as a single source of "
+            "disaster information (" + FC16 + ", Summary (ix)).")],
+         [T(["Level", "Example indicator for a district"],
+            [["Input", "Mitigation fund money proposed, sanctioned and released"],
+             ["Output", "Shelters maintained and staffed; volunteers trained; registers of "
+              "vulnerable people updated this year"],
+             ["Outcome", "Share of households warned in time and able to act, by group"],
+             ["Impact", "Deaths, affected people and economic loss per 100,000 people, compared "
+              "with earlier events of similar strength"]]),
+          B("Illustrative, following the input, output and outcome levels in UNDRR's Sendai "
+            "monitoring scope.", sm=True)])),
+
+    C("Evaluating", "How to tell whether preparedness worked",
+      T(["Method", "What it tells you", "Example in this course", "Main limitation"],
+        [["Before and after comparison", "Change in deaths or losses after a programme",
+          "Odisha cyclone deaths, 1999 and after", "Storms differ; other changes happen at "
+          "the same time"],
+         ["Temperature-mortality model, before and after", "Change in deaths at the same heat",
+          "Ahmedabad HAP evaluation (Hess et al. 2018)", "One city; wide confidence intervals"],
+         ["Excess mortality", "True death toll of an event", "Ahmedabad May 2010 (Azhar et al. "
+          "2014)", "Needs complete death registration"],
+         ["Damage, loss and needs assessment", "Economic and social cost and recovery needs",
+          "Fani DLNA; Pakistan PDNA", "Usually done once, soon after the event"],
+         ["Simulation drill", "Whether systems work under test", "Not covered here", "Drills "
+          "are not real events"],
+         ["After-action review", "What worked and failed, by step", "Fani DLNA recommendations",
+          "Depends on candour"]]),
+      TW([B("A preparedness evaluation should report results by group. Both the tsunami and Fani "
+            "records show that systems which reduce total deaths can still exclude Dalits, "
+            "migrants, women and disabled people.", sm=True)],
+         [H("amber", "Ask what the counterfactual is. A programme that reports fewer deaths in a "
+            "weaker cyclone has shown nothing.")]),
+      compact=True),
+
+    C("Data", "Where the data for disaster monitoring come from",
+      T(["Data", "Held by", "Use", "Watch for"],
+        [["National Disaster Management Information System", "MHA", "State expenditure by "
+          "disaster and relief item", "Coverage depends on what States enter (FC-16 para 11.43)"],
+         ["State and national disaster databases", "SDMAs and NDMA (2025 amendment)",
+          "Assessments, funds, plans, risk registers", "Whether they are published"],
+         ["Death registration", "Civil registration system in each State", "Excess mortality in "
+          "heatwaves and floods", "Delays and incomplete registration"],
+         ["NCRB accidental deaths data", "National Crime Records Bureau", "Deaths from heat, "
+          "lightning and other forces of nature", "Records only deaths reported to police"],
+         ["IMD observations and forecasts", "India Meteorological Department", "Thresholds, "
+          "warnings, verification", "Station density in rural areas"],
+         ["DesInventar Sendai", "National loss databases built with UNDRR's tool", "Sendai "
+          "targets (a) to (d)", "Self-reported"],
+         ["Post-disaster assessments", "State government with partners", "Damage, loss, needs "
+          "by sector", "One-off; method varies"]]),
+      TW([B("Sources: " + FC16 + "; " + DMA25 + "; UNDRR, monitoring scope of the Sendai "
+            "Framework.", sm=True)],
+         [H("cyan", "Before designing new data collection, list what these sources already hold "
+            "for your district. Most of the gaps are in disaggregation by caste, sex, disability "
+            "and migrant status.")]),
+      compact=True),
+
+    C("A results framework", "Example: results framework for a district heat plan",
+      T(["Level", "Statement", "Indicator", "Source"],
+        [["Impact", "Fewer people die in heatwaves", "Excess all-cause deaths in heat alert "
+          "periods per 100,000", "Civil registration"],
+         ["Outcome 1", "Vulnerable people protect themselves during alerts", "Share of older "
+          "people living alone visited during each alert", "Volunteer logs; survey"],
+         ["Outcome 2", "Outdoor workers avoid peak heat", "Share of registered worksites "
+          "observing changed hours on alert days", "Labour department inspections"],
+         ["Output 1", "Alerts issued on local thresholds", "Alerts issued at least 3 days ahead",
+          "District control room records"],
+         ["Output 2", "Health system ready", "Primary health centres with cooling and oral "
+          "rehydration stocks on 1 April", "Health department checklist"],
+         ["Output 3", "Cool roofs installed", "Number of slum roofs converted", "Municipal "
+          "records"],
+         ["Assumption", "Workers can stop without losing wages", "Wage protection orders in force",
+          "Labour department"]]),
+      B("Illustrative framework built on the Ahmedabad model (Knowlton et al. 2014; ILO 2019 on "
+        "cool roofs) and the gaps in the CPR review. The indicators are examples, not "
+        "standards.", sm=True),
+      compact=True),
+
+    C("Sources", "Sources used in this course (1 of 2)",
+      BL(["UNDRR, What is the Sendai Framework for Disaster Risk Reduction? "
+          "https://www.undrr.org/implementing-sendai-framework/what-sendai-framework",
+          "UNDRR, Sendai Framework for Disaster Risk Reduction 2015-2030 (text). "
+          "https://www.undrr.org/media/16176/download",
+          "Disaster Management Act 2005 (NIDM copy). https://nidm.gov.in/PDF/En_DM_act2005.pdf",
+          "Disaster Management (Amendment) Act 2025, Gazette of India, 29 March 2025. "
+          "https://www.thc.nic.in/Central%20Governmental%20Acts/Disaster%20Management%20Act,%202005.pdf",
+          "PRS Legislative Research, The Disaster Management (Amendment) Bill, 2024. "
+          "https://prsindia.org/billtrack/the-disaster-management-amendment-bill-2024",
+          "Jos Chathukulam, Disaster Management (Amendment) Act, 2025: Old Wine in a New Bottle?, "
+          "EPW 60(30), 26 July 2025. https://crmindia.org/wp-content/uploads/2025/08/Diaster-Management-EPW-1.pdf",
+          "Report of the Sixteenth Finance Commission, Vol. I (2026-31). "
+          "https://www.indiabudget.gov.in/doc/16fcvol1.pdf",
+          "Economic Survey 2021-22, Vol. 2, para 2.35. "
+          "https://www.indiabudget.gov.in/economicsurvey/ebook_es2022/files/basic-html/page90.html",
+          "Government of Odisha, Cyclone Fani Damage, Loss and Needs Assessment (2019). "
+          "https://www.osdma.org/wp-content/uploads/2019/08/Cyclone-Fani-2019-Odisha-DLNA-Report.pdf",
+          "Government of Pakistan et al., Pakistan Floods 2022 Post-Disaster Needs Assessment. "
+          "https://www.pc.gov.pk/uploads/downloads/PDNA-2022.pdf",
+          "ThePrint, House panel recommends record Rs 2.84 lakh crore disaster fund, 7 August 2026. "
+          "https://theprint.in/india/house-panel-recommends-record-rs-2-84-lakh-crore-disaster-fund-heatwaves-lightning-on-disaster-list/3008901/"],
+         "cyan"),
+      compact=True),
+
+    C("Sources", "Sources used in this course (2 of 2)",
+      BL(["India Meteorological Department, heat wave and warm night definitions. "
+          "https://mausam.imd.gov.in/pdfs/heatcolduser/Definition.pdf",
+          "Azhar et al. 2014, PLoS One 9(3):e91831. https://doi.org/10.1371/journal.pone.0091831",
+          "Knowlton et al. 2014, Int J Environ Res Public Health 11(4):3473-92. "
+          "https://doi.org/10.3390/ijerph110403473",
+          "Hess et al. 2018, J Environ Public Health 2018:7973519. https://doi.org/10.1155/2018/7973519",
+          "Sharma et al. 2025, Int J Biometeorol 69(9):2225-36. https://doi.org/10.1007/s00484-025-02959-8",
+          "Sherwood and Huber 2010, PNAS 107(21):9552-5. https://doi.org/10.1073/pnas.0913352107",
+          "Vecellio et al. 2022, J Appl Physiol 132(2):340-5. "
+          "https://doi.org/10.1152/japplphysiol.00738.2021",
+          "ILO 2019, Working on a Warmer Planet: The Impact of Heat Stress on Labour Productivity "
+          "and Decent Work. https://www.ilo.org/sites/default/files/wcmsp5/groups/public/@dgreports/@dcomm/@publ/documents/publication/wcms_711919.pdf",
+          "Pillai and Dalal 2023, How is India Adapting to Heatwaves?, Centre for Policy "
+          "Research. https://cprindia.org/wp-content/uploads/2023/03/Heat-Report_27March-23_Updated-Table.pdf",
+          "Human Rights Watch 2005, After the Deluge. https://www.hrw.org/reports/2005/india0505/india0505.pdf",
+          "VB-G RAM G Act 2025 (Act 36 of 2025). https://www.indiacode.nic.in/bitstream/123456789/22478/1/a2025-36.pdf",
+          "SCC Online, 12 May 2026, on commencement and repeal of MGNREGA. "
+          "https://www.scconline.com/blog/post/2026/05/12/vbgramg-act-implemented-from-1-july-2026/"],
+         "indigo"),
+      compact=True),
+
+    {"type": "end",
+     "eyebrow": "Disaster Risk and Heat Resilience 101 &middot; Complete",
+     "headline": "Know who is in the path,<br>and reach them first.",
+     "byline": "A hazard becomes a disaster through exposure and vulnerability. Read the law, "
+               "follow the money, count every death, and check that relief reached the "
+               "people at the end of every list. Explore the rest of the ImpactMojo 101 Series, "
+               "free forever.",
+     "ctas": [
+         {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
+         {"label": "Climate Essentials 101", "href": "https://www.impactmojo.in/101-courses/climate-essentials.html"},
+         {"label": "Climate Risk Studio", "href": "https://www.impactmojo.in/Labs/climate-adaptation-lab.html"}],
+     "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+]
+
+DECK = {
+    "slug": "disaster-heat",
+    "title": "Disaster Risk and Heat Resilience 101",
+    "description": ("Disaster Risk and Heat Resilience 101, a free foundational course for "
+                    "development practitioners in South Asia. Hazard, exposure and vulnerability, "
+                    "the Sendai Framework, India's Disaster Management Act 2005 and its 2025 "
+                    "amendment, the response and mitigation funds and the Finance Commissions, "
+                    "Odisha's cyclone record, floods, lightning and drought, heatwaves, heat "
+                    "action plans and outdoor work, early warning, the people relief misses, "
+                    "insurance and shock-responsive social protection. ImpactMojo, CC BY-NC-ND."),
+    "slides": SLIDES,
+}
