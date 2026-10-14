@@ -498,7 +498,7 @@ Thirteen browser tools for research and evaluation work. Seven builders are free
 | **NudgeKit** | 203 behaviour change techniques (BCTs) with South Asian context | Free: [Browse](/bct-repository) |
 | **Dataverse** | 343 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
 | **DevDiscourses** | 500+ curated research papers and books | Free |
-| **PolicyDhara** | Indian policy tracking and analysis | Free: [Browse](/policydhara) |
+| **PolicyDhara** | Indian policy tracking and analysis | Free: [Browse](https://policydhara.impactmojo.in/) |
 | **NotebookLM Study Companions** | 12 AI study companion notebooks | Free |
 | **Blog: Learning Loops** | 32 articles on development practice | Free, [Read](/blog.html) |
 | **Podcast: Between the Logframes** | Audio episodes on Spotify | Free |
