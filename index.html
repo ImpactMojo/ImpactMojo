@@ -803,16 +803,32 @@ window.addEventListener('click', function(e) {
 /* Homepage: hero search hands its text to the site search panel; the chips
    open the quiz or a search; #quiz in the address opens the quiz. */
 (function () {
-  function openSearch(q) {
-    if (window.ImpactMojoSearch && window.ImpactMojoSearch.open) { window.ImpactMojoSearch.open(q || ''); return; }
-    var s = document.createElement('script');
-    s.src = '/js/search.js';
-    s.onload = function () { if (window.ImpactMojoSearch && window.ImpactMojoSearch.open) window.ImpactMojoSearch.open(q || ''); };
-    document.head.appendChild(s);
-  }
   var form = document.getElementById('h-search');
   var input = document.getElementById('h-q');
+  var loading = false, pending = null;
+  function loadSearch(then) {
+    if (window.ImpactMojoSearch && window.ImpactMojoSearch.open) { if (then) then(); return; }
+    if (then) pending = then;          // the latest request wins
+    if (loading) return;
+    loading = true;
+    var s = document.createElement('script');
+    s.src = '/js/search.js';
+    // Read the box when the script arrives, so letters typed while it loads are kept.
+    s.onload = function () { if (pending) { var f = pending; pending = null; f(); } };
+    document.head.appendChild(s);
+  }
+  function openSearch(q) {
+    loadSearch(function () { if (window.ImpactMojoSearch && window.ImpactMojoSearch.open) window.ImpactMojoSearch.open(typeof q === 'function' ? q() : (q || '')); });
+  }
   if (form) form.addEventListener('submit', function (e) { e.preventDefault(); openSearch(input.value.trim()); });
+  // Results as you type. The first keystroke hands the text to the search panel,
+  // which carries on from there; focusing the box starts loading it early.
+  if (input) {
+    input.addEventListener('focus', function () { loadSearch(); }, { once: true });
+    input.addEventListener('input', function () {
+      if (input.value.trim()) openSearch(function () { var v = input.value; input.value = ''; return v; });
+    });
+  }
   document.querySelectorAll('[data-search]').forEach(function (b) {
     b.addEventListener('click', function () { openSearch(b.getAttribute('data-search')); });
   });

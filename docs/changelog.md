@@ -14,6 +14,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **The Political Unconscious** — Fredric Jameson's method for reading texts, made readable, with a protocol for reading policy documents.
 - **Algiers, Third World Capital** — Elaine Mokhtefi's memoir of Algeria after independence and Third World solidarity.
 
+- **Search as you type on the home page** — the search box now shows results from the first letter instead of waiting for Enter.
+
 ### Added
 
 - Seven reading companions, taking the library from 185 to 192. Built from the books' full text; every quotation was checked against the source, and errors found in the books are flagged on their pages.
