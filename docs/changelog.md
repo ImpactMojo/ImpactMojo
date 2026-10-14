@@ -2,6 +2,16 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.384.0 — October 14, 2026 (one bio for each founder, everywhere)
+
+### Changed
+
+- Each founder now has one bio and one title, the same on every page that names them: the home page, About, Coaching, the press kit, the four assessed-certificate pages, the credential upgrade page, the Gender, Power BI and Public Choice courses, the FAQ, the coaching guide and the team page. The founder cards at the end of the Data Visualization, Gender, SEL, AI for Development and Law courses use the same text.
+
+### Fixed
+
+- **Stray characters under the founder photos in Data Visualization module 12** (#1264).
+
 ## v10.383.0 — October 14, 2026 (Vandana's bio restored)
 
 ### Changed

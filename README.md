@@ -746,7 +746,7 @@ Retrieved from https://www.impactmojo.in
 
 ## Acknowledgments
 
-**Founded by Dr. Varna Sri Raman**, a development economist with two decades of experience in development practice, research, and education across South Asia.
+**Founded by Dr. Varna Sri Raman**, a development economist (PhD) specialising in social-impact measurement, gender studies, and development research across South Asia, and **Vandana Soni**, an education and development professional (15+ years) specialising in early literacy, learning assessment, and programme design for schools across India.
 
 **Co-Founded by Vandana Soni**, who leads partnerships, programmes, and social media.
 

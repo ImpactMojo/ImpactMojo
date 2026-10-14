@@ -226,7 +226,12 @@ For the full policy, see [AI Policy](ai-policy-guide.md).
 
 ## Who built ImpactMojo?
 
-ImpactMojo was created by **Dr. Varna Sri Raman** (Founder (development economist, PhD, specialist in social impact measurement and gender studies across South Asia) and **Vandana Soni** (Co-Founder) 15+ years in education programme design, recognised as Top Contributor in Education Sector by Jobs for Her 2022). **Vignesh** serves as Honorary Technical Lead.
+ImpactMojo was created by **Dr. Varna Sri Raman**, Founder, and **Vandana Soni**, Co-founder.
+
+- **Varna Sri Raman**: Development economist (PhD) specialising in social-impact measurement, gender studies, and development research across South Asia. At ImpactMojo, leads curriculum and course design.
+- **Vandana Soni**: Education and development professional (15+ years) specialising in early literacy, learning assessment, and programme design for schools across India. At ImpactMojo, designs learning programmes and coaching for practitioners.
+
+**Vignesh** serves as Honorary Technical Lead.
 
 The platform is supported by **PinPoint Ventures**.
 

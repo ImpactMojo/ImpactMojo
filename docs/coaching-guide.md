@@ -22,8 +22,8 @@ Coaching is aimed at **development-sector professionals**: people navigating a c
 
 Sessions are led by ImpactMojo's founding team:
 
-- **Varna Sri Raman**: Founder and Lead of Learning Design & Impact. A Development Economist with a PhD, specializing in social impact measurement, gender studies, and development research across South Asia.
-- **Vandana Soni**: Co-Founder and Lead of Partnerships & Programmes. An education and development professional with over 15 years designing learning programs and large-scale education initiatives across India (Top Contributor in the Education Sector, Jobs for Her, 2022).
+- **Varna Sri Raman**: Founder, Learning Design & Impact. Development economist (PhD) specialising in social-impact measurement, gender studies, and development research across South Asia. At ImpactMojo, leads curriculum and course design.
+- **Vandana Soni**: Co-founder, Head of Learning Programmes. Education and development professional (15+ years) specialising in early literacy, learning assessment, and programme design for schools across India. At ImpactMojo, designs learning programmes and coaching for practitioners.
 
 ---
 
