@@ -545,6 +545,10 @@
     wrap.querySelector('[data-im-dys]').addEventListener('click', toggleDys);
 
     // 6. wire theme
+    // theme.js always sets data-theme. A page without it (the homepage among
+    // them) never applied a saved choice on load, so a reader who chose dark
+    // got the light page on every visit. Apply it here in that case only.
+    if (!root.hasAttribute('data-theme')) applyTheme(currentMode(), true);
     syncTheme(currentMode());
     document.querySelectorAll('.im-sc-tbtn').forEach(function (b) {
       b.addEventListener('click', function () { applyTheme(b.getAttribute('data-m')); });
