@@ -355,23 +355,33 @@ def page(cid, c):
 '''
 
 
+def _share():
+    """The share-tag pass (scripts/build-social-tags.py), applied to each page as
+    it is written, so a rebuild keeps the canonical, Open Graph and card tags."""
+    import importlib.util as u
+    sp = u.spec_from_file_location('build_social_tags', ROOT / 'scripts' / 'build-social-tags.py')
+    m = u.module_from_spec(sp)
+    sp.loader.exec_module(m)
+    return m
+
+
 def build(check):
     data = json.loads(DATA.read_text(encoding='utf-8'))
+    share = _share()
+    norm = lambda t: re.sub(r'\?v=[0-9a-f]+', '', t or '')   # stamp-assets.py adds these after the build
     stale = []
     for cid, c in data['courses'].items():
         out = ROOT / 'courses' / folder(cid) / 'readings.html'
-        text = page(cid, c)
+        rel = str(out.relative_to(ROOT))
+        text = share.apply(rel, page(cid, c))
         cur = out.read_text(encoding='utf-8') if out.exists() else None
-        if cur is not None:
-            # build-social-tags.py adds a share block; compare without it
-            cur_cmp = re.sub(r'<!-- share:start -->.*?<!-- share:end -->\n?', '', cur, flags=re.S)
-            cur_cmp = re.sub(r'\?v=[0-9a-f]{8}', '', cur_cmp)
+        if norm(cur) == norm(text):
+            continue
         if check:
-            if cur is None or cur_cmp != text:
-                stale.append(str(out.relative_to(ROOT)))
-        elif cur is None or cur_cmp != text:
+            stale.append(rel)
+        else:
             out.write_text(text, encoding='utf-8')
-            print('wrote', out.relative_to(ROOT))
+            print('wrote', rel)
     if check:
         if stale:
             print('FAIL: stale or missing reading lists, run scripts/build-reading-lists.py:\n  ' + '\n  '.join(stale))
