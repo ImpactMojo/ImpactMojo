@@ -112,6 +112,10 @@ An instructor at a school of social work asked for a kit covering Sustainability
 - [x] **Community-contributed courses**: Verified practitioners can submit courses ("Teach with Us", `contribute.html`, Netlify Forms)
 - [x] **Live workshops integration**: Webinar listings + registration with `.ics` calendar export (`events.html`, `data/events.json`). _Operational follow-up: replace placeholder `join_url`s with real Zoom/Meet links._
 - [x] **Impact measurement dashboard**: Public community outcomes view + login-gated outcome logging (`impact-dashboard.html`, `impact_outcomes` table with RLS)
+- [x] **Analytics only after consent** (v10.378.0): Google Analytics stays off until a reader accepts, on every page.
+- [ ] **Paid Practice Pack modules served after sign-in** (v10.379.0, ready, publishing with the next release): the free modules stay in the page and the rest load only for a reader with access.
+- [ ] **Human check on the sign-in forms** (v10.379.0, ready): Cloudflare Turnstile on sign-up, sign-in, magic link and password reset, switched on once the site key is in place.
+- [ ] **DevDiscourses and PolicyDhara on their own addresses** (v10.379.0, ready): devdiscourses.impactmojo.in and policydhara.impactmojo.in, with the old links forwarding.
 - [ ] **Translations pass after the English copy rewrite**: Planned, not started. The English rewrite (plain prose, every fact checked against a primary source) ships batch by batch from October 2026. During it, counts, names and dates are corrected in all five languages so no version contradicts another, but the prose is rewritten in English only. This task re-translates the rewritten pages into Hindi, Tamil, Bengali, Marathi and Telugu, with a native reader checking each before it publishes. Start only when a reviewer is available for the same batch; `scripts/check-i18n-quality.py` must pass.
 
 ---

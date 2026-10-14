@@ -26,6 +26,7 @@ These were previously listed as planned or in progress, and are now live. Each n
 - **Live workshop listings**: workshops with registration and a calendar file you can add to your own diary. ([/events.html](/events.html))
 - **Impact measurement dashboard**: a public view of community outcomes, and a signed-in route to log your own. ([/impact-dashboard.html](/impact-dashboard.html))
 - **Offline support, both halves**: browser notifications you can switch on from your account, and background sync, so progress recorded on a bad connection is replayed once you are back online rather than lost.
+- **Analytics only after consent**: Google Analytics does not run until you accept it in the cookie notice, on every page. (v10.378.0)
 
 ## Planned
 
