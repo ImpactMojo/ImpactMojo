@@ -282,9 +282,9 @@ SEC1 = [
               "the principal source of income for 68.9 per cent of agricultural households in 2019."),
             B("The table shows who they are. Other Backward Classes make up 45.8 per cent of "
               "agricultural households. Scheduled Castes are 15.9 per cent of agricultural households "
-              "and 28.4 per cent of non-agricultural rural households, because many Dalit families "
-              "work on land without operating any. Scheduled Tribes are over-represented among "
-              "farming households.", sm=True)],
+              "and 28.4 per cent of non-agricultural rural households, which fits the long record of "
+              "Dalit families working on land that others operate. Scheduled Tribes are a larger "
+              "share of farming households than of rural households as a whole.", sm=True)],
            [T(["Social group", "Agricultural households (%)", "Non-agricultural households (%)", "All rural households (%)"],
               [["Scheduled Tribes", "14.2", "10.0", "12.3"],
                ["Scheduled Castes", "15.9", "28.4", "21.6"],
@@ -309,9 +309,9 @@ SEC1 = [
               "0.4 hectares."),
             B("The Agriculture Census shows how land is divided by caste. Scheduled Castes ran 11.84 "
               "per cent of operational holdings in 2015-16 and 8.54 per cent of the operated area. "
-              "Scheduled Tribes ran 8.65 per cent of holdings and 11.27 per cent of the area, because "
-              "tribal holdings in hill and forest districts are larger and often less productive. Both "
-              "groups are a larger share of the rural population than their share of farmland.", sm=True),
+              "Scheduled Tribes ran 8.65 per cent of holdings and 11.27 per cent of the area. Both "
+              "groups make up a larger share of rural households (21.6 and 12.3 per cent in the NSS "
+              "survey) than of operated farmland.", sm=True),
             H("amber", "A scheme that pays per hectare owned will pay Dalit households the least, "
               "because they own the least.")]),
     ]),
