@@ -14,6 +14,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **The Political Unconscious** — Fredric Jameson's method for reading texts, made readable, with a protocol for reading policy documents.
 - **Algiers, Third World Capital** — Elaine Mokhtefi's memoir of Algeria after independence and Third World solidarity.
 
+- **A brighter home page** — the three ways in are now tinted tiles in blue, violet and slate, with a highlighter on the headline and coloured labels on what is new.
 - **Search as you type on the home page** — the search box now shows results from the first letter instead of waiting for Enter.
 
 ### Added
