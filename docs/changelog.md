@@ -2,10 +2,18 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
-## v10.380.0 — October 14, 2026 (accuracy, speed and every page checked)
+## v10.380.0 — October 14, 2026 (a new flagship, four 101 decks, two law guides and a Code School course)
 
 ### For Learners
 
+- **Social Protection and Welfare Delivery in India** — a new flagship course in 13 modules with a 50-term lexicon: the food law and the ration shop, who gets counted, how benefits are paid, the 2025 rural work guarantee that replaced MGNREGA on 1 July 2026, pensions, cash for farmers and mothers, health cover, anganwadis and school meals, informal workers, social audits and a capstone set in a real district.
+- **Agriculture and Food Systems 101** — who farms and on how much land, MSP and procurement, the 2020 farm laws and their repeal, the PDS, subsidies, irrigation, crop insurance and farmer producer organisations.
+- **Urban Development and Municipal Governance 101** — census towns and the 74th Amendment, how towns raise and spend money, the urban missions, street vendors, urban job guarantees, heat and floods.
+- **Water, Sanitation and Hygiene 101** — why India's sanitation and water numbers disagree, Swachh Bharat, Jal Jeevan Mission, groundwater, sanitation work and the law, and how to monitor a WASH programme.
+- **Disaster Risk and Heat Resilience 101** — the Sendai Framework, the Disaster Management Act and its 2025 amendment, the disaster funds, cyclones, floods, drought, heat and outdoor work, and the people relief misses.
+- **Running an NGO in India** — a law guide on trusts, societies and Section 8 companies, approvals under the Income-tax Act, 2025, audits and returns, CSR-1, FCRA and a yearly compliance calendar.
+- **Land, Forest and Resource Rights** — a law guide on land acquisition, Forest Rights Act claims, PESA and the Fifth Schedule, land records and the 2023 forest law amendment, with the Niyamgiri and Samatha judgments.
+- **Analysing Indian Survey Data** — a Code School course on NFHS, PLFS and HCES unit-level files in R and Python: survey weights, strata and clusters, and standard errors that respect the design.
 - **Faster pages** — Google Analytics is no longer downloaded until you accept cookies, which takes about 180 KB off every page for anyone who has not.
 - **Current figures in the courses** — the World Bank's $3.00 poverty line, the 2025 female labour force participation rate, the 16th Finance Commission and the PM-JAY extension for people over 70 are now stated as they stand.
 - **Every page in five languages, stated plainly** — the roadmap now says what the language menu already does: every page, the 101 decks included, can be read in Hindi, Tamil, Bengali, Marathi and Telugu.

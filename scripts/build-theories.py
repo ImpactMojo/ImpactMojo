@@ -197,7 +197,7 @@ def page_shell(title, description, keywords, og_title, og_desc, path, body, scri
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <!-- Google tag (gtag.js) - G-JRCMEB9TBW -->
-<script async src="/js/ga-load.js"></script>
+<script async src="{stamp('/js/ga-load.js')}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){{dataLayer.push(arguments);}}

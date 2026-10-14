@@ -1475,8 +1475,7 @@ DECK = {
                    ["Broad entitlement with a ceiling", "NFSA 2013: up to 75% rural and 50% "
                     "urban population (s3(2))", "Fewer exclusion errors at the bottom",
                     "Coverage capped by fixed population shares"],
-                   ["Universal by category", "PM-JAY for everyone aged 70 and above (from 11 "
-                    "September 2024)", "No means test; simple to explain",
+                   ["Universal by category", "PM-JAY for everyone aged 70 and above (from 29 October 2024)", "No means test; simple to explain",
                     "Spends on those who could pay"],
                    ["Proportionate", "Extra workers or funds for high-burden blocks inside a "
                     "universal service", "Reaches the whole gradient, with more where needed",
