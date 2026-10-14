@@ -75,6 +75,7 @@ const FILES = {
   // 101-notes:start (written by build-101-shop.py)
   "Academic Writing & Publishing 101, Course Notes": "ImpactMojo-101-Notes-academic-writing.pdf",
   "Advocacy Basics 101, Course Notes": "ImpactMojo-101-Notes-advocacy-basics.pdf",
+  "Agriculture and Food Systems 101, Course Notes": "ImpactMojo-101-Notes-agri-food.pdf",
   "Aid & Philanthropy 101, Course Notes": "ImpactMojo-101-Notes-aid-philanthropy.pdf",
   "Behaviour Change Communication 101, Course Notes": "ImpactMojo-101-Notes-bcc-comms.pdf",
   "Bivariate Analysis 101, Course Notes": "ImpactMojo-101-Notes-bi-analysis.pdf",
@@ -98,6 +99,7 @@ const FILES = {
   "Digital Ethics 101, Course Notes": "ImpactMojo-101-Notes-digital-ethics.pdf",
   "Digital Rights & AI 101, Course Notes": "ImpactMojo-101-Notes-digital-rights-ai.pdf",
   "Disability Inclusion 101, Course Notes": "ImpactMojo-101-Notes-disability-inclusion.pdf",
+  "Disaster Risk and Heat Resilience 101, Course Notes": "ImpactMojo-101-Notes-disaster-heat.pdf",
   "Econometrics 101, Course Notes": "ImpactMojo-101-Notes-econometrics-101.pdf",
   "Education and Pedagogy 101, Course Notes": "ImpactMojo-101-Notes-edu-pedagogy.pdf",
   "Education Policy 101, Course Notes": "ImpactMojo-101-Notes-education-policy.pdf",
@@ -150,7 +152,9 @@ const FILES = {
   "Systematic Reviews & Evidence Synthesis 101, Course Notes": "ImpactMojo-101-Notes-systematic-reviews.pdf",
   "Theory of Change 101, Course Notes": "ImpactMojo-101-Notes-toc-workbench.pdf",
   "Time Series Analysis 101, Course Notes": "ImpactMojo-101-Notes-time-series.pdf",
+  "Urban Development and Municipal Governance 101, Course Notes": "ImpactMojo-101-Notes-urban-governance.pdf",
   "Visual Ethnography 101, Course Notes": "ImpactMojo-101-Notes-visual-eth.pdf",
+  "Water, Sanitation and Hygiene 101, Course Notes": "ImpactMojo-101-Notes-wash.pdf",
   "Women’s Economic Empowerment 101, Course Notes": "ImpactMojo-101-Notes-wee-studies.pdf",
   "Work, Labour & Livelihoods 101, Course Notes": "ImpactMojo-101-Notes-work-labour-livelihoods.pdf",
   // 101-notes:end

@@ -169,6 +169,38 @@
       competencies: ['Nonviolent Communication', 'Conflict Transformation', 'Restorative Justice', 'Repair & Accountability'],
       color: '#8B5CF6',
       icon: 'message'
+    },
+    'social-movements': {
+      name: 'Movements and Collective Action Analyst',
+      description: 'Reads how social movements form, organise and change policy, with South Asian cases.',
+      track: 'Philosophy, Law & Governance',
+      competencies: ['Movement Theory', 'Repertoires of Protest', 'Movement Outcomes', 'South Asian Movements'],
+      color: '#8B5CF6',
+      icon: 'globe'
+    },
+    esg: {
+      name: 'ESG and CSR Practitioner',
+      description: 'Designs and reviews CSR portfolios, human rights due diligence and BRSR disclosures under Indian law.',
+      track: 'Policy & Economics',
+      competencies: ['Section 135 and Schedule VII', 'CSR Portfolio Design', 'Human Rights Due Diligence', 'Reading a BRSR'],
+      color: '#6366F1',
+      icon: 'globe'
+    },
+    'gender-mel': {
+      name: 'Gender-Sensitive MEL Practitioner',
+      description: 'Measures gender rather than counting women, from frameworks and indicators to safe data collection and feminist evaluation.',
+      track: 'Gender, Equity & Inclusion',
+      competencies: ['Gender Analysis Frameworks', 'Gender Indicators', 'Measuring Empowerment', 'Feminist Evaluation'],
+      color: '#D53F8C',
+      icon: 'heart'
+    },
+    'social-protection': {
+      name: 'Social Protection Practitioner',
+      description: 'Understands how India\'s food, work, pension, cash and health schemes reach people, and how to find who they miss.',
+      track: 'Policy & Economics',
+      competencies: ['Food Security and the PDS', 'Targeting and Exclusion', 'Benefit Payments', 'Social Audit and Grievance'],
+      color: '#6366F1',
+      icon: 'globe'
     }
   };
   // URL slug for the SEL course is lowercase; keep both ids valid.

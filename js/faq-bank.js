@@ -15,6 +15,7 @@
     { t:"Gandhi's Political Thought: Philosophy for Praxis", u:"/courses/gandhi/", o:"Gandhi's political thought from Swaraj and Satyagraha to Gram Swaraj and Trusteeship, with an interactive lexicon of 55 annotated terms."},
     { t:"Gender Studies: Feminisms, Power & Social Change", u:"/courses/gender/", o:"A flagship course on feminist theory, gender & power, care work, law, movements, and development practice: with deep South Asian focus."},
     { t:"Gender-Sensitive Monitoring, Evaluation & Learning", u:"/courses/gender-mel/", o:"A practitioner's flagship on measuring gender rather than counting women."},
+    { t:"Social Protection and Welfare Delivery in India", u:"/courses/social-protection/", o:"A practitioner's flagship on how India's welfare schemes reach people, and whom they miss."},
     { t:"Designing What Works: Development Interventions from Model to Scale", u:"/courses/intervention/", o:"A free flagship on development intervention and programme design."},
     { t:"Constitution & Law for Development Practice", u:"/courses/law/", o:"A practitioner's guide to constitutional law and rights-based frameworks across South Asia."},
     { t:"Livelihoods in India: Rural, Urban, and Skills", u:"/courses/livelihoods/", o:"Indian livelihoods in three parts: rural work (NRLM, SHGs, agriculture), urban work (informal jobs, gig work, street vendors) and skills (Skill India, women's labour force participation)."},
@@ -289,7 +290,7 @@
 
     // Flagship count
     { re: /how many.*course|flagship|all.*course/i,
-      a: () => "We have **21 flagship courses** and **80 foundational courses**, 101 in all, plus " + CODE.length + " Code School courses. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
+      a: () => "We have **22 flagship courses** and **84 foundational courses**, 101 in all, plus " + CODE.length + " Code School courses. The full list is on the courses page, and a selection follows.\n\n" + listCourses() },
 
     // PoA specific
     { re: /poa|politics.*aspiration|nrega|rti|nfsa|forest.*right/i,

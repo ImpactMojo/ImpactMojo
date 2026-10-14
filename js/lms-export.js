@@ -25,7 +25,7 @@
   // Scripts that are site plumbing rather than course content. Matched against
   // the src attribute; inline blocks are matched by content in stripInline().
   var DROP_SRC = [
-    'googletagmanager', 'gtag/js', 'google-analytics',
+    'googletagmanager', 'gtag/js', 'google-analytics', 'ga-load.js',
     'supabase', 'state-manager', 'config.js', 'auth.js',
     'site-chrome', 'translate-sarvam', 'pwa.js', 'offline.js',
     'search.js', 'tours.js', 'feedback', 'mojini'

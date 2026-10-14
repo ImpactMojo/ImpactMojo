@@ -41,16 +41,16 @@ We provide accessible, high-quality educational materials grounded in South Asia
 
 | Category | Description |
 |----------|-------------|
-| **101 Courses** | 21 flagship + 80 foundational courses across 6 learning tracks (all foundational decks self-hosted as native HTML slide decks). Every flagship ends with an auto-graded "Assess Yourself" self-check |
+| **101 Courses** | 22 flagship + 84 foundational courses across 6 learning tracks (all foundational decks self-hosted as native HTML slide decks). Every flagship ends with an auto-graded "Assess Yourself" self-check |
 | **35 Interactive Studios** | Hands-on workbenches for MEL, policy, partnerships, budgeting, gender analysis, and more |
 | **135 Game Library** | 18 interactive simulations (MiroFish AI agents, Indian folk art: Warli, Madhubani, Gond, Kalamkari, Pichwai, Pattachitra) + 117 crosswords, quizzes & word searches |
-| **ImpactLex Dictionary** | 390+ development terms with contextual definitions, formulas, and case studies (PWA, hosted on ImpactMojo) |
+| **ImpactLex Dictionary** | 490+ development terms with contextual definitions, formulas, and case studies (PWA, hosted on ImpactMojo) |
 | **Dev Case Studies** | 200 evidence-based case studies from 117 countries |
 | **DevDiscourses** | 500+ curated open-access research papers, books, and grey literature |
 | **PolicyDhara** | Curated Indian public policy documents, government schemes, and legislative frameworks |
 | **BCT Repository** | 203 behavior change techniques from BCT Taxonomy v1 with definitions, examples, evidence ratings, 60 WASH/nutrition case studies, fuzzy search, bookmarks, notes, comparison tool, PDF export: dark mode, filters, CSV export |
 | **Dataverse** | 343 curated tools, datasets, APIs, MCP servers, and platforms across 22 categories: dark mode, category filters, responsive cards |
-| **184 Reading Companions** | Interactive study companions for development economics, political economy, statistics, leadership, and productivity texts |
+| **185 Reading Companions** | Interactive study companions for development economics, political economy, statistics, leadership, and productivity texts |
 | **12 AI Study Companions** | NotebookLM-powered study notebooks covering the flagship courses |
 | **84 Handouts** | Downloadable resources across 6 learning tracks |
 | **27 Deep Dives** | Curated, annotated reading guides: working syllabi on contested development questions |
@@ -113,7 +113,7 @@ Structured, outcome-focused paths that combine courses, games, and practice into
 
 | Tier | Price | Key Features |
 |------|-------|-------------|
-| **Explorer** | Free | All courses, games, studios, DevDiscourses, Telegram channel |
+| **Explorer** | Free | All courses, games, studios, DevDiscourses, WhatsApp PLC |
 | **Practitioner** | ₹399/mo · ₹3,990/yr | Advanced ToC Studio, PDF/PNG export, certificates, full community |
 | **Professional** | ₹999/mo · ₹9,990/yr | + Qual Insights Lab and Code Converter export, VaniScribe notebook, hosted Advisory Board models, Viz Cookbook code copying, DevEconomics Toolkit, priority coaching |
 | **Organization** | ₹1,499/user/mo | + Team dashboard, custom learning paths, training packages and cohorts, branded certificates, GST invoices and a named contact on request (called the Team Plan on the site) |
@@ -241,7 +241,7 @@ Browser-based studios under `/Labs/`. Each runs entirely client-side, keeps your
 Everything below is free, runs in the browser, and needs no account.
 
 - **[Teach with ImpactMojo](https://www.impactmojo.in/teach)** (`teach.html`): syllabus mappings, ready-made course kits, and how to run the material in a classroom or a workshop.
-- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`), package any of the 21 flagship and 80 foundational courses, plus the 47 practice workbooks, as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
+- **[LMS export](https://www.impactmojo.in/lms-export)** (`lms-export.html`), package any of the 22 flagship and 84 foundational courses, plus the 47 practice workbooks, as **SCORM 1.2**, **SCORM 2004**, **IMS Common Cartridge 1.3**, or a single self-contained HTML file. The package is built in your browser from the live page, so it is never stale. Our analytics, sign-in, Supabase and translation code are stripped before packaging and the rest inlined, so an imported course runs with no network and phones nothing home. SCORM reports completion when the learner reaches the final slide.
 - **Studio submissions** (`js/studio-submit.js`): wraps a Studio's own export in an envelope carrying the student's name, the Studio, a timestamp and a content digest. Studio exports previously carried no identity at all, so thirty files from a class were thirty anonymous JSON blobs. Wired into the LogFrame Builder as the reference implementation; the other Studios take the same two lines.
 - **[Gradebook](https://www.impactmojo.in/gradebook)** (`gradebook.html`): drop a folder of those submissions in and get one CSV, with tampered files flagged by digest mismatch. Entirely client-side: student work is never uploaded anywhere.
 
@@ -342,7 +342,7 @@ All of it lives in one page, `Labs/toc-lab.html` (the Theory of Change Studio). 
 - **Reading Lists**: Curated resource collections
 - **Course Comparison**: Compare courses side-by-side
 - **Interactive Assessments**: MCQ, multi-select, and T/F quizzes for MEL, DataViz, and DevAI courses with scoring, feedback, and localStorage persistence
-- **Offline PWA Support**: Service worker caches all 21 flagship courses for offline access with automatic background updates
+- **Offline PWA Support**: Service worker caches all 22 flagship courses for offline access with automatic background updates
 - **Certificate Generation**: Auto-issued on course completion with public verification and Open Badges 3.0 metadata
 - **Badge Wallet**: View, download, and share W3C verifiable credential badges
 - **Portfolio Builder**, Premium feature: curate certificates, projects & case studies with PDF export
@@ -354,7 +354,7 @@ All of it lives in one page, `Labs/toc-lab.html` (the Theory of Change Studio). 
 - **User Profiles**: Track progress and preferences
 - **Tiered Access**: Explorer (free), Practitioner, Professional, Organization
 - **Team Training Packages**, Organization tier: pre-built training paths (MEL Officer, Program Manager, Field Staff, Governance), facilitator guides, assessment rubrics, cohort management
-- **Community Access**: WhatsApp PLC, Discord, Telegram
+- **Community Access**: WhatsApp PLC, Discord
 
 ---
 
@@ -385,7 +385,7 @@ Main site (impactmojo.in)
 │                     └── auth-gate.ts verifies JWT, sets session cookie
 ├── Games ──► Supabase Edge Fn (game-agent) ──► Groq/Gemini/DeepSeek LLMs
 ├── Static content ──► Courses, Studios, ImpactLex
-└── Community ──► WhatsApp PLC, Discord, Telegram
+└── Community ──► WhatsApp PLC, Discord
 ```
 
 Premium tools are hosted as separate Netlify sites, each protected by a JWT auth-gate edge function. The main site mints a short-lived token via Supabase, which the resource site verifies and exchanges for a 24-hour session cookie.
@@ -691,7 +691,6 @@ We welcome contributions! Whether improving content, fixing bugs, enhancing acce
 | **Newsletter** | [Varna's Substack](https://varna.substack.com) |
 | **WhatsApp PLC** | [Professional Learning Community](https://forms.gle/vJaHFd7QcMe4JVF19) |
 | **Discord** | [Tech tinkering & data tools](https://discord.gg/M3ZCmUe7ab) |
-| **Telegram** | [Free toolkits & resources](https://t.me/impactmojo) |
 
 ### Support the Platform
 

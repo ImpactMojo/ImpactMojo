@@ -4,7 +4,7 @@
 
 ---
 
-## Flagship Courses (14)
+## Flagship Courses (21)
 
 প্রতিটিতে ১২–১৩টি মডিউল, ইন্টারঅ্যাক্টিভ লেক্সিকন, দক্ষিণ এশীয় কেস স্টাডি এবং AI স্টাডি সঙ্গীসহ গভীর, বহু-মডিউল কোর্স।
 
@@ -22,13 +22,13 @@
 
 ---
 
-## BookSummaries (134)
+## BookSummaries (185)
 
 Specials-এর অধীনে ইন্টারঅ্যাক্টিভ বই সঙ্গী — ডেটা টুল এবং AI-চালিত প্রশ্নোত্তরসহ গভীর, অধ্যায়-ভিত্তিক অন্বেষণ। বিস্তারিত জানতে [Book Companions Guide](book-summaries-guide.md) দেখুন।
 
 | # | বই | লেখক | অধ্যায় | বিভাগ | লিঙ্ক |
 |---|------|--------|----------|----------|------|
-| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [Open](/BookSummaries/handbook-social-protection.html) |
+| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [Open](/BookSummaries/handbook-social-protection-companion.html) |
 | 2 | Development Economics | Debraj Ray (Princeton 1998) | 18 | Development Economics | [Open](/BookSummaries/debraj-ray-companion.html) |
 | 3 | Design Thinking: A Guide to Creative Problem Solving | Andrew Pressman (Routledge 2019) | 10 | Design & Innovation | [Open](/BookSummaries/dt-companion.html) |
 | 4 | Basic Econometrics | Gujarati & Porter (McGraw-Hill) | 22 | Econometrics | [Open](/BookSummaries/basic-econometrics-companion.html) |
@@ -38,7 +38,7 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 
 ---
 
-## Foundational Courses (38)
+## Foundational Courses (80)
 
 অপরিহার্য উন্নয়ন বিষয় কভার করা একক-পৃষ্ঠার কোর্স। সবই বিনামূল্যে, লগইন প্রয়োজন নেই।
 
@@ -115,7 +115,7 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 
 ---
 
-## Interactive Labs (11)
+## Interactive Labs (35)
 
 হাতে-কলমে workbench যেখানে আপনি প্রকৃত দক্ষতা তৈরি, ডিজাইন এবং অনুশীলন করেন।
 
@@ -134,7 +134,7 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 
 ---
 
-## Learning Games (16)
+## Learning Games (135)
 
 অর্থনীতির সিমুলেশন এবং ইন্টারঅ্যাক্টিভ গেম — কর্মশালা এবং শ্রেণিকক্ষে ব্যবহারের জন্য আদর্শ।
 
@@ -161,7 +161,7 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 
 ---
 
-## Handouts (80+ HTML pages)
+## Handouts (84 HTML pages)
 
 শিক্ষণ ট্র্যাক অনুযায়ী সংগঠিত ডাউনলোডযোগ্য রেফারেন্স শিট। সবগুলো দেখুন [Handouts Index](/Handouts/index.html)-এ।
 
@@ -242,7 +242,7 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 
 ---
 
-## Premium Tools (7)
+## Premium Tools (11)
 
 গবেষক এবং অনুশীলনকারীদের জন্য উন্নত টুল। একটি পেইড সদস্যপদ প্রয়োজন।
 
@@ -264,10 +264,10 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 
 | সম্পদ | বিবরণ | অ্যাক্সেস |
 |----------|-------------|--------|
-| **ImpactLex** | 390+ উন্নয়ন পরিভাষার অভিধান (PWA, ImpactMojo-তে হোস্ট করা) | বিনামূল্যে |
-| **Dev Case Studies** | 117টি দেশ থেকে 200টি নির্বাচিত কেস | বিনামূল্যে |
+| **ImpactLex** | 490+ উন্নয়ন পরিভাষার অভিধান (PWA, ImpactMojo-তে হোস্ট করা) | বিনামূল্যে |
+| **Dev Case Studies** | 117টি দেশ থেকে 208টি নির্বাচিত কেস | বিনামূল্যে |
 | **DevDiscourses** | 500+ নির্বাচিত গবেষণাপত্র ও বই | বিনামূল্যে |
-| **Dataverse** | 270টি ডেটা টুল, API এবং ডেটাসেট | বিনামূল্যে — [Browse](/dataverse.html) |
+| **Dataverse** | 343টি ডেটা টুল, API এবং ডেটাসেট | বিনামূল্যে — [Browse](/dataverse.html) |
 | **Blog: Learning Loops** | উন্নয়ন অনুশীলন সম্পর্কে নিবন্ধ | বিনামূল্যে — [Read](/blog.html) |
 | **Podcast: Between the Logframes** | Spotify-তে অডিও পর্ব | বিনামূল্যে |
 | **Dojos** | 35+ অনুশীলন-ভিত্তিক দক্ষতা সেশন | পেইড |
@@ -279,16 +279,16 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 
 | বিভাগ | সংখ্যা |
 |----------|-------|
-| Flagship courses | 14 |
-| Foundational courses | 39 |
-| Interactive labs | 11 |
-| Learning games | 16 |
-| BookSummaries | 5 |
-| Premium tools | 9 |
-| Handout pages | 80+ |
-| Dataverse entries | 270 |
-| Dev case studies | 200 |
+| Flagship courses | 21 |
+| Foundational courses | 80 |
+| Interactive labs | 35 |
+| Learning games | 135 |
+| BookSummaries | 185 |
+| Premium tools | 11 |
+| Handout pages | 84 |
+| Dataverse entries | 343 |
+| Dev case studies | 208 |
 | DevDiscourses entries | 500+ |
-| ImpactLex terms | 390+ |
+| ImpactLex terms | 490+ |
 | সমর্থিত ভাষা | 6 (English, Hindi, Tamil, Bengali, Telugu, Marathi) |
 | শিক্ষণ ট্র্যাক | 6 |

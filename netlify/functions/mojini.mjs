@@ -46,7 +46,7 @@ WHAT'S FREE (no sign-in):
 FREEMIUM MODEL: "free to build, pay to export." The paywall never blocks learning or doing the work, only exporting a polished deliverable, advanced modes, the full Practice Packs, the AI Advisory Board, VaniScribe, DevData, certificates, and priority coaching.
 PLANS (see /premium.html): Learner (free) · Practitioner ₹399/mo or ₹3,990/yr · Professional ₹999/mo or ₹9,990/yr · Team (custom). Practice Packs also à la carte.
 
-COMMUNITY (/community): WhatsApp PLC, "Research Rundown" (a Substack newsletter at varna.substack.com), Discord, Telegram. Coaching (/coaching). Peer review (/peer-review.html). Webinars are small (10 seats): request a seat at /events.html.
+COMMUNITY (/community): WhatsApp PLC, "Research Rundown" (a Substack newsletter at varna.substack.com), Discord (for paying members). Coaching (/coaching). Peer review (/peer-review.html). Webinars are small (10 seats): request a seat at /events.html.
 ABOUT: Founded by Dr. Varna Sri Raman and Vandana Soni. Supported by PinPoint Ventures.`;
 
 const SYSTEM = `You are Mojini, the friendly assistant for ImpactMojo, a free development-education platform for South Asia.

@@ -6,7 +6,7 @@ Common questions from educators, facilitators, and practitioners.
 
 ## Is ImpactMojo really free?
 
-Yes. All 21 flagship courses (13 modules each), 80 foundational courses, 135 learning games, 35 interactive studios, 84 handouts, the ImpactLex glossary (494 terms), 208 Dev Case Studies, 687 DevDiscourses papers, and interactive BookSummaries are completely free.
+Yes. All 22 flagship courses (13 modules each), 84 foundational courses, 135 learning games, 35 interactive studios, 84 handouts, the ImpactLex glossary (494 terms), 208 Dev Case Studies, 687 DevDiscourses papers, and interactive BookSummaries are completely free.
 
 There are paid tiers (Practitioner, Professional, and Organization) that unlock additional tools: things like advanced studio features, PDF/PNG export, AI-powered tools, and team dashboards. But the core learning experience is free and always will be.
 
@@ -102,9 +102,9 @@ Here is a straightforward comparison:
 
 | Feature | Explorer (Free) | Practitioner (₹399/mo) | Professional (₹999/mo) | Organization (₹1,499/user/mo) |
 |---------|----------------|------------------------|------------------------|-------------------------------|
-| All 101 courses | Yes | Yes | Yes | Yes |
+| All 22 flagship and 84 foundational courses | Yes | Yes | Yes | Yes |
 | 135 games | Yes | Yes | Yes | Yes |
-| 35 studios | Yes | Yes | Yes | Yes |
+| 35 Free Studio tools | Yes | Yes | Yes | Yes |
 | 84 handouts | Yes | Yes | Yes | Yes |
 | ImpactLex, DevDiscourses, Case Studies | Yes | Yes | Yes | Yes |
 | Progress tracking and certificates | – | Yes | Yes | Yes |
@@ -148,7 +148,7 @@ To set up an organization account, contact the ImpactMojo team. Sliding-scale pr
 
 ## What is the Dataverse?
 
-The Dataverse is a curated library of **270 data sources, tools, datasets, and APIs** relevant to development practice in South Asia.
+The Dataverse is a curated library of **343 data sources, tools, datasets, and APIs** relevant to development practice in South Asia.
 
 Think of it as a carefully organized reference shelf. Instead of searching the internet for "India poverty data" and wading through hundreds of results, you can browse the Dataverse to find:
 
@@ -178,14 +178,14 @@ ImpactMojo works on any device with a modern web browser:
 
 ## What is the difference between flagship courses and foundational courses?
 
-**Flagship courses** (18 in total) are ImpactMojo's most developed learning experiences. Each one has:
+**Flagship courses** (21 in total) are ImpactMojo's most developed learning experiences. Each one has:
 - ~13 in-depth modules that build on each other
 - An interactive lexicon of 50–65 key terms
 - South Asian case studies, reflection prompts, and curated further reading
 - Quizzes and assessment components
 - Certificate eligibility on completion
 
-**Foundational courses** (51 in total) are comprehensive study decks: self-paced reading materials that cover a specific topic thoroughly. They are:
+**Foundational courses** (80 in total) are comprehensive study decks: self-paced reading materials that cover a specific topic thoroughly. They are:
 - Great for self-study and reference
 - Comprehensive in their coverage of a topic
 - Older in their technology: they don't include interactive features, assessments, or project components
@@ -251,7 +251,7 @@ For full details, see [Certificates and Progress](certificates-and-progress.md).
 
 ## What is Pro Studio?
 
-Pro Studio is ImpactMojo's set of 13 browser tools for research and evaluation work.
+Pro Studio is ImpactMojo's set of 11 browser tools for research and evaluation work.
 
 - **Seven builders** are free to use and charge only for export: the Research Question Builder, ToR Builder, Logframe Builder, Empathy Mapping, AI Strategy Canvas, Statistical Code Converter and Qualitative Insights Lab.
 - **Four reference tools** are free to open: the Chart Selector, DevData Practice (36 synthetic dataset generators, more than 840,000 rows), the Visualization Cookbook (63 chart recipes with Python code) and Field Notes. Copying code from the Cookbook or a note from Field Notes needs a Professional plan.

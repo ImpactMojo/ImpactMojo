@@ -1,0 +1,43 @@
+# Every page, every day. tests/axe-accessibility.js on pull requests audits a
+# short core list plus the pages a pull request changes; this audits all of
+# them, so a page is covered because it exists rather than because someone
+# remembered to list it. It compares against tests/a11y-baseline.json and fails
+# only on failures that are not already recorded there.
+#
+# It runs in its own workflow, on a schedule, for the reason link-check.yml
+# does: a long job cancelled by its timeout cancels the whole run, and this one
+# must never take the pull-request checks down with it.
+name: Accessibility sweep (every page)
+
+on:
+  schedule:
+    - cron: '41 0 * * *'   # 06:11 IST, before the 07:47 IST publish
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sweep:
+    name: Sweep shard ${{ matrix.shard }} of 8
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Start local server
+        run: npx http-server -p 8080 -s &
+      - name: Wait for server
+        run: npx --yes wait-on@8.0.3 -t 30000 http://localhost:8080/index.html
+      - name: Audit this shard
+        env:
+          AXE_SHARD: ${{ matrix.shard }}/8
+          AXE_CONCURRENCY: '4'
+        run: node tests/axe-sweep.js

@@ -4,12 +4,7 @@ What's coming next for ImpactMojo. This is a living document: we'd love your inp
 
 ## Currently In Progress
 
-### Vernacular Course Content
-Full course content in regional languages. ([#29](https://github.com/ImpactMojo/ImpactMojo/issues/29))
-
-**Where this stands:** The platform interface and quality-audited page translations are already live in **5 languages**, Hindi, Tamil, Bengali, Marathi, and Telugu. What remains in progress is deeper course-level localisation: complete course translations refined toward human quality, starting with the most-used flagship courses.
-
-**What this means for you:** If you work with teams who are more comfortable in regional languages, you can already switch the interface and key pages today, and full course translations are on the way.
+Nothing is in progress that you would notice on the site. The Planned list below is what comes next.
 
 ## Recently Shipped
 
@@ -17,7 +12,7 @@ These were previously listed as planned or in progress, and are now live. Each n
 
 - **BookSummaries expansion**: the interactive reading companion library has grown to **172 companions** across development economics, statistics, research methods, communication, leadership, and productivity. ([#272](https://github.com/ImpactMojo/ImpactMojo/issues/272))
 - **Native 101 deck migration**: all **58 foundational course decks** are now self-hosted HTML with ~100 slides each, interactive charts, and keyboard/touch navigation. No third-party presentation embeds remain.
-- **Vernacular interface**: the UI and quality-audited page translations ship in 5 languages (Hindi, Tamil, Bengali, Marathi, Telugu); see "Currently In Progress" above for what's still open.
+- **Every page in five Indian languages**: use the language menu on any page to read it in Hindi, Tamil, Bengali, Marathi or Telugu, the 101 decks, Handouts and Deep Dives included. The menus, the homepage and the flagship course pages use translations we have checked. The rest is machine translation, which is readable but not reviewed. If you spot an error, tell us and we will save the corrected wording. ([#29](https://github.com/ImpactMojo/ImpactMojo/issues/29))
 - **Practitioner voices**: this was listed as a planned "practitioner interview series". It shipped as **Field Radio**, a station of **19 clips**: voice notes and short videos from practitioners, each with a full transcript, playing back-to-back and filterable by track. Every clip is in site search, including its transcript, so a phrase you half-remember finds the clip. ([Listen](/field-radio.html))
 - **Peer review system**: get feedback on your work from other practitioners, and give it. ([/peer-review.html](/peer-review.html))
 - **Certificate verification for employers**: listed as a "certificate marketplace"; what shipped is the part that matters to a hiring manager, a page that checks whether a credential is real. ([/verify-certificate.html](/verify-certificate.html))

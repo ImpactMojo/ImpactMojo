@@ -22,7 +22,7 @@ ImpactMojo अत्यावश्यक विकास ग्रंथां�
 
 | पुस्तक | लेखक | अध्याय | श्रेणी | पाथ |
 |------|-----------|----------|----------|------|
-| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | Social Protection | `/BookSummaries/handbook-social-protection.html` |
+| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | Social Protection | `/BookSummaries/handbook-social-protection-companion.html` |
 | **Development Economics** | Debraj Ray, Princeton University Press 1998 | 18 | Development Economics | `/BookSummaries/debraj-ray-companion.html` |
 | **Design Thinking: A Guide to Creative Problem Solving for Everyone** | Andrew Pressman, FAIA, Routledge 2019 | 10 | Design & Innovation | `/BookSummaries/dt-companion.html` |
 | **Basic Econometrics** | Damodar N. Gujarati & Dawn C. Porter, McGraw-Hill | 22 | Econometrics | `/BookSummaries/basic-econometrics-companion.html` |
@@ -97,7 +97,7 @@ Book companions समृद्ध शिकण्याच्या अनु�
 
 ## संबंधित संसाधने
 
-- **[Courses](/courses/)** — 19 फ्लॅगशिप आणि 51 पायाभूत विकास विषयांवर संरचित शिकण्याचे मार्ग
+- **[Courses](/courses/)** — 21 फ्लॅगशिप आणि 80 पायाभूत विकास विषयांवर संरचित शिकण्याचे मार्ग
 - **[Games](/Games/)** — खेळाद्वारे विकास संकल्पना शिकवणारी परस्परसंवादी सिम्युलेशन
 - **[Labs](/courses/)** — प्रत्यक्ष सरावासाठी ब्राउझर-आधारित कोडिंग आणि डेटा labs
-- **[Handouts](/Handouts/)** — सर्व विकास ट्रॅकवर 400+ जलद-संदर्भ मार्गदर्शक
+- **[Handouts](/Handouts/)** — सर्व विकास ट्रॅकवर 84 जलद-संदर्भ मार्गदर्शक

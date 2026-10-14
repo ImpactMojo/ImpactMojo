@@ -1367,8 +1367,8 @@ DECK = {
                  "hospital care through over 38,000 empanelled public and private hospitals, for "
                  "1,961 procedures. Rural eligibility uses SECC 2011 deprivation criteria, "
                  "including D5 (SC and ST households) and D7 (landless households relying on "
-                 "manual casual labour). On 11 September 2024 the scheme was extended to all "
-                 "people aged 70 and above, about 6 crore senior citizens, of whom more than 1.36 "
+                 "manual casual labour). The Cabinet approved extending it to all people aged 70 "
+                 "and above on 11 September 2024, and the extension was launched on 29 October 2024: about 6 crore senior citizens, of whom more than 1.36 "
                  "crore held Ayushman Vay Vandana cards by 21 September 2026. West Bengal became "
                  "the 36th state or union territory to implement the scheme on 8 June 2026 (PIB).", sm=True),
             hbox("Eligibility is built from social determinants: housing, caste, household "
@@ -1475,8 +1475,7 @@ DECK = {
                    ["Broad entitlement with a ceiling", "NFSA 2013: up to 75% rural and 50% "
                     "urban population (s3(2))", "Fewer exclusion errors at the bottom",
                     "Coverage capped by fixed population shares"],
-                   ["Universal by category", "PM-JAY for everyone aged 70 and above (from 11 "
-                    "September 2024)", "No means test; simple to explain",
+                   ["Universal by category", "PM-JAY for everyone aged 70 and above (from 29 October 2024)", "No means test; simple to explain",
                     "Spends on those who could pay"],
                    ["Proportionate", "Extra workers or funds for high-burden blocks inside a "
                     "universal service", "Reaches the whole gradient, with more where needed",

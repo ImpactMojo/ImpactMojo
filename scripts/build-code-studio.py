@@ -171,7 +171,7 @@ def head(page, canonical):
     <meta name="description" content="%(desc)s">
     <link rel="canonical" href="%(canon)s">
 <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>
+<script async src="/js/ga-load.js"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

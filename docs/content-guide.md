@@ -6,18 +6,17 @@ This page documents how educational content is structured in ImpactMojo, for con
 
 | Type | Count | Format | Access |
 |------|-------|--------|--------|
-| Flagship Courses | 16 | Multi-module (12–13 modules each) | Free |
-| Foundational Courses | 47 | Single-page or multi-section | Free |
-| Interactive Labs | 28 | HTML/JS workbenches | Free |
+| Flagship Courses | 21 | Multi-module (12–13 modules each) | Free |
+| Foundational Courses | 80 | The 101 Series: one native HTML deck each (~100 slides) | Free |
+| Free Studio tools | 35 | HTML/JS workbenches | Free |
 | Learning Games | 135 | 18 simulations + 117 puzzles | Free |
-| Pro Studio tools | 9 | Separate Netlify sites | Paid tiers |
+| Pro Studio tools | 11 | On the main site, under /premium-tools/ | Paid tiers; five are free to use and charge only for export |
 | ImpactLex | 494 terms | PWA dictionary | Free |
-| Dev Case Studies | 200 | Curated library | Free |
+| Dev Case Studies | 208 | Curated library | Free |
 | DevDiscourses | 500+ | Curated papers/books | Free |
 | Handouts | 84 | HTML pages | Free |
-| BookSummaries | 55 | Interactive reading companions | Free (Specials) |
-| Deep Dives | 21 | Curated annotated reading lists | Free (Specials) |
-| 101 Course Decks | 47 | Native HTML (~100 slides), fully self-hosted | Free |
+| Reading companions | 185 | Interactive reading companions | Free (Specials) |
+| Deep Dives | 27 | Curated annotated reading lists | Free (Specials) |
 | Blog posts | Ongoing | HTML articles | Free |
 | Podcast | Episodes | Audio (Spotify) | Free |
 

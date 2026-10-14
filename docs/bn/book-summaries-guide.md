@@ -22,7 +22,7 @@ ImpactMojo অপরিহার্য উন্নয়ন গ্রন্থ�
 
 | বই | লেখক(গণ) | অধ্যায় | বিভাগ | পাথ |
 |------|-----------|----------|----------|------|
-| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | Social Protection | `/BookSummaries/handbook-social-protection.html` |
+| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | Social Protection | `/BookSummaries/handbook-social-protection-companion.html` |
 | **Development Economics** | Debraj Ray, Princeton University Press 1998 | 18 | Development Economics | `/BookSummaries/debraj-ray-companion.html` |
 | **Design Thinking: A Guide to Creative Problem Solving for Everyone** | Andrew Pressman, FAIA, Routledge 2019 | 10 | Design & Innovation | `/BookSummaries/dt-companion.html` |
 | **Basic Econometrics** | Damodar N. Gujarati & Dawn C. Porter, McGraw-Hill | 22 | Econometrics | `/BookSummaries/basic-econometrics-companion.html` |
@@ -97,7 +97,7 @@ Book companions একটি সমৃদ্ধ শেখার অভিজ্�
 
 ## সম্পর্কিত সম্পদ
 
-- **[Courses](/courses/)** — 13টি ফ্ল্যাগশিপ এবং 40টি ভিত্তিগত উন্নয়ন বিষয় জুড়ে কাঠামোবদ্ধ শেখার পথ
+- **[Courses](/courses/)** — 21টি ফ্ল্যাগশিপ এবং 80টি ভিত্তিগত উন্নয়ন বিষয় জুড়ে কাঠামোবদ্ধ শেখার পথ
 - **[Games](/Games/)** — খেলার মাধ্যমে উন্নয়ন ধারণা শেখানো ইন্টারেক্টিভ সিমুলেশন
 - **[Labs](/courses/)** — হাতে-কলমে অনুশীলনের জন্য ব্রাউজার-ভিত্তিক কোডিং ও ডেটা labs
-- **[Handouts](/Handouts/)** — সমস্ত উন্নয়ন ট্র্যাক জুড়ে 400+ দ্রুত-রেফারেন্স গাইড
+- **[Handouts](/Handouts/)** — সমস্ত উন্নয়ন ট্র্যাক জুড়ে 84 দ্রুত-রেফারেন্স গাইড

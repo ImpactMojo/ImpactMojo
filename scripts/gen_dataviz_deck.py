@@ -1126,7 +1126,7 @@ HEAD = ('<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n'
         '<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>\n'
         + CSS + '\n'
         '<!-- Google Analytics -->\n'
-        '<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRCMEB9TBW"></script>\n'
+        '<script async src="/js/ga-load.js"></script>\n'
         "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>\n"
         '<!-- SEO meta -->\n'
         '<meta name="description" content="' + META_DESC + '">\n'

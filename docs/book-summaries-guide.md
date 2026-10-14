@@ -22,7 +22,7 @@ All book summaries are **free, browser-based, and require no login**. They are s
 
 | Book | Author(s) | Chapters | Category | Path |
 |------|-----------|----------|----------|------|
-| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | Social Protection | `/BookSummaries/handbook-social-protection.html` |
+| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | Social Protection | `/BookSummaries/handbook-social-protection-companion.html` |
 | **Development Economics** | Debraj Ray, Princeton University Press 1998 | 18 | Development Economics | `/BookSummaries/debraj-ray-companion.html` |
 | **Design Thinking: A Guide to Creative Problem Solving for Everyone** | Andrew Pressman, FAIA, Routledge 2019 | 10 | Design & Innovation | `/BookSummaries/dt-companion.html` |
 | **Basic Econometrics** | Damodar N. Gujarati & Dawn C. Porter, McGraw-Hill | 22 | Econometrics | `/BookSummaries/basic-econometrics-companion.html` |
@@ -102,7 +102,7 @@ Have a development text that would benefit from an interactive companion? We wel
 
 ## Related Resources
 
-- **[Courses](/courses/)**: structured learning paths across 21 flagship and 80 foundational development topics
+- **[Courses](/courses/)**: structured learning paths across 22 flagship and 84 foundational development topics
 - **[Games](/Games/)**: interactive simulations that teach development concepts through play
 - **[Labs](/courses/)**: browser-based coding and data labs for hands-on practice
-- **[Handouts](/Handouts/)**: 400+ quick-reference guides across all development tracks
+- **[Handouts](/Handouts/)**: 84 quick-reference handouts across all development tracks

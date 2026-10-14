@@ -8,7 +8,7 @@ This page walks through everything available on ImpactMojo: what each content ty
 
 Courses are the backbone of ImpactMojo. There are two types:
 
-### Flagship Courses (18)
+### Flagship Courses (21)
 
 These are comprehensive, deep-dive courses: each with approximately **13 modules** that build on each other. Think of them as the equivalent of a semester-long university course, but written for working professionals.
 
@@ -26,9 +26,9 @@ Each flagship course includes:
 
 **How to use them:** Work through a course at your own pace (one module per week is a comfortable rhythm). Assign modules to your team as pre-reading before a planning session. Use them as the curriculum backbone for a university course or NGO training programme.
 
-### Foundational Courses (51)
+### Foundational Courses (80)
 
-Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials (thorough in their coverage but simpler in format than flagship courses. **All 80 foundational courses are native ~100-slide HTML decks** with interactive charts, light/dark theme, and keyboard/touch navigation) fully self-hosted, with no third-party presentation embeds. See the [101 Course Decks Guide](101-decks-guide.md) for details.
+Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials (thorough in their coverage but simpler in format than flagship courses. **All 84 foundational courses are native ~100-slide HTML decks** with interactive charts, light/dark theme, and keyboard/touch navigation) fully self-hosted, with no third-party presentation embeds. See the [101 Course Decks Guide](101-decks-guide.md) for details.
 
 **What they include:**
 - Comprehensive topic coverage: each one covers its subject thoroughly
@@ -77,7 +77,7 @@ Each game:
 
 ---
 
-## Interactive Studios (35 studios)
+## Interactive Studios (35 Free Studio tools)
 
 Studios are browser-based workbenches where you build something. Unlike courses (where you read and reflect), studios are hands-on: you follow a guided workflow and produce a real output.
 
@@ -161,9 +161,9 @@ ImpactLex is a **development sector dictionary**: a searchable, browsable collec
 
 ---
 
-## Dev Case Studies (200 cases from 117 countries)
+## Dev Case Studies (208 cases from 117 countries)
 
-A curated library of **200 real-world development case studies**, not theoretical examples, but actual programmes, evaluations, and interventions from around the world.
+A curated library of **208 real-world development case studies**, not theoretical examples, but actual programmes, evaluations, and interventions from around the world.
 
 Each case study is tagged by:
 - **Country** (117 countries represented)
@@ -184,7 +184,7 @@ Entries are organized by topic and tagged for easy browsing.
 
 ---
 
-## Dataverse (296 resources)
+## Dataverse (343 resources)
 
 Dataverse is your starting point for development data. It includes:
 
@@ -203,7 +203,7 @@ Resources cover poverty, health, education, gender, governance, climate, and mor
 
 Interactive reading companions that go far beyond a summary. Each BookSummary offers chapter-by-chapter navigation, evidence explorers, data playgrounds with interactive simulators, programme comparison tools, concept glossaries, and AI-powered Q&A. Currently available under Specials. See the [Reading Companions Guide](book-summaries-guide.md) for full details.
 
-**Current entries: 184 reading companions** spanning development economics (Poor Economics, Why Nations Fail, Development as Freedom, Debraj Ray), econometrics and statistics (Gujarati, Naked Statistics, Learning Statistics with R), data visualization (Tufte, Storytelling with Data, The Truthful Art), research methods, communication, leadership, and productivity. See the full list in the [Content Catalog](content-catalog.md).
+**Current entries: 185 reading companions** spanning development economics (Poor Economics, Why Nations Fail, Development as Freedom, Debraj Ray), econometrics and statistics (Gujarati, Naked Statistics, Learning Statistics with R), data visualization (Tufte, Storytelling with Data, The Truthful Art), research methods, communication, leadership, and productivity. See the full list in the [Content Catalog](content-catalog.md).
 
 ---
 
@@ -250,7 +250,7 @@ ImpactMojo has a **Model Context Protocol (MCP) server** that lets any AI assist
 - `lookup_bct` / `search_bcts` / `list_bct_categories`, 203 BCT techniques with South Asian context and case studies
 - `browse_dataverse` / `search_dataverse`, 343 tools, datasets, APIs
 - `list_challenges` / `get_challenge`, Practice exercises with rubrics
-- `list_courses`, 101 courses across 6 learning tracks
+- `list_courses`, 22 flagship and 84 foundational courses
 - `get_game_info`, 18 simulation games with AI agent personas
 - `query_climate_data`, India GHG emissions from Climate TRACE
 
@@ -306,7 +306,7 @@ Switch languages from the platform interface. This makes ImpactMojo usable for t
 
 ## What's free and what needs a paid plan?
 
-The vast majority of ImpactMojo is **completely free**: this is a genuine commitment, not a marketing strategy. All 101 courses, 135 games, 35 studios, handouts, ImpactLex, case studies, DevDiscourses, and Dataverse are available at no cost.
+The vast majority of ImpactMojo is **completely free**, and it will stay that way. All 22 flagship and 84 foundational courses, 135 games, 35 Free Studio tools, handouts, ImpactLex, case studies, DevDiscourses, and Dataverse are available at no cost.
 
 Paid memberships (starting at ₹399/month) unlock additional tools, PDF/PNG export from studios, certificates, and priority access to coaching and workshops.
 

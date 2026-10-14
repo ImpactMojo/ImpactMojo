@@ -161,5 +161,5 @@ After the workshop, help participants continue their learning:
 - **Create accounts.** Encourage participants to create free ImpactMojo accounts so their progress is tracked going forward.
 - **Set up learning paths.** Point participants to the learning track most relevant to their role. A field coordinator might follow the MEL & Research track. A communications officer might follow Communication & Data.
 - **Earn certificates.** Participants who complete a full flagship course receive a verifiable digital certificate (W3C Open Badges 3.0). This can be shared with employers or included in professional portfolios.
-- **Join the community.** Share the ImpactMojo Telegram channel for ongoing discussions and peer support.
+- **Join the community.** Point participants to the ImpactMojo WhatsApp learning community for ongoing discussions and peer support.
 - **Follow-up sessions.** Consider scheduling monthly check-ins where participants discuss what they have applied from the workshop. Use reflection prompts from the courses as discussion starters.

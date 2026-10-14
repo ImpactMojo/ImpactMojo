@@ -22,7 +22,7 @@ ImpactMojo அத்தியாவசிய வளர்ச்சி நூல�
 
 | நூல் | ஆசிரியர்(கள்) | அத்தியாயங்கள் | வகை | பாதை |
 |------|-----------|----------|----------|------|
-| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | Social Protection | `/BookSummaries/handbook-social-protection.html` |
+| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | Social Protection | `/BookSummaries/handbook-social-protection-companion.html` |
 | **Development Economics** | Debraj Ray, Princeton University Press 1998 | 18 | Development Economics | `/BookSummaries/debraj-ray-companion.html` |
 | **Design Thinking: A Guide to Creative Problem Solving for Everyone** | Andrew Pressman, FAIA, Routledge 2019 | 10 | Design & Innovation | `/BookSummaries/dt-companion.html` |
 | **Basic Econometrics** | Damodar N. Gujarati & Dawn C. Porter, McGraw-Hill | 22 | Econometrics | `/BookSummaries/basic-econometrics-companion.html` |
@@ -97,7 +97,7 @@ Book companions ஒரு வளமான கற்றல் அனுபவத�
 
 ## தொடர்புடைய வளங்கள்
 
-- **[Courses](/courses/)** — 19 முதன்மை மற்றும் 51 அடிப்படை வளர்ச்சித் தலைப்புகளில் கட்டமைக்கப்பட்ட கற்றல் பாதைகள்
+- **[Courses](/courses/)** — 21 முதன்மை மற்றும் 80 அடிப்படை வளர்ச்சித் தலைப்புகளில் கட்டமைக்கப்பட்ட கற்றல் பாதைகள்
 - **[Games](/Games/)** — விளையாட்டின் மூலம் வளர்ச்சிக் கருத்துக்களைக் கற்பிக்கும் ஊடாடும் உருவகப்படுத்துதல்கள்
 - **[Labs](/courses/)** — நேரடிப் பயிற்சிக்கான உலாவி-அடிப்படையிலான குறியீட்டு மற்றும் தரவு labs
-- **[Handouts](/Handouts/)** — அனைத்து வளர்ச்சி தடங்களிலும் 400+ விரைவு-குறிப்பு வழிகாட்டிகள்
+- **[Handouts](/Handouts/)** — அனைத்து வளர்ச்சி தடங்களிலும் 84 விரைவு-குறிப்பு வழிகாட்டிகள்

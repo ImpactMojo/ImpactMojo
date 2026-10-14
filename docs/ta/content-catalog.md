@@ -4,7 +4,7 @@
 
 ---
 
-## Flagship Courses (14)
+## Flagship Courses (21)
 
 தலா 12–13 தொகுதிகள், ஊடாடும் சொல்லகராதிகள், தென்னாசிய வழக்காய்வுகள் மற்றும் AI கற்றல் துணைகள் கொண்ட ஆழமான, பல-தொகுதி பாடநெறிகள்.
 
@@ -22,13 +22,13 @@
 
 ---
 
-## BookSummaries (134)
+## BookSummaries (185)
 
 Specials-ன் கீழ் உள்ள ஊடாடும் புத்தக துணைகள் — தரவுக் கருவிகள் மற்றும் AI-இயக்கப்படும் கேள்வி-பதிலுடன் கூடிய ஆழமான, அத்தியாயம்-வாரியான ஆய்வுகள். முழு விவரங்களுக்கு [Book Companions Guide](book-summaries-guide.md) பார்க்கவும்.
 
 | # | புத்தகம் | ஆசிரியர் | அத்தியாயங்கள் | வகை | இணைப்பு |
 |---|------|--------|----------|----------|------|
-| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [Open](/BookSummaries/handbook-social-protection.html) |
+| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [Open](/BookSummaries/handbook-social-protection-companion.html) |
 | 2 | Development Economics | Debraj Ray (Princeton 1998) | 18 | Development Economics | [Open](/BookSummaries/debraj-ray-companion.html) |
 | 3 | Design Thinking: A Guide to Creative Problem Solving | Andrew Pressman (Routledge 2019) | 10 | Design & Innovation | [Open](/BookSummaries/dt-companion.html) |
 | 4 | Basic Econometrics | Gujarati & Porter (McGraw-Hill) | 22 | Econometrics | [Open](/BookSummaries/basic-econometrics-companion.html) |
@@ -38,7 +38,7 @@ Specials-ன் கீழ் உள்ள ஊடாடும் புத்த�
 
 ---
 
-## Foundational Courses (38)
+## Foundational Courses (80)
 
 அத்தியாவசிய வளர்ச்சித் தலைப்புகளை உள்ளடக்கிய ஒற்றைப் பக்க பாடநெறிகள். அனைத்தும் இலவசம், உள்நுழைவு தேவையில்லை.
 
@@ -115,7 +115,7 @@ Specials-ன் கீழ் உள்ள ஊடாடும் புத்த�
 
 ---
 
-## Interactive Labs (11)
+## Interactive Labs (35)
 
 நீங்கள் உண்மையான திறன்களை உருவாக்கி, வடிவமைத்து, பயிற்சி செய்யும் கைகளில் வேலை செய்யும் workbench-கள்.
 
@@ -134,7 +134,7 @@ Specials-ன் கீழ் உள்ள ஊடாடும் புத்த�
 
 ---
 
-## Learning Games (16)
+## Learning Games (135)
 
 பொருளாதார உருவகப்படுத்துதல்கள் மற்றும் ஊடாடும் விளையாட்டுகள் — பட்டறைகள் மற்றும் வகுப்பறை பயன்பாட்டிற்கு ஏற்றவை.
 
@@ -161,7 +161,7 @@ Specials-ன் கீழ் உள்ள ஊடாடும் புத்த�
 
 ---
 
-## Handouts (80+ HTML pages)
+## Handouts (84 HTML pages)
 
 கற்றல் பாதையின்படி ஒழுங்கமைக்கப்பட்ட பதிவிறக்கம் செய்யக்கூடிய குறிப்புத் தாள்கள். அனைத்தையும் [Handouts Index](/Handouts/index.html) இல் உலாவவும்.
 
@@ -242,7 +242,7 @@ Specials-ன் கீழ் உள்ள ஊடாடும் புத்த�
 
 ---
 
-## Premium Tools (7)
+## Premium Tools (11)
 
 ஆராய்ச்சியாளர்கள் மற்றும் பயிற்சியாளர்களுக்கான மேம்பட்ட கருவிகள். கட்டண உறுப்பினர்த்துவம் தேவை.
 
@@ -264,10 +264,10 @@ Specials-ன் கீழ் உள்ள ஊடாடும் புத்த�
 
 | வளம் | விளக்கம் | அணுகல் |
 |----------|-------------|--------|
-| **ImpactLex** | 390+ வளர்ச்சிச் சொற்கள் அகராதி (PWA, ImpactMojo இல் ஹோஸ்ட் செய்யப்பட்டது) | இலவசம் |
-| **Dev Case Studies** | 117 நாடுகளில் இருந்து 200 தேர்ந்தெடுக்கப்பட்ட வழக்குகள் | இலவசம் |
+| **ImpactLex** | 490+ வளர்ச்சிச் சொற்கள் அகராதி (PWA, ImpactMojo இல் ஹோஸ்ட் செய்யப்பட்டது) | இலவசம் |
+| **Dev Case Studies** | 117 நாடுகளில் இருந்து 208 தேர்ந்தெடுக்கப்பட்ட வழக்குகள் | இலவசம் |
 | **DevDiscourses** | 500+ தேர்ந்தெடுக்கப்பட்ட ஆராய்ச்சிக் கட்டுரைகள் மற்றும் புத்தகங்கள் | இலவசம் |
-| **Dataverse** | 324 தரவுக் கருவிகள், API-கள் மற்றும் தரவுத்தொகுப்புகள் | இலவசம் — [Browse](/dataverse.html) |
+| **Dataverse** | 343 தரவுக் கருவிகள், API-கள் மற்றும் தரவுத்தொகுப்புகள் | இலவசம் — [Browse](/dataverse.html) |
 | **Blog: Learning Loops** | வளர்ச்சி நடைமுறை பற்றிய கட்டுரைகள் | இலவசம் — [Read](/blog.html) |
 | **Podcast: Between the Logframes** | Spotify இல் ஆடியோ எபிசோடுகள் | இலவசம் |
 | **Dojos** | 35+ நடைமுறை-அடிப்படையிலான திறன் அமர்வுகள் | கட்டணம் |
@@ -279,16 +279,16 @@ Specials-ன் கீழ் உள்ள ஊடாடும் புத்த�
 
 | வகை | எண்ணிக்கை |
 |----------|-------|
-| Flagship courses | 14 |
-| Foundational courses | 39 |
-| Interactive labs | 11 |
-| Learning games | 16 |
-| BookSummaries | 5 |
-| Premium tools | 9 |
-| Handout pages | 80+ |
-| Dataverse entries | 270 |
-| Dev case studies | 200 |
+| Flagship courses | 21 |
+| Foundational courses | 80 |
+| Interactive labs | 35 |
+| Learning games | 135 |
+| BookSummaries | 185 |
+| Premium tools | 11 |
+| Handout pages | 84 |
+| Dataverse entries | 343 |
+| Dev case studies | 208 |
 | DevDiscourses entries | 500+ |
-| ImpactLex terms | 390+ |
+| ImpactLex terms | 490+ |
 | ஆதரிக்கப்படும் மொழிகள் | 6 (English, Hindi, Tamil, Bengali, Telugu, Marathi) |
 | கற்றல் பாதைகள் | 6 |

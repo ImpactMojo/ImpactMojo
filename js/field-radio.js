@@ -102,7 +102,7 @@
         '<span class="fr-item-ic" style="--tc:' + trackColor(c.track) + '">' + icon + "</span>" +
         '<span class="fr-item-b">' +
           '<span class="fr-item-t">' + esc(c.title || "Untitled") + (c.sample ? ' <span class="fr-tag-sample">sample</span>' : "") + "</span>" +
-          '<span class="fr-item-m">' + esc(c.speaker || "") + (c.track ? ' &middot; <span style="color:' + trackColor(c.track) + '">' + esc(c.track) + "</span>" : "") + "</span>" +
+          '<span class="fr-item-m">' + esc(c.speaker || "") + (c.track ? ' &middot; <span>' + esc(c.track) + "</span>" : "") + "</span>" +
         "</span>" +
         '<span class="fr-item-d">' + esc(c.duration || "") + "</span>" +
       "</button>";

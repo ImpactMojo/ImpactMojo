@@ -8,7 +8,7 @@ This guide will walk you through your first experience with ImpactMojo: from you
 
 1. **Open [impactmojo.in](https://www.impactmojo.in)** in any browser, Chrome, Firefox, Safari, or Edge on your phone, tablet, or computer
 2. **Explore the homepage.** You'll see an overview of what's available: courses, games, labs, and resources. Scroll through to get a sense of the platform.
-3. **Browse the course catalog.** Click on "Courses" or "Catalog" to see all 101 courses: 21 flagship courses with deep, multi-module content, and 80 foundational courses on focused topics.
+3. **Browse the course catalog.** Click on "Courses" or "Catalog" to see all 22 flagship courses, with deep, multi-module content, and all 84 foundational courses on focused topics.
 4. **Open any course and start reading.** No login, no signup, no payment. The content is right there.
 
 That's it. You're learning.
@@ -155,7 +155,7 @@ ImpactMojo is built as a **Progressive Web App (PWA)**, which means it can work 
 ImpactMojo is free to use, and the free tier is genuinely substantial. Here's what each level offers, explained in terms of what it means for your work:
 
 ### Explorer (Free)
-**What you get:** All 101 courses, 135 simulation games, 35 labs, 84 handouts, ImpactLex, Dev Case Studies, DevDiscourses, Dataverse access, and the Telegram community channel.
+**What you get:** All 22 flagship and 84 foundational courses, 135 games and simulations, 35 Free Studio tools, 84 handouts, ImpactLex, Dev Case Studies, DevDiscourses, Dataverse access, and the WhatsApp learning community.
 
 **Who it's for:** Anyone who wants to learn. Students, curious professionals, or team members exploring new topics. There's no time limit and no content restrictions on the core library.
 
@@ -195,4 +195,4 @@ Now that you know how to navigate the platform, here are some good starting poin
 - **If you need a specific resource:** Press Ctrl+K and search for it
 - **If you want to see everything:** Read the [Platform Overview](platform-overview.md) for a detailed guide to every content type
 
-For questions or feedback, visit the [contact page](https://www.impactmojo.in/contact.html) or join the community on Telegram.
+For questions or feedback, visit the [contact page](https://www.impactmojo.in/contact.html) or ask to join the WhatsApp learning community from the [community page](https://www.impactmojo.in/community).

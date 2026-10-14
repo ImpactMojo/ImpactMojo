@@ -275,6 +275,9 @@
 'html body .im-sc-consent button.is-yes{background:var(--sc-sel)!important;color:var(--sc-sel-ink)!important}',
 'html body .im-sc-consent button.is-no{background:transparent!important;color:var(--sc-fg)!important}',
 '@media(max-width:600px){.im-sc-consent{left:10px;right:10px;bottom:10px;max-width:none}}',
+// On a 101 deck the slide controls sit along the bottom edge, so the card goes
+// under the top bar instead of covering them.
+'.im-sc-consent.is-deck{top:56px;bottom:auto!important}',
 '@media(prefers-reduced-motion:reduce){.im-sc *{transition:none!important}}',
 '.im-sc-inv{filter:invert(.92) hue-rotate(180deg)}',
 // reconcile app-like pages (course shells): kill dead reserved padding + offset fixed sidebar/progress below the 46px bar
@@ -789,7 +792,7 @@
     if (document.getElementById('cookieConsent') || document.querySelector('script[src*="cookie-ui.js"]')) return;
     var box = document.createElement('div');
     box.id = 'im-consent';
-    box.className = 'im-sc im-sc-consent';
+    box.className = 'im-sc im-sc-consent' + (isDeck ? ' is-deck' : '');
     box.setAttribute('role', 'region');
     box.setAttribute('aria-label', 'Cookie choice');
     box.innerHTML = '<p>ImpactMojo uses analytics cookies to count visits and learn which pages are useful. Everything on the site works the same if you decline. '
@@ -800,6 +803,7 @@
       var c = b.getAttribute('data-c');
       store(CONSENT_KEY, c);
       if (typeof window.gtag === 'function') { try { window.gtag('consent', 'update', { analytics_storage: c }); } catch (err) {} }
+      if (c === 'granted' && typeof window.imLoadGA === 'function') window.imLoadGA();
       box.parentNode && box.parentNode.removeChild(box);
       scheduleFloating(30);
     });

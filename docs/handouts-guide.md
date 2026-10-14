@@ -1,6 +1,6 @@
 # Handouts Guide
 
-ImpactMojo offers **400+ free, downloadable handouts**: concise reference materials you can use in workshops, classrooms, self-study, or team training sessions. Think of them as the companion notes you wish every training came with.
+ImpactMojo offers **84 free, downloadable handouts**: concise reference materials you can use in workshops, classrooms, self-study, or team training sessions. Think of them as the companion notes you wish every training came with.
 
 This guide covers how to find, use, print, and adapt handouts for your work.
 

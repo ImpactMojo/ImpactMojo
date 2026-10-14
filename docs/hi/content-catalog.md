@@ -4,7 +4,7 @@
 
 ---
 
-## प्रमुख पाठ्यक्रम (11)
+## प्रमुख पाठ्यक्रम (21)
 
 गहन, बहु-मॉड्यूल पाठ्यक्रम जिनमें प्रत्येक में 12–13 मॉड्यूल, इंटरैक्टिव शब्दकोश, दक्षिण एशियाई केस स्टडी और AI अध्ययन सहायक हैं।
 
@@ -22,13 +22,13 @@
 
 ---
 
-## BookSummaries (134)
+## BookSummaries (185)
 
 Specials के अंतर्गत इंटरैक्टिव बुक कम्पैनियन — डेटा टूल और AI-संचालित प्रश्नोत्तर के साथ अध्याय-दर-अध्याय गहन अन्वेषण। पूरी जानकारी के लिए [Book Companions Guide](book-summaries-guide.md) देखें।
 
 | # | पुस्तक | लेखक | अध्याय | श्रेणी | लिंक |
 |---|------|--------|----------|----------|------|
-| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [खोलें](/BookSummaries/handbook-social-protection.html) |
+| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [खोलें](/BookSummaries/handbook-social-protection-companion.html) |
 | 2 | Development Economics | Debraj Ray (Princeton 1998) | 18 | Development Economics | [खोलें](/BookSummaries/debraj-ray-companion.html) |
 | 3 | Design Thinking: A Guide to Creative Problem Solving | Andrew Pressman (Routledge 2019) | 10 | Design & Innovation | [खोलें](/BookSummaries/dt-companion.html) |
 | 4 | Basic Econometrics | Gujarati & Porter (McGraw-Hill) | 22 | Econometrics | [खोलें](/BookSummaries/basic-econometrics-companion.html) |
@@ -38,7 +38,7 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 
 ---
 
-## आधारभूत पाठ्यक्रम (38)
+## आधारभूत पाठ्यक्रम (80)
 
 आवश्यक विकास विषयों को कवर करने वाले एकल-पृष्ठ पाठ्यक्रम। सभी निःशुल्क, किसी लॉगिन की आवश्यकता नहीं।
 
@@ -115,7 +115,7 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 
 ---
 
-## इंटरैक्टिव Labs (11)
+## इंटरैक्टिव Labs (35)
 
 व्यावहारिक वर्कबेंच जहाँ आप वास्तविक कौशल बनाते, डिज़ाइन करते और अभ्यास करते हैं।
 
@@ -134,7 +134,7 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 
 ---
 
-## शिक्षण खेल (16)
+## शिक्षण खेल (135)
 
 अर्थशास्त्र सिमुलेशन और इंटरैक्टिव खेल — कार्यशालाओं और कक्षा उपयोग के लिए आदर्श।
 
@@ -161,7 +161,7 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 
 ---
 
-## Handouts (80+ HTML पृष्ठ)
+## Handouts (84 HTML पृष्ठ)
 
 शिक्षण ट्रैक के अनुसार व्यवस्थित डाउनलोड करने योग्य संदर्भ पत्रक। सभी को [Handouts Index](/Handouts/index.html) पर देखें।
 
@@ -242,7 +242,7 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 
 ---
 
-## Premium Tools (7)
+## Premium Tools (11)
 
 शोधकर्ताओं और प्रैक्टिशनरों के लिए उन्नत उपकरण। सशुल्क सदस्यता आवश्यक है।
 
@@ -264,10 +264,10 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 
 | संसाधन | विवरण | पहुँच |
 |----------|-------------|--------|
-| **ImpactLex** | 390+ विकास शब्दों का शब्दकोश (PWA, ImpactMojo पर होस्टेड) | निःशुल्क |
-| **Dev Case Studies** | 117 देशों से 200 क्यूरेटेड केस | निःशुल्क |
+| **ImpactLex** | 490+ विकास शब्दों का शब्दकोश (PWA, ImpactMojo पर होस्टेड) | निःशुल्क |
+| **Dev Case Studies** | 117 देशों से 208 क्यूरेटेड केस | निःशुल्क |
 | **DevDiscourses** | 500+ क्यूरेटेड शोध पत्र और पुस्तकें | निःशुल्क |
-| **Dataverse** | 324 डेटा टूल, API और डेटासेट | निःशुल्क — [ब्राउज़ करें](/dataverse.html) |
+| **Dataverse** | 343 डेटा टूल, API और डेटासेट | निःशुल्क — [ब्राउज़ करें](/dataverse.html) |
 | **Blog: Learning Loops** | विकास अभ्यास पर लेख | निःशुल्क — [पढ़ें](/blog.html) |
 | **Podcast: Between the Logframes** | Spotify पर ऑडियो एपिसोड | निःशुल्क |
 | **Dojos** | 35+ अभ्यास-आधारित कौशल सत्र | सशुल्क |
@@ -279,16 +279,16 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 
 | श्रेणी | संख्या |
 |----------|-------|
-| प्रमुख पाठ्यक्रम | 9 |
-| आधारभूत पाठ्यक्रम | 39 |
-| इंटरैक्टिव labs | 11 |
-| शिक्षण खेल | 16 |
-| BookSummaries | 5 |
-| Premium tools | 9 |
-| Handout पृष्ठ | 80+ |
-| Dataverse प्रविष्टियाँ | 270 |
-| Dev केस स्टडी | 200 |
+| प्रमुख पाठ्यक्रम | 21 |
+| आधारभूत पाठ्यक्रम | 80 |
+| इंटरैक्टिव labs | 35 |
+| शिक्षण खेल | 135 |
+| BookSummaries | 185 |
+| Premium tools | 11 |
+| Handout पृष्ठ | 84 |
+| Dataverse प्रविष्टियाँ | 343 |
+| Dev केस स्टडी | 208 |
 | DevDiscourses प्रविष्टियाँ | 500+ |
-| ImpactLex शब्द | 390+ |
+| ImpactLex शब्द | 490+ |
 | समर्थित भाषाएँ | 6 (English, Hindi, Tamil, Bengali, Telugu, Marathi) |
 | शिक्षण ट्रैक | 6 |

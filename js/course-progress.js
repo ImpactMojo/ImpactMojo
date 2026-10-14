@@ -54,7 +54,8 @@
         // along, but without an entry here `if (!COURSE_NAMES[courseId]) return`
         // exited before the tracker booted, so that course recorded nothing.
         'social-movements': 'Social Movements & Protests: Theory and South Asian Practice',
-        'gender-mel': 'Gender-Sensitive Monitoring, Evaluation & Learning'
+        'gender-mel': 'Gender-Sensitive Monitoring, Evaluation & Learning',
+        'social-protection': 'Social Protection and Welfare Delivery in India'
     };
 
     // =========================================================
