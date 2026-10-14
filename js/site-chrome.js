@@ -284,6 +284,9 @@
 '.im-sc-sheet a{display:flex;align-items:center;min-height:40px;color:var(--sc-fg);text-decoration:none;font-size:14px;font-weight:500}',
 '.im-sc-sheet a:hover{color:var(--sc-ink);text-decoration:underline}',
 '.im-sc-tour-row{margin:10px 0 4px}',
+'.im-sc-cookie-set{background:none;border:0;padding:0;color:var(--sc-mut);font:inherit;text-decoration:underline;cursor:pointer}',
+'.im-sc-cookie-set:hover{color:var(--sc-ink)}',
+'.im-sc-cookie-set:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px}',
 '.im-sc-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:6px;vertical-align:middle}',
 // footer
 '.im-sc-foot{background:var(--sc-bg);border-top:1px solid var(--sc-bd);color:var(--sc-fg);font-family:\'Inter\',system-ui,sans-serif;padding:40px clamp(16px,4vw,32px) 28px;margin-top:48px}',
@@ -510,8 +513,16 @@
         navCols('im-sc-foot-col') +
       '</div>' +
       '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free Forever &middot; &copy; ImpactMojo</span>' +
+        '<button type="button" class="im-sc-cookie-set" data-im-cookies>Cookie settings</button>' +
         '<span>Made for South Asian development practitioners</span></div>';
     document.body.appendChild(foot);
+    // Cookie settings forgets the stored choice and asks again with the strip.
+    foot.querySelector('[data-im-cookies]').addEventListener('click', function () {
+      try { localStorage.removeItem(CONSENT_KEY); localStorage.removeItem('cookieConsent'); } catch (e) {}
+      injectConsent();
+      var box = document.getElementById('im-consent');
+      if (box) { var first = box.querySelector('button'); if (first) first.focus(); }
+    });
 
     // 5. menu sheet (H2): the footer's columns, plus the reading settings that
     // a phone's bar has no room for.
@@ -745,7 +756,7 @@
   // expanded cookie card) and anything anchored by `top` are obstacles that
   // others move around, never moved themselves.
   var FLOAT_SEL = '#im-wa-fab,#mojini-chat-toggle,.chatbot-fab,.mojini-fab,.feedback-fab,.imx-speed-dial,'
-                + '#cookieConsent,.cookie-consent,#im-lang-switch.im-lang-floating,#im-consent';
+                + '#cookieConsent,.cookie-consent,#im-lang-switch.im-lang-floating,#im-consent,.userway_buttons_wrapper';
   var GAP = 10;
   function layoutFloating() {
     if (!document.body) return;
@@ -841,13 +852,10 @@
   }
 
   // ── Analytics consent notice (M9) ──────────────────────────────────
-  // Five pages carry their own cookie widget (#cookieConsent, cookie-ui.js);
-  // on those this stays out of the way. Everywhere else, a reader who has not
-  // chosen sees a small card with two equal buttons. The choice is stored, and
-  // passed to gtag's consent mode when the page has gtag.
+  // A reader who has not chosen sees a slim strip with two equal buttons. The
+  // choice is stored, and passed to gtag's consent mode when the page has gtag.
   function injectConsent() {
     if (consentChoice() || document.getElementById('im-consent')) return;
-    if (document.getElementById('cookieConsent') || document.querySelector('script[src*="cookie-ui.js"]')) return;
     var box = document.createElement('div');
     box.id = 'im-consent';
     box.className = 'im-sc im-sc-consent' + (isDeck ? ' is-deck' : '');

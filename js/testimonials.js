@@ -48,7 +48,7 @@
                     '.imx-testimonial figcaption{font-size:0.85rem;opacity:0.8}' +
                     '</style>' +
                     '<h2 style="font-size:1.25rem;margin:0 0 4px">What learners say</h2>' +
-                    '<p style="font-size:0.85rem;opacity:0.75;margin:0 0 12px">Real quotes, shared with permission.</p>' +
+                    '<p style="font-size:0.85rem;margin:0 0 12px">Real quotes, shared with permission.</p>' +
                     '<div class="imx-testimonial-wrap">' + cards + '</div>';
                 mount.style.display = '';
             });

@@ -1,0 +1,166 @@
+/* ImpactMojo plain hero: the one hero pattern for hub pages.
+   Approved by the owner (2026-10 redesign mockup). Plain page background, a
+   thin accent bar, a small eyebrow, the heading in Inter, one sentence in
+   Amaranth, statistics as a quiet line of text. No gradient text, no gradient
+   panels, no decorative blobs.
+
+   Markup:
+     <section class="ph ph--sky">
+       <div class="ph-in">                      (optional: only where the hero
+                                                 is not already inside a page
+                                                 container)
+         <span class="ph-bar" aria-hidden="true"></span>
+         <p class="ph-eyebrow">Section</p>
+         <h1 class="ph-title">Heading</h1>
+         <p class="ph-lede">One sentence.</p>
+         <p class="ph-meta"><span>22 flagship courses</span><span>Free</span></p>
+       </div>
+     </section>
+
+   The section colour (ph--sky, ph--indigo ...) sets only the bar and the
+   eyebrow. Every ink is declared for both themes and measured against the
+   page backgrounds it sits on: 4.5:1 or better in light and dark. Theme hooks
+   follow js/theme.js and js/site-chrome.js, which set html[data-theme],
+   html.dark and body.dark-mode together; the prefers-color-scheme block covers
+   the moment before either script runs, and a page that marks a chosen light
+   theme only with body.light-mode keeps it. A page whose own script resolves
+   the system preference into html.dark, and whose colours ignore
+   prefers-color-scheme (DeepDives), adds ph--no-system so the hero follows
+   the page rather than the system. */
+
+.ph {
+  --ph-ink: #111827;
+  --ph-muted: #4B5563;
+  --ph-track: #0369A1;
+  --ph-line: #E3E6EB;
+  position: relative;
+  background: none;
+  padding: 40px 0 30px;
+  text-align: left;
+  color: var(--ph-ink);
+}
+html[data-theme="dark"] .ph,
+html.dark .ph,
+body.dark-mode .ph {
+  --ph-ink: #F1F5F9;
+  --ph-muted: #CBD5E1;
+  --ph-track: #7DD3FC;
+  --ph-line: #2A3550;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) body:not(.light-mode) .ph:not(.ph--no-system) {
+    --ph-ink: #F1F5F9;
+    --ph-muted: #CBD5E1;
+    --ph-track: #7DD3FC;
+    --ph-line: #2A3550;
+  }
+}
+
+/* Section colours: ink for the bar and the eyebrow only. */
+.ph--sky    { --ph-track: #0369A1; }
+.ph--indigo { --ph-track: #4F46E5; }
+.ph--violet { --ph-track: #6D28D9; }
+.ph--green  { --ph-track: #15803D; }
+.ph--blue   { --ph-track: #1D4ED8; }
+.ph--teal   { --ph-track: #0F766E; }
+.ph--rose   { --ph-track: #BE185D; }
+.ph--amber  { --ph-track: #92400E; }
+html[data-theme="dark"] .ph--sky,    html.dark .ph--sky,    body.dark-mode .ph--sky    { --ph-track: #7DD3FC; }
+html[data-theme="dark"] .ph--indigo, html.dark .ph--indigo, body.dark-mode .ph--indigo { --ph-track: #A5B4FC; }
+html[data-theme="dark"] .ph--violet, html.dark .ph--violet, body.dark-mode .ph--violet { --ph-track: #C4B5FD; }
+html[data-theme="dark"] .ph--green,  html.dark .ph--green,  body.dark-mode .ph--green  { --ph-track: #86EFAC; }
+html[data-theme="dark"] .ph--blue,   html.dark .ph--blue,   body.dark-mode .ph--blue   { --ph-track: #93C5FD; }
+html[data-theme="dark"] .ph--teal,   html.dark .ph--teal,   body.dark-mode .ph--teal   { --ph-track: #5EEAD4; }
+html[data-theme="dark"] .ph--rose,   html.dark .ph--rose,   body.dark-mode .ph--rose   { --ph-track: #F9A8D4; }
+html[data-theme="dark"] .ph--amber,  html.dark .ph--amber,  body.dark-mode .ph--amber  { --ph-track: #FCD34D; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) body:not(.light-mode) .ph--sky:not(.ph--no-system)    { --ph-track: #7DD3FC; }
+  html:not([data-theme]) body:not(.light-mode) .ph--indigo:not(.ph--no-system) { --ph-track: #A5B4FC; }
+  html:not([data-theme]) body:not(.light-mode) .ph--violet:not(.ph--no-system) { --ph-track: #C4B5FD; }
+  html:not([data-theme]) body:not(.light-mode) .ph--green:not(.ph--no-system)  { --ph-track: #86EFAC; }
+  html:not([data-theme]) body:not(.light-mode) .ph--blue:not(.ph--no-system)   { --ph-track: #93C5FD; }
+  html:not([data-theme]) body:not(.light-mode) .ph--teal:not(.ph--no-system)   { --ph-track: #5EEAD4; }
+  html:not([data-theme]) body:not(.light-mode) .ph--rose:not(.ph--no-system)   { --ph-track: #F9A8D4; }
+  html:not([data-theme]) body:not(.light-mode) .ph--amber:not(.ph--no-system)  { --ph-track: #FCD34D; }
+}
+
+/* For a hero inside a page wrapper that already pads its top. */
+.ph--tight { padding-top: 0; }
+
+.ph-in {
+  max-width: var(--ph-max, 1180px);
+  margin: 0 auto;
+  padding: 0 var(--ph-pad, clamp(16px, 3vw, 28px));
+}
+.ph-bar {
+  display: block;
+  width: 56px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ph-track);
+  margin: 0 0 16px;
+}
+.ph .ph-eyebrow {
+  display: block;
+  font: 700 12px/1.3 'Inter', Helvetica, Arial, sans-serif;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ph-track);
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0 0 12px;
+}
+.ph .ph-title {
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-size: clamp(30px, 4.2vw, 44px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  color: var(--ph-ink);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  text-align: left;
+  text-wrap: balance;
+  max-width: 24ch;
+  margin: 0 0 14px;
+  padding: 0;
+}
+.ph .ph-lede {
+  font-family: 'Amaranth', Arial, sans-serif;
+  font-size: 19.5px;
+  line-height: 1.55;
+  color: var(--ph-muted);
+  max-width: 60ch;
+  margin: 0 0 16px;
+  text-align: left;
+}
+.ph .ph-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  font: 500 13.5px/1.5 'Inter', Helvetica, Arial, sans-serif;
+  color: var(--ph-muted);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* The separator ends each item, so a wrapped line never starts with a dot. */
+.ph .ph-meta > :not(:last-child)::after {
+  content: "\00B7";
+  margin: 0 9px;
+}
+/* The counts are plain text in the line; any wrapper the page uses for a
+   script hook or a checked count keeps the line's own type. */
+.ph .ph-meta b,
+.ph .ph-meta span {
+  font: inherit;
+  color: inherit;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+@media (max-width: 600px) {
+  .ph { padding: 26px 0 22px; }
+  .ph .ph-lede { font-size: 17.5px; }
+}
