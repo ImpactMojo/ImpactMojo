@@ -68,7 +68,10 @@ function shard(list) {
 const urlFor = (p) => BASE_URL + '/' + p.split('/').map(encodeURIComponent).join('/');
 
 async function audit(browser, pagePath, variant) {
-  const page = await browser.newPage();
+  // A fresh context per render: pages keep their theme in localStorage, and a
+  // shared profile let one page's saved theme leak into the next page's run.
+  const ctx = await browser.createBrowserContext();
+  const page = await ctx.newPage();
   try {
     await page.setViewport({ width: variant.width, height: variant.height });
     const go = async (waitUntil) => {
@@ -101,6 +104,7 @@ async function audit(browser, pagePath, variant) {
     return { error: e.message.slice(0, 160) };
   } finally {
     await page.close().catch(() => {});
+    await ctx.close().catch(() => {});
   }
 }
 
