@@ -32,8 +32,8 @@ jobs:
         run: |
           # Up to 30 changed pages, existing on disk; the daily sweep covers the rest.
           git diff --name-only --diff-filter=AM "origin/${{ github.base_ref }}...HEAD" -- '*.html' \
-            | grep -vE '^(Backups|admin|docs|tests|scripts)/' | head -30 | tr '\n' ' ' > changed-pages.txt || true
-          echo "Changed pages to audit: $(wc -w < changed-pages.txt)"
+            | grep -vE '^(Backups|admin|docs|tests|scripts)/' | head -30 > changed-pages.txt || true
+          echo "Changed pages to audit: $(grep -c . changed-pages.txt || true)"
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -82,7 +82,7 @@ jobs:
         # introduces fails here; a page's older, recorded problems do not.
         if: github.event_name == 'pull_request'
         run: |
-          if [ -s changed-pages.txt ]; then AXE_PAGES="$(cat changed-pages.txt)" node tests/axe-sweep.js; else echo "No pages changed."; fi
+          if [ -s changed-pages.txt ]; then AXE_PAGES_FILE=changed-pages.txt node tests/axe-sweep.js; else echo "No pages changed."; fi
 
       - name: Upload axe-core report
         if: always()

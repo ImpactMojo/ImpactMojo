@@ -53,7 +53,14 @@ const VARIANTS = [
 ];
 
 function allPages() {
-  if (process.env.AXE_PAGES) return process.env.AXE_PAGES.split(/\s+/).filter(Boolean);
+  // Paths can contain spaces (every Handouts page does), so a page list is one
+  // path per line: AXE_PAGES_FILE names such a file, and AXE_PAGES splits on
+  // newlines when it has any and on whitespace only when it has none.
+  if (process.env.AXE_PAGES_FILE) return fs.readFileSync(process.env.AXE_PAGES_FILE, 'utf8').split('\n').map((x) => x.trim()).filter(Boolean);
+  if (process.env.AXE_PAGES) {
+    const v = process.env.AXE_PAGES;
+    return (v.includes('\n') ? v.split('\n') : v.split(/\s+/)).map((x) => x.trim()).filter(Boolean);
+  }
   const out = execSync('git ls-files -z -- "*.html"', { cwd: ROOT, maxBuffer: 64 << 20 }).toString();
   return out.split('\0').filter(Boolean).filter((p) => !SKIP.some((re) => re.test(p))).sort();
 }
@@ -163,7 +170,7 @@ async function main() {
   }
 
   if (UPDATE) {
-    if (process.env.AXE_SHARD || process.env.AXE_PAGES) { console.error('--update needs a whole run, not a shard or a page list'); process.exit(2); }
+    if (process.env.AXE_SHARD || process.env.AXE_PAGES || process.env.AXE_PAGES_FILE) { console.error('--update needs a whole run, not a shard or a page list'); process.exit(2); }
     if (errors.length) { console.error('--update refused: some pages could not be audited, so the baseline would be incomplete'); process.exit(2); }
     const out = {};
     for (const p of Object.keys(found).sort()) {

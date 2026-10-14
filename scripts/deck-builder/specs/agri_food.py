@@ -1179,11 +1179,12 @@ SEC8 = [
                ["Post-harvest", "Crop drying in the field covered for up to 14 days against cyclone and unseasonal rain"],
                ["Localised calamity", "Farm-level claims for hail, landslide, inundation, cloudburst and natural fire"]]),
             B("Source: " + PMFBY + ".", sm=True)],
-           [B("Most claims under PMFBY are settled on an area basis. Each insurance unit has a "
-              "threshold yield. Crop cutting experiments, and now remote sensing through the YES-TECH "
-              "system, estimate the actual yield, and if it falls below the threshold every insured "
-              "farmer in the unit is paid a share of the shortfall. A farmer whose own field failed in "
-              "a unit that did well receives nothing, unless the loss is one of the localised perils."),
+           [B("Most claims under PMFBY are settled on an area basis. Crop cutting experiments, and "
+              "now remote sensing through the YES-TECH system with up to 50 per cent weight in some "
+              "states, estimate the actual yield of each insurance unit, and claims for yield loss are "
+              "calculated from that figure for everyone insured in the unit. A farmer whose own field "
+              "failed in a unit that did well may receive nothing, unless the loss is one of the "
+              "localised perils."),
             B("Loanee farmers, whose crop loans or KCCs are active, have the premium deducted by the "
               "bank. Non-loanee farmers enrol voluntarily. Tenants and sharecroppers can enrol with "
               "tenure agreements or sowing certificates as each state requires.", sm=True),
@@ -1200,18 +1201,17 @@ SEC8 = [
               "kharif 2026 enrolment had reached 241.38 lakh farmers.", sm=True)],
            [B("An application is one crop on one plot in one season. A farmer who insures paddy and "
               "wheat on two plots files four applications in a year. The 92.46 crore applications are "
-              "therefore far more than the number of farmers, and should not be quoted as people."),
-            B("Claims paid are about &#8377;2.06 lakh crore over ten years. The premium the farmers "
-              "paid and the much larger share paid by governments are reported separately on the "
-              "National Crop Insurance Portal, and a full account of the scheme compares claims with "
-              "total premium, not with the farmers' share alone.", sm=True),
+              "therefore far more than the number of farmers. Quote them as applications."),
+            B("Claims paid are about &#8377;2.06 lakh crore over ten years. Farmers pay only a small "
+              "part of the premium. A full account of the scheme compares claims with the "
+              "total premium paid by farmers and governments together for the same seasons.", sm=True),
             H("amber", "Tenants and sharecroppers enrolled since 2018 number more than 1.44 crore, "
               "according to the PIB backgrounder.")]),
     ]),
 
     S("States in and out", "States have left the scheme and come back", [
         TC([B("Insurance is voluntary for states, which pay half the subsidised premium. Several large "
-              "states left PMFBY after 2018 and ran their own relief schemes. The government's "
+              "agricultural states opted out of PMFBY or launched their own non-insurance relief schemes. The government's "
               "backgrounder of August 2026 lists Andhra Pradesh rejoining from kharif 2022, Jharkhand "
               "from kharif 2024 and West Bengal from kharif 2026. Bihar has decided to return from rabi "
               "2026-27. PMFBY is being implemented by 25 states and union territories in kharif 2026."),
@@ -1243,9 +1243,8 @@ SEC8 = [
               "answers liquidity and salience for borrowers, because the premium is deducted from the "
               "loan. Trust depends on whether claims are paid on time and are seen to match losses."),
             P("amber", "What remains",
-              "Area-based yields mean some farmers lose and are not paid, which erodes trust. Delays "
-              "in yield data and in the state share of premium have historically delayed claims. The "
-              "Digiclaim module, used since kharif 2022, pays claims through the Public Financial "
+              "Area-based settlement means a farmer whose plot failed in a unit that did well may not "
+              "be paid, and that experience shapes trust in the next season. The Digiclaim module, used since kharif 2022, pays claims through the Public Financial "
               "Management System and has paid over &#8377;55,000 crore.")]),
     ]),
 
@@ -1269,17 +1268,17 @@ SEC8 = [
     S("Who PM-KISAN reaches", "A flat transfer to landholders leaves out those who work land they do not own", [
         TC([B("PM-KISAN is defined for landholding farmer families. A tenant who cultivates leased "
               "land, a sharecropper, and an agricultural labourer with no land are outside it by "
-              "design, although they carry the same risks as owners and often more."),
+              "design, although they carry the same farming risks as owners."),
             B("The transfer is the same for a family with 0.3 hectares and for one with 10 hectares, "
               "so per hectare it is far larger for small holdings. Measured against income, "
               "&#8377;6,000 a year is &#8377;500 a month, about 5 per cent of the average agricultural "
               "household's income of &#8377;10,218 in 2018-19.", sm=True),
             H("cyan", "Because it is paid per family and needs land records, the quality of state land "
-              "records decides who receives it. Farmers whose land is still recorded in a deceased "
-              "parent's name are a common gap.")],
+              "records decides who receives it. A family whose land is still recorded in a deceased "
+              "parent's name can be left out until the record is updated.")],
            [T(["Group", "In PM-KISAN?", "Why"],
               [["Owner-cultivator with records", "Yes", "Landholding family with seeded records"],
-               ["Owner whose records are not updated", "Often not", "Land not recorded in the family's name"],
+               ["Owner whose records are not updated", "May be left out", "Land not recorded in the family's name"],
                ["Tenant or sharecropper", "No", "Not a landholder"],
                ["Landless agricultural labourer", "No", "No land"],
                ["Landowner who pays income tax", "No", "Excluded category"],
@@ -1305,3 +1304,579 @@ SEC8 = [
               "contacts. Treat such figures as associations until a design rules out selection.")]),
     ]),
 ]
+
+
+# ===================== SECTION 09: MARKETS, EXTENSION, FPOs =====================
+SEC9 = [
+    DIV("09", "Nine", "Markets, extension and farmer producer organisations"),
+
+    S("Selling the crop", "About half of households growing rice or wheat sell any of it", [
+        TC([T(["Crop (agricultural households producing it)", "Producing (% of agricultural households)", "Of producers, % reporting a sale"],
+              [["Paddy, July to December 2018", "53.2", "52.6"],
+               ["Wheat, January to June 2019", "41.2", "50.8"],
+               ["Maize, July to December 2018", "11.3", "47.1"],
+               ["Soybean, July to December 2018", "6.0", "94.4"],
+               ["Cotton, July to December 2018", "7.2", "94.6"],
+               ["Sugarcane, July to December 2018", "3.5", "95.9"],
+               ["Potato, January to June 2019", "5.3", "55.0"]]),
+            B("Source: " + SAS + ", Table 5.", sm=True)],
+           [B("Around half the households that grow paddy or wheat report no sale, so most of "
+              "that grain stays in the household. Almost everyone who grows soybean, cotton or sugarcane sells, "
+              "because these are cash crops. A market reform therefore reaches cash-crop growers "
+              "fully and touches subsistence grain growers only at the margin."),
+            B("Farmers sell in regulated APMC mandis, to traders and commission agents in the "
+              "village, to processors and mills, to procurement agencies and to FPOs. "
+              "Each state's APMC law decides what is regulated and what fee applies. The Economic "
+              "Survey 2025-26 lists inadequate marketing and storage infrastructure among the main "
+              "reasons for low productivity.", sm=True),
+            H("cyan", "Before designing a market intervention, find out what share of the crop is sold "
+              "at all, and when.")]),
+    ]),
+
+    S("e-NAM", "An electronic market across 1,656 mandis", [
+        TC([B("The National Agriculture Market (e-NAM) was launched in April 2016 as a pan-India "
+              "electronic trading platform that links existing APMC mandis. Each mandi that joins "
+              "receives &#8377;75 lakh for hardware, software, quality assaying and related "
+              "infrastructure. In principle a buyer in another district or state can bid for a lot "
+              "that has been assayed and listed online."),
+            B("Trade between mandis or states needs grading that distant buyers trust, payment "
+              "that clears across states, and transport to move the produce. Ask how much of a "
+              "mandi's e-NAM trade is with buyers from outside it.", sm=True)],
+           [ST([C("1,656", "mandis integrated with e-NAM, June 2026", "cyan", PIBAG),
+                C("1.89 crore", "farmers registered on e-NAM", "green", PIBAG),
+                C("2.78 lakh", "traders registered on e-NAM", "amber", PIBAG),
+                C("4,698", "FPOs on e-NAM, 31 December 2025", "indigo", ES)], cols=2),
+            H("amber", "Registration is not trade. Ask for the volume and value traded, and the share "
+              "traded between mandis or states.")]),
+    ]),
+
+    S("Information and prices", "When farmers can see prices and choose a buyer, prices rise", [
+        TC([P("cyan", "Goyal (2010), soybean in Madhya Pradesh",
+              "From October 2000 a private buyer set up internet kiosks and warehouses that gave "
+              "soybean growers wholesale price information and a second way to sell. Aparajita Goyal "
+              "used a new market-level dataset and found a significant rise in soybean mandi prices "
+              "after the kiosks arrived, and a robust increase in soybean acreage. She reads this as "
+              "evidence that rural markets worked better once farmers had information and an outside "
+              "option (American Economic Journal: Applied Economics, 2010, 2(3): 22-45)."),
+            B("This is the kind of evidence cited for opening agricultural trade. It came from a "
+              "setting where a large, credible buyer entered and competed with the mandi.", sm=True)],
+           [T(["What raised prices in Goyal's study", "What a practitioner should ask locally"],
+              [["Price information at the village", "Do farmers see mandi prices before they sell?"],
+               ["A second buyer at the farm gate", "Is there more than one buyer, or one trader who also lends?"],
+               ["Warehouses near the village", "Can farmers store and wait, or must they sell at harvest?"],
+               ["Transparent weighing and grading", "Who weighs, and who decides the grade?"]]),
+            H("green", "Credit and sale are often linked. A farmer who borrowed from a trader before "
+              "sowing may be obliged to sell to him.")]),
+    ]),
+
+    S("Extension", "Public extension reaches few farmers, and input dealers fill the gap", [
+        TC([B("Extension is the advice that helps farmers use new seed, fertiliser, water and "
+              "practices well. The Economic Survey 2025-26 says Indian extension, delivered by public "
+              "agencies, Krishi Vigyan Kendras, agricultural universities, private firms and digital "
+              "platforms, faces limited reach, staff shortages and fragmented delivery."),
+            B("The government's own programmes recognise that farmers take advice from the shops "
+              "that sell them inputs. The DAESI programme trains input dealers in a 48-week diploma, and had reached "
+              "1,07,659 dealers by October 2025. Kisan Call Centres answered 30.65 lakh calls in "
+              "2024-25 in 22 languages. BharatVistaar, an AI advisory platform with a "
+              "&#8377;150 crore allocation in 2026-27, had served over 3 lakh farmers by July 2026.", sm=True)],
+           [ST([C("731", "Krishi Vigyan Kendras set up by ICAR, as of June 2026", "cyan", PIBAG),
+                C("58.02 lakh", "farmers trained by KVKs, 2021-22 to 2023-24", "green", PIBAG),
+                C("39.04 lakh", "farmers reached through ATMA in 2024-25", "amber", ES),
+                C("1,07,659", "input dealers trained under DAESI, October 2025", "indigo", ES)], cols=2),
+            H("amber", "Compare 58 lakh farmers trained in three years with over 9 crore farmer "
+              "families paid by PM-KISAN.")]),
+    ]),
+
+    S("Evidence on advice", "A phone hotline changed what farmers did, and the yield gains were unclear", [
+        TC([B("Shawn Cole and A. Nilesh Fernando evaluated Avaaj Otalo, a phone service through which "
+              "farmers could call agronomists with questions, among 1,200 farmers in 40 villages in "
+              "Ahmedabad district, Gujarat (Economic Journal, 2021)."),
+            BL(["More than half of the farmers offered the service called it in the first seven months.",
+                "Treated farmers relied less on other farmers and on input sellers for advice.",
+                "They adopted more effective pesticides and cut spending on less effective and "
+                "hazardous ones.",
+                "They sowed more cumin, a lucrative but risky crop.",
+                "The accepted working paper version reports no systematic evidence of gains in yields "
+                "or profits."], "cyan")],
+           [P("green", "What this teaches",
+              "Advice that farmers can ask for, on their own crop and their own pest, changes "
+              "behaviour. Changing input choices is a real outcome, especially when it replaces "
+              "hazardous pesticides. Yield and profit gains are harder to detect in a single season "
+              "with weather noise, and a study powered for adoption may not be powered for yields."),
+            P("amber", "Cost",
+              "Farmers' willingness to pay was on average below the per-farmer cost of running the "
+              "service in the study, but the authors expect it to exceed the cost at scale.")]),
+    ]),
+
+    S("FPOs", "The 10,000 FPO target has been met on paper", [
+        TC([B("A Farmer Producer Organisation is a company or cooperative owned by its farmer members. "
+              "It can buy inputs in bulk, hire machines, aggregate produce, grade and store it, and "
+              "sell in larger lots to buyers who would not deal with a single marginal farmer."),
+            B("The central scheme to form and promote 10,000 FPOs was launched in 2020 with a budget "
+              "of &#8377;6,860 crore through 2027-28, according to the Economic Survey 2025-26. By 31 "
+              "December 2025, 10,000 FPOs had been registered. Primary agricultural credit societies "
+              "are being computerised at the same time: 79,630 PACS sanctioned and 63,707 on the "
+              "national ERP software by August 2026.", sm=True)],
+           [P("amber", "Registration is the first step",
+              "An FPO registered under the scheme has a legal form, a board and a support agency. "
+              "Whether it trades at scale, pays dividends, keeps its members and survives after the "
+              "support period ends is a separate question. Of the 10,000 registered, 4,698 were on "
+              "e-NAM by December 2025."),
+            T(["Stage", "Indicator worth tracking"],
+              [["Formation", "Members, share capital paid up, women on the board"],
+               ["Business", "Turnover, number of members selling through the FPO"],
+               ["Viability", "Profit after support ends, working capital, credit access"],
+               ["Benefit", "Price members receive compared with non-members"]])]),
+    ]),
+
+    S("What makes an FPO work", "Practitioner checklist for supporting a producer organisation", [
+        TC([BL(["Start from a business the members already do, such as selling one crop, and do it "
+                "well before adding more.",
+                "Working capital decides whether an FPO can pay members on delivery. Without it, "
+                "members sell to the trader who pays cash.",
+                "Members who borrowed from a trader before sowing cannot sell to the FPO. Crop credit "
+                "and marketing need to be planned together.",
+                "Grading and weighing that members trust are the foundation of aggregation.",
+                "Governance matters: who sits on the board, how the CEO is paid, and whether accounts "
+                "are shared with members.",
+                "Plan for the end of promotional support from the first year."], "cyan")],
+           [T(["Common failure", "Early warning sign"],
+              [["Formed to meet a target", "Members cannot say what the FPO does for them"],
+               ["Captured by a few larger farmers", "Board and benefits concentrated in one group or village"],
+               ["No working capital", "Members sell to traders even after the FPO opens a collection centre"],
+               ["Dependence on a single buyer", "Prices dictated by one processor or retailer"],
+               ["Exclusion of tenants and women", "Membership tied to land in the member's name"]]),
+            B("For cooperatives and collective enterprise, see " + L("community-dev.html", "Community Development 101") +
+              " and " + L("wee-studies.html", "Women's Economic Empowerment 101") + ".", sm=True)]),
+    ]),
+]
+
+
+# ===================== SECTION 10: LAND, TENANCY, WOMEN =====================
+SEC10 = [
+    DIV("10", "Ten", "Land records, tenancy and women in agriculture"),
+
+    S("Land records", "Every scheme in this course depends on knowing who cultivates which plot", [
+        TC([B("PM-KISAN needs land records seeded on its portal. The Price Support Scheme buys only "
+              "from registered farmers with valid land records. PMFBY validates insured area against "
+              "state land records, and about 85 per cent of insured area in ten states is now checked "
+              "this way. A per-acre fertiliser transfer would need the same. When land records are out "
+              "of date, wrong or missing, the error passes into every scheme built on them."),
+            B("The Digital Agriculture Mission, approved in September 2024, is building AgriStack, a "
+              "registry of farmers linked to their plots, alongside a Krishi Decision Support System "
+              "and soil maps.", sm=True)],
+           [ST([C("10.31 crore", "Farmer IDs created under the Digital Agriculture Mission, Aug 2026", "cyan", PIBAG),
+                C("31.3 crore", "plots covered by the Digital Crop Survey in rabi 2025-26, in 648 districts", "green", PIBAG),
+                C("81 lakh", "land parcels resurveyed in Andhra Pradesh's drone-based resurvey, 6,901 villages", "amber", ES),
+                C("86,000", "boundary disputes resolved in that resurvey", "indigo", ES)], cols=2),
+            H("amber", "A digital registry is as accurate as the record it digitises. Ask how tenants, "
+              "joint holders and women co-owners are recorded.")]),
+    ]),
+
+    S("Tenancy", "Tenants farm land that the records say belongs to someone else", [
+        TC([TERM("Fixed-rent tenancy", "The tenant pays the owner an agreed amount in cash or grain for "
+                 "the season, and keeps the rest of the crop and the risk."),
+            TERM("Sharecropping", "The tenant gives the owner a share of the harvest. Owner and tenant "
+                 "share the risk, and sometimes the input costs."),
+            TERM("Informal tenancy", "An oral agreement with no written lease, which leaves the tenant with "
+                 "no document to show a scheme, an insurer or a bank.")],
+           [B("Tenancy is governed by state law under Entry 18 of the State List, which covers the "
+              "relation of landlord and tenant. The Agriculture Census counts land leased in as part "
+              "of an operational holding, but the schemes in this course pay according to recorded "
+              "ownership, so a tenant who appears in the census as an operator is often invisible to "
+              "the schemes."),
+            B("The Economic Survey 2025-26 raises this problem itself in its proposal for per-acre "
+              "fertiliser transfers, noting that a portion of the land is cultivated by renters and "
+              "suggesting that pilots include tenancy-heavy districts. PMFBY has enrolled more than "
+              "1.44 crore tenant and sharecropper farmers since 2018, which shows that including them "
+              "is possible when a scheme allows other proof of cultivation.", sm=True),
+            H("cyan", "When a programme says it covers farmers, ask whether it means owners or "
+              "cultivators.")]),
+    ]),
+
+    S("Eligibility by tenure", "The same tenant is in some schemes and out of others", [
+        T(["Scheme", "Owner-cultivator", "Tenant or sharecropper", "Landless labourer", "Basis"],
+          [["PM-KISAN", "Yes", "No", "No", "Landholding farmer families with seeded land records"],
+           ["PMFBY", "Yes", "Yes, with tenure agreement or sowing certificate as the state requires", "No crop to insure", "Insurable interest in the crop"],
+           ["MSP procurement of rice and wheat", "Yes", "Depends on state registration rules", "No crop to sell", "Sale at a purchase centre"],
+           ["Price Support Scheme (pulses, oilseeds)", "Yes", "Only with valid land records", "No", "Pre-registered farmers with land records"],
+           ["NFSA ration", "If eligible household", "If eligible household", "If eligible household", "Household identification, not land"],
+           ["VB G RAM G rural employment guarantee", "If they seek work", "If they seek work", "Yes", "Rural household, 125 days a year"]]),
+        TC([B("Sources: " + KISAN + "; " + PMFBY + "; " + PIBMSP + "; " + NFSA + "; " + ES13 + ".", sm=True)],
+           [B("The schemes least tied to land, the ration and the employment guarantee, are the ones "
+              "that reach the landless. Under the VB G RAM G Act, states may notify up to 60 days in "
+              "peak sowing and harvesting seasons when public works pause, so that farm labour is "
+              "available.", sm=True)]),
+    ], compact=True),
+
+    S("Women's work", "Three in four rural women workers are in agriculture", [
+        TC([BAR("chWomen", "Share of workers in agriculture by sex and area, PLFS 2023-24 (% of workers, usual status)", PLFS24,
+                ["Rural men", "Rural women", "Urban men", "Urban women", "All men", "All women"],
+                [DS("Share in agriculture", [49.4, 76.9, 4.8, 12.3, 36.3, 64.4], GREEN)], ytitle="per cent of workers")],
+           [B("In 2023-24, 76.9 per cent of rural women workers were in agriculture, against 49.4 per "
+              "cent of rural men. Across India the share was 64.4 per cent for women and 36.3 per cent "
+              "for men. Rural men work in construction (17.7 per cent) and trade, hotels and "
+              "restaurants (10.9 per cent) far more than rural women (3.9 per cent in each)."),
+            B("The Economic Survey 2025-26 reports from PLFS for July to September 2025 that, in rural "
+              "areas, 37.5 per cent of women workers are own-account workers or employers and 34.2 "
+              "per cent are helpers in household enterprises, which includes unpaid work on the "
+              "family farm. Only 10.8 per cent are in regular wage jobs.", sm=True),
+            H("amber", "A woman who works every day on her family's farm and receives no wage is a "
+              "helper in a household enterprise in the survey.")], ratio="a32"),
+    ]),
+
+    S("Women as landholders", "Women do much of the farm work and hold a small share of the land", [
+        TC([ST([C("13.96%", "of operational holders were women in 2015-16, up from 12.79% in 2010-11", "cyan", AGC),
+                C("11.72%", "of operated area was in women's holdings, up from 10.36%", "amber", AGC),
+                C("2.18 crore", "women among the 9.44 crore paid in the 23rd PM-KISAN instalment", "green", KISAN),
+                C("64.4%", "of all women workers were in agriculture, 2023-24", "indigo", PLFS24)], cols=2)],
+           [B("Women make up a large share of the agricultural workforce and a small share of those who "
+              "operate holdings. Schemes that pay the recorded landholder therefore pay men in most "
+              "families. PM-KISAN's women recipients, about 23 per cent of the 23rd instalment, are "
+              "women in whose name the land stands."),
+            B("Credit and FPO membership often follow the land record too. A woman "
+              "cultivating her husband's land, or land she inherited but has not had recorded, works "
+              "the land without the documents that schemes ask for.", sm=True),
+            B("The NFSA takes the opposite approach for the ration card, naming the eldest woman as "
+              "head of household under section 13. Recording land jointly in the names of both spouses "
+              "would apply the same idea to land.", sm=True)]),
+    ]),
+
+    S("Time", "Women in rural India carry farm work and care work at once", [
+        TC([ST([C("41%", "of women aged 15-59 did caregiving for household members on the survey day", "red", "Time Use Survey 2024, in Economic Survey 2025-26, Box XII.1"),
+                C("21.4%", "of men aged 15-59 did", "cyan", "Same"),
+                C("363 min", "a day women spent on unpaid activities, against 123 minutes for men", "amber", "Same"),
+                C("25%", "of women aged 15-59 did employment and related activities, up from 21.8% in 2019", "green", "Same")], cols=2)],
+           [B("The Time Use Survey of 2024 measures what people did in each half-hour of a day. Women "
+              "spent about 140 minutes a day on care among those who did any, against 74 minutes for "
+              "men, and 363 minutes a day on unpaid activities, against about 123 for men."),
+            B("For agricultural programmes this has practical consequences. Training scheduled at "
+              "midday, far from the village, or over several days will reach fewer women. A new "
+              "practice that adds labour to tasks women already do, such as weeding or post-harvest "
+              "work, may raise yields and lengthen women's working day at once.", sm=True),
+            H("cyan", "Ask who does each task in the crop cycle before deciding who should be trained "
+              "and who should be paid.")]),
+    ]),
+
+    S("Practice", "Designing agricultural programmes that reach women farmers", [
+        T(["Design question", "What to do", "Why"],
+          [["Who is the farmer on your list?", "Register the person who cultivates, not only the recorded owner", "Most women cultivators do not hold the land record"],
+           ["Who controls the money?", "Pay transfers into women's own accounts where they manage the activity", "Payment to the landholder goes to men in most families"],
+           ["When and where is training held?", "In the village, at times women choose, with childcare", "Care work takes over two hours a day for women who do it"],
+           ["Which tasks does the new practice change?", "Map tasks by sex before and after adoption", "A yield gain can come from more unpaid female labour"],
+           ["Who sits on the FPO board?", "Reserve seats and allow membership without land title", "Membership tied to land excludes most women"],
+           ["Which crops and animals?", "Include livestock, dairy and kitchen gardens", "These are often women's activities and income"]]),
+        TC([B("These are design principles drawn from the evidence in this section. For gender analysis "
+              "methods, see " + L("gender-dev.html", "Gender and Development 101") + ".", sm=True)],
+           [B("For the care economy and time use, see " + L("care-economy-101.html", "Care Economy 101") + ".", sm=True)]),
+    ], compact=True),
+]
+
+
+# ===================== SECTION 11: CLIMATE AND NUTRITION =====================
+SEC11 = [
+    DIV("11", "Eleven", "Climate risk, nutrition and food systems"),
+
+    S("Projected yield losses", "Without adaptation, rain-fed rice could lose a fifth of its yield by 2050", [
+        TC([BAR("chClimate", "Projected change in yield without adaptation (%)", NICRA,
+                ["Rain-fed rice", "Irrigated rice", "Wheat"],
+                [DS("2050", [-20, -3.5, -19.3], AMBER), DS("2080", [-47, -5, -40], RED)],
+                legend=True, ytitle="per cent change in yield")],
+           [B("ICAR's network project National Innovations in Climate Resilient Agriculture (NICRA) "
+              "ran computer simulation models for major crops. In a written reply to the Lok Sabha on "
+              "10 December 2024, the Minister of State for Agriculture said that in the absence of "
+              "adaptation, climate change is likely to reduce rain-fed rice yields by 20 per cent in "
+              "2050 and 47 per cent in 2080, irrigated rice by 3.5 and 5 per cent, wheat by 19.3 and "
+              "40 per cent, and kharif maize by 10 to 19 per cent in 2050 and more than 20 per cent in "
+              "2080."),
+            B("These are model projections under stated scenarios. Their value lies in the "
+              "comparison: irrigation buffers rice against warming, and wheat, a winter crop "
+              "sensitive to heat at grain filling, is among the most exposed.", sm=True),
+            H("amber", "The farmers with the least irrigation face the largest projected losses.")], ratio="a32"),
+    ]),
+
+    S("Weather shocks now", "Heat, unseasonal rain and El Ni&ntilde;o already cut yields and quality", [
+        TC([P("red", "Grain quality",
+              "The same Lok Sabha reply notes preliminary findings that elevated carbon dioxide and "
+              "temperature reduced iron, zinc and protein in certain maize genotypes, that elevated "
+              "carbon dioxide altered rice grain quality, and that heat stress in wheat caused "
+              "shrivelled grains with less starch and protein, while excess rain at grain filling "
+              "caused lodging and discoloured grain."),
+            P("amber", "Yields below the national average",
+              "A CACP report cited in the Economic Survey 2025-26 found that several major "
+              "rice-producing states, including West Bengal, Uttar Pradesh, Telangana, Odisha, Andhra "
+              "Pradesh and Tamil Nadu, had per-hectare yields below the national average, and named "
+              "unseasonal rain, heat stress and dry spells at critical crop stages as the main causes.")],
+           [P("cyan", "El Ni&ntilde;o and pulses",
+              "A NITI Aayog report cited in the Economic Survey found that in 15 of the 27 El Ni&ntilde;o "
+              "years between 1951 and 2024, pulse acreage fell by 2 to 9 per cent, production by 6 to 30 "
+              "per cent and yields by 5 to 25 per cent year on year. During La Ni&ntilde;a years "
+              "acreage, production and productivity rose. Pulses are mostly rain-fed, with about 26 per "
+              "cent of their area irrigated."),
+            H("green", "Climate risk shows up first in rain-fed crops and in the quality of food, not "
+              "only in the quantity of rice and wheat.")]),
+    ]),
+
+    S("Evidence on adaptation", "A flood-tolerant rice variety paid off through the investments it encouraged", [
+        TC([B("Kyle Emerick, Alain de Janvry, Elisabeth Sadoulet and Manzoor Dar ran a randomised trial "
+              "in 128 villages in Odisha with Swarna-Sub1, a version of the popular Swarna rice variety "
+              "carrying a gene that lets it survive submergence. In normal years it yields the same as "
+              "Swarna. In a flood it loses much less (American Economic Review, 2016, 106(6): 1537-61)."),
+            B("Farmers given the new seed did more than plant it. They adopted a more labour-intensive "
+              "planting method, cultivated more area, used more fertiliser and took more credit. A "
+              "large share of the expected gain came from these crowded-in investments, because "
+              "lowering the risk of total loss made it worth investing in the crop.", sm=True)],
+           [T(["Lesson", "Implication for programme design"],
+              [["Risk shapes investment", "Reducing the worst outcome can raise effort and inputs in every year"],
+               ["Seed is a delivery problem", "A proven variety helps only if farmers can get certified seed on time"],
+               ["Benefits spill into other decisions", "Measure area, inputs and credit, not only yield"],
+               ["Insurance and technology complement each other", "A stress-tolerant seed lowers the losses insurance must cover"]]),
+            B("See also " + L("impact-eval.html", "Impact Evaluation 101") + " for how such trials are designed.", sm=True)]),
+    ]),
+
+    S("Plenty and malnutrition", "Record harvests, and three in ten young children stunted", [
+        TC([ST([C("376.56 MT", "foodgrain production, 2025-26 (third advance estimates)", "green", PIBAG),
+                C("248 MT", "milk production, 2024-25, up from 146.31 MT in 2014-15", "cyan", PIBAG),
+                C("377.78 MT", "horticulture production, 2025-26 (second advance estimates)", "amber", PIBAG)], cols=3),
+            ST([C("29.3%", "of children under five stunted, NFHS-6 (2023-24), down from 35.5% in NFHS-5", "red", "ORF, from the NFHS-6 fact sheet"),
+                C("31.8%", "of children under five underweight, NFHS-6", "red", "Same"),
+                C("15.3%", "of children 6-23 months receiving a minimum adequate diet, NFHS-6", "indigo", "Same")], cols=3)],
+           [B("India produces more grain, milk, fruit and vegetables than ever. Yet according to "
+              "NFHS-6, as summarised by the Observer Research Foundation in June 2026, about three "
+              "in ten young children are stunted and only about one in seven infants aged 6 to 23 "
+              "months receives a minimum adequate diet."),
+            B("The gap between production and nutrition is about access, prices, diets, care, water "
+              "and sanitation, and disease. Agriculture affects all the food-related parts of that "
+              "chain: what is grown, what it costs, what is in it, and the time and income of the "
+              "women who grow it.", sm=True),
+            H("amber", "Stunting fell by about six percentage points between NFHS-5 and NFHS-6. "
+              "ORF reports that wasting has not improved.")]),
+    ]),
+
+    S("Food systems", "Farm policy decides what is cheap to grow and cheap to eat", [
+        T(["Policy", "Effect on what is grown", "Effect on diets"],
+          [["MSP procurement concentrated on rice and wheat", "Rice and wheat are the safe choice where procurement works", "The PDS distributes cereals; protein and micronutrients come from the market"],
+           ["Urea subsidy", "Makes nitrogen cheap relative to other nutrients", "No direct effect on diets"],
+           ["Irrigation concentrated on rice", "About 67% of rice is irrigated, under 15% of millets", "Millets and pulses stay exposed to rainfall shocks and price swings"],
+           ["Imports of edible oils and pulses", "Domestic oilseed and pulse growers compete with imports", "Prices of protein and fat depend on world markets"],
+           ["Millets in the PDS and school meals", "Creates assured demand for millets in states that buy them", "Adds micronutrient-rich grains to the ration"]]),
+        TC([B("The Economic Survey 2025-26 argues for diversification out of rice and wheat into "
+              "pulses, oilseeds and maize, partly to reduce import dependence and partly for "
+              "nutrition. A food systems view asks the same question from the plate back to the field.", sm=True)],
+           [B("Rows in this table summarise relationships discussed elsewhere in this course. The last "
+              "column describes likely effects and should be checked against local evidence.", sm=True)]),
+    ], compact=True),
+
+    S("Natural and organic farming", "Promoted widely, still on a small fraction of the land", [
+        TC([ST([C("10.32 lakh ha", "in 18,893 natural farming clusters formed in 2025-26, involving 20.93 lakh farmers", "green", PIBAG),
+                C("14.43 lakh", "farmers certified under the Natural Farming Certification System", "cyan", PIBAG),
+                C("18.93 lakh ha", "covered by the Paramparagat Krishi Vikas Yojana since inception", "amber", PIBAG),
+                C("157.82 m ha", "total operated area, Agriculture Census 2015-16", "indigo", AGC)], cols=2)],
+           [B("The National Mission on Natural Farming organises farmers into clusters to practise "
+              "natural farming. The 10.32 lakh hectares "
+              "of clusters formed in 2025-26 are about 0.65 per cent of the 157.82 million hectares "
+              "operated in 2015-16."),
+            B("The Economic Survey 2025-26 says plainly that organic and natural farming still cover a "
+              "small fraction of cultivated land, and that limited quality inputs, uneven adoption and "
+              "gaps in extension constrain scaling. Yield and income effects of natural farming at "
+              "scale remain a question for careful evaluation.", sm=True),
+            H("cyan", "Compare the area under a promoted practice with the total, and ask whether "
+              "farmers who were counted are still practising it a season later.")]),
+    ]),
+
+    S("Practice", "Building climate risk into an agricultural programme", [
+        T(["Step", "Question", "Source of evidence"],
+          [["1. Exposure", "Is the area rain-fed? What share of its main crops is irrigated?", "District irrigation statistics; Economic Survey crop coverage"],
+           ["2. Water", "Is the block safe, semi-critical, critical or over-exploited?", "Dynamic Ground Water Resource Assessment"],
+           ["3. Hazards", "Which shocks recur: drought, flood, heat at grain filling, unseasonal rain?", "IMD records; local crop loss history"],
+           ["4. Varieties", "Are stress-tolerant varieties available, and is certified seed reachable on time?", "State seed corporations; KVKs"],
+           ["5. Insurance", "Is the crop notified under PMFBY or the weather-based scheme in this unit?", "National Crop Insurance Portal"],
+           ["6. Diversification", "Is there a buyer for the alternative crop at a fair price?", "Mandi and procurement data; FPOs"],
+           ["7. Nutrition", "Will the change raise or lower the diversity of food the household eats?", "Household diet surveys; NFHS district fact sheets"]]),
+        TC([B("Climate adaptation in farming mostly means reducing the worst outcome. The Swarna-Sub1 "
+              "trial shows that lowering downside risk can change how much farmers invest in every "
+              "season.", sm=True)],
+           [B("For climate science and policy, see " + L("climate-essentials.html", "Climate Essentials 101") + ".", sm=True)]),
+    ], compact=True),
+]
+
+
+# ===================== SECTION 12: EVIDENCE AND PRACTICE =====================
+SEC12 = [
+    DIV("12", "Twelve", "What evaluations have found, and sources"),
+
+    S("Evidence map", "Studies cited in this course, and what each one found", [
+        T(["Study", "Setting", "Design", "Main finding"],
+          [["Goyal (2010), AEJ: Applied", "Soybean, Madhya Pradesh", "Market-level panel around kiosk entry", "Mandi prices and soybean area rose after a private buyer's kiosks arrived"],
+           ["Cole et al. (2013), AEJ: Applied", "Rainfall insurance, Andhra Pradesh and Gujarat", "Randomised price and marketing", "5-10% take-up; price elasticity -0.66 to -0.88; trust and liquidity matter"],
+           ["Dr&egrave;ze and Khera (2015), EPW", "PDS, all India and states", "Offtake against survey purchases", "Leakage fell from 54% to 42% (NSS) between 2004-05 and 2011-12, fastest in reforming states"],
+           ["Emerick et al. (2016), AER", "Flood-tolerant rice, Odisha", "Randomised trial, 128 villages", "Lower downside risk raised planting effort, area, fertiliser and credit"],
+           ["Varshney et al. (2020), IFPRI DP 1907", "PM-KISAN, Uttar Pradesh", "Triple difference with matching", "Reached a third of farmers in three months; helped the credit-constrained"],
+           ["Cole and Fernando (2021), Economic Journal", "Phone advisory, Gujarat", "Randomised, 1,200 farmers", "Changed pesticide and crop choices; no systematic yield gain reported"],
+           ["Ryan and Sudarshan (2022), JPE", "Farm power and groundwater, Rajasthan", "Structural model with geological variation", "Rationing keeps average use near optimal but misallocates water"],
+           ["Muralidharan, Niehaus and Sukhtankar, NBER WP 26744", "Biometric PDS, Jharkhand", "Randomised across 132 sub-districts", "Less corruption; 1.5 to 2 million lost benefits at some point"]]),
+        TC([B("The list is short. This course found few rigorous evaluations of the largest farm "
+              "schemes, and the ministry-sponsored PM-KISAN study it cites compares beneficiaries with "
+              "non-beneficiaries, which cannot separate the scheme from the kind of farmer who joins it.", sm=True)],
+           [B("Where evidence is thin, say so, and design your own monitoring so that it can answer a "
+              "causal question later.", sm=True)]),
+    ], compact=True),
+
+    S("Prices and markets", "What the evidence says about selling crops", [
+        TC([B("The strongest Indian evidence on agricultural markets is about information and buyer "
+              "competition. Goyal's soybean study shows that when farmers could see prices and sell to "
+              "a second buyer, mandi prices rose. Cole and Fernando show that farmers use advice when "
+              "they can ask for it, and that changing what farmers do does not automatically raise "
+              "yields within a season."),
+            B("On MSP, the descriptive evidence is clear and the causal evidence is scarce. The "
+              "Situation Assessment Surveys show that a minority of farmers sell to procurement "
+              "agencies, and the share of wheat output sold at MSP fell between 2013 and 2019. What "
+              "MSP does to prices in districts where agencies buy, and to crop choice and "
+              "groundwater, needs more rigorous study.", sm=True)],
+           [T(["Question", "What we know", "What we do not know well"],
+              [["Do farmers get MSP?", "A minority sell to agencies; awareness is limited", "The price effect in districts without procurement"],
+               ["Does information raise prices?", "Yes, where a credible buyer competes", "Effects where one trader dominates"],
+               ["Do e-markets help?", "Registrations are large", "Volume traded between mandis and its price effect"],
+               ["Do FPOs raise members' prices?", "10,000 are registered", "Which FPOs survive and what members gain"]])]),
+    ]),
+
+    S("Safety nets", "What the evidence says about food and income transfers", [
+        TC([B("The PDS evidence shows that delivery can improve quickly when states reform it. "
+              "Dr&egrave;ze and Khera found leakage fell sharply in Chhattisgarh, Odisha and Bihar and "
+              "barely changed in some other large states. Technology can cut theft, and the Jharkhand "
+              "experiment shows it can also cut people off, depending on how the transition is "
+              "managed."),
+            B("PM-KISAN's early evidence suggests that a small, regular, unconditional transfer eases "
+              "the cash constraints of farmers who lack credit. It also shows the cost of tying "
+              "transfers to land records, which leaves out tenants and labourers.", sm=True)],
+           [P("cyan", "Principles that carry across schemes",
+              "Measure exclusion as carefully as leakage. Keep a fallback for people a new verification "
+              "step fails. Tie eligibility to the activity you want to support, cultivation or need, "
+              "and check how well the records match it. Pay on a predictable schedule, before the "
+              "season's costs fall due."),
+            B("For welfare delivery and targeting, see " + L("public-policy-101.html", "Public Policy 101") +
+              " and " + L("governance-accountability.html", "Governance and Accountability 101") + ".", sm=True)]),
+    ]),
+
+    S("Risk and technology", "What the evidence says about risk, inputs and water", [
+        TC([B("Three findings fit together. Farmers value protection against bad weather but buy little "
+              "insurance when they must pay for it, do not trust it, or lack cash when the premium is "
+              "due (Cole et al. 2013). When a technology removes the worst outcome, farmers invest "
+              "more in everything else (Emerick et al. 2016). And when a key input such as water is "
+              "free, rationing it by quantity limits the total but sends it to the wrong farmers "
+              "(Ryan and Sudarshan 2022)."),
+            B("The Economic Survey 2025-26 applies the same logic to fertiliser. A price far below cost "
+              "embeds overuse, and an income transfer with prices closer to cost could protect farmers "
+              "and soils at once. The Survey proposes pilots, so the idea has not been tested at scale.", sm=True)],
+           [T(["Finding", "Programme implication"],
+              [["Insurance demand is price-sensitive and trust-sensitive", "Subsidise, pay claims fast, explain area-based settlement"],
+               ["Downside protection crowds in investment", "Combine stress-tolerant seed with credit and inputs"],
+               ["Free inputs are overused or misallocated", "Prefer transfers plus prices that reflect cost"],
+               ["Advice changes practice before yields", "Measure adoption and input use; follow up for yields over seasons"]])]),
+    ]),
+
+    S("Practice", "Ten questions to ask of any agricultural scheme", [
+        TC([BL(["Who is on the list: owners, cultivators, households or individuals?",
+                "How is the list made, and how does someone left off get on?",
+                "What does the scheme do to the relative prices of crops, water and fertiliser?",
+                "Which crops and which regions receive most of the money?",
+                "Does it reach rain-fed farmers, or mostly irrigated ones?",
+                "What share of beneficiaries are women, and in whose name is the payment?"], "cyan")],
+           [BL(["Is the headline figure a count of people, applications, hectares or rupees?",
+                "Is spending reported as budget, revised estimate or actual?",
+                "Has any evaluation compared beneficiaries with a credible counterfactual?",
+                "What happens to the groundwater, the soil and the household's diet if the scheme "
+                "works as intended?"], "green"),
+            H("amber", "Run these questions on one scheme in your district before your next planning "
+              "meeting, using the sources on the next two slides.")]),
+    ]),
+
+    S("Sources: data and government", "Where the numbers in this course come from", [
+        TC([BL([A("https://www.pib.gov.in/PressReleasePage.aspx?PRID=1753856", "NSS Report 587, Situation Assessment Survey 2019 (PIB, 10 Sept 2021)"),
+                A("https://www.fao.org/fileadmin/templates/ess/ess_test_folder/World_Census_Agriculture/WCA_2020/WCA_2020_new_doc/IND_REP_ENG_2015_2016.pdf", "Agriculture Census 2015-16, All India Report"),
+                A("https://www.pib.gov.in/PressReleasePage.aspx?PRID=2287251", "PIB, Agricultural Census (2021-22), 21 July 2026"),
+                A("https://www.pib.gov.in/PressReleasePage.aspx?PRID=2260618", "PIB, Kharif MSP 2026-27, 13 May 2026"),
+                A("https://www.pib.gov.in/PressReleasePage.aspx?PRID=2173567", "PIB, Rabi MSP 2026-27"),
+                A("https://www.pib.gov.in/PressReleasepage.aspx?PRID=2316941", "PIB, Rabi MSP 2027-28, 30 Sept 2026"),
+                A("https://www.pib.gov.in/PressReleasePage.aspx?PRID=2177219", "PIB, Minimum Support Prices backgrounder, 10 Oct 2025"),
+                A("https://www.indiabudget.gov.in/doc/Budget_at_Glance/budget_at_a_glance.pdf", "Budget at a Glance 2026-27"),
+                A("https://www.indiabudget.gov.in/economicsurvey/doc/eschapter/echap06.pdf", "Economic Survey 2025-26, chapter 6"),
+                A("https://www.indiabudget.gov.in/economicsurvey/doc/eschapter/echap12.pdf", "Economic Survey 2025-26, chapter 12"),
+                A("https://www.indiabudget.gov.in/economicsurvey/doc/eschapter/echap13.pdf", "Economic Survey 2025-26, chapter 13")], sm=True)],
+           [BL([A("https://prsindia.org/files/bills_acts/acts_parliament/2013/national-food-security-act-2013.pdf", "National Food Security Act 2013, Gazette text"),
+                A("https://prsindia.org/billtrack/the-farm-laws-repeal-bill-2021", "PRS, Farm Laws Repeal Bill 2021"),
+                A("https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc_9735_20260829_18493301.pdf", "PIB backgrounder on PMFBY, 29 Aug 2026"),
+                A("https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/jun/doc2026620898101.pdf", "PIB backgrounder on PM-KISAN, 20 June 2026"),
+                A("https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026812952301.pdf", "PIB backgrounder, The New Era of Indian Agriculture, 12 Aug 2026"),
+                A("https://mospi.gov.in/sites/default/files/publication_reports/AnnualReport_PLFS2023-24L2.pdf", "PLFS Annual Report 2023-24"),
+                A("https://www.mospi.gov.in/uploads/latestReleases/latest_release_1774607827733_3e8964a9-268b-4cc9-ad65-cfc8a9e32f08_Press_note_AR_PLFS_2025_23032025_V2.1_26032026_final.pdf", "PLFS Annual Report 2025, press note"),
+                A("https://www.icar.org.in/sites/default/files/Circulars/LU-2365.pdf", "ICAR, Lok Sabha Unstarred Question 2365, 10 Dec 2024"),
+                A("https://www.etvbharat.com/en/bharat/nearly-11-per-cent-groundwater-assessment-units-over-exploited-govt-enn26072007475", "Groundwater assessment 2025, Rajya Sabha reply (ETV Bharat report)"),
+                A("https://en.wikipedia.org/wiki/State_List", "Seventh Schedule, State List")], sm=True)]),
+    ], compact=True),
+
+    S("Sources: studies and analysis", "Research and analysis cited in this course", [
+        TC([BL([A("https://ageconsearch.umn.edu/record/334366/files/Situation_Assessment_Survey_of_Agricultural_Households_2019_A_Statistical_Note.pdf", "Bakshi (2021), SAS 2019: A Statistical Note, Review of Agrarian Studies 11(2)"),
+                A("https://ideas.repec.org/a/aea/aejapp/v2y2010i3p22-45.html", "Goyal (2010), AEJ: Applied Economics 2(3): 22-45"),
+                A("https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr373.pdf", "Cole, Gin&eacute;, Tobacman, Topalova, Townsend and Vickery (2013), AEJ: Applied 5(1): 104-35"),
+                A("https://web.iitd.ac.in/~suban/COP290/stuff/pds/Understanding_Leakages_in_the_Public_Distribution_System.pdf", "Dr&egrave;ze and Khera (2015), Understanding Leakages in the PDS, EPW 50(7)"),
+                A("https://povertyactionlab.org/sites/default/files/research-paper/852%20Ag%20Innovation%20Risk%20Oct2015.pdf", "Emerick, de Janvry, Sadoulet and Dar (2016), AER 106(6): 1537-61"),
+                A("https://cgspace.cgiar.org/server/api/core/bitstreams/e1860a45-121f-44ba-a67e-8eebf09a884a/content", "Varshney, Joshi, Roy and Kumar (2020), IFPRI Discussion Paper 1907")], sm=True)],
+           [BL([A("https://www.atai-research.org/wp-content/uploads/2020/06/ueaa084.pdf", "Cole and Fernando (2021), 'Mobile'izing Agricultural Advice, Economic Journal"),
+                A("https://ideas.repec.org/a/ucp/jpolec/doi10.1086-717045.html", "Ryan and Sudarshan (2022), Rationing the Commons, JPE 130(1): 210-257"),
+                A("https://www.nber.org/papers/w26744", "Muralidharan, Niehaus and Sukhtankar, Identity Verification Standards in Welfare Programs, NBER WP 26744"),
+                A("https://www.orfonline.org/expert-speak/reducing-stunting-building-human-capital-lessons-from-nfhs-6", "ORF (2026), Reducing stunting: lessons from NFHS-6"),
+                A("https://www.downtoearth.org.in/environment/reduce-food-security-benefits-from-67-to-40-population-says-panel-on-restructuring-fci--48344", "Down To Earth (2015) on the Shanta Kumar committee report"),
+                A("https://en.wikipedia.org/wiki/2020%E2%80%932021_Indian_farmers%27_protest", "Wikipedia, 2020-2021 Indian farmers' protest")], sm=True),
+            H("cyan", "Figures were checked against these sources in October 2026. Where two official "
+              "sources disagree, as on the PM-KISAN allocation, the course says so.")]),
+    ], compact=True),
+]
+
+
+DECK = {
+    "slug": "agri-food",
+    "title": "Agriculture and Food Systems 101",
+    "description": ("Agriculture and Food Systems 101: a free foundational course for development "
+                    "practitioners in India. Who farms and on how much land from the Agriculture Census "
+                    "and the Situation Assessment Survey, farm incomes and debt, MSP, the CACP and "
+                    "procurement, the 2020 farm laws and their repeal, the PDS and the National Food "
+                    "Security Act, fertiliser and power subsidies, irrigation and groundwater, PMFBY, "
+                    "PM-KISAN, markets, extension and FPOs, tenancy and women in agriculture, climate "
+                    "risk and nutrition, and what evaluations have found. ImpactMojo, CC BY-NC-ND."),
+    "slides": [
+        {"type": "title",
+         "main": "Agriculture<br>and Food<br>Systems 101",
+         "sub": "Land, incomes, prices, food, water, risk and the evidence: a foundational course on "
+                "Indian farming for development practitioners",
+         "tags": ["100 Slides", "India Focus", "Free Forever", "MSP to Nutrition"]},
+
+        {"type": "toc", "label": "Agenda", "title": "What we cover",
+         "items": [
+             {"name": "Who farms, and on how much land"},
+             {"name": "Incomes and indebtedness"},
+             {"name": "MSP, the CACP and procurement"},
+             {"name": "The 2020 farm laws and their repeal"},
+             {"name": "The PDS and the National Food Security Act"},
+             {"name": "Input subsidies"},
+             {"name": "Irrigation and groundwater"},
+             {"name": "Crop insurance and income support"},
+             {"name": "Markets, extension and FPOs"},
+             {"name": "Land records, tenancy and women"},
+             {"name": "Climate risk, nutrition and food systems"},
+             {"name": "Evidence and sources"},
+         ]},
+    ] + SEC1 + SEC2 + SEC3 + SEC4 + SEC5 + SEC6 + SEC7 + SEC8 + SEC9 + SEC10 + SEC11 + SEC12 + [
+        {"type": "end",
+         "eyebrow": "Agriculture and Food Systems 101 &middot; Complete",
+         "headline": "Start with who farms<br>and who is on the list",
+         "byline": "Most Indian farmers operate under one hectare, and most farm schemes pay whoever "
+                   "the land records name. Check the source, the unit and the list before you "
+                   "design. Explore the rest of the ImpactMojo 101 Series, free forever.",
+         "ctas": [
+             {"label": "The 101 Series", "href": "https://www.impactmojo.in/101-courses/"},
+             {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
+             {"label": "Dataverse", "href": "https://www.impactmojo.in/dataverse.html"}],
+         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+    ],
+}
