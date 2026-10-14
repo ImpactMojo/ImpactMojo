@@ -122,6 +122,9 @@ An instructor at a school of social work asked for a kit covering Sustainability
 - [x] **Two new law guides** (v10.380.0): running an NGO in India, and land, forest and resource rights. There are eight law guides.
 - [x] **Analysing Indian survey data** (v10.380.0): a Code School course on NFHS, PLFS and HCES unit-level files in R and Python.
 - [x] **Every page checked for accessibility each day** (v10.380.0): light and dark, phone and laptop width.
+- [x] **A reading list for every flagship** (v10.381.0): 1,099 readings checked against the publisher, free legal copies linked, and a request form for subscription articles.
+- [x] **Teaching kits and template bundles** (v10.381.0): the question banks as kits for institutions, and four bundles named for the job.
+- [x] **A plainer front page and course pages** (v10.381.0): three ways in on the home page, and every flagship opens with its modules.
 
 ---
 

@@ -27,6 +27,8 @@ These were previously listed as planned or in progress, and are now live. Each n
 - **Four new 101 decks** on agriculture and food systems, urban governance, water and sanitation, and disaster and heat risk. ([/101-courses/](/101-courses/), v10.380.0)
 - **Two new law guides**, on running an NGO in India and on land, forest and resource rights. ([/law-guides/](/law-guides/), v10.380.0)
 - **Analysing Indian survey data**, a Code School course on NFHS, PLFS and HCES files. ([/code/survey-data.html](/code/survey-data.html), v10.380.0)
+- **A reading list for every flagship course**, with free legal copies linked where they exist. ([/courses/mel/readings.html](/courses/mel/readings.html), v10.381.0)
+- **Teaching kits for trainers and faculty, and template bundles named for the job.** ([/products.html](/products.html), v10.381.0)
 
 ## Planned
 

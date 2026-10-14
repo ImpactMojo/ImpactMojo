@@ -2,6 +2,35 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.381.0 — October 14, 2026 (reading lists for every flagship, teaching kits, and a plainer front page)
+
+### For Learners
+
+- **A reading list for every flagship course** — each of the 22 flagships now has its own reading list, module by module: 1,099 readings checked against the publisher, a link to a free legal copy wherever one exists, and a form to request a copy of a subscription article. The Course Papers button on each course opens it.
+- **Lexicons and exercises on the site** — the lexicon spreadsheets and the six MEL exercise workbooks now download from the course pages themselves.
+- **ImpactLex definitions checked against their sources** — 348 terms now say which source they were checked against and when. Several were corrected, among them the employment guarantee terms, which now describe the VB-G RAM G Act, 2025.
+- **Teaching kits for trainers and faculty** — the four question banks are now teaching kits for institutions, listing exactly what a teacher gets, with a quote on request. Each bank is still sold on its own.
+- **Template bundles named for the job** — four bundles: a proposal for a donor, setting up MEL for a new programme, preparing for field data collection, and commissioning an evaluation, from ₹399.
+- **A plainer front page** — the home page now says what ImpactMojo is and offers three ways in: learn a method, find a tool, or look up data, with what is new this month below.
+- **Courses that start on the first screen** — every flagship page opens with its modules and a Start button, and the 101 Series is grouped by track, six courses at a time.
+
+### Changed
+
+- The hub pages for courses, the catalogue, Labs, the Data Room, law guides, Deep Dives, Reading Companions and Code School share one plain heading.
+- The cookie notice is one line, the guided tour starts only when asked for, and only a small help button floats on the page.
+- The two calculators take a request for a demo in place of a buy button.
+- Power BI module 6 is now called Honest Visualisation.
+
+### Fixed
+
+- **The home page ignored a saved dark theme** (#1246).
+- **Course paper buttons opened folders with no readings in them** (#1247).
+- **Some flagship modules cited works that do not exist as cited** (#1248).
+- **Some ImpactLex definitions were out of date or at odds with their sources** (#1249).
+- **Text fell below contrast thresholds on seven pages** (#1250).
+- **Four new 101 decks sat under the wrong track, and two course counts were stale** (#1251).
+- **One profile field was readable more widely than it needed to be** (#1252).
+
 ## v10.380.0 — October 14, 2026 (a new flagship, four 101 decks, two law guides and a Code School course)
 
 ### For Learners
