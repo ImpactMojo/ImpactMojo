@@ -521,7 +521,7 @@
     if (navButtons) {
       var themeSelector = navButtons.querySelector('.theme-selector');
       if (themeSelector) {
-        navButtons.insertBefore(btn, themeSelector);
+        themeSelector.parentNode.insertBefore(btn, themeSelector);
       } else {
         navButtons.insertBefore(btn, navButtons.firstChild);
       }

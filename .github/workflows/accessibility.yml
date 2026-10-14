@@ -24,6 +24,16 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Pages this pull request changes
+        if: github.event_name == 'pull_request'
+        run: |
+          # Up to 30 changed pages, existing on disk; the daily sweep covers the rest.
+          git diff --name-only --diff-filter=AM "origin/${{ github.base_ref }}...HEAD" -- '*.html' \
+            | grep -vE '^(Backups|admin|docs|tests|scripts)/' | head -30 | tr '\n' ' ' > changed-pages.txt || true
+          echo "Changed pages to audit: $(wc -w < changed-pages.txt)"
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -66,6 +76,13 @@ jobs:
             }
             fs.writeFileSync('axe-report.md', md);
           "
+
+      - name: Audit the pages this pull request changes
+        # Compared with tests/a11y-baseline.json, so only a failure the change
+        # introduces fails here; a page's older, recorded problems do not.
+        if: github.event_name == 'pull_request'
+        run: |
+          if [ -s changed-pages.txt ]; then AXE_PAGES="$(cat changed-pages.txt)" node tests/axe-sweep.js; else echo "No pages changed."; fi
 
       - name: Upload axe-core report
         if: always()

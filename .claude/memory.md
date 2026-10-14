@@ -12,7 +12,7 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 - **Reference Library counts** (verified v10.23.2): ImpactLex 390 terms · FieldCases 200 cases / 117 countries · NudgeKit 203 BCTs / 26 categories · Dataverse 272 items · DevDiscourses 500+ papers · PolicyDhara (Indian policy docs)
 - **Deploy target**: Netlify (auto-deploy on push to main, HTML now edge-cached for 5 min)
 - **Backend**: Supabase project `ddyszmfffyedolkcugld`
-- **DevDiscourses and PolicyDhara** move to devdiscourses.impactmojo.in and policydhara.impactmojo.in in v10.379.0 (PR #1238, with PolicyDhara #816 and development-discourses #17). The old `/devdiscourses` and `/policydhara` paths 301 there; the two proxy edge functions are deleted. Until v10.379.0 is published the edge functions still serve the old paths.
+- **DevDiscourses and PolicyDhara** are GitHub Pages sites at devdiscourses.impactmojo.in and policydhara.impactmojo.in (live since v10.379.0). The old `/devdiscourses` and `/policydhara` paths 301 there. PolicyDhara deploys through a workflow, so its custom domain is set in the repository's Pages settings, not by the CNAME file.
 - **Publishing is locked**: a merge builds but goes live only at the scheduled publish (07:47 and 19:47 IST, `tools/publish-locked.py` in Democracy-by-Design) or when that workflow is run by hand for `impactmojo`.
 
 ## Known drift (open)
@@ -191,9 +191,13 @@ The owner writes plainly, as a journalist or a professor does, and asked why the
 
 ## Session Log
 
-### Session 2026-10-13/14 — v10.378.0 live, v10.379.0 waiting to publish
+### Session 2026-10-13/14 — v10.378.0 and v10.379.0 live
 - **v10.378.0 (PR #1236) is live** via the scheduled publish: analytics wait for consent on 1,030 pages, shared site chrome stylesheet on 1,009, Supabase client vendored, old names swept, h1 on decks, contrast fixes. Issues #1230, #1232, #1233, #1234, #1235 closed after live spot checks.
-- **v10.379.0 (PR #1238, draft, CI green)** waits for the owner's word to publish, because the owner is saving deploy credits and wants one publish: paid Practice Pack modules served by `/api/pack-content` after a server-side access check (item 37 in testing.md), Cloudflare Turnstile on the sign-in forms (off until `TURNSTILE_SITE_KEY` is set in `js/config.js`; the owner has not yet sent the site key), DevDiscourses and PolicyDhara on their own subdomains, the security policy enforced on the account pages, and more contrast fixes. #1231 stays open until it is live.
+- **v10.379.0 (PR #1238) published 14 October by a manual run of the publish workflow**: paid Practice Pack modules served by `/api/pack-content` after a server-side access check (item 37 in testing.md), Cloudflare Turnstile on the sign-in forms (site key in `js/config.js`, secret and the switch in Supabase Auth; switched on after the owner confirmed a real sign-in passes), DevDiscourses and PolicyDhara on their own subdomains, the security policy enforced on the account pages, and more contrast fixes. #1231 closed. Anonymous reads of profiles and certificates are closed; certificate checks go through the `verify_certificate` RPC.
+- **Translation is live Sarvam, cached once per phrase, and that is the design** (owner, 14 October): every page with `js/translate-sarvam.js` translates in five languages; saved translations cover the menus and 33 pages. Do not plan a bulk re-translation. The roadmap once said the decks were untranslated and misled a whole session; it was corrected. **Check a roadmap claim against the site before acting on it.**
+- **Owner does not want content about site engineering** (blog posts, essays or courses about how the site is built).
+- **Question banks**: the old assessment bank JSON stays in git history by owner decision (two forks, no recorded sales). No history rewrite.
+
 - **Owner decisions**: products sold separately; /subscribe/ offers Practitioner and Professional; Pro Studio exports stay a soft gate in the browser (deliberate, noted in `js/premium.js`).
 - **After publish**: merge PolicyDhara #816 and development-discourses #17 and set their Pages custom domains; the owner turns on CAPTCHA in Supabase with the Turnstile secret themselves; finish the remaining private follow-ups recorded outside the repository.
 - **Preview deploys no longer receive the server keys**: the eight secret Netlify variables are scoped to production only. A function that needs one fails on a deploy preview by design.
