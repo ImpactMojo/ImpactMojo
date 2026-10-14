@@ -1029,3 +1029,279 @@ SEC6 = [
               "a price that rewards the wrong choice.")]),
     ]),
 ]
+
+
+# ===================== SECTION 07: IRRIGATION AND GROUNDWATER =====================
+SEC7 = [
+    DIV("07", "Seven", "Irrigation and groundwater"),
+
+    S("Irrigation coverage", "Just over half the cropped area is irrigated, and rice gets most of it", [
+        TC([ST([C("41.7%", "gross irrigated area as a share of gross cropped area, 2001-02", "indigo", ES),
+                C("55.8%", "the same share in 2022-23", "cyan", ES),
+                C("about 67%", "irrigation coverage of rice", "green", ES),
+                C("about 26%", "irrigation coverage of pulses", "amber", ES),
+                C("under 15%", "irrigation coverage of millets", "red", ES)], cols=3),
+            B("Source: Economic Survey 2025-26, paragraph 6.21.", sm=True)],
+           [B("Irrigation gives a farmer water when the rain fails, which makes it possible to grow a "
+              "second crop, to use fertiliser with confidence and to plant higher-value crops. The "
+              "share of cropped area that is irrigated rose by about 14 percentage points in two "
+              "decades."),
+            B("Coverage is very uneven across crops. Rice, the crop that needs the most water, is the "
+              "most irrigated. Pulses and millets, which the government wants farmers to grow more of "
+              "for nutrition and import reasons, are mostly rain-fed. The Survey calls expanding "
+              "irrigation in lagging states and crops, while ensuring sustainability, an urgent "
+              "priority, and argues that rejuvenating water bodies and increasing surface storage "
+              "would earn the economy far more than other public investments.", sm=True),
+            H("amber", "Gross irrigated area counts a hectare irrigated twice in a year twice. Net "
+              "irrigated area counts it once. Check which one a source reports.")]),
+    ]),
+
+    S("The 2025 assessment", "India extracts about 61 per cent of the groundwater it can replenish", [
+        TC([T(["Measure, 2025", "Value"],
+              [["Annual groundwater recharge", "448.52 billion cubic metres"],
+               ["Annual extractable resource", "407.75 BCM"],
+               ["Annual extraction, all uses", "247.22 BCM"],
+               ["National stage of extraction", "60.63% (60.48% in 2024; 63.33% in 2017)"],
+               ["Assessment units", "6,762 blocks, mandals and talukas"]]),
+            B("Sources: " + GW + "; Vision IAS summary of the 2025 report.", sm=True)],
+           [T(["Category of unit", "Stage of extraction", "Units", "Share"],
+              [["Safe", "Under 70%", "4,946", "73.14%"],
+               ["Semi-critical", "70% to 90%", "758", "11.21%"],
+               ["Critical", "90% to 100%", "201", "2.97%"],
+               ["Over-exploited", "Above 100%", "730", "10.80%"],
+               ["Saline", "Separate category", "127", "1.88%"]]),
+            B("An over-exploited unit takes out more water each year than the rain and rivers put "
+              "back. The Central Ground Water Board and the states carry out the assessment jointly.", sm=True)]),
+    ]),
+
+    S("Where the water table falls", "Punjab draws one and a half times what it recharges", [
+        TC([BAR("chGW", "Stage of groundwater extraction, 2025 (% of extractable resource)", GW,
+                ["Punjab", "Rajasthan", "Haryana", "Delhi", "All India", "Himachal Pradesh"],
+                [DS("Stage of extraction, 2025", [156.36, 147.11, 136.75, 92.10, 60.63, 38.50], RED)],
+                horizontal=True, ytitle="per cent")],
+           [B("The national average hides a concentrated problem. Punjab extracted 156.36 per cent of "
+              "its extractable groundwater in 2025, Rajasthan 147.11 per cent and Haryana 136.75 per "
+              "cent. Over-exploited units are concentrated in the north-west, in the west and in parts "
+              "of the south, in Karnataka, Tamil Nadu, Telangana and Andhra Pradesh."),
+            B("Some states have improved. Delhi fell from 119.61 per cent in 2017 to 92.10 per cent in "
+              "2025, and Himachal Pradesh from 86.37 to 38.50 per cent. The Minister of State for Jal "
+              "Shakti gave these figures in a written reply to the Rajya Sabha in July 2026.", sm=True),
+            H("red", "A stage above 100 per cent cannot continue. It means the aquifer is being mined, "
+              "and wells have to go deeper over time.")], ratio="a32"),
+    ]),
+
+    S("Why it happens", "The incentives in the north-west all point towards pumping", [
+        TC([P("amber", "Free or cheap power",
+              "Where farm power is free or flat-rated, the cost of pumping one more hour is close to "
+              "zero for the farmer. Ryan and Sudarshan show in Rajasthan that rationing hours keeps "
+              "average use in check but misallocates water between farmers."),
+            P("amber", "Assured prices for a thirsty crop",
+              "Rice is the most irrigated crop, at about two-thirds coverage, and in the states with "
+              "large procurement it is bought at MSP. A farmer comparing paddy with a less "
+              "water-intensive crop that has no assured buyer will often choose paddy.")],
+           [P("cyan", "A common pool",
+              "Groundwater under a village is shared. Water one farmer does not pump may be pumped by "
+              "a neighbour, so restraint by one farmer brings little benefit to that farmer. This is "
+              "the logic of the commons, and it is why individual advice to save water rarely works "
+              "without a collective rule."),
+            P("cyan", "Rules that are hard to enforce",
+              "The Economic Survey notes that Uttar Pradesh's Ground Water Rules of 2020 strengthened "
+              "regulation of extraction, and that by 2025 recharge had risen marginally while "
+              "extraction intensity also increased."),
+            H("green", "The Economic Survey's diversification proposal in section 3 is partly a "
+              "groundwater policy.")]),
+    ]),
+
+    S("Programmes", "Irrigation policy now aims at efficiency as much as area", [
+        TC([B("The Pradhan Mantri Krishi Sinchayee Yojana aims, in the Economic Survey's description, "
+              "to coordinate irrigation investment at farm level, expand the area under assured "
+              "irrigation, raise on-farm water efficiency, promote precision irrigation, recharge "
+              "aquifers, and test the reuse of treated municipal wastewater in peri-urban farming."),
+            B("Under its Per Drop More Crop component the government pays 55 per cent of the cost of "
+              "drip and sprinkler systems for small and marginal farmers and 45 per cent for others.", sm=True)],
+           [T(["State example in the Economic Survey", "What was done", "Reported result"],
+              [["Telangana", "Kaleshwaram Lift Irrigation Project; Mission Kakatiya to rejuvenate tanks", "Cultivated area rose from 1.31 crore acres in 2014 to 2.2 crore acres by FY23"],
+               ["Assam", "State Irrigation Plan (2022), new schemes and solar pumps", "Gross irrigated area 24.28% of agricultural land by 2024-25"],
+               ["Uttar Pradesh", "Ground Water Rules (2020)", "Recharge up marginally; extraction intensity also up"]]),
+            B("Source: " + ES + ", Box VI.1 and paragraph 6.21. These are the state governments' "
+              "reported outcomes, not independent evaluations.", sm=True)]),
+    ]),
+
+    S("Drip and the rebound", "Water-saving technology can increase total water use", [
+        TC([B("Drip irrigation delivers water to the roots and wastes less to evaporation and runoff. "
+              "Per hectare, it uses less water for the same crop. The farmer, though, may use the "
+              "water saved to irrigate more land or to switch to a thirstier, more profitable crop. "
+              "Total extraction from the aquifer can then stay the same or rise."),
+            B("This is the rebound problem. It is why water-saving subsidies work best alongside a "
+              "limit on how much is extracted, such as a cap on hours, a metered connection, or a "
+              "village agreement on the area under each crop.", sm=True),
+            H("amber", "A programme that reports hectares under drip is reporting an input. Ask what "
+              "happened to the water table and to the area irrigated.")],
+           [T(["Indicator", "What it tells you", "What it misses"],
+              [["Hectares under micro-irrigation", "Adoption of the technology", "Whether total pumping fell"],
+               ["Water use per hectare", "Efficiency on the treated plot", "Expansion to new plots"],
+               ["Depth to water table in monitoring wells", "The state of the aquifer", "Which farmers caused the change"],
+               ["Stage of extraction for the block", "Balance of recharge and use", "Seasonal and local variation"]])]),
+    ]),
+
+    S("Practice", "Using groundwater data in programme design", [
+        TC([BL(["Look up the category of the block you work in before promoting any crop, pump or "
+                "irrigation scheme. A semi-critical block today may be over-exploited in five years.",
+                "Ask whether a proposed livelihood depends on new borewells. In an over-exploited block "
+                "it will compete with existing users for a falling resource.",
+                "Pair any water-saving subsidy with a rule on total use, or report what happened to "
+                "the area irrigated.",
+                "In rain-fed blocks, treat surface storage, tanks and soil moisture conservation as the "
+                "main irrigation strategy.",
+                "Remember that the stage of extraction is a block average. Wells near a canal and "
+                "wells at the tail end of a block can face very different conditions."], "cyan")],
+           [P("green", "A note on solar pumps",
+              "PM-KUSUM has installed 11.49 lakh off-grid solar pumps. In a safe block a solar pump "
+              "can replace diesel and cut costs. In an over-exploited block it removes the last cost "
+              "on pumping. Check the block category before promoting one."),
+            B("For climate and water, see " + L("climate-essentials.html", "Climate Essentials 101") +
+              " and " + L("env-justice.html", "Environmental Justice 101") + ".", sm=True)]),
+    ]),
+]
+
+
+# ===================== SECTION 08: CROP INSURANCE AND PM-KISAN =====================
+SEC8 = [
+    DIV("08", "Eight", "Crop insurance and income support"),
+
+    S("PMFBY design", "The farmer pays 2 per cent of the sum insured for kharif food crops", [
+        TC([T(["Feature", "Pradhan Mantri Fasal Bima Yojana"],
+              [["Launched", "18 February 2016, from kharif 2016"],
+               ["Farmer's premium, maximum", "2% kharif foodgrains and oilseeds; 1.5% rabi; 5% commercial and horticultural crops"],
+               ["Rest of the premium", "Centre and state 50:50; 90:10 in north-eastern and Himalayan states"],
+               ["Yield losses", "Area-based: drought, dry spells, flood, cyclone, hail, pests and disease in a notified area"],
+               ["Prevented sowing", "Claims up to 25% of the sum insured"],
+               ["Post-harvest", "Crop drying in the field covered for up to 14 days against cyclone and unseasonal rain"],
+               ["Localised calamity", "Farm-level claims for hail, landslide, inundation, cloudburst and natural fire"]]),
+            B("Source: " + PMFBY + ".", sm=True)],
+           [B("Most claims under PMFBY are settled on an area basis. Each insurance unit has a "
+              "threshold yield. Crop cutting experiments, and now remote sensing through the YES-TECH "
+              "system, estimate the actual yield, and if it falls below the threshold every insured "
+              "farmer in the unit is paid a share of the shortfall. A farmer whose own field failed in "
+              "a unit that did well receives nothing, unless the loss is one of the localised perils."),
+            B("Loanee farmers, whose crop loans or KCCs are active, have the premium deducted by the "
+              "bank. Non-loanee farmers enrol voluntarily. Tenants and sharecroppers can enrol with "
+              "tenure agreements or sowing certificates as each state requires.", sm=True),
+            H("cyan", "The Restructured Weather-Based Crop Insurance Scheme pays on weather readings "
+              "at notified stations instead of yields, mostly for fruit, vegetables and plantations.")]),
+    ]),
+
+    S("Scale", "Ten years, 92 crore applications and &#8377;2 lakh crore in claims", [
+        TC([ST([C("92.46 crore", "farmer applications insured, kharif 2016 to rabi 2025-26", "cyan", PMFBY),
+                C("&#8377;2.06 lakh crore", "claims paid on over 26.33 crore applications", "green", PMFBY),
+                C("4.19 crore", "farmers insured in 2024-25, on 6.2 crore hectares", "amber", ES),
+                C("&#8377;12,200 crore", "Central allocation, Budget 2026-27", "indigo", BAG)], cols=2),
+            B("Kharif 2025 insured 229.77 lakh farmers on 269.38 lakh hectares; by 27 August 2026, "
+              "kharif 2026 enrolment had reached 241.38 lakh farmers.", sm=True)],
+           [B("An application is one crop on one plot in one season. A farmer who insures paddy and "
+              "wheat on two plots files four applications in a year. The 92.46 crore applications are "
+              "therefore far more than the number of farmers, and should not be quoted as people."),
+            B("Claims paid are about &#8377;2.06 lakh crore over ten years. The premium the farmers "
+              "paid and the much larger share paid by governments are reported separately on the "
+              "National Crop Insurance Portal, and a full account of the scheme compares claims with "
+              "total premium, not with the farmers' share alone.", sm=True),
+            H("amber", "Tenants and sharecroppers enrolled since 2018 number more than 1.44 crore, "
+              "according to the PIB backgrounder.")]),
+    ]),
+
+    S("States in and out", "States have left the scheme and come back", [
+        TC([B("Insurance is voluntary for states, which pay half the subsidised premium. Several large "
+              "states left PMFBY after 2018 and ran their own relief schemes. The government's "
+              "backgrounder of August 2026 lists Andhra Pradesh rejoining from kharif 2022, Jharkhand "
+              "from kharif 2024 and West Bengal from kharif 2026. Bihar has decided to return from rabi "
+              "2026-27. PMFBY is being implemented by 25 states and union territories in kharif 2026."),
+            B("Enrolment can swing on a single state decision. Andhra Pradesh and Maharashtra paid the "
+              "whole farmer premium in 2023 and 2024, so every farmer was enrolled. When they stopped "
+              "in 2025, enrolment fell sharply.", sm=True)],
+           [T(["Farmers enrolled", "Kharif 2024", "Kharif 2025", "Kharif 2026 (to 28 Aug)"],
+              [["Andhra Pradesh", "31.92 lakh", "7.43 lakh", "16.22 lakh"],
+               ["Maharashtra", "76.59 lakh", "45.99 lakh", "42.55 lakh"],
+               ["Uttar Pradesh", "15.48 lakh", "20.84 lakh", "not reported"],
+               ["Rajasthan", "30.59 lakh", "36.45 lakh", "not reported"]]),
+            B("Source: " + PMFBY + ".", sm=True),
+            H("cyan", "When you read an enrolment trend, check whether a state changed who pays the "
+              "premium.")]),
+    ]),
+
+    S("Evidence on insurance demand", "Farmers say rainfall is their biggest risk and still buy little insurance", [
+        TC([B("Shawn Cole, Xavier Gin&eacute;, Jeremy Tobacman, Petia Topalova, Robert Townsend and "
+              "James Vickery ran randomised experiments on rainfall index insurance in rural Andhra "
+              "Pradesh and Gujarat (American Economic Journal: Applied Economics, 2013, 5(1): 104-35)."),
+            B("Only 5 to 10 per cent of households bought the insurance, even though they "
+              "overwhelmingly named rainfall variability as their most important risk. Demand was "
+              "sensitive to price, with an estimated price elasticity between -0.66 and -0.88. Price "
+              "was not the whole story. The authors point to lack of trust, liquidity constraints and "
+              "limited salience, and argue that even contracts as generous as those in the United "
+              "States would see limited take-up without addressing these.", sm=True)],
+           [P("cyan", "What PMFBY's design does about these frictions",
+              "A heavily subsidised premium answers price. Automatic enrolment of loanee farmers "
+              "answers liquidity and salience for borrowers, because the premium is deducted from the "
+              "loan. Trust depends on whether claims are paid on time and are seen to match losses."),
+            P("amber", "What remains",
+              "Area-based yields mean some farmers lose and are not paid, which erodes trust. Delays "
+              "in yield data and in the state share of premium have historically delayed claims. The "
+              "Digiclaim module, used since kharif 2022, pays claims through the Public Financial "
+              "Management System and has paid over &#8377;55,000 crore.")]),
+    ]),
+
+    S("PM-KISAN", "&#8377;6,000 a year to every landholding farmer family", [
+        TC([B("PM-KISAN was launched on 24 February 2019. Every eligible farmer family with cultivable "
+              "land receives &#8377;6,000 a year in three instalments of &#8377;2,000, paid by direct "
+              "benefit transfer into an Aadhaar-seeded bank account. Land records must be seeded on the "
+              "PM-KISAN portal and e-KYC completed."),
+            B("Higher-income families are excluded: income tax payers, government and public sector "
+              "employees and holders of constitutional posts. As of December 2025, &#8377;416.75 crore "
+              "had been recovered from ineligible beneficiaries. The 23rd instalment was released on "
+              "20 June 2026 in Hooghly, West Bengal.", sm=True)],
+           [ST([C("9.44 crore", "farmers paid in the 23rd instalment, of whom 2.18 crore women", "cyan", KISAN),
+                C("&#8377;18,880 crore", "released in the 23rd instalment", "green", KISAN),
+                C("&#8377;4.46 lakh crore", "paid since 2019 across 23 instalments", "amber", KISAN),
+                C("&#8377;63,500 crore", "PM-KISAN, Budget Estimate 2026-27", "indigo", BAG)], cols=2),
+            H("amber", "The PIB backgrounder gives the 2026-27 allocation as &#8377;60,000 crore. Budget "
+              "at a Glance shows &#8377;63,500 crore. Quote the budget document and note the difference.")]),
+    ]),
+
+    S("Who PM-KISAN reaches", "A flat transfer to landholders leaves out those who work land they do not own", [
+        TC([B("PM-KISAN is defined for landholding farmer families. A tenant who cultivates leased "
+              "land, a sharecropper, and an agricultural labourer with no land are outside it by "
+              "design, although they carry the same risks as owners and often more."),
+            B("The transfer is the same for a family with 0.3 hectares and for one with 10 hectares, "
+              "so per hectare it is far larger for small holdings. Measured against income, "
+              "&#8377;6,000 a year is &#8377;500 a month, about 5 per cent of the average agricultural "
+              "household's income of &#8377;10,218 in 2018-19.", sm=True),
+            H("cyan", "Because it is paid per family and needs land records, the quality of state land "
+              "records decides who receives it. Farmers whose land is still recorded in a deceased "
+              "parent's name are a common gap.")],
+           [T(["Group", "In PM-KISAN?", "Why"],
+              [["Owner-cultivator with records", "Yes", "Landholding family with seeded records"],
+               ["Owner whose records are not updated", "Often not", "Land not recorded in the family's name"],
+               ["Tenant or sharecropper", "No", "Not a landholder"],
+               ["Landless agricultural labourer", "No", "No land"],
+               ["Landowner who pays income tax", "No", "Excluded category"],
+               ["Woman cultivator on family land", "Only if land is in her name", "Paid to the landholding family"]])]),
+    ]),
+
+    S("Evidence on PM-KISAN", "Early studies suggest it eased cash shortages for the most constrained farmers", [
+        TC([P("cyan", "IFPRI Discussion Paper 1907 (January 2020)",
+              "Deepak Varshney, Pramod Kumar Joshi, Devesh Roy and Anjani Kumar surveyed 1,406 farmers "
+              "in Uttar Pradesh. PM-KISAN had reached one-third of farmers in the first three months. "
+              "They found no selection bias by social, economic or agricultural characteristics. The "
+              "scheme helped most those more dependent on agriculture and with poor access to credit, "
+              "and it strengthened the effect of Krishi Vigyan Kendras on adoption of modern varieties. "
+              "They use a triple difference with matching."),
+            B("Source: " + A("https://cgspace.cgiar.org/server/api/core/bitstreams/e1860a45-121f-44ba-a67e-8eebf09a884a/content", "IFPRI DP 01907") + ".", sm=True)],
+           [P("amber", "A ministry-sponsored study (2022)",
+              "The Agro-Economic Research Centre at the University of Allahabad, sponsored by the "
+              "Ministry of Agriculture, compared beneficiaries and non-beneficiaries in Uttar Pradesh. "
+              "As reported by PIB, paddy yields were 3.08 per cent and wheat yields 1.93 per cent "
+              "higher on beneficiary farms, and household farm income 9.85 per cent higher."),
+            H("red", "A comparison of beneficiaries with non-beneficiaries is not a causal estimate. "
+              "Families who registered may differ from those who did not in land, information and "
+              "contacts. Treat such figures as associations until a design rules out selection.")]),
+    ]),
+]
