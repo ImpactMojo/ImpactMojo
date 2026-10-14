@@ -43,7 +43,7 @@ DECK = {
              {"name": "What counts as urban"},
              {"name": "How fast and where India urbanises"},
              {"name": "The 74th Amendment and the Twelfth Schedule"},
-             {"name": "Who runs a town: councils, mayors and staff"},
+             {"name": "Who runs a town, from councils to staff"},
              {"name": "Municipal finance"},
              {"name": "Transfers, Finance Commissions and borrowing"},
              {"name": "The urban missions"},
@@ -62,7 +62,7 @@ DECK = {
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "term", "word": "Statutory town",
-                        "def": "Every administrative unit that a state law defines as urban: a "
+                        "def": "Every administrative unit that a state law defines as urban, such as a "
                         "municipal corporation, municipality, cantonment board, notified town area "
                         "committee, town panchayat or nagar palika. The Registrar General treats all "
                         "of them as urban without applying any test."},
@@ -104,7 +104,7 @@ DECK = {
          ]},
 
         {"type": "content", "label": "Where the City Ends",
-         "title": "Outgrowths and agglomerations: how the Census draws a city's edge",
+         "title": "How the Census draws a city's edge with outgrowths and agglomerations",
          "blocks": [
              {"t": "twocol", "ratio": "a32",
               "left": [{"t": "body", "html": "An outgrowth is a village, a hamlet or an enumeration "
@@ -150,7 +150,7 @@ DECK = {
          ]},
 
         {"type": "content", "label": "Fieldwork", "compact": True,
-         "title": "Urban by Census, rural by governance: what census towns look like on the ground",
+         "title": "Census towns are urban in the Census and rural in governance",
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "body", "html": "A World Bank study led by Partha Mukhopadhyay and "
@@ -158,7 +158,7 @@ DECK = {
                         "Research, studied census towns in Bihar, West Bengal, Odisha and Jharkhand. "
                         "It found an everyday bazaar economy serving surrounding villages, small "
                         "town-specific trades often rooted in caste occupations, and five new "
-                        "activities common to every site: para-transit, construction, private "
+                        "activities common to every site, namely para-transit, construction, private "
                         "education, private health care and mobile phone services."},
                        {"t": "body", "html": "Controlling for size, the study found little evident "
                         "difference in service provision between census towns and statutory towns. "
@@ -216,7 +216,7 @@ DECK = {
                          "2025 asked states to report every change to districts, sub-districts, towns, "
                          "wards and villages since 2010, up to the freezing of boundaries on 31 December "
                          "2025. Circular No. 2 asked for a list of villages that could become new census "
-                         "towns. The screening tests in its proforma use 2011 data: 4,000 people or "
+                         "towns. The screening tests in its proforma use 2011 data, asking for 4,000 people or "
                          "more, density of at least 400 per sq km, and under 25 per cent of male main "
                          "workers in agriculture."},
                         {"t": "hbox", "color": "amber", "html": "For urban work this means two things. "
@@ -426,7 +426,7 @@ DECK = {
               "right": [{"t": "body", "html": "In 2025, 27.7 per cent of urban women aged 15 and above "
                          "were working or seeking work, against 45.9 per cent of rural women. For men "
                          "the rural and urban rates were close, at 80.5 and 76.2 per cent."},
-                        {"t": "body", "html": "Several urban services bear on this gap: safe and cheap "
+                        {"t": "body", "html": "Several urban services bear on this gap, among them safe and cheap "
                          "public transport, street lighting, public toilets, childcare and water at "
                          "home that does not need to be fetched. Most of these appear in the Twelfth "
                          "Schedule or in the urban missions. Rural women's participation is counted "
@@ -479,7 +479,7 @@ DECK = {
                          "It fixed the existence of municipalities, their five-year term, direct "
                          "election of councillors, reservation, the election and finance commissions "
                          "and the planning committees. It left to state legislatures the decisive "
-                         "matters: which functions and taxes a municipality gets, how its mayor is "
+                         "matters, such as which functions and taxes a municipality gets, how its mayor is "
                          "chosen, who appoints its staff and how much the state transfers. Most of "
                          "this section is about that division."},
                         src("Texts of Articles 243P to 243ZG and the Twelfth Schedule as reproduced by "
@@ -493,7 +493,7 @@ DECK = {
               "head": ["Article", "What it provides", "Left to the state legislature"],
               "rows": [
                   ["243P", "Definitions. A metropolitan area has 10 lakh people or more, in one or more districts, with two or more municipalities or panchayats", "Notification of metropolitan and municipal areas by the Governor"],
-                  ["243Q", "Three kinds of municipality: nagar panchayat, municipal council, municipal corporation", "Which kind each town is"],
+                  ["243Q", "Three kinds of municipality, the nagar panchayat, municipal council and municipal corporation", "Which kind each town is"],
                   ["243R", "All seats filled by direct election from wards", "Representation of MPs, MLAs and experts, and the manner of electing the chairperson"],
                   ["243S", "Wards committees in municipalities of 3 lakh people or more", "Composition, territory and how seats are filled"],
                   ["243T", "Reservation for SCs, STs and women, including chairpersons", "Rotation, chairperson rules, backward classes"],
@@ -661,7 +661,7 @@ DECK = {
 
         # ===================== SECTION 04 =====================
         {"type": "divider", "num": "04", "label": "Section Four",
-         "title": "Who runs a town: councils, mayors and staff"},
+         "title": "Who runs a town, from councils to staff"},
 
         {"type": "content", "label": "Offices", "compact": True,
          "title": "Four offices in a municipality, chosen in four different ways",
@@ -671,7 +671,7 @@ DECK = {
               "rows": [
                   ["Councillor (corporator)", "Direct election from a ward (Article 243R)", "Votes on the budget, by-laws and resolutions, sits on committees, takes ward complaints", "Ward voters"],
                   ["Mayor or chairperson", "Set by state law. Elected directly by voters in some states, by councillors in others", "Presides over the council. Executive powers vary from ceremonial to a mayor-in-council", "Voters or the council"],
-                  ["Commissioner or chief officer", "Appointed by the state government", "Executive head: staff, contracts, tax collection, budget preparation", "The state government, in practice"],
+                  ["Commissioner or chief officer", "Appointed by the state government", "Executive head for staff, contracts, tax collection and budget preparation", "The state government, in practice"],
                   ["Standing and ward committees", "Elected from among councillors, and in wards committees as state law provides", "Financial sanction, scrutiny, ward-level works", "The council"]]},
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "body", "html": "The CAG's 2024 audits found a directly elected mayor in "
@@ -683,7 +683,7 @@ DECK = {
          ]},
 
         {"type": "content", "label": "Executive Power",
-         "title": "Where executive power sits: the mayor or the commissioner",
+         "title": "Executive power sits with the mayor in some cities and the commissioner in others",
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "table",
@@ -778,7 +778,7 @@ DECK = {
              {"t": "table",
               "head": ["Provision", "What it does", "Why it matters for self-government"],
               "rows": [
-                  ["Chief Minister heads the Authority and the Metropolitan Planning Committee", "Puts state ministers in charge of municipal coordination and planning", "Planning is a Twelfth Schedule function, and the MPC chair is meant to forward a plan to the state, not be the state"],
+                  ["Chief Minister heads the Authority and the Metropolitan Planning Committee", "Puts state ministers in charge of municipal coordination and planning", "Planning is a Twelfth Schedule function, and under Article 243ZE the MPC chair forwards the plan to the state, and here the chair is a state minister"],
                   ["State may dissolve a corporation", "For incompetence, abuse of power or failing to follow directions", "Elected councils can be removed by the government above them"],
                   ["Prior approvals", "Sale or long lease of property, contracts and many regulations need state or Authority approval", "Devolved powers that need permission are partly devolved"],
                   ["Property tax rates", "Set by the government in consultation with the Authority", "In Delhi, Kerala and Maharashtra, corporations set their own rates"],
@@ -807,7 +807,7 @@ DECK = {
                          "closure on 31 March 2025, the Ministry advised that SPVs must finish all "
                          "ongoing projects by December 2025 (section 07). An SPV is one more executive "
                          "body beside the council, with its own board."},
-                        {"t": "hbox", "color": "amber", "html": "Practical test: for each service you "
+                        {"t": "hbox", "color": "amber", "html": "As a practical test, for each service you "
                          "work on, write down which body signs the contract, which body collects the "
                          "charge and which body takes complaints. They are often three different bodies."},
                         src("PRS, GBG Bill analysis. ETV Bharat, 12 December 2025, quoting a MoHUA official.")]},
@@ -949,7 +949,7 @@ DECK = {
                         "asked for full recovery of operation and maintenance costs of water supply and "
                         "solid waste management through user charges."}],
               "right": [{"t": "term", "word": "Non-revenue water",
-                         "def": "Water that a utility produces but does not bill: leakage, theft, "
+                         "def": "Water that a utility produces but does not bill, through leakage, theft, "
                          "unmetered public use and billing errors. AMRUT 2.0 set a target of under "
                          "20 per cent."},
                         {"t": "panel", "color": "amber", "title": "The equity question", "html":
@@ -962,7 +962,7 @@ DECK = {
          ]},
 
         {"type": "content", "label": "Spending", "compact": True,
-         "title": "Spending: salaries and upkeep first, capital works when grants arrive",
+         "title": "What the spending figures show, and why RBI and CAG figures differ",
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "table",
@@ -1006,7 +1006,7 @@ DECK = {
                          "from CARE and India Ratings and pledged property tax for repayment."},
                         {"t": "hbox", "color": "green", "html": "For a researcher, the published annual "
                          "accounts and budget books of a municipality are the first documents to "
-                         "collect. Ask for actuals, not only budget estimates."},
+                         "collect. Ask for actual figures as well as budget estimates."},
                         src("Article 243Z. HPEC Box 1.5, JNNURM reforms. PRS summaries of the 15th and 16th FC. ORF, Ramanath Jha, 3 September 2019.")]},
          ]},
 
@@ -1015,8 +1015,8 @@ DECK = {
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "body", "html": "A municipality's own revenue depends on three state "
-                        "decisions: which taxes it may levy under Article 243X, who sets the rates, "
-                        "and which agency collects. The HPEC recommended abolishing octroi and entry tax "
+                        "decisions. These are which taxes it may levy under Article 243X, who sets "
+                        "the rates, and which agency collects. The HPEC recommended abolishing octroi and entry tax "
                         "in all states and giving municipalities a constitutionally fixed share of "
                         "state taxes on goods and services."},
                        {"t": "body", "html": "PRS notes that in Delhi, Kerala and Maharashtra "
@@ -1047,7 +1047,7 @@ DECK = {
                       "Develop a municipal bond market. Bonds were under a tenth of corporation borrowing, and gross borrowing was under 0.05 per cent of GDP."]}]}],
               "right": [{"t": "panel", "color": "green", "title": "2024 report", "blocks": [
                   {"t": "bullets", "color": "green", "items": [
-                      "State-specific strategies for municipal revenue: reform of local taxes, better enforcement and new non-tax sources.",
+                      "State-specific strategies for municipal revenue, through reform of local taxes, better enforcement and new non-tax sources.",
                       "Timely, adequate and rule-based transfers from higher tiers of government.",
                       "Training in financial management to build capacity."]}]},
                         {"t": "body", "html": "Both reports cover only municipal corporations, 201 in "
@@ -1329,7 +1329,7 @@ DECK = {
                         "bicycles, 1,500 buses, 9,400 smart classrooms and 35,000 affordable housing "
                         "units built by 23 cities."},
                        {"t": "body", "html": "The Ministry listed the causes of delay reported by "
-                        "states: legal issues, clearances from other departments, land acquisition, "
+                        "states as legal issues, clearances from other departments, land acquisition, "
                         "construction in hilly areas, a shortage of vendors in small and medium cities, "
                         "centralised decision-making in a few cities, and under-use of the command "
                         "centres."}],
@@ -1358,7 +1358,7 @@ DECK = {
                         "India. The central to state sharing is 60:40 for most states, 90:10 for the "
                         "north-eastern and Himalayan states and UTs with legislatures, and 100:0 for "
                         "UTs without legislatures."}],
-              "right": [{"t": "body", "html": "The scheme names special focus groups: sanitation "
+              "right": [{"t": "body", "html": "The scheme names as special focus groups sanitation "
                          "workers (safai karmi), street vendors identified under PM SVANidhi, artisans "
                          "under PM-Vishwakarma, anganwadi workers, building and construction workers "
                          "and residents of slums and chawls."}]},
@@ -1431,7 +1431,7 @@ DECK = {
                          "stock is sold. That protection comes from a survey and a certificate of "
                          "vending under the Street Vendors Act, 2014, administered by a Town Vending "
                          "Committee (section 08). Practitioners working with vendors should check "
-                         "both: whether loans were received, and whether the town has completed its "
+                         "both whether loans were received and whether the town has completed its "
                          "survey and issued certificates."},
                         src("Union Budget 2025-26, speech paragraphs 49 and 50. PMAY-U 2.0 Operational Guidelines, paragraph 3.4.")]},
          ]},
@@ -1499,15 +1499,15 @@ DECK = {
                   ["Resettlement", "Households moved to a new site", "For untenable slums, with land as the state provides", "Distance from work, schools and networks"],
                   ["Rental housing", "Rooms or flats for rent, for migrants and workers", "ARH", "Rents and eligibility rules may not fit short-stay workers"]]},
              {"t": "twocol", "ratio": "half",
-              "left": [{"t": "body", "html": "Most programmes combine these. The order of choice "
-                        "matters: upgrading keeps people where their work is, while resettlement "
-                        "moves them away from it."}],
+              "left": [{"t": "body", "html": "Most programmes combine these. Upgrading keeps "
+                        "people where their work is, and resettlement moves them away from it, so the "
+                        "order in which the approaches are tried matters."}],
               "right": [{"t": "body", "html": "The next slide reports a long-run test of what "
                          "resettlement does to the people who receive a new house."}]},
          ]},
 
         {"type": "content", "label": "Evidence: Relocation",
-         "title": "A housing lottery in an Indian city: better houses, no economic gain, broken networks",
+         "title": "A housing lottery in an Indian city brought better houses and no economic gain",
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "body", "html": "Sharon Barnhardt, Erica Field and Rohini Pande studied "
@@ -1533,7 +1533,7 @@ DECK = {
               "left": [{"t": "body", "html": "Benjamin Marx, Thomas Stoker and Tavneet Suri reviewed "
                         "the economics of slums in the developing world in 2013. They argue that "
                         "poverty in contemporary slums resembles a poverty trap. Three mechanisms keep "
-                        "residents from using the economic opportunities of being near a city: "
+                        "residents from using the economic opportunities of being near a city. They are "
                         "thresholds in human capital, inertia in investment, and a 'policy trap'."},
                        {"t": "body", "html": "They also test the competing view that slums are a "
                         "transitory feature of fast-growing economies, by examining economic growth, "
@@ -1642,7 +1642,7 @@ DECK = {
          ]},
 
         {"type": "content", "label": "The Proposal", "compact": True,
-         "title": "Jean Drèze's DUET proposal: public institutions as employers of urban workers",
+         "title": "Jean Drèze's DUET proposal makes public institutions the employers of urban workers",
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "body", "html": "In September 2020, after months of lockdown, Jean Drèze "
@@ -1833,9 +1833,9 @@ DECK = {
               "right": [{"t": "stats", "cols": 1, "cards": [
                   {"num": "2,380", "label": "deaths estimated avoided in 2014 and 2015, compared with a 2007 to 2010 baseline", "color": "green", "source": "Hess et al., 2018, as summarised in the 2019 plan"}]},
                         {"t": "body", "html": "Cool roofs can keep indoor temperatures 2 to 5°C lower "
-                         "than traditional roofs, according to the plan. Most of its measures are "
-                         "municipal tasks: messaging, coordination with hospitals, drinking water and "
-                         "first aid at anganwadis, and building rules."},
+                         "than traditional roofs, according to the plan. Most of its measures, "
+                         "such as messaging, coordination with hospitals, drinking water and first aid "
+                         "at anganwadis, and building rules, are municipal tasks."},
                         src("Ahmedabad Heat Action Plan 2019 update, easy read version. Hess et al., <em>Journal of Environmental and Public Health</em>, 2018.")]},
          ]},
 
@@ -1849,8 +1849,8 @@ DECK = {
                        {"t": "body", "html": "The rain closed the city's commercial and industrial "
                         "activity for days. The state declared 27 and 28 July public holidays. Banking "
                         "transactions stopped at many branches from the evening of 26 July."}],
-              "right": [{"t": "body", "html": "After rain of this size, the governance questions are "
-                         "what happens to the water once drains are full: whether rivers such as the "
+              "right": [{"t": "body", "html": "After rain of this size, the governance questions "
+                         "concern what happens to the water once drains are full, including whether rivers such as the "
                          "Mithi have room to carry it, whether low-lying land has been built over, and "
                          "whether warnings reach people in time."},
                         {"t": "panel", "color": "cyan", "title": "Who holds the pieces", "html":
@@ -1935,7 +1935,7 @@ DECK = {
          "title": "Participation and what research has found"},
 
         {"type": "content", "label": "Ward Committees",
-         "title": "Wards committees and area sabhas: participation below the council",
+         "title": "Wards committees and area sabhas give residents a voice below the council",
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "body", "html": "Article 243S requires wards committees in every "
@@ -1983,7 +1983,7 @@ DECK = {
          ]},
 
         {"type": "content", "label": "Research (1)", "ultra-compact": True,
-         "title": "What research has found: definitions, finance and institutions",
+         "title": "What research has found on definitions, finance and institutions",
          "blocks": [
              {"t": "table",
               "head": ["Study", "Finding"],
@@ -1997,7 +1997,7 @@ DECK = {
          ]},
 
         {"type": "content", "label": "Research (2)", "ultra-compact": True,
-         "title": "What research has found: housing, heat and work",
+         "title": "What research has found on housing, heat and work",
          "blocks": [
              {"t": "table",
               "head": ["Study", "Finding"],
@@ -2007,7 +2007,7 @@ DECK = {
                   ["Azhar et al., <em>PLoS ONE</em> (2014)", "1,344 excess deaths (43.1%) in Ahmedabad in May 2010. The authors argue that IMD heatwave thresholds may underestimate health effects"],
                   ["Hess et al. (2018), as summarised in the Ahmedabad plan", "An estimated 2,380 deaths avoided in 2014 and 2015 after the Heat Action Plan, against a 2007 to 2010 baseline"],
                   ["Choragudi, Ideas for India (2022)", "Himachal Pradesh's urban guarantee built useful assets and employed mostly women, but few ULBs offered work, wages were late and the budget was cut from ₹100 crore to ₹5 crore"],
-                  ["Drèze, Ideas for India (2020)", "A proposal: job stamps through public institutions as a decentralised step towards an urban employment guarantee"],
+                  ["Drèze, Ideas for India (2020)", "Proposed job stamps through public institutions as a decentralised step towards an urban employment guarantee"],
                   ["CAG on the Chennai floods (tabled 2018)", "Reservoir releases and foreshore land use decided by a state department turned heavy rain into a disaster"]]},
          ]},
 
@@ -2019,8 +2019,8 @@ DECK = {
                   {"t": "bullets", "color": "cyan", "items": [
                       "Is the place a statutory town, a census town or an outgrowth? Check against the Census 2027 frozen boundaries.",
                       "Is there an elected council, or an administrator? When is the next election due under Article 243U?",
-                      "For your issue, which body holds the function: the municipality, a parastatal, a state department or an SPV?",
-                      "Who signs contracts: the commissioner, the mayor-in-council or the state?",
+                      "For your issue, does the municipality, a parastatal, a state department or an SPV hold the function?",
+                      "Does the commissioner, the mayor-in-council or the state sign contracts?",
                       "Is there a wards committee, and does it meet?"]}]}],
               "right": [{"t": "panel", "color": "green", "title": "Money and evidence", "blocks": [
                   {"t": "bullets", "color": "green", "items": [
@@ -2092,7 +2092,7 @@ DECK = {
                   "<a href='https://en.wikipedia.org/wiki/2005_Maharashtra_floods'>Wikipedia, 2005 Maharashtra floods</a>",
                   "<a href='https://www.thehindu.com/news/cities/chennai/2015-floods-a-man-made-disaster-cag/article24374953.ece'>The Hindu, CAG terms 2015 Chennai floods a man-made disaster, July 2018</a>"]},
                         {"t": "hbox", "color": "amber", "html": "Left out because no primary source for "
-                         "them could be opened: Census 2011 slum totals, the detailed loan terms of PM SVANidhi, and the CAG compendium's "
+                         "them could be opened are Census 2011 slum totals, the detailed loan terms of PM SVANidhi, and the CAG compendium's "
                          "figures beyond those reported by Business Standard."}]},
          ]},
 
