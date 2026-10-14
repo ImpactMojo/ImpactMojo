@@ -9,6 +9,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **Course notes at the end of each module** — every flagship module now ends with one line pointing to that course's printable notes.
 - **A Gender Studies lexicon you can download** — the 75 terms of the Gender lexicon as a spreadsheet, from the course page.
 - **Reading lists with the corrected works** — the reading lists now include the works that replace citations which did not exist as cited.
+- **Progress and certificates on six more courses** — Gender, Public Policy, Public Choice, Livelihoods, Nonviolence in Practice and Power BI now save your progress. The last three have no quiz questions, so a module counts once you reach its end.
 
 ### Changed
 
@@ -19,6 +20,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **Some course readings cited works that do not exist, or described real ones wrongly** (#1257).
 - **Four Dropbox links survived in course quiz sections, and the Public Choice translations still sent readers to a Dropbox folder** (#1258).
+- **Progress tracking never started on six flagship courses; Public Choice marked every quiz answer wrong, Public Policy's Check Answer buttons did nothing, and four Gender buttons failed** (#1259).
+- **Flagship course pages broke on phones and lost the site bar** (#1260).
 
 ## v10.381.0 — October 14, 2026 (reading lists for every flagship, teaching kits, and a plainer front page)
 

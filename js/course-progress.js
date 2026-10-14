@@ -224,11 +224,64 @@
     // =========================================================
     // SCAN DOM FOR MODULES & QUIZZES
     // =========================================================
+    // Three quiz formats are in use across the flagships. The tracker reads
+    // one, so each is normalised to it before scanning:
+    //  - .quiz-question[data-correct]: the original format.
+    //  - .quiz-question whose options carry data-correct="true" (Public
+    //    Choice). The page's grader read the answer from the question, so
+    //    every answer in those modules was marked wrong, and nothing was
+    //    tracked. The answer is copied up to the question.
+    //  - .mcq, with the answer in data-correct (Public Policy) or as the
+    //    second argument of checkMCQ(this, 'b', ...) (Gender).
+    // A course whose modules hold no graded question at all (Livelihoods,
+    // NVC-RJ, Power BI) is tracked by reading: a module counts once its
+    // last line has been on screen.
+    var GRADED = '.quiz-question[data-correct], .mcq[data-correct]';
+    var readMode = false;
+    // A module is a section[id^="module"], or (Livelihoods) any section
+    // holding a #moduleN-content block, whose own id is a reading anchor
+    // such as #rural-1. Such sections are tagged data-cpb-module="moduleN".
+    var MODSEL = 'section[id^="module"], section[data-cpb-module]';
+    function modIdOf(sec) { return sec.getAttribute('data-cpb-module') || sec.id; }
+    function modEl(id) { return document.querySelector('[data-cpb-module="' + id + '"]') || document.getElementById(id); }
+    // Reading mode may only start once course-loader.js has injected the
+    // modules, or a course with graded quizzes could boot into it early.
+    var contentLoaded = false;
+    document.addEventListener('courseContentLoaded', function () { contentLoaded = true; });
+
+    function normaliseQuizzes() {
+        document.querySelectorAll('[id^="module"][id$="-content"]').forEach(function (ph) {
+            var sec = ph.closest('section');
+            if (sec && !/^module/.test(sec.id)) sec.setAttribute('data-cpb-module', ph.id.replace(/-content$/, ''));
+        });
+        document.querySelectorAll('.quiz-question:not([data-correct])').forEach(function (q) {
+            var right = q.querySelector('.quiz-option[data-correct="true"] input[type="radio"]');
+            if (!right) return;
+            q.dataset.correct = right.value;
+            q.querySelectorAll('.quiz-option').forEach(function (opt) {
+                var r = opt.querySelector('input[type="radio"]');
+                if (r && !opt.dataset.option) opt.dataset.option = r.value;
+            });
+        });
+        document.querySelectorAll('.mcq:not([data-correct])').forEach(function (m) {
+            var btn = m.querySelector('[onclick*="checkMCQ"]');
+            var hit = btn && /checkMCQ\(\s*this\s*,\s*['"]([^'"]+)['"]/.exec(btn.getAttribute('onclick'));
+            if (hit) m.dataset.correct = hit[1];
+        });
+    }
+
+    function hasText(section) {
+        var content = document.getElementById(modIdOf(section) + '-content') || section;
+        if (content.querySelector('.content-loading, .module-locked')) return false;
+        return (content.innerText || '').trim().split(/\s+/).length >= 50;
+    }
+
     function scanModules() {
-        const moduleSections = document.querySelectorAll('section[id^="module"]');
+        normaliseQuizzes();
+        const moduleSections = document.querySelectorAll(MODSEL);
         moduleSections.forEach(function (section) {
-            const id = section.id;  // e.g. "module1"
-            const gradedQuestions = section.querySelectorAll('.quiz-question[data-correct]');
+            const id = modIdOf(section);  // e.g. "module1"
+            const gradedQuestions = section.querySelectorAll(GRADED);
             if (gradedQuestions.length > 0) {
                 moduleData[id] = {
                     total: gradedQuestions.length,
@@ -237,7 +290,37 @@
                 };
             }
         });
+        if (Object.keys(moduleData).length === 0 && contentLoaded) {
+            moduleSections.forEach(function (section) {
+                if (!hasText(section)) return;
+                moduleData[modIdOf(section)] = { total: 1, correct: new Set(), element: section };
+            });
+            readMode = Object.keys(moduleData).length > 0;
+        }
         totalModules = Object.keys(moduleData).length;
+    }
+
+    // Reading mode: a sentinel at the end of each module's content marks the
+    // module done when it scrolls into view.
+    function watchReading() {
+        if (!readMode || !('IntersectionObserver' in window)) return;
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                io.unobserve(e.target);
+                var section = e.target.closest(MODSEL);
+                if (section) completeModule(modIdOf(section));
+            });
+        });
+        Object.keys(moduleData).forEach(function (id) {
+            if (completedModules.has(id)) return;
+            var content = document.getElementById(id + '-content') || document.getElementById(id);
+            var s = document.createElement('span');
+            s.className = 'cpb-read-end';
+            s.setAttribute('aria-hidden', 'true');
+            content.appendChild(s);
+            io.observe(s);
+        });
     }
 
     // =========================================================
@@ -378,7 +461,9 @@
     // =========================================================
     function updateSidebarChecks() {
         completedModules.forEach(function (modId) {
-            var link = document.querySelector('a.nav-link[href="#' + modId + '"]');
+            var el = modEl(modId);
+            var link = document.querySelector('a.nav-link[href="#' + modId + '"]') ||
+                (el && document.querySelector('a.nav-link[href="#' + el.id + '"]'));
             if (link && !link.querySelector('.cpb-check')) {
                 var check = document.createElement('span');
                 check.className = 'cpb-check';
@@ -393,9 +478,9 @@
     // =========================================================
     function restoreQuizState() {
         completedModules.forEach(function (modId) {
-            var section = document.getElementById(modId);
+            var section = modEl(modId);
             if (!section) return;
-            var questions = section.querySelectorAll('.quiz-question[data-correct]');
+            var questions = section.querySelectorAll(GRADED);
             questions.forEach(function (q) {
                 var correct = q.dataset.correct;
                 var options = q.querySelectorAll('.quiz-option');
@@ -520,15 +605,15 @@
         if (!isCorrect) return;
 
         // Find which module this question belongs to
-        var section = questionEl.closest('section[id^="module"]');
+        var section = questionEl.closest(MODSEL);
         if (!section) return;
 
-        var modId = section.id;
+        var modId = modIdOf(section);
         var mod = moduleData[modId];
         if (!mod || completedModules.has(modId)) return;
 
         // Find index of this question within the module's graded questions
-        var gradedQuestions = Array.from(section.querySelectorAll('.quiz-question[data-correct]'));
+        var gradedQuestions = Array.from(section.querySelectorAll(GRADED));
         var idx = gradedQuestions.indexOf(questionEl);
         if (idx === -1) return;
 
@@ -545,19 +630,26 @@
 
         // Module passed?
         if (mod.correct.size >= questionsToPass(mod.total)) {
-            completedModules.add(modId);
-            saveProgress();
-            updateProgressBar();
-            updateSidebarChecks();
-            queueSync();
+            completeModule(modId);
+        }
+    }
 
-            var moduleNum = modId.replace('module', '');
-            showToast('Module ' + moduleNum + ' complete!');
+    function completeModule(modId) {
+        var mod = moduleData[modId];
+        if (!mod || completedModules.has(modId)) return;
+        for (var i = 0; i < mod.total; i++) mod.correct.add(i);
+        completedModules.add(modId);
+        saveProgress();
+        updateProgressBar();
+        updateSidebarChecks();
+        queueSync();
 
-            // Check if entire course is done
-            if (completedModules.size >= totalModules) {
-                setTimeout(function () { showCompletionModal(); }, 1000);
-            }
+        var moduleNum = modId.replace('module', '');
+        showToast('Module ' + moduleNum + ' complete!');
+
+        // Check if entire course is done
+        if (completedModules.size >= totalModules) {
+            setTimeout(function () { showCompletionModal(); }, 1000);
         }
     }
 
@@ -582,6 +674,51 @@
                 onQuizAnswered(question, true);
             }
         };
+
+        // .mcq questions. Public Policy calls checkMCQ(this) and its page never
+        // defined the function, so every Check Answer button did nothing.
+        // This grader is used only where a page has none of its own.
+        var originalCheckMCQ = typeof window.checkMCQ === 'function' ? window.checkMCQ : gradeMCQ;
+        window.checkMCQ = function (btn) {
+            var mcq = btn.closest('.mcq');
+            originalCheckMCQ.apply(this, arguments);
+            if (!mcq) return;
+            var picked = mcq.querySelector('input[type="radio"]:checked');
+            if (picked && mcq.dataset.correct && picked.value === mcq.dataset.correct) {
+                onQuizAnswered(mcq, true);
+            }
+        };
+    }
+
+    function gradeMCQ(btn) {
+        var mcq = btn.closest('.mcq');
+        if (!mcq) return;
+        var picked = mcq.querySelector('input[type="radio"]:checked');
+        var feedback = mcq.querySelector('.mcq-feedback');
+        if (!picked) {
+            if (feedback) {
+                if (!feedback.dataset.explain) feedback.dataset.explain = feedback.textContent.trim();
+                feedback.textContent = 'Please select an answer.';
+                feedback.className = 'mcq-feedback show incorrect';
+                feedback.style.display = 'block';
+            }
+            return;
+        }
+        var right = picked.value === mcq.dataset.correct;
+        mcq.querySelectorAll('.mcq-option').forEach(function (opt) {
+            var r = opt.querySelector('input[type="radio"]');
+            opt.classList.remove('correct', 'incorrect');
+            if (r && r.value === mcq.dataset.correct) opt.classList.add('correct');
+            else if (r && r === picked) opt.classList.add('incorrect');
+            if (r) r.disabled = true;
+        });
+        if (feedback) {
+            if (!feedback.dataset.explain) feedback.dataset.explain = feedback.textContent.trim();
+            feedback.textContent = (right ? 'Correct. ' : 'Not quite. The right answer is marked above. ') + feedback.dataset.explain;
+            feedback.className = 'mcq-feedback show ' + (right ? 'correct' : 'incorrect');
+            feedback.style.display = 'block';
+        }
+        btn.disabled = true;
     }
 
     // =========================================================
@@ -736,12 +873,12 @@
     // the median of the readable ones.
     // =========================================================
     function computeReadingTimes() {
-        var sections = document.querySelectorAll('section[id^="module"]');
+        var sections = document.querySelectorAll(MODSEL);
         var minutes = [];
         var lockedCount = 0;
 
         sections.forEach(function (section) {
-            var content = document.getElementById(section.id + '-content') || section;
+            var content = document.getElementById(modIdOf(section) + '-content') || section;
             if (content.querySelector('.module-locked')) { lockedCount++; return; }
             if (content.querySelector('.content-loading')) return; // still loading
             var words = (content.innerText || '').trim().split(/\s+/).length;
@@ -800,6 +937,7 @@
         updateSidebarChecks();
         restoreQuizState();
         enhanceCheckAnswer();
+        watchReading();
         listenForAuthChanges();
         computeReadingTimes();
 
