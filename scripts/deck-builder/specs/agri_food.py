@@ -895,3 +895,137 @@ SEC5 = [
             B("For the nutrition evidence, see " + L("nutrition.html", "Nutrition 101") + ".", sm=True)]),
     ]),
 ]
+
+
+# ===================== SECTION 06: INPUT SUBSIDIES =====================
+SEC6 = [
+    DIV("06", "Six", "Input subsidies: fertiliser, power and machinery"),
+
+    S("The money", "Fertiliser and food subsidies dwarf every other farm programme", [
+        T(["Item (&#8377; crore)", "2024-25 actual", "2025-26 budget", "2025-26 revised", "2026-27 budget"],
+          [["Fertiliser subsidy", "1,70,683", "1,67,887", "1,86,460", "1,70,781"],
+           ["Food subsidy", "1,99,867", "2,03,420", "2,28,154", "2,27,629"],
+           ["PM-KISAN", "66,121", "63,500", "63,500", "63,500"],
+           ["Modified Interest Subvention Scheme", "22,600", "22,600", "22,600", "22,600"],
+           ["Crop insurance scheme", "14,473", "12,242", "12,267", "12,200"],
+           ["PM-AASHA (price support)", "5,438", "6,941", "6,941", "7,200"],
+           ["PM-KUSUM (solar pumps)", "2,560", "2,600", "5,000", "5,000"]]),
+        TC([B("Source: " + BAG + ". The fertiliser subsidy alone is more than two and a half times "
+              "PM-KISAN and about fourteen times the crop insurance budget.", sm=True)],
+           [B("In 2025-26 the revised fertiliser estimate came in &#8377;18,573 crore above the budget. "
+              "The fertiliser bill is exposed to world prices of gas, phosphate and potash, which the "
+              "budget cannot control.", sm=True)]),
+    ], compact=True),
+
+    S("How fertiliser is subsidised", "Urea is cheap at the counter, and farmers use more of it", [
+        TC([B("Urea, the main source of nitrogen, is sold to farmers at a retail price set by the "
+              "government, and the government meets the difference between that price and the cost "
+              "of supply. Phosphatic and potassic fertilisers are supported through nutrient-based "
+              "pricing, a fixed subsidy per unit of nutrient. The result is that nitrogen is much "
+              "cheaper relative to phosphorus and potassium than its cost would make it."),
+            B("The Economic Survey 2025-26 says plainly that the urea subsidy has increased "
+              "application and that this increased use has been reported to affect soil productivity "
+              "negatively. It lists neem-coating of urea, Aadhaar-linked verification at the point of "
+              "sale and the Integrated Fertiliser Management System as steps that improved control "
+              "over physical flows without changing the price signal farmers face.", sm=True)],
+           [P("amber", "The Survey's diagnosis, in its words",
+              "&ldquo;As long as one nutrient is vastly cheaper than others, its overuse is "
+              "structurally embedded, regardless of monitoring or enforcement.&rdquo;"),
+            B("Source: " + ES + ", Box VI.4.", sm=True),
+            H("cyan", "A price subsidy reaches farmers in proportion to how much they buy. Those who use "
+              "the most urea receive the most subsidy.")]),
+    ]),
+
+    S("Nutrient balance", "The ratio of nitrogen to potassium has more than doubled since 2009-10", [
+        TC([BAR("chNPK", "Parts of nitrogen (N) and phosphorus (P) applied for each part of potassium (K)", ES + ", Box VI.4",
+                ["2009-10", "2019-20", "2023-24", "Agronomic benchmark"],
+                [DS("Nitrogen per unit K", [4, 7, 10.9, 4], CYAN), DS("Phosphorus per unit K", [3.2, 2.8, 4.1, 2], AMBER)],
+                legend=True, ytitle="parts per part of potassium")],
+           [B("The Survey reports the national N:P:K ratio at 4:3.2:1 in 2009-10, close to recommended "
+              "levels for most Indian soils. By 2019-20 it had moved to 7:2.8:1 and by 2023-24 to "
+              "about 10.9:4.1:1. Agronomic benchmarks for most crops and soils suggest a ratio closer "
+              "to 4:2:1."),
+            B("The Survey links excess nitrogen to lower soil organic matter, faster depletion of "
+              "micronutrients, weaker soil structure and nitrate leaching into groundwater, and says "
+              "that in several irrigated belts the yield response to fertiliser has plateaued or "
+              "declined even as application has risen.", sm=True),
+            H("amber", "More fertiliser is not more nutrition for the crop when the nutrients are out "
+              "of balance.")], ratio="a32"),
+    ]),
+
+    S("A proposal", "Raise the urea price a little and pay farmers the difference per acre", [
+        TC([B("The Economic Survey 2025-26 proposes separating income support from fertiliser purchase. "
+              "The retail price of urea would rise modestly, and an equivalent amount would be "
+              "transferred directly to cultivators per acre, indexed to agro-climatic zone and "
+              "cropping pattern. Farmers keep the same purchasing power, but nitrogen's price moves "
+              "closer to its agronomic cost."),
+            B("The Survey expects efficient users to gain, because they receive the full transfer and "
+              "spend less at the counter. Over-users face a reason to shift to balanced fertilisation. "
+              "Low-input farmers growing pulses and oilseeds in rain-fed areas would gain on net. It "
+              "proposes pilots across irrigated, rain-fed and mixed systems before national roll-out.", sm=True)],
+           [P("red", "The tenancy problem, which the Survey raises itself",
+              "A per-acre transfer is paid to someone identified with the land. Where a portion of the "
+              "land is cultivated by renters, the owner may receive the transfer while the tenant pays "
+              "the higher urea price. The Survey suggests that pilot designs include tenancy-heavy "
+              "districts to refine the mechanism."),
+            T(["Who gains or loses", "Under the proposal"],
+              [["Farmer applying balanced doses", "Gains: full transfer, lower spending"],
+               ["Farmer over-applying urea", "Loses unless they cut use"],
+               ["Rain-fed pulse or oilseed grower", "Gains: transfer exceeds extra cost"],
+               ["Tenant without recorded lease", "Loses if the transfer goes to the owner"]])]),
+    ]),
+
+    S("Power for pumps", "Free electricity is rationed, and rationing misallocates water", [
+        TC([B("Where farm power is free or nearly free, the only limit on pumping is how many hours "
+              "of supply the utility provides. Nicholas Ryan and Anant Sudarshan studied this system in "
+              "Rajasthan (Rationing the Commons, Journal of Political Economy 2022, "
+              "130(1): 210-257)."),
+            B("They find that farmers face near-zero prices for pumping, but rationing binds, so on "
+              "average farmers use roughly the socially optimal amount of water. The rationing regime "
+              "is still very inefficient because it misallocates water across farmers. A ration of "
+              "hours, for example, gives a farmer with a high-value crop the same water as a farmer with "
+              "a low-value one. They estimate "
+              "that a Pigouvian reform, which prices pumping at its cost to the commons, would raise agricultural surplus by 12 per cent of household income.", sm=True)],
+           [ST([C("11.49 lakh", "off-grid solar pumps installed for farming under PM-KUSUM, Aug 2026", "green", PIBAG),
+                C("15.89 lakh", "farm pumps covered by feeder-level solarisation", "cyan", PIBAG),
+                C("1,726 MW", "decentralised solar capacity on farmers' land", "amber", PIBAG),
+                C("&#8377;5,000 crore", "PM-KUSUM, Budget Estimate 2026-27", "indigo", BAG)], cols=2),
+            H("red", "A solar pump has close to zero cost per extra hour of pumping. Where groundwater "
+              "is already over-exploited, solar pumps without a limit on extraction can deepen the "
+              "problem.")]),
+    ]),
+
+    S("Comparing instruments", "Each way of supporting farmers reaches different people", [
+        T(["Instrument", "Who receives most", "Who it misses", "Effect on resource use"],
+          [["Fertiliser price subsidy", "Heavy users of urea, often in irrigated rice and wheat", "Rain-fed farmers who buy little fertiliser", "Encourages excess nitrogen"],
+           ["Free or flat-rate power", "Farmers with electric pumps and good aquifers", "Rain-fed and canal-dependent farmers; those without connections", "Encourages pumping where not rationed"],
+           ["Interest subvention", "Farmers with bank accounts, land records and KCCs", "Tenants and those who borrow informally", "Neutral"],
+           ["PM-KISAN", "Every eligible landholding family equally", "Tenants and landless labourers", "Neutral"],
+           ["Per-acre transfer (proposed)", "Recorded cultivators, by area", "Unrecorded tenants unless the design includes them", "Neutral; lets input prices signal cost"],
+           ["MSP procurement", "Sellers of rice and wheat near purchase centres", "Farmers in districts without procurement", "Favours rice and wheat over other crops"]]),
+        TC([B("This table is a reasoning aid drawn from the evidence in this course, and the second "
+              "and third columns describe tendencies. Check them against data for the district you "
+              "work in.", sm=True)],
+           [B("A practitioner choosing between instruments should ask who is on the list, how the "
+              "list is made, and what the instrument does to the price of water, fertiliser and "
+              "crops.", sm=True)]),
+    ], compact=True),
+
+    S("Machines and soil", "Small plots make machines hard to own, so hiring centres matter", [
+        TC([B("Fragmented holdings and rising labour shortages, says the Economic Survey 2025-26, "
+              "continue to hinder mechanisation. On a 0.38-hectare marginal holding, owning a tractor "
+              "or a combine harvester makes no sense, but hiring one for a day can. Between 2014-15 "
+              "and 2025-26, 25,689 Custom Hiring Centres were set up under the Sub-Mission on "
+              "Agricultural Mechanisation, including 558 in 2025-26 up to 30 October 2025."),
+            B("The Survey recommends collective ownership through FPOs, primary agricultural credit "
+              "societies and self-help groups, and machinery designed for small plots.", sm=True)],
+           [ST([C("26.09 crore", "soil health cards issued, as of July 2026", "green", PIBAG),
+                C("70,002", "Krishi Sakhis trained to give soil health advice", "cyan", PIBAG),
+                C("25,689", "Custom Hiring Centres set up, 2014-15 to 2025-26", "amber", ES)], cols=3),
+            P("amber", "A card is not a change in practice",
+              "The Survey notes that despite the scale-up of soil testing and soil health cards, "
+              "fertiliser use remains inefficient and the N:P:K ratio has deteriorated, largely "
+              "because of price distortions favouring nitrogen. Information alone does not overcome "
+              "a price that rewards the wrong choice.")]),
+    ]),
+]
