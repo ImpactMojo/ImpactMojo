@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0F172A">
+    <title>Analysing Indian survey data: weights, design and the errors that matter | ImpactMojo</title>
+<!-- share:start -->
+<link rel="canonical" href="https://www.impactmojo.in/code/survey-data.html">
+<meta name="description" content="Learn to analyse NFHS/DHS, PLFS and HCES unit-level data correctly in R and Python, covering survey weights, strata and PSUs, anthropometry flags, the PLFS combined weight, MPCE by sector, design-based standard errors, domains and design effects. Runs in your browser on synthetic files.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ImpactMojo">
+<meta property="og:title" content="Analysing Indian survey data: weights, design and the errors that matter">
+<meta property="og:description" content="Learn to analyse NFHS/DHS, PLFS and HCES unit-level data correctly in R and Python, covering survey weights, strata and PSUs, anthropometry flags, the PLFS combined weight, MPCE by sector, design-based standard errors, domains and design effects. Runs in your browser on synthetic files.">
+<meta property="og:url" content="https://www.impactmojo.in/code/survey-data.html">
+<meta property="og:image" content="https://www.impactmojo.in/assets/og/code-survey-data-6ca02dd5.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Analysing Indian survey data: weights, design and the errors that matter, Code School, ImpactMojo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Analysing Indian survey data: weights, design and the errors that matter">
+<meta name="twitter:description" content="Learn to analyse NFHS/DHS, PLFS and HCES unit-level data correctly in R and Python, covering survey weights, strata and PSUs, anthropometry flags, the PLFS combined weight, MPCE by sector, design-based standard errors, domains and design effects. Runs in your browser on synthetic files.">
+<meta name="twitter:image" content="https://www.impactmojo.in/assets/og/code-survey-data-6ca02dd5.jpg">
+<!-- share:end -->
+<!-- Google Analytics -->
+<script async src="/js/ga-load.js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+  gtag('config', 'G-JRCMEB9TBW');
+</script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+    <link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
+    <link rel="stylesheet" href="/css/code-studio.css?v=b12142c7">
+<meta name="robots" content="index, follow">
+
+<link rel="icon" type="image/png" href="/assets/images/favicon.png">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Analysing Indian survey data: weights, design and the errors that matter", "description": "Learn to analyse NFHS/DHS, PLFS and HCES unit-level data correctly in R and Python, covering survey weights, strata and PSUs, anthropometry flags, the PLFS combined weight, MPCE by sector, design-based standard errors, domains and design effects. Runs in your browser on synthetic files.", "url": "https://www.impactmojo.in/code/survey-data.html", "isAccessibleForFree": true, "inLanguage": "en", "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
+</head>
+<body data-datasets="survey_hh,dhs_kids,plfs_persons">
+<a href="#main-content" class="im-skip-link">Skip to content</a>
+<div class="im-topbar" id="imTopbar">
+    <div class="im-topbar-left">
+        <a href="/" class="im-topbar-home">
+            <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="24" height="24" style="border-radius:4px;">
+            <span>ImpactMojo</span>
+        </a>
+    </div>
+    <div class="im-topbar-right">
+        <a href="/catalog.html" class="im-browse-btn" title="Browse all content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Browse</a>
+        <a href="/premium.html" class="im-premium-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Membership
+        </a>
+        <div class="im-theme-selector" aria-label="Theme selection">
+            <button class="im-theme-btn" data-theme="system" title="System theme" aria-label="Use system theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+            <button class="im-theme-btn" data-theme="light" title="Light theme" aria-label="Use light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+            <button class="im-theme-btn" data-theme="dark" title="Dark theme" aria-label="Use dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+    </div>
+</div>
+<a id="main-content" tabindex="-1"></a>
+<div class="container" id="main">
+    <svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+        <circle cx="150" cy="50" r="4" fill="#6366F1"/>
+    </svg>
+    <a href="/code/" class="back-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Code School</a>
+    <div class="header">
+        <div class="header-badge">Code School &middot; Runs in your browser</div>
+        <h1>Analysing Indian survey data: weights, design and the errors that matter</h1>
+        <p>NFHS, PLFS and HCES are sample surveys, and every figure you take from their unit-level files depends on three things beyond the data itself. These are the weight each record carries, the strata and primary sampling units the sample was drawn from, and the rules each survey sets for its own variables. This course works through all three in R and Python side by side, running in your browser. The files it uses are synthetic, built to show the method, so their numbers say nothing about India.</p>
+    </div>
+    <div class="info-box warning" style="margin-bottom:1.25rem;"><strong>How the live code works.</strong> Each cell has an R tab and a Python tab. The first Run downloads the language engine once (R about 7&nbsp;MB, Python about 10&nbsp;MB). The R cells that set a survey design install the <code class="inline">survey</code> package the first time, and one Python cell loads <code class="inline">scipy</code>, so those take longer. The working folder already holds three files, <code class="inline">survey_hh.csv</code>, <code class="inline">dhs_kids.csv</code> and <code class="inline">plfs_persons.csv</code>. <strong>All three are synthetic.</strong> They copy the shape and the variable names of the real files so that the code carries over, but every value was generated for this page and none of them describes any place or person in India. The real unit-level files come with terms of use from the DHS Program and from MoSPI, and you request them yourself.</div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="tabs" id="tabs" role="tablist"><button class="tab-btn active" type="button" role="tab"><span class="tab-num">1</span> Why design</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">2</span> NFHS / DHS</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">3</span> PLFS</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">4</span> HCES</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">5</span> Standard errors</button><button class="tab-btn" type="button" role="tab"><span class="tab-num">6</span> Checklist</button></div>
+<div class="tab-panel lesson active" data-panel="0" role="tabpanel">
+<div class="eyebrow">Module 1 of 6</div>
+<h2>Why survey estimates need weights and design</h2>
+<p>A national survey does not interview a simple random sample of households. It divides the country into <strong>strata</strong> (in Indian surveys, usually rural and urban parts of each state or district), draws a small number of <strong>primary sampling units</strong> (PSUs, which are villages or urban blocks) in each stratum, and then interviews a fixed number of households in each PSU. Two things follow from that. Some households had a much higher chance of being picked than others, so each record carries a <strong>weight</strong>, the number of households in the population it stands for. And households in the same village resemble each other, so 12 interviews in one village carry less information than 12 interviews in 12 villages.</p>
+<div class="info-box warning"><strong>These files are synthetic.</strong> This course uses <code class="inline">survey_hh.csv</code>, a household file shaped like an HCES file. It holds 720 households in 60 PSUs across 6 strata, with a weight, household size, social group, MPCE and an LPG indicator. <span class="illustrative-tag">Synthetic data</span> The values were generated for this page and mean nothing about India.</div>
+<div class="code-cell" data-r="hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+head(hh)
+cat(&quot;Households:&quot;, nrow(hh), &quot; PSUs:&quot;, length(unique(hh$psu)),
+    &quot; Strata:&quot;, length(unique(hh$stratum)), &quot;\n&quot;)" data-py="import pandas as pd
+pd.set_option(&quot;display.width&quot;, 150)
+pd.set_option(&quot;display.max_columns&quot;, None)
+hh = pd.read_csv(&quot;survey_hh.csv&quot;)
+print(hh.head())
+print(&quot;Households:&quot;, len(hh), &quot; PSUs:&quot;, hh[&quot;psu&quot;].nunique(),
+      &quot; Strata:&quot;, hh[&quot;stratum&quot;].nunique())" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+head(hh)
+cat(&quot;Households:&quot;, nrow(hh), &quot; PSUs:&quot;, length(unique(hh$psu)),
+    &quot; Strata:&quot;, length(unique(hh$stratum)), &quot;\n&quot;)</textarea></div>
+<p>The design of this file oversamples urban households. The next cell compares each sector's share of the interviews with its share of the households the weights say it represents.</p>
+<div class="code-cell" data-r="hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+n_sample &lt;- tapply(hh$weight, hh$sector, length)
+n_pop &lt;- tapply(hh$weight, hh$sector, sum)
+data.frame(interviewed = n_sample,
+           sample_share_pct = round(100 * n_sample / sum(n_sample), 1),
+           represented = round(n_pop),
+           population_share_pct = round(100 * n_pop / sum(n_pop), 1))" data-py="import pandas as pd
+hh = pd.read_csv(&quot;survey_hh.csv&quot;)
+t = hh.groupby(&quot;sector&quot;).agg(interviewed=(&quot;hh_id&quot;, &quot;size&quot;),
+                             represented=(&quot;weight&quot;, &quot;sum&quot;))
+t[&quot;sample_share_pct&quot;] = (100 * t[&quot;interviewed&quot;] / t[&quot;interviewed&quot;].sum()).round(1)
+t[&quot;population_share_pct&quot;] = (100 * t[&quot;represented&quot;] / t[&quot;represented&quot;].sum()).round(1)
+t[&quot;represented&quot;] = t[&quot;represented&quot;].round()
+print(t)" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+n_sample &lt;- tapply(hh$weight, hh$sector, length)
+n_pop &lt;- tapply(hh$weight, hh$sector, sum)
+data.frame(interviewed = n_sample,
+           sample_share_pct = round(100 * n_sample / sum(n_sample), 1),
+           represented = round(n_pop),
+           population_share_pct = round(100 * n_pop / sum(n_pop), 1))</textarea></div>
+<p>Urban households are half of the interviews and about a fifth of the population. Any figure that ignores the weights treats them as half the population. The cost shows in the numbers.</p>
+<div class="code-cell" data-r="hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+cat(&quot;Households with LPG, unweighted:&quot;, round(100 * mean(hh$has_lpg), 1), &quot;%\n&quot;)
+cat(&quot;Households with LPG, weighted:  &quot;, round(100 * weighted.mean(hh$has_lpg, hh$weight), 1), &quot;%\n&quot;)
+cat(&quot;Mean MPCE, unweighted: Rs&quot;, round(mean(hh$mpce)), &quot;\n&quot;)
+cat(&quot;Mean MPCE, weighted:   Rs&quot;, round(weighted.mean(hh$mpce, hh$weight)), &quot;\n&quot;)" data-py="import pandas as pd, numpy as np
+hh = pd.read_csv(&quot;survey_hh.csv&quot;)
+print(&quot;Households with LPG, unweighted:&quot;, round(100 * hh[&quot;has_lpg&quot;].mean(), 1), &quot;%&quot;)
+print(&quot;Households with LPG, weighted:  &quot;, round(100 * np.average(hh[&quot;has_lpg&quot;], weights=hh[&quot;weight&quot;]), 1), &quot;%&quot;)
+print(&quot;Mean MPCE, unweighted: Rs&quot;, round(hh[&quot;mpce&quot;].mean()))
+print(&quot;Mean MPCE, weighted:   Rs&quot;, round(np.average(hh[&quot;mpce&quot;], weights=hh[&quot;weight&quot;])))" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+cat(&quot;Households with LPG, unweighted:&quot;, round(100 * mean(hh$has_lpg), 1), &quot;%\n&quot;)
+cat(&quot;Households with LPG, weighted:  &quot;, round(100 * weighted.mean(hh$has_lpg, hh$weight), 1), &quot;%\n&quot;)
+cat(&quot;Mean MPCE, unweighted: Rs&quot;, round(mean(hh$mpce)), &quot;\n&quot;)
+cat(&quot;Mean MPCE, weighted:   Rs&quot;, round(weighted.mean(hh$mpce, hh$weight)), &quot;\n&quot;)</textarea></div>
+<p>Both the unweighted share of households with LPG and the unweighted mean MPCE are higher than the weighted ones, because the richer, oversampled urban households pull them up. The weighted figures are the estimates of the population. The unweighted ones describe the 720 households interviewed and nothing else.</p>
+<h3>The design changes the standard error too</h3>
+<p>Weights correct the point estimate. The standard error needs the design as well. An ordinary formula such as <code class="inline">sd(x) / sqrt(n)</code> assumes 720 independent draws. The real sample is 60 villages and blocks, and households in each are alike, so the true uncertainty is larger. R's <code class="inline">survey</code> package takes the design in <code class="inline">svydesign()</code>. The Python tab writes the same calculation out with numpy and pandas, so you can see what it does.</p>
+<div class="code-cell" data-r="library(survey)
+hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+# What an ordinary formula assumes: every household drawn independently
+naive_se &lt;- sd(hh$has_lpg) / sqrt(nrow(hh))
+cat(&quot;SE assuming simple random sampling:&quot;, round(100 * naive_se, 2), &quot;points\n&quot;)
+# The design: PSUs drawn within strata, households within PSUs
+des &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~weight,
+                 data = hh, nest = TRUE)
+m &lt;- svymean(~has_lpg, des)
+print(m)
+cat(&quot;Design-based SE:&quot;, round(100 * SE(m), 2), &quot;points\n&quot;)" data-py="import numpy as np, pandas as pd
+
+def svy_mean(df, y, weight, strata, psu, domain=None):
+    &quot;&quot;&quot;Weighted mean and its design-based standard error (Taylor linearisation).
+    PSUs are treated as drawn with replacement within strata, as R&#x27;s survey package
+    does by default. A domain keeps every PSU and gives rows outside it zero weight.&quot;&quot;&quot;
+    d = np.ones(len(df)) if domain is None else df[domain].to_numpy(dtype=float)
+    w = df[weight].to_numpy(dtype=float) * d
+    yv = df[y].to_numpy(dtype=float)
+    est = np.sum(w * yv) / np.sum(w)
+    z = w * (yv - est) / np.sum(w)                 # each row&#x27;s share of the error
+    t = pd.DataFrame({&quot;h&quot;: df[strata].to_numpy(), &quot;j&quot;: df[psu].to_numpy(), &quot;z&quot;: z})
+    t = t.groupby([&quot;h&quot;, &quot;j&quot;], as_index=False)[&quot;z&quot;].sum()   # add up within each PSU
+    var = 0.0
+    for _, g in t.groupby(&quot;h&quot;):                     # compare PSUs within each stratum
+        n_h = len(g)
+        var += n_h / (n_h - 1) * np.sum((g[&quot;z&quot;] - g[&quot;z&quot;].mean()) ** 2)
+    return est, np.sqrt(var)
+
+hh = pd.read_csv(&quot;survey_hh.csv&quot;)
+naive_se = hh[&quot;has_lpg&quot;].std() / np.sqrt(len(hh))
+print(&quot;SE assuming simple random sampling:&quot;, round(100 * naive_se, 2), &quot;points&quot;)
+est, se = svy_mean(hh, &quot;has_lpg&quot;, &quot;weight&quot;, &quot;stratum&quot;, &quot;psu&quot;)
+print(&quot;Weighted share:&quot;, round(est, 4))
+print(&quot;Design-based SE:&quot;, round(100 * se, 2), &quot;points&quot;)" data-pkgs="survey" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">library(survey)
+hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+# What an ordinary formula assumes: every household drawn independently
+naive_se &lt;- sd(hh$has_lpg) / sqrt(nrow(hh))
+cat(&quot;SE assuming simple random sampling:&quot;, round(100 * naive_se, 2), &quot;points\n&quot;)
+# The design: PSUs drawn within strata, households within PSUs
+des &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~weight,
+                 data = hh, nest = TRUE)
+m &lt;- svymean(~has_lpg, des)
+print(m)
+cat(&quot;Design-based SE:&quot;, round(100 * SE(m), 2), &quot;points\n&quot;)</textarea></div>
+<p>The design-based standard error is more than twice the naive one. A confidence interval built on the naive figure would be less than half as wide as it should be, and a difference between two groups that looks significant may not be. <code class="inline">nest = TRUE</code> tells R that PSU numbers are unique only within a stratum, which is the safe setting for Indian files.</p>
+<div class="info-box">Python and R agree here to every printed digit. Both use the same method, Taylor linearisation with PSUs treated as drawn with replacement within strata.</div>
+<div class="nav-row"><span></span><button class="btn btn-primary" type="button" data-goto="1">Next: NFHS / DHS &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="1" role="tabpanel">
+<div class="eyebrow">Module 2 of 6</div>
+<h2>The weight and the anthropometry flags in NFHS and DHS files</h2>
+<p>The National Family Health Survey is India's Demographic and Health Survey. The DHS Program distributes NFHS-5 (2019-21) as a standard DHS survey in its DHS-7 recode structure, so its files use the standard DHS variable names, and the DHS Program's <em>Guide to DHS Statistics</em> is the reference for how each indicator is computed.</p>
+<p>Three rules from the Guide matter on almost every analysis. The weight is <code class="inline">v005</code> in the women's file, <code class="inline">mv005</code> in the men's and <code class="inline">hv005</code> in the household and household-member files, and it must be divided by 1,000,000, because the weights are stored without the decimal point. The PSU is usually <code class="inline">v021</code> (<code class="inline">hv021</code>) and the stratum usually <code class="inline">v023</code> (<code class="inline">hv023</code>), though the Guide warns that stratification was not defined consistently across surveys and should be checked against Appendix A of the survey report. And the z-scores for child anthropometry, <code class="inline">hc70</code> for height-for-age, are stored as the z-score times 100, with values of 9990 and above used as flags for implausible or incomplete measurements.</p>
+<div class="info-box warning"><strong>These files are synthetic.</strong> <code class="inline">dhs_kids.csv</code> is shaped like the child rows of a DHS household-member (PR) file. It has cluster, stratum, residence, weight, whether the child slept in the household the night before, age in months, sex and <code class="inline">hc70</code>. <span class="illustrative-tag">Synthetic data</span> It holds 397 invented children, and the flag values were scattered at random to show the error.</div>
+<div class="code-cell" data-r="kids &lt;- read.csv(&quot;dhs_kids.csv&quot;)
+head(kids)
+kids$wt &lt;- kids$hv005 / 1000000
+summary(kids$wt)
+# hc70 is the height-for-age z-score times 100.
+# Values of 9990 and above are flags, not scores.
+table(flagged = kids$hc70 &gt;= 9990)
+table(kids$hc70[kids$hc70 &gt;= 9990])" data-py="import pandas as pd
+pd.set_option(&quot;display.width&quot;, 150)
+kids = pd.read_csv(&quot;dhs_kids.csv&quot;)
+print(kids.head())
+kids[&quot;wt&quot;] = kids[&quot;hv005&quot;] / 1_000_000
+print(kids[&quot;wt&quot;].describe())
+# hc70 is the height-for-age z-score times 100.
+# Values of 9990 and above are flags, not scores.
+print((kids[&quot;hc70&quot;] &gt;= 9990).value_counts())
+print(kids.loc[kids[&quot;hc70&quot;] &gt;= 9990, &quot;hc70&quot;].value_counts().sort_index())" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">kids &lt;- read.csv(&quot;dhs_kids.csv&quot;)
+head(kids)
+kids$wt &lt;- kids$hv005 / 1000000
+summary(kids$wt)
+# hc70 is the height-for-age z-score times 100.
+# Values of 9990 and above are flags, not scores.
+table(flagged = kids$hc70 &gt;= 9990)
+table(kids$hc70[kids$hc70 &gt;= 9990])</textarea></div>
+<p>For a mean or a percentage, dividing the weight by 1,000,000 changes nothing, because the scale cancels. It matters for anything that counts, such as a frequency weight in software that reads the weight as a number of cases. The Guide divides it, and so should you.</p>
+<h3>Drop the flags before dividing by 100</h3>
+<p>The Guide defines stunting as a height-for-age z-score below -2 standard deviations from the median of the WHO Child Growth Standards, <code class="inline">hc70 &lt; -200</code>. Its denominator is de facto children aged 0 to 59 months (<code class="inline">hv103 == 1</code>) with a valid, non-flagged score, <code class="inline">hc70 &lt; 9990</code>. The order of operations is the trap. Divide <code class="inline">hc70</code> by 100 first and a flag of 9996 becomes a z-score of 99.96. That child is counted as not stunted, so every flag adds one to the denominator and nothing to the numerator, and the stunting rate falls. The mean z-score is worse, because each flag adds a value near 100.</p>
+<div class="code-cell" data-r="kids &lt;- read.csv(&quot;dhs_kids.csv&quot;)
+kids$wt &lt;- kids$hv005 / 1000000
+kids &lt;- kids[kids$hv103 == 1 &amp; kids$hc1 &lt;= 59, ]   # de facto children 0-59 months
+
+# Wrong: divide first. 9996 becomes 99.96, a child who looks very tall.
+wrong_z &lt;- kids$hc70 / 100
+# Right: drop the flags, then divide.
+ok &lt;- kids$hc70 &lt; 9990
+right_z &lt;- kids$hc70[ok] / 100
+
+cat(&quot;Stunted, flags left in: &quot;, round(100 * weighted.mean(wrong_z &lt; -2, kids$wt), 1), &quot;%\n&quot;)
+cat(&quot;Stunted, flags dropped: &quot;, round(100 * weighted.mean(right_z &lt; -2, kids$wt[ok]), 1), &quot;%\n&quot;)
+cat(&quot;Mean z-score, flags left in: &quot;, round(weighted.mean(wrong_z, kids$wt), 2), &quot;\n&quot;)
+cat(&quot;Mean z-score, flags dropped: &quot;, round(weighted.mean(right_z, kids$wt[ok]), 2), &quot;\n&quot;)" data-py="import pandas as pd, numpy as np
+kids = pd.read_csv(&quot;dhs_kids.csv&quot;)
+kids[&quot;wt&quot;] = kids[&quot;hv005&quot;] / 1_000_000
+kids = kids[(kids[&quot;hv103&quot;] == 1) &amp; (kids[&quot;hc1&quot;] &lt;= 59)]   # de facto children 0-59 months
+
+# Wrong: divide first. 9996 becomes 99.96, a child who looks very tall.
+wrong_z = kids[&quot;hc70&quot;] / 100
+# Right: drop the flags, then divide.
+ok = kids[&quot;hc70&quot;] &lt; 9990
+right_z = kids.loc[ok, &quot;hc70&quot;] / 100
+
+print(&quot;Stunted, flags left in: &quot;, round(100 * np.average(wrong_z &lt; -2, weights=kids[&quot;wt&quot;]), 1), &quot;%&quot;)
+print(&quot;Stunted, flags dropped: &quot;, round(100 * np.average(right_z &lt; -2, weights=kids.loc[ok, &quot;wt&quot;]), 1), &quot;%&quot;)
+print(&quot;Mean z-score, flags left in: &quot;, round(np.average(wrong_z, weights=kids[&quot;wt&quot;]), 2))
+print(&quot;Mean z-score, flags dropped: &quot;, round(np.average(right_z, weights=kids.loc[ok, &quot;wt&quot;]), 2))" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">kids &lt;- read.csv(&quot;dhs_kids.csv&quot;)
+kids$wt &lt;- kids$hv005 / 1000000
+kids &lt;- kids[kids$hv103 == 1 &amp; kids$hc1 &lt;= 59, ]   # de facto children 0-59 months
+
+# Wrong: divide first. 9996 becomes 99.96, a child who looks very tall.
+wrong_z &lt;- kids$hc70 / 100
+# Right: drop the flags, then divide.
+ok &lt;- kids$hc70 &lt; 9990
+right_z &lt;- kids$hc70[ok] / 100
+
+cat(&quot;Stunted, flags left in: &quot;, round(100 * weighted.mean(wrong_z &lt; -2, kids$wt), 1), &quot;%\n&quot;)
+cat(&quot;Stunted, flags dropped: &quot;, round(100 * weighted.mean(right_z &lt; -2, kids$wt[ok]), 1), &quot;%\n&quot;)
+cat(&quot;Mean z-score, flags left in: &quot;, round(weighted.mean(wrong_z, kids$wt), 2), &quot;\n&quot;)
+cat(&quot;Mean z-score, flags dropped: &quot;, round(weighted.mean(right_z, kids$wt[ok]), 2), &quot;\n&quot;)</textarea></div>
+<p>In this synthetic file about a tenth of children carry a flag, more than you should expect in a real survey, so the error is large on purpose. In a real file it is smaller and harder to see. The mean z-score is the giveaway, since a mean height-for-age above zero in an Indian sample would be a very strange result.</p>
+<h3>With the design</h3>
+<p>The Guide's own R example sets the design with <code class="inline">svydesign()</code> from the <code class="inline">survey</code> package. The children who fail the filter are not removed from the data. They are left out of the estimate with <code class="inline">subset()</code> on the design, which keeps every cluster in the variance calculation. Module 5 shows why that matters.</p>
+<div class="code-cell" data-r="library(survey)
+kids &lt;- read.csv(&quot;dhs_kids.csv&quot;)
+kids$wt &lt;- kids$hv005 / 1000000
+kids$valid &lt;- kids$hv103 == 1 &amp; kids$hc1 &lt;= 59 &amp; kids$hc70 &lt; 9990
+kids$stunted &lt;- as.numeric(kids$hc70 &lt; -200)      # below -2 SD
+des &lt;- svydesign(ids = ~hv021, strata = ~hv023, weights = ~wt,
+                 data = kids, nest = TRUE)
+kid_des &lt;- subset(des, valid)    # a domain: every cluster stays in the design
+m &lt;- svymean(~stunted, kid_des)
+print(m)
+confint(m)
+# hv025: 1 = urban, 2 = rural
+svyby(~stunted, ~hv025, kid_des, svymean)" data-py="import numpy as np, pandas as pd
+
+def svy_mean(df, y, weight, strata, psu, domain=None):
+    &quot;&quot;&quot;Weighted mean and its design-based standard error (Taylor linearisation).
+    PSUs are treated as drawn with replacement within strata, as R&#x27;s survey package
+    does by default. A domain keeps every PSU and gives rows outside it zero weight.&quot;&quot;&quot;
+    d = np.ones(len(df)) if domain is None else df[domain].to_numpy(dtype=float)
+    w = df[weight].to_numpy(dtype=float) * d
+    yv = df[y].to_numpy(dtype=float)
+    est = np.sum(w * yv) / np.sum(w)
+    z = w * (yv - est) / np.sum(w)                 # each row&#x27;s share of the error
+    t = pd.DataFrame({&quot;h&quot;: df[strata].to_numpy(), &quot;j&quot;: df[psu].to_numpy(), &quot;z&quot;: z})
+    t = t.groupby([&quot;h&quot;, &quot;j&quot;], as_index=False)[&quot;z&quot;].sum()   # add up within each PSU
+    var = 0.0
+    for _, g in t.groupby(&quot;h&quot;):                     # compare PSUs within each stratum
+        n_h = len(g)
+        var += n_h / (n_h - 1) * np.sum((g[&quot;z&quot;] - g[&quot;z&quot;].mean()) ** 2)
+    return est, np.sqrt(var)
+
+kids = pd.read_csv(&quot;dhs_kids.csv&quot;)
+kids[&quot;wt&quot;] = kids[&quot;hv005&quot;] / 1_000_000
+kids[&quot;valid&quot;] = (kids[&quot;hv103&quot;] == 1) &amp; (kids[&quot;hc1&quot;] &lt;= 59) &amp; (kids[&quot;hc70&quot;] &lt; 9990)
+kids[&quot;stunted&quot;] = (kids[&quot;hc70&quot;] &lt; -200).astype(float)      # below -2 SD
+est, se = svy_mean(kids, &quot;stunted&quot;, &quot;wt&quot;, &quot;hv023&quot;, &quot;hv021&quot;, domain=&quot;valid&quot;)
+print(&quot;Stunted:&quot;, round(est, 4), &quot; SE:&quot;, round(se, 4))
+print(&quot;95% CI:&quot;, round(est - 1.96 * se, 4), &quot;to&quot;, round(est + 1.96 * se, 4))
+# hv025: 1 = urban, 2 = rural
+for res in (1, 2):
+    kids[&quot;dom&quot;] = kids[&quot;valid&quot;] &amp; (kids[&quot;hv025&quot;] == res)
+    e, s = svy_mean(kids, &quot;stunted&quot;, &quot;wt&quot;, &quot;hv023&quot;, &quot;hv021&quot;, domain=&quot;dom&quot;)
+    print(&quot;hv025 =&quot;, res, &quot; stunted:&quot;, round(e, 4), &quot; SE:&quot;, round(s, 4))" data-pkgs="survey" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">library(survey)
+kids &lt;- read.csv(&quot;dhs_kids.csv&quot;)
+kids$wt &lt;- kids$hv005 / 1000000
+kids$valid &lt;- kids$hv103 == 1 &amp; kids$hc1 &lt;= 59 &amp; kids$hc70 &lt; 9990
+kids$stunted &lt;- as.numeric(kids$hc70 &lt; -200)      # below -2 SD
+des &lt;- svydesign(ids = ~hv021, strata = ~hv023, weights = ~wt,
+                 data = kids, nest = TRUE)
+kid_des &lt;- subset(des, valid)    # a domain: every cluster stays in the design
+m &lt;- svymean(~stunted, kid_des)
+print(m)
+confint(m)
+# hv025: 1 = urban, 2 = rural
+svyby(~stunted, ~hv025, kid_des, svymean)</textarea></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="0">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="2">Next: PLFS &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="2" role="tabpanel">
+<div class="eyebrow">Module 3 of 6</div>
+<h2>The PLFS combined weight, usual status and current weekly status</h2>
+<p>Until December 2024 the Periodic Labour Force Survey drew its first-stage units (FSUs) in two independent <strong>sub-samples</strong>. Each sub-sample on its own gives an estimate of the whole population, and the unit-level file carries a multiplier for each record calculated for its own sub-sample. The NSO's README for the calendar-year 2022 files names three variables. <code class="inline">NSS</code> is the number of FSUs surveyed in the record's sub-sample within its stratum and sub-stratum, <code class="inline">NSC</code> is the number surveyed in both sub-samples together, and <code class="inline">MLTS</code> is the multiplier. For a combined estimate from both sub-samples the README sets the final weight to <code class="inline">MLTS/100</code> where <code class="inline">NSS = NSC</code> and <code class="inline">MLTS/200</code> otherwise.</p>
+<p>The reason for the two cases is that a stratum with FSUs in both sub-samples has two estimates of its total, which must be averaged, hence 200. A stratum where only one sub-sample was surveyed has one estimate, and its multiplier is used whole, hence 100. Applying <code class="inline">MLT/100</code> to every record counts most of the population twice.</p>
+<div class="info-box"><strong>Check which release you have.</strong> The README's exact variable name and rule differ between releases (quarterly files use a different divisor), so read the README shipped with your files. From January 2025 PLFS changed its design. MoSPI's release of the PLFS Annual Report 2025 says FSUs are now drawn "with one FSU drawn per stratum/sub-stratum each month and no provision for independent sub-samples", so the two-case rule above belongs to files up to 2024. Take the weight for 2025 files from their own README.</div>
+<div class="info-box warning"><strong>These files are synthetic.</strong> <code class="inline">plfs_persons.csv</code> is shaped like a pre-2025 PLFS person file, restricted to persons aged 15 and over, in 4 strata. Stratum 4 has FSUs in one sub-sample only, so its records have <code class="inline">nss == nsc</code>. <span class="illustrative-tag">Synthetic data</span> The sex codes (1 male, 2 female) and status codes follow the NSS conventions, but every value was generated for this page.</div>
+<div class="code-cell" data-r="p &lt;- read.csv(&quot;plfs_persons.csv&quot;)
+head(p)
+p$wt &lt;- ifelse(p$nss == p$nsc, p$mlt / 100, p$mlt / 200)
+p$wt_wrong &lt;- p$mlt / 100                      # the common mistake
+aggregate(cbind(right = wt, wrong = wt_wrong) ~ stratum, data = p, FUN = sum)
+cat(&quot;Persons 15+ represented, right weight:     &quot;,
+    format(round(sum(p$wt)), big.mark = &quot;,&quot;), &quot;\n&quot;)
+cat(&quot;Persons 15+ represented, MLT/100 everywhere:&quot;,
+    format(round(sum(p$wt_wrong)), big.mark = &quot;,&quot;), &quot;\n&quot;)" data-py="import pandas as pd, numpy as np
+pd.set_option(&quot;display.width&quot;, 150)
+pd.set_option(&quot;display.max_columns&quot;, None)
+p = pd.read_csv(&quot;plfs_persons.csv&quot;)
+print(p.head())
+p[&quot;wt&quot;] = np.where(p[&quot;nss&quot;] == p[&quot;nsc&quot;], p[&quot;mlt&quot;] / 100, p[&quot;mlt&quot;] / 200)
+p[&quot;wt_wrong&quot;] = p[&quot;mlt&quot;] / 100                 # the common mistake
+print(p.groupby(&quot;stratum&quot;)[[&quot;wt&quot;, &quot;wt_wrong&quot;]].sum().round())
+print(&quot;Persons 15+ represented, right weight:     &quot;, f&quot;{round(p[&#x27;wt&#x27;].sum()):,}&quot;)
+print(&quot;Persons 15+ represented, MLT/100 everywhere:&quot;, f&quot;{round(p[&#x27;wt_wrong&#x27;].sum()):,}&quot;)" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">p &lt;- read.csv(&quot;plfs_persons.csv&quot;)
+head(p)
+p$wt &lt;- ifelse(p$nss == p$nsc, p$mlt / 100, p$mlt / 200)
+p$wt_wrong &lt;- p$mlt / 100                      # the common mistake
+aggregate(cbind(right = wt, wrong = wt_wrong) ~ stratum, data = p, FUN = sum)
+cat(&quot;Persons 15+ represented, right weight:     &quot;,
+    format(round(sum(p$wt)), big.mark = &quot;,&quot;), &quot;\n&quot;)
+cat(&quot;Persons 15+ represented, MLT/100 everywhere:&quot;,
+    format(round(sum(p$wt_wrong)), big.mark = &quot;,&quot;), &quot;\n&quot;)</textarea></div>
+<p>With <code class="inline">MLT/100</code> everywhere the three strata that have both sub-samples double, and the population total is close to twice the right one. Ratios such as the unemployment rate move less, because the error partly cancels between numerator and denominator, which is exactly why it goes unnoticed. Any total, such as the number of workers, is wrong by nearly a factor of two.</p>
+<h3>Usual status and current weekly status</h3>
+<p>PLFS classifies each person's activity in two ways. The <strong>usual status</strong> uses the 365 days before the survey. The principal status (ps) is the activity on which the person spent relatively long time in that year, and the subsidiary status (ss) records economic activity pursued for 30 days or more in addition to the principal one. A person counts as a worker in usual status (ps+ss) if either is work. The <strong>current weekly status</strong> (CWS) uses the 7 days before the survey. CWS figures are lower for work done in season, because a person who works for part of the year may not have worked in the reference week.</p>
+<p>The three rates are defined by MoSPI as follows. The <strong>labour force participation rate (LFPR)</strong> is the percentage of persons in the labour force, meaning working or seeking or available for work, in the population. The <strong>worker population ratio (WPR)</strong> is the percentage of employed persons in the population. The <strong>unemployment rate (UR)</strong> is the percentage of persons unemployed among those in the labour force. The UR's denominator is the labour force, which is smaller than the population, so a UR and an LFPR are shares of different bases and cannot be added.</p>
+<p>The status codes follow the NSS scheme. Codes 11 to 51 are kinds of work (own-account work, employer, unpaid helper in a household enterprise, regular wage or salaried work, casual labour). Codes 61 to 72 are people who had work but did not work in the reference period. Code 81 is seeking or available for work, with 82 added in the weekly status for those available but not seeking. Codes 91 to 99 are outside the labour force (education, domestic duties, rentiers and pensioners, disability, young children and others).</p>
+<div class="code-cell" data-r="p &lt;- read.csv(&quot;plfs_persons.csv&quot;)
+p$wt &lt;- ifelse(p$nss == p$nsc, p$mlt / 100, p$mlt / 200)
+# Usual status (ps+ss): works in the principal status, or for 30 days or more in a subsidiary one
+p$us_worker &lt;- p$ups %in% 11:51 | (!is.na(p$uss) &amp; p$uss %in% 11:51)
+p$us_lf &lt;- p$us_worker | p$ups == 81
+# Current weekly status: the 7 days before the interview
+p$cws_worker &lt;- p$cws %in% 11:72
+p$cws_lf &lt;- p$cws_worker | p$cws %in% 81:82
+rates &lt;- function(d, worker, lf) {
+  c(LFPR = 100 * weighted.mean(d[[lf]], d$wt),
+    WPR  = 100 * weighted.mean(d[[worker]], d$wt),
+    UR   = 100 * sum(d$wt * (d[[lf]] &amp; !d[[worker]])) / sum(d$wt * d[[lf]]))
+}
+women &lt;- p[p$sex == 2, ]
+men &lt;- p[p$sex == 1, ]
+round(rbind(
+  &quot;Usual status, all&quot;   = rates(p, &quot;us_worker&quot;, &quot;us_lf&quot;),
+  &quot;Usual status, women&quot; = rates(women, &quot;us_worker&quot;, &quot;us_lf&quot;),
+  &quot;Usual status, men&quot;   = rates(men, &quot;us_worker&quot;, &quot;us_lf&quot;),
+  &quot;CWS, all&quot;            = rates(p, &quot;cws_worker&quot;, &quot;cws_lf&quot;),
+  &quot;CWS, women&quot;          = rates(women, &quot;cws_worker&quot;, &quot;cws_lf&quot;),
+  &quot;CWS, men&quot;            = rates(men, &quot;cws_worker&quot;, &quot;cws_lf&quot;)), 1)" data-py="import pandas as pd, numpy as np
+p = pd.read_csv(&quot;plfs_persons.csv&quot;)
+p[&quot;wt&quot;] = np.where(p[&quot;nss&quot;] == p[&quot;nsc&quot;], p[&quot;mlt&quot;] / 100, p[&quot;mlt&quot;] / 200)
+# Usual status (ps+ss): works in the principal status, or for 30 days or more in a subsidiary one
+p[&quot;us_worker&quot;] = p[&quot;ups&quot;].between(11, 51) | p[&quot;uss&quot;].between(11, 51)
+p[&quot;us_lf&quot;] = p[&quot;us_worker&quot;] | (p[&quot;ups&quot;] == 81)
+# Current weekly status: the 7 days before the interview
+p[&quot;cws_worker&quot;] = p[&quot;cws&quot;].between(11, 72)
+p[&quot;cws_lf&quot;] = p[&quot;cws_worker&quot;] | p[&quot;cws&quot;].between(81, 82)
+
+def rates(d, worker, lf):
+    w = d[&quot;wt&quot;]
+    return pd.Series({
+        &quot;LFPR&quot;: 100 * np.average(d[lf], weights=w),
+        &quot;WPR&quot;: 100 * np.average(d[worker], weights=w),
+        &quot;UR&quot;: 100 * (w * (d[lf] &amp; ~d[worker])).sum() / (w * d[lf]).sum()})
+
+women, men = p[p[&quot;sex&quot;] == 2], p[p[&quot;sex&quot;] == 1]
+out = pd.DataFrame({
+    &quot;Usual status, all&quot;: rates(p, &quot;us_worker&quot;, &quot;us_lf&quot;),
+    &quot;Usual status, women&quot;: rates(women, &quot;us_worker&quot;, &quot;us_lf&quot;),
+    &quot;Usual status, men&quot;: rates(men, &quot;us_worker&quot;, &quot;us_lf&quot;),
+    &quot;CWS, all&quot;: rates(p, &quot;cws_worker&quot;, &quot;cws_lf&quot;),
+    &quot;CWS, women&quot;: rates(women, &quot;cws_worker&quot;, &quot;cws_lf&quot;),
+    &quot;CWS, men&quot;: rates(men, &quot;cws_worker&quot;, &quot;cws_lf&quot;)}).T
+print(out.round(1))" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">p &lt;- read.csv(&quot;plfs_persons.csv&quot;)
+p$wt &lt;- ifelse(p$nss == p$nsc, p$mlt / 100, p$mlt / 200)
+# Usual status (ps+ss): works in the principal status, or for 30 days or more in a subsidiary one
+p$us_worker &lt;- p$ups %in% 11:51 | (!is.na(p$uss) &amp; p$uss %in% 11:51)
+p$us_lf &lt;- p$us_worker | p$ups == 81
+# Current weekly status: the 7 days before the interview
+p$cws_worker &lt;- p$cws %in% 11:72
+p$cws_lf &lt;- p$cws_worker | p$cws %in% 81:82
+rates &lt;- function(d, worker, lf) {
+  c(LFPR = 100 * weighted.mean(d[[lf]], d$wt),
+    WPR  = 100 * weighted.mean(d[[worker]], d$wt),
+    UR   = 100 * sum(d$wt * (d[[lf]] &amp; !d[[worker]])) / sum(d$wt * d[[lf]]))
+}
+women &lt;- p[p$sex == 2, ]
+men &lt;- p[p$sex == 1, ]
+round(rbind(
+  &quot;Usual status, all&quot;   = rates(p, &quot;us_worker&quot;, &quot;us_lf&quot;),
+  &quot;Usual status, women&quot; = rates(women, &quot;us_worker&quot;, &quot;us_lf&quot;),
+  &quot;Usual status, men&quot;   = rates(men, &quot;us_worker&quot;, &quot;us_lf&quot;),
+  &quot;CWS, all&quot;            = rates(p, &quot;cws_worker&quot;, &quot;cws_lf&quot;),
+  &quot;CWS, women&quot;          = rates(women, &quot;cws_worker&quot;, &quot;cws_lf&quot;),
+  &quot;CWS, men&quot;            = rates(men, &quot;cws_worker&quot;, &quot;cws_lf&quot;)), 1)</textarea></div>
+<p>In this file LFPR and WPR are lower in CWS than in usual status, because the synthetic data has some people who work during the year but did not work in the reference week. Always say which status a figure uses. PLFS publishes both, and MoSPI's headline annual figures are in usual status (ps+ss) for persons aged 15 and over.</p>
+<div class="nav-row"><button class="btn" type="button" data-goto="1">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="3">Next: HCES &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="3" role="tabpanel">
+<div class="eyebrow">Module 4 of 6</div>
+<h2>MPCE in HCES 2023-24, the two sectors and imputed free items</h2>
+<p>The Household Consumption Expenditure Survey measures what households consume. Its main indicator is <strong>monthly per capita consumption expenditure</strong> (MPCE), a household's consumption in a month divided by its size. MoSPI's press release of 30 January 2025 on HCES 2023-24 (August 2023 to July 2024, 2,61,953 households) puts average MPCE at ₹4,122 in rural India and ₹6,996 in urban India. It reports every figure for rural and urban India separately and gives no single figure for the two together, and the same is true of its state tables.</p>
+<p>The sectors are separate by construction. The microdata portal's study description says the rural sample is drawn from a frame of Census 2011 villages and the urban sample from a frame of Urban Frame Survey blocks, with sub-units formed by different rules in each. Rural and urban are estimated as two populations. A pooled all-India average can be computed from the unit-level data with the weights, but it is your own calculation. MoSPI has published no such figure, so label it as yours and never set it beside the published rural and urban numbers as if it were one of them.</p>
+<h3>With and without imputation of free items</h3>
+<p>HCES 2022-23 and 2023-24 publish two sets of MPCE. The first leaves out the value of items households received free through welfare programmes. The second imputes a value for them. The imputed items are named in the release, among them rice, wheat and atta, millets, pulses, salt, sugar and edible oil, and laptops, tablets, mobile handsets, bicycles, motorcycles, school uniforms and school shoes. Free health care such as PM-JAY and fee waivers in education were not imputed. With imputation, average MPCE in 2023-24 is ₹4,247 in rural India and ₹7,078 in urban India. The release reports the first set in its main section and the second after it. Whichever you use, say so, and compare like with like across years.</p>
+<div class="info-box warning"><strong>These files are synthetic.</strong> The MPCE columns in <code class="inline">survey_hh.csv</code> (<code class="inline">mpce</code> without free items, <code class="inline">mpce_free_items</code> with them) were generated for this page. <span class="illustrative-tag">Synthetic data</span> Their averages are not the published figures above and should not be compared with them.</div>
+<h3>Per person or per household</h3>
+<p>An average across persons gives each household its weight times its size. An average across households uses the weight alone. Because larger households tend to have lower MPCE, the two differ. Find out which one a published table reports before you try to match it.</p>
+<div class="code-cell" data-r="hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+hh$person_wt &lt;- hh$weight * hh$hh_size        # households x persons in each
+avg &lt;- function(var, w) sapply(split(hh, hh$sector),
+                               function(d) weighted.mean(d[[var]], d[[w]]))
+data.frame(
+  per_person_without_free_items = round(avg(&quot;mpce&quot;, &quot;person_wt&quot;)),
+  per_person_with_free_items    = round(avg(&quot;mpce_free_items&quot;, &quot;person_wt&quot;)),
+  per_household_without         = round(avg(&quot;mpce&quot;, &quot;weight&quot;)))" data-py="import pandas as pd, numpy as np
+hh = pd.read_csv(&quot;survey_hh.csv&quot;)
+hh[&quot;person_wt&quot;] = hh[&quot;weight&quot;] * hh[&quot;hh_size&quot;]   # households x persons in each
+
+def avg(var, w):
+    return hh.groupby(&quot;sector&quot;)[[var, w]].apply(lambda d: np.average(d[var], weights=d[w]))
+
+out = pd.DataFrame({
+    &quot;per_person_without_free_items&quot;: avg(&quot;mpce&quot;, &quot;person_wt&quot;),
+    &quot;per_person_with_free_items&quot;: avg(&quot;mpce_free_items&quot;, &quot;person_wt&quot;),
+    &quot;per_household_without&quot;: avg(&quot;mpce&quot;, &quot;weight&quot;)}).round()
+pd.set_option(&quot;display.width&quot;, 150)
+print(out)" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+hh$person_wt &lt;- hh$weight * hh$hh_size        # households x persons in each
+avg &lt;- function(var, w) sapply(split(hh, hh$sector),
+                               function(d) weighted.mean(d[[var]], d[[w]]))
+data.frame(
+  per_person_without_free_items = round(avg(&quot;mpce&quot;, &quot;person_wt&quot;)),
+  per_person_with_free_items    = round(avg(&quot;mpce_free_items&quot;, &quot;person_wt&quot;)),
+  per_household_without         = round(avg(&quot;mpce&quot;, &quot;weight&quot;)))</textarea></div>
+<p>Both sectors are reported side by side, never as one number. Standard errors by sector come from the design in the same way as before, with each sector as a domain.</p>
+<div class="code-cell" data-r="library(survey)
+hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+hh$person_wt &lt;- hh$weight * hh$hh_size
+des &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~person_wt,
+                 data = hh, nest = TRUE)
+svyby(~mpce + mpce_free_items, ~sector, des, svymean)" data-py="import numpy as np, pandas as pd
+
+def svy_mean(df, y, weight, strata, psu, domain=None):
+    &quot;&quot;&quot;Weighted mean and its design-based standard error (Taylor linearisation).
+    PSUs are treated as drawn with replacement within strata, as R&#x27;s survey package
+    does by default. A domain keeps every PSU and gives rows outside it zero weight.&quot;&quot;&quot;
+    d = np.ones(len(df)) if domain is None else df[domain].to_numpy(dtype=float)
+    w = df[weight].to_numpy(dtype=float) * d
+    yv = df[y].to_numpy(dtype=float)
+    est = np.sum(w * yv) / np.sum(w)
+    z = w * (yv - est) / np.sum(w)                 # each row&#x27;s share of the error
+    t = pd.DataFrame({&quot;h&quot;: df[strata].to_numpy(), &quot;j&quot;: df[psu].to_numpy(), &quot;z&quot;: z})
+    t = t.groupby([&quot;h&quot;, &quot;j&quot;], as_index=False)[&quot;z&quot;].sum()   # add up within each PSU
+    var = 0.0
+    for _, g in t.groupby(&quot;h&quot;):                     # compare PSUs within each stratum
+        n_h = len(g)
+        var += n_h / (n_h - 1) * np.sum((g[&quot;z&quot;] - g[&quot;z&quot;].mean()) ** 2)
+    return est, np.sqrt(var)
+
+hh = pd.read_csv(&quot;survey_hh.csv&quot;)
+hh[&quot;person_wt&quot;] = hh[&quot;weight&quot;] * hh[&quot;hh_size&quot;]
+for sector in [&quot;Rural&quot;, &quot;Urban&quot;]:
+    hh[&quot;dom&quot;] = hh[&quot;sector&quot;] == sector
+    for var in [&quot;mpce&quot;, &quot;mpce_free_items&quot;]:
+        est, se = svy_mean(hh, var, &quot;person_wt&quot;, &quot;stratum&quot;, &quot;psu&quot;, domain=&quot;dom&quot;)
+        print(sector, var, &quot; mean:&quot;, round(est), &quot; SE:&quot;, round(se, 1))" data-pkgs="survey" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">library(survey)
+hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+hh$person_wt &lt;- hh$weight * hh$hh_size
+des &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~person_wt,
+                 data = hh, nest = TRUE)
+svyby(~mpce + mpce_free_items, ~sector, des, svymean)</textarea></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="2">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="4">Next: Standard errors &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="4" role="tabpanel">
+<div class="eyebrow">Module 5 of 6</div>
+<h2>Design-based standard errors, domains and design effects</h2>
+<p>Every estimate in the earlier modules has a design-based standard error behind it. This module sets out the three tools you need to report one properly.</p>
+<div class="info-box warning"><strong>These files are synthetic.</strong> The cells below use <code class="inline">survey_hh.csv</code> again. <span class="illustrative-tag">Synthetic data</span> Its numbers are invented and mean nothing about India.</div>
+<h3>Confidence intervals and design effects</h3>
+<p>The <strong>design effect</strong> (DEff) is the variance of an estimate under the real design divided by the variance a simple random sample of the same size would have given. A DEff of 4 means the 720 households carry as much information as 180 drawn at random. That smaller number is the <strong>effective sample size</strong>. For a confidence interval, R's <code class="inline">confint()</code> uses the normal distribution by default. With few PSUs a t distribution on the design's degrees of freedom, the number of PSUs minus the number of strata, is more honest. <code class="inline">deff = "replace"</code> compares against simple random sampling with replacement, the right choice when the weights are relative, as DHS weights are.</p>
+<div class="code-cell" data-r="library(survey)
+hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+des &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~weight,
+                 data = hh, nest = TRUE)
+m &lt;- svymean(~has_lpg, des, deff = &quot;replace&quot;)
+print(m)
+cat(&quot;Degrees of freedom (PSUs minus strata):&quot;, degf(des), &quot;\n&quot;)
+confint(m)                    # normal approximation
+confint(m, df = degf(des))    # t on the design degrees of freedom" data-py="import numpy as np, pandas as pd
+
+def svy_mean(df, y, weight, strata, psu, domain=None):
+    &quot;&quot;&quot;Weighted mean and its design-based standard error (Taylor linearisation).
+    PSUs are treated as drawn with replacement within strata, as R&#x27;s survey package
+    does by default. A domain keeps every PSU and gives rows outside it zero weight.&quot;&quot;&quot;
+    d = np.ones(len(df)) if domain is None else df[domain].to_numpy(dtype=float)
+    w = df[weight].to_numpy(dtype=float) * d
+    yv = df[y].to_numpy(dtype=float)
+    est = np.sum(w * yv) / np.sum(w)
+    z = w * (yv - est) / np.sum(w)                 # each row&#x27;s share of the error
+    t = pd.DataFrame({&quot;h&quot;: df[strata].to_numpy(), &quot;j&quot;: df[psu].to_numpy(), &quot;z&quot;: z})
+    t = t.groupby([&quot;h&quot;, &quot;j&quot;], as_index=False)[&quot;z&quot;].sum()   # add up within each PSU
+    var = 0.0
+    for _, g in t.groupby(&quot;h&quot;):                     # compare PSUs within each stratum
+        n_h = len(g)
+        var += n_h / (n_h - 1) * np.sum((g[&quot;z&quot;] - g[&quot;z&quot;].mean()) ** 2)
+    return est, np.sqrt(var)
+
+from scipy import stats
+hh = pd.read_csv(&quot;survey_hh.csv&quot;)
+est, se = svy_mean(hh, &quot;has_lpg&quot;, &quot;weight&quot;, &quot;stratum&quot;, &quot;psu&quot;)
+# Design effect: the design variance over the variance a simple random sample of the same size would give
+w, y, n = hh[&quot;weight&quot;], hh[&quot;has_lpg&quot;], len(hh)
+s2 = np.sum(w * (y - est) ** 2) / np.sum(w) * n / (n - 1)
+deff = se ** 2 / (s2 / n)
+df = hh[&quot;psu&quot;].nunique() - hh[&quot;stratum&quot;].nunique()
+t = stats.t.ppf(0.975, df)
+print(&quot;Share:&quot;, round(est, 4), &quot; SE:&quot;, round(se, 4), &quot; DEff:&quot;, round(deff, 2))
+print(&quot;Degrees of freedom (PSUs minus strata):&quot;, df)
+print(&quot;95% CI, normal:&quot;, round(est - 1.96 * se, 4), &quot;to&quot;, round(est + 1.96 * se, 4))
+print(&quot;95% CI, t:     &quot;, round(est - t * se, 4), &quot;to&quot;, round(est + t * se, 4))
+print(&quot;Effective sample size:&quot;, round(n / deff), &quot;of&quot;, n, &quot;households&quot;)" data-pkgs="survey" data-pypkgs="pandas,numpy,scipy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">library(survey)
+hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+des &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~weight,
+                 data = hh, nest = TRUE)
+m &lt;- svymean(~has_lpg, des, deff = &quot;replace&quot;)
+print(m)
+cat(&quot;Degrees of freedom (PSUs minus strata):&quot;, degf(des), &quot;\n&quot;)
+confint(m)                    # normal approximation
+confint(m, df = degf(des))    # t on the design degrees of freedom</textarea></div>
+<h3>Subgroups are domains, so do not cut the data first</h3>
+<p>To estimate for a subgroup, such as Scheduled Tribe households, the tempting move is to keep only those rows and then declare the design. That throws away the PSUs where no ST household was interviewed. Those PSUs carry information. They tell you that this part of the sample contributed zero ST households, and the number of ST households in a PSU is itself random. Dropping them understates the standard error, and if a stratum is left with one PSU the variance cannot be computed at all. Declare the design on the whole file, then take the subgroup as a <strong>domain</strong> with <code class="inline">subset()</code> on the design or <code class="inline">svyby()</code> in R, or by giving rows outside the domain zero weight while keeping every PSU, as the Python function does.</p>
+<div class="code-cell" data-r="library(survey)
+hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+# Wrong: cut the data to ST households, then declare the design
+st_only &lt;- hh[hh$social_group == &quot;ST&quot;, ]
+cat(&quot;PSUs left after cutting the data:&quot;, length(unique(st_only$psu)), &quot;of&quot;,
+    length(unique(hh$psu)), &quot;\n&quot;)
+des_wrong &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~weight,
+                       data = st_only, nest = TRUE)
+print(svymean(~mpce, des_wrong))
+# Right: declare the design on the whole file, then take the domain
+des &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~weight,
+                 data = hh, nest = TRUE)
+print(svymean(~mpce, subset(des, social_group == &quot;ST&quot;)))
+# Every group at once, as domains
+svyby(~mpce, ~social_group, des, svymean)" data-py="import numpy as np, pandas as pd
+
+def svy_mean(df, y, weight, strata, psu, domain=None):
+    &quot;&quot;&quot;Weighted mean and its design-based standard error (Taylor linearisation).
+    PSUs are treated as drawn with replacement within strata, as R&#x27;s survey package
+    does by default. A domain keeps every PSU and gives rows outside it zero weight.&quot;&quot;&quot;
+    d = np.ones(len(df)) if domain is None else df[domain].to_numpy(dtype=float)
+    w = df[weight].to_numpy(dtype=float) * d
+    yv = df[y].to_numpy(dtype=float)
+    est = np.sum(w * yv) / np.sum(w)
+    z = w * (yv - est) / np.sum(w)                 # each row&#x27;s share of the error
+    t = pd.DataFrame({&quot;h&quot;: df[strata].to_numpy(), &quot;j&quot;: df[psu].to_numpy(), &quot;z&quot;: z})
+    t = t.groupby([&quot;h&quot;, &quot;j&quot;], as_index=False)[&quot;z&quot;].sum()   # add up within each PSU
+    var = 0.0
+    for _, g in t.groupby(&quot;h&quot;):                     # compare PSUs within each stratum
+        n_h = len(g)
+        var += n_h / (n_h - 1) * np.sum((g[&quot;z&quot;] - g[&quot;z&quot;].mean()) ** 2)
+    return est, np.sqrt(var)
+
+hh = pd.read_csv(&quot;survey_hh.csv&quot;)
+# Wrong: cut the data to ST households, then compute
+st_only = hh[hh[&quot;social_group&quot;] == &quot;ST&quot;]
+print(&quot;PSUs left after cutting the data:&quot;, st_only[&quot;psu&quot;].nunique(), &quot;of&quot;, hh[&quot;psu&quot;].nunique())
+est, se = svy_mean(st_only, &quot;mpce&quot;, &quot;weight&quot;, &quot;stratum&quot;, &quot;psu&quot;)
+print(&quot;Cut first:   mean&quot;, round(est), &quot; SE&quot;, round(se, 1))
+# Right: keep the whole file and mark the domain
+hh[&quot;st&quot;] = hh[&quot;social_group&quot;] == &quot;ST&quot;
+est, se = svy_mean(hh, &quot;mpce&quot;, &quot;weight&quot;, &quot;stratum&quot;, &quot;psu&quot;, domain=&quot;st&quot;)
+print(&quot;As a domain: mean&quot;, round(est), &quot; SE&quot;, round(se, 1))
+for g in [&quot;ST&quot;, &quot;SC&quot;, &quot;OBC&quot;, &quot;Others&quot;]:
+    hh[&quot;dom&quot;] = hh[&quot;social_group&quot;] == g
+    est, se = svy_mean(hh, &quot;mpce&quot;, &quot;weight&quot;, &quot;stratum&quot;, &quot;psu&quot;, domain=&quot;dom&quot;)
+    print(g, &quot; mean:&quot;, round(est), &quot; SE:&quot;, round(se, 1))" data-pkgs="survey" data-pypkgs="pandas,numpy"><textarea class="code-input" spellcheck="false" aria-label="Code editor">library(survey)
+hh &lt;- read.csv(&quot;survey_hh.csv&quot;)
+# Wrong: cut the data to ST households, then declare the design
+st_only &lt;- hh[hh$social_group == &quot;ST&quot;, ]
+cat(&quot;PSUs left after cutting the data:&quot;, length(unique(st_only$psu)), &quot;of&quot;,
+    length(unique(hh$psu)), &quot;\n&quot;)
+des_wrong &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~weight,
+                       data = st_only, nest = TRUE)
+print(svymean(~mpce, des_wrong))
+# Right: declare the design on the whole file, then take the domain
+des &lt;- svydesign(ids = ~psu, strata = ~stratum, weights = ~weight,
+                 data = hh, nest = TRUE)
+print(svymean(~mpce, subset(des, social_group == &quot;ST&quot;)))
+# Every group at once, as domains
+svyby(~mpce, ~social_group, des, svymean)</textarea></div>
+<p>The point estimate is the same both ways, and the standard error differs. The <code class="inline">survey</code> package's documentation includes a vignette, "Estimates in subpopulations", on exactly this.</p>
+<div class="info-box"><strong>Small domains.</strong> A standard error is itself an estimate, and with few PSUs in a domain it is unreliable. If a subgroup has very few households or appears in only a handful of PSUs, report that alongside the estimate, or do not report the estimate.</div>
+<div class="nav-row"><button class="btn" type="button" data-goto="3">&larr; Back</button><button class="btn btn-primary" type="button" data-goto="5">Next: Checklist &rarr;</button></div>
+</div>
+<div class="tab-panel lesson" data-panel="5" role="tabpanel">
+<div class="eyebrow">Module 6 of 6</div>
+<h2>A checklist of the errors that matter</h2>
+<p>Each item below is a way to get a wrong number from these files with no error message to warn you. Go through them before you report a figure from NFHS, PLFS or HCES unit-level data.</p>
+<ol class="guide-steps"><li><strong>Use the weight.</strong> An unweighted mean describes the people interviewed and no one else. Indian surveys do not give every household the same chance of selection. HCES 2023-24, for one, allotted every state and UT at least 40 FSUs whatever its population.</li><li><strong>Use the right weight.</strong> DHS and NFHS weights are <code class="inline">v005/1000000</code> (or <code class="inline">mv005</code>, <code class="inline">hv005</code>). PLFS files up to 2024 use <code class="inline">MLT/100</code> where <code class="inline">NSS = NSC</code> and <code class="inline">MLT/200</code> otherwise, for combined estimates. Read the README that ships with your release.</li><li><strong>Use the right unit.</strong> MPCE per person weights households by weight times size. PLFS rates are per person. NFHS women's indicators come from the women's file.</li><li><strong>Drop anthropometry flags before dividing by 100.</strong> Valid scores are <code class="inline">hc70 &lt; 9990</code>. Restrict to de facto children aged 0 to 59 months.</li><li><strong>Say which activity status.</strong> Usual status (ps+ss) and current weekly status give different LFPR, WPR and UR. The unemployment rate is a share of the labour force.</li><li><strong>Keep rural and urban HCES figures apart</strong> and say whether MPCE includes imputed free items. A pooled figure is your own calculation and must be labelled as one.</li><li><strong>Declare the design.</strong> Strata and PSUs, with <code class="inline">nest = TRUE</code> where PSU numbers repeat across strata. Check the stratum variable against the survey report.</li><li><strong>Estimate subgroups as domains.</strong> Never cut the file before setting the design.</li><li><strong>Report the uncertainty.</strong> Give design-based standard errors or confidence intervals, and the design effect where it helps a reader judge the sample.</li><li><strong>Do not compare across a design change without saying so.</strong> MoSPI states that PLFS annual estimates for 2025 may not be strictly comparable with earlier ones because the sampling design changed in January 2025.</li><li><strong>Do not share the microdata.</strong> The DHS Program and MoSPI each set terms for their files. Share your code and your aggregate results instead.</li></ol>
+<div class="info-box warning"><strong>These files are synthetic.</strong> Every number this course printed came from three synthetic files made for this page. <span class="illustrative-tag">Synthetic data</span> They show how the method works. They say nothing about India, its states, or any group in it.</div>
+<h3>Sources</h3>
+<ul><li><li><a href="https://dhsprogram.com/data/Guide-to-DHS-Statistics/Analyzing_DHS_Data.htm" rel="noopener" target="_blank" style="color:var(--accent-color)">The DHS Program, <em>Guide to DHS Statistics</em> (DHS-8), "Analyzing DHS Data"</a></li><li><a href="https://dhsprogram.com/data/Guide-to-DHS-Statistics/Nutritional_Status.htm" rel="noopener" target="_blank" style="color:var(--accent-color)">The DHS Program, <em>Guide to DHS Statistics</em> (DHS-8), "Nutritional Status"</a></li><li><a href="https://dhsprogram.com/what-we-do/survey/survey-display-541.cfm" rel="noopener" target="_blank" style="color:var(--accent-color)">The DHS Program, India: Standard DHS, 2019-21 (NFHS-5), survey page</a></li><li><a href="https://www.mospi.gov.in/sites/default/files/main_menu/plfs_cy_22/README.pdf" rel="noopener" target="_blank" style="color:var(--accent-color)">NSO, MoSPI, README for PLFS unit-level data, January to December 2022</a></li><li><a href="https://microdata.gov.in/NADA/index.php/catalog/254/study-description" rel="noopener" target="_blank" style="color:var(--accent-color)">MoSPI microdata portal, PLFS quarterly release, study description (weights for quarterly files)</a></li><li><a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2246009" rel="noopener" target="_blank" style="color:var(--accent-color)">PIB, Periodic Labour Force Survey (PLFS) Annual Report, 2025, released 27 March 2026</a></li><li><a href="https://www.mospi.gov.in/sites/default/files/publication_reports/PLFS_Changes-in-2025_rev.pdf" rel="noopener" target="_blank" style="color:var(--accent-color)">MoSPI, Changes in Periodic Labour Force Survey (PLFS) from 2025</a></li><li><a href="https://dsbb.imf.org/sdds/dqaf-base/country/IND/category/UEM00" rel="noopener" target="_blank" style="color:var(--accent-color)">IMF Dissemination Standards Bulletin Board, India, labour market: unemployment (NSS activity status codes)</a></li><li><a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2097601" rel="noopener" target="_blank" style="color:var(--accent-color)">PIB, Household Consumption Expenditure Survey: 2023-24, released 30 January 2025</a></li><li><a href="https://microdata.gov.in/NADA/index.php/catalog/237/study-description" rel="noopener" target="_blank" style="color:var(--accent-color)">MoSPI microdata portal, Household Consumption Expenditure Survey: 2023-24, study description</a></li><li><a href="https://CRAN.R-project.org/package=survey" rel="noopener" target="_blank" style="color:var(--accent-color)">Thomas Lumley and others, survey: Analysis of Complex Survey Samples, R package version 4.5 (CRAN)</a></li></li></ul>
+<h3>Where next</h3><div class="roadmap"><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/r-python.html" style="color:var(--text-primary)">R &amp; Python for Development</a></h4><p>The basics of both languages, if any of the code here was new.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/pandas.html" style="color:var(--text-primary)">pandas for Development Data</a></h4><p>Cleaning, joining and reshaping survey tables in Python.</p></div></div><div class="road-item"><div class="road-num">&rarr;</div><div><h4><a href="/code/tidyverse.html" style="color:var(--text-primary)">The tidyverse for development data</a></h4><p>The same work in R with dplyr and ggplot2.</p></div></div></div>
+<div class="nav-row"><button class="btn" type="button" data-goto="4">&larr; Back</button><a class="btn btn-primary" href="/code/">All Code School courses &rarr;</a></div>
+</div>
+</div>
+<footer class="im-footer" role="contentinfo">
+<div class="im-footer-content">
+<p class="im-footer-made">Made with &#10084; by <a href="https://www.pinpointventures.in" rel="noopener noreferrer" target="_blank">PinPoint Ventures</a></p>
+<div class="im-footer-grid">
+<div class="im-footer-section"><h4>Learn</h4><ul>
+<li><a href="/code/">Code School</a></li>
+<li><a href="/101-courses/">101 Series</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/catalog.html">Full Catalog</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>Explore</h4><ul>
+<li><a href="/">Home</a></li>
+<li><a href="/blog.html">Blog</a></li>
+<li><a href="/premium-tools/code-converter-pro.html">Code Convert Pro</a></li>
+<li><a href="/premium.html">Membership</a></li>
+</ul></div>
+<div class="im-footer-section"><h4>About</h4><ul>
+<li><a href="/about.html">About ImpactMojo</a></li>
+<li><a href="/contact.html">Contact</a></li>
+</ul></div>
+</div>
+<div class="im-footer-bottom">
+<p>&copy; 2026 ImpactMojo. Free development education for South Asia.</p>
+<p>R runs via <a href="https://webr.r-wasm.org" rel="noopener" target="_blank">WebR</a>, Python via <a href="https://pyodide.org" rel="noopener" target="_blank">Pyodide</a> and SQL via <a href="https://sql.js.org" rel="noopener" target="_blank">sql.js</a>: open source, in your browser. Shiny apps open in <a href="https://shinylive.io" rel="noopener" target="_blank">Shinylive</a>.</p>
+</div>
+</div>
+</footer>
+<script src="/js/code-studio.js?v=1ef145b4"></script>
+<script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
+<script src="/js/site-chrome.js?v=32cec957" defer></script>
+</body>
+</html>

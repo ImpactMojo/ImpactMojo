@@ -691,7 +691,15 @@
                 border: 1px solid #ccc;
             }
         }
-    </style>
+            /* a11y: --white-pure is ink on the tricolour fills; the card surface is its own token and goes dark with the theme */
+        :root { --card-surface: #FFFFFF; }
+        body.dark-mode, [data-theme="dark"], html.dark { --card-surface: #211B15; --ink-light: #9A9488; }
+        @media (prefers-color-scheme: dark) { :root:not(.light) { --card-surface: #211B15; --ink-light: #9A9488; } }
+        .term-card, .search-box input, .filter-select { background: var(--card-surface); }
+        .search-box input, .filter-select { color: var(--ink-black); }
+        .term-body { background: linear-gradient(180deg, var(--khadi-cream) 0%, var(--card-surface) 100%); }
+        .category-count { opacity: 1; }
+</style>
 <style>
 /* ===== ImpactMojo Design System ===== */
 :root {
