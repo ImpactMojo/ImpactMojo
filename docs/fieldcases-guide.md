@@ -2,7 +2,7 @@
 
 ## What Is FieldCases?
 
-FieldCases is ImpactMojo's **free, searchable library of 200 cited development case studies from 117 countries**. Every case is grounded in published research: no anecdotal stories or unverified claims.
+FieldCases is ImpactMojo's **free, searchable library of 208 cited development case studies from 117 countries**. Every case is grounded in published research: no anecdotal stories or unverified claims.
 
 The library covers financial inclusion, health, education, governance, livelihoods, climate, gender, and more: organised by topic, region, and methodology so you can find exactly the cases you need for teaching, proposals, or programme design.
 
@@ -31,7 +31,7 @@ RCTs, quasi-experimental studies, mixed methods, qualitative research, programme
 - **Every claim is cited**: case studies reference published research, not opinion
 - **Searchable by topic, region, and keyword**: find cases relevant to your specific programme area
 - **Practitioner-oriented summaries**: cases are written for programme designers and trainers, not academic audiences
-- **200 cases across 117 countries**: broad enough to find relevant parallels for almost any development context
+- **208 cases across 117 countries**: broad enough to find relevant parallels for almost any development context
 
 ---
 
@@ -62,4 +62,4 @@ Assign students or participants a case study to analyse using a specific framewo
 - **Filter by region first** if you need context-specific examples: a case from Bihar is more persuasive than one from Bolivia when designing a programme in Odisha.
 - **Check the methodology**: if you're teaching RCTs, filter for experimental studies; if you're teaching adaptive management, look for mixed-methods evaluations.
 - **Combine with Live Case Challenges**: FieldCases provides background evidence; Challenges provide structured application exercises.
-- **200 cases and growing**: suggest additions at hello@impactmojo.in.
+- **208 cases and growing**: suggest additions at hello@impactmojo.in.

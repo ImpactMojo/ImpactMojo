@@ -34,7 +34,7 @@ Deep, multi-module courses with 8–16 modules each, interactive lexicons, South
 
 ---
 
-## Reading companions (171)
+## Reading companions (185)
 
 Interactive reading companions: deep, chapter-by-chapter explorations with data tools and AI-powered Q&A. The list below shows 52 of the 171; the full set is on the Book Summaries page. See the [Reading Companions Guide](book-summaries-guide.md) for full details.
 
@@ -338,7 +338,7 @@ Real-world case challenges with 2-document case packets and assessment rubrics: 
 
 ---
 
-## Deep Dives (25)
+## Deep Dives (27)
 
 Curated, fully web-cited reading lists on the debates that shape development practice.
 
@@ -494,7 +494,7 @@ Thirteen browser tools for research and evaluation work. Seven builders are free
 | Resource | Description | Access |
 |----------|-------------|--------|
 | **ImpactLex** | 494 development terms dictionary (PWA, hosted on ImpactMojo) | Free: [Browse](/impactlex/) |
-| **FieldCases** | 200 curated development cases from 117 countries | Free |
+| **FieldCases** | 208 curated development cases from 117 countries | Free |
 | **NudgeKit** | 203 behaviour change techniques (BCTs) with South Asian context | Free: [Browse](/bct-repository) |
 | **Dataverse** | 343 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
 | **DevDiscourses** | 500+ curated research papers and books | Free |
@@ -527,7 +527,7 @@ Thirteen browser tools for research and evaluation work. Seven builders are free
 | Pro Studio tools | 13 |
 | Handout pages | 90 |
 | Dataverse entries | 335 |
-| FieldCases | 200 (117 countries) |
+| FieldCases | 208 (117 countries) |
 | DevDiscourses entries | 500+ |
 | ImpactLex terms | 494 |
 | NudgeKit BCTs | 203 |

@@ -22,13 +22,13 @@
 
 ---
 
-## BookSummaries (184)
+## BookSummaries (185)
 
 Specials के अंतर्गत इंटरैक्टिव बुक कम्पैनियन — डेटा टूल और AI-संचालित प्रश्नोत्तर के साथ अध्याय-दर-अध्याय गहन अन्वेषण। पूरी जानकारी के लिए [Book Companions Guide](book-summaries-guide.md) देखें।
 
 | # | पुस्तक | लेखक | अध्याय | श्रेणी | लिंक |
 |---|------|--------|----------|----------|------|
-| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [खोलें](/BookSummaries/handbook-social-protection.html) |
+| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [खोलें](/BookSummaries/handbook-social-protection-companion.html) |
 | 2 | Development Economics | Debraj Ray (Princeton 1998) | 18 | Development Economics | [खोलें](/BookSummaries/debraj-ray-companion.html) |
 | 3 | Design Thinking: A Guide to Creative Problem Solving | Andrew Pressman (Routledge 2019) | 10 | Design & Innovation | [खोलें](/BookSummaries/dt-companion.html) |
 | 4 | Basic Econometrics | Gujarati & Porter (McGraw-Hill) | 22 | Econometrics | [खोलें](/BookSummaries/basic-econometrics-companion.html) |
@@ -283,7 +283,7 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 | आधारभूत पाठ्यक्रम | 80 |
 | इंटरैक्टिव labs | 35 |
 | शिक्षण खेल | 135 |
-| BookSummaries | 184 |
+| BookSummaries | 185 |
 | Premium tools | 11 |
 | Handout पृष्ठ | 84 |
 | Dataverse प्रविष्टियाँ | 343 |

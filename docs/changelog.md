@@ -2,6 +2,32 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.380.0 — October 14, 2026 (accuracy, speed and every page checked)
+
+### For Learners
+
+- **Faster pages** — Google Analytics is no longer downloaded until you accept cookies, which takes about 180 KB off every page for anyone who has not.
+- **Current figures in the courses** — the World Bank's $3.00 poverty line, the 2025 female labour force participation rate, the 16th Finance Commission and the PM-JAY extension for people over 70 are now stated as they stand.
+- **Every page in five languages, stated plainly** — the roadmap now says what the language menu already does: every page, the 101 decks included, can be read in Hindi, Tamil, Bengali, Marathi and Telugu.
+
+### Changed
+
+- Every page on the site is now checked for accessibility each day, in light and dark at phone and laptop width, and each change is checked on the pages it touches.
+- The Membership pages say the same thing about community spaces everywhere. The WhatsApp learning community is free for everyone, and the Discord server is for paying members. Mentions of a Telegram channel, which ImpactMojo does not run, were removed from every page, the help docs and the sign-up emails.
+- The Handbook of Social Protection companion has a new address ending in -companion.html; the old address forwards to it.
+- On the 101 decks the cookie notice sits under the top bar, clear of the slide controls.
+- Icons carry their size, so pages no longer shift as icons load.
+- A page about the site's own setup is no longer public.
+
+### Fixed
+
+- **Some course slides stated figures that have since been updated** (#1240).
+- **"MEAL 101" appeared as "Food 101" in Hindi and Tamil** (#1241).
+- **Counts and names disagreed across pages** (#1242), including the number of reading companions (185), Pro Studio tools (11), games (135) and FieldCases case studies (208), and the help docs in all six languages.
+- **The Membership pages disagreed about which community spaces are free** (#1243).
+- **The Data Room hub and Field Radio fell short on contrast** (#1244).
+- **A sentence in Capacity for Irony had broken punctuation** (#1239).
+
 ## v10.379.0 — October 13, 2026 (Practice Packs unlocked on the server)
 
 ### Changed

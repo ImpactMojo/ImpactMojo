@@ -22,13 +22,13 @@
 
 ---
 
-## BookSummaries (184)
+## BookSummaries (185)
 
 Specials-ன் கீழ் உள்ள ஊடாடும் புத்தக துணைகள் — தரவுக் கருவிகள் மற்றும் AI-இயக்கப்படும் கேள்வி-பதிலுடன் கூடிய ஆழமான, அத்தியாயம்-வாரியான ஆய்வுகள். முழு விவரங்களுக்கு [Book Companions Guide](book-summaries-guide.md) பார்க்கவும்.
 
 | # | புத்தகம் | ஆசிரியர் | அத்தியாயங்கள் | வகை | இணைப்பு |
 |---|------|--------|----------|----------|------|
-| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [Open](/BookSummaries/handbook-social-protection.html) |
+| 1 | The Handbook of Social Protection and Inclusionary Development | Hanna & Olken (MIT Press 2026) | 30+ | Social Protection | [Open](/BookSummaries/handbook-social-protection-companion.html) |
 | 2 | Development Economics | Debraj Ray (Princeton 1998) | 18 | Development Economics | [Open](/BookSummaries/debraj-ray-companion.html) |
 | 3 | Design Thinking: A Guide to Creative Problem Solving | Andrew Pressman (Routledge 2019) | 10 | Design & Innovation | [Open](/BookSummaries/dt-companion.html) |
 | 4 | Basic Econometrics | Gujarati & Porter (McGraw-Hill) | 22 | Econometrics | [Open](/BookSummaries/basic-econometrics-companion.html) |
@@ -283,7 +283,7 @@ Specials-ன் கீழ் உள்ள ஊடாடும் புத்த�
 | Foundational courses | 80 |
 | Interactive labs | 35 |
 | Learning games | 135 |
-| BookSummaries | 184 |
+| BookSummaries | 185 |
 | Premium tools | 11 |
 | Handout pages | 84 |
 | Dataverse entries | 343 |

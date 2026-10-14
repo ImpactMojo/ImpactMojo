@@ -22,7 +22,7 @@ ImpactMojo అవసరమైన అభివృద్ధి గ్రంథా�
 
 | పుస్తకం | రచయిత(లు) | అధ్యాయాలు | వర్గం | మార్గం |
 |------|-----------|----------|----------|------|
-| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | సామాజిక రక్షణ | `/BookSummaries/handbook-social-protection.html` |
+| **Handbook of Social Protection and Inclusionary Development** | Rema Hanna & Benjamin A. Olken (Eds.), MIT Press 2026 | 30+ | సామాజిక రక్షణ | `/BookSummaries/handbook-social-protection-companion.html` |
 | **Development Economics** | Debraj Ray, Princeton University Press 1998 | 18 | అభివృద్ధి ఆర్థికశాస్త్రం | `/BookSummaries/debraj-ray-companion.html` |
 | **Design Thinking: A Guide to Creative Problem Solving for Everyone** | Andrew Pressman, FAIA, Routledge 2019 | 10 | రూపకల్పన & ఆవిష్కరణ | `/BookSummaries/dt-companion.html` |
 | **Basic Econometrics** | Damodar N. Gujarati & Dawn C. Porter, McGraw-Hill | 22 | ఎకనామెట్రిక్స్ | `/BookSummaries/basic-econometrics-companion.html` |
@@ -102,7 +102,7 @@ ImpactMojo అవసరమైన అభివృద్ధి గ్రంథా�
 
 ## సంబంధిత వనరులు
 
-- **[కోర్సులు](/courses/)** — 15 ఫ్లాగ్‌షిప్ మరియు 47 పునాది అభివృద్ధి అంశాల అంతటా నిర్మాణాత్మక అభ్యాస మార్గాలు
+- **[కోర్సులు](/courses/)** — 21 ఫ్లాగ్‌షిప్ మరియు 80 పునాది అభివృద్ధి అంశాల అంతటా నిర్మాణాత్మక అభ్యాస మార్గాలు
 - **[గేమ్‌లు](/Games/)** — ఆట ద్వారా అభివృద్ధి భావనలను బోధించే ఇంటరాక్టివ్ సిమ్యులేషన్లు
 - **[ల్యాబ్‌లు](/courses/)** — ఆచరణాత్మక అభ్యాసం కోసం బ్రౌజర్-ఆధారిత కోడింగ్ మరియు డేటా ల్యాబ్‌లు
-- **[హ్యాండ్‌అవుట్‌లు](/Handouts/)** — అన్ని అభివృద్ధి ట్రాక్‌ల అంతటా 400+ త్వరిత-సూచన మార్గదర్శకాలు
+- **[హ్యాండ్‌అవుట్‌లు](/Handouts/)** — అన్ని అభివృద్ధి ట్రాక్‌ల అంతటా 84 త్వరిత-సూచన మార్గదర్శకాలు

@@ -24,7 +24,7 @@ ImpactMojo is an educational platform serving development practitioners, researc
 
 ## Scope
 
-This Code of Conduct applies to all ImpactMojo spaces: GitHub repository, Discord server, Telegram channel, WhatsApp PLC, and any other community spaces.
+This Code of Conduct applies to all ImpactMojo spaces: GitHub repository, Discord server, WhatsApp PLC, and any other community spaces.
 
 ## Enforcement
 

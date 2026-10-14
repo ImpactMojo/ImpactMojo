@@ -11,9 +11,9 @@ Everything you need to learn, teach, and facilitate:
 - **All courses**: 21 flagship + 80 foundational courses across 6 learning tracks
 - **All games**: 16 economics simulations, perfect for workshops
 - **All labs**: 19 interactive workbenches (Theory of Change builder, research design tools, etc.)
-- **All handouts**: 400+ downloadable reference sheets
+- **All handouts**: 84 downloadable reference sheets
 - **ImpactLex**: 494 development terms dictionary (now hosted on ImpactMojo)
-- **Dev Case Studies**: 200 curated cases from 117 countries
+- **Dev Case Studies**: 208 curated cases from 117 countries
 - **DevDiscourses**: 500+ curated research papers and books
 - **Dataverse**: 343 data tools, APIs, and datasets
 - **Field Notes & Podcast**. The Margin Muse (field observations) and Between the Logframes (podcast)
@@ -25,7 +25,7 @@ Everything you need to learn, teach, and facilitate:
 
 For students, curious learners, and anyone exploring development topics.
 
-**What you get:** Everything listed above, plus the Telegram community channel. No account required to browse content, but creating a free account unlocks progress tracking, bookmarks, and notes.
+**What you get:** Everything listed above, plus the WhatsApp learning community. No account required to browse content, but creating a free account unlocks progress tracking, bookmarks, and notes.
 
 ### Practitioner: ₹399/month or ₹3,990/year
 

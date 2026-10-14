@@ -113,7 +113,7 @@ Structured, outcome-focused paths that combine courses, games, and practice into
 
 | Tier | Price | Key Features |
 |------|-------|-------------|
-| **Explorer** | Free | All courses, games, studios, DevDiscourses, Telegram channel |
+| **Explorer** | Free | All courses, games, studios, DevDiscourses, WhatsApp PLC |
 | **Practitioner** | ₹399/mo · ₹3,990/yr | Advanced ToC Studio, PDF/PNG export, certificates, full community |
 | **Professional** | ₹999/mo · ₹9,990/yr | + Qual Insights Lab and Code Converter export, VaniScribe notebook, hosted Advisory Board models, Viz Cookbook code copying, DevEconomics Toolkit, priority coaching |
 | **Organization** | ₹1,499/user/mo | + Team dashboard, custom learning paths, training packages and cohorts, branded certificates, GST invoices and a named contact on request (called the Team Plan on the site) |
@@ -354,7 +354,7 @@ All of it lives in one page, `Labs/toc-lab.html` (the Theory of Change Studio). 
 - **User Profiles**: Track progress and preferences
 - **Tiered Access**: Explorer (free), Practitioner, Professional, Organization
 - **Team Training Packages**, Organization tier: pre-built training paths (MEL Officer, Program Manager, Field Staff, Governance), facilitator guides, assessment rubrics, cohort management
-- **Community Access**: WhatsApp PLC, Discord, Telegram
+- **Community Access**: WhatsApp PLC, Discord
 
 ---
 
@@ -385,7 +385,7 @@ Main site (impactmojo.in)
 │                     └── auth-gate.ts verifies JWT, sets session cookie
 ├── Games ──► Supabase Edge Fn (game-agent) ──► Groq/Gemini/DeepSeek LLMs
 ├── Static content ──► Courses, Studios, ImpactLex
-└── Community ──► WhatsApp PLC, Discord, Telegram
+└── Community ──► WhatsApp PLC, Discord
 ```
 
 Premium tools are hosted as separate Netlify sites, each protected by a JWT auth-gate edge function. The main site mints a short-lived token via Supabase, which the resource site verifies and exchanges for a 24-hour session cookie.
@@ -691,7 +691,6 @@ We welcome contributions! Whether improving content, fixing bugs, enhancing acce
 | **Newsletter** | [Varna's Substack](https://varna.substack.com) |
 | **WhatsApp PLC** | [Professional Learning Community](https://forms.gle/vJaHFd7QcMe4JVF19) |
 | **Discord** | [Tech tinkering & data tools](https://discord.gg/M3ZCmUe7ab) |
-| **Telegram** | [Free toolkits & resources](https://t.me/impactmojo) |
 
 ### Support the Platform
 

@@ -47,13 +47,13 @@ ImpactMojo is much more than a course library. Here's what's available:
 **11 browser-based workbenches** where you can build frameworks, analyse data, and produce real outputs (like a theory of change diagram or a research question) step by step.
 
 ### Handouts
-**400+ downloadable pages** organized by track: ready to print, share in a training, or assign as pre-reading.
+**84 downloadable handouts** organized by track: ready to print, share in a training, or assign as pre-reading.
 
 ### ImpactLex
 A **dictionary of 500+ development terms**, from "attribution" to "zero-based budgeting", available as an app that works offline.
 
 ### Dev Case Studies
-**200 curated case studies** drawn from real development programmes in **117 countries**. Search by theme, country, or methodology.
+**208 curated case studies** drawn from real development programmes in **117 countries**. Search by theme, country, or methodology.
 
 ### DevDiscourses
 **500+ curated academic papers, books, and reports**: the essential reading list for development professionals, organized so you can actually find what you need.

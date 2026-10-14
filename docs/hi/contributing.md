@@ -99,6 +99,5 @@ git push origin feature/your-feature-name
 
 - [WhatsApp PLC](https://chat.whatsapp.com/EsBjbKaQfupG1HbtajTjHM) — व्यवसायियों के बीच सहकर्मी चर्चाएँ
 - [Discord](https://discord.gg/M3ZCmUe7ab) — तकनीकी चर्चाएँ और प्रयोग
-- [Telegram](https://t.me/impactmojo) — निःशुल्क संसाधन और अपडेट
 - [GitHub Discussions](https://github.com/ImpactMojo/ImpactMojo/discussions) — विचार, प्रश्नोत्तर और घोषणाएँ
 - **ईमेल:** hello@impactmojo.in — किसी भी अन्य चीज़ के लिए

@@ -8,7 +8,7 @@ This page walks through everything available on ImpactMojo: what each content ty
 
 Courses are the backbone of ImpactMojo. There are two types:
 
-### Flagship Courses (18)
+### Flagship Courses (21)
 
 These are comprehensive, deep-dive courses: each with approximately **13 modules** that build on each other. Think of them as the equivalent of a semester-long university course, but written for working professionals.
 
@@ -26,7 +26,7 @@ Each flagship course includes:
 
 **How to use them:** Work through a course at your own pace (one module per week is a comfortable rhythm). Assign modules to your team as pre-reading before a planning session. Use them as the curriculum backbone for a university course or NGO training programme.
 
-### Foundational Courses (51)
+### Foundational Courses (80)
 
 Comprehensive study decks that cover a specific skill or concept in depth. These are self-paced reading materials (thorough in their coverage but simpler in format than flagship courses. **All 80 foundational courses are native ~100-slide HTML decks** with interactive charts, light/dark theme, and keyboard/touch navigation) fully self-hosted, with no third-party presentation embeds. See the [101 Course Decks Guide](101-decks-guide.md) for details.
 
@@ -161,9 +161,9 @@ ImpactLex is a **development sector dictionary**: a searchable, browsable collec
 
 ---
 
-## Dev Case Studies (200 cases from 117 countries)
+## Dev Case Studies (208 cases from 117 countries)
 
-A curated library of **200 real-world development case studies**, not theoretical examples, but actual programmes, evaluations, and interventions from around the world.
+A curated library of **208 real-world development case studies**, not theoretical examples, but actual programmes, evaluations, and interventions from around the world.
 
 Each case study is tagged by:
 - **Country** (117 countries represented)
@@ -184,7 +184,7 @@ Entries are organized by topic and tagged for easy browsing.
 
 ---
 
-## Dataverse (296 resources)
+## Dataverse (343 resources)
 
 Dataverse is your starting point for development data. It includes:
 
