@@ -71,7 +71,9 @@
       // builds the module on request, so this pinned version is trusted as
       // served. Vendoring a built copy under /impactlex/ would remove that.
       const { init, tx, i } = await import('https://esm.sh/@instantdb/core@0.14.22');
-      const db = init({ appId: CONFIG.instantDbAppId });
+      // devtool: false. InstantDB draws an unlabelled devtool button on
+      // localhost, which is an unnamed control to a screen reader.
+      const db = init({ appId: CONFIG.instantDbAppId, devtool: false });
       window.__impactlexDb = db;
       db.subscribeQuery({ terms: {}, caseStudies: {}, formulae: {} }, (resp) => {
         if (resp.error) { console.warn('InstantDB error:', resp.error); return; }
