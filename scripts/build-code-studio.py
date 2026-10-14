@@ -266,19 +266,30 @@ def render_index(page, others):
                         for o in others if o["kind"] == kind)
         sections.append('<h2 class="studio-section-title">%s</h2><p class="studio-section-note">%s</p>'
                         '<div class="studio-grid">%s</div>' % (title, note, cards))
+    # The hero's quiet count line, computed from the specs so it cannot drift.
+    n_run = sum(1 for o in others if o["kind"] == "runnable")
+    n_guide = sum(1 for o in others if o["kind"] == "guide")
+    meta = ('<span>%d in-browser courses</span><span>%d guided tool courses</span>'
+            '<span>Free, with nothing to install</span>' % (n_run, n_guide))
+    # The landing page uses the shared plain hero (css/plain-hero.css); the
+    # lesson pages keep their own header.
+    head_html = head(page, canonical).replace(
+        '<link rel="stylesheet" href="/css/code-studio.css">',
+        '<link rel="stylesheet" href="/css/code-studio.css">\n    <link rel="stylesheet" href="/css/plain-hero.css">', 1)
     return """%(head)s
 <body>
 <a href="#main-content" class="im-skip-link">Skip to content</a>
 %(topbar)s
 <a id="main-content" tabindex="-1"></a>
 <div class="container" id="main">
-    %(plane)s
     <a href="/" class="back-link">%(back)s Back to ImpactMojo</a>
-    <div class="header">
-        <div class="header-badge">Free courses in data and code</div>
-        <h1>%(h1)s</h1>
-        <p>%(lede)s</p>
-    </div>
+    <section class="ph ph--blue">
+        <span class="ph-bar" aria-hidden="true"></span>
+        <p class="ph-eyebrow">Free courses in data and code</p>
+        <h1 class="ph-title">%(h1)s</h1>
+        <p class="ph-lede">%(lede)s</p>
+        <p class="ph-meta">%(meta)s</p>
+    </section>
     %(intro)s
     %(sections)s
 </div>
@@ -288,7 +299,7 @@ def render_index(page, others):
 <script src="/js/site-chrome.js" defer></script>
 </body>
 </html>
-""" % {"head": head(page, canonical), "topbar": TOPBAR, "plane": PLANE, "back": BACK, "h1": page["h1"],
+""" % {"head": head_html, "topbar": TOPBAR, "back": BACK, "h1": page["h1"], "meta": meta,
        "lede": page["lede"], "intro": page.get("intro", ""), "sections": "\n".join(sections), "footer": FOOTER}
 
 

@@ -237,8 +237,21 @@
       description: 'Completed all courses in the Monitoring, Evaluation & Learning track.',
       courseIds: ['mel'],
       color: '#10B981'
+    },
+    'Gender, Equity & Inclusion': {
+      name: 'Gender, Equity & Inclusion Track Credential',
+      description: 'Completed all courses in the Gender, Equity & Inclusion track.',
+      courseIds: ['gender'],
+      color: '#D53F8C'
     }
   };
+  // A track lists every flagship whose badge names it, so a new course joins
+  // its track without anyone editing these lists by hand.
+  Object.keys(TRACK_BADGES).forEach(function (t) {
+    TRACK_BADGES[t].courseIds = Object.keys(BADGE_CLASSES).filter(function (id) {
+      return id !== 'sel' && BADGE_CLASSES[id].track === t;
+    });
+  });
 
   // ── OB3.0 JSON-LD Credential Builder ────────────────────────────────
   function buildCredential(cert, recipientName) {

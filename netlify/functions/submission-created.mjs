@@ -171,6 +171,41 @@ const FILES = {
   "Labour Laws for NGOs, Annotated": "ImpactMojo-Labour-Laws-NGOs-Digest.pdf",
 };
 
+// Bundles named for the job a buyer is finishing. A bundle title resolves to
+// every file of the items listed under it, so an order for a bundle delivers
+// all of them. Each item name must be a key in FILES above, and
+// scripts/check-product-orders.py fails if one is not.
+const BUNDLES = {
+  "Write a Proposal for a Donor: Bundle": [
+    "Theory of Change Canvas",
+    "Logframe Template",
+    "Activity Budget & Costing Template",
+    "Stakeholder Mapping Template",
+  ],
+  "Set Up MEL for a New Programme: Bundle": [
+    "MEL Plan Template",
+    "Results Framework & Indicator Bank",
+    "Donor Report Template",
+    "OECD-DAC Criteria: Refresher",
+    "Quant vs Qual vs Mixed: Refresher",
+    "MEL & Statistics Formulae Poster",
+  ],
+  "Prepare for Field Data Collection: Bundle": [
+    "Survey Instrument Template",
+    "FGD Facilitator's Guide",
+    "Data Management & Consent Pack",
+    "Field Data-Collection Readiness Checklist",
+    "Ethics & DPDP Consent Checklist",
+    "Sampling & Sample Size: Refresher",
+  ],
+  "Commission an Evaluation: Bundle": [
+    "ToR Template",
+    "Proposal Scoring Rubric",
+    "Proposal Review Checklist",
+    "Causal Designs: Refresher",
+  ],
+};
+
 // Titles are matched with case and punctuation ignored. On 2026-10-05 the
 // em-dash sweep rewrote these keys ("…Learning, Course Notes") but not the
 // titles the buy pages send ("…Learning — Course Notes"), so every order for
@@ -178,7 +213,18 @@ const FILES = {
 // comma must never decide whether a paying buyer gets their file.
 const norm = (t) => String(t || "").toLowerCase().replace(/&(?:amp|#x?[0-9a-f]+|[a-z]+);/g, "").replace(/[^a-z0-9]+/g, "");
 const FILES_NORM = Object.fromEntries(Object.entries(FILES).map(([k, v]) => [norm(k), v]));
-const fileFor = (title) => FILES[title] || FILES_NORM[norm(title)];
+const BUNDLES_NORM = Object.fromEntries(Object.entries(BUNDLES).map(([k, v]) => [norm(k), v]));
+const single = (title) => FILES[title] || FILES_NORM[norm(title)];
+// A single product resolves to one file. A bundle resolves to all of its
+// files joined by commas, which /api/confirm splits and delivers one by one.
+// If any item of a bundle has no file the whole bundle is reported as
+// unknown, so a buyer is never sent part of what they paid for in silence.
+const fileFor = (title) => {
+  const items = BUNDLES[title] || BUNDLES_NORM[norm(title)];
+  if (!items) return single(title);
+  const files = items.map(single);
+  return files.every(Boolean) ? files.join(",") : undefined;
+};
 
 const looksLikeEmail = (v) => typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 
@@ -199,10 +245,47 @@ async function sendMail(to, subject, html) {
   } catch (e) { console.log("[submission] mail failed:", e.message); }
 }
 
+// Enquiry forms carry no payment, so there is nothing to confirm. Each one is
+// a person asking the owner to reply, and before this branch existed the only
+// trace was a Netlify notification nobody is obliged to read. The owner gets
+// the submitted fields as an email from the usual sender, and nothing goes
+// back to the address the visitor typed.
+const ENQUIRIES = {
+  "quote-request": {
+    subject: (d) => `Quote request: ${d.kit || "(kit not given)"}${d.organisation ? ", " + d.organisation : ""}`,
+    fields: [["name", "Name"], ["email", "Email"], ["organisation", "Organisation"], ["kit", "Kit"], ["learners", "Number of learners"], ["use", "How they will use it"]],
+  },
+  "demo-request": {
+    subject: (d) => `Demo request: ${d.calculator || "(calculator not given)"}${d.organisation ? ", " + d.organisation : ""}`,
+    fields: [["name", "Name"], ["email", "Email"], ["organisation", "Organisation"], ["calculator", "Calculator"], ["purpose", "What they want to price or cost"]],
+  },
+  "paper-request": {
+    subject: (d) => `Paper request: ${d.paper || "(paper not given)"}`,
+    fields: [["name", "Name"], ["email", "Email"], ["paper", "Paper"], ["course", "Course"], ["institution", "Institution"], ["note", "Note"]],
+  },
+};
+
+function enquiryHtml(spec, data) {
+  const rows = spec.fields.map(([k, label]) => {
+    const v = String(data[k] == null ? "" : data[k]).trim();
+    return `<tr><td style="padding:4px 12px 4px 0;vertical-align:top;color:#475569"><strong>${esc(label)}</strong></td><td style="padding:4px 0">${v ? esc(v).replace(/\n/g, "<br>") : "(not given)"}</td></tr>`;
+  }).join("");
+  return `<table style="font-family:Inter,Arial;font-size:14px;border-collapse:collapse">${rows}</table>
+    <p style="font-size:12px;color:#94A3B8">Reply to the address above. No acknowledgement has been sent to the requester.</p>`;
+}
+
 export const handler = async (event) => {
   let data, form, ip;
   try { const b = JSON.parse(event.body); data = b.payload.data || {}; form = b.payload.form_name; ip = String(data.ip || b.payload.ip || ""); }
   catch { return { statusCode: 200 }; }
+
+  if (Object.prototype.hasOwnProperty.call(ENQUIRIES, form)) {
+    const spec = ENQUIRIES[form];
+    const clean = (v) => String(v == null ? "" : v).replace(/[\r\n]+/g, " ").trim().slice(0, 120);
+    const d = Object.fromEntries(spec.fields.map(([k]) => [k, clean(data[k])]));
+    await sendMail(ADMIN_EMAIL, spec.subject(d), enquiryHtml(spec, data));
+    return { statusCode: 200 };
+  }
   if (!ADMIN_KEY) { console.log("[submission] ADMIN_KEY unset"); return { statusCode: 200 }; }
 
   const email = (data.email || "").trim();

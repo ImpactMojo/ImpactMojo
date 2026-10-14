@@ -2,7 +2,7 @@
    Pages queue their gtag() calls inline, with consent defaulting to denied.
    Until this file finds a "granted" choice, gtag.js (about 180 KB) is not
    downloaded at all, so a reader who has not chosen, or has declined, pays
-   nothing for it. The Accept buttons (js/site-chrome.js, js/cookie-ui.js) call
+   nothing for it. The Accept button in js/site-chrome.js calls
    window.imLoadGA() so analytics starts on the page where the reader accepts. */
 (function () {
   var ID = 'G-JRCMEB9TBW', loaded = false;

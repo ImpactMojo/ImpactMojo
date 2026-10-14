@@ -52,6 +52,22 @@ def main():
         print("FAIL — the handler no longer looks titles up through fileFor()")
         sys.exit(1)
 
+    # A bundle resolves to the files of its items, so every item it names must
+    # itself be a key in FILES. A bundle naming an item that has no file would
+    # deliver part of what the buyer paid for.
+    bundle_errors = []
+    if "const BUNDLES" in src:
+        bstart = src.index("const BUNDLES")
+        bblock = src[bstart:src.index("\n};", bstart)]
+        for bm in re.finditer(r'^\s*"((?:[^"\\]|\\.)*)":\s*\[(.*?)\]', bblock, re.M | re.S):
+            items = re.findall(r'"((?:[^"\\]|\\.)*)"', bm.group(2))
+            if not items:
+                bundle_errors.append("bundle \"%s\" lists no items" % bm.group(1))
+            for it in items:
+                if norm(it) not in keys:
+                    bundle_errors.append("bundle \"%s\" names \"%s\", which has no file" % (bm.group(1), it))
+            keys.add(norm(bm.group(1)))
+
     manual = {norm(k): k for k in MANUAL}
     used, errors, seen = set(), [], 0
     for p in sorted(ROOT.rglob("*.html")):
@@ -70,6 +86,7 @@ def main():
                 continue
             errors.append("%s: \"%s\" matches no file in the order handler" % (rel, title))
     stale = [manual[n] for n in manual if n not in used]
+    errors = bundle_errors + errors
     if errors or stale:
         print("FAIL — buy buttons the order handler cannot deliver")
         for e in errors:

@@ -5,9 +5,9 @@ PAGE = {
     "slug": "index",
     "title": "Code School",
     "h1": "Code School",
-    "lede": ("Learn the languages and tools of development data work by doing it. Write and run R, Python and "
-             "SQL in your browser with nothing to install, then follow guided courses for the desktop software "
-             "your organisation already uses."),
+    "lede": ("Learn the languages and tools of development data work by doing it, running R, Python and SQL "
+             "in your browser and following guided courses for the desktop software your organisation already "
+             "uses."),
     "description": ("ImpactMojo Code School: free, hands-on courses for development data work in South Asia. "
                     "Run R, Python, tidyverse, pandas and SQL live in your browser, build Shiny apps, and learn "
                     "Stata, SPSS, jamovi, JASP, OpenRefine, QGIS, KoboToolbox, spreadsheets, Git and Quarto "

@@ -3213,6 +3213,114 @@ html[data-theme="light"],html[data-theme="light"] body{--accent-color:#BE185D;--
 html[data-theme="dark"],html[data-theme="dark"] body{--accent-color:#F9A8D4;--accent-hover:#FBCFE8}
 html[data-theme="dark"] .sidebar-nav .nav-link.active,html[data-theme="dark"] .nav-link.active{color:var(--accent-color)}
 </style>
+<style id="course-hero-style">
+/* Course opening (ch-). The course is on the first screen: title, one line
+   of promise, Start, three outcomes and the module list. The track colour is
+   an accent only (a thin bar, the label, the part names), never a panel.
+   Every ink below is measured against the page and panel surfaces in both
+   themes. Light values here; dark values in the two blocks that follow. */
+.ch-hero, .ch-about {
+  --ch-ink:#111827; --ch-muted:#4B5563; --ch-link:#0369A1;
+  --ch-fill:#0369A1; --ch-on-fill:#FFFFFF;
+  --ch-surface:#F5F6F8; --ch-line:#E3E6EB; --ch-line-strong:#C9CED6;
+  --ch-econ:#92580A; --ch-mel:#1D4ED8; --ch-gender:#BE185D; --ch-law:#6D28D9;
+  --ch-comm:#0F766E; --ch-phil:#9A3412; --ch-practice:#166534;
+  --ch-track:var(--ch-link);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .ch-hero, html:not([data-theme="light"]) .ch-about {
+    --ch-ink:#F1F5F9; --ch-muted:#A7B2C5; --ch-link:#7DD3FC;
+    --ch-fill:#38BDF8; --ch-on-fill:#0B1120;
+    --ch-surface:#131B2E; --ch-line:#26314A; --ch-line-strong:#3A4766;
+    --ch-econ:#FCD34D; --ch-mel:#93C5FD; --ch-gender:#F9A8D4; --ch-law:#C4B5FD;
+    --ch-comm:#5EEAD4; --ch-phil:#FDBA74; --ch-practice:#86EFAC;
+  }
+}
+[data-theme="dark"] .ch-hero, [data-theme="dark"] .ch-about,
+body.dark-mode .ch-hero, body.dark-mode .ch-about {
+  --ch-ink:#F1F5F9; --ch-muted:#A7B2C5; --ch-link:#7DD3FC;
+  --ch-fill:#38BDF8; --ch-on-fill:#0B1120;
+  --ch-surface:#131B2E; --ch-line:#26314A; --ch-line-strong:#3A4766;
+  --ch-econ:#FCD34D; --ch-mel:#93C5FD; --ch-gender:#F9A8D4; --ch-law:#C4B5FD;
+  --ch-comm:#5EEAD4; --ch-phil:#FDBA74; --ch-practice:#86EFAC;
+}
+.ch-tr-econ { --ch-track:var(--ch-econ); } .ch-tr-mel { --ch-track:var(--ch-mel); }
+.ch-tr-gender { --ch-track:var(--ch-gender); } .ch-tr-law { --ch-track:var(--ch-law); }
+.ch-tr-comm { --ch-track:var(--ch-comm); } .ch-tr-phil { --ch-track:var(--ch-phil); }
+.ch-tr-practice { --ch-track:var(--ch-practice); }
+
+/* The wrapper's top padding was sized for a mobile header that the site bar
+   now replaces, so it is trimmed wherever the opening sits first. */
+.content-wrapper:has(> .ch-hero:first-child), .main-content:has(> .ch-hero:first-child) { padding-top:1.5rem; }
+
+.ch-hero { position:relative; z-index:1; color:var(--ch-ink); background:transparent; padding:0.25rem 0 2rem; margin:0; border:0; text-align:left; }
+.ch-hero *, .ch-about * { box-sizing:border-box; }
+.ch-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:1.75rem; align-items:start; }
+.ch-accent { display:block; width:56px; height:4px; border-radius:2px; background:var(--ch-track); margin:0 0 1rem; }
+.ch-label { display:flex; align-items:center; gap:7px; margin:0 0 0.75rem; padding:0; font:700 12px/1.3 'Inter',Helvetica,Arial,sans-serif !important; letter-spacing:.06em; text-transform:uppercase; color:var(--ch-track) !important; }
+.ch-label .ch-dot { width:8px; height:8px; border-radius:50%; background:currentColor; flex:none; }
+.ch-hero h1.ch-title { font-family:'Inter',Helvetica,Arial,sans-serif !important; font-size:clamp(1.75rem,3.2vw,2.5rem) !important; line-height:1.12 !important; font-weight:800 !important; letter-spacing:-.015em; margin:0 0 0.85rem !important; padding:0 !important; border:0; color:var(--ch-ink) !important; -webkit-text-fill-color:currentColor !important; background:none !important; text-shadow:none !important; max-width:none; text-align:left; }
+.ch-lede { font-size:1.2rem !important; line-height:1.5 !important; color:var(--ch-muted) !important; margin:0 0 0.85rem !important; max-width:60ch; padding:0; }
+.ch-meta { display:flex; flex-wrap:wrap; gap:4px 0; margin:0 0 1.1rem !important; padding:0; list-style:none; color:var(--ch-muted); font:500 13.5px/1.4 'Inter',Helvetica,Arial,sans-serif; }
+.ch-meta li { margin:0; padding:0; }
+.ch-meta li + li::before { content:"\00B7"; margin:0 9px; }
+.ch-hero a.ch-start { display:inline-flex; align-items:center; gap:8px; min-height:46px; padding:0 20px; border-radius:10px; background:var(--ch-fill) !important; color:var(--ch-on-fill) !important; font:700 15px/1 'Inter',Helvetica,Arial,sans-serif; text-decoration:none !important; border:0; }
+.ch-hero a.ch-start:hover { filter:brightness(1.08); }
+.ch-hero a.ch-start:focus-visible, .ch-mods a:focus-visible, .ch-mat:focus-visible { outline:2px solid var(--ch-link); outline-offset:2px; }
+.ch-can { margin-top:1.4rem; border-top:1px solid var(--ch-line); padding-top:1rem; }
+.ch-hero h2.ch-h, .ch-hero .ch-h { font-family:'Inter',Helvetica,Arial,sans-serif !important; font-size:15px !important; line-height:1.3 !important; font-weight:750; margin:0 !important; padding:0 !important; border:0 !important; color:var(--ch-ink) !important; letter-spacing:0; background:none; -webkit-text-fill-color:currentColor; }
+.ch-hero h2.ch-h::before, .ch-hero h2.ch-h::after { content:none !important; display:none !important; }
+.ch-can ul { margin:0.5rem 0 0 !important; padding:0 !important; list-style:none !important; }
+.ch-can li { position:relative; margin:0 !important; padding:0 0 0.5rem 18px !important; line-height:1.45; color:var(--ch-ink); font-size:1.02rem; list-style:none !important; }
+.ch-can li::before { content:""; position:absolute; left:0; top:.62em; width:7px; height:7px; border-radius:2px; background:var(--ch-track); }
+.ch-can li::marker { content:none; }
+.ch-mods { border:1px solid var(--ch-line); border-radius:14px; padding:0.8rem 1rem 0.6rem; background:var(--ch-surface); color:var(--ch-ink); }
+.ch-mods-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:0 0 2px; }
+.ch-mods-head span { color:var(--ch-muted); font:500 13px/1.3 'Inter',Helvetica,Arial,sans-serif; }
+.ch-part { font:700 11px/1.3 'Inter',Helvetica,Arial,sans-serif !important; letter-spacing:.06em; text-transform:uppercase; color:var(--ch-track) !important; margin:0.65rem 0 0.15rem !important; padding:0; }
+.ch-mods ol { list-style:none !important; margin:0 !important; padding:0 !important; }
+.ch-mods li { margin:0 !important; padding:0 !important; list-style:none !important; }
+.ch-mods li::marker { content:none; }
+.ch-mods li a { display:flex; gap:10px; align-items:baseline; padding:3px 0; color:var(--ch-ink) !important; text-decoration:none !important; font-size:0.94rem; line-height:1.3; border:0; background:none; }
+.ch-mods li a:hover .ch-mt { color:var(--ch-link); text-decoration:underline; }
+.ch-mn { font:600 12px/1.3 'Inter',Helvetica,Arial,sans-serif; color:var(--ch-muted); font-variant-numeric:tabular-nums; flex:none; width:20px; }
+
+/* Laptop: the module list sits in a right-hand column. The course sidebar
+   takes 260px, so the opening uses the full width beside it rather than the
+   900px reading column. */
+@media (min-width: 1200px) {
+  .ch-hero { --ch-w:min(1060px, calc(100vw - var(--sidebar-width, 260px) - 64px)); width:var(--ch-w); max-width:none; margin-left:calc(50% - var(--ch-w) / 2); }
+  .ch-grid { grid-template-columns:minmax(0,1fr) minmax(0,380px); gap:2.25rem; }
+  .ch-mods { position:relative; }
+}
+@media (max-width: 600px) {
+  .ch-hero { padding-bottom:1.5rem; }
+  .ch-lede { font-size:1.08rem !important; }
+  .ch-mods { padding:0.7rem 0.85rem 0.5rem; }
+}
+
+/* About this course: the description the opening used to carry, unchanged. */
+.ch-about { color:var(--ch-ink); }
+:where(.ch-about) { padding:0.5rem 0; margin:0; }
+.ch-about h2.ch-about-h { font-family:'Inter',Helvetica,Arial,sans-serif !important; margin:0 0 0.75rem !important; color:var(--ch-ink) !important; -webkit-text-fill-color:currentColor !important; background:none !important; }
+.ch-about .ch-about-tag { font-weight:700; color:var(--ch-ink) !important; font-size:1.1rem; margin:0 0 0.6rem; }
+.ch-about .ch-about-p { color:var(--ch-ink) !important; margin:0 0 0.9rem; }
+.ch-about .ch-about-p a { color:var(--ch-link) !important; text-decoration:underline; text-underline-offset:.15em; }
+.ch-facts { display:flex; flex-wrap:wrap; gap:4px 0; margin:0 0 1rem !important; padding:0 !important; list-style:none !important; color:var(--ch-muted); font:500 13.5px/1.5 'Inter',Helvetica,Arial,sans-serif; }
+.ch-facts li { margin:0 !important; padding:0 !important; list-style:none !important; }
+.ch-facts li::marker { content:none; }
+.ch-facts li + li::before { content:"\00B7"; margin:0 9px; }
+.ch-mats { display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.25rem 0 0.5rem; padding:0; border:0; }
+.ch-mat { display:inline-flex; align-items:center; gap:0.45rem; min-height:40px; padding:0.45rem 0.85rem; border:1px solid var(--ch-line-strong); border-radius:8px; background:transparent; color:var(--ch-link) !important; font:600 14px/1.3 'Inter',Helvetica,Arial,sans-serif; text-decoration:none !important; }
+a.ch-mat:hover { border-color:var(--ch-link); text-decoration:underline !important; }
+.ch-mat.is-soon { color:var(--ch-muted) !important; cursor:default; }
+.ch-mat img, .ch-mat svg { width:16px !important; height:16px !important; flex:none; margin:0 !important; opacity:1 !important; filter:none !important; }
+[data-theme="dark"] .ch-mat img, body.dark-mode .ch-mat img { filter:invert(1) !important; }
+@media (prefers-color-scheme: dark) { html:not([data-theme="light"]) .ch-mat img { filter:invert(1) !important; } }
+.ch-mat .soon-badge { margin-left:0.2rem; background:var(--ch-surface) !important; color:var(--ch-muted) !important; border:1px solid var(--ch-line) !important; opacity:1 !important; }
+.ch-about .ch-quote { margin:0.5rem 0 1rem; }
+.ch-about .stat-grid { margin:0.5rem 0 1rem; }
+</style>
 <body>
 <!-- ImpactMojo Top Bar -->
 <div class="im-topbar" id="imTopbar" role="navigation" aria-label="Site navigation">
@@ -3328,33 +3436,56 @@ html[data-theme="dark"] .sidebar-nav .nav-link.active,html[data-theme="dark"] .n
             <div class="sidebar-footer"><button class="theme-toggle" id="theme-toggle"><span class="theme-icon"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Flare.svg" alt="" class="theme-toggle-icon"></span><span class="theme-label">Light mode</span></button></div>
         </aside>
         <main class="main-content" id="main-content"><div class="content-wrapper">
-<section class="hero" id="hero">
-                    <div class="hero-badge"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Heart.svg" alt="" style="width:16px;height:16px;">Flagship Course &bull; Free Forever</div>
-                    <h1>Nonviolence in Practice</h1>
-                    <p class="hero-tagline">Communication, Resistance &amp; Repair: NVC, NVR and Restorative Justice</p>
-                    <p class="hero-subtitle">Gandhi gave the twentieth century a philosophy of nonviolence. This course teaches the <strong>working methods</strong> that grew from it: three canonical traditions that turn <em>ahimsa</em> into concrete skill. <strong>Nonviolent Communication</strong> (Marshall Rosenberg) for the interpersonal moment; <strong>Non-Violent Resistance / New Authority</strong> (Haim Omer) for holding a firm, non-escalating line in families, care work and institutions; and <strong>Restorative Justice</strong> (Howard Zehr and the circle traditions) for repairing harm in communities and systems. We teach each canon in full, trace its <strong>indigenous and South Asian roots</strong>, take its feminist and decolonial critiques seriously, and end in fieldcraft. Sits alongside our <a href="../gandhi/index.html" style="color: rgba(255,255,255,0.95); text-decoration: underline;">Gandhi</a> and <a href="../sel/index.html" style="color: rgba(255,255,255,0.95); text-decoration: underline;">Social-Emotional Learning</a> flagships.</p>
-                    <div class="feature-tags">
-<span class="feature-tag data"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Chat.svg" alt="">Rosenberg &middot; NVC</span>
-<span class="feature-tag data"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Flare.svg" alt="">Omer &middot; NVR</span>
-<span class="feature-tag data"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Direction_alt.svg" alt="">Zehr &middot; Restorative Justice</span>
-<span class="feature-tag data"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Globe_detailed.svg" alt="">South Asian Roots</span>
-</div><div class="hero-meta">
-<div class="hero-meta-item"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Check_circle.svg" alt="" style="width:16px;height:16px;">11 Modules + Capstone</div>
-                    <div class="hero-meta-item"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Clock.svg" alt="" style="width:16px;height:16px;">~18 hours</div>
-<div class="hero-meta-item"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Check_circle.svg" alt="" style="width:16px;height:16px;">3 Canonical Traditions</div>
-<div class="hero-meta-item"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Check_circle.svg" alt="" style="width:16px;height:16px;">Critique &amp; Fieldcraft</div>
-<div class="hero-meta-item"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Check_circle.svg" alt="" style="width:16px;height:16px;">48-Term Lexicon</div>
-</div>
-                    <div class="hero-resources">
-                        <a href="/products/notes-nvc-rj/" class="hero-resource-btn" title="Buy the full course as printable PDF notes (₹350)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg> Course Notes · PDF ₹350</a>
-                        <a href="lexicon.html" class="hero-resource-btn"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Book.svg" alt="" style="width:16px;height:16px;">Interactive Lexicon</a>
-                        <a href="#course-assessment" class="hero-resource-btn"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Checklist.svg" alt="" style="width:16px;height:16px;">Assess Yourself</a>
-                        <a href="#module11" class="hero-resource-btn"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Checklist.svg" alt="" style="width:16px;height:16px;">Facilitation Fieldcraft</a>
-                        <a href="/Labs/nvc-mediation-lab.html" class="hero-resource-btn" title="Practise NVC and mediation on your own scenarios"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Chat.svg" alt="" style="width:16px;height:16px;">NVC &amp; Mediation Practice · Lab</a>
-                        <a href="/Labs/before-we-fall-apart-lab.html" class="hero-resource-btn" title="Capstone practicum: a group conflict-preparedness studio"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Heart.svg" alt="" style="width:16px;height:16px;">Before We Fall Apart · Lab</a>
-                        <span class="hero-resource-btn soon" title="Reading pack: coming soon"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Book.svg" alt="" style="width:16px;height:16px;">Course Papers <span class="soon-badge">Soon</span></span>
-                        <span class="hero-resource-btn soon" title="NotebookLM AI companion: coming soon"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_AI_note.svg" alt="" style="width:16px;height:16px;">AI Study Companion <span class="soon-badge">Soon</span></span>
-                    </div></section><div class="divider"></div>
+<section class="ch-hero ch-tr-phil" id="hero" aria-labelledby="ch-title">
+    <div class="ch-grid">
+        <div class="ch-left">
+            <span class="ch-accent" aria-hidden="true"></span>
+            <p class="ch-label"><span class="ch-dot" aria-hidden="true"></span>Flagship course &middot; Philosophy</p>
+            <h1 class="ch-title" id="ch-title">Nonviolence in Practice</h1>
+            <p class="ch-lede">Learn three working methods of nonviolence, for a hard conversation, for holding a firm line and for repairing harm.</p>
+            <ul class="ch-meta" aria-label="Course facts"><li>11 modules and a capstone</li><li>About 18 hours</li><li>48-term lexicon</li><li>Free</li></ul>
+            <a class="ch-start" href="#module1">Start module 1 <span aria-hidden="true">&rarr;</span></a>
+            <div class="ch-can">
+                <h2 class="ch-h">What you will be able to do</h2>
+                <ul>
+                    <li>Use Nonviolent Communication's observations, feelings, needs and requests to keep a hard conversation connected.</li>
+                    <li>Hold a firm line without escalating in families, care work and institutions, with Non-Violent Resistance.</li>
+                    <li>Use restorative practices to repair harm in communities, with the feminist and decolonial critiques of each tradition in view.</li>
+                </ul>
+            </div>
+        </div>
+        <nav class="ch-mods" aria-labelledby="ch-mods-h">
+            <div class="ch-mods-head"><h2 class="ch-h" id="ch-mods-h">12 modules</h2><span>in five parts</span></div>
+            <p class="ch-part">Foundations</p>
+            <ol start="1"><li><a href="#module1"><span class="ch-mn" aria-hidden="true">01</span><span class="ch-mt">The Practice of Nonviolence</span></a></li></ol>
+            <p class="ch-part">Nonviolent Communication</p>
+            <ol start="2"><li><a href="#module2"><span class="ch-mn" aria-hidden="true">02</span><span class="ch-mt">NVC Foundations</span></a></li><li><a href="#module3"><span class="ch-mn" aria-hidden="true">03</span><span class="ch-mt">The Four Components</span></a></li><li><a href="#module4"><span class="ch-mn" aria-hidden="true">04</span><span class="ch-mt">Empathy &amp; the Uses of Force</span></a></li></ol>
+            <p class="ch-part">Non-Violent Resistance</p>
+            <ol start="5"><li><a href="#module5"><span class="ch-mn" aria-hidden="true">05</span><span class="ch-mt">NVR &amp; New Authority</span></a></li><li><a href="#module6"><span class="ch-mn" aria-hidden="true">06</span><span class="ch-mt">NVR in Action</span></a></li></ol>
+            <p class="ch-part">Restorative Justice</p>
+            <ol start="7"><li><a href="#module7"><span class="ch-mn" aria-hidden="true">07</span><span class="ch-mt">The Restorative Approach</span></a></li><li><a href="#module8"><span class="ch-mn" aria-hidden="true">08</span><span class="ch-mt">Restorative Practices</span></a></li><li><a href="#module9"><span class="ch-mn" aria-hidden="true">09</span><span class="ch-mt">Roots, Power &amp; Critique</span></a></li></ol>
+            <p class="ch-part">Integration</p>
+            <ol start="10"><li><a href="#module10"><span class="ch-mn" aria-hidden="true">10</span><span class="ch-mt">Choosing &amp; Combining</span></a></li><li><a href="#module11"><span class="ch-mn" aria-hidden="true">11</span><span class="ch-mt">Fieldcraft &amp; Facilitation</span></a></li><li><a href="#module12"><span class="ch-mn" aria-hidden="true">12</span><span class="ch-mt">Capstone Project</span></a></li></ol>
+        </nav>
+    </div>
+</section>
+
+<section class="ch-about" id="course-about" aria-labelledby="ch-about-h">
+    <h2 class="ch-about-h" id="ch-about-h">About this course</h2>
+    <p class="ch-about-tag">Communication, Resistance &amp; Repair: NVC, NVR and Restorative Justice</p>
+    <p class="ch-about-p">Gandhi gave the twentieth century a philosophy of nonviolence. This course teaches the <strong>working methods</strong> that grew from it: three canonical traditions that turn <em>ahimsa</em> into concrete skill. <strong>Nonviolent Communication</strong> (Marshall Rosenberg) for the interpersonal moment; <strong>Non-Violent Resistance / New Authority</strong> (Haim Omer) for holding a firm, non-escalating line in families, care work and institutions; and <strong>Restorative Justice</strong> (Howard Zehr and the circle traditions) for repairing harm in communities and systems. We teach each canon in full, trace its <strong>indigenous and South Asian roots</strong>, take its feminist and decolonial critiques seriously, and end in fieldcraft. Sits alongside our <a href="../gandhi/index.html">Gandhi</a> and <a href="../sel/index.html">Social-Emotional Learning</a> flagships.</p>
+    <ul class="ch-facts" aria-label="Course at a glance"><li>3 Canonical Traditions</li><li>Critique &amp; Fieldcraft</li></ul>
+    <div class="ch-mats">
+        <a class="ch-mat" href="/products/notes-nvc-rj/" title="Buy the full course as printable PDF notes (₹350)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg> Course Notes · PDF ₹350</a>
+        <a class="ch-mat" href="lexicon.html"><img alt="" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Book.svg" width="24"/>Interactive Lexicon</a>
+        <a class="ch-mat" href="#course-assessment"><img alt="" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Checklist.svg" width="24"/>Assess Yourself</a>
+        <a class="ch-mat" href="#module11"><img alt="" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Checklist.svg" width="24"/>Facilitation Fieldcraft</a>
+        <a class="ch-mat" href="/Labs/nvc-mediation-lab.html" title="Practise NVC and mediation on your own scenarios"><img alt="" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Chat.svg" width="24"/>NVC &amp; Mediation Practice · Lab</a>
+        <a class="ch-mat" href="/Labs/before-we-fall-apart-lab.html" title="Capstone practicum: a group conflict-preparedness studio"><img alt="" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Heart.svg" width="24"/>Before We Fall Apart · Lab</a>
+        <a class="ch-mat" href="readings.html"><img alt="" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Book.svg" width="24"/>Reading list </a>
+        <span class="ch-mat is-soon" title="NotebookLM AI companion: coming soon"><img alt="" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_AI_note.svg" width="24"/>AI Study Companion <span class="soon-badge">Soon</span></span>
+    </div>
+</section><div class="divider"></div>
 
 <section class="section reveal" id="orientation" style="max-width:900px;margin:0 auto;padding:2.5rem 1.5rem;">
   <div style="background:var(--secondary-bg);border:1px solid var(--border-color);border-left:4px solid var(--accent-color);border-radius:12px;padding:1.75rem 1.75rem 1.25rem;">
@@ -3859,7 +3990,7 @@ html[data-theme="dark"] .sidebar-nav .nav-link.active,html[data-theme="dark"] .n
         </script>
         
         <!-- Google Analytics -->
-        <script async src="/js/ga-load.js?v=29205802"></script>
+        <script async src="/js/ga-load.js?v=7b6e3dd2"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -4021,6 +4152,6 @@ html[data-theme="dark"] .sidebar-nav .nav-link.active,html[data-theme="dark"] .n
 <script src="/js/offline.js?v=13c54b3d" defer></script>
 <script defer src="../../js/auto-refresh.js"></script>
 <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
-  <script src="/js/site-chrome.js?v=a85d1db1" defer></script>
+  <script src="/js/site-chrome.js?v=0d18f1bc" defer></script>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <meta name="robots" content="index, follow">
 
 <!-- Google Analytics -->
-<script async src="/js/ga-load.js?v=29205802"></script>
+<script async src="/js/ga-load.js?v=7b6e3dd2"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('consent','default',{analytics_storage:(function(){try{var v=localStorage.getItem('im-analytics-consent');if(v==='granted'||v==='denied')return v;if(localStorage.getItem('cookieConsent')==='true')return 'granted'}catch(e){}return 'denied'})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','G-JRCMEB9TBW');</script>
 
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
@@ -32,133 +32,160 @@
 
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+/* Tokens. Every ink is measured against --paper and --paper-soft in both
+   themes. --fill is a surface carrying --on-fill; it is never used as ink. */
 :root{
-  --cyan:#0EA5E9;--indigo:#6366F1;--green:#10B981;--amber:#F59E0B;--red:#EF4444;
-  --ink:#0F172A;--ink-mid:#1E293B;--ink-light:#475569;
-  --paper:#FDF8F2;--paper-mid:#F1F5F9;--paper-soft:#FFFFFF;
-  --border:#E2E8F0;
+  --paper:#FFFFFF;--paper-mid:#F5F6F8;--paper-soft:#FFFFFF;
+  --ink:#111827;--ink-mid:#374151;--ink-light:#4B5563;
+  --border:#E3E6EB;--border-strong:#C9CED6;
+  --link:#0369A1;--fill:#0369A1;--on-fill:#FFFFFF;
+  --badge-bg:#E6F0F6;--badge-ink:#075985;
+  --count-bg:#EEF2F7;--count-ink:#1F2937;
+  --new-bg:#FEF3C7;--new-ink:#713F12;
+  --tick:#15803D;
+  --t-mel:#1D4ED8;--t-data:#15803D;--t-policy:#A16207;
+  --t-gender:#BE185D;--t-law:#6D28D9;--t-health:#B91C1C;
   --font-head:'Inter',system-ui,sans-serif;
   --font-body:'Amaranth',Georgia,serif;
   --font-mono:'JetBrains Mono',monospace;
 }
-html.dark{--paper:#0F172A;--paper-mid:#1E293B;--paper-soft:#1E293B;--ink:#F1F5F9;--ink-mid:#CBD5E1;--ink-light:#94A3B8;--border:#334155}
-@media(prefers-color-scheme:dark){html:not([data-theme]){--paper:#0F172A;--paper-mid:#1E293B;--paper-soft:#1E293B;--ink:#F1F5F9;--ink-mid:#CBD5E1;--ink-light:#94A3B8;--border:#334155}}
+html.dark,html[data-theme="dark"]{
+  --paper:#0B1120;--paper-mid:#131B2E;--paper-soft:#131B2E;
+  --ink:#F1F5F9;--ink-mid:#CBD5E1;--ink-light:#A7B2C5;
+  --border:#26314A;--border-strong:#3A4766;
+  --link:#7DD3FC;--fill:#38BDF8;--on-fill:#0B1120;
+  --badge-bg:#16304A;--badge-ink:#BAE6FD;
+  --count-bg:#1E293B;--count-ink:#E2E8F0;
+  --new-bg:#2B2210;--new-ink:#FDE68A;
+  --tick:#86EFAC;
+  --t-mel:#93C5FD;--t-data:#86EFAC;--t-policy:#FCD34D;
+  --t-gender:#F9A8D4;--t-law:#C4B5FD;--t-health:#FCA5A5;
+}
+@media(prefers-color-scheme:dark){html:not([data-theme]){
+  --paper:#0B1120;--paper-mid:#131B2E;--paper-soft:#131B2E;
+  --ink:#F1F5F9;--ink-mid:#CBD5E1;--ink-light:#A7B2C5;
+  --border:#26314A;--border-strong:#3A4766;
+  --link:#7DD3FC;--fill:#38BDF8;--on-fill:#0B1120;
+  --badge-bg:#16304A;--badge-ink:#BAE6FD;
+  --count-bg:#1E293B;--count-ink:#E2E8F0;
+  --new-bg:#2B2210;--new-ink:#FDE68A;
+  --tick:#86EFAC;
+  --t-mel:#93C5FD;--t-data:#86EFAC;--t-policy:#FCD34D;
+  --t-gender:#F9A8D4;--t-law:#C4B5FD;--t-health:#FCA5A5;
+}}
+html{scroll-padding-top:60px}
 html,body{font-family:var(--font-body);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--link)}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-/* Topbar */
-.im-topbar{position:sticky;top:0;z-index:50;background:var(--paper-soft);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* Topbar (js/site-chrome.js replaces it with the shared bar) */
+.im-topbar{position:sticky;top:0;z-index:50;background:var(--paper-soft);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:flex-start;gap:16px;flex-wrap:wrap}
 .im-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
 .im-logo svg{width:32px;height:32px}
-.im-logo-text{font-family:var(--font-head);font-weight:800;font-size:18px;background:linear-gradient(90deg,#0EA5E9,#6366F1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.3px}
-.im-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.im-nav-btn{font-family:var(--font-head);font-size:13px;font-weight:600;color:var(--ink-mid);text-decoration:none;padding:8px 14px;border-radius:7px;border:1px solid transparent;transition:background 0.15s,border 0.15s}
+.im-logo-text{font-family:var(--font-head);font-weight:800;font-size:18px;color:var(--ink);letter-spacing:-0.3px}
+.im-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-left:auto}
+.im-nav-btn{font-family:var(--font-head);font-size:13px;font-weight:600;color:var(--ink-mid);text-decoration:none;padding:8px 14px;border-radius:7px;border:1px solid transparent}
 .im-nav-btn:hover{background:var(--paper-mid);border-color:var(--border)}
-.im-premium-btn{background:linear-gradient(135deg,#F59E0B,#EF4444);color:white;border-color:transparent}
-.im-premium-btn:hover{background:linear-gradient(135deg,#EAB308,#F87171);color:white;border-color:transparent}
-
-/* Hero */
-.hero{position:relative;padding:80px 28px 60px;background:linear-gradient(135deg,#0F172A 0%,#1E293B 100%);color:white;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 25% 30%,rgba(14,165,233,0.15) 1px,transparent 1px),radial-gradient(circle at 75% 70%,rgba(99,102,241,0.12) 1px,transparent 1px);background-size:80px 80px;opacity:0.5}
-.hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto}
-.hero-eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#0EA5E9;margin-bottom:16px;font-weight:600}
-.hero-title{font-family:var(--font-head);font-size:54px;font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:18px;background:linear-gradient(135deg,#fff 0%,#CBD5E1 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-family:var(--font-body);font-size:18px;line-height:1.55;color:rgba(255,255,255,0.78);max-width:780px;margin-bottom:30px}
-.hero-stats{display:flex;gap:24px;flex-wrap:wrap}
-.hero-stat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);padding:14px 22px;border-radius:10px;backdrop-filter:blur(10px)}
-.hero-stat-num{font-family:var(--font-head);font-size:32px;font-weight:800;color:#0EA5E9;line-height:1;margin-bottom:4px}
-.hero-stat-lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.85)}
-
-/* Filter bar */
-.filter-bar{padding:20px 28px;background:var(--paper-soft);border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center;flex-wrap:wrap;position:sticky;top:64px;z-index:40}
-.filter-label{font-family:var(--font-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-light);font-weight:600;margin-right:6px}
-.filter-chip{font-family:var(--font-head);font-size:12px;font-weight:600;padding:7px 14px;border-radius:7px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--ink-mid);transition:all 0.15s}
-.filter-chip:hover{background:var(--paper-mid)}
-.filter-chip.active{background:linear-gradient(135deg,#0EA5E9,#6366F1);color:white;border-color:transparent}
-.filter-search{flex:1;min-width:200px;font-family:var(--font-body);font-size:14px;padding:8px 14px;border:1px solid var(--border);border-radius:7px;background:var(--paper);color:var(--ink)}
-.filter-search:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(14,165,233,0.15)}
-
-/* Course grid */
-.courses-section{padding:50px 28px;max-width:1280px;margin:0 auto}
-.section-title{font-family:var(--font-head);font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-light);margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.section-title::after{content:"";flex:1;height:1px;background:var(--border)}
-.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;margin-bottom:48px}
-
-.course-card{position:relative;background:var(--paper-soft);border:1px solid var(--border);border-radius:12px;padding:22px 22px 18px;text-decoration:none;color:var(--ink);transition:transform 0.15s ease,box-shadow 0.15s ease,border-color 0.15s ease;display:flex;flex-direction:column;min-height:170px}
-.course-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(15,23,42,0.08);border-color:var(--cyan)}
-.course-card.card-coming{opacity:0.62;cursor:not-allowed}
-.course-card.card-coming:hover{transform:none;box-shadow:none;border-color:var(--border)}
-.card-badge{display:inline-block;font-family:var(--font-mono);font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:5px;margin-bottom:12px;width:fit-content}
-.card-badge-native{background:rgba(14,165,233,0.12);color:#0369A1;border:1px solid rgba(14,165,233,0.25)}
-.card-badge-deck{background:rgba(99,102,241,0.12);color:#4338CA;border:1px solid rgba(99,102,241,0.25)}
-.card-badge-coming{background:rgba(245,158,11,0.12);color:#92400E;border:1px solid rgba(245,158,11,0.25)}
-@media(prefers-color-scheme:dark){
-  .card-badge-native{color:#7DD3FC}
-  .card-badge-deck{color:#A5B4FC}
-  .card-badge-coming{color:#FCD34D}
-}
-.card-title{font-family:var(--font-head);font-size:17px;font-weight:700;line-height:1.25;margin-bottom:8px;color:var(--ink);letter-spacing:-0.3px}
-.card-desc{font-family:var(--font-body);font-size:14px;line-height:1.5;color:var(--ink-mid);flex:1;margin-bottom:14px}
-.card-cta{font-family:var(--font-head);font-size:12px;font-weight:700;color:var(--cyan);letter-spacing:0.3px}
-/* --- marketing feature list --- */
-.card-feats{list-style:none;margin:2px 0 14px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
-.card-feats li{font-family:var(--font-body);font-size:13px;color:var(--ink-mid);display:flex;align-items:center;gap:7px;line-height:1.35}
-.card-feats .ck{color:#10B981;font-weight:800;flex-shrink:0}
-.card-stretch{display:flex;flex-direction:column;flex:1 1 auto;text-decoration:none;color:inherit}
-.card-actions{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
-.course-card .card-cta{margin-top:0}
-.card-practice{font-family:var(--font-head);font-size:12.5px;font-weight:700;color:#fff;background:linear-gradient(135deg,#0EA5E9,#6366F1);padding:6px 12px;border-radius:7px;text-decoration:none;transition:opacity .15s}
-.card-practice:hover{opacity:.88}
-.card-outline{font-family:var(--font-head);font-size:12.5px;font-weight:700;color:var(--ink-mid);text-decoration:none;padding:6px 11px;border:1.5px solid var(--border);border-radius:7px;transition:.15s}
-.card-outline:hover{border-color:var(--cyan);color:var(--cyan)}
-.card-meta{font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.7px;text-transform:uppercase;color:var(--ink-light);margin-bottom:14px}
-@media(max-width:420px){.card-feats{grid-template-columns:1fr}}
-/* --- bigger, nicer cards (override base) --- */
-.course-grid{grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:22px}
-.course-card{padding:26px 24px 22px;min-height:215px;border-radius:16px;background:var(--paper-soft)}
-.course-card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;border-radius:16px 16px 0 0;background:linear-gradient(90deg,#0EA5E9,#6366F1);opacity:0;transition:opacity .15s}
-.course-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(15,23,42,.13);border-color:var(--cyan)}
-.course-card:hover::before{opacity:1}
-.card-badge{font-size:9.5px;margin-bottom:14px}
-.card-title{font-size:19px;margin-bottom:9px;letter-spacing:-0.4px}
-.card-desc{font-size:14px;margin-bottom:16px}
-.card-cta{font-size:13px;font-weight:700;color:var(--cyan);display:inline-flex;align-items:center;gap:6px;margin-top:auto}
-/* --- 3-button theme selector in the nav --- */
+.im-premium-btn{background:var(--fill);color:var(--on-fill)}
 .im-topbar-right{display:inline-flex;align-items:center;gap:8px}
 .im-theme-selector{display:inline-flex;gap:2px;background:var(--paper-mid);border:1px solid var(--border);border-radius:9px;padding:3px;margin-left:4px}
-.im-theme-btn{background:transparent;border:none;color:var(--ink-light);width:32px;height:32px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s}
-.im-theme-btn:hover{background:var(--paper-soft);color:var(--ink)}
-.im-theme-btn.active{background:linear-gradient(135deg,#0EA5E9,#6366F1);color:#fff}
+.im-theme-btn{background:transparent;border:none;color:var(--ink-light);width:32px;height:32px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.im-theme-btn.active{background:var(--fill);color:var(--on-fill)}
 .im-theme-btn svg{width:16px;height:16px}
-.im-topbar{justify-content:flex-start}
-.im-nav{margin-left:auto}
-@media(max-width:720px){.im-topbar{justify-content:space-between;padding:12px 16px}.im-nav{order:3;flex-basis:100%;margin-left:0;justify-content:center;gap:6px;margin-top:6px}.im-nav-btn{padding:7px 11px;font-size:12.5px}}
+@media(max-width:720px){.im-topbar{justify-content:space-between;padding:12px 16px}.im-nav{order:3;flex-basis:100%;margin-left:0;justify-content:center;gap:6px;margin-top:6px}}
 
-/* Footer */
+/* Hero: plain background, eyebrow, title, one sentence */
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.hub-hero{padding:44px 0 26px}
+.hub-accent{display:block;width:56px;height:4px;border-radius:2px;background:var(--link);margin:0 0 16px}
+.hub-eyebrow{font-family:var(--font-head);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-light);margin:0 0 12px}
+.hub-hero h1{font-family:var(--font-head);font-size:clamp(28px,4.2vw,44px);line-height:1.12;font-weight:800;letter-spacing:-.01em;color:var(--ink);margin:0 0 14px;max-width:22ch}
+.hub-lede{font-size:19px;color:var(--ink-light);max-width:60ch;margin:0 0 10px}
+.hub-note{font-size:16px;color:var(--ink-light);max-width:64ch}
+.hub-note a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
+
+/* Search and filters */
+.filter-bar{display:flex;flex-direction:column;gap:12px;padding:18px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.filter-search{width:100%;max-width:560px;font-family:var(--font-body);font-size:16px;padding:11px 14px;min-height:46px;border:1px solid var(--border-strong);border-radius:9px;background:var(--paper-soft);color:var(--ink)}
+.filter-search::placeholder{color:var(--ink-light);opacity:1}
+.filter-search:focus-visible{outline:2px solid var(--link);outline-offset:1px;border-color:var(--link)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.filter-chip{font-family:var(--font-head);font-size:13px;font-weight:600;min-height:36px;padding:7px 13px;border-radius:999px;cursor:pointer;border:1px solid var(--border-strong);background:var(--paper-soft);color:var(--ink-mid)}
+.filter-chip:hover{border-color:var(--link)}
+.filter-chip.active{background:var(--fill);color:var(--on-fill);border-color:var(--fill)}
+.filter-status{font-family:var(--font-head);font-size:14px;font-weight:600;color:var(--ink-mid);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.filter-status:empty{display:none}
+.clear-btn{font-family:var(--font-head);font-size:13px;font-weight:600;color:var(--link);background:transparent;border:1px solid var(--border-strong);border-radius:8px;padding:6px 11px;cursor:pointer}
+
+/* Tracks */
+.courses-section{padding-top:8px;padding-bottom:40px}
+.track{border-bottom:1px solid var(--border);padding:6px 0 10px}
+.deck-group-head{padding:14px 0 6px;border-left:4px solid var(--track,var(--link));padding-left:14px;margin:10px 0 6px}
+.deck-group-head h2{font-family:var(--font-head);font-size:1.3rem;font-weight:800;line-height:1.25;margin:0 0 .2rem;color:var(--ink)}
+.deck-group-head p{margin:0;font-size:.98rem;color:var(--ink-light)}
+.dg-n{display:inline-block;font-family:var(--font-mono);font-size:.78rem;font-weight:600;background:var(--count-bg);color:var(--count-ink);border-radius:999px;padding:.12rem .55rem;margin-left:.45rem;vertical-align:middle}
+.t-match{font-family:var(--font-head);font-size:.85rem;font-weight:600;color:var(--ink-light);margin-left:.5rem}
+.t-match:empty{display:none}
+.t-toggle{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:0;width:100%;min-height:44px;cursor:pointer;font:inherit;color:inherit;border-radius:6px}
+.t-toggle:focus-visible{outline:2px solid var(--link);outline-offset:3px}
+.t-icon{margin-left:auto;flex:none;width:30px;height:30px;border:1px solid var(--border-strong);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink-mid)}
+.t-icon::before{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .15s}
+.t-toggle[aria-expanded="false"] .t-icon::before{transform:translateY(1px) rotate(-45deg)}
+.t-toggle:hover .t-icon{border-color:var(--link);color:var(--link)}
+.track-mel{--track:var(--t-mel)}.track-data{--track:var(--t-data)}.track-policy{--track:var(--t-policy)}
+.track-gender{--track:var(--t-gender)}.track-law{--track:var(--t-law)}.track-health{--track:var(--t-health)}
+.track-body{padding:10px 0 8px}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.show-all{display:inline-flex;align-items:center;gap:8px;margin:16px 0 4px;min-height:44px;padding:0 18px;border-radius:10px;border:1px solid var(--border-strong);background:var(--paper-soft);color:var(--link);font-family:var(--font-head);font-size:14.5px;font-weight:700;cursor:pointer}
+.show-all:hover{border-color:var(--link)}
+.is-hidden,.is-out{display:none !important}
+.hub-js .track:not(.all) .is-extra{display:none}
+.hub-js .filtering .track .is-extra{display:flex}
+.hub-js .filtering .track .is-extra.is-out{display:none}
+.hub-aside{font-size:16px;color:var(--ink-light);max-width:70ch;padding:22px 0 0}
+.hub-aside a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
+
+/* Cards */
+.course-card{position:relative;background:var(--paper-soft);border:1px solid var(--border);border-radius:14px;padding:22px 22px 18px;color:var(--ink);display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
+.course-card:hover{border-color:var(--link);box-shadow:0 10px 26px rgba(15,23,42,.10)}
+.course-card.card-new{border-left:4px solid var(--new-ink)}
+.card-new-tag{display:inline-block;width:fit-content;font-family:var(--font-head);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--new-bg);color:var(--new-ink);border-radius:5px;padding:4px 8px;margin:0 8px 12px 0;vertical-align:top}
+.card-badge{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:4px 9px;border-radius:5px;margin-bottom:12px;width:fit-content;background:var(--badge-bg);color:var(--badge-ink)}
+.card-title{font-family:var(--font-head);font-size:18px;font-weight:700;line-height:1.25;margin-bottom:8px;color:var(--ink);letter-spacing:-0.3px}
+.card-desc{font-family:var(--font-body);font-size:15px;line-height:1.5;color:var(--ink-mid);flex:1;margin-bottom:12px}
+.card-stretch{display:flex;flex-direction:column;flex:1 1 auto;text-decoration:none;color:inherit;border-radius:8px}
+.card-feats{list-style:none;margin:2px 0 12px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.card-feats li{font-family:var(--font-body);font-size:13.5px;color:var(--ink-mid);display:flex;align-items:center;gap:7px;line-height:1.35}
+.card-feats .ck{color:var(--tick);font-weight:800;flex-shrink:0}
+.card-meta{font-family:var(--font-mono);font-size:10px;letter-spacing:0.7px;text-transform:uppercase;color:var(--ink-light);margin-bottom:4px}
+.card-actions{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.card-cta{font-family:var(--font-head);font-size:13.5px;font-weight:700;color:var(--link);display:inline-flex;align-items:center;gap:6px;padding:6px 0}
+.card-practice{font-family:var(--font-head);font-size:12.5px;font-weight:700;color:var(--on-fill);background:var(--fill);padding:6px 12px;border-radius:7px;text-decoration:none}
+.card-practice:hover{filter:brightness(1.08)}
+.card-outline{font-family:var(--font-head);font-size:12.5px;font-weight:700;color:var(--ink-mid);text-decoration:none;padding:6px 11px;border:1px solid var(--border-strong);border-radius:7px}
+.card-outline:hover{border-color:var(--link);color:var(--link)}
+
+/* Footer (js/site-chrome.js replaces it with the shared footer) */
 .foot{padding:50px 28px 32px;border-top:1px solid var(--border);text-align:center;background:var(--paper-soft)}
 .foot-cta{font-family:var(--font-head);font-size:14px;font-weight:600;color:var(--ink-mid);margin-bottom:20px}
 .foot-links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
-.foot-links a{font-family:var(--font-head);font-size:13px;font-weight:600;color:var(--cyan);text-decoration:none}
-.foot-links a:hover{text-decoration:underline}
+.foot-links a{font-family:var(--font-head);font-size:13px;font-weight:600;color:var(--link);text-decoration:none}
 .foot-meta{font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--ink-light);text-transform:uppercase}
 
 @media(max-width:720px){
-  .hero{padding:50px 22px 40px}
-  .hero-title{font-size:38px;letter-spacing:-1.5px}
-  .hero-sub{font-size:15px}
-  .hero-stat-num{font-size:24px}
-  .courses-section{padding:32px 18px}
-  .filter-bar{padding:14px 18px;top:62px}
+  .wrap{padding:0 16px}
+  .hub-hero{padding:28px 0 18px}
+  .hub-lede{font-size:17px}
+  .hub-note,.hub-aside{font-size:15px}
+  .course-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+  .course-card{padding:16px 16px 14px}
+  .card-feats,.card-meta{display:none}
+  .card-desc{margin-bottom:6px}
+  .card-actions{margin-top:8px}
+  .deck-group-head h2{font-size:1.15rem}
 }
-
-/* Track group headers inside the course grid */
-.deck-group-head{grid-column:1/-1;margin:1.6rem 0 0.2rem}
-.deck-group-head h2{font-family:'Inter',sans-serif;font-size:1.3rem;font-weight:800;margin:0 0 0.15rem;color:var(--ink,#0F172A)}
-.deck-group-head p{margin:0;font-size:0.92rem;color:var(--ink-light,#475569)}
-.deck-group-head .dg-n{font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:600;background:rgba(102,126,234,.12);color:#4C51BF;border-radius:999px;padding:0.12rem 0.55rem;margin-left:0.4rem;vertical-align:middle}
-body.deck-filtering .deck-group-head{display:none}
-[data-theme="dark"] .deck-group-head .dg-n{color:#C7D2FE}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .deck-group-head .dg-n{color:#C7D2FE}}
-
+@media(prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 </head>
@@ -189,43 +216,34 @@ body.deck-filtering .deck-group-head{display:none}
   </div>
 </header>
 
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">ImpactMojo 101 Series &middot; Free Forever</div>
-    <h1 class="hero-title">84 Foundational Courses for South Asian Development Practitioners</h1>
-    <p class="hero-sub">A free, open-access, CC BY-NC-ND library of foundational primers on development methods, theory, and practice. Covering MEL, data, ethics, gender, climate, public finance, identity, and more: built specifically for the South Asian context. Interactive slide decks plus curated reading lists.</p>
-    <p class="hero-sub" style="font-size:15px;margin-top:-14px">Want a copy to print and annotate? Every course is also available as <a href="/products/notes-101/" style="color:#7DD3FC">course notes, ₹149</a>: all the slides on A4, two to a page, with space for your notes.</p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-num">80</div>
-        <div class="hero-stat-lbl">Native Course Decks</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">8,000+</div>
-        <div class="hero-stat-lbl">Slides of Learning</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">Free</div>
-        <div class="hero-stat-lbl">Forever, CC BY-NC-ND</div>
-      </div>
-    </div>
-    <p class="hero-sub" style="margin-top:1rem">Looking for hands-on coding? R &amp; Python for Development and fifteen other courses, from Stata and SPSS to QGIS and KoboToolbox, are in <a href="/code/" style="color:inherit;text-decoration:underline">Code School</a>, with R, Python and SQL running in your browser.</p>
-  </div>
+<div class="wrap">
+<section class="hub-hero" aria-labelledby="hub-title">
+  <span class="hub-accent" aria-hidden="true"></span>
+  <p class="hub-eyebrow">101 Series</p>
+  <h1 id="hub-title">84 short courses for development practitioners in South Asia</h1>
+  <p class="hub-lede">Each course is a free deck of about 100 slides that you work through at your own pace.</p>
+  <p class="hub-note">Want a copy to print and annotate? Every course is also sold as <a href="/products/notes-101/">course notes for ₹149</a>, with all the slides on A4, two to a page, and room for your own notes.</p>
 </section>
 
-<div class="filter-bar">
-  <span class="filter-label">Filter:</span>
-  <button class="filter-chip active" data-filter="all">All (80)</button>
-  <button class="filter-chip" data-filter="quiz">Self-check drills (17)</button>
-  <button class="filter-chip" data-filter="charts">Interactive charts (7)</button>
-  <button class="filter-chip" data-filter="glossary">With glossary (6)</button>
-  <input type="search" class="filter-search" placeholder="Search courses by title or description..." aria-label="Search courses">
+<div class="filter-bar" role="search" aria-label="Courses">
+  <label class="sr-only" for="courseSearch">Search courses</label>
+  <input type="search" id="courseSearch" class="filter-search" placeholder="Search courses, for example water or gender" autocomplete="off">
+  <div class="chips" role="group" aria-label="Show only">
+    <button type="button" class="filter-chip active" data-filter="all" aria-pressed="true">All (84)</button>
+    <button type="button" class="filter-chip" data-filter="quiz" aria-pressed="false">Self-check drills (17)</button>
+    <button type="button" class="filter-chip" data-filter="charts" aria-pressed="false">Interactive charts (11)</button>
+    <button type="button" class="filter-chip" data-filter="glossary" aria-pressed="false">With glossary (6)</button>
+  </div>
+  <p class="filter-status" id="filterStatus" aria-live="polite"></p>
+</div>
 </div>
 
-<main class="courses-section">
-  <div class="section-title">All 101 Courses</div>
-  <div class="course-grid" id="courseGrid">
-<div class="deck-group-head"><h2>MEL & Research <span class="dg-n">19</span></h2><p>Monitoring, evaluation, and research methods</p></div>
+<main class="courses-section wrap">
+  <div class="tracks" id="courseGrid">
+<section class="track track-mel" id="track-mel" aria-labelledby="track-mel-h">
+<div class="deck-group-head"><h2 id="track-mel-h"><span class="t-name">MEL and research</span> <span class="dg-n">19</span><span class="t-match"></span></h2><p>Monitoring, evaluation and research methods</p></div>
+<div class="track-body" id="track-mel-body">
+<div class="course-grid" id="track-mel-list">
 <div class="course-card" data-quiz="1" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/community-dev.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
@@ -418,71 +436,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-practice" href="/101-courses/practice/survey-design.html">Practice &rsaquo;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="1" data-glossary="0">
-  <a class="card-stretch" href="/101-courses/urban-governance.html">
-  <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
-  <div class="card-title">Urban Development and Municipal Governance 101</div>
-  <div class="card-desc">How Indian towns are defined, governed and financed: census towns and the 74th Amendment, property tax and Finance Commission grants, the urban missions, street vendors, urban job guarantees, heat and floods, and what the research has found.</div>
-  <ul class="card-feats">
-    <li><span class="ck" aria-hidden="true">✓</span>100 slides</li>
-    <li><span class="ck" aria-hidden="true">✓</span>Self-paced</li>
-    <li><span class="ck" aria-hidden="true">✓</span>Indian data and sources</li>
-  </ul>
-  <div class="card-meta">Free forever &middot; CC BY-NC-ND &middot; No login</div>
-  </a>
-  <div class="card-actions">
-    <a class="card-cta" href="/101-courses/urban-governance.html">Open Course &rarr;</a>
-  </div>
-</div>
-<div class="course-card card-new" data-quiz="0" data-charts="1" data-glossary="0">
-  <a class="card-stretch" href="/101-courses/disaster-heat.html">
-  <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
-  <div class="card-title">Disaster Risk and Heat Resilience 101</div>
-  <div class="card-desc">Why a hazard becomes a disaster for some people and not others: the Sendai Framework, the Disaster Management Act and its 2025 amendment, the disaster funds, cyclones, floods, drought, heat and outdoor work, early warning, and the people relief misses.</div>
-  <ul class="card-feats">
-    <li><span class="ck" aria-hidden="true">✓</span>100 slides</li>
-    <li><span class="ck" aria-hidden="true">✓</span>Self-paced</li>
-    <li><span class="ck" aria-hidden="true">✓</span>Indian data and sources</li>
-  </ul>
-  <div class="card-meta">Free forever &middot; CC BY-NC-ND &middot; No login</div>
-  </a>
-  <div class="card-actions">
-    <a class="card-cta" href="/101-courses/disaster-heat.html">Open Course &rarr;</a>
-  </div>
-</div>
-<div class="course-card card-new" data-quiz="0" data-charts="1" data-glossary="0">
-  <a class="card-stretch" href="/101-courses/wash.html">
-  <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
-  <div class="card-title">Water, Sanitation and Hygiene 101</div>
-  <div class="card-desc">What India&#x27;s water, sanitation and hygiene numbers measure and why they disagree: the JMP ladders, NSS and NFHS, Swachh Bharat, Jal Jeevan Mission, groundwater, sanitation work and the law, and how to monitor a WASH programme.</div>
-  <ul class="card-feats">
-    <li><span class="ck" aria-hidden="true">✓</span>100 slides</li>
-    <li><span class="ck" aria-hidden="true">✓</span>Self-paced</li>
-    <li><span class="ck" aria-hidden="true">✓</span>Indian data and sources</li>
-  </ul>
-  <div class="card-meta">Free forever &middot; CC BY-NC-ND &middot; No login</div>
-  </a>
-  <div class="card-actions">
-    <a class="card-cta" href="/101-courses/wash.html">Open Course &rarr;</a>
-  </div>
-</div>
-<div class="course-card card-new" data-quiz="0" data-charts="1" data-glossary="0">
-  <a class="card-stretch" href="/101-courses/agri-food.html">
-  <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
-  <div class="card-title">Agriculture and Food Systems 101</div>
-  <div class="card-desc">Who farms and on how much land, farm incomes and debt, MSP and procurement, the 2020 farm laws and their repeal, the PDS and the food law, subsidies, irrigation, crop insurance, markets, land records and women farmers, with Indian data.</div>
-  <ul class="card-feats">
-    <li><span class="ck" aria-hidden="true">✓</span>100 slides</li>
-    <li><span class="ck" aria-hidden="true">✓</span>Self-paced</li>
-    <li><span class="ck" aria-hidden="true">✓</span>Indian data and sources</li>
-  </ul>
-  <div class="card-meta">Free forever &middot; CC BY-NC-ND &middot; No login</div>
-  </a>
-  <div class="card-actions">
-    <a class="card-cta" href="/101-courses/agri-food.html">Open Course &rarr;</a>
-  </div>
-</div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/systematic-reviews.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Systematic Reviews &amp; Evidence Synthesis 101</div>
@@ -498,7 +452,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/systematic-reviews.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/academic-writing.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Academic Writing &amp; Publishing 101</div>
@@ -514,7 +468,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/academic-writing.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/sem.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Structural Equation Modelling 101</div>
@@ -530,7 +484,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/sem.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/development-finance.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 116 slides</span>
   <div class="card-title">Development Finance 101</div>
@@ -546,7 +500,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/development-finance.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/qda-software.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Qualitative Analysis Software 101</div>
@@ -562,7 +516,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/qda-software.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/research-methods.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Research Methods 101</div>
@@ -578,7 +532,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/research-methods.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/causal-inference.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Causal Inference 101</div>
@@ -594,7 +548,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/causal-inference.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/programme-design.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Programme Design 101</div>
@@ -610,7 +564,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/programme-design.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/participatory-methods.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Participatory Methods 101</div>
@@ -626,8 +580,14 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/participatory-methods.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="deck-group-head"><h2>Data & Technology <span class="dg-n">14</span></h2><p>Data literacy, analysis, and responsible tech</p></div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+</div>
+</div>
+</section>
+<section class="track track-data" id="track-data" aria-labelledby="track-data-h">
+<div class="deck-group-head"><h2 id="track-data-h"><span class="t-name">Data and technology</span> <span class="dg-n">14</span><span class="t-match"></span></h2><p>Data literacy, analysis and responsible tech</p></div>
+<div class="track-body" id="track-data-body">
+<div class="course-grid" id="track-data-list">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/genai-practitioners.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 106 slides</span>
   <div class="card-title">GenAI for Practitioners 101</div>
@@ -644,7 +604,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/genai-practitioners.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/data-protection-dpdp.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 105 slides</span>
   <div class="card-title">Data Protection & the DPDP Act 101</div>
@@ -737,7 +697,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-practice" href="/101-courses/practice/econometrics-101.html">Practice &rsaquo;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/time-series.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Time Series Analysis 101</div>
@@ -753,7 +713,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/time-series.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/stats-without-code.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Statistics Without Code 101</div>
@@ -846,7 +806,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-practice" href="/101-courses/practice/obs2insight.html">Practice &rsaquo;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/quant-methods.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Quantitative Methods 101</div>
@@ -862,7 +822,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/quant-methods.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/digital-rights-ai.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Digital Rights &amp; AI 101</div>
@@ -878,7 +838,45 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/digital-rights-ai.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="deck-group-head"><h2>Policy & Economics <span class="dg-n">14</span></h2><p>Economics, public finance, and how policy works</p></div>
+</div>
+</div>
+</section>
+<section class="track track-policy" id="track-policy" aria-labelledby="track-policy-h">
+<div class="deck-group-head"><h2 id="track-policy-h"><span class="t-name">Policy and economics</span> <span class="dg-n">16</span><span class="t-match"></span></h2><p>Economics, public finance and how policy works</p></div>
+<div class="track-body" id="track-policy-body">
+<div class="course-grid" id="track-policy-list">
+<div class="course-card card-new" data-quiz="0" data-charts="1" data-glossary="0">
+  <a class="card-stretch" href="/101-courses/disaster-heat.html">
+  <span class="card-new-tag">New</span><span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
+  <div class="card-title">Disaster Risk and Heat Resilience 101</div>
+  <div class="card-desc">Why a hazard becomes a disaster for some people and not others: the Sendai Framework, the Disaster Management Act and its 2025 amendment, the disaster funds, cyclones, floods, drought, heat and outdoor work, early warning, and the people relief misses.</div>
+  <ul class="card-feats">
+    <li><span class="ck" aria-hidden="true">✓</span>100 slides</li>
+    <li><span class="ck" aria-hidden="true">✓</span>Self-paced</li>
+    <li><span class="ck" aria-hidden="true">✓</span>Indian data and sources</li>
+  </ul>
+  <div class="card-meta">Free forever &middot; CC BY-NC-ND &middot; No login</div>
+  </a>
+  <div class="card-actions">
+    <a class="card-cta" href="/101-courses/disaster-heat.html">Open Course &rarr;</a>
+  </div>
+</div>
+<div class="course-card card-new" data-quiz="0" data-charts="1" data-glossary="0">
+  <a class="card-stretch" href="/101-courses/agri-food.html">
+  <span class="card-new-tag">New</span><span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
+  <div class="card-title">Agriculture and Food Systems 101</div>
+  <div class="card-desc">Who farms and on how much land, farm incomes and debt, MSP and procurement, the 2020 farm laws and their repeal, the PDS and the food law, subsidies, irrigation, crop insurance, markets, land records and women farmers, with Indian data.</div>
+  <ul class="card-feats">
+    <li><span class="ck" aria-hidden="true">✓</span>100 slides</li>
+    <li><span class="ck" aria-hidden="true">✓</span>Self-paced</li>
+    <li><span class="ck" aria-hidden="true">✓</span>Indian data and sources</li>
+  </ul>
+  <div class="card-meta">Free forever &middot; CC BY-NC-ND &middot; No login</div>
+  </a>
+  <div class="card-actions">
+    <a class="card-cta" href="/101-courses/agri-food.html">Open Course &rarr;</a>
+  </div>
+</div>
 <div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/cost-effectiveness.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
@@ -1100,7 +1098,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-practice" href="/101-courses/practice/pol-economy.html">Practice &rsaquo;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/public-policy-101.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Public Policy 101</div>
@@ -1116,7 +1114,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/public-policy-101.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/aid-philanthropy.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Aid &amp; Philanthropy 101</div>
@@ -1132,7 +1130,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/aid-philanthropy.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/education-policy.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Education Policy 101</div>
@@ -1148,8 +1146,14 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/education-policy.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="deck-group-head"><h2>Gender, Equity & Inclusion <span class="dg-n">10</span></h2><p>Gender, caste, disability, and structural inequity</p></div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+</div>
+</div>
+</section>
+<section class="track track-gender" id="track-gender" aria-labelledby="track-gender-h">
+<div class="deck-group-head"><h2 id="track-gender-h"><span class="t-name">Gender, equity and inclusion</span> <span class="dg-n">10</span><span class="t-match"></span></h2><p>Gender, caste, disability and structural inequity</p></div>
+<div class="track-body" id="track-gender-body">
+<div class="course-grid" id="track-gender-list">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/safeguarding-psea.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 107 slides</span>
   <div class="card-title">Safeguarding & PSEA 101</div>
@@ -1166,7 +1170,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/safeguarding-psea.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/disability-inclusion.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 102 slides</span>
   <div class="card-title">Disability Inclusion 101</div>
@@ -1280,7 +1284,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-practice" href="/101-courses/practice/gender-mainstreaming.html">Practice &rsaquo;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/gender-dev.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Gender &amp; Development 101</div>
@@ -1296,7 +1300,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/gender-dev.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/caste-studies.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Caste Studies 101</div>
@@ -1312,7 +1316,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/caste-studies.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/inclusive-education.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Inclusive Education 101</div>
@@ -1328,8 +1332,30 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/inclusive-education.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="deck-group-head"><h2>Philosophy, Law & Governance <span class="dg-n">9</span></h2><p>Rights, constitutional ideas, and governance</p></div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+</div>
+</div>
+</section>
+<section class="track track-law" id="track-law" aria-labelledby="track-law-h">
+<div class="deck-group-head"><h2 id="track-law-h"><span class="t-name">Philosophy, law and governance</span> <span class="dg-n">10</span><span class="t-match"></span></h2><p>Rights, constitutional ideas and governance</p></div>
+<div class="track-body" id="track-law-body">
+<div class="course-grid" id="track-law-list">
+<div class="course-card card-new" data-quiz="0" data-charts="1" data-glossary="0">
+  <a class="card-stretch" href="/101-courses/urban-governance.html">
+  <span class="card-new-tag">New</span><span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
+  <div class="card-title">Urban Development and Municipal Governance 101</div>
+  <div class="card-desc">How Indian towns are defined, governed and financed: census towns and the 74th Amendment, property tax and Finance Commission grants, the urban missions, street vendors, urban job guarantees, heat and floods, and what the research has found.</div>
+  <ul class="card-feats">
+    <li><span class="ck" aria-hidden="true">✓</span>100 slides</li>
+    <li><span class="ck" aria-hidden="true">✓</span>Self-paced</li>
+    <li><span class="ck" aria-hidden="true">✓</span>Indian data and sources</li>
+  </ul>
+  <div class="card-meta">Free forever &middot; CC BY-NC-ND &middot; No login</div>
+  </a>
+  <div class="card-actions">
+    <a class="card-cta" href="/101-courses/urban-governance.html">Open Course &rarr;</a>
+  </div>
+</div>
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/csr-esg.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">CSR &amp; ESG 101</div>
@@ -1346,7 +1372,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/csr-esg.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/brsr-reporting.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">BRSR &amp; Sustainability Reporting 101</div>
@@ -1438,7 +1464,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-practice" href="/101-courses/practice/post-truth-101.html">Practice &rsaquo;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/human-rights.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Human Rights 101</div>
@@ -1454,7 +1480,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/human-rights.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/child-rights.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Child Rights 101</div>
@@ -1470,7 +1496,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/child-rights.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/governance-accountability.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Governance &amp; Accountability 101</div>
@@ -1486,7 +1512,29 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/governance-accountability.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="deck-group-head"><h2>Health, Communication & Wellbeing <span class="dg-n">14</span></h2><p>Public health, communication, and wellbeing</p></div>
+</div>
+</div>
+</section>
+<section class="track track-health" id="track-health" aria-labelledby="track-health-h">
+<div class="deck-group-head"><h2 id="track-health-h"><span class="t-name">Health, communication and wellbeing</span> <span class="dg-n">15</span><span class="t-match"></span></h2><p>Public health, communication and wellbeing</p></div>
+<div class="track-body" id="track-health-body">
+<div class="course-grid" id="track-health-list">
+<div class="course-card card-new" data-quiz="0" data-charts="1" data-glossary="0">
+  <a class="card-stretch" href="/101-courses/wash.html">
+  <span class="card-new-tag">New</span><span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
+  <div class="card-title">Water, Sanitation and Hygiene 101</div>
+  <div class="card-desc">What India&#x27;s water, sanitation and hygiene numbers measure and why they disagree: the JMP ladders, NSS and NFHS, Swachh Bharat, Jal Jeevan Mission, groundwater, sanitation work and the law, and how to monitor a WASH programme.</div>
+  <ul class="card-feats">
+    <li><span class="ck" aria-hidden="true">✓</span>100 slides</li>
+    <li><span class="ck" aria-hidden="true">✓</span>Self-paced</li>
+    <li><span class="ck" aria-hidden="true">✓</span>Indian data and sources</li>
+  </ul>
+  <div class="card-meta">Free forever &middot; CC BY-NC-ND &middot; No login</div>
+  </a>
+  <div class="card-actions">
+    <a class="card-cta" href="/101-courses/wash.html">Open Course &rarr;</a>
+  </div>
+</div>
 <div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/care-economy-101.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
@@ -1659,7 +1707,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-practice" href="/101-courses/practice/maternal-health.html">Practice &rsaquo;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/mental-health.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Mental Health 101</div>
@@ -1675,7 +1723,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/mental-health.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/nutrition.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Nutrition 101</div>
@@ -1691,7 +1739,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/nutrition.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/social-determinants-health.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Social Determinants of Health 101</div>
@@ -1707,7 +1755,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/social-determinants-health.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/fln.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Foundational Literacy &amp; Numeracy 101</div>
@@ -1723,7 +1771,7 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/fln.html">Open Course &rarr;</a>
   </div>
 </div>
-<div class="course-card card-new" data-quiz="0" data-charts="0" data-glossary="0">
+<div class="course-card" data-quiz="0" data-charts="0" data-glossary="0">
   <a class="card-stretch" href="/101-courses/media-comms.html">
   <span class="card-badge card-badge-native">Native HTML &middot; 100 slides</span>
   <div class="card-title">Media &amp; Communications 101</div>
@@ -1739,8 +1787,12 @@ body.deck-filtering .deck-group-head{display:none}
     <a class="card-cta" href="/101-courses/media-comms.html">Open Course &rarr;</a>
   </div>
 </div>
+</div>
+</div>
+</section>
 
 </div>
+  <p class="hub-aside">Looking for hands-on coding? R &amp; Python for Development and fifteen other courses, from Stata and SPSS to QGIS and KoboToolbox, are in <a href="/code/">Code School</a>, with R, Python and SQL running in your browser.</p>
 </main>
 
 <footer class="foot">
@@ -1756,53 +1808,166 @@ body.deck-filtering .deck-group-head{display:none}
 </footer>
 
 <script>
-// Filter + search
+// Tracks, the six-card limit, search and filters.
+// Without JavaScript every card shows and no control is drawn.
 (function(){
-  const grid = document.getElementById('courseGrid');
-  const cards = Array.from(grid.querySelectorAll('.course-card'));
-  const chips = document.querySelectorAll('.filter-chip');
-  const search = document.querySelector('.filter-search');
-  let activeFilter = 'all';
-  let q = '';
+  var root = document.getElementById('courseGrid');
+  if (!root) return;
+  var LIMIT = 6;
+  var cards = Array.prototype.slice.call(root.querySelectorAll('.course-card'));
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.filter-chip'));
+  var search = document.getElementById('courseSearch');
+  var status = document.getElementById('filterStatus');
+  var phone = window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+  var activeFilter = 'all';
+  var q = '';
 
   // Chip counts come from the cards on the page, so they cannot drift.
-  chips.forEach(chip => {
-    const f = chip.dataset.filter;
-    const n = f === 'all' ? cards.length : cards.filter(c => c.dataset[f] === '1').length;
+  chips.forEach(function(chip){
+    var f = chip.dataset.filter;
+    var n = f === 'all' ? cards.length : cards.filter(function(c){ return c.dataset[f] === '1'; }).length;
     chip.textContent = chip.textContent.replace(/\(\d+\)/, '(' + n + ')');
   });
 
-  function matchesFilter(card){
-    if (activeFilter === 'all') return true;
-    return card.dataset[activeFilter] === '1';
-  }
-
-  function apply(){
-    document.body.classList.toggle('deck-filtering', activeFilter !== 'all' || !!q);
-    cards.forEach(c => {
-      const okFilter = matchesFilter(c);
-      const text = c.textContent.toLowerCase();
-      const okSearch = !q || text.includes(q);
-      c.style.display = (okFilter && okSearch) ? '' : 'none';
-    });
-  }
-
-  chips.forEach(chip => chip.addEventListener('click', () => {
-    chips.forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    activeFilter = chip.dataset.filter;
-    apply();
-  }));
-
-  search.addEventListener('input', e => {
-    q = e.target.value.trim().toLowerCase();
-    apply();
+  function norm(s){ return (s || '').toLowerCase().replace(/&/g, ' and ').replace(/\s+/g, ' '); }
+  cards.forEach(function(c){
+    var title = c.querySelector('.card-title');
+    var desc = c.querySelector('.card-desc');
+    var link = c.querySelector('a[href]');
+    c._text = norm((title ? title.textContent : '') + ' ' + (desc ? desc.textContent : '') + ' ' + (link ? link.getAttribute('href').replace(/[\/\-.]/g, ' ') : ''));
   });
+
+  document.documentElement.classList.add('hub-js');
+
+  var tracks = Array.prototype.slice.call(root.querySelectorAll('.track')).map(function(sec, i){
+    var h = sec.querySelector('h2');
+    var body = sec.querySelector('.track-body');
+    var list = sec.querySelector('.course-grid');
+    var own = Array.prototype.slice.call(list.querySelectorAll('.course-card'));
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 't-toggle';
+    btn.setAttribute('aria-controls', body.id);
+    var label = document.createElement('span');
+    while (h.firstChild) label.appendChild(h.firstChild);
+    btn.appendChild(label);
+    var icon = document.createElement('span');
+    icon.className = 't-icon';
+    icon.setAttribute('aria-hidden', 'true');
+    btn.appendChild(icon);
+    h.appendChild(btn);
+    own.forEach(function(c, k){ if (k >= LIMIT) c.classList.add('is-extra'); });
+    var t = { sec: sec, btn: btn, body: body, cards: own, more: null,
+              match: sec.querySelector('.t-match'),
+              open: !(phone && i > 0), fOpen: true, all: false };
+    if (own.length > LIMIT) {
+      var more = document.createElement('button');
+      more.type = 'button';
+      more.className = 'show-all';
+      more.setAttribute('aria-controls', list.id);
+      body.appendChild(more);
+      t.more = more;
+      more.addEventListener('click', function(){
+        t.all = !t.all;
+        render();
+        if (t.all) {
+          var first = own[LIMIT].querySelector('a[href]');
+          if (first) first.focus();
+        } else {
+          more.scrollIntoView({ block: 'nearest' });
+        }
+      });
+    }
+    btn.addEventListener('click', function(){
+      if (filtering()) t.fOpen = !t.fOpen; else t.open = !t.open;
+      render();
+    });
+    return t;
+  });
+
+  function filtering(){ return activeFilter !== 'all' || !!q; }
+  function matches(c){
+    if (activeFilter !== 'all' && c.dataset[activeFilter] !== '1') return false;
+    if (!q) return true;
+    return q.split(' ').every(function(w){ return c._text.indexOf(w) !== -1; });
+  }
+
+  function render(){
+    var f = filtering();
+    root.classList.toggle('filtering', f);
+    var total = 0;
+    tracks.forEach(function(t){
+      var n = 0;
+      t.cards.forEach(function(c){
+        var ok = !f || matches(c);
+        c.classList.toggle('is-out', !ok);
+        if (ok) n++;
+      });
+      total += n;
+      var open = f ? t.fOpen : t.open;
+      t.sec.classList.toggle('is-hidden', f && n === 0);
+      t.body.classList.toggle('is-hidden', !open);
+      t.btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      t.sec.classList.toggle('all', t.all);
+      t.match.textContent = f ? (n === 1 ? '1 match' : n + ' matches') : '';
+      if (t.more) {
+        t.more.classList.toggle('is-hidden', f);
+        t.more.setAttribute('aria-expanded', t.all ? 'true' : 'false');
+        t.more.textContent = t.all ? 'Show fewer' : 'Show all ' + t.cards.length;
+      }
+    });
+    status.textContent = '';
+    if (f) {
+      var msg = document.createElement('span');
+      msg.textContent = total === 0 ? 'No course matches. Try a shorter word.'
+                      : (total === 1 ? '1 course matches.' : total + ' courses match.');
+      status.appendChild(msg);
+      var clear = document.createElement('button');
+      clear.type = 'button';
+      clear.className = 'clear-btn';
+      clear.textContent = 'Clear search and filters';
+      clear.addEventListener('click', function(){
+        search.value = '';
+        q = '';
+        setFilter('all');
+        search.focus();
+      });
+      status.appendChild(clear);
+    }
+  }
+
+  function setFilter(f){
+    activeFilter = f;
+    chips.forEach(function(c){
+      var on = c.dataset.filter === f;
+      c.classList.toggle('active', on);
+      c.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    begin();
+    render();
+  }
+  var wasFiltering = false;
+  function begin(){
+    var f = filtering();
+    if (f && !wasFiltering) tracks.forEach(function(t){ t.fOpen = true; });
+    wasFiltering = f;
+  }
+
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){ setFilter(chip.dataset.filter); });
+  });
+  search.addEventListener('input', function(){
+    q = norm(search.value).trim();
+    begin();
+    render();
+  });
+
+  render();
 })();
 </script>
 
 <script src="/js/theme.js?v=ca787a55"></script>
 <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
-  <script src="/js/site-chrome.js?v=a85d1db1" defer></script>
+  <script src="/js/site-chrome.js?v=0d18f1bc" defer></script>
 </body>
 </html>

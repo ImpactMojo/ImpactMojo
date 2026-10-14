@@ -85,6 +85,7 @@ RX = re.compile("|".join(PHRASES), re.I)
 
 # (path, phrase as it appears) -> reason
 EXEMPT = {
+    ("courses/sel/readings.html", "Unlocking the Power"): "the published title of Brackett (2019), Permission to Feel, cited as a reading",
     ("peer-review.html", "Genuinely"): "an illustrative peer review, quoted as a review",
     ("content-marketing-kit.html", "In today's fast-paced"): "listed as a phrase to avoid",
     ("101-courses/climate-essentials.html", "is not just"): "inside a quotation",

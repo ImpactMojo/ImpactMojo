@@ -3247,6 +3247,114 @@ html[data-theme="dark"] .sidebar-nav .nav-link.active,html[data-theme="dark"] .n
    that marks it out from the words around it. */
 main p a:not([class]),main li a:not([class]),main td a:not([class]),main .card-text a:not([class]),main .lead a:not([class]){text-decoration:underline;text-underline-offset:.15em}
 </style>
+<style id="course-hero-style">
+/* Course opening (ch-). The course is on the first screen: title, one line
+   of promise, Start, three outcomes and the module list. The track colour is
+   an accent only (a thin bar, the label, the part names), never a panel.
+   Every ink below is measured against the page and panel surfaces in both
+   themes. Light values here; dark values in the two blocks that follow. */
+.ch-hero, .ch-about {
+  --ch-ink:#111827; --ch-muted:#4B5563; --ch-link:#0369A1;
+  --ch-fill:#0369A1; --ch-on-fill:#FFFFFF;
+  --ch-surface:#F5F6F8; --ch-line:#E3E6EB; --ch-line-strong:#C9CED6;
+  --ch-econ:#92580A; --ch-mel:#1D4ED8; --ch-gender:#BE185D; --ch-law:#6D28D9;
+  --ch-comm:#0F766E; --ch-phil:#9A3412; --ch-practice:#166534;
+  --ch-track:var(--ch-link);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .ch-hero, html:not([data-theme="light"]) .ch-about {
+    --ch-ink:#F1F5F9; --ch-muted:#A7B2C5; --ch-link:#7DD3FC;
+    --ch-fill:#38BDF8; --ch-on-fill:#0B1120;
+    --ch-surface:#131B2E; --ch-line:#26314A; --ch-line-strong:#3A4766;
+    --ch-econ:#FCD34D; --ch-mel:#93C5FD; --ch-gender:#F9A8D4; --ch-law:#C4B5FD;
+    --ch-comm:#5EEAD4; --ch-phil:#FDBA74; --ch-practice:#86EFAC;
+  }
+}
+[data-theme="dark"] .ch-hero, [data-theme="dark"] .ch-about,
+body.dark-mode .ch-hero, body.dark-mode .ch-about {
+  --ch-ink:#F1F5F9; --ch-muted:#A7B2C5; --ch-link:#7DD3FC;
+  --ch-fill:#38BDF8; --ch-on-fill:#0B1120;
+  --ch-surface:#131B2E; --ch-line:#26314A; --ch-line-strong:#3A4766;
+  --ch-econ:#FCD34D; --ch-mel:#93C5FD; --ch-gender:#F9A8D4; --ch-law:#C4B5FD;
+  --ch-comm:#5EEAD4; --ch-phil:#FDBA74; --ch-practice:#86EFAC;
+}
+.ch-tr-econ { --ch-track:var(--ch-econ); } .ch-tr-mel { --ch-track:var(--ch-mel); }
+.ch-tr-gender { --ch-track:var(--ch-gender); } .ch-tr-law { --ch-track:var(--ch-law); }
+.ch-tr-comm { --ch-track:var(--ch-comm); } .ch-tr-phil { --ch-track:var(--ch-phil); }
+.ch-tr-practice { --ch-track:var(--ch-practice); }
+
+/* The wrapper's top padding was sized for a mobile header that the site bar
+   now replaces, so it is trimmed wherever the opening sits first. */
+.content-wrapper:has(> .ch-hero:first-child), .main-content:has(> .ch-hero:first-child) { padding-top:1.5rem; }
+
+.ch-hero { position:relative; z-index:1; color:var(--ch-ink); background:transparent; padding:0.25rem 0 2rem; margin:0; border:0; text-align:left; }
+.ch-hero *, .ch-about * { box-sizing:border-box; }
+.ch-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:1.75rem; align-items:start; }
+.ch-accent { display:block; width:56px; height:4px; border-radius:2px; background:var(--ch-track); margin:0 0 1rem; }
+.ch-label { display:flex; align-items:center; gap:7px; margin:0 0 0.75rem; padding:0; font:700 12px/1.3 'Inter',Helvetica,Arial,sans-serif !important; letter-spacing:.06em; text-transform:uppercase; color:var(--ch-track) !important; }
+.ch-label .ch-dot { width:8px; height:8px; border-radius:50%; background:currentColor; flex:none; }
+.ch-hero h1.ch-title { font-family:'Inter',Helvetica,Arial,sans-serif !important; font-size:clamp(1.75rem,3.2vw,2.5rem) !important; line-height:1.12 !important; font-weight:800 !important; letter-spacing:-.015em; margin:0 0 0.85rem !important; padding:0 !important; border:0; color:var(--ch-ink) !important; -webkit-text-fill-color:currentColor !important; background:none !important; text-shadow:none !important; max-width:none; text-align:left; }
+.ch-lede { font-size:1.2rem !important; line-height:1.5 !important; color:var(--ch-muted) !important; margin:0 0 0.85rem !important; max-width:60ch; padding:0; }
+.ch-meta { display:flex; flex-wrap:wrap; gap:4px 0; margin:0 0 1.1rem !important; padding:0; list-style:none; color:var(--ch-muted); font:500 13.5px/1.4 'Inter',Helvetica,Arial,sans-serif; }
+.ch-meta li { margin:0; padding:0; }
+.ch-meta li + li::before { content:"\00B7"; margin:0 9px; }
+.ch-hero a.ch-start { display:inline-flex; align-items:center; gap:8px; min-height:46px; padding:0 20px; border-radius:10px; background:var(--ch-fill) !important; color:var(--ch-on-fill) !important; font:700 15px/1 'Inter',Helvetica,Arial,sans-serif; text-decoration:none !important; border:0; }
+.ch-hero a.ch-start:hover { filter:brightness(1.08); }
+.ch-hero a.ch-start:focus-visible, .ch-mods a:focus-visible, .ch-mat:focus-visible { outline:2px solid var(--ch-link); outline-offset:2px; }
+.ch-can { margin-top:1.4rem; border-top:1px solid var(--ch-line); padding-top:1rem; }
+.ch-hero h2.ch-h, .ch-hero .ch-h { font-family:'Inter',Helvetica,Arial,sans-serif !important; font-size:15px !important; line-height:1.3 !important; font-weight:750; margin:0 !important; padding:0 !important; border:0 !important; color:var(--ch-ink) !important; letter-spacing:0; background:none; -webkit-text-fill-color:currentColor; }
+.ch-hero h2.ch-h::before, .ch-hero h2.ch-h::after { content:none !important; display:none !important; }
+.ch-can ul { margin:0.5rem 0 0 !important; padding:0 !important; list-style:none !important; }
+.ch-can li { position:relative; margin:0 !important; padding:0 0 0.5rem 18px !important; line-height:1.45; color:var(--ch-ink); font-size:1.02rem; list-style:none !important; }
+.ch-can li::before { content:""; position:absolute; left:0; top:.62em; width:7px; height:7px; border-radius:2px; background:var(--ch-track); }
+.ch-can li::marker { content:none; }
+.ch-mods { border:1px solid var(--ch-line); border-radius:14px; padding:0.8rem 1rem 0.6rem; background:var(--ch-surface); color:var(--ch-ink); }
+.ch-mods-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:0 0 2px; }
+.ch-mods-head span { color:var(--ch-muted); font:500 13px/1.3 'Inter',Helvetica,Arial,sans-serif; }
+.ch-part { font:700 11px/1.3 'Inter',Helvetica,Arial,sans-serif !important; letter-spacing:.06em; text-transform:uppercase; color:var(--ch-track) !important; margin:0.65rem 0 0.15rem !important; padding:0; }
+.ch-mods ol { list-style:none !important; margin:0 !important; padding:0 !important; }
+.ch-mods li { margin:0 !important; padding:0 !important; list-style:none !important; }
+.ch-mods li::marker { content:none; }
+.ch-mods li a { display:flex; gap:10px; align-items:baseline; padding:3px 0; color:var(--ch-ink) !important; text-decoration:none !important; font-size:0.94rem; line-height:1.3; border:0; background:none; }
+.ch-mods li a:hover .ch-mt { color:var(--ch-link); text-decoration:underline; }
+.ch-mn { font:600 12px/1.3 'Inter',Helvetica,Arial,sans-serif; color:var(--ch-muted); font-variant-numeric:tabular-nums; flex:none; width:20px; }
+
+/* Laptop: the module list sits in a right-hand column. The course sidebar
+   takes 260px, so the opening uses the full width beside it rather than the
+   900px reading column. */
+@media (min-width: 1200px) {
+  .ch-hero { --ch-w:min(1060px, calc(100vw - var(--sidebar-width, 260px) - 64px)); width:var(--ch-w); max-width:none; margin-left:calc(50% - var(--ch-w) / 2); }
+  .ch-grid { grid-template-columns:minmax(0,1fr) minmax(0,380px); gap:2.25rem; }
+  .ch-mods { position:relative; }
+}
+@media (max-width: 600px) {
+  .ch-hero { padding-bottom:1.5rem; }
+  .ch-lede { font-size:1.08rem !important; }
+  .ch-mods { padding:0.7rem 0.85rem 0.5rem; }
+}
+
+/* About this course: the description the opening used to carry, unchanged. */
+.ch-about { color:var(--ch-ink); }
+:where(.ch-about) { padding:0.5rem 0; margin:0; }
+.ch-about h2.ch-about-h { font-family:'Inter',Helvetica,Arial,sans-serif !important; margin:0 0 0.75rem !important; color:var(--ch-ink) !important; -webkit-text-fill-color:currentColor !important; background:none !important; }
+.ch-about .ch-about-tag { font-weight:700; color:var(--ch-ink) !important; font-size:1.1rem; margin:0 0 0.6rem; }
+.ch-about .ch-about-p { color:var(--ch-ink) !important; margin:0 0 0.9rem; }
+.ch-about .ch-about-p a { color:var(--ch-link) !important; text-decoration:underline; text-underline-offset:.15em; }
+.ch-facts { display:flex; flex-wrap:wrap; gap:4px 0; margin:0 0 1rem !important; padding:0 !important; list-style:none !important; color:var(--ch-muted); font:500 13.5px/1.5 'Inter',Helvetica,Arial,sans-serif; }
+.ch-facts li { margin:0 !important; padding:0 !important; list-style:none !important; }
+.ch-facts li::marker { content:none; }
+.ch-facts li + li::before { content:"\00B7"; margin:0 9px; }
+.ch-mats { display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.25rem 0 0.5rem; padding:0; border:0; }
+.ch-mat { display:inline-flex; align-items:center; gap:0.45rem; min-height:40px; padding:0.45rem 0.85rem; border:1px solid var(--ch-line-strong); border-radius:8px; background:transparent; color:var(--ch-link) !important; font:600 14px/1.3 'Inter',Helvetica,Arial,sans-serif; text-decoration:none !important; }
+a.ch-mat:hover { border-color:var(--ch-link); text-decoration:underline !important; }
+.ch-mat.is-soon { color:var(--ch-muted) !important; cursor:default; }
+.ch-mat img, .ch-mat svg { width:16px !important; height:16px !important; flex:none; margin:0 !important; opacity:1 !important; filter:none !important; }
+[data-theme="dark"] .ch-mat img, body.dark-mode .ch-mat img { filter:invert(1) !important; }
+@media (prefers-color-scheme: dark) { html:not([data-theme="light"]) .ch-mat img { filter:invert(1) !important; } }
+.ch-mat .soon-badge { margin-left:0.2rem; background:var(--ch-surface) !important; color:var(--ch-muted) !important; border:1px solid var(--ch-line) !important; opacity:1 !important; }
+.ch-about .ch-quote { margin:0.5rem 0 1rem; }
+.ch-about .stat-grid { margin:0.5rem 0 1rem; }
+</style>
 </head>
 <body>
 <div class="im-topbar" id="imTopbar" role="navigation" aria-label="Site navigation">
@@ -3338,45 +3446,56 @@ main p a:not([class]),main li a:not([class]),main td a:not([class]),main .card-t
 
         <main id="main-content" class="main-content">
             <div class="content-wrapper">
-                <section class="hero" id="hero">
-                    <div class="hero-badge"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg> Flagship Course • Free Forever</div>
-                    <h1>Livelihoods in India: Rural, Urban &amp; Skills</h1>
-                    <p class="hero-tagline" style="font-size: 1.25rem; color: var(--secondary-accent); margin: 0.5rem 0 1rem 0; font-weight: 600;">Work and incomes in India: institutions, instruments, evidence</p>
-                    <p class="hero-subtitle">A flagship course on the institutions, instruments, and evidence that shape work and incomes in India today. Built for practitioners, evaluators, and policy actors who need both the policy context and the methodological rigour to read the field critically.</p>
-                    <div class="feature-tags">
-                        <span class="feature-tag data"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Layers.svg" alt=""> 15 Modules · 3 Parts</span>
-                        <span class="feature-tag cases"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Activity.svg" alt=""> NRLM · MGNREGA · Skill India</span>
-                        <span class="feature-tag region"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Globe_detailed.svg" alt=""> India-Centred</span>
-                        <span class="feature-tag lexicon"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Crosshair_detailed.svg" alt=""> Evidence-Driven</span>
-                    </div>
-                    <div class="hero-meta">
-                        <div class="hero-meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> 15 Modules · 3 Parts</div>
-                        <div class="hero-meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> ~18 hours</div>
-                        <div class="hero-meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg> Practitioner level</div>
-                        <div class="hero-meta-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg> India-centred</div>
-                    </div>
-                    <div class="hero-resources">
-                        <a href="/products/notes-livelihoods/" class="hero-resource-btn" title="Buy the full course as printable PDF notes (₹350)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg> Course Notes · PDF ₹350</a>
-                        <a href="#framing" class="hero-resource-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Start the Course</a>
-                        <a href="/courses/devecon/" class="hero-resource-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> Companion: Dev Economics</a>
-                        <a href="/courses/mel/" class="hero-resource-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Companion: MEL</a>
-                        <a class='hero-resource-btn' href='lexicon.html'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg> Interactive Lexicon</a>
-                                            <span class="hero-resource-btn soon" title="Reading pack: coming soon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/></svg>
-                            Course Papers <span class="soon-badge">Soon</span>
-                        </span>
-                        <span class="hero-resource-btn soon" title="NotebookLM AI companion: coming soon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            AI Study Companion <span class="soon-badge">Soon</span>
-                        </span>
-                    </div>
-                    <div class="stat-grid">
-                        <div class="stat-card"><span class="stat-num">~90%</span><div class="stat-label">Workers in informal employment (ILO India Employment Report 2024)</div></div>
-                        <div class="stat-card"><span class="stat-num">100M+</span><div class="stat-label">Women in SHG federations under NRLM</div></div>
-                        <div class="stat-card"><span class="stat-num">41.7%</span><div class="stat-label">Female labour force participation, 15+ (PLFS 2023–24)</div></div>
-                        <div class="stat-card"><span class="stat-num">7.7M</span><div class="stat-label">Gig &amp; platform workers, 2020-21 (NITI Aayog 2022)</div></div>
-                    </div>
-                </section>
+                <section class="ch-hero ch-tr-econ" id="hero" aria-labelledby="ch-title">
+    <div class="ch-grid">
+        <div class="ch-left">
+            <span class="ch-accent" aria-hidden="true"></span>
+            <p class="ch-label"><span class="ch-dot" aria-hidden="true"></span>Flagship course &middot; Economics and policy</p>
+            <h1 class="ch-title" id="ch-title">Livelihoods in India: Rural, Urban &amp; Skills</h1>
+            <p class="ch-lede">Read the institutions, instruments and evidence that shape work and incomes in rural and urban India.</p>
+            <ul class="ch-meta" aria-label="Course facts"><li>15 modules</li><li>About 18 hours</li><li>53-term lexicon</li><li>Free</li></ul>
+            <a class="ch-start" href="#rural-1">Start module 1 <span aria-hidden="true">&rarr;</span></a>
+            <div class="ch-can">
+                <h2 class="ch-h">What you will be able to do</h2>
+                <ul>
+                    <li>Explain how NRLM and its SHG federations, MGNREGA and financial inclusion shape rural livelihoods.</li>
+                    <li>Read the evidence on informal, gig and domestic work in Indian cities and the policy tools aimed at it.</li>
+                    <li>Weigh what Skill India, apprenticeships and job matching deliver, including for women's work.</li>
+                </ul>
+            </div>
+        </div>
+        <nav class="ch-mods" aria-labelledby="ch-mods-h">
+            <div class="ch-mods-head"><h2 class="ch-h" id="ch-mods-h">15 modules</h2><span>in three parts</span></div>
+            <p class="ch-part">Part 1 · Rural</p>
+            <ol start="1"><li><a href="#rural-1"><span class="ch-mn" aria-hidden="true">01</span><span class="ch-mt">Why Rural Still Dominates</span></a></li><li><a href="#rural-2"><span class="ch-mn" aria-hidden="true">02</span><span class="ch-mt">NRLM &amp; SHG Federations</span></a></li><li><a href="#rural-3"><span class="ch-mn" aria-hidden="true">03</span><span class="ch-mt">Agriculture &amp; Diversification</span></a></li><li><a href="#rural-4"><span class="ch-mn" aria-hidden="true">04</span><span class="ch-mt">MGNREGA</span></a></li><li><a href="#rural-5"><span class="ch-mn" aria-hidden="true">05</span><span class="ch-mt">Financial Inclusion</span></a></li></ol>
+            <p class="ch-part">Part 2 · Urban</p>
+            <ol start="6"><li><a href="#urban-1"><span class="ch-mn" aria-hidden="true">06</span><span class="ch-mt">The Urbanisation Reality</span></a></li><li><a href="#urban-2"><span class="ch-mn" aria-hidden="true">07</span><span class="ch-mt">Informal &amp; Vendor Work</span></a></li><li><a href="#urban-3"><span class="ch-mn" aria-hidden="true">08</span><span class="ch-mt">Gig Economy</span></a></li><li><a href="#urban-4"><span class="ch-mn" aria-hidden="true">09</span><span class="ch-mt">Domestic Workers</span></a></li><li><a href="#urban-5"><span class="ch-mn" aria-hidden="true">10</span><span class="ch-mt">Urban Policy Tools</span></a></li></ol>
+            <p class="ch-part">Part 3 · Skills</p>
+            <ol start="11"><li><a href="#skills-1"><span class="ch-mn" aria-hidden="true">11</span><span class="ch-mt">Skill India: Promise vs Evidence</span></a></li><li><a href="#skills-2"><span class="ch-mn" aria-hidden="true">12</span><span class="ch-mt">Apprenticeships</span></a></li><li><a href="#skills-3"><span class="ch-mn" aria-hidden="true">13</span><span class="ch-mt">Women's Labour Force</span></a></li><li><a href="#skills-4"><span class="ch-mn" aria-hidden="true">14</span><span class="ch-mt">Job Matching</span></a></li><li><a href="#skills-5"><span class="ch-mn" aria-hidden="true">15</span><span class="ch-mt">Returns to Training</span></a></li></ol>
+        </nav>
+    </div>
+</section>
+
+<section class="ch-about" id="course-about" aria-labelledby="ch-about-h">
+    <h2 class="ch-about-h" id="ch-about-h">About this course</h2>
+    <p class="ch-about-tag">Work and incomes in India: institutions, instruments, evidence</p>
+    <p class="ch-about-p">A flagship course on the institutions, instruments, and evidence that shape work and incomes in India today. Built for practitioners, evaluators, and policy actors who need both the policy context and the methodological rigour to read the field critically.</p>
+    <div class="stat-grid">
+<div class="stat-card"><span class="stat-num">~90%</span><div class="stat-label">Workers in informal employment (ILO India Employment Report 2024)</div></div>
+<div class="stat-card"><span class="stat-num">100M+</span><div class="stat-label">Women in SHG federations under NRLM</div></div>
+<div class="stat-card"><span class="stat-num">41.7%</span><div class="stat-label">Female labour force participation, 15+ (PLFS 2023–24)</div></div>
+<div class="stat-card"><span class="stat-num">7.7M</span><div class="stat-label">Gig &amp; platform workers, 2020-21 (NITI Aayog 2022)</div></div>
+</div>
+    <ul class="ch-facts" aria-label="Course at a glance"><li>Practitioner level</li><li>India-centred</li></ul>
+    <div class="ch-mats">
+        <a class="ch-mat" href="/products/notes-livelihoods/" title="Buy the full course as printable PDF notes (₹350)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg> Course Notes · PDF ₹350</a>
+        <a class="ch-mat" href="/courses/devecon/"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg> Companion: Dev Economics</a>
+        <a class="ch-mat" href="/courses/mel/"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg> Companion: MEL</a>
+        <a class="ch-mat" href="lexicon.html"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg> Interactive Lexicon</a>
+        <a class="ch-mat" href="readings.html"> <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg> Reading list </a>
+        <span class="ch-mat is-soon" title="NotebookLM AI companion: coming soon"> <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg> AI Study Companion <span class="soon-badge">Soon</span> </span>
+    </div>
+</section>
                 <div class="divider"></div>
 
 <section class="section" id="framing"><div id="module1-content" class="module-content-placeholder"><!-- served from Supabase --></div></section>
@@ -3950,7 +4069,7 @@ main p a:not([class]),main li a:not([class]),main td a:not([class]),main .card-t
         </script>
         
         <!-- Google Analytics -->
-        <script async src="/js/ga-load.js?v=29205802"></script>
+        <script async src="/js/ga-load.js?v=7b6e3dd2"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -4055,6 +4174,6 @@ main p a:not([class]),main li a:not([class]),main td a:not([class]),main .card-t
 <script src="/js/offline.js?v=13c54b3d" defer></script>
 <script defer src="../../js/auto-refresh.js"></script>
 <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
-  <script src="/js/site-chrome.js?v=a85d1db1" defer></script>
+  <script src="/js/site-chrome.js?v=0d18f1bc" defer></script>
 </body>
 </html>

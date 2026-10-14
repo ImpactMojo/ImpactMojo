@@ -295,6 +295,9 @@ LABEL_KEYS = [
     ("data tools", "dataverse"),
     ("law guides", "law-guides"),
     ("foundational", "foundational-courses"),
+    # "80 Native Course Decks" on the 101 index sat four behind for a day:
+    # the 101 decks are the foundational set, and no other count is called decks.
+    ("course decks", "foundational-courses"),
     # "80 101 Series courses": the 101 Series is the foundational set, so the
     # label must not fall through to the 101-course total below.
     ("101 series", "foundational-courses"),

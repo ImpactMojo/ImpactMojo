@@ -29,6 +29,7 @@
     filter: { category: 'all', course: 'all', provenance: 'all', query: '' },
     bookmarks: new Set(JSON.parse(localStorage.getItem('impactlex:bookmarks') || '[]')),
     liveSource: 'snapshot', // 'snapshot' | 'instantdb'
+    checked: {}, // slug -> corrections from impactlex/data/reviewed.json
   };
 
   // ─── Theme ──────────────────────────────────────────────────────────────
@@ -48,12 +49,36 @@
   initTheme();
 
   // ─── Data loading ───────────────────────────────────────────────────────
+  /* impactlex/data/reviewed.json holds entries that were checked against a
+     cited source in the repository. They win over both the snapshot and the
+     live database for the fields they carry, because the live database is not
+     writable from the repository and would otherwise put the unchecked text
+     back. A checked entry says so; it does not claim an editor's review. */
+  async function loadChecked() {
+    try {
+      const res = await fetch(CONFIG.reviewedUrl || '/impactlex/data/reviewed.json');
+      if (!res.ok) return;
+      const data = await res.json();
+      state.checked = data.terms || {};
+    } catch (err) { /* the page works without it */ }
+  }
+  function applyChecked(terms) {
+    return terms.map((t) => {
+      const c = state.checked[t.id];
+      if (!c) return t;
+      const out = { ...t, checkedAt: c.checkedAt };
+      ['definition', 'example', 'sources'].forEach((k) => { if (c[k] !== undefined) out[k] = c[k]; });
+      return out;
+    });
+  }
+
   async function loadSnapshot() {
+    await loadChecked();
     try {
       const res = await fetch(CONFIG.snapshotUrl);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      state.terms = (data.terms || []).filter((t) => t.status !== 'rejected');
+      state.terms = applyChecked((data.terms || []).filter((t) => t.status !== 'rejected'));
       state.caseStudies = data.caseStudies || [];
       state.formulae = data.formulae || [];
       updateStats();
@@ -82,7 +107,7 @@
         const useSlug = (row) => ({ ...row, uuid: row.id, id: row.slug || row.id });
         // Show everything that isn't explicitly rejected. Seed/draft/published all visible.
         // (Drafts only appear in /impactlex/review.html for editors.)
-        if (d.terms?.length) state.terms = d.terms.filter((t) => t.status !== 'rejected').map(useSlug);
+        if (d.terms?.length) state.terms = applyChecked(d.terms.filter((t) => t.status !== 'rejected').map(useSlug));
         if (d.caseStudies?.length) state.caseStudies = d.caseStudies.map(useSlug);
         if (d.formulae?.length) state.formulae = d.formulae.map(useSlug);
         state.liveSource = 'instantdb';
@@ -127,6 +152,7 @@
   function provenanceOf(t) {
     return {
       reviewed: t.status === 'published',
+      checked: Boolean(t.checkedAt),
       aiDrafted: Boolean(t.aiProvider),
       sourced: Boolean(t.sources && t.sources.length),
     };
@@ -137,6 +163,7 @@
     reviewed: { label: 'Reviewed', test: (t) => provenanceOf(t).reviewed },
     unreviewed: { label: 'Not yet reviewed', test: (t) => !provenanceOf(t).reviewed },
     sourced: { label: 'With a source', test: (t) => provenanceOf(t).sourced },
+    checked: { label: 'Checked against a source', test: (t) => provenanceOf(t).checked },
   };
 
   function visibleTerms() {
@@ -323,9 +350,16 @@
     /* Never hidden. A term with no source used to render exactly like a term
        whose sources happened not to apply, because the section was dropped. */
     const hasSources = Boolean(t.sources && t.sources.length);
-    $('modal-sources').textContent = hasSources
-      ? t.sources.join(' · ')
-      : 'No source recorded for this entry.';
+    if (hasSources) {
+      // A source is plain text, optionally ending in an address, which is
+      // turned into a link. Everything is escaped first.
+      $('modal-sources').innerHTML = t.sources.map((src) => {
+        const text = escapeHtml(String(src));
+        return text.replace(/(https?:\/\/[^\s<]+)/g, (u) => `<a href="${u}" target="_blank" rel="noopener noreferrer">${u}</a>`);
+      }).join('<br>');
+    } else {
+      $('modal-sources').textContent = 'No source recorded for this entry.';
+    }
     $('modal-sources').classList.toggle('sources-empty', !hasSources);
     $('modal-sources-section').hidden = false;
 
@@ -334,6 +368,9 @@
       prov.reviewed
         ? ['ok', 'Reviewed by an editor and published.']
         : ['warn', 'Not yet reviewed. It is published so the term is findable, and an editor has not checked it.'],
+      ...(prov.checked
+        ? [['ok', `Definition checked against the source cited above on ${escapeHtml(String(t.checkedAt))}.`]]
+        : []),
       prov.aiDrafted
         ? ['warn', `First draft written by a language model (${escapeHtml(String(t.aiProvider))}), then edited.`]
         : ['ok', 'Written by hand.'],
