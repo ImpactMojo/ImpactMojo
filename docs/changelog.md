@@ -9,6 +9,9 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - The paid modules of all 18 Practice Packs, and their capstone builders, are no longer in the page. Members and buyers of a pack get them from the server after it checks their account, so the pack opens as before for them. Everyone else still gets the first two modules free.
 - The organisation invite lookup works only for people who run an organisation.
 - Two internal pages were removed from site search.
+- Development Discourses and PolicyDhara have their own addresses, devdiscourses.impactmojo.in and policydhara.impactmojo.in. The old /devdiscourses and /policydhara links redirect there.
+- The sign-in, account, organisation and admin pages now enforce a list of the outside services they may load code from.
+- The sign-in forms are ready for a Cloudflare Turnstile human check, which switches on once its key is added.
 
 ### Fixed
 
