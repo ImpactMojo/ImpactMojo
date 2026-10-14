@@ -56,10 +56,13 @@ function allPages() {
   // Paths can contain spaces (every Handouts page does), so a page list is one
   // path per line: AXE_PAGES_FILE names such a file, and AXE_PAGES splits on
   // newlines when it has any and on whitespace only when it has none.
-  if (process.env.AXE_PAGES_FILE) return fs.readFileSync(process.env.AXE_PAGES_FILE, 'utf8').split('\n').map((x) => x.trim()).filter(Boolean);
+  // The SKIP list applies to a given list too: a pull request that touches an
+  // email template must not audit it as a web page (#1270).
+  const keep = (p) => !SKIP.some((re) => re.test(p));
+  if (process.env.AXE_PAGES_FILE) return fs.readFileSync(process.env.AXE_PAGES_FILE, 'utf8').split('\n').map((x) => x.trim()).filter(Boolean).filter(keep);
   if (process.env.AXE_PAGES) {
     const v = process.env.AXE_PAGES;
-    return (v.includes('\n') ? v.split('\n') : v.split(/\s+/)).map((x) => x.trim()).filter(Boolean);
+    return (v.includes('\n') ? v.split('\n') : v.split(/\s+/)).map((x) => x.trim()).filter(Boolean).filter(keep);
   }
   const out = execSync('git ls-files -z -- "*.html"', { cwd: ROOT, maxBuffer: 64 << 20 }).toString();
   return out.split('\0').filter(Boolean).filter((p) => !SKIP.some((re) => re.test(p))).sort();

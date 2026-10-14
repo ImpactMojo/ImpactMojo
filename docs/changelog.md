@@ -20,6 +20,10 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - Seven reading companions, taking the library from 185 to 192. Built from the books' full text; every quotation was checked against the source, and errors found in the books are flagged on their pages.
 
+### Fixed
+
+- **The accessibility check on pull requests audited email templates as web pages** (#1270).
+
 ## v10.384.0 — October 14, 2026 (a cleaner home page, one menu, and your tools on your dashboard)
 
 ### For Learners
