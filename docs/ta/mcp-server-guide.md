@@ -14,12 +14,12 @@ ImpactMojo-வில் ஒரு **Model Context Protocol (MCP) server** உள
 | `lookup_bct` | முழு BCT நுட்ப விவரங்களைப் பெறுங்கள் (தெற்காசிய சூழல், case studies) |
 | `search_bcts` | 203 Behavior Change Techniques-ஐ தேடல்/வடிகட்டல் |
 | `list_bct_categories` | அனைத்து 26 BCT வகைகளையும் எண்ணிக்கைகளுடன் பட்டியலிடுங்கள் |
-| `browse_dataverse` | வகையின் அடிப்படையில் 270 கருவிகள், தரவுத்தொகுப்புகள், APIs-ஐ உலாவுங்கள் |
+| `browse_dataverse` | வகையின் அடிப்படையில் 343 கருவிகள், தரவுத்தொகுப்புகள், APIs-ஐ உலாவுங்கள் |
 | `search_dataverse` | dataverse உருப்படிகள் முழுவதும் முக்கிய சொல் தேடல் |
 | `list_challenges` | track/சிரம அளவின் அடிப்படையில் பயிற்சி சவால்களைப் பட்டியலிடுங்கள் |
 | `get_challenge` | case சூழல் மற்றும் மதிப்பீட்டுத் திட்டத்துடன் முழு சவால் |
-| `list_courses` | 6 learning tracks முழுவதும் 70 படிப்புகள் |
-| `get_game_info` | AI agent personas கொண்ட 16 பொருளாதார games |
+| `list_courses` | 21 flagship மற்றும் 80 foundational படிப்புகள் |
+| `get_game_info` | AI agent personas கொண்ட 18 பொருளாதார games |
 | `query_climate_data` | Climate TRACE-இலிருந்து India GHG உமிழ்வுகள் |
 
 ## கிடைக்கக்கூடிய வளங்கள் (3)
