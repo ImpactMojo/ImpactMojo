@@ -109,6 +109,28 @@
     }
   }
 
+  // ── Course notes offer ──────────────────────────────────────────
+  // Course notes are the only product that has sold, so each unlocked
+  // module ends with one plain line pointing to them. Courses with no
+  // notes product (social-protection) get nothing.
+  var NOTES = {
+    causal: 1, dataviz: 1, devai: 1, devecon: 1, esg: 1, gandhi: 1, gender: 1,
+    'gender-mel': 1, intervention: 1, law: 1, livelihoods: 1, media: 1, mel: 1,
+    'nothing-about-us': 1, 'nvc-rj': 1, poa: 1, powerbi: 1, pubchoice: 1,
+    pubpol: 1, sel: 1, 'social-movements': 1
+  };
+  var notesSlug = String(courseId).toLowerCase();
+
+  function notesOffer() {
+    if (!NOTES[notesSlug]) return '';
+    return '<p class="im-notes-offer" style="margin:2rem 0 0;padding-top:1rem;' +
+      'border-top:1px solid rgba(128,128,128,.35);font-size:.95rem;line-height:1.6;">' +
+      'Want this course on paper? The course notes put every module\'s core ideas, ' +
+      'diagrams and key readings in one printable PDF. ' +
+      '<a href="/products/notes-' + notesSlug + '/" style="color:inherit;' +
+      'text-decoration:underline;font-weight:600;">See the course notes</a></p>';
+  }
+
   // ── Inject content into module placeholders ─────────────────────
   function injectContent(modules) {
     for (var i = 0; i < modules.length; i++) {
@@ -126,6 +148,7 @@
       var html = '';
       if (mod.content_html) html += mod.content_html;
       if (mod.quiz_html) html += mod.quiz_html;
+      html += notesOffer();
       placeholder.innerHTML = html;
     }
 
