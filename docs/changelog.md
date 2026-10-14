@@ -2,6 +2,22 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.385.0 — October 15, 2026 (seven new reading companions)
+
+### For Learners
+
+- **Decolonizing Methodologies** — Linda Tuhiwai Smith on research done to Indigenous peoples and how communities can set the terms, with a consent and ownership check to run before fieldwork.
+- **Seeing Like a Feminist** — Nivedita Menon on family, body, desire, law and sexual violence in India, with an audit for gender programmes.
+- **Black Feminist Thought** — Patricia Hill Collins on the matrix of domination and standpoint, read beside Dalit feminist work.
+- **Making Sense of the University** — Debaditya Bhattacharya on what India's public university is for, with a publicness audit.
+- **Palestine: A Primer** — Rashid Khalidi's account, attributed throughout, with notes for humanitarian and refugee work.
+- **The Political Unconscious** — Fredric Jameson's method for reading texts, made readable, with a protocol for reading policy documents.
+- **Algiers, Third World Capital** — Elaine Mokhtefi's memoir of Algeria after independence and Third World solidarity.
+
+### Added
+
+- Seven reading companions, taking the library from 185 to 192. Built from the books' full text; every quotation was checked against the source, and errors found in the books are flagged on their pages.
+
 ## v10.384.0 — October 14, 2026 (a cleaner home page, one menu, and your tools on your dashboard)
 
 ### For Learners
