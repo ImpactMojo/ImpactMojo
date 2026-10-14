@@ -68,6 +68,23 @@
   function dysOn() { return store(DYS_KEY) === 'opendyslexic'; }
   if (dysOn()) root.classList.add('im-dyslexic');
 
+  // ── Accessibility choices ──────────────────────────────────────────
+  // The header's Accessibility menu stores these together and they are put on
+  // <html> here, before the page paints, the same way as the reading font:
+  // text size (zoom on <body>, so pages set in px grow too), wider spacing,
+  // underlined links, reduced motion and a stronger focus outline. They replace
+  // the third-party UserWay widget, which loaded on about 50 pages and on none
+  // of the rest.
+  var A11Y_KEY = 'im-a11y';
+  var A11Y_FLAGS = ['spacing', 'links', 'motion', 'focus'];
+  function a11yGet() { try { var v = JSON.parse(store(A11Y_KEY) || '{}'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; } }
+  function a11yApply(v) {
+    root.classList.remove('im-a11y-text-1', 'im-a11y-text-2');
+    if (v.text === 1 || v.text === 2) root.classList.add('im-a11y-text-' + v.text);
+    A11Y_FLAGS.forEach(function (k) { root.classList.toggle('im-a11y-' + k, !!v[k]); });
+  }
+  a11yApply(a11yGet());
+
   // ── Opt-out (homepage) ─────────────────────────────────────────────
   var path = location.pathname.replace(/index\.html$/, '');
   var lpath = path.toLowerCase(); // Netlify lowercases paths, so match case-insensitively
@@ -312,8 +329,9 @@
 // Search looks like a field, so it reads as the way in that it is.
 '.im-sc-search{min-width:200px;justify-content:flex-start;border-color:var(--sc-bd);background:color-mix(in srgb,var(--sc-fg) 3%,transparent);color:var(--sc-mut)}',
 '.im-sc-search .im-sc-label{flex:1;text-align:left}',
-'.im-sc-kbd{font:500 11.5px/1 Inter,system-ui,sans-serif;border:1px solid var(--sc-bd);border-radius:5px;padding:3px 6px;color:var(--sc-mut);background:var(--sc-solid)}',
+'.im-sc-kbd{font:500 11.5px/1 Inter,system-ui,sans-serif!important;border:1px solid var(--sc-bd);border-radius:5px;padding:3px 6px;color:var(--sc-mut);background:var(--sc-solid)}',
 '.im-sc-icon{width:36px;height:34px;padding:0;justify-content:center}',
+'.im-sc-setbtn{border-color:var(--sc-bd)}.im-sc-aa{font:700 15px/1 Inter,system-ui,sans-serif!important;letter-spacing:-.3px}',
 '.im-sc-signup{background:var(--sc-sel);color:var(--sc-sel-ink);font-weight:600}',
 'html body .im-sc .im-sc-signup,html body .im-sc .im-sc-signup:visited{background:var(--sc-sel);color:var(--sc-sel-ink)!important}',
 'html body .im-sc .im-sc-signup:hover{background:var(--sc-sel);color:var(--sc-sel-ink)!important;opacity:.92}',
@@ -331,6 +349,24 @@
 '.im-sc-tbtn[aria-pressed="true"] .im-sc-i{opacity:1}',
 '.im-sc-setpanel .im-sc-btn{width:100%;height:40px;border-color:var(--sc-bd)}',
 '.im-sc-setpanel .im-sc-btn[aria-pressed="true"]{border-color:var(--sc-sel);background:color-mix(in srgb,var(--sc-sel) 14%,transparent)}',
+'.im-sc-setpanel{width:300px;max-height:calc(100vh - 64px);overflow-y:auto;overscroll-behavior:contain}',
+'.im-sc-setpanel .im-sc-a11y-list{display:grid;gap:6px;margin-bottom:14px}',
+'.im-sc-setpanel .im-sc-a11y-list .im-sc-btn{justify-content:flex-start;gap:10px;font-weight:500}',
+'.im-sc-tick{width:16px;height:16px;flex:none;border:1.5px solid var(--sc-mut);border-radius:4px;display:inline-flex;align-items:center;justify-content:center}',
+'.im-sc-btn[aria-pressed="true"] .im-sc-tick{background:var(--sc-sel);border-color:var(--sc-sel)}',
+'.im-sc-btn[aria-pressed="true"] .im-sc-tick::after{content:"";width:8px;height:4px;border:solid var(--sc-sel-ink);border-width:0 0 2px 2px;transform:translateY(-1px) rotate(-45deg)}',
+'.im-sc-size{display:flex;gap:2px;background:color-mix(in srgb,var(--sc-fg) 6%,transparent);border:1px solid var(--sc-bd);border-radius:9px;padding:3px;margin-bottom:14px}',
+'.im-sc-size button{flex:1;height:36px;border:0;border-radius:6px;background:transparent;color:var(--sc-fg);cursor:pointer;font-family:inherit;font-weight:600;line-height:1}',
+'html body .im-sc-size button[aria-pressed="true"]{background:var(--sc-sel);color:var(--sc-sel-ink)!important}',
+'.im-sc-size button:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px}',
+'.im-sc-reset{width:100%;height:38px;border:0;background:transparent;color:var(--sc-ink);font:600 13.5px/1 inherit;text-decoration:underline;cursor:pointer}',
+// The choices themselves, on every page that loads this script.
+'html.im-a11y-text-1 body{zoom:1.15}html.im-a11y-text-2 body{zoom:1.3}',
+'html.im-a11y-spacing body :is(p,li,dd,dt,td,th,blockquote,figcaption,label,summary){line-height:1.8!important;letter-spacing:.04em!important;word-spacing:.12em!important}',
+'html.im-a11y-links body a:not(.im-sc-btn):not(.im-sc-crumb){text-decoration:underline!important;text-underline-offset:2px}',
+'html.im-a11y-motion *,html.im-a11y-motion *::before,html.im-a11y-motion *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}',
+'html.im-a11y-focus :focus-visible{outline:3px solid #B45309!important;outline-offset:3px!important;box-shadow:0 0 0 6px rgba(245,158,11,.45)!important}',
+
 // Narrower screens: the keyboard hint goes, then the search label, then the
 // groups move into the Menu sheet and the trail back to the section appears.
 '@media(max-width:1180px){.im-sc-kbd{display:none}.im-sc-search{min-width:0}}',
@@ -448,6 +484,7 @@
     user: svg('<circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/>'),
     close: svg('<path d="M6 6l12 12M18 6 6 18"/>'),
     chev: svg('<path d="m6 9 6 6 6-6"/>'),
+    a11y: svg('<circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="7.2" r="1.3"/><path d="M7.5 10h9M12 10v4.5M12 14.5l-2.5 4M12 14.5l2.5 4"/>'),
     sliders: svg('<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>')
   };
   var LOGO = SITE + '/assets/images/apple-touch-icon.png'; // 7KB vs the 599KB full logo
@@ -528,6 +565,31 @@
     document.querySelectorAll('.im-sc-signup').forEach(function (b) { b.hidden = inn; });
     var sa = document.querySelector('[data-sheet-acct]');
     if (sa) { sa.textContent = label; sa.href = a.href; }
+  }
+
+  // ── Accessibility menu ─────────────────────────────────────────────
+  function syncA11y() {
+    var v = a11yGet(), t = v.text === 1 || v.text === 2 ? v.text : 0;
+    document.querySelectorAll('[data-a11y-text]').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-a11y-text') === t)); });
+    document.querySelectorAll('[data-a11y]').forEach(function (b) { b.setAttribute('aria-pressed', String(!!v[b.getAttribute('data-a11y')])); });
+  }
+  function a11ySet(v) {
+    store(A11Y_KEY, JSON.stringify(v));
+    a11yApply(v); syncA11y(); scheduleFloating(60);
+  }
+  function wireA11y(bar) {
+    bar.querySelectorAll('[data-a11y-text]').forEach(function (b) {
+      b.addEventListener('click', function () { var v = a11yGet(); v.text = +b.getAttribute('data-a11y-text'); a11ySet(v); });
+    });
+    bar.querySelectorAll('[data-a11y]').forEach(function (b) {
+      b.addEventListener('click', function () { var v = a11yGet(), k = b.getAttribute('data-a11y'); v[k] = !v[k]; a11ySet(v); });
+    });
+    bar.querySelector('[data-a11y-reset]').addEventListener('click', function () {
+      a11ySet({});
+      if (root.classList.contains('im-dyslexic')) toggleDys();
+      applyTheme('system');
+    });
+    syncA11y();
   }
 
   // ── Header groups and the settings panel ───────────────────────────
@@ -636,11 +698,21 @@
         '<button class="im-sc-btn im-sc-search" type="button" aria-label="Search the site">' + I.search + '<span class="im-sc-label">Search</span>' +
           '<kbd class="im-sc-kbd" aria-hidden="true">' + (mac ? '&#8984;K' : 'Ctrl K') + '</kbd></button>' +
         '<div class="im-sc-setwrap">' +
-          '<button class="im-sc-btn im-sc-icon im-sc-setbtn" type="button" aria-expanded="false" aria-controls="im-sc-setpanel" aria-label="Display settings">' + I.sliders + '</button>' +
-          '<div class="im-sc-setpanel" id="im-sc-setpanel" hidden>' +
+          '<button class="im-sc-btn im-sc-icon im-sc-setbtn" type="button" aria-expanded="false" aria-controls="im-sc-setpanel" aria-label="Accessibility and display" title="Accessibility"><span class="im-sc-aa" aria-hidden="true">Aa</span></button>' +
+          '<div class="im-sc-setpanel" id="im-sc-setpanel" role="region" aria-label="Accessibility and display" hidden>' +
             '<h3>Theme</h3>' + themeGroup(true) +
-            '<h3>Reading font</h3><button class="im-sc-btn" type="button" data-im-dys aria-pressed="false">' +
-              '<span aria-hidden="true" style="font-weight:700">Aa</span>Dyslexia-friendly font</button>' +
+            '<h3 id="im-sc-size-h">Text size</h3><div class="im-sc-size" role="group" aria-labelledby="im-sc-size-h">' +
+              '<button type="button" data-a11y-text="0" aria-pressed="false" aria-label="Default text size" style="font-size:13px">A</button>' +
+              '<button type="button" data-a11y-text="1" aria-pressed="false" aria-label="Larger text" style="font-size:16px">A</button>' +
+              '<button type="button" data-a11y-text="2" aria-pressed="false" aria-label="Largest text" style="font-size:19px">A</button></div>' +
+            '<h3>Reading</h3><div class="im-sc-a11y-list">' +
+              '<button class="im-sc-btn" type="button" data-im-dys aria-pressed="false"><span class="im-sc-tick" aria-hidden="true"></span>Dyslexia-friendly font</button>' +
+              '<button class="im-sc-btn" type="button" data-a11y="spacing" aria-pressed="false"><span class="im-sc-tick" aria-hidden="true"></span>Wider line and letter spacing</button>' +
+              '<button class="im-sc-btn" type="button" data-a11y="links" aria-pressed="false"><span class="im-sc-tick" aria-hidden="true"></span>Underline every link</button>' +
+              '<button class="im-sc-btn" type="button" data-a11y="motion" aria-pressed="false"><span class="im-sc-tick" aria-hidden="true"></span>Reduce motion</button>' +
+              '<button class="im-sc-btn" type="button" data-a11y="focus" aria-pressed="false"><span class="im-sc-tick" aria-hidden="true"></span>Stronger focus outline</button>' +
+            '</div>' +
+            '<button class="im-sc-reset" type="button" data-a11y-reset>Reset all</button>' +
           '</div>' +
         '</div>' +
         '<a class="im-sc-btn im-sc-acct" href="' + SITE + '/login.html" aria-label="Log in">' + I.user + '<span class="im-sc-label">Log in</span></a>' +
@@ -686,6 +758,7 @@
     document.body.appendChild(wrap);
     wireSheet(bar.querySelector('.im-sc-menu'), wrap);
     bar.querySelector('[data-im-dys]').addEventListener('click', toggleDys);
+    wireA11y(bar);
     wireDropdowns(bar);
 
     // 6. wire theme

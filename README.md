@@ -372,7 +372,6 @@ All of it lives in one page, `Labs/toc-lab.html` (the Theory of Change Studio). 
 | **Open Badges 3.0** | W3C Verifiable Credentials for course completion badges |
 | **Google Analytics** | Usage analytics |
 | **Netlify Forms** | Contact & feedback form handling |
-| **UserWay** | Accessibility widget |
 | **axe-core + Puppeteer** | Automated WCAG 2.1 AA accessibility testing |
 | **Google Fonts** | Amaranth (body) + Inter (headings) + JetBrains Mono (code) |
 

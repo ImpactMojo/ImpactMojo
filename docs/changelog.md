@@ -11,6 +11,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **Search answers questions** — Ctrl+K (Cmd+K on a Mac) opens search on any page, and common questions such as how to get a certificate now come back with the answer.
 - **Your tools on your dashboard** — bookmarks, notes, reading lists, compare, streak, learning analytics, a focus timer and study music now live under My tools on your free account, with everything you saved before.
 - **Support ImpactMojo** — pay what you think is fair and download a pack of five practitioner resources.
+- **An accessibility menu on every page** — the button beside search sets the theme, text size, wider spacing, underlined links, reduced motion, a stronger focus outline and the dyslexia-friendly font, and remembers your choices.
 
 ### Changed
 
@@ -18,6 +19,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - The home page uses Inter for text and Amaranth for headings. Its old stylesheet set Amaranth on every paragraph and stopped the header from sticking.
 - The Mojini chat assistant is retired; its answers to common questions now come back in search. The floating toolbox is retired; its tools are on the dashboard, and the old addresses (/bookmarks, /notes, /pomodoro and the rest) open the matching tab.
 - The founders' bios live on the About page; the home page links to it.
+- The third-party UserWay accessibility widget is removed from the 50 pages that loaded it; the site's own accessibility menu replaces it on every page, and the privacy and data-protection pages no longer list UserWay.
 - Each founder now has one bio and one title, the same on every page that names them: About, Coaching, the press kit, the four assessed-certificate pages, the credential upgrade page, the Gender, Power BI and Public Choice courses, the FAQ, the coaching guide and the team page. The founder cards at the end of the Data Visualization, Gender, SEL, AI for Development and Law courses use the same text.
 
 ### Fixed
