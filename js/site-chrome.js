@@ -453,6 +453,14 @@
 // companion tool: 60 of 60 measured, 22 nav links each (#1080). Any page added
 // later inherits this instead of needing its own copy, which is the point --
 // sixty copies of a name is how the last rename got lost.
+// Page titles and section headings share the homepage's Amaranth, so every
+// page reads as one family; h3 and below stay in the running-text Inter.
+// build() sets .im-sc-type only on pages that do not carry their own type
+// (slide decks, games and the print handouts keep theirs). Skipped for the
+// reading font, which must win, and for pages in another language, because
+// Amaranth has Latin letters only and would push Indian scripts onto a
+// fallback face instead of the page's own Noto.
+"html:not(.im-dyslexic):is([lang^=en],:not([lang])) body.im-sc-type :is(h1,h2):not(.im-sc *){font-family:'Amaranth','Inter',system-ui,-apple-system,sans-serif!important}",
 '@media print{.im-sc,.im-sc-bar,.im-sc-foot,.im-sc-consent,#im-wa-fab{display:none!important}body.im-sc-on{padding-top:0!important}}'
     ].join('');
   }
@@ -673,6 +681,7 @@
 
     // 2. state classes (styles are already in from boot)
     document.body.classList.add('im-sc-on', 'im-sc-has-theme');
+    if (!/^\/(games|handouts)\/|^\/101-courses\/(native\/)?(?!index(\.html)?$)[^/]+$/i.test(location.pathname)) document.body.classList.add('im-sc-type');
 
     // 3. top bar
     var sec = section();
