@@ -16,6 +16,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **A brighter home page** — the three ways in are now tinted tiles in blue, violet and slate, with a highlighter on the headline and coloured labels on what is new.
 - **Colour on the section pages** — the top of each section page (courses, Studio, law guides, Data Room, Deep Dives, the library and the rest) now sits on a tinted panel in the same blue, violet and slate.
+- **Recently added, always current** — the home page list of new things now builds itself from these release notes and shows a different selection each day.
 - **Search as you type on the home page** — the search box now shows results from the first letter instead of waiting for Enter.
 
 ### Added
