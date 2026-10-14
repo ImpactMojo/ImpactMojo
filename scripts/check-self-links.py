@@ -27,7 +27,6 @@ URL = re.compile(r"https://(?:www\.)?impactmojo\.in(/[^\"'\s<>)#?&\\]*)")
 
 # Served by a rule or a function rather than a file; each checked live 2026-10-12.
 EXEMPT = {
-    "privacy": "301 to /privacy-policy.html in _redirects",
     "api/v1": "partner API, netlify/functions/partner-api.mjs",
     "api/v1/catalog": "partner API, netlify/functions/partner-api.mjs",
     "api/v1/courses/gandhi": "partner API, netlify/functions/partner-api.mjs",
