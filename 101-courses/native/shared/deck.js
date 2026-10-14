@@ -75,7 +75,7 @@ document.addEventListener('fullscreenchange', function() {
 function scaleViewport() {
   var vp = document.getElementById('viewport');
   if (!vp) return;
-  var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+  var s = Math.min(window.innerWidth / 1280, ((document.getElementById('deck')||{}).clientHeight||window.innerHeight)/720);
   vp.style.transform = 'scale(' + s + ')';
 }
 window.addEventListener('resize', scaleViewport);

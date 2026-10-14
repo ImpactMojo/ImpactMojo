@@ -3,7 +3,7 @@
  * Injects shared header, footer, 3-way theme, Indian folk art motifs,
  * ImpactMojo typography, Sargam icon helpers, and visual enhancements.
  * Inspired by DesiLog, FolkLog, and Indian folk art traditions.
- * Typography: Inter (titles), Amaranth (body), JetBrains Mono (code)
+ * Typography: Amaranth (h1, h2 and game titles), Inter (body), JetBrains Mono (code)
  * Usage: <script src="/js/game-shell.js"></script> (at end of <body>)
  */
 (function() {
@@ -447,11 +447,25 @@
   css.textContent =
 
     /* ═══ TYPOGRAPHY ═════════════════════════════════════════ */
-    'body { font-family: "Amaranth", sans-serif !important; }' +
-    'h1, h2, h3, h4, h5, h6, .welcome-title, .game-title, .section-title { font-family: "Inter", sans-serif !important; }' +
+    /* Body in Inter and titles (h1, h2, the welcome and game titles) in
+       Amaranth, as on the rest of the site. Amaranth has Latin letters only, so
+       it applies on English pages; the reading-font toggle (html.im-dyslexic)
+       overrides both. */
+    'body { font-family: "Inter", system-ui, sans-serif !important; }' +
+    'h3, h4, h5, h6, .section-title { font-family: "Inter", system-ui, sans-serif !important; }' +
+    /* The story intro (.story-screen > .story-card, in five games) is a dark
+       storybook scene in both themes: keep its card out of the card rules
+       above and below, and make the backdrop opaque so the page and its
+       footer do not show through it. */
+    '.story-screen { background: #0B1120 !important; }' +
+    'body :is(.story-screen, .story-modal) .story-card, body :is(.story-screen, .story-modal) .story-card :is(p, span, li, label, small, h1, h2, h3, button) { color: #E2E8F0 !important; }' +
+    'body :is(.story-screen, .story-modal) .story-card .story-title { color: #FBBF24 !important; }' +
+    /* Form controls do not inherit a font by default, so buttons drew in the
+       browser's Arial. :where() keeps this below any game's own rule. */
+    ':where(button, input, select, textarea) { font-family: inherit; }' +
+    ':where(html:is([lang^=en],:not([lang])):not(.im-dyslexic)) :is(h1, h2, .welcome-title, .game-title) { font-family: "Amaranth", "Inter", system-ui, sans-serif !important; }' +
     'code, pre, kbd, samp, .mono, [class*="mono"] { font-family: "JetBrains Mono", monospace !important; }' +
     '.imx-gh-logo span { font-family: "Inter", sans-serif !important; font-weight: 800 !important; }' +
-    '#imx-game-footer { font-family: "Amaranth", sans-serif !important; }' +
     /* Sargam icon inline styling */
     '.imx-sargam-icon { display: inline-block; vertical-align: middle; margin: 0 2px; filter: brightness(0) invert(1); }' +
     'body.light-mode .imx-sargam-icon { filter: brightness(0) invert(0.2); }' +
@@ -459,7 +473,7 @@
 
     /* ═══ DARK MODE CONTRAST FIX ═══════════════════════════ */
     /* Fix dark text on dark backgrounds — comprehensive contrast overrides */
-    'body:not(.light-mode) .card, body:not(.light-mode) [class*="card"]:not(.imx-theme-btn) { background: #1E293B !important; color: #F1F5F9 !important; border-color: #475569 !important; }' +
+    'body:not(.light-mode) .card, body:not(.light-mode) [class*="card"]:not(.imx-theme-btn):not(.story-card) { background: #1E293B !important; color: #F1F5F9 !important; border-color: #475569 !important; }' +
     'body:not(.light-mode) p, body:not(.light-mode) span:not(.imx-gh-logo span), body:not(.light-mode) li, body:not(.light-mode) label, body:not(.light-mode) td, body:not(.light-mode) dd, body:not(.light-mode) dt { color: #E2E8F0 !important; }' +
     'body:not(.light-mode) h1, body:not(.light-mode) h2, body:not(.light-mode) h3, body:not(.light-mode) h4, body:not(.light-mode) h5, body:not(.light-mode) h6 { color: #F8FAFC !important; }' +
     'body:not(.light-mode) small, body:not(.light-mode) .text-muted, body:not(.light-mode) .subtitle, body:not(.light-mode) .desc, body:not(.light-mode) .description { color: #CBD5E1 !important; }' +
@@ -480,7 +494,7 @@
 
     /* ═══ LIGHT MODE ═══════════════════════════════════════ */
     'body.light-mode { background: #FFFBF5 !important; color: #1E293B !important; }' +
-    'body.light-mode .card, body.light-mode [class*="card"] { background: #FFFFFF !important; border-color: #E7DDD0 !important; color: #1E293B !important; box-shadow: 0 2px 8px rgba(139,90,43,0.08); }' +
+    'body.light-mode .card, body.light-mode [class*="card"]:not(.story-card) { background: #FFFFFF !important; border-color: #E7DDD0 !important; color: #1E293B !important; box-shadow: 0 2px 8px rgba(139,90,43,0.08); }' +
     'body.light-mode input, body.light-mode select, body.light-mode textarea { background: #FFF8F0 !important; color: #1E293B !important; border-color: #D4C4B0 !important; }' +
     'body.light-mode button:not(.imx-theme-btn) { color: #1E293B; }' +
     'body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode h4 { color: #1A1207 !important; }' +
@@ -574,7 +588,7 @@
     /* Cards — warmer borders, more depth */
     '[class*="card"], .card { transition: all 0.25s ease; border-radius: 12px !important; }' +
     '[class*="card"]:hover, .card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }' +
-    'body.light-mode [class*="card"]:hover, body.light-mode .card:hover { box-shadow: 0 8px 30px rgba(139,90,43,0.12); }' +
+    'body.light-mode [class*="card"]:not(.story-card):hover, body.light-mode .card:hover { box-shadow: 0 8px 30px rgba(139,90,43,0.12); }' +
 
     /* Choice cards — distinct warm colors */
     '.choice-card:nth-child(1), [class*="option"]:nth-child(1) { border-left: 4px solid #D97706 !important; }' +

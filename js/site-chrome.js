@@ -99,7 +99,9 @@
   // 101 decks: the slide pager, notes button and theme pill fill the bottom of
   // the screen, and the WhatsApp button covered them. Index, poster and practice
   // pages live elsewhere in the folder and are ordinary pages.
-  var isDeck = /^\/101-courses\/[^/]+\.html$/i.test(location.pathname) && !/\/index\.html$/i.test(location.pathname);
+  // A 101 deck, at /101-courses/<slug>.html or /101-courses/native/<slug>.html,
+  // with or without .html (Netlify serves both); never the series index.
+  var isDeck = /^\/101-courses\/(native\/)?(?!index(\.html)?$)[^/]+$/i.test(location.pathname);
 
   // ── Page name for the breadcrumb ───────────────────────────────────
   function pageName() {
@@ -730,7 +732,31 @@
       '</div>';
     document.body.insertBefore(bar, document.body.firstChild);
 
-    // 4. footer
+    // A 101 deck's stage (#deck) is fixed to the whole window, so on a laptop
+    // the bar covered the top of every slide: 46px of it on a 16:9 screen,
+    // which is the slide header. Start the stage below the bar; each deck
+    // sizes its slide to #deck's height, so a resize event re-fits it. Phones
+    // (820px and under) read decks as a scrolling page and are left alone.
+    if (isDeck) {
+      var fitDeck = function () {
+        var d = document.getElementById('deck');
+        if (!d) return;
+        var wide = window.innerWidth > 820;
+        var top = wide ? Math.round(bar.getBoundingClientRect().bottom) + 'px' : '';
+        d.style.background = wide ? '#111' : '';
+        // The deck's own resize handler ran before this one, so if the stage
+        // moved it measured the old height: fire once more.
+        if (d.style.top !== top) { d.style.top = top; window.dispatchEvent(new Event('resize')); }
+      };
+      window.addEventListener('resize', fitDeck);
+      fitDeck();
+    }
+
+    // 4. footer. Not on a 101 deck (isDeck): a deck fills the screen and has
+    // its own footer line, so this one sat behind the slides on a laptop and
+    // below them on a phone, where the page scrolled down into it. Cookie
+    // settings are on the footer of every other page.
+    if (!isDeck) {
     var foot = document.createElement('footer');
     foot.className = 'im-sc im-sc-foot'; foot.setAttribute('role', 'contentinfo');
     foot.innerHTML =
@@ -750,6 +776,7 @@
       var box = document.getElementById('im-consent');
       if (box) { var first = box.querySelector('button'); if (first) first.focus(); }
     });
+    }
 
     // 5. menu sheet (H2): the footer's columns, plus the reading settings that
     // a phone's bar has no room for.
