@@ -2,6 +2,17 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.386.0 — October 15, 2026 (games in the site's type, slides clear of the menu bar)
+
+### For Learners
+
+- **Games in the site's type** — titles in the games are now in Amaranth and the text in Inter, the same as every other page; buttons no longer fall back to the browser's default font.
+
+### Fixed
+
+- **On the 101 decks the site footer sat behind the slides, and on a wide screen the menu bar covered the top of each slide** (#1271).
+- **In the light theme the story screen at the start of five games turned white, with pale text that could not be read** (#1272).
+
 ## v10.385.0 — October 15, 2026 (seven new reading companions)
 
 ### For Learners
