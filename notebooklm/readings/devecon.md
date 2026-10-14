@@ -5,7 +5,7 @@ Open-access sources cited across the course. Add to the notebook with:
 ```bash
 # after `notebooklm login` and creating the notebook:
 python3 scripts/notebooklm-manage.py add-source devecon https://ourworldindata.org/human-development-index
-python3 scripts/notebooklm-manage.py add-source devecon https://www.dropbox.com/scl/fo/4n8bwqatkgxnva49kwfkb/AAcW4EFP_CRjI8mf5DVhd18?rlkey=iqykledl0yp2zsra3qcb5388m&st=466lm3zc&dl=0
+python3 scripts/notebooklm-manage.py add-source devecon https://www.impactmojo.in/courses/devecon/readings.html
 python3 scripts/notebooklm-manage.py add-source devecon https://mru.org/courses/development-economics/what-is-economic-growth
 python3 scripts/notebooklm-manage.py add-source devecon https://ourworldindata.org/economic-growth
 python3 scripts/notebooklm-manage.py add-source devecon https://data.worldbank.org/
@@ -32,7 +32,7 @@ python3 scripts/notebooklm-manage.py add-source devecon https://www.povertyactio
 python3 scripts/notebooklm-manage.py add-source devecon https://www.povertyactionlab.org/
 python3 scripts/notebooklm-manage.py add-source devecon https://mru.org/courses/development-economics/randomized-controlled-trial-explained
 python3 scripts/notebooklm-manage.py add-source devecon https://ourworldindata.org/much-better-awful-can-be-better
-python3 scripts/notebooklm-manage.py add-source devecon https://www.dropbox.com/scl/fi/0tw89748114gbo2va3isn/Development-Economics-Lexicon.xlsx?rlkey=n2imp5yhb8ma7l0fg7qk1w3r6&dl=1
+python3 scripts/notebooklm-manage.py add-source devecon https://www.impactmojo.in/courses/devecon/Development-Economics-Lexicon.xlsx
 python3 scripts/notebooklm-manage.py add-source devecon https://www.linkedin.com/in/varnasriraman
 python3 scripts/notebooklm-manage.py add-source devecon https://twitter.com/varnasriraman
 python3 scripts/notebooklm-manage.py add-source devecon https://varnasriraman.notion.site
@@ -50,7 +50,7 @@ python3 scripts/notebooklm-manage.py add-source devecon https://ourworldindata.o
 
 ## URLs
 - https://ourworldindata.org/human-development-index
-- https://www.dropbox.com/scl/fo/4n8bwqatkgxnva49kwfkb/AAcW4EFP_CRjI8mf5DVhd18?rlkey=iqykledl0yp2zsra3qcb5388m&st=466lm3zc&dl=0
+- https://www.impactmojo.in/courses/devecon/readings.html
 - https://mru.org/courses/development-economics/what-is-economic-growth
 - https://ourworldindata.org/economic-growth
 - https://data.worldbank.org/
@@ -77,7 +77,7 @@ python3 scripts/notebooklm-manage.py add-source devecon https://ourworldindata.o
 - https://www.povertyactionlab.org/
 - https://mru.org/courses/development-economics/randomized-controlled-trial-explained
 - https://ourworldindata.org/much-better-awful-can-be-better
-- https://www.dropbox.com/scl/fi/0tw89748114gbo2va3isn/Development-Economics-Lexicon.xlsx?rlkey=n2imp5yhb8ma7l0fg7qk1w3r6&dl=1
+- https://www.impactmojo.in/courses/devecon/Development-Economics-Lexicon.xlsx
 - https://www.linkedin.com/in/varnasriraman
 - https://twitter.com/varnasriraman
 - https://varnasriraman.notion.site

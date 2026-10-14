@@ -713,6 +713,12 @@
             /* Offset main content for progress bar */
             '.main-content { padding-top: 48px !important; }' +
 
+            /* The shared site bar is sticky at the top and 46px tall. Without
+               this the progress bar sat hidden under it and its 48px offset
+               showed as an empty gap, and module links scrolled the module
+               heading under both bars. */
+            'body:has(.im-sc-bar) #course-progress-bar { top: 46px; }' +
+
             /* Responsive */
             '@media (max-width: 900px) {' +
                 '#course-progress-bar { padding: 6px 12px; }' +

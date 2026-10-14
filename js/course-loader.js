@@ -41,6 +41,18 @@
   var courseId = detectCourseId();
   if (!courseId) return;
 
+  // ── Page-level layout fixes for every flagship ──────────────────
+  // overflow-x:hidden on html or body makes them scroll containers, so the
+  // sticky site bar scrolled away on six courses. clip stops sideways
+  // scrolling without that side effect. The scroll margin keeps a module
+  // heading clear of the site bar and the progress bar after a jump.
+  (function () {
+    var st = document.createElement('style');
+    st.textContent = 'html, body { overflow-x: clip !important; }' +
+      'section[id], [id^="module"] { scroll-margin-top: 104px; }';
+    document.head.appendChild(st);
+  })();
+
   // ── Get auth token if user is logged in ─────────────────────────
   // Prefers the token from Supabase's in-memory session (which may have
   // been refreshed) over the raw localStorage value (which may be stale).
@@ -131,6 +143,35 @@
       'text-decoration:underline;font-weight:600;">See the course notes</a></p>';
   }
 
+  // ── Wide tables ─────────────────────────────────────────────────
+  // Module tables come from the database with no scroll wrapper, so one
+  // wider than a phone pushed the whole page sideways. Each table gets a
+  // wrapper that scrolls on its own; a wrapper that actually overflows is
+  // made focusable so a keyboard can scroll it too.
+  function wrapTables(root) {
+    var tables = root.getElementsByTagName('table');
+    for (var i = tables.length - 1; i >= 0; i--) {
+      var t = tables[i];
+      if (t.parentNode && t.parentNode.className === 'im-table-scroll') continue;
+      var w = document.createElement('div');
+      w.className = 'im-table-scroll';
+      w.style.overflowX = 'auto';
+      w.style.maxWidth = '100%';
+      t.parentNode.insertBefore(w, t);
+      w.appendChild(t);
+    }
+    requestAnimationFrame(function () {
+      var ws = root.querySelectorAll('.im-table-scroll');
+      for (var j = 0; j < ws.length; j++) {
+        if (ws[j].scrollWidth > ws[j].clientWidth + 1) {
+          ws[j].setAttribute('tabindex', '0');
+          ws[j].setAttribute('role', 'region');
+          ws[j].setAttribute('aria-label', 'Table, scrolls sideways');
+        }
+      }
+    });
+  }
+
   // ── Inject content into module placeholders ─────────────────────
   function injectContent(modules) {
     for (var i = 0; i < modules.length; i++) {
@@ -150,6 +191,7 @@
       if (mod.quiz_html) html += mod.quiz_html;
       html += notesOffer();
       placeholder.innerHTML = html;
+      wrapTables(placeholder);
     }
 
     // Re-initialize quiz handlers (course-progress.js will pick these up)

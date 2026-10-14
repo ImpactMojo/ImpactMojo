@@ -39,7 +39,7 @@ python3 scripts/notebooklm-manage.py add-source gandhi https://www.aeinstein.org
 python3 scripts/notebooklm-manage.py add-source gandhi https://archive.org/search?query=guha+gandhi+years+changed+world
 python3 scripts/notebooklm-manage.py add-source gandhi https://www.mkgandhi.org/gquots1.php
 python3 scripts/notebooklm-manage.py add-source gandhi https://www.gandhiheritageportal.org/audio-video
-python3 scripts/notebooklm-manage.py add-source gandhi https://www.dropbox.com/scl/fi/9foplmubg4xen9seywr9s/Gandhian-Lexicon-Annotated.xlsx?rlkey=6dcghlcrkdqmlq807kuqhs0jl&st=ugj6g0s1&dl=1
+python3 scripts/notebooklm-manage.py add-source gandhi https://www.impactmojo.in/courses/gandhi/Gandhian-Lexicon-Annotated.xlsx
 ```
 
 ## URLs
@@ -78,4 +78,4 @@ python3 scripts/notebooklm-manage.py add-source gandhi https://www.dropbox.com/s
 - https://archive.org/search?query=guha+gandhi+years+changed+world
 - https://www.mkgandhi.org/gquots1.php
 - https://www.gandhiheritageportal.org/audio-video
-- https://www.dropbox.com/scl/fi/9foplmubg4xen9seywr9s/Gandhian-Lexicon-Annotated.xlsx?rlkey=6dcghlcrkdqmlq807kuqhs0jl&st=ugj6g0s1&dl=1
+- https://www.impactmojo.in/courses/gandhi/Gandhian-Lexicon-Annotated.xlsx

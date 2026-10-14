@@ -74,7 +74,7 @@ def coach_gaps(mods):
 SHELL_CHECKS = [
     # Both class names are in use: most shells write hero-resource-btn, devai
     # and gender write hero-btn. Counting only the first reported those two as
-    # 0/4 when they carry a full set, including real Dropbox and NotebookLM links.
+    # 0/4 when they carry a full set, including real reading-list and NotebookLM links.
     ('hero buttons (4)',   lambda s: len(re.findall(r'class="hero-(?:resource-)?btn\b', s)), 4),
     ('resource cards (7)', lambda s: len(re.findall(r'class="resource-card [a-z0-9]+"', s)), 7),
     ('v3 blob divs (4)',   lambda s: len(re.findall(r'class="v3-blob v3-blob-\d"', s)), 4),
