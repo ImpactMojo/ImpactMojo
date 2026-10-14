@@ -2,6 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.383.0 — October 14, 2026 (Vandana's bio restored)
+
+### Changed
+
+- Vandana Soni's bio on the home page, the About page and the Gender course now describes her work, taken from her own profile: early literacy at Room to Read, national assessments with NCERT and MHRD at Central Square Foundation, programmes for rural schools at eVidyaloka Trust. Her title is now Head of Learning Programmes, as she gives it.
+
 ## v10.382.0 — October 14, 2026 (corrected citations, the last Dropbox links, and course pages that fit a phone)
 
 ### For Learners
