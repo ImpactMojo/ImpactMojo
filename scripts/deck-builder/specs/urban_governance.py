@@ -483,7 +483,7 @@ DECK = {
                          "chosen, who appoints its staff and how much the state transfers. Most of "
                          "this section is about that division."},
                         src("Texts of Articles 243P to 243ZG and the Twelfth Schedule as reproduced by "
-                            "the Centre for Law and Policy Research, constitutionofindia.net.")]},
+                            "the Constitution of India as published by the Legislative Department (legislative.gov.in).")]},
          ]},
 
         {"type": "content", "label": "The Articles", "ultra-compact": True,
@@ -607,7 +607,7 @@ DECK = {
                         {"t": "hbox", "color": "amber", "html": "Article 243ZG bars courts from "
                          "interfering in municipal electoral matters except through an election "
                          "petition under state law."},
-                        src("Articles 243R, 243U, 243ZA and 243ZG, constitutionofindia.net.")]},
+                        src("Articles 243R, 243U, 243ZA and 243ZG, Constitution of India.")]},
          ]},
 
         {"type": "content", "label": "Planning Committees",
@@ -755,8 +755,8 @@ DECK = {
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "body", "html": "The Greater Bengaluru Governance Bill was introduced on "
                         "23 July 2024, referred to a select committee and passed by both houses in "
-                        "March 2025. It replaces the BBMP Act, 2020. The Greater Bengaluru Authority "
-                        "was established in May 2025 and took over from the BBMP during 2025."},
+                        "March 2025. It replaces the BBMP Act, 2020, and came into effect on 15 May "
+                        "2025. The Greater Bengaluru Authority it creates is chaired by the Chief Minister."},
                        {"t": "bullets", "color": "cyan", "items": [
                            "The Authority is chaired by the Chief Minister, with an appointed Chief Commissioner as member secretary and MPs, MLAs, mayors and agency heads as members.",
                            "Each corporation needs more than 10 lakh people, more than 5,000 people per sq km and over ₹300 crore of local revenue.",
@@ -769,7 +769,7 @@ DECK = {
                          "sabhas, where every voter of a polling area could propose priorities and "
                          "identify scheme beneficiaries, were removed by the select committee."},
                         src("PRS Legislative Research, analysis of the Greater Bengaluru Governance Bill, "
-                            "2024. Wikipedia, 'Greater Bengaluru Authority', citing The Hindu, 14 May 2025.")]},
+                            "2024. The Hindu, 15 May 2025, on the Act taking effect.")]},
          ]},
 
         {"type": "content", "label": "Case: Issues", "ultra-compact": True,
@@ -833,7 +833,7 @@ DECK = {
                         {"t": "hbox", "color": "amber", "html": "Backward class reservation is not "
                          "required by Part IXA. Article 243T(6) only says that nothing in the Part "
                          "prevents a state from providing it, so its extent differs by state."},
-                        src("Article 243T, constitutionofindia.net.")]},
+                        src("Article 243T, Constitution of India.")]},
          ]},
 
         # ===================== SECTION 05 =====================
@@ -1562,10 +1562,9 @@ DECK = {
                   ["18(3)", "No relocation or eviction without thirty days' notice"],
                   ["22", "The Town Vending Committee is chaired by the commissioner. At least 40 per cent of members are vendors elected by vendors, one-third of them women, and at least 10 per cent are from NGOs and community organisations"],
                   ["27", "A vendor trading within the certificate's terms cannot be prevented by police or any other authority"]]},
-             {"t": "body", "cls": "sm", "html": "The Act is No. 7 of 2014. Lok Sabha passed it on 6 "
-              "September 2013 and Rajya Sabha on 19 February 2014. It received assent on 4 March 2014 "
-              "and came into force on 1 May 2014. Text from the Gazette of India copy held by PRS "
-              "Legislative Research. Dates from Wikipedia, citing the Gazette."},
+             {"t": "body", "cls": "sm", "html": "The Act is No. 7 of 2014. It received the President's "
+              "assent on 4 March 2014 and was published in the Gazette of India on 5 March 2014. "
+              "Text from the Gazette copy held by PRS Legislative Research."},
          ]},
 
         {"type": "content", "label": "Implementation",
@@ -1728,13 +1727,13 @@ DECK = {
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "body", "html": "The Viksit Bharat Guarantee for Rozgar and Ajeevika "
-                        "Mission (Gramin) Act, 2025 replaces the Mahatma Gandhi National Rural "
-                        "Employment Guarantee Act, 2005. Ashwini Kulkarni's reading of the Bill "
+                        "Mission (Gramin) Act, 2025 came into force on 1 July 2026, and section 37 repealed the Mahatma Gandhi National Rural "
+                        "Employment Guarantee Act, 2005 from that date. Ashwini Kulkarni's reading of the Bill "
                         "identifies four changes that matter for towns and their edges."},
                        {"t": "bullets", "color": "cyan", "items": [
                            "Workdays per household rise from 100 to 125 a year.",
                            "Work is suspended for 60 days during sowing and harvest, on dates the state sets.",
-                           "The Centre funds 60 per cent of total cost and the state 40 per cent. Under the 2005 Act the Centre paid all unskilled wages.",
+                           "The Centre funds 60 per cent of total cost and the state 40 per cent, or 90 and 10 in the North Eastern and Himalayan States (section 22). Under the 2005 Act the Centre paid all unskilled wages.",
                            "The Act applies only to rural areas that the Centre notifies."]}],
               "right": [{"t": "panel", "color": "amber", "title": "Why urban practitioners should care", "html":
                          "Census towns and outgrowths are rural in law. Whether they are notified "
@@ -1743,7 +1742,7 @@ DECK = {
                          "Finance Commission's urbanisation premium encourages, leave the rural "
                          "guarantee altogether and enter towns that have none unless the state "
                          "provides one."},
-                        src("Ashwini Kulkarni, 'VB-G RAM G Bill, 2025: Decoding the new rural employment scheme', Ideas for India, 7 January 2026. PRS, 16th FC summary.")]},
+                        src("The VB-G RAM G Act, 2025 (Act 36 of 2025), ss. 22 and 37, and S.O. 2382(E) of 11 May 2026; Ashwini Kulkarni, 'VB-G RAM G Bill, 2025: Decoding the new rural employment scheme', Ideas for India, 7 January 2026. PRS, 16th FC summary.")]},
          ]},
 
         {"type": "content", "label": "Who Employs", "compact": True,
@@ -1839,27 +1838,28 @@ DECK = {
                         src("Ahmedabad Heat Action Plan 2019 update, easy read version. Hess et al., <em>Journal of Environmental and Public Health</em>, 2018.")]},
          ]},
 
-        {"type": "content", "label": "Mumbai 2005",
-         "title": "Mumbai, 26 July 2005: 944 mm of rain in a day",
+        {"type": "content", "label": "Drains",
+         "title": "Storm water drains covered less than a fifth of urban roads",
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "stats", "cols": 2, "cards": [
-                  {"num": "944 mm", "label": "rain in 24 hours at the IMD Santacruz station, 26 to 27 July 2005", "color": "cyan", "source": "IMD record, via Wikipedia"},
-                  {"num": "644 mm", "label": "fell in 12 hours on 26 July", "color": "amber", "source": "Same"}]},
-                       {"t": "body", "html": "The rain closed the city's commercial and industrial "
-                        "activity for days. The state declared 27 and 28 July public holidays. Banking "
-                        "transactions stopped at many branches from the evening of 26 July."}],
-              "right": [{"t": "body", "html": "After rain of this size, the governance questions "
-                         "concern what happens to the water once drains are full, including whether rivers such as the "
-                         "Mithi have room to carry it, whether low-lying land has been built over, and "
-                         "whether warnings reach people in time."},
+                  {"num": "under 20%", "label": "of the urban road network covered by storm water drains", "color": "red", "source": "MoUD (2010), cited in HPEC Box 2.4"},
+                  {"num": "1,700", "label": "flooding points reported eliminated under the first AMRUT, 2015 to 2021", "color": "green", "source": "Cabinet release on AMRUT 2.0, 2021"}]},
+                       {"t": "body", "html": "The HPEC's service norm was a storm water drain network "
+                        "covering the full length of every road on both sides, in all cities. It costed "
+                        "water supply, sewerage, solid waste and storm water drains together at ₹8 lakh "
+                        "crore, 20 per cent of its ₹39.2 lakh crore estimate for 2012 to 2031."}],
+              "right": [{"t": "body", "html": "When rain exceeds what drains can carry, the "
+                         "governance questions concern what happens to the water next, including "
+                         "whether rivers and lakes have room for it, whether low-lying land has been "
+                         "built over, and whether warnings reach people in time."},
                         {"t": "panel", "color": "cyan", "title": "Who holds the pieces", "html":
                          "Storm water drains are among the eight sectors the HPEC costed for urban "
                          "local bodies. Reservoirs and tanks may be run by a state department, as "
                          "Chennai's were in 2015 (next slide). Land use in large cities may sit with "
                          "development authorities, as in Bengaluru (section 04). Flooding crosses all "
                          "of these boundaries."},
-                        src("Wikipedia, '2005 Maharashtra floods', citing IMD and the Maharashtra disaster management status report.")]},
+                        src("HPEC, March 2011, Executive Summary paragraph 16, Box 2.4 and service norms. Cabinet release on AMRUT 2.0, 12 October 2021.")]},
          ]},
 
         {"type": "content", "label": "Chennai 2015",
@@ -2046,10 +2046,10 @@ DECK = {
                   "<a href='https://data.worldbank.org/indicator/SP.URB.TOTL.IN.ZS?locations=IN'>World Bank, World Development Indicators, urban population (% of total)</a>",
                   "<a href='https://www.mospi.gov.in/'>MoSPI, Periodic Labour Force Survey, annual 2025 and 2023-24</a>",
                   "<a href='https://icrier.org/pdf/FinalReport-hpec.pdf'>High Powered Expert Committee, Report on Indian Urban Infrastructure and Services, March 2011</a>",
-                  "<a href='https://www.constitutionofindia.net/schedules/twelfth-schedule/'>Constitution of India, Part IXA and the Twelfth Schedule (constitutionofindia.net)</a>",
+                  "<a href='https://legislative.gov.in/constitution-of-india/'>Constitution of India, Part IXA and the Twelfth Schedule (Legislative Department)</a>",
                   "<a href='https://www.business-standard.com/opinion/columns/india-s-urban-crisis-deepens-as-states-choke-city-level-governance-125102200921_1.html'>Business Standard, 22 October 2025, on the CAG compendium of 74th Amendment audits</a>",
                   "<a href='https://prsindia.org/bills/states/the-greater-bengaluru-governance-bill-2024'>PRS Legislative Research, Greater Bengaluru Governance Bill, 2024</a>",
-                  "<a href='https://en.wikipedia.org/wiki/Greater_Bengaluru_Authority'>Wikipedia, Greater Bengaluru Authority</a>",
+                  "<a href='https://www.thehindu.com/news/cities/bangalore/karnataka-greater-bengaluru-governance-act-2024-to-govern-city-from-may-15/article69575536.ece'>The Hindu, Greater Bengaluru Governance Act, 2024, to govern city from May 15, 15 May 2025</a>",
                   "<a href='https://www.rbi.org.in/Scripts/PublicationsView.aspx?id=22741'>RBI, Report on Municipal Finances, Chapter II, 13 November 2024</a>",
                   "<a href='https://www.rbi.org.in/scripts/PublicationsView.aspx?id=21361'>RBI, Report on Municipal Finances, Chapter II, 10 November 2022</a>",
                   "<a href='https://prsindia.org/policy/report-summaries/report-15th-finance-commission-2021-26'>PRS, Report Summary, 15th Finance Commission for 2021-26</a>",
@@ -2079,7 +2079,6 @@ DECK = {
                   "<a href='https://www.pmindia.gov.in/en/news_updates/cabinet-approves-the-continuation-of-swachh-bharat-mission-urban-sbm-u-till-2025-26-for-sustainable-outcomes/'>Cabinet approves SBM-Urban 2.0 till 2025-26, October 2021</a>",
                   "<a href='https://prsindia.org/files/bills_acts/bills_parliament/2012/Street_Vendors__Act,_2014.pdf'>Street Vendors (Protection of Livelihood and Regulation of Street Vending) Act, 2014, Gazette text (PRS)</a>",
                   "<a href='https://prsindia.org/billtrack/the-street-vendors-protection-of-livelihood-and-regulation-of-street-vending-bill-2012'>PRS, Street Vendors Bill, 2012, analysis</a>",
-                  "<a href='https://en.wikipedia.org/wiki/Street_Vendors_Act,_2014'>Wikipedia, Street Vendors Act, 2014 (dates)</a>",
                   "<a href='https://www.aeaweb.org/articles?id=10.1257/app.20150397'>Barnhardt, Field and Pande, Moving to Opportunity or Isolation?, AEJ: Applied Economics, 2017</a>",
                   "<a href='https://www.aeaweb.org/articles?id=10.1257/jep.27.4.187'>Marx, Stoker and Suri, The Economics of Slums in the Developing World, JEP, 2013</a>"]}],
               "right": [{"t": "bullets", "sm": True, "items": [
@@ -2089,8 +2088,7 @@ DECK = {
                   "<a href='https://www.ideasforindia.in/topics/poverty-inequality/vb--g-ram-g-bill-2025-decoding-the-new-rural-employment-scheme'>Ashwini Kulkarni, VB-G RAM G Bill, 2025, Ideas for India, 7 January 2026</a>",
                   "<a href='https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0091831'>Azhar et al., Heat-Related Mortality in India, PLoS ONE, 2014</a>",
                   "<a href='https://www.nrdc.org/sites/default/files/ahmedabad-heat-action-plan-2018.pdf'>Ahmedabad Heat Action Plan, 2019 update, easy read version (NRDC)</a>",
-                  "<a href='https://en.wikipedia.org/wiki/2005_Maharashtra_floods'>Wikipedia, 2005 Maharashtra floods</a>",
-                  "<a href='https://www.thehindu.com/news/cities/chennai/2015-floods-a-man-made-disaster-cag/article24374953.ece'>The Hindu, CAG terms 2015 Chennai floods a man-made disaster, July 2018</a>"]},
+                                    "<a href='https://www.thehindu.com/news/cities/chennai/2015-floods-a-man-made-disaster-cag/article24374953.ece'>The Hindu, CAG terms 2015 Chennai floods a man-made disaster, July 2018</a>"]},
                         {"t": "hbox", "color": "amber", "html": "Left out because no primary source for "
                          "them could be opened are Census 2011 slum totals, the detailed loan terms of PM SVANidhi, and the CAG compendium's "
                          "figures beyond those reported by Business Standard."}]},
