@@ -18,7 +18,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Fixed
 
-- **Some course readings cited works that do not exist, or described real ones wrongly** (#1257).
+- **Some course readings cited works that do not exist, or described real ones wrongly** (#1257). A second pass corrected 21 more across Causal, Gandhi, Designing What Works, Law, Media, Politics of Aspiration, Public Choice and Public Policy, and added 56 confirmed readings to the reading lists.
 - **Four Dropbox links survived in course quiz sections, and the Public Choice translations still sent readers to a Dropbox folder** (#1258).
 - **Progress tracking never started on six flagship courses; Public Choice marked every quiz answer wrong, Public Policy's Check Answer buttons did nothing, and four Gender buttons failed** (#1259).
 - **Flagship course pages broke on phones and lost the site bar** (#1260).
