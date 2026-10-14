@@ -71,18 +71,31 @@ export default async (req) => {
 
   try {
     if (type === "product") {
-      const r = await fetch(`${SUPABASE_URL}/storage/v1/object/sign/products/${encodeURIComponent(key)}`, {
-        method: "POST", headers: { Authorization: `Bearer ${SERVICE_KEY}`, apikey: SERVICE_KEY, "Content-Type": "application/json" },
-        body: JSON.stringify({ expiresIn: 7 * 24 * 3600 }),
-      });
-      if (!r.ok) {
-        console.log("[confirm] sign failed:", r.status, (await r.text()).slice(0, 400));
-        return page("Could not sign file", "The download link could not be created, so nothing was sent. Check that the file is in the products store, then use this link again.");
+      // A bundle's key is its files joined by commas. Every file is signed
+      // before anything is sent, so a buyer gets the whole bundle or the
+      // owner is told nothing went out.
+      const files = key.split(",").map((f) => f.trim()).filter(Boolean);
+      const links = [];
+      for (const file of files) {
+        const r = await fetch(`${SUPABASE_URL}/storage/v1/object/sign/products/${encodeURIComponent(file)}`, {
+          method: "POST", headers: { Authorization: `Bearer ${SERVICE_KEY}`, apikey: SERVICE_KEY, "Content-Type": "application/json" },
+          body: JSON.stringify({ expiresIn: 7 * 24 * 3600 }),
+        });
+        if (!r.ok) {
+          console.log("[confirm] sign failed:", file, r.status, (await r.text()).slice(0, 400));
+          return page("Could not sign file", `The download link for ${esc(file)} could not be created, so nothing was sent. Check that the file is in the products store, then use this link again.`);
+        }
+        links.push({ file, url: `${SUPABASE_URL}/storage/v1${(await r.json()).signedURL}` });
       }
-      const url = `${SUPABASE_URL}/storage/v1${(await r.json()).signedURL}`;
-      await mail(email, "Your ImpactMojo download", `<p>Thank you for your purchase!</p><p><a href="${url}" style="background:#0369A1;color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:700;font-family:Inter,Arial">Download your file →</a></p><p>This link works for 7 days. Reply to this email if you have any trouble.</p>`);
+      if (!links.length) return page("Nothing to send", "This link names no file. Deliver this order by hand.");
+      const btn = (u, label) => `<p><a href="${u}" style="background:#0369A1;color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:700;font-family:Inter,Arial">${label}</a></p>`;
+      const body = links.length === 1
+        ? btn(links[0].url, "Download your file →")
+        : `<p>Your bundle has ${links.length} files. Each link below downloads one of them.</p>` +
+          links.map((l) => btn(l.url, esc(l.file.replace(/^.*\//, "").replace(/^ImpactMojo-/, "").replace(/\.[a-z]+$/i, "").replace(/-/g, " ")))).join("");
+      await mail(email, "Your ImpactMojo download", `<p>Thank you for your purchase!</p>${body}<p>${links.length === 1 ? "This link works" : "These links work"} for 7 days. Reply to this email if you have any trouble.</p>`);
       await markUsed();
-      return page("Delivered ✓", `The file was emailed to <b>${esc(email)}</b>.`);
+      return page("Delivered ✓", `${links.length === 1 ? "The file was" : links.length + " files were"} emailed to <b>${esc(email)}</b>.`);
     }
     if (type === "sub") {
       const pr = await sb(`subscription_payments?reference=eq.${encodeURIComponent(key)}`, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ status: "paid" }) });
