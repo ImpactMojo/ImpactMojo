@@ -29,6 +29,7 @@ These were previously listed as planned or in progress, and are now live. Each n
 - **Analysing Indian survey data**, a Code School course on NFHS, PLFS and HCES files. ([/code/survey-data.html](/code/survey-data.html), v10.380.0)
 - **A reading list for every flagship course**, with free legal copies linked where they exist. ([/courses/mel/readings.html](/courses/mel/readings.html), v10.381.0)
 - **Teaching kits for trainers and faculty, and template bundles named for the job.** ([/products.html](/products.html), v10.381.0)
+- **Progress saved on all 22 flagships**, including Gender, Public Policy, Public Choice, Livelihoods, Nonviolence in Practice and Power BI. ([/courses/pubpol/](/courses/pubpol/), v10.382.0)
 
 ## Planned
 

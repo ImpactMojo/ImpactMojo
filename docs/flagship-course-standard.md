@@ -80,11 +80,12 @@ GA `G-JRCMEB9TBW` · a JSON-LD `Course` schema block. Site utilities use absolut
 
 A gold-standard hero carries four buttons, in this spirit:
 
-1. **Course Papers Collection** → a **Dropbox folder** link (`target="_blank"`,
-   `title="Most readings included. For others, email hello@impactmojo.in…"`).
+1. **Reading list** → `readings.html`, written by `scripts/build-reading-lists.py`
+   from `data/course-readings.json`. It links a free copy of each reading where one
+   exists and has a form to request the rest. Never link a shared folder of papers.
 2. **AI Study Companion** → a **NotebookLM** notebook link (`target="_blank"`).
 3. **Interactive Lexicon** → `lexicon.html`.
-4. **Excel Lexicon** → the downloadable `.xlsx` (Dropbox).
+4. **Excel Lexicon** → the `.xlsx` in the course folder, linked with `download`.
 
 A disabled `<span class="hero-resource-btn soon">…<span class="soon-badge">Soon</span></span>`
 is the honest placeholder while a real URL doesn't exist yet, but a flagship is
@@ -369,5 +370,5 @@ Chromium against all three malformation shapes: content stays inside the
 placeholder in every case. Untidy, not broken.
 
 **External dependencies** (block two components everywhere): a **NotebookLM
-notebook** and a **Dropbox papers folder** per course. Create via
-`scripts/notebooklm-manage.py` / Dropbox, or supply the URLs.
+notebook** per course, and its readings in `data/course-readings.json`. Create
+the notebook by uploading the course's sources, or supply the URL.

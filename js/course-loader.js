@@ -41,6 +41,18 @@
   var courseId = detectCourseId();
   if (!courseId) return;
 
+  // ── Page-level layout fixes for every flagship ──────────────────
+  // overflow-x:hidden on html or body makes them scroll containers, so the
+  // sticky site bar scrolled away on six courses. clip stops sideways
+  // scrolling without that side effect. The scroll margin keeps a module
+  // heading clear of the site bar and the progress bar after a jump.
+  (function () {
+    var st = document.createElement('style');
+    st.textContent = 'html, body { overflow-x: clip !important; }' +
+      'section[id], [id^="module"] { scroll-margin-top: 104px; }';
+    document.head.appendChild(st);
+  })();
+
   // ── Get auth token if user is logged in ─────────────────────────
   // Prefers the token from Supabase's in-memory session (which may have
   // been refreshed) over the raw localStorage value (which may be stale).
@@ -109,6 +121,57 @@
     }
   }
 
+  // ── Course notes offer ──────────────────────────────────────────
+  // Course notes are the only product that has sold, so each unlocked
+  // module ends with one plain line pointing to them. Courses with no
+  // notes product (social-protection) get nothing.
+  var NOTES = {
+    causal: 1, dataviz: 1, devai: 1, devecon: 1, esg: 1, gandhi: 1, gender: 1,
+    'gender-mel': 1, intervention: 1, law: 1, livelihoods: 1, media: 1, mel: 1,
+    'nothing-about-us': 1, 'nvc-rj': 1, poa: 1, powerbi: 1, pubchoice: 1,
+    pubpol: 1, sel: 1, 'social-movements': 1
+  };
+  var notesSlug = String(courseId).toLowerCase();
+
+  function notesOffer() {
+    if (!NOTES[notesSlug]) return '';
+    return '<p class="im-notes-offer" style="margin:2rem 0 0;padding-top:1rem;' +
+      'border-top:1px solid rgba(128,128,128,.35);font-size:.95rem;line-height:1.6;">' +
+      'Want this course on paper? The course notes put every module\'s core ideas, ' +
+      'diagrams and key readings in one printable PDF. ' +
+      '<a href="/products/notes-' + notesSlug + '/" style="color:inherit;' +
+      'text-decoration:underline;font-weight:600;">See the course notes</a></p>';
+  }
+
+  // ── Wide tables ─────────────────────────────────────────────────
+  // Module tables come from the database with no scroll wrapper, so one
+  // wider than a phone pushed the whole page sideways. Each table gets a
+  // wrapper that scrolls on its own; a wrapper that actually overflows is
+  // made focusable so a keyboard can scroll it too.
+  function wrapTables(root) {
+    var tables = root.getElementsByTagName('table');
+    for (var i = tables.length - 1; i >= 0; i--) {
+      var t = tables[i];
+      if (t.parentNode && t.parentNode.className === 'im-table-scroll') continue;
+      var w = document.createElement('div');
+      w.className = 'im-table-scroll';
+      w.style.overflowX = 'auto';
+      w.style.maxWidth = '100%';
+      t.parentNode.insertBefore(w, t);
+      w.appendChild(t);
+    }
+    requestAnimationFrame(function () {
+      var ws = root.querySelectorAll('.im-table-scroll');
+      for (var j = 0; j < ws.length; j++) {
+        if (ws[j].scrollWidth > ws[j].clientWidth + 1) {
+          ws[j].setAttribute('tabindex', '0');
+          ws[j].setAttribute('role', 'region');
+          ws[j].setAttribute('aria-label', 'Table, scrolls sideways');
+        }
+      }
+    });
+  }
+
   // ── Inject content into module placeholders ─────────────────────
   function injectContent(modules) {
     for (var i = 0; i < modules.length; i++) {
@@ -126,7 +189,9 @@
       var html = '';
       if (mod.content_html) html += mod.content_html;
       if (mod.quiz_html) html += mod.quiz_html;
+      html += notesOffer();
       placeholder.innerHTML = html;
+      wrapTables(placeholder);
     }
 
     // Re-initialize quiz handlers (course-progress.js will pick these up)

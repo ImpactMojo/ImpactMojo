@@ -182,10 +182,10 @@ in copy must be **accurate and consistent** (a recurring bug: audit them).
 
 **E2. Structured data.** One JSON-LD `Course` schema block (provider = ImpactMojo).
 
-**E3. Hero resource buttons: 4 expected.** Course Papers (Dropbox folder), AI Study
-Companion (NotebookLM), Interactive Lexicon (`lexicon.html`), Excel Lexicon (Dropbox
-`.xlsx`). Honest `.hero-resource-btn.soon` stub allowed until a real URL exists, but a
-course isn't "on par" until Papers + AI Companion are live.
+**E3. Hero resource buttons: 4 expected.** Reading list (`readings.html`), AI Study
+Companion (NotebookLM), Interactive Lexicon (`lexicon.html`), Excel Lexicon (the
+`.xlsx` in the course folder). Honest `.hero-resource-btn.soon` stub allowed until a real URL exists, but a
+course isn't "on par" until the reading list and AI Companion are live.
 
 **E4. Connected Resources block**, `#resources-cross` with 7 `.resource-card`s in order
 `lab · notebooklm · course101 · book · handout · dojo · premium`, each with real,
