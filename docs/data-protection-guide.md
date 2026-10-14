@@ -72,7 +72,6 @@ We use three external services that process some data on our behalf:
 |---------|---------|--------------|
 | **Google Analytics** | Usage analytics | Anonymous browsing data |
 | **Formspree** | Contact form processing | Name, email, message |
-| **UserWay** | Accessibility tools | Anonymous interaction data |
 
 We don't share personal data with any other third parties.
 

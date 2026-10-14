@@ -22,8 +22,8 @@ Coaching is aimed at **development-sector professionals**: people navigating a c
 
 Sessions are led by ImpactMojo's founding team:
 
-- **Varna Sri Raman**: Founder and Lead of Learning Design & Impact. A Development Economist with a PhD, specializing in social impact measurement, gender studies, and development research across South Asia.
-- **Vandana Soni**: Co-Founder and Lead of Partnerships & Programmes. An education and development professional with over 15 years designing learning programs and large-scale education initiatives across India (Top Contributor in the Education Sector, Jobs for Her, 2022).
+- **Varna Sri Raman**: Founder, Learning Design & Impact. Development economist (PhD) specialising in social-impact measurement, gender studies, and development research across South Asia. At ImpactMojo, leads curriculum and course design.
+- **Vandana Soni**: Co-founder, Head of Learning Programmes. Education and development professional (15+ years) specialising in early literacy, learning assessment, and programme design for schools across India. At ImpactMojo, designs learning programmes and coaching for practitioners.
 
 ---
 
@@ -51,7 +51,7 @@ Beyond the one-on-one sessions, Coaching offers **three-day intensive workshops*
 
 - **One-on-one sessions:** click the **Book an appointment** button on any service card to schedule directly through Google Calendar.
 - **Workshops:** there is no direct calendar booking, use the [Contact page](/contact.html) and mention your preferred course topic and dates.
-- **Not sure which service fits?** Use the "Have Questions?" contact call-to-action, write to `hello@impactmojo.in`, or ask **Mojini**, the on-page assistant, for pricing, service, and booking help.
+- **Not sure which service fits?** Use the "Have Questions?" contact call-to-action, write to `hello@impactmojo.in`, or search the site (Ctrl+K) for short answers on pricing, services and booking.
 
 ---
 

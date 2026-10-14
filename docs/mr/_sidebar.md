@@ -19,7 +19,6 @@
   - [वारंवार विचारले जाणारे प्रश्न](faq.md)
 
 - **साधने आणि संसाधने**
-  - [Mojini (व्यासपीठ सहाय्यक)](mojini-guide.md)
   - [ImpactLex (शब्दसंग्रह)](impactlex-guide.md)
   - [FieldCases (केस ग्रंथालय)](fieldcases-guide.md)
   - [DevDiscourses (संशोधन)](devdiscourses-guide.md)

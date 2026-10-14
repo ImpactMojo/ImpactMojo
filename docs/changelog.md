@@ -2,11 +2,41 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.384.0 — October 14, 2026 (a cleaner home page, one menu, and your tools on your dashboard)
+
+### For Learners
+
+- **A new home page** — one search box, three ways in (learn a method, find a tool, look up the data) and what is new this month, on a page a third the length of the old one.
+- **One menu on every page** — five groups (Learn, Tools, Data, Read, Membership), with search, language, display settings and sign-in beside it.
+- **Search answers questions** — Ctrl+K (Cmd+K on a Mac) opens search on any page, and common questions such as how to get a certificate now come back with the answer.
+- **Your tools on your dashboard** — bookmarks, notes, reading lists, compare, streak, learning analytics, a focus timer and study music now live under My tools on your free account, with everything you saved before.
+- **Support ImpactMojo** — pay what you think is fair and download a pack of five practitioner resources.
+- **An accessibility menu on every page** — the button beside search sets the theme, text size, wider spacing, underlined links, reduced motion, a stronger focus outline and the dyslexia-friendly font, and remembers your choices.
+
+### Changed
+
+- The header on every page is now the logo, five menu groups, search, language, one display-settings button (theme and the dyslexia-friendly font) and sign-in. It replaces a bar of ten buttons and a 22-link menu.
+- The home page uses Inter for text and Amaranth for headings. Its old stylesheet set Amaranth on every paragraph and stopped the header from sticking.
+- The Mojini chat assistant is retired; its answers to common questions now come back in search. The floating toolbox is retired; its tools are on the dashboard, and the old addresses (/bookmarks, /notes, /pomodoro and the rest) open the matching tab.
+- The founders' bios live on the About page; the home page links to it.
+- Running text across the site is set in Inter, and headings keep Amaranth where they had it. About 690 pages, Reading Companions, product pages, handouts, blog posts and course pages among them, had set Amaranth on every paragraph. Slide decks and games are unchanged.
+- Page titles and section headings are set in Amaranth on every page, as on the home page; smaller headings and labels stay in Inter. Slide decks, games and handouts keep their own type, pages read in another language keep their script's font, and the reading font still replaces both when it is on.
+- The third-party UserWay accessibility widget is removed from the 50 pages that loaded it; the site's own accessibility menu replaces it on every page, and the privacy and data-protection pages no longer list UserWay.
+- Each founder now has one bio and one title, the same on every page that names them: About, Coaching, the press kit, the four assessed-certificate pages, the credential upgrade page, the Gender, Power BI and Public Choice courses, the FAQ, the coaching guide and the team page. The founder cards at the end of the Data Visualization, Gender, SEL, AI for Development and Law courses use the same text.
+
+### Fixed
+
+- **Stray characters under the founder photos in Data Visualization module 12** (#1264).
+- **Account sync emptied the learning-streak calendar** (#1265).
+- **Account sync merged notes on the wrong date, so an edited note could lose to an older copy** (#1266).
+- **The Support ImpactMojo form could not be reached from anywhere on the site, and its Copy button did nothing** (#1267). It now has its own page.
+- **Six course lexicons scrolled sideways on a phone** (#1268). A long term could widen the card grid past the screen; the cards now wrap.
+
 ## v10.383.0 — October 14, 2026 (Vandana's bio restored)
 
 ### Changed
 
-- Vandana Soni's bio on the home page, the About page and the Gender course now describes her work, taken from her own profile: early literacy at Room to Read, national assessments with NCERT and MHRD at Central Square Foundation, programmes for rural schools at eVidyaloka Trust. Her title is now Head of Learning Programmes, as she gives it.
+- The two founders' bios on the home page, the About page and the Gender course now share one form: what each does, and one line on their work at ImpactMojo. Vandana Soni's title is Head of Learning Programmes, as she gives it.
 
 ## v10.382.0 — October 14, 2026 (corrected citations, the last Dropbox links, and course pages that fit a phone)
 

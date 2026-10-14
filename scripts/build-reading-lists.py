@@ -175,7 +175,7 @@ CSS = """
 body{background:#FFFFFF;color:#111827}
 html[data-theme="dark"] body,html.dark body,body.dark-mode{background:#0F172A;color:#F1F5F9}
 @media (prefers-color-scheme:dark){html:not([data-theme]) body:not(.light-mode){background:#0F172A;color:#F1F5F9}}
-.rl,.rl-dlg{--rl-ink:#111827;--rl-field:#6B7280;font-family:Amaranth,Arial,sans-serif;--rl-muted:#4B5563;--rl-line:#E3E6EB;--rl-link:#075985;--rl-chip:#F1F5F9;--rl-btn:#0369A1;--rl-btn-ink:#FFFFFF;color:var(--rl-ink)}
+.rl, .rl-dlg {--rl-ink:#111827;--rl-field:#6B7280;font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;--rl-muted:#4B5563;--rl-line:#E3E6EB;--rl-link:#075985;--rl-chip:#F1F5F9;--rl-btn:#0369A1;--rl-btn-ink:#FFFFFF;color:var(--rl-ink)}
 .rl{max-width:860px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) 64px max(16px,env(safe-area-inset-left,0px))}
 html[data-theme="dark"] :is(.rl,.rl-dlg),html.dark :is(.rl,.rl-dlg),body.dark-mode :is(.rl,.rl-dlg){--rl-field:#94A3B8;--rl-ink:#F1F5F9;--rl-muted:#CBD5E1;--rl-line:#2A3550;--rl-link:#7DD3FC;--rl-chip:#1E293B;--rl-btn:#7DD3FC;--rl-btn-ink:#0F172A}
 @media (prefers-color-scheme:dark){html:not([data-theme]) body:not(.light-mode) :is(.rl,.rl-dlg){--rl-field:#94A3B8;--rl-ink:#F1F5F9;--rl-muted:#CBD5E1;--rl-line:#2A3550;--rl-link:#7DD3FC;--rl-chip:#1E293B;--rl-btn:#7DD3FC;--rl-btn-ink:#0F172A}}

@@ -137,11 +137,12 @@
   var TOURS = {
     index: [
       { intro: '<strong>Welcome to ImpactMojo</strong><br>Development know-how for South Asia: 22 flagship and 84 foundational courses, 135 games and 35 Free Studio tools, built by practitioners and free to use. Here is a quick look round.' },
-      { element: '.im-sc-menu', intro: '<strong>Menu</strong><br>Every part of the site, from the 22 flagship courses and the 84 shorter courses of the 101 Series to Code School, Free Studio, the reading companions and the Data Room. A small dot marks what changed recently.' },
-      { element: '.im-sc-search', whenVisible: true, intro: '<strong>Search everything</strong><br>Search every course, studio, game and companion. On a computer, Ctrl+K opens it from any page.' },
+      { element: '.im-sc-nav', whenVisible: true, intro: '<strong>Menu</strong><br>Five groups: Learn, Tools, Data, Read and Membership. Learn holds the 22 flagship courses, the 84 shorter courses of the 101 Series and Code School.' },
+      { element: '.im-sc-menu', whenVisible: true, intro: '<strong>Menu</strong><br>Every part of the site, grouped as Learn, Tools, Data and Read. A small dot marks what changed recently.' },
+      { element: '.im-sc-search', whenVisible: true, intro: '<strong>Search everything</strong><br>Search every course, studio, game and companion, and the answers to common questions. On a computer, Ctrl+K opens it from any page.' },
       { element: '.im-sc-lang', whenVisible: true, intro: '<strong>Language</strong><br>Read any page in Hindi, Tamil, Bengali, Marathi or Telugu.' },
       { element: '#quiz', intro: '<strong>Not sure where to start?</strong><br>Six quick questions give you a personal starting path, and the homepage remembers it.' },
-      { element: '#pro-studio', intro: '<strong>Pro Studio</strong><br>Professional tools for subscribers. Everything you have seen so far stays free.' }
+      { element: '#routes', intro: '<strong>Three ways in</strong><br>Learn a method, find a tool, or look up the data. Everything here is free; Membership adds exports and Pro tools.' }
     ]
     // Tours run on the homepage only. Do not add per-page tours here.
   };

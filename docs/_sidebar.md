@@ -29,7 +29,6 @@
   - [FAQ](faq.md)
 
 - **Tools & Resources**
-  - [Mojini (Platform Assistant)](mojini-guide.md)
   - [ImpactLex (Glossary)](impactlex-guide.md)
   - [FieldCases (Case Library)](fieldcases-guide.md)
   - [DevDiscourses (Research)](devdiscourses-guide.md)

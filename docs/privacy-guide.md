@@ -63,7 +63,6 @@ We use three external services:
 |---------|-------------|-------------------|
 | **Google Analytics** | Website usage analytics | Anonymous page visit data |
 | **Formspree** | Processes contact form submissions | Your name, email, and message when you fill in a contact form |
-| **UserWay** | Accessibility tools | Anonymous interaction data for accessibility features |
 
 ---
 

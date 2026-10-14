@@ -10,7 +10,6 @@
     |  - Added V3 decorative elements (paper planes, gradient blobs)               |
     |  - Updated navigation with dropdowns                                         |
     |  - Updated 4-section footer                                                  |
-    |  - Added Mojini chatbot and cookie consent                                   |
     |  - Mobile responsive design with fixed menu                                  |
     |  - Preserved all original account functionality                              |
     |  - NO toolbox (account page, not course/resource page)                       |
@@ -143,6 +142,7 @@ window.addEventListener('pageshow', function(event) {
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
 <link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 <link rel="stylesheet" href="/css/impact-bold.css?v=0c411841">
+<link rel="stylesheet" href="/css/learner-tools.css?v=a03223c1">
 
 <style>
 /* ========================================
@@ -240,7 +240,7 @@ html {
 }
 
 body {
-    font-family: 'Amaranth', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
     background: var(--primary-bg);
     color: var(--text-primary);
     line-height: 1.6;
@@ -248,7 +248,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-}
+} h1, h2, h3 {font-family: 'Amaranth', 'Inter', system-ui, sans-serif;}
 
 a {
     color: var(--accent-color);
@@ -1407,223 +1407,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ========================================
-   MOJINI CHATBOT
-   ======================================== */
-.feedback-fab {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    z-index: 9000;
-    transition: all 0.3s ease;
-}
-
-.feedback-fab:hover {
-    transform: scale(1.1);
-    box-shadow: var(--shadow-xl);
-}
-
-.feedback-fab svg {
-    width: 24px;
-    height: 24px;
-    stroke: white;
-    fill: none;
-    stroke-width: 2;
-}
-
-.chatbot-modal {
-    display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 24px;
-    width: 380px;
-    max-width: calc(100vw - 48px);
-    max-height: 500px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    box-shadow: var(--shadow-xl);
-    z-index: 9001;
-    overflow: hidden;
-    flex-direction: column;
-}
-
-.chatbot-modal.open {
-    display: flex;
-}
-
-.chat-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
-    background: var(--gradient-primary);
-    color: white;
-}
-
-.chat-header h3 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.chat-header svg {
-    width: 20px;
-    height: 20px;
-    stroke: white;
-    fill: none;
-}
-
-.chat-close {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
-}
-
-.chat-close:hover {
-    background: rgba(255,255,255,0.3);
-}
-
-.chat-close svg {
-    width: 16px;
-    height: 16px;
-    stroke: white;
-}
-
-.chat-messages {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 300px;
-}
-
-.bot-message {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.bot-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.bot-avatar svg {
-    width: 18px;
-    height: 18px;
-    stroke: white;
-    fill: none;
-}
-
-.bot-bubble {
-    background: var(--secondary-bg);
-    padding: 12px 16px;
-    border-radius: 12px;
-    border-top-left-radius: 4px;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    max-width: 85%;
-}
-
-.chat-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 0 16px 12px;
-}
-
-.chat-option {
-    padding: 8px 14px;
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    color: var(--text-primary);
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.chat-option:hover {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-}
-
-.chat-input-area {
-    display: flex;
-    gap: 10px;
-    padding: 16px;
-    border-top: 1px solid var(--border-color);
-    background: var(--secondary-bg);
-}
-
-.chat-input-area input {
-    flex: 1;
-    padding: 10px 14px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    outline: none;
-}
-
-.chat-input-area input:focus {
-    border-color: var(--accent-color);
-}
-
-.chat-send {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    background: var(--gradient-primary);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
-}
-
-.chat-send:hover {
-    transform: scale(1.05);
-}
-
-.chat-send svg {
-    width: 18px;
-    height: 18px;
-    stroke: white;
-    fill: none;
-}
-
-/* ========================================
    MOBILE RESPONSIVE STYLES
    ======================================== */
 @media (max-width: 768px) {
@@ -1841,13 +1624,7 @@ h1, h2, h3, h4, h5, h6 {
         text-align: center;
     }
     
-    /* Chatbot mobile */
-    .chatbot-modal {
-        right: 12px;
-        left: 12px;
-        width: auto;
-        bottom: 80px;
-    }
+    
     
     /* Decorative elements mobile */
     .v3-paper-plane {
@@ -2499,6 +2276,24 @@ h1, h2, h3, h4, h5, h6 {
                 </div>
             </div>
 
+            <!-- My tools (Full Width): bookmarks, notes, reading lists, compare,
+                 streak, learning analytics, focus timer and study music.
+                 Drawn by js/learner-tools.js; they used to sit in the
+                 floating toolbox. -->
+            <section class="card card-full" id="my-tools" aria-labelledby="myToolsTitle">
+                <div class="card-header">
+                    <h2 class="card-title" id="myToolsTitle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        My tools
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div id="learnerTools" data-learner-tools>
+                        <p>Your tools are loading. If nothing appears, check that JavaScript is turned on.</p>
+                    </div>
+                </div>
+            </section>
+
             <!-- Edit Profile Card (Full Width) -->
             <div class="card card-full">
                 <div class="card-header">
@@ -2995,56 +2790,8 @@ h1, h2, h3, h4, h5, h6 {
     </div>
 </footer>
 
-<!-- Mojini Chatbot FAB -->
-<button class="feedback-fab" id="mojini-chat-toggle" onclick="openChatbot()" title="Chat with Mojini">
-    <svg viewBox="0 0 24 24">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-    </svg>
-</button>
 
-<!-- Chatbot Modal -->
-<div class="chatbot-modal" id="chatbotModal">
-    <div class="chat-header">
-        <h3>
-            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
-            Mojini
-        </h3>
-        <button class="chat-close" aria-label="Close chat" onclick="closeChatbot()">
-            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-    </div>
-    <div class="chat-messages" id="chatMessages">
-        <div class="message bot-message">
-            <div class="bot-avatar">
-                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
-            </div>
-            <div class="bot-bubble">Hello, I'm Mojini, your ImpactMojo assistant. How can I help you manage your account today?</div>
-        </div>
-    </div>
-    <div class="chat-options">
-        <button class="chat-option" onclick="selectOption('courses')"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Library_books.svg" alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;" aria-hidden="true"> Courses</button>
-        <button class="chat-option" onclick="selectOption('contact')"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Mail.svg" alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;" aria-hidden="true"> Contact</button>
-        <button class="chat-option" onclick="selectOption('feedback')"><img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Chat.svg" alt="" style="width:1em;height:1em;vertical-align:-0.15em;display:inline-block;" aria-hidden="true"> Feedback</button>
-    </div>
-    <div class="chat-input-area">
-        <input type="text" id="chatInput" aria-label="Chat message" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
-        <button class="chat-send" aria-label="Send message" onclick="sendChatMessage()">
-            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
-    </div>
-</div>
 
-<!-- UserWay Accessibility Widget -->
-<script>
-    (function(d) {
-      var s = d.createElement("script");
-      s.setAttribute("data-position", 3);
-      s.setAttribute("data-widget_layout", "full");
-      s.setAttribute("data-account", "EksmhlPg9k");
-      s.setAttribute("src", "https://cdn.userway.org/widget.js");
-      (d.body || d.head).appendChild(s);
-    })(document);
-</script>
 
 <!-- State Manager (must load before auth.js) -->
 <script src="js/state-manager.js"></script>
@@ -3061,6 +2808,7 @@ h1, h2, h3, h4, h5, h6 {
 
 <!-- Account Page Logic (extracted from inline script) -->
 <script src="js/account.js"></script>
+<script src="js/learner-tools.js"></script>
 
 <!-- REMOVED: ~650 lines of inline JS moved to js/account.js -->
 <script>/* Inline JS removed — see js/account.js */
@@ -3089,7 +2837,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 600px) { .imx-badge-wallet { grid-template-columns: 1fr; } .imx-badge-card { flex-direction: column; align-items: center; text-align: center; } .imx-badge-competencies, .imx-badge-actions { justify-content: center; } }
 
 /* ImpactMojo Global Font Overrides */
-body { font-family: 'Amaranth', sans-serif !important; }
+body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif !important; } h1, h2, h3 {font-family: 'Amaranth', 'Inter', system-ui, sans-serif;}
 h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif !important; }
 code, pre, .monospace, kbd, samp { font-family: 'JetBrains Mono', monospace !important; }
 
@@ -3117,12 +2865,11 @@ body.dark-mode .nav-links > li > a:hover, [data-theme="dark"] .nav-links > li > 
 [data-theme="dark"],body.dark-mode,html.dark{--im-accent:#38BDF8;--im-secondary-accent:#A5B4FC;--im-success:#6EE7B7;}
 </style>
 <!-- Language Translation (Hindi, Tamil, Bengali, Marathi) -->
-<script src="/js/search.js?v=e4b820bd" defer></script>
+<script src="/js/search.js?v=a8b15de1" defer></script>
 <script defer src="js/auto-refresh.js"></script>
 <!-- ImpactMojo Theme Toggle JS -->
 <script src="/js/theme.js?v=ca787a55"></script>
 <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
-  <script src="/js/site-chrome.js?v=0d18f1bc" defer></script>
-<script src="/js/mojini-ai.js?v=d120c762" defer></script>
+  <script src="/js/site-chrome.js?v=afeb5ce2" defer></script>
 </body>
 </html>

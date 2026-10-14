@@ -19,7 +19,6 @@
   - [अक्सर पूछे जाने वाले प्रश्न](faq.md)
 
 - **उपकरण और संसाधन**
-  - [Mojini (मंच सहायक)](mojini-guide.md)
   - [ImpactLex (शब्दावली)](impactlex-guide.md)
   - [FieldCases (केस पुस्तकालय)](fieldcases-guide.md)
   - [DevDiscourses (शोध)](devdiscourses-guide.md)

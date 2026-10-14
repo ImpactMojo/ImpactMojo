@@ -19,7 +19,6 @@
   - [সাধারণ প্রশ্নাবলী](faq.md)
 
 - **সরঞ্জাম ও সম্পদ**
-  - [Mojini (প্ল্যাটফর্ম সহায়ক)](mojini-guide.md)
   - [ImpactLex (পরিভাষা)](impactlex-guide.md)
   - [FieldCases (কেস লাইব্রেরি)](fieldcases-guide.md)
   - [DevDiscourses (গবেষণা)](devdiscourses-guide.md)

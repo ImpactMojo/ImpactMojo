@@ -1,0 +1,312 @@
+/* ImpactMojo homepage, refresh of October 2026 (option D on the design canvas).
+
+   The homepage used to load css/imx-main.min.css (226 KB), which set
+   'Amaranth' as the font of every paragraph, put `overflow-x: hidden` on <html>
+   (a sticky header then sticks to nothing) and forced section padding with
+   !important on phones. This file replaces it on this page only.
+
+   Type: Inter for text, Amaranth for headings and the large numbers only.
+   Colour: every colour is a token, declared for light on :root and again for
+   dark, under both the theme switch and the system setting. A token is either
+   ink (text on the page ground) or a fill (a surface carrying --h-on-fill),
+   never both. */
+
+:root {
+  --h-bg: #FFFFFF;
+  --h-soft: #F8FAFC;
+  --h-ink: #0F172A;
+  --h-mut: #475569;
+  --h-bd: #E2E8F0;
+  --h-link: #075985;
+  --h-fill: #0369A1;
+  --h-on-fill: #FFFFFF;
+  --h-sky: #0EA5E9;
+  --h-green: #10B981;
+  --h-indigo: #6366F1;
+  --h-sky-ink: #0369A1;
+  --h-green-ink: #047857;
+  --h-indigo-ink: #4F46E5;
+  --h-glow-a: #E0F2FE;
+  --h-glow-b: #EEF2FF;
+  --h-trail-a: #7DD3FC;
+  --h-trail-b: #C7D2FE;
+  --h-plane-fill: #FFFFFF;
+  --h-shadow: rgba(3, 105, 161, 0.12);
+  --h-band: #0369A1;
+  --h-band-ink: #FFFFFF;
+  --h-band-mut: #E0F2FE;
+  --h-band-btn: #FFFFFF;
+  --h-band-btn-ink: #0369A1;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    --h-bg: #0B1120;
+    --h-soft: #111A2E;
+    --h-ink: #F1F5F9;
+    --h-mut: #A3B1C6;
+    --h-bd: #25304A;
+    --h-link: #7DD3FC;
+    --h-fill: #38BDF8;
+    --h-on-fill: #0B1120;
+    --h-sky-ink: #7DD3FC;
+    --h-green-ink: #6EE7B7;
+    --h-indigo-ink: #A5B4FC;
+    --h-glow-a: rgba(56, 189, 248, 0.14);
+    --h-glow-b: rgba(129, 140, 248, 0.12);
+    --h-trail-a: #0369A1;
+    --h-trail-b: #4F46E5;
+    --h-plane-fill: #0B1120;
+    --h-shadow: rgba(0, 0, 0, 0.35);
+    --h-band: #0C2A44;
+    --h-band-ink: #F1F5F9;
+    --h-band-mut: #BAE6FD;
+    --h-band-btn: #38BDF8;
+    --h-band-btn-ink: #0B1120;
+  }
+}
+html[data-theme="dark"], html.dark {
+  --h-bg: #0B1120;
+  --h-soft: #111A2E;
+  --h-ink: #F1F5F9;
+  --h-mut: #A3B1C6;
+  --h-bd: #25304A;
+  --h-link: #7DD3FC;
+  --h-fill: #38BDF8;
+  --h-on-fill: #0B1120;
+  --h-sky-ink: #7DD3FC;
+  --h-green-ink: #6EE7B7;
+  --h-indigo-ink: #A5B4FC;
+  --h-glow-a: rgba(56, 189, 248, 0.14);
+  --h-glow-b: rgba(129, 140, 248, 0.12);
+  --h-trail-a: #0369A1;
+  --h-trail-b: #4F46E5;
+  --h-plane-fill: #0B1120;
+  --h-shadow: rgba(0, 0, 0, 0.35);
+  --h-band: #0C2A44;
+  --h-band-ink: #F1F5F9;
+  --h-band-mut: #BAE6FD;
+  --h-band-btn: #38BDF8;
+  --h-band-btn-ink: #0B1120;
+}
+
+html { overflow-x: clip; scroll-padding-top: 64px; }
+body {
+  margin: 0;
+  background: var(--h-bg);
+  color: var(--h-ink);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+*, *::before, *::after { box-sizing: border-box; }
+img, svg { max-width: 100%; }
+a { color: var(--h-link); }
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--h-fill);
+  outline-offset: 2px;
+}
+.h-skip {
+  position: absolute; left: -9999px; top: 8px; z-index: 100001;
+  background: var(--h-fill); color: var(--h-on-fill); padding: 10px 14px; border-radius: 8px;
+}
+.h-skip:focus { left: 8px; }
+.h-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.h-display, .h-h2, .h-col h2, .h-num {
+  font-family: 'Amaranth', 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+}
+html.im-dyslexic .h-display, html.im-dyslexic .h-h2, html.im-dyslexic .h-col h2 { font-family: inherit; }
+
+/* Hero */
+.h-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(1100px 520px at 78% 0%, var(--h-glow-a) 0%, transparent 70%),
+    radial-gradient(800px 420px at 8% 100%, var(--h-glow-b) 0%, transparent 70%);
+}
+.h-hero .h-wrap { position: relative; padding-top: 88px; padding-bottom: 72px; }
+.h-hero-text { position: relative; z-index: 1; max-width: 680px; display: flex; flex-direction: column; gap: 20px; }
+.h-display {
+  margin: 0;
+  font-size: clamp(40px, 6vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.5px;
+  text-wrap: balance;
+}
+.h-lede { margin: 0; font-size: clamp(17px, 2vw, 20px); color: var(--h-mut); max-width: 600px; }
+.h-search { margin-top: 8px; }
+.h-search label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.h-search-box {
+  display: flex; align-items: center; gap: 12px; height: 60px; padding: 0 10px 0 18px;
+  background: var(--h-bg); border: 2px solid var(--h-sky); border-radius: 14px;
+  box-shadow: 0 10px 28px var(--h-shadow);
+}
+.h-search-box svg { flex: none; color: var(--h-sky-ink); }
+.h-search-box input {
+  flex: 1; min-width: 0; border: 0; background: transparent; color: var(--h-ink);
+  font: inherit; font-size: 17px; outline: none;
+}
+.h-search-box input::placeholder { color: var(--h-mut); opacity: 1; }
+.h-search-box:focus-within { outline: 2px solid var(--h-fill); outline-offset: 2px; }
+.h-search-go {
+  flex: none; height: 42px; padding: 0 16px; border: 0; border-radius: 10px;
+  background: var(--h-fill); color: var(--h-on-fill); font: 600 15px/1 inherit; cursor: pointer;
+}
+.h-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.h-chips > span { font-size: 14px; color: var(--h-mut); }
+.h-chip {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px;
+  border: 1px solid var(--h-bd); border-radius: 999px; background: var(--h-bg);
+  color: var(--h-link); font: 500 14px/1.2 inherit; text-decoration: none; cursor: pointer;
+}
+.h-chip:hover { border-color: var(--h-sky); }
+
+/* The planes sit in the space to the right of the text column (and, on wide
+   screens, in the margin beyond the page), so they never cross a word. Below
+   1100px there is no such space and they are not drawn. */
+.h-planes { position: absolute; inset: 0; pointer-events: none; }
+.h-planes svg { position: absolute; display: block; }
+.h-planes .p-right { right: 0; top: 40px; width: 380px; height: 420px; }
+.h-planes .p-left { left: -150px; bottom: 30px; width: 130px; height: 140px; }
+@media (max-width: 1099px) { .h-planes { display: none; } }
+@media (max-width: 1499px) { .h-planes .p-left { display: none; } }
+
+/* Continue where you left off (rendered by a script for returning learners) */
+#im-continue-strip {
+  display: flex; align-items: center; gap: 10px; max-width: 680px; margin-top: 4px; padding: 12px 16px;
+  background: var(--h-bg); border: 1px solid var(--h-bd); border-left: 0; border-radius: 12px;
+  box-shadow: inset 4px 0 0 var(--h-sky); color: var(--h-ink); text-decoration: none; font-size: 15px;
+}
+#im-continue-strip:hover { border-color: var(--h-sky); }
+#im-continue-strip svg { color: var(--h-sky-ink); flex: none; }
+#im-continue-strip .im-cs-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#im-continue-strip .im-cs-meta { font-size: 13px; color: var(--h-mut); white-space: nowrap; }
+#im-continue-strip .im-cs-arrow { color: var(--h-sky-ink); font-weight: 700; }
+@media (max-width: 600px) {
+  #im-continue-strip { flex-wrap: wrap; }
+  #im-continue-strip .im-cs-text { white-space: normal; }
+}
+
+/* Three ways in */
+.h-routes .h-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--h-bd); border-bottom: 1px solid var(--h-bd);
+}
+.h-col { padding: 32px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.h-col:first-child { padding-left: 0; }
+.h-col:last-child { padding-right: 0; }
+.h-col + .h-col { border-left: 1px solid var(--h-bd); }
+.h-bar { width: 32px; height: 5px; border-radius: 3px; }
+.h-col h2 { margin: 0; font-size: 24px; line-height: 1.2; color: var(--h-ink); }
+.h-col p { margin: 0 0 4px; font-size: 15px; color: var(--h-mut); }
+.h-col a {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  min-height: 32px; text-decoration: none; color: var(--h-ink); font-weight: 600;
+}
+.h-col a:hover .h-name { color: var(--h-link); text-decoration: underline; }
+.h-num { font-size: 19px; }
+.h-tag { font-size: 14px; font-weight: 400; color: var(--h-mut); text-align: right; }
+.c-sky .h-bar { background: var(--h-sky); } .c-sky .h-num { color: var(--h-sky-ink); }
+.c-green .h-bar { background: var(--h-green); } .c-green .h-num { color: var(--h-green-ink); }
+.c-indigo .h-bar { background: var(--h-indigo); } .c-indigo .h-num { color: var(--h-indigo-ink); }
+@media (max-width: 860px) {
+  .h-routes .h-grid { grid-template-columns: minmax(0, 1fr); }
+  .h-col, .h-col:first-child, .h-col:last-child { padding: 24px 0; }
+  .h-col + .h-col { border-left: 0; border-top: 1px solid var(--h-bd); }
+}
+
+/* New this month */
+.h-sec { padding-top: 64px; padding-bottom: 8px; }
+.h-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+.h-h2 { margin: 0; font-size: clamp(28px, 3.4vw, 34px); line-height: 1.15; }
+.h-more { font-weight: 600; font-size: 15px; }
+.h-list { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--h-bd); }
+.h-list a {
+  display: grid; grid-template-columns: 150px minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px; align-items: baseline;
+  padding: 16px 0; border-top: 1px solid var(--h-bd); text-decoration: none; color: var(--h-ink);
+}
+.h-list a:hover .h-title { color: var(--h-link); text-decoration: underline; }
+.h-type { font-size: 13px; font-weight: 600; }
+.h-title { font-size: 17px; font-weight: 600; line-height: 1.35; }
+.h-desc { font-size: 15px; color: var(--h-mut); }
+.t-course .h-type { color: var(--h-sky-ink); }
+.t-101 .h-type { color: var(--h-green-ink); }
+.t-law .h-type { color: var(--h-indigo-ink); }
+@media (max-width: 760px) {
+  .h-list a { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+
+/* Why we built this */
+.h-why { display: flex; flex-wrap: wrap; gap: 16px 48px; align-items: baseline; padding-top: 56px; }
+.h-why p { margin: 0; flex: 999 1 480px; min-width: 0; font-size: 17px; color: var(--h-mut); }
+.h-why p strong { color: var(--h-ink); font-weight: 600; }
+.h-why nav { display: flex; flex-wrap: wrap; gap: 8px 20px; font-weight: 600; font-size: 15px; }
+
+/* Account band */
+.h-band-wrap { padding-top: 56px; padding-bottom: 72px; }
+.h-band {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; padding: 36px 40px;
+  background: var(--h-band); color: var(--h-band-ink); border-radius: 20px;
+}
+.h-band div { flex: 999 1 420px; min-width: 0; }
+.h-band h2 { margin: 0 0 8px; font-size: 30px; line-height: 1.2; color: var(--h-band-ink); }
+.h-band p { margin: 0; font-size: 16px; color: var(--h-band-mut); }
+.h-band a {
+  display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px; border-radius: 10px;
+  background: var(--h-band-btn); color: var(--h-band-btn-ink); font-weight: 600; text-decoration: none;
+}
+.h-band a:hover { opacity: 0.92; }
+@media (max-width: 600px) { .h-band { padding: 28px 24px; } .h-band h2 { font-size: 26px; } }
+
+/* Starting-path quiz (the one modal this page keeps) */
+.modal { display: none; position: fixed; inset: 0; z-index: 100000; overflow-y: auto; background: rgba(15, 23, 42, 0.55); padding: 24px 16px; }
+.modal-content {
+  max-width: 720px; margin: 24px auto; background: var(--h-bg); color: var(--h-ink);
+  border: 1px solid var(--h-bd); border-radius: 16px; box-shadow: 0 24px 60px rgba(15, 23, 42, 0.3);
+}
+.modal-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 24px; border-bottom: 1px solid var(--h-bd); }
+.modal-header h2 { margin: 0; display: flex; align-items: center; gap: 10px; font-family: 'Amaranth', 'Inter', sans-serif; font-size: 24px; }
+.modal-header .icon { width: 22px; height: 22px; fill: none; stroke: var(--h-sky-ink); stroke-width: 2; }
+.modal .close {
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+  border-radius: 10px; font-size: 28px; line-height: 1; cursor: pointer; color: var(--h-mut);
+}
+.modal .close:hover { background: var(--h-soft); color: var(--h-ink); }
+.modal-body { padding: 8px 24px 24px; }
+.quiz-question-group h3 { font-size: 17px; margin: 20px 0 10px; }
+.quiz-options { display: grid; gap: 8px; }
+.quiz-option {
+  display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px;
+  border: 1px solid var(--h-bd); border-radius: 10px; cursor: pointer; font-size: 15px;
+}
+.quiz-option:hover { border-color: var(--h-sky); }
+.quiz-option input { margin-top: 4px; accent-color: var(--h-fill); }
+.quiz-option:has(input:checked) { border-color: var(--h-fill); background: var(--h-soft); }
+.quiz-actions { margin-top: 20px; }
+.imx-btn {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 0; border-radius: 10px;
+  background: var(--h-fill); color: var(--h-on-fill); font: 600 15px/1.2 'Inter', sans-serif; text-decoration: none; cursor: pointer;
+}
+.quiz-result { margin-top: 20px; padding: 16px; border: 1px solid var(--h-bd); border-radius: 12px; background: var(--h-soft); }
+.quiz-result h3 { margin: 0 0 8px; }
+.quiz-result a { color: var(--h-link); }
+.quiz-result a.imx-btn { color: var(--h-on-fill); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+@media print {
+  .h-planes, .h-search, .h-chips, .h-band-wrap, .modal { display: none !important; }
+}
+@media (max-width: 600px) {
+  .h-hero .h-wrap { padding-top: 40px; padding-bottom: 48px; }
+  .h-search-box { height: 54px; padding-left: 14px; }
+  .h-search-go { padding: 0 12px; }
+}

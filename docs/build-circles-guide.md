@@ -59,7 +59,7 @@ You choose your own tools. Common picks include:
 - **Data:** Open Government Data India, or your own programme data
 - **Channels:** WhatsApp, forms, email
 
-ImpactMojo's free tools (the Advisory Board preview, labs, and MOJINI) are available throughout. Whatever you build is **yours**; builds are showcased on ImpactMojo only with your permission.
+ImpactMojo's free tools (the Advisory Board preview and the labs) are available throughout. Whatever you build is **yours**; builds are showcased on ImpactMojo only with your permission.
 
 ---
 

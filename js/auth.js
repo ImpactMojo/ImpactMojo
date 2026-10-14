@@ -144,6 +144,100 @@ const STORAGE_KEYS = (typeof window.IMState !== 'undefined')
       };
 
 // =====================================================
+// SYNC MERGE HELPERS (pure; tested by scripts/test-sync-merge.mjs)
+// imx-merge-helpers:start
+// =====================================================
+
+// Streak (#1265). The local copy carries visitDates, totalDays and
+// celebratedMilestone besides the counts. The merge used to rebuild the object
+// from four fields, so one sync emptied the streak calendar. Every field is
+// kept; the visit dates of both copies are combined.
+function imxMergeStreak(localStreak, cloudStreak) {
+    function obj(v) { return (v && typeof v === 'object' && !Array.isArray(v)) ? v : {}; }
+    function num(v) { v = Number(v); return isFinite(v) && v > 0 ? Math.floor(v) : 0; }
+    function day(v) { return (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}/.test(v)) ? v.slice(0, 10) : null; }
+    function cur(x) { return num(x.currentStreak !== undefined ? x.currentStreak : x.current); }
+    function best(x) { return num(x.longestStreak !== undefined ? x.longestStreak : x.longest); }
+    function last(x) { return day(x.lastVisit) || day(x.lastDate); }
+
+    var a = obj(localStreak), b = obj(cloudStreak);
+    var la = last(a), lb = last(b);
+    // The copy that saw the later visit knows the current run; on a tie, local.
+    var newer = (la && (!lb || la >= lb)) ? a : (lb ? b : a);
+    var older = newer === a ? b : a;
+
+    var seen = {}, dates = [];
+    [].concat(Array.isArray(a.visitDates) ? a.visitDates : [], Array.isArray(b.visitDates) ? b.visitDates : [])
+        .forEach(function (d) { d = day(d); if (d && !seen[d]) { seen[d] = true; dates.push(d); } });
+    dates.sort();
+    if (dates.length > 365) dates = dates.slice(-365);
+
+    var lastVisit = la && lb ? (la > lb ? la : lb) : (la || lb || null);
+
+    // The run of consecutive days ending at lastVisit, in the combined dates.
+    var run = 0;
+    if (lastVisit && seen[lastVisit]) {
+        var t = Date.parse(lastVisit + 'T00:00:00Z');
+        while (seen[new Date(t).toISOString().slice(0, 10)]) { run++; t -= 86400000; }
+    }
+    var currentStreak = la === lb ? Math.max(cur(a), cur(b), run) : Math.max(cur(newer), run);
+
+    var merged = Object.assign({}, older, newer);
+    delete merged.current; delete merged.longest; delete merged.lastDate;
+    merged.currentStreak = currentStreak;
+    merged.longestStreak = Math.max(best(a), best(b), currentStreak);
+    merged.lastVisit = lastVisit;
+    merged.visitDates = dates;
+    merged.totalDays = Math.max(num(a.totalDays), num(b.totalDays), dates.length);
+    merged.totalVisits = Math.max(num(a.totalVisits), num(b.totalVisits));
+    merged.celebratedMilestone = num(newer.celebratedMilestone);
+    return merged;
+}
+
+// Notes (#1266). Notes are saved with `updated` and `created` (milliseconds);
+// the merge read `updatedAt` and `timestamp`, which notes do not carry, so a
+// conflict was decided by array order and the list order scrambled. The newer
+// copy of a note wins (local on a tie) and the list is ordered newest first,
+// with fixed tie-breaks so the order does not change from sync to sync.
+function imxMergeNotes(localNotes, cloudNotes) {
+    function list(v) {
+        if (Array.isArray(v)) return v;
+        if (v && typeof v === 'object') {
+            return Object.keys(v).map(function (k) {
+                var n = v[k];
+                return (n && typeof n === 'object' && !n.id) ? Object.assign({ id: k }, n) : n;
+            });
+        }
+        return [];
+    }
+    function ms(v) {
+        if (typeof v === 'number' && isFinite(v)) return v;
+        if (typeof v === 'string' && v) { var p = Date.parse(v); if (!isNaN(p)) return p; var n = Number(v); if (isFinite(n)) return n; }
+        return 0;
+    }
+    function updatedOf(n) { return Math.max(ms(n.updated), ms(n.updatedAt)) || ms(n.created) || ms(n.createdAt) || ms(n.timestamp); }
+    function createdOf(n) { return ms(n.created) || ms(n.createdAt) || ms(n.timestamp); }
+    function keyOf(n) { return n.id ? String(n.id) : 'k:' + (n.title || '') + '|' + createdOf(n) + '|' + (n.content || ''); }
+
+    var map = new Map();
+    function take(n, isLocal) {
+        if (!n || typeof n !== 'object') return;
+        var k = keyOf(n), have = map.get(k);
+        if (!have) { map.set(k, n); return; }
+        var tn = updatedOf(n), th = updatedOf(have);
+        if (tn > th || (tn === th && isLocal)) map.set(k, n);
+    }
+    list(cloudNotes).forEach(function (n) { take(n, false); });
+    list(localNotes).forEach(function (n) { take(n, true); });
+
+    return Array.from(map.values()).sort(function (x, y) {
+        return (updatedOf(y) - updatedOf(x)) || (createdOf(y) - createdOf(x)) ||
+            (keyOf(x) < keyOf(y) ? -1 : keyOf(x) > keyOf(y) ? 1 : 0);
+    });
+}
+// imx-merge-helpers:end
+
+// =====================================================
 // AUTH STATE MANAGEMENT
 // =====================================================
 // ---------------------------------------------------------------------------
@@ -645,18 +739,8 @@ const ImpactMojoAuth = {
         });
         merged.bookmarks = Array.from(bookmarkMap.values());
 
-        // Merge notes (combine unique by ID, newer timestamp wins)
-        const allNotes = [...(cloudData.notes || []), ...(localData.notes || [])];
-        const notesMap = new Map();
-        allNotes.forEach(note => {
-            const key = note.id || note.timestamp;
-            if (!notesMap.has(key) || (note.updatedAt && note.updatedAt > notesMap.get(key).updatedAt)) {
-                notesMap.set(key, note);
-            }
-        });
-        merged.notes = Array.from(notesMap.values()).sort((a, b) => 
-            (b.timestamp || 0) - (a.timestamp || 0)
-        );
+        // Merge notes: newer copy of each note wins, stable order (#1266)
+        merged.notes = imxMergeNotes(localData.notes, cloudData.notes);
 
         // Merge compare list (combine unique items)
         const allCompare = [...(cloudData.compare_list || []), ...(localData.compare_list || [])];
@@ -667,18 +751,8 @@ const ImpactMojoAuth = {
         });
         merged.compare_list = Array.from(compareMap.values());
 
-        // Merge streak data (keep higher values)
-        const localStreak = localData.streak_data || { currentStreak: 0, longestStreak: 0, lastVisit: null };
-        const cloudStreak = cloudData.streak_data || { currentStreak: 0, longestStreak: 0, lastVisit: null };
-        merged.streak_data = {
-            currentStreak: Math.max(localStreak.currentStreak || 0, cloudStreak.currentStreak || 0),
-            longestStreak: Math.max(localStreak.longestStreak || 0, cloudStreak.longestStreak || 0),
-            lastVisit: localStreak.lastVisit && cloudStreak.lastVisit 
-                ? (localStreak.lastVisit > cloudStreak.lastVisit ? localStreak.lastVisit : cloudStreak.lastVisit)
-                : (localStreak.lastVisit || cloudStreak.lastVisit),
-            // Keep additional streak fields
-            totalVisits: Math.max(localStreak.totalVisits || 0, cloudStreak.totalVisits || 0)
-        };
+        // Merge streak data: keep every field, combine visit dates (#1265)
+        merged.streak_data = imxMergeStreak(localData.streak_data, cloudData.streak_data);
 
         // Merge progress/analytics (combine all data)
         merged.progress = {

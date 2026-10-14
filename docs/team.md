@@ -8,7 +8,7 @@ ImpactMojo was built by people who've spent years working inside the development
 
 ## Dr. Varna Sri Raman: Founder, Learning Design & Impact
 
-Varna is a development economist with a PhD and field experience across South Asia. She leads ImpactMojo's curriculum design, bringing together academic rigour and practitioner reality.
+Development economist (PhD) specialising in social-impact measurement, gender studies, and development research across South Asia. At ImpactMojo, leads curriculum and course design.
 
 **What she does at ImpactMojo:**
 - Designs all 22 flagship courses, including the interactive lexicons and case studies
@@ -27,9 +27,9 @@ Varna is a development economist with a PhD and field experience across South As
 
 ---
 
-## Vandana Soni: Co-Founder, Partnerships & Programmes
+## Vandana Soni: Co-founder, Head of Learning Programmes
 
-Vandana is an education and development professional with over 15 years of experience designing learning programmes and driving large-scale education initiatives across India.
+Education and development professional (15+ years) specialising in early literacy, learning assessment, and programme design for schools across India. At ImpactMojo, designs learning programmes and coaching for practitioners.
 
 **What she does at ImpactMojo:**
 - Manages partnerships with NGOs, universities, and development agencies
