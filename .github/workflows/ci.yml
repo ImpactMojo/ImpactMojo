@@ -1000,6 +1000,12 @@ jobs:
       - name: Every course directory appears on the homepage
         run: python3 scripts/check-homepage-courses.py
 
+      # The home page's "Recently added" list is drawn from the release notes
+      # (docs/changelog.md, For Learners). A release that adds content without
+      # rebuilding it would leave the list a release behind, with no error.
+      - name: Recently added list matches the release notes
+        run: python3 scripts/build-whats-new.py --check
+
   search-coverage:
     name: Site-search coverage
     runs-on: ubuntu-latest

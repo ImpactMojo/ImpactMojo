@@ -32,11 +32,25 @@
   --h-trail-b: #C7D2FE;
   --h-plane-fill: #FFFFFF;
   --h-shadow: rgba(3, 105, 161, 0.12);
-  --h-band: #0369A1;
+  --h-band: #1E3A8A;
   --h-band-ink: #FFFFFF;
-  --h-band-mut: #E0F2FE;
+  --h-band-mut: #E0E7FF;
   --h-band-btn: #FFFFFF;
-  --h-band-btn-ink: #0369A1;
+  --h-band-btn-ink: #1E3A8A;
+  --h-tile-blue: #EAF1FF;
+  --h-tile-violet: #F1ECFF;
+  --h-tile-slate: #EEF2F6;
+  --h-tile-edge: rgba(15, 23, 42, 0.10);
+  --h-blue-ink: #1D4ED8;
+  --h-violet-ink: #5B21B6;
+  --h-slate-ink: #334155;
+  --h-pill: #FFFFFF;
+  --h-hl: #E4DAFF;
+  --h-rule-a: #1D4ED8;
+  --h-rule-b: #7C3AED;
+  --h-chip-bg: #F1ECFF;
+  --h-chip-bd: #D9CCFF;
+  --h-band-2: #4C1D95;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-theme="light"]) {
@@ -57,11 +71,25 @@
     --h-trail-b: #4F46E5;
     --h-plane-fill: #0B1120;
     --h-shadow: rgba(0, 0, 0, 0.35);
-    --h-band: #0C2A44;
+    --h-band: #1E2A55;
     --h-band-ink: #F1F5F9;
-    --h-band-mut: #BAE6FD;
-    --h-band-btn: #38BDF8;
+    --h-band-mut: #C7D2FE;
+    --h-band-btn: #C4B5FD;
     --h-band-btn-ink: #0B1120;
+    --h-tile-blue: #14213D;
+    --h-tile-violet: #211A3D;
+    --h-tile-slate: #182132;
+    --h-tile-edge: rgba(0, 0, 0, 0.45);
+    --h-blue-ink: #93C5FD;
+    --h-violet-ink: #C4B5FD;
+    --h-slate-ink: #CBD5E1;
+    --h-pill: #0B1120;
+    --h-hl: #3B2A6B;
+    --h-rule-a: #60A5FA;
+    --h-rule-b: #A78BFA;
+    --h-chip-bg: #211A3D;
+    --h-chip-bd: #3B2F66;
+    --h-band-2: #2E1A5E;
   }
 }
 html[data-theme="dark"], html.dark {
@@ -82,11 +110,25 @@ html[data-theme="dark"], html.dark {
   --h-trail-b: #4F46E5;
   --h-plane-fill: #0B1120;
   --h-shadow: rgba(0, 0, 0, 0.35);
-  --h-band: #0C2A44;
+  --h-band: #1E2A55;
   --h-band-ink: #F1F5F9;
-  --h-band-mut: #BAE6FD;
-  --h-band-btn: #38BDF8;
+  --h-band-mut: #C7D2FE;
+  --h-band-btn: #C4B5FD;
   --h-band-btn-ink: #0B1120;
+  --h-tile-blue: #14213D;
+  --h-tile-violet: #211A3D;
+  --h-tile-slate: #182132;
+  --h-tile-edge: rgba(0, 0, 0, 0.45);
+  --h-blue-ink: #93C5FD;
+  --h-violet-ink: #C4B5FD;
+  --h-slate-ink: #CBD5E1;
+  --h-pill: #0B1120;
+  --h-hl: #3B2A6B;
+  --h-rule-a: #60A5FA;
+  --h-rule-b: #A78BFA;
+  --h-chip-bg: #211A3D;
+  --h-chip-bd: #3B2F66;
+  --h-band-2: #2E1A5E;
 }
 
 html { overflow-x: clip; scroll-padding-top: 64px; }
@@ -163,10 +205,16 @@ html.im-dyslexic .h-display, html.im-dyslexic .h-h2, html.im-dyslexic .h-col h2 
 .h-chips > span { font-size: 14px; color: var(--h-mut); }
 .h-chip {
   display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px;
-  border: 1px solid var(--h-bd); border-radius: 999px; background: var(--h-bg);
-  color: var(--h-link); font: 500 14px/1.2 inherit; text-decoration: none; cursor: pointer;
+  border: 1px solid var(--h-chip-bd); border-radius: 999px; background: var(--h-chip-bg);
+  color: var(--h-violet-ink); font: 500 14px/1.2 inherit; text-decoration: none; cursor: pointer;
 }
-.h-chip:hover { border-color: var(--h-sky); }
+.h-chip:hover { border-color: var(--h-violet-ink); }
+
+/* The highlighter swash behind the key phrase of the headline */
+.h-hl {
+  background: linear-gradient(transparent 58%, var(--h-hl) 58%, var(--h-hl) 92%, transparent 92%);
+  padding: 0 0.06em; border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
 
 /* The planes sit in the space to the right of the text column (and, on wide
    screens, in the margin beyond the page), so they never cross a word. Below
@@ -194,38 +242,39 @@ html.im-dyslexic .h-display, html.im-dyslexic .h-h2, html.im-dyslexic .h-col h2 
   #im-continue-strip .im-cs-text { white-space: normal; }
 }
 
-/* Three ways in */
-.h-routes .h-grid {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid var(--h-bd); border-bottom: 1px solid var(--h-bd);
+/* Three ways in: three tinted tiles, blue, violet and slate */
+.h-routes { padding-top: 8px; }
+.h-routes .h-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.h-col {
+  padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 14px; min-width: 0;
+  border-radius: 18px; box-shadow: inset 0 -4px 0 var(--h-tile-edge);
 }
-.h-col { padding: 32px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-.h-col:first-child { padding-left: 0; }
-.h-col:last-child { padding-right: 0; }
-.h-col + .h-col { border-left: 1px solid var(--h-bd); }
-.h-bar { width: 32px; height: 5px; border-radius: 3px; }
+.h-bar { display: none; }
 .h-col h2 { margin: 0; font-size: 24px; line-height: 1.2; color: var(--h-ink); }
 .h-col p { margin: 0 0 4px; font-size: 15px; color: var(--h-mut); }
 .h-col a {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
-  min-height: 32px; text-decoration: none; color: var(--h-ink); font-weight: 600;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  min-height: 34px; text-decoration: none; color: var(--h-ink); font-weight: 600;
 }
 .h-col a:hover .h-name { color: var(--h-link); text-decoration: underline; }
-.h-num { font-size: 19px; }
+.h-num { font-size: 18px; min-width: 42px; padding: 3px 10px; border-radius: 999px; background: var(--h-pill); text-align: center; }
 .h-tag { font-size: 14px; font-weight: 400; color: var(--h-mut); text-align: right; }
-.c-sky .h-bar { background: var(--h-sky); } .c-sky .h-num { color: var(--h-sky-ink); }
-.c-green .h-bar { background: var(--h-green); } .c-green .h-num { color: var(--h-green-ink); }
-.c-indigo .h-bar { background: var(--h-indigo); } .c-indigo .h-num { color: var(--h-indigo-ink); }
+.c-sky { background: var(--h-tile-blue); } .c-sky .h-num { color: var(--h-blue-ink); }
+.c-green { background: var(--h-tile-violet); } .c-green .h-num { color: var(--h-violet-ink); }
+.c-indigo { background: var(--h-tile-slate); } .c-indigo .h-num { color: var(--h-slate-ink); }
+.c-sky p, .c-green p, .c-indigo p, .c-sky .h-tag { color: var(--h-slate-ink); }
 @media (max-width: 860px) {
-  .h-routes .h-grid { grid-template-columns: minmax(0, 1fr); }
-  .h-col, .h-col:first-child, .h-col:last-child { padding: 24px 0; }
-  .h-col + .h-col { border-left: 0; border-top: 1px solid var(--h-bd); }
+  .h-routes .h-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
 }
 
 /* New this month */
 .h-sec { padding-top: 64px; padding-bottom: 8px; }
 .h-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
 .h-h2 { margin: 0; font-size: clamp(28px, 3.4vw, 34px); line-height: 1.15; }
+.h-sec .h-h2::after {
+  content: ""; display: block; width: 56px; height: 5px; margin-top: 10px; border-radius: 3px;
+  background: linear-gradient(90deg, var(--h-rule-a), var(--h-rule-b));
+}
 .h-more { font-weight: 600; font-size: 15px; }
 .h-list { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--h-bd); }
 .h-list a {
@@ -233,12 +282,12 @@ html.im-dyslexic .h-display, html.im-dyslexic .h-h2, html.im-dyslexic .h-col h2 
   padding: 16px 0; border-top: 1px solid var(--h-bd); text-decoration: none; color: var(--h-ink);
 }
 .h-list a:hover .h-title { color: var(--h-link); text-decoration: underline; }
-.h-type { font-size: 13px; font-weight: 600; }
+.h-type { justify-self: start; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; line-height: 1.4; }
 .h-title { font-size: 17px; font-weight: 600; line-height: 1.35; }
 .h-desc { font-size: 15px; color: var(--h-mut); }
-.t-course .h-type { color: var(--h-sky-ink); }
-.t-101 .h-type { color: var(--h-green-ink); }
-.t-law .h-type { color: var(--h-indigo-ink); }
+.t-course .h-type { background: var(--h-tile-blue); color: var(--h-blue-ink); }
+.t-101 .h-type { background: var(--h-tile-violet); color: var(--h-violet-ink); }
+.t-law .h-type { background: var(--h-tile-slate); color: var(--h-slate-ink); }
 @media (max-width: 760px) {
   .h-list a { grid-template-columns: minmax(0, 1fr); gap: 4px; }
 }
@@ -253,7 +302,8 @@ html.im-dyslexic .h-display, html.im-dyslexic .h-h2, html.im-dyslexic .h-col h2 
 .h-band-wrap { padding-top: 56px; padding-bottom: 72px; }
 .h-band {
   display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; padding: 36px 40px;
-  background: var(--h-band); color: var(--h-band-ink); border-radius: 20px;
+  background: var(--h-band); background: linear-gradient(120deg, var(--h-band) 0%, var(--h-band-2) 100%);
+  color: var(--h-band-ink); border-radius: 20px;
 }
 .h-band div { flex: 999 1 420px; min-width: 0; }
 .h-band h2 { margin: 0 0 8px; font-size: 30px; line-height: 1.2; color: var(--h-band-ink); }

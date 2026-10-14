@@ -160,7 +160,60 @@ html[data-theme="dark"] .ph--amber,  html.dark .ph--amber,  body.dark-mode .ph--
   -webkit-text-fill-color: currentColor;
 }
 
+/* Tinted panel (October 2026, option 1, matching the home page tiles). The
+   hero sits on a soft tint of its section's family: blue (sky, blue, teal),
+   violet (indigo, violet, rose) or slate (green, amber), with a darker bottom
+   edge. Section-coloured text sits on a pill, because the green ink on the
+   slate tint alone measures 4.46:1; on the pill it is 5.02:1 and every other
+   pair is higher. Where the hero has an inner .ph-in, the panel is drawn on
+   that, so it lines up with the page column. */
+.ph {
+  --ph-tint: #EAF1FF;
+  --ph-pill: #FFFFFF;
+  --ph-edge: rgba(15, 23, 42, 0.10);
+  --ph-violet: #7C3AED;
+}
+.ph--indigo, .ph--violet, .ph--rose { --ph-tint: #F1ECFF; }
+.ph--green, .ph--amber { --ph-tint: #EEF2F6; }
+html[data-theme="dark"] .ph, html.dark .ph, body.dark-mode .ph {
+  --ph-tint: #14213D; --ph-pill: #0B1120; --ph-edge: rgba(0, 0, 0, 0.45); --ph-violet: #A78BFA;
+}
+html[data-theme="dark"] :is(.ph--indigo, .ph--violet, .ph--rose), html.dark :is(.ph--indigo, .ph--violet, .ph--rose), body.dark-mode :is(.ph--indigo, .ph--violet, .ph--rose) { --ph-tint: #211A3D; }
+html[data-theme="dark"] :is(.ph--green, .ph--amber), html.dark :is(.ph--green, .ph--amber), body.dark-mode :is(.ph--green, .ph--amber) { --ph-tint: #182132; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) body:not(.light-mode) .ph:not(.ph--no-system) {
+    --ph-tint: #14213D; --ph-pill: #0B1120; --ph-edge: rgba(0, 0, 0, 0.45); --ph-violet: #A78BFA;
+  }
+  html:not([data-theme]) body:not(.light-mode) :is(.ph--indigo, .ph--violet, .ph--rose):not(.ph--no-system) { --ph-tint: #211A3D; }
+  html:not([data-theme]) body:not(.light-mode) :is(.ph--green, .ph--amber):not(.ph--no-system) { --ph-tint: #182132; }
+}
+.ph:not(:has(> .ph-in)), .ph > .ph-in {
+  background: var(--ph-tint);
+  border-radius: 20px;
+  box-shadow: inset 0 -4px 0 var(--ph-edge);
+}
+.ph:not(:has(> .ph-in)) { padding: 32px clamp(20px, 3.4vw, 40px) 30px; margin-bottom: 8px; }
+.ph:has(> .ph-in) { padding: 24px 0 8px; }
+.ph > .ph-in {
+  /* --ph-max:none (Courses, Free Studio) makes the max-width invalid, which
+     leaves it at none: the panel then spans the page less its gutters. */
+  box-sizing: border-box;
+  width: calc(100% - 2 * var(--ph-pad, clamp(16px, 3vw, 28px)));
+  max-width: calc(var(--ph-max, 1180px) - 2 * var(--ph-pad, clamp(16px, 3vw, 28px)));
+  padding: 32px clamp(20px, 3.4vw, 40px) 30px;
+}
+.ph-bar { background: linear-gradient(90deg, var(--ph-track), var(--ph-violet)); }
+.ph .ph-eyebrow {
+  display: inline-block; padding: 4px 11px; border-radius: 999px; background: var(--ph-pill);
+}
+.ph .ph-meta { gap: 8px; }
+.ph .ph-meta > :not(:last-child)::after { content: none; }
+.ph .ph-meta > * {
+  padding: 3px 11px; border-radius: 999px; background: var(--ph-pill);
+}
+
 @media (max-width: 600px) {
-  .ph { padding: 26px 0 22px; }
+  .ph:not(:has(> .ph-in)) { padding: 24px 18px 22px; border-radius: 16px; }
+  .ph > .ph-in { padding: 24px 18px 22px; border-radius: 16px; }
   .ph .ph-lede { font-size: 17.5px; }
 }
