@@ -118,14 +118,14 @@ SLIDES_A = [
      "items": [
          {"name": "Why WASH matters and what it covers"},
          {"name": "The JMP service ladders"},
-         {"name": "India's numbers: JMP, NFHS and NSS"},
-         {"name": "Swachh Bharat Mission: what was built"},
+         {"name": "India's numbers from the JMP, NFHS and NSS"},
+         {"name": "What Swachh Bharat Mission built"},
          {"name": "ODF claims and the survey evidence"},
-         {"name": "Jal Jeevan Mission: taps, function and quality"},
-         {"name": "Groundwater: depletion and contamination"},
+         {"name": "Jal Jeevan Mission, from taps to working water"},
+         {"name": "Groundwater depletion and contamination"},
          {"name": "Who governs water and sanitation"},
          {"name": "Faecal sludge, sanitation work and the 2013 Act"},
-         {"name": "Hygiene: handwashing and menstrual health"},
+         {"name": "Handwashing and menstrual health"},
          {"name": "Climate, drought and water security"},
          {"name": "Monitoring a WASH programme"},
      ]},
@@ -181,20 +181,20 @@ SLIDES_A = [
              "and note the authors' own counterfactual is the SDG target.", sm=True),
     ], compact=True),
 
-    C("Pathways", "The F-diagram: how faeces reach a mouth", [
+    C("Pathways", "The F-diagram shows how faeces reach a mouth", [
         flow(["Faeces", "Fluids", "Fingers", "Flies", "Fields", "Food", "New host"]),
         body("Public health teaching draws transmission as the F-diagram. Pathogens leave "
              "an infected person in faeces and reach the next person through water, hands, "
              "flies, soil and the food that all of these touch. Barriers work at two "
-             "points. Primary barriers stop faeces entering the environment at all: a "
-             "toilet that is used, safe child-faeces disposal and safe emptying of pits "
-             "and tanks. Secondary barriers stop contamination that is already in the "
-             "environment from reaching the mouth: handwashing, safe water storage and "
-             "treatment, and food hygiene."),
+             "points. Primary barriers stop faeces entering the environment at all. They "
+             "include a toilet that is used, safe disposal of children's faeces and safe "
+             "emptying of pits and tanks. Secondary barriers stop contamination already in "
+             "the environment from reaching the mouth. They include handwashing, safe "
+             "water storage and treatment, and food hygiene."),
         tw(pp("green", "Primary barriers",
-              "A latrine that every member uses, including small children whose faeces "
-              "carry more pathogens than adult faeces, plus a pit or tank that is emptied "
-              "and treated without exposing workers or neighbours."),
+              "A latrine that every member uses, safe disposal of small children's "
+              "faeces, and a pit or tank that is emptied and treated without exposing "
+              "workers or neighbours."),
            pp("cyan", "Secondary barriers",
               "Handwashing with soap after defecation, after cleaning a child and before "
               "food. Covered storage and household treatment. The NSS 76th round found "
@@ -322,8 +322,8 @@ SLIDES_A = [
                ["Surface water", "Directly from a river, dam, lake, pond, stream, canal or "
                 "irrigation canal"]]),
         tw(pp("cyan", "What counts as improved",
-              "Sources that by their design can deliver safe water: piped water, "
-              "boreholes and tubewells, protected dug wells and springs, rainwater and "
+              "These are sources that by design can deliver safe water, such as piped "
+              "water, boreholes and tubewells, protected dug wells and springs, rainwater and "
               "packaged or delivered water. The NFHS-6 footnote lists piped water, public "
               "taps, tubewells, protected wells and springs, rainwater, tanker trucks, "
               "carts with small tanks, bottled water and community RO plants (" + N6 + ")."),
@@ -385,8 +385,8 @@ SLIDES_A = [
              "each year."),
         tw(pp("cyan", "The minimum rule",
               "For safely managed drinking water the JMP takes the lowest of three "
-              "proportions among people using improved sources: accessible on premises, "
-              "available when needed and free from contamination. It reports the estimate "
+              "proportions among people using improved sources, which are accessible on "
+              "premises, available when needed and free from contamination. It reports the estimate "
               "only if quality data cover at least half the population and accessibility "
               "or availability data are also present (" + JMP + ", Charts SM notes)."),
            pp("amber", "What this means for the reader",
@@ -430,7 +430,7 @@ SLIDES_A = [
                      "Separate rural and urban before comparing states. A state average "
                      "mixes two different service models.",
                      "Look for the word <em>estimate</em>. A JMP figure for 2024 is a "
-                     "fitted value, not a measurement taken that year.",
+                     "fitted value. Nobody measured it in that year.",
                      "Find the oldest input behind the newest year. Several JMP series for "
                      "India rest on 2021 to 2023 surveys."], "cyan", sm=True)],
            pp("amber", "A worked example",
@@ -444,7 +444,7 @@ SLIDES_A = [
     ], compact=True),
 
     # ===================== SECTION 03 =====================
-    D("03", "Section Three", "India's numbers: JMP, NFHS and NSS"),
+    D("03", "Section Three", "India's numbers from the JMP, NFHS and NSS"),
 
     C("India on the ladders", "India's WASH ladders in 2024, as the JMP estimates them", [
         table(["Rung", "Drinking water", "Sanitation", "Hygiene"],
@@ -482,7 +482,7 @@ SLIDES_A = [
                     "borderColor": "#EF4444", "backgroundColor": "#EF4444", "fill": False}]},
               "{ plugins:{legend:{position:'bottom'}}, scales:{ y:{ min:0, max:100, title:{display:true,text:'% of population'} } } }"),
         body("Water access was high and rising before either mission began. Sanitation is "
-             "the larger story: in 2000 nearly three in four Indians defecated in the open. "
+             "the larger story. In 2000 nearly three in four Indians defecated in the open. "
              "The JMP line falls steadily through the Swachh Bharat years, and Section 5 "
              "explains why the survey points under that line disagree with each other.",
              sm=True),
@@ -523,7 +523,7 @@ SLIDES_A = [
               "{ plugins:{legend:{display:false}}, scales:{ y:{ min:0, max:100, title:{display:true,text:'% of population'} } } }"),
         body("Because the JMP takes the minimum of the three criteria, whichever is lowest "
              "decides the safely managed figure. For India that is on-premises access, so "
-             "every Jal Jeevan Mission tap that works adds directly to SDG 6.1. Quality "
+             "a working Jal Jeevan Mission tap can add directly to SDG 6.1. Quality "
              "sits at 91.3%, but it rests on far fewer tests than access does, and a "
              "contaminated tap at home still counts as accessible.", sm=True),
     ], compact=True),
@@ -564,9 +564,9 @@ SLIDES_A = [
               "sample. Researchers will need the unit-level data, if it is released, or "
               "other surveys."),
            pp("cyan", "Where to look instead",
-              "The NSS rounds (76th round in 2018, the 78th round's multiple indicator "
-              "survey, HCES 2023-24 and CAMS 2022-23) carry household latrine questions, "
-              "and the JMP lists them as inputs. The ImpactMojo Deep Dive <em>What NFHS-6 "
+              "NSS rounds, including the 76th round of 2018 and the 2020-21 round, and "
+              "the 2023 HCES and CAMS surveys, carry household latrine questions, and "
+              "the JMP lists them as inputs. The ImpactMojo Deep Dive <em>What NFHS-6 "
               "stopped counting</em> collects the readings on this gap.")),
         hbox("When a programme report cites NFHS-6 for sanitation, the citation is wrong. "
              "Ask which survey the figure came from.", "red"),
@@ -614,7 +614,7 @@ SLIDES_A = [
 SLIDES_B = [
 
     # ===================== SECTION 04 =====================
-    D("04", "Section Four", "Swachh Bharat Mission: what was built"),
+    D("04", "Section Four", "What Swachh Bharat Mission built"),
 
     C("SBM (Grameen)", "Swachh Bharat Mission (Grameen): the aim and the design", [
         body("Swachh Bharat Mission (Grameen) was launched on 2 October 2014 with the aim of "
@@ -624,8 +624,8 @@ SLIDES_B = [
              "management. The programme has been extended to 2026-27 (" + SBMN + ")."),
         tw(pp("cyan", "The household incentive",
               "An incentive of ₹12,000 is paid for building an individual household "
-              "latrine to BPL households and to identified APL households: SC and ST "
-              "households, small and marginal farmers, landless labourers with homestead, "
+              "latrine to BPL households and to identified APL households, namely SC and "
+              "ST households, small and marginal farmers, landless labourers with homestead, "
               "persons with disabilities and women-headed households. States may add to "
               "it from their own share (" + YER + ")."),
            pp("indigo", "Who pays",
@@ -751,11 +751,12 @@ SLIDES_B = [
                          "2024", "green", JMP)], cols=1)],
            pp("cyan", "What changed",
               "Every source used in this course shows a large fall in open defecation "
-              "after 2014. The JMP rural line falls by about 34 points in ten years. The "
-              "r.i.c.e. panel shows a 26-point fall in four years in the states where "
-              "open defecation was most common. Latrine ownership among the households "
-              "that had none in 2014 rose sharply. No earlier sanitation programme in "
-              "India moved the figure this fast.")),
+              "after 2014. The r.i.c.e. panel shows a 26-point fall in four years in the "
+              "states where open defecation was most common, and 57% of its households "
+              "that had no latrine in 2014 had one by 2018 (Down To Earth report). The "
+              "JMP rural line falls by about 34 points from 2014 to 2024. It also fell by "
+              "about 34 points from 2004 to 2014, so the fitted trend shows no break at "
+              "2014, which is a reason to read the survey points directly.")),
         tw(pp("amber", "What did not change as fast",
               "Use among owners, the treatment of children's faeces, the emptying of "
               "pits, and the caste division of the work of emptying them. These appear in "
@@ -800,8 +801,8 @@ SLIDES_B = [
                ["NFHS-5", "2019-21", "Rural open defecation, as used by JMP", "25.5%"],
                ["NSS 78th round", "2020-21", "Rural open defecation, as used by JMP",
                 "20.7%"],
-               ["HCES", "2022-23", "Rural open defecation, as used by JMP", "18.0%"],
-               ["CAMS", "2022-23", "Rural open defecation, as used by JMP", "11.4%"],
+               ["HCES", "2023 (JMP label)", "Rural open defecation, as used by JMP", "18.0%"],
+               ["CAMS", "2023 (JMP label)", "Rural open defecation, as used by JMP", "11.4%"],
                ["JMP estimate", "2024", "Rural open defecation (fitted)", "10.7%"]]),
         body("Sources: " + YER + "; " + NSS + "; " + RICE + "; survey points from the JMP "
              "India country file, Data Summary sheet (" + JMP + "). The r.i.c.e. figure "
@@ -818,7 +819,7 @@ SLIDES_B = [
               "bar",
               {"labels": ["NSS 2012", "NFHS-4 2015-16", "NSS 2017", "NARSS 2018",
                           "NSS 2018", "NARSS 2019", "NARSS 2020", "NFHS-5 2019-21",
-                          "NSS 2020-21", "HCES 2022-23", "CAMS 2022-23"],
+                          "NSS 2020-21", "HCES 2023", "CAMS 2023"],
                "datasets": [{"label": "Rural open defecation (%)",
                              "data": [60.1, 54.3, 33.0, 23.0, 29.9, 6.8, 0.8, 25.5, 20.7,
                                       18.0, 11.4],
@@ -923,7 +924,7 @@ SLIDES_B = [
                      "Was each household member asked, including children's faeces disposal?",
                      "When was fieldwork, and in which season?",
                      "Were scheme-benefit questions asked before facility questions?",
-                     "What happens when pits fill: who empties them, and how?"], "cyan",
+                     "When pits fill, who empties them, and how?"], "cyan",
                     sm=True)],
            pp("amber", "Using it in a district",
               "Take the district's ODF Plus status from the SBM(G) dashboard. Then visit "
@@ -937,9 +938,9 @@ SLIDES_B = [
     ], compact=True),
 
     # ===================== SECTION 06 =====================
-    D("06", "Section Six", "Jal Jeevan Mission: taps, function and quality"),
+    D("06", "Section Six", "Jal Jeevan Mission, from taps to working water"),
 
-    C("The promise", "Jal Jeevan Mission: a working tap in every rural home", [
+    C("The promise", "Jal Jeevan Mission promises a working tap in every rural home", [
         body("Jal Jeevan Mission (JJM) was launched on 15 August 2019 to provide a "
              "functional household tap connection to every rural household. When it "
              "began, about 3.23 crore rural households had a tap connection (Union Jal "
@@ -979,7 +980,7 @@ SLIDES_B = [
              "connections from JJM-IMIS.", sm=True),
     ], compact=True),
 
-    C("Counting water", "A connection is counted once; water has to arrive every day", [
+    C("Counting water", "A connection is counted once, and water has to arrive every day", [
         tw(pp("cyan", "What IMIS records",
               "The JJM management information system records a connection when the pipe "
               "and tap are installed and the household is listed. Villages then move to "
@@ -998,7 +999,7 @@ SLIDES_B = [
                ["Functional", "Third-party assessment", "Quantity, regularity and quality on the day"]]),
     ], compact=True),
 
-    C("Functionality 2022", "The functionality assessment: design and definitions", [
+    C("Functionality 2022", "How the functionality assessment was designed", [
         body("For 2021-22 the National Jal Jeevan Mission engaged HTA-Kantar Public to "
              "assess household tap connections. The sample was 13,303 villages (5,298 of "
              "them Har Ghar Jal) and 2,98,377 households in 712 rural districts of 33 "
@@ -1097,7 +1098,7 @@ SLIDES_B = [
     ], compact=True),
 
     # ===================== SECTION 07 =====================
-    D("07", "Section Seven", "Groundwater: depletion and contamination"),
+    D("07", "Section Seven", "Groundwater depletion and contamination"),
 
     C("The account", "India's groundwater account for 2025", [
         stats([card("448.52 BCM", "annual groundwater recharge", "cyan", GW),
@@ -1174,7 +1175,7 @@ SLIDES_B = [
               "drinking water sources is what a district needs to know.")),
     ], compact=True),
 
-    C("Arsenic and fluoride", "Arsenic and fluoride: responses that work and their limits", [
+    C("Arsenic and fluoride", "Responses to arsenic and fluoride, and their limits", [
         body("Arsenic and fluoride occur naturally in some aquifers and cause harm through "
              "years of drinking. The BIS permissible limit for fluoride is 1.5 mg/L (IS "
              "10500:2012, cited by the Ministry of Jal Shakti, PIB, 4 December 2025). "
@@ -1184,7 +1185,7 @@ SLIDES_B = [
               [["Piped supply from a safe surface source", "Replaces the contaminated source "
                 "for drinking", "Advice to states, PIB, 10 March 2025"],
                ["Deep wells with cement sealing", "Taps arsenic-free aquifers below "
-                "contaminated ones; 525 wells built, 294 in Uttar Pradesh",
+                "contaminated ones. 525 wells built, 294 in Uttar Pradesh",
                 "PIB, 4 December 2025"],
                ["Community water purification plants", "Interim treatment in quality-affected "
                 "habitations", "PIB, 4 December 2025"],
@@ -1242,7 +1243,7 @@ SLIDES_C = [
     D("08", "Section Eight", "Who governs water and sanitation"),
 
     C("A State subject", "Water is a State subject, and the Centre pays and advises", [
-        body("Ministry of Jal Shakti replies to Parliament repeat one sentence: water is a "
+        body("Ministry of Jal Shakti replies to Parliament repeat one sentence. Water is a "
              "State subject, and sustainable development and management of water, together "
              "with mitigation of quality problems, is primarily the responsibility of State "
              "governments. The Central Government supports states with technical and "
@@ -1267,8 +1268,8 @@ SLIDES_C = [
               "The 73rd Amendment came into force on 24 April 1993. It gave panchayats "
               "constitutional status and provided for devolving the 29 subjects listed in "
               "the Eleventh Schedule, along with State Finance Commissions and regular "
-              "elections. The word that matters is <em>may</em>: each state decides what to "
-              "devolve."),
+              "elections. The word that matters is <em>may</em>, because each state decides "
+              "what to devolve."),
            pp("indigo", "Municipalities",
               "The Twelfth Schedule lists the functions states may give urban local bodies, "
               "including water supply for domestic, industrial and commercial purposes and "
@@ -1399,8 +1400,8 @@ SLIDES_C = [
         tw(pp("cyan", "Where the chain breaks",
               "Septic tanks built without a soak pit or with an outlet to a drain discharge "
               "effluent directly. Single pits must be emptied while the contents are fresh. "
-              "Desludging trucks are private, unregistered and paid in cash, and unload "
-              "wherever is nearest. The JMP country file records no sludge for India as "
+              "Where desludging trucks are private and unregistered, nothing records "
+              "where they unload. The JMP country file records no sludge for India as "
               "emptied and treated, and treated wastewater at 5.9% of the population."),
            pp("amber", "Greywater and drains",
               "In 2018, 48.1% of rural households living in houses disposed of waste water "
@@ -1432,7 +1433,7 @@ SLIDES_C = [
              "hazardous work.", "amber"),
     ], compact=True),
 
-    C("Urban FSM", "Treating sludge in towns: what SBM-U reports", [
+    C("Urban FSM", "What SBM-U reports on treating sludge in towns", [
         tw(pp("cyan", "Plants on the dashboard",
               "The SBM-U 2.0 portal lists 984 sewage treatment plants of 5 MLD or more and "
               "969 faecal sludge treatment plants of 5 KLD or more. It also lists 3,158 "
@@ -1489,12 +1490,12 @@ SLIDES_C = [
               "apparatus or a harness, and is overcome by gases. Others enter to rescue "
               "him. The 2013 Act bans hazardous cleaning of sewers and septic tanks, so "
               "each death records a failure of enforcement as well as of equipment.")),
-        hbox("Ask who hired the worker: a municipality, a contractor, a housing society "
-             "or a household. Each of them decided to send a person into the tank.",
+        hbox("Ask who hired the worker, whether a municipality, a contractor, a housing "
+             "society or a household. Each of them decided to send a person into the tank.",
              "amber"),
     ], compact=True),
 
-    C("NAMASTE", "NAMASTE: mechanising the work and registering the workers", [
+    C("NAMASTE", "NAMASTE mechanises the work and registers the workers", [
         body("The National Action for Mechanised Sanitation Ecosystem (NAMASTE) was launched "
              "in 2023-24 for sewer and septic tank workers (SSWs). Its stated outcomes "
              "include zero fatalities in sanitation work, all sanitation work done by "
@@ -1514,8 +1515,8 @@ SLIDES_C = [
     ], compact=True),
 
     C("In your programme", "What a WASH programme can do about sanitation work", [
-        tw([bullets(["Design toilets that never need manual emptying of fresh sludge: twin "
-                     "pits, correctly built septic tanks with soak pits.",
+        tw([bullets(["Design toilets that never need manual emptying of fresh sludge, such "
+                     "as twin pits and correctly built septic tanks with soak pits.",
                      "Map who empties pits and tanks in your area, how they are paid and "
                      "what equipment they have.",
                      "Link workers to NAMASTE profiling, PPE and health cover.",
@@ -1536,7 +1537,7 @@ SLIDES_C = [
     ], compact=True),
 
     # ===================== SECTION 10 =====================
-    D("10", "Section Ten", "Hygiene: handwashing and menstrual health"),
+    D("10", "Section Ten", "Handwashing and menstrual health"),
 
     C("What soap prevents", "Handwashing with soap cuts diarrhoea and pneumonia", [
         tw(pp("cyan", "The systematic review",
@@ -1601,8 +1602,8 @@ SLIDES_C = [
     C("SuperAmma", "Changing behaviour without talking about germs", [
         body("The SuperAmma trial ran in 14 villages of Chittoor district, Andhra Pradesh, "
              "between May 2011 and September 2012. It tested whether a village-level "
-             "campaign built on emotional drivers of behaviour, rather than knowledge of "
-             "disease, could change handwashing. The campaign used an animated film, "
+             "campaign built on emotional drivers of behaviour, with knowledge of disease "
+             "left out of the message, could change handwashing. The campaign used an animated film, "
              "skits and public pledging in community and school events (Biran et al., "
              "Lancet Global Health, 2014)."),
         tw(pp("green", "What it found",
@@ -1610,9 +1611,10 @@ SLIDES_C = [
               "intervention villages, against 6% in control villages. At twelve months, "
               "after controls received a shorter version, both groups were at 29%."),
            pp("amber", "What to take from it",
-              "Baseline handwashing with soap was close to zero by observation, while "
-              "household surveys in the same period report much higher figures. Messages "
-              "built on nurture, disgust and social standing moved behaviour. Fourteen "
+              "Baseline handwashing with soap was close to zero by observation. The NSS "
+              "in 2018 recorded 74.1% of households as using soap after defecation. The "
+              "two differ in method, place and year, and the gap is a warning about "
+              "self-report. Messages built on emotion moved behaviour. Fourteen "
               "villages is a small trial, and the effect at twelve months was measured "
               "after the control group was treated.")),
         hbox("If your programme reports handwashing from a questionnaire alone, it is "
@@ -1690,8 +1692,8 @@ SLIDES_C = [
            pp("amber", "What India's surveys show around it",
               "In 2018, 56.6% of rural households had access to a bathroom and 48.0% had "
               "both a bathroom and a latrine within their premises (" + NSS + "). A girl "
-              "without a private place to change at home or at school manages "
-              "menstruation in the open or misses school.")),
+              "without a private place to change at home or at school may have to "
+              "manage menstruation without privacy or miss school.")),
         tw(pp("indigo", "Disposal",
               "Disposable pads enter household garbage, drains and pits. In 2018, 80.4% of "
               "rural households living in houses had no arrangement for garbage collection "
@@ -1816,7 +1818,7 @@ SLIDES_D = [
     C("Kinds of data", "Four kinds of WASH data, each with its own typical error", [
         table(["Kind", "Examples", "Good for", "Typical error"],
               [["Programme MIS", "SBM(G) IMIS, JJM-IMIS", "What was built, where, when",
-                "Records construction and declarations, not use"],
+                "Records construction and declarations. Use is missing"],
                ["Government-commissioned surveys", "JJM functionality assessments",
                 "Checking the programme at scale", "The commissioning agency runs the "
                 "programme"],
@@ -1824,7 +1826,7 @@ SLIDES_D = [
                 "CAMS", "Independent population estimates", "Infrequent, question order "
                 "and respondent effects"],
                ["Independent studies and trials", "r.i.c.e. panels, SuperAmma, Odisha trial",
-                "Use, behaviour and causal effects", "Small areas, not national"]]),
+                "Use, behaviour and causal effects", "Small areas only"]]),
         tw(pp("cyan", "Triangulate",
               "Use the MIS to find where things were built, a statistical survey to find "
               "how many people use them, and a small independent check to understand why."),
@@ -1836,8 +1838,8 @@ SLIDES_D = [
 
     C("Indicators", "Indicators that match the ladders", [
         table(["Indicator", "Definition to use", "How to collect"],
-              [["Safe drinking water at home", "JMP safely managed: on premises, available "
-                "when needed, free from contamination", "Household survey plus water tests"],
+              [["Safe drinking water at home", "JMP safely managed (on premises, available "
+                "when needed, free from contamination)", "Household survey plus water tests"],
                ["Days of supply last week", "Count of days the tap ran, 0-7",
                 "Household recall, cross-checked at the source"],
                ["Litres per person per day", "Measured volume divided by members, against 55",
@@ -1857,8 +1859,8 @@ SLIDES_D = [
     C("Measuring behaviour", "Self-report, observation and spot checks", [
         tw(pp("cyan", "Self-report",
               "Cheap and fast. Inflated for socially approved behaviour such as "
-              "handwashing and toilet use. Ask about the last occasion rather than "
-              "usual practice, ask each person separately, and put programme-benefit "
+              "handwashing and toilet use. Ask about the last occasion, since usual "
+              "practice invites the approved answer. Ask each person separately, and put programme-benefit "
               "questions at the end, as the NSS's own warning suggests."),
            pp("green", "Structured observation",
               "An observer records behaviour at key events over several hours. SuperAmma "
@@ -1866,7 +1868,7 @@ SLIDES_D = [
               "domestic water use to reduce bias (Biran et al., 2014). Expensive, and "
               "people behave differently when watched.")),
         tw(pp("amber", "Spot checks",
-              "Look for signs: a wet pan in the morning, a worn path to the toilet, soap "
+              "Look for signs such as a wet pan in the morning, a worn path to the toilet, soap "
               "at the handwashing place, faeces in the lanes at dawn. Spot checks are "
               "cheaper than observation and harder to fake than a questionnaire."),
            pp("indigo", "Combining them",
@@ -1876,8 +1878,8 @@ SLIDES_D = [
     ], compact=True),
 
     C("Water quality", "Monitoring drinking water quality in practice", [
-        body("The 2022 JJM assessment tested twelve critical parameters in district labs: "
-             "turbidity, total hardness, total alkalinity, chloride, ammonia, iron, nitrate, "
+        body("The 2022 JJM assessment tested twelve critical parameters in district labs. "
+             "They were turbidity, total hardness, total alkalinity, chloride, ammonia, iron, nitrate, "
              "sulphate, total dissolved solids, bacteriological contamination, arsenic and "
              "fluoride. pH and residual chlorine were measured on site (" + FA + ")."),
         tw(pp("cyan", "Field test kits",
@@ -1978,7 +1980,7 @@ SLIDES_D = [
                  "<a href=\"https://en.wikipedia.org/wiki/Municipal_governance_in_India\">Municipal "
                  "governance in India</a> (Wikipedia), for the 73rd Amendment and the "
                  "Twelfth Schedule.", sm=True)]),
-    ], **{"ultra-compact": True}),
+    ], compact=True),
 
     # ===================== END =====================
     {"type": "end",

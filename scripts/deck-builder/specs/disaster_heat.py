@@ -1371,3 +1371,274 @@ SLIDES += [
             "much of India. Section 08 turns to heat itself."),
           B("Illustrative monitoring list.", sm=True)])),
 ]
+
+# ===================== SECTION 08: HEAT =====================
+AZHAR = ("Azhar et al., Heat-related mortality in India: excess all-cause mortality associated "
+         "with the 2010 Ahmedabad heat wave, PLoS One 9(3):e91831, 2014")
+KNOW = ("Knowlton et al., Development and implementation of South Asia's first heat-health "
+        "action plan in Ahmedabad, Int J Environ Res Public Health 11(4):3473-92, 2014")
+HESS = ("Hess et al., Building resilience to climate change: pilot evaluation of the impact of "
+        "India's first heat action plan on all-cause mortality, J Environ Public Health 2018:7973519")
+
+SLIDES += [
+    D("08", "Section Eight", "Heat"),
+
+    C("Definition", "When IMD declares a heatwave",
+      TW([T(["Criterion", "Heat wave", "Severe heat wave"],
+            [["Basic condition", "Maximum temperature at least 40°C in the plains, 30°C in hilly "
+              "regions", "Same"],
+             ["Departure from normal", "4.5°C to 6.4°C above normal", "More than 6.4°C above "
+              "normal"],
+             ["Actual temperature (plains only)", "45°C or more", "47°C or more"],
+             ["Coastal stations", "Departure of 4.5°C or more, with actual maximum of 37°C or "
+              "more", ""],
+             ["Declaration rule", "Criteria met at 2 or more stations in a meteorological "
+              "sub-division for 2 consecutive days; declared on the second day", ""]]),
+          B("Source: " + IMD + ".", sm=True)],
+         [B("The IMD definition is based on dry air temperature. It says nothing about humidity, "
+            "and it requires the heat to be widespread enough to be met at two stations for two "
+            "days. That is right for a weather service. It is a blunt tool for health, because "
+            "people die at lower temperatures where it is humid, where nights stay hot, and "
+            "where people are not used to the heat."),
+          TERM("Warm night (IMD)", "Considered only when the maximum stays at 40°C or more. A warm "
+               "night is a minimum temperature 4.5°C to 6.4°C above normal; a very warm night is "
+               "more than 6.4°C above normal."),
+          H("amber", "Many city heat action plans set their own lower, local thresholds based on "
+            "when deaths rise in that city. Pillai and Dalal found only ten of 37 plans did so "
+            "(" + CPR + ").")])),
+
+    C("Heat in India", "Hotter days, and nights that do not cool",
+      TW([B("The Sixteenth Finance Commission records that the frequency and intensity of hot "
+            "days in India increased significantly over 1981 to 2022, with notable heatwaves in "
+            "2013, 2016, 2019, 2022 and 2024, and a marked rise in very warm nights in the last "
+            "decade. It explains why nights matter: warm nights stop the body recovering from "
+            "daytime heat, which raises the risk of heat illness such as heatstroke "
+            "(" + FC16 + ", paras 11.66, 11.67)."),
+          B("CPR's review of heat action plans adds that three-day runs of concurrent hot days "
+            "and hot nights increased significantly over 1951 to 2016, and are projected to "
+            "increase two to four times by 2050 under moderate and high emission scenarios "
+            "(" + CPR + ", citing published projections).")],
+         [T(["Who is most at risk from heat", "Why"],
+            [["Older people", "Weaker cooling response; often live alone; chronic illness"],
+             ["Infants and young children", "Dehydrate quickly; depend on others"],
+             ["Pregnant women", "Higher heat load; risks to the pregnancy"],
+             ["Outdoor workers", "Exposed during the hottest hours; paid by the day or the piece"],
+             ["People with chronic disease", "Heart, kidney and lung disease worsen in heat"],
+             ["People in poor housing", "Tin roofs and no ventilation keep houses hot at night"],
+             ["Homeless people", "No shade, no water, no place to rest"]]),
+          B("Illustrative summary of standard public health guidance. CPR found that most heat "
+            "action plans list groups like these drawn from NDMA's heat guidelines, without a "
+            "local vulnerability assessment.", sm=True)])),
+
+    C("Humid heat", "Wet-bulb temperature, and why humidity changes the danger",
+      TW([TERM("Wet-bulb temperature",
+               "The lowest temperature air can reach by evaporating water into it. It combines "
+               "heat and humidity. The body cools itself mainly by evaporating sweat, so as the "
+               "wet-bulb temperature approaches skin temperature, sweating stops working."),
+          B("Sherwood and Huber argued in 2010 that a wet-bulb temperature above 35°C for an "
+            "extended period would cause hyperthermia in humans, because metabolic heat could no "
+            "longer be lost, and noted that observed peak wet-bulb temperatures then did not "
+            "exceed 31°C (PNAS 107(21):9552, 2010)."),
+          B("Vecellio and colleagues tested the idea on young, healthy volunteers in a chamber. "
+            "In humid conditions the critical wet-bulb temperature at which heat stress became "
+            "uncompensable averaged 30.55°C, well below 35°C, and no subject reached 35°C. In "
+            "hot, dry conditions it was lower still (J Appl Physiol 132(2):340, 2022).")],
+         [ST([CARD("35°C", "theoretical wet-bulb limit for survival, extended exposure", "red",
+                   "Sherwood and Huber 2010"),
+              CARD("30.55°C", "measured critical limit, young healthy adults, humid heat", "amber",
+                   "Vecellio et al. 2022")], 2),
+          H("cyan", "For practice, the lesson is that a coastal city at 37°C with high humidity can "
+            "be more dangerous than an inland city at 44°C and dry air. A heat plan that uses dry "
+            "temperature alone will warn the wrong city on the wrong day."),
+          B("The volunteers were young and healthy. Older people, people with illness and people "
+            "doing heavy work reach their limits sooner.", sm=True)])),
+
+    C("Ahmedabad 2010", "The heatwave that started South Asia's first heat action plan",
+      TW([B("In May 2010 Ahmedabad's temperature reached 46.8°C. Azhar and colleagues compared "
+            "all-cause deaths in the city for 1 to 31 May 2010 with the average of the same "
+            "period in 2009 and 2011. There were 4,462 deaths in May 2010 against a reference of "
+            "3,118, an excess of 1,344 deaths, or 43.1 per cent. During the most intense week, "
+            "19 to 25 May, mortality rate ratios were 1.76 to 2.12 depending on the reference "
+            "period."),
+          B("The excess deaths were not recorded as heat deaths. They appeared in the city's "
+            "death registrations as deaths from all causes, which is why the method matters. "
+            "Counting deaths certified as heatstroke would have found a small fraction of the "
+            "1,344."),
+          B("Source: " + AZHAR + ".", sm=True)],
+         [CH("dhAhdChart", "bar", "All-cause deaths, Ahmedabad, 1 to 31 May",
+             AZHAR + ". Reference is the mean of May 2009 and May 2011.",
+             {"labels": ["Reference (2009 and 2011 mean)", "May 2010"],
+              "datasets": [{"label": "Deaths", "data": [3118, 4462],
+                            "backgroundColor": ["#94A3B8", "#EF4444"]}]},
+             "{ plugins:{legend:{display:false}}, scales:{ y:{ min:0, max:5000, title:{display:true,text:'All-cause deaths'} } } }")]),
+      compact=True),
+
+    C("The plan", "What Ahmedabad's 2013 heat action plan contains",
+      TW([B("A coalition of the Ahmedabad Municipal Corporation, the Indian Institute of Public "
+            "Health Gandhinagar, the Natural Resources Defense Council and other partners built "
+            "the plan from a literature review, analysis of local temperature and mortality "
+            "data, surveys of heat-vulnerable people, focus groups with health workers, and "
+            "expert advice. The pilot was implemented in 2013."),
+          B("A 7-day probabilistic weather forecast triggers the plan before dangerous heat. "
+            "Findings were turned into policy briefs for government agencies, health "
+            "professionals, outdoor workers and slum communities. Outreach used training "
+            "workshops, hoardings, pamphlets and print advertisements (" + KNOW + ")."),
+          B("The city's 2017 plan added a cool roofs initiative for slum residents and the urban "
+            "poor, aiming to convert at least 500 slum roofs and to raise the reflectivity of "
+            "government buildings and schools (ILO 2019, ch. 2).")],
+         [FLOW("Forecast shows dangerous heat",
+               "Alert issued to departments and public",
+               "Hospitals, ambulances and water points prepare",
+               "Messages reach outdoor workers and slums",
+               "After the season: review deaths and update thresholds"),
+          T(["Component", "Example"],
+            [["Early warning", "Colour-coded alerts from a 7-day forecast"],
+             ["Health system", "Training staff to recognise and treat heat illness"],
+             ["Public outreach", "Messages on water, shade and timing of work"],
+             ["Vulnerable groups", "Outdoor workers, slum residents"],
+             ["Long-term", "Cool roofs, shade, urban design"]]),
+          B("Illustrative structure based on the published description.", sm=True)]),
+      compact=True),
+
+    C("Did it work", "Evaluating the Ahmedabad plan",
+      TW([B("Hess and colleagues compared summer all-cause mortality in 2014-2015, after the "
+            "plan, with a 2007-2010 baseline. Before the plan, the mortality rate ratio at 47°C "
+            "was 2.34 (95% CI 1.98 to 2.76). After it, the ratio at 47°C was 1.25 (1.02 to "
+            "1.53). They estimated 1,190 deaths avoided a year on average (95% CI 162 to 2,218)."),
+          B("Read the uncertainty as carefully as the headline. The confidence interval on "
+            "avoided deaths runs from 162 to 2,218. The incidence rate ratios for days above "
+            "40°C and above 45°C were 0.95 (0.73 to 1.22) and 0.73 (0.29 to 1.81), both "
+            "consistent with no change. The study is a before and after comparison in one city, "
+            "so other changes over the same years, such as air conditioning, could account for "
+            "part of the fall. The authors call it a pilot evaluation."),
+          B("Source: " + HESS + ".", sm=True)],
+         [CH("dhHessChart", "bar", "Mortality rate ratio at 47°C, Ahmedabad, before and after the plan",
+             HESS + ". Bars show point estimates; 95% confidence limits are given in the text.",
+             {"labels": ["Before plan (2007-2010)", "After plan (2014-2015)"],
+              "datasets": [{"label": "Rate ratio", "data": [2.34, 1.25],
+                            "backgroundColor": ["#EF4444", "#0EA5E9"]}]},
+             "{ plugins:{legend:{display:false}}, scales:{ y:{ min:0, max:3, title:{display:true,text:'Mortality rate ratio'} } } }"),
+          H("amber", "A 2025 study of Ahmedabad data from 2002 to 2018 also found reduced immediate "
+            "heat mortality risk after the plan, but not at longer lags or under moderate heat "
+            "(Sharma et al., Int J Biometeorol 69(9):2225, 2025).")]),
+      compact=True),
+
+    C("Plans across India", "What a review of 37 heat action plans found",
+      TW([CH("dhCprChart", "bar", "Heat action plans meeting each test (of 37 reviewed)",
+             CPR + ". Plans published 2016-2022 at city (9), district (13) and State (15) level, "
+             "across 18 States.",
+             {"labels": ["Local temperature thresholds", "Vulnerability assessment",
+                         "Discuss funding sources", "Hierarchical accountability",
+                         "State their legal authority"],
+              "datasets": [{"label": "Plans", "data": [10, 2, 11, 12, 0],
+                            "backgroundColor": "#F59E0B"}]},
+             "{ indexAxis:'y', plugins:{legend:{display:false}}, scales:{ x:{ min:0, max:37, title:{display:true,text:'Number of plans (of 37)'} } } }")],
+         [B("Pillai and Dalal reviewed 37 heat action plans, a subset of what they describe as "
+            "the purported 100 or more plans in India, and found that plan-making had spread "
+            "fast after Ahmedabad and after NDMA's heat guidelines of 2016. Most follow a "
+            "template. Their four main findings were that plans rarely set local thresholds or "
+            "account for humidity and hot nights, that nearly all are poor at identifying and "
+            "targeting vulnerable groups, that they are underfunded, and that none states the "
+            "legal authority under which it operates."),
+          B("Their recommendations include a national repository of plans at NDMA, an expert "
+            "committee on notifying heatwaves as disasters, independent evaluation, and linking "
+            "each action to an existing law or scheme so that someone is obliged and funded to "
+            "carry it out (" + CPR + ")."),
+          H("cyan", "The MHA told the Sixteenth Commission that existing rules already allow "
+            "State and national mitigation funds to be spent on heatwave and lightning, which are "
+            "non-notified disasters (" + FC16 + ", para 11.32).")]),
+      compact=True),
+
+    C("Counting the dead", "Why recorded heat deaths are a small part of the true toll",
+      TW([B("The Sixteenth Finance Commission quotes NCRB data showing 3,798 deaths from heat or "
+            "sunstroke in the whole of India from 2018 to 2022, about 760 a year (" + FC16 +
+            ", para 11.67). In one month of 2010, in one city, Azhar and colleagues counted "
+            "1,344 excess deaths from all causes during a heatwave (" + AZHAR + ")."),
+          B("The two numbers measure different things, and the gap between them is the point. "
+            "NCRB counts deaths that police record as caused by heat or sunstroke. Most heat "
+            "deaths are certified as heart attacks, strokes, kidney failure or simply old age, "
+            "often at home, and never reach that category. Excess mortality, comparing all "
+            "deaths in a hot period with deaths expected in a normal one, captures them without "
+            "needing a cause on the certificate.")],
+         [T(["Method", "Counts", "Strength", "Weakness"],
+            [["Certified heatstroke deaths", "Deaths with heat recorded as cause", "Simple, "
+              "available fast", "Large undercount"],
+             ["Accidental deaths (NCRB)", "Police-recorded heat and sunstroke", "National series",
+              "Misses home deaths and other causes"],
+             ["Excess all-cause mortality", "Deaths above expected in a hot period", "Captures "
+              "uncertified heat deaths", "Needs complete, timely death registration"],
+             ["Temperature-mortality models", "Deaths attributable to heat over a season",
+              "Separates heat from other causes", "Needs years of daily data"]]),
+          H("red", "When heat deaths are undercounted, heat looks like a small disaster, gets "
+            "less money, and the Sendai mortality target looks met when it is not. An Indian "
+            "city's civil registration data is the most useful heat dataset it owns.")]),
+      compact=True),
+
+    C("Outdoor work", "Heat stress takes working hours away",
+      TW([CH("dhIloChart", "bar", "Working hours lost to heat stress, % of total, 1995 and 2030 (projected)",
+             ILO + ". Work in agriculture and construction assumed in the shade; RCP2.6 scenario.",
+             {"labels": ["India", "Bangladesh", "Pakistan", "Sri Lanka", "Nepal", "Southern Asia"],
+              "datasets": [
+                  {"label": "1995", "data": [4.31, 4.24, 4.19, 1.83, 1.17, 4.02], "backgroundColor": "#94A3B8"},
+                  {"label": "2030", "data": [5.80, 4.84, 5.54, 2.67, 2.05, 5.29], "backgroundColor": "#EF4444"}]},
+             "{ scales:{ y:{ min:0, max:7, title:{display:true,text:'% of working hours lost'} } } }")],
+         [B("The ILO estimated that India lost 4.3 per cent of working hours to heat stress in "
+            "1995 and projected a loss of 5.8 per cent in 2030, the equivalent of 34 million "
+            "full-time jobs. Southern Asia as a whole is projected to lose 5.3 per cent of "
+            "working hours in 2030, the equivalent of 43 million jobs. Worldwide, the ILO "
+            "projected 2.2 per cent of working hours lost in 2030, equivalent to 80 million "
+            "full-time jobs."),
+          B("These figures assume agricultural and construction work is done in the shade. "
+            "Work in the sun adds roughly 2 to 3°C to the heat stress index, so the real losses "
+            "for people working in open fields and on building sites are larger (" + ILO + ")."),
+          H("amber", "Lost hours are lost wages for people paid by the day or the piece. Heat is "
+            "an income shock before it is a health emergency.")]),
+      compact=True),
+
+    C("Who works in heat", "Sectors, kilns and the law",
+      TW([CH("dhIloSector", "bar", "India: working hours lost to heat stress by sector, 2030 projection (%)",
+             ILO + ".",
+             {"labels": ["Agriculture", "Construction", "Manufacturing", "Services"],
+              "datasets": [{"label": "% of hours lost", "data": [9.04, 9.04, 5.29, 1.48],
+                            "backgroundColor": ["#10B981", "#F59E0B", "#6366F1", "#0EA5E9"]}]},
+             "{ plugins:{legend:{display:false}}, scales:{ y:{ min:0, max:10, title:{display:true,text:'% of working hours'} } } }")],
+         [B("The ILO expects most of India's loss in agriculture, with a growing share in "
+            "construction, where heat stress affects both men and women. Its box on brick kilns "
+            "describes workers, most of them migrants from poor villages and including young "
+            "children, exposed to air temperatures of 40 to 45°C and to radiant heat from the "
+            "kilns, with little or no cooling and short breaks only when exhausted. A study of "
+            "women brick workers in West Bengal it cites found roughly a 2 per cent loss in "
+            "productivity for each 1°C rise."),
+          B("The ILO notes that the Factories Act 1948 and the Building and Other Construction "
+            "Workers Act 1996 were the statutes relevant to such work, and that neither made "
+            "clear how the occupational safety and health of brick workers was to be "
+            "protected (" + ILO + ", Box 6.1). Labour law has changed since the report, so "
+            "check which occupational safety law and rules now apply in your State."),
+          H("cyan", "Practical measures that heat plans recommend for outdoor work include shifting "
+            "hours away from the afternoon, water and shade at the work site, rest breaks, and "
+            "protecting the wages of workers who stop in extreme heat. Illustrative.")]),
+      compact=True),
+
+    C("For practitioners", "Building a heat plan that reaches people",
+      T(["Step", "What to do", "Evidence it was done"],
+        [["Set local thresholds", "Analyse past daily deaths against temperature, humidity and "
+          "night temperature in your city or district", "A threshold table with its data source"],
+         ["Map vulnerability", "Find where older people living alone, outdoor workers, slums "
+          "with tin roofs and homeless people are", "Ward or village list, updated each year"],
+         ["Fix the trigger", "Agree which forecast, at what lead time, triggers which action by "
+          "which department", "Signed standard operating procedures"],
+         ["Prepare health services", "Train staff, stock oral rehydration salts and cooling, "
+          "record heat cases daily", "Daily heat illness reports in season"],
+         ["Protect workers", "Agree work hours, water, shade and wage protection with employers "
+          "and labour department", "Notices issued; inspections done"],
+         ["Fund and give legal basis", "Link each action to a scheme budget and a legal "
+          "authority", "Budget lines; orders under the DM Act or other law"],
+         ["Count deaths properly", "Track excess all-cause deaths during heat periods",
+          "Monthly civil registration analysis"]]),
+      TW([B("Illustrative checklist synthesised from the Ahmedabad plan and the CPR review. "
+            "Each row answers one of the weaknesses CPR found.", sm=True)],
+         [H("green", "For heat and work, see ImpactMojo's "
+            "<a href=\"https://www.impactmojo.in/101-courses/work-labour-livelihoods.html\">Work, "
+            "Labour and Livelihoods 101</a>.")]),
+      compact=True),
+]
