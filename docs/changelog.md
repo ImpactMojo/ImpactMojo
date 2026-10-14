@@ -19,6 +19,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - The home page uses Inter for text and Amaranth for headings. Its old stylesheet set Amaranth on every paragraph and stopped the header from sticking.
 - The Mojini chat assistant is retired; its answers to common questions now come back in search. The floating toolbox is retired; its tools are on the dashboard, and the old addresses (/bookmarks, /notes, /pomodoro and the rest) open the matching tab.
 - The founders' bios live on the About page; the home page links to it.
+- Running text across the site is set in Inter, and headings keep Amaranth where they had it. About 690 pages, Reading Companions, product pages, handouts, blog posts and course pages among them, had set Amaranth on every paragraph. Slide decks and games are unchanged.
 - The third-party UserWay accessibility widget is removed from the 50 pages that loaded it; the site's own accessibility menu replaces it on every page, and the privacy and data-protection pages no longer list UserWay.
 - Each founder now has one bio and one title, the same on every page that names them: About, Coaching, the press kit, the four assessed-certificate pages, the credential upgrade page, the Gender, Power BI and Public Choice courses, the FAQ, the coaching guide and the team page. The founder cards at the end of the Data Visualization, Gender, SEL, AI for Development and Law courses use the same text.
 
