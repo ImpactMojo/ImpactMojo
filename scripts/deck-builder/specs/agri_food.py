@@ -350,3 +350,275 @@ SEC1 = [
             H("green", "A quintal is 100 kilograms. MSPs are quoted in rupees per quintal.")]),
     ]),
 ]
+
+
+# ===================== SECTION 02: INCOMES AND DEBT =====================
+SEC2 = [
+    DIV("02", "Two", "Incomes and indebtedness"),
+
+    S("Measuring income", "The survey builds income from five sources and offers two answers", [
+        TC([B("India has no regular survey of household income. The Situation Assessment Survey is the "
+              "only official source of household-level income for a large part of the population, as "
+              "Bakshi points out. It adds up wages and salaries, rent from land leased out, and net "
+              "receipts from crops, animals and non-farm business, where net receipt is receipts less "
+              "expenses for that activity."),
+            B("The 77th round reports income twice. The first answer deducts only paid-out expenses, "
+              "the cash a household spent. The second also deducts imputed costs: the market value of "
+              "family labour, home-grown seed and manure, and rent on the household's own land. The "
+              "second answer is closer to the cost concepts the Commission for Agricultural Costs and "
+              "Prices uses for MSP.", sm=True)],
+           [T(["Monthly income per agricultural household, 2018-19 (&#8377;)", "Paid-out expenses deducted", "Paid-out and imputed expenses deducted"],
+              [["Wages and salaries", "4,063", "4,063"],
+               ["Leasing out land", "134", "134"],
+               ["Net receipt, crop production", "3,798", "3,058"],
+               ["Net receipt, farming of animals", "1,582", "441"],
+               ["Net receipt, non-farm business", "641", "641"],
+               ["Total", "10,218", "8,337"]]),
+            B("Source: " + SAS + ", Table 6.", sm=True)], ratio="a23"),
+    ]),
+
+    S("Composition", "Wages now earn farm households more than their crops do", [
+        TC([BAR("chIncome", "Average monthly income of an agricultural household by source, at 2018-19 prices (&#8377;)", RAS,
+                ["Wages and salaries", "Crop production", "Farming of animals", "Non-farm business"],
+                [DS("2012-13 (inflated to 2018-19 prices)", [2849.4, 4239.0, 1049.8, 704.4], INDIGO),
+                 DS("2018-19", [4063, 3798, 1582, 641], GREEN)], legend=True, ytitle="rupees per month")],
+           [B("In 2012-13 crop production was the largest source of income, 47.9 per cent of the total. "
+              "By 2018-19 its share had fallen to 37.2 per cent and wages had risen to 39.8 per cent. "
+              "Bakshi deflates the 2012-13 figures with the rural consumer price index so the two years "
+              "can be compared."),
+            B("At constant prices, income from crops fell 10.4 per cent in six years while income from "
+              "wages rose 42.6 per cent and income from animals rose 50.7 per cent. Total income rose "
+              "15.6 per cent in real terms. Crop output did not fall over the period. The index of "
+              "agricultural production rose from 129.8 to 138.1, so the fall in crop income points to "
+              "prices received and costs paid.", sm=True)], ratio="a32"),
+    ]),
+
+    S("A day's earnings", "Cultivation paid less than a day's wage", [
+        TC([ST([C("&#8377;3,798", "monthly net receipt from crops, paid-out costs only", "amber", SAS),
+                C("&#8377;3,058", "the same after imputed costs of family labour and own land", "red", SAS),
+                C("&#8377;441", "monthly net receipt from animals after imputed costs, down from &#8377;1,582", "indigo", SAS),
+                C("15.6%", "real growth in total income, 2012-13 to 2018-19", "green", RAS)], cols=2)],
+           [B("Once family labour and owned land are valued at market rates, net income from animals "
+              "almost disappears. The household's own labour on its cattle earns about what the same "
+              "hours would earn at market wages, so the animal income is mostly a return to family "
+              "labour, much of it unpaid."),
+            B("Kishore and Jha's analysis of the same survey in the Hindustan Times on "
+              "14 September 2021 carried the headline that farmers earned &#8377;27 a day from "
+              "cultivation in 2018-19, and set it beside MGNREGA wages. The comparison is crude "
+              "because it divides a household's crop income across the days of a year, but it is the "
+              "reason the survey's release became a political argument.", sm=True),
+            H("cyan", "Ask for the full distribution, by size class of land, before quoting the "
+              "average for a district or a programme.")]),
+    ]),
+
+    S("Debt", "Half of agricultural households were in debt in 2019", [
+        TC([ST([C("50.2%", "of agricultural households had an outstanding loan on the survey date", "red", SAS),
+                C("&#8377;74,121", "average outstanding loan per agricultural household, indebted or not", "amber", SAS)], cols=2),
+            B("The average is taken over all agricultural households, including the half with no debt, "
+              "so the average loan among indebted households is roughly twice as large. The survey asks "
+              "about the amount outstanding on the day of the first visit, which falls in the first "
+              "half of 2019.", sm=True)],
+           [P("cyan", "Reading a debt figure",
+              "Two loans of the same size, one from a bank at a low rate and one from a moneylender "
+              "at a high rate, appear as the same rupees in an outstanding-debt total. The burden lies in the interest rate, the "
+              "repayment schedule and what the loan was for. Ask for the share of debt from "
+              "institutional sources, the purpose of borrowing, and whether the loan funds farming or "
+              "consumption and health spending."),
+            P("amber", "Debt and distress",
+              "A high average debt is not evidence of distress on its own. A household that borrows "
+              "to buy a pump and one that borrows to pay a hospital bill carry the same debt on paper. "
+              "Look at debt relative to income and assets, and at who the lender is.")]),
+    ]),
+
+    S("Doubling incomes", "The 2022 target, and what the survey says about it", [
+        TC([FL(["Feb 2016: the Prime Minister sets a goal of doubling farmers' incomes by 2022",
+                "Apr 2016: an inter-ministerial committee under Ashok Dalwai is formed",
+                "Sep 2018: the committee reports, and recommends a Situation Assessment Survey every five years",
+                "2019: the 77th round is fielded, six years after the 70th"]),
+            B("The Dalwai Committee set the target national farmer income for 2022-23 at "
+              "&#8377;1,92,694 at 2015-16 prices, or &#8377;2,71,378 at current prices, counting farm "
+              "and non-farm income together (Government of India 2018, volume 14, as quoted by Bakshi).", sm=True)],
+           [B("Between 2012-13 and 2018-19 the real income of an agricultural household grew by about 15 "
+              "per cent. Doubling in the following four years would have required growth far faster "
+              "than anything the survey records. Bakshi concludes that the numbers point to the "
+              "near-impossibility of meeting the goal."),
+            B("The 2019 round is the latest Situation Assessment Survey used in this course, and it "
+              "predates the 2022 deadline. A claim that incomes doubled, or did not, needs a later "
+              "household survey to support it.", sm=True),
+            H("amber", "When a target is announced without a measurement plan, ask which survey will "
+              "measure it and when.")]),
+    ]),
+
+    S("Credit", "Kisan Credit Cards and interest subvention carry most farm lending", [
+        TC([ST([C("7.28 crore", "operational Kisan Credit Card accounts, 2025-26", "cyan", PIBAG),
+                C("&#8377;10.08 lakh crore", "outstanding under KCC, as on 3 August 2026", "amber", PIBAG),
+                C("&#8377;22,600 crore", "Modified Interest Subvention Scheme, Budget Estimate 2026-27", "green", BAG),
+                C("14.7%", "of interest subvention benefits went to the Central region, which has 30% of gross cropped area", "red", ES)], cols=2)],
+           [B("The Kisan Credit Card gives a farmer a revolving crop loan sized to the crops grown and "
+              "the area cultivated. Under the Modified Interest Subvention Scheme the government pays "
+              "part of the interest on short-term crop loans, so a farmer who repays on time borrows "
+              "at a lower rate than the bank's normal rate."),
+            B("The Economic Survey 2025-26 notes that the Central region accounts for 30 per cent of "
+              "gross cropped area and the largest share of PM-KISAN beneficiaries but received only "
+              "14.7 per cent of interest subvention benefits, which the Survey reads as untapped "
+              "potential for credit linkage.", sm=True),
+            H("cyan", "Ask how tenants and sharecroppers in your area get crop credit, since they do not "
+              "hold the land records that lenders usually ask for.")]),
+    ]),
+
+    S("Practice", "Questions to ask of any claim about farm incomes", [
+        TC([BL(["Which survey? A Situation Assessment Survey figure is per agricultural household. A "
+                "GVA figure divided by workers is per worker and includes plantation companies.",
+                "Which cost concept? Paid-out costs give &#8377;10,218 a month in 2018-19. Paid-out and "
+                "imputed costs give &#8377;8,337.",
+                "Nominal or real? The 2012-13 and 2018-19 totals look like a 59 per cent rise in rupees "
+                "and a 15.6 per cent rise after inflation.",
+                "Mean or median? A few large commercial farms pull the mean up. Ask for incomes by "
+                "size class of land.",
+                "Household or person? A household of six on &#8377;10,218 a month has about "
+                "&#8377;1,700 per person."], "cyan")],
+           [T(["Claim you may hear", "What to check"],
+              [["Farm incomes have doubled", "Which year is the base, which survey, and whether figures are nominal"],
+               ["Most farm income is now non-farm", "Wages include farm labour; the survey does not split farm and non-farm wages"],
+               ["Dairy is the most profitable activity", "Net animal income falls from &#8377;1,582 to &#8377;441 once family labour is costed"],
+               ["Half of farmers are in debt", "The 50.2% refers to agricultural households in 2019, not individual farmers"]]),
+            H("green", "Bakshi notes that the 77th round does not separate agricultural from "
+              "non-agricultural wages, so no one can say from it how much income comes from outside farming.")]),
+    ]),
+]
+
+
+# ===================== SECTION 03: MSP AND PROCUREMENT =====================
+SEC3 = [
+    DIV("03", "Three", "MSP, the CACP and procurement"),
+
+    S("What MSP is", "A price the government announces for 22 crops, and buys at for a few", [
+        TC([B("Every year the Union government announces Minimum Support Prices for 22 mandated crops on "
+              "the recommendation of the Commission for Agricultural Costs and Prices (CACP), after "
+              "hearing state governments and central ministries. The CACP also recommends the Fair and "
+              "Remunerative Price for sugarcane, which mills must pay."),
+            B("An MSP is a price at which public agencies stand ready to buy. It is not a legal floor "
+              "on private trade. A farmer who sells to a private trader below MSP breaks no law, and "
+              "for most of the 22 crops in most districts no public agency buys at all. Rice and wheat "
+              "are bought in large volumes for the central pool. Pulses, oilseeds and copra are bought "
+              "under the Price Support Scheme of PM-AASHA when market prices fall below MSP, and only "
+              "from pre-registered farmers with valid land records.", sm=True)],
+           [T(["Season", "Mandated crops"],
+              [["Kharif (14)", "Paddy, jowar, bajra, ragi, maize, arhar (tur), moong, urad, cotton, groundnut, sunflower seed, soybean, sesamum, nigerseed"],
+               ["Rabi (6)", "Wheat, barley, gram, masur (lentil), rapeseed and mustard, safflower"],
+               ["Commercial (2)", "Jute, copra"],
+               ["Separately", "Sugarcane, through the Fair and Remunerative Price"]]),
+            B("Sources: " + ES + ", footnote 98; " + PIBMSP + ".", sm=True)]),
+    ]),
+
+    S("The 1.5 times rule", "Since 2018-19 every MSP is set at least 50 per cent above a cost of production", [
+        T(["Crop (kharif 2026-27)", "MSP (&#8377;/quintal)", "Cost used (&#8377;/quintal)", "Margin over cost", "MSP 2025-26", "MSP 2013-14"],
+          [["Paddy, common", "2,441", "1,627", "50%", "2,369", "1,310"],
+           ["Jowar, hybrid", "4,023", "2,682", "50%", "3,699", "1,500"],
+           ["Bajra", "2,900", "1,858", "56%", "2,775", "1,250"],
+           ["Maize", "2,410", "1,544", "56%", "2,400", "1,310"],
+           ["Tur (arhar)", "8,450", "5,496", "54%", "8,000", "4,300"],
+           ["Moong", "8,780", "5,438", "61%", "8,768", "4,500"],
+           ["Soybean (yellow)", "5,708", "3,805", "50%", "5,328", "2,560"],
+           ["Cotton, medium staple", "8,267", "5,511", "50%", "7,710", "3,700"]]),
+        TC([B("The Union Budget 2018-19 announced that MSPs would be fixed at no less than 1.5 times the "
+              "all-India weighted average cost of production. Every kharif and rabi announcement since "
+              "says it is in line with that rule. The margin is printed crop by crop, and for kharif "
+              "2026-27 it ranges from 50 per cent for paddy to 61 per cent for moong.", sm=True)],
+           [B("The common paddy MSP rose by &#8377;72 a quintal for 2026-27. The government's "
+              "comparison with 2013-14 shows an 86 per cent rise over thirteen years. Source: " + KMS + ".", sm=True)]),
+    ], compact=True),
+
+    S("Rabi 2027-28", "Wheat got its smallest increase in seventeen years", [
+        TC([BAR("chRabi", "Rabi Marketing Season 2027-28: MSP and the cost used to set it (&#8377; per quintal)", RMS28,
+                ["Wheat", "Barley", "Gram", "Masur", "Mustard", "Safflower"],
+                [DS("Cost of production", [1264, 1447, 3751, 3854, 3367, 4810], AMBER),
+                 DS("MSP 2027-28", [2610, 2286, 5958, 7390, 6613, 7215], CYAN)], legend=True, ytitle="rupees per quintal")],
+           [B("On 30 September 2026 the Cabinet fixed the wheat MSP for Rabi Marketing Season 2027-28 "
+              "at &#8377;2,610 a quintal, up &#8377;25 from &#8377;2,585. The Indian Express reported "
+              "it as a 0.97 per cent rise and the smallest increase in seventeen years. Safflower rose "
+              "the most, by &#8377;675 to &#8377;7,215."),
+            B("The margin over cost is 106 per cent for wheat and 50 per cent for safflower. A large "
+              "margin on wheat and a small one on oilseeds says the cost estimate for wheat is low "
+              "relative to its price, which follows from high irrigated yields in Punjab, Haryana and "
+              "Madhya Pradesh spreading fixed costs over more grain.", sm=True),
+            H("amber", "A margin of 106 per cent does not mean wheat farmers double their money. It "
+              "compares the MSP with one particular cost concept, discussed on the next slide.")], ratio="a32"),
+    ]),
+
+    S("Cost concepts", "Which cost the 50 per cent is added to is the heart of the MSP dispute", [
+        TC([TERM("A1 and A2", "Paid-out costs. A1 is cash spent on seed, fertiliser, hired labour, "
+                 "machinery and irrigation by an owner-cultivator. A2 adds rent paid for leased-in land, "
+                 "so it is the cash cost of a tenant."),
+            TERM("Family labour (FL)", "The imputed value of the work done by the farmer's own family, "
+                 "valued at market wages."),
+            TERM("C2 and C3", "Comprehensive cost. C2 adds imputed rent on owned land and interest on "
+                 "owned capital to paid-out costs and family labour. C3 adds a further allowance for the "
+                 "farmer's management.")],
+           [B("Bakshi describes the CACP as using nine cost concepts, all of which include some kind "
+              "of imputed cost. The National Commission on Farmers chaired by M. S. Swaminathan "
+              "recommended that MSP be set 50 per cent above total cost, defined as all paid-out and "
+              "imputed costs, which corresponds to C2. Farmers' unions have demanded that formula, "
+              "especially during the 2020-21 protests."),
+            B("The government's announced margins are calculated on a narrower cost. On a C2 basis, "
+              "which includes the rent of the farmer's own land, the same MSP shows a much smaller "
+              "margin. When someone says MSP is or is not 1.5 times cost, ask which cost.", sm=True),
+            H("cyan", "The SAS 77th round collected imputed costs for the first time, which lets "
+              "researchers compute farm income on cost definitions close to the CACP's.")]),
+    ]),
+
+    S("Who sells at MSP", "A minority of farmers know the MSP, and fewer sell to a procurement agency", [
+        TC([T(["Agricultural households (%)", "Paddy 2013", "Paddy 2019", "Wheat 2013", "Wheat 2019"],
+              [["Aware of MSP", "32.3", "40.7", "39.2", "37.1"],
+               ["Aware of a procurement agency", "25.1", "30.3", "34.5", "27.2"],
+               ["Sold to a procurement agency", "13.5", "14.5", "16.2", "9.7"],
+               ["Share of output sold at MSP", "27.0", "23.7", "35.0", "20.8"]]),
+            B("Source: " + RAS + ", Table 3, from SAS 70th and 77th rounds.", sm=True)],
+           [B("In 2019 only 14.5 per cent of paddy-growing agricultural households, and 9.7 per cent of "
+              "wheat growers, sold any of their crop to a procurement agency. In 2015 the High Level "
+              "Committee on restructuring the Food Corporation of India, chaired by Shanta Kumar, "
+              "estimated from 2012-13 NSS data that only 6 per cent of farmers benefited from MSP "
+              "through sales to official procurement."),
+            B("Procurement is concentrated where the state has built the buying system: Punjab, "
+              "Haryana, Madhya Pradesh, Chhattisgarh, Telangana and parts of Odisha and Uttar Pradesh "
+              "for paddy and wheat. A farmer in a district without a purchase centre lives with the "
+              "market price, whatever the MSP says.", sm=True),
+            H("amber", "Awareness of MSP fell for wheat between the two rounds even as MSPs rose.")]),
+    ]),
+
+    S("Scale", "Procurement is large, and it is mostly rice and wheat", [
+        TC([ST([C("1,175 LMT", "foodgrains procured in July 2024 to June 2025, up from 761.40 LMT in 2014-15", "cyan", PIBMSP),
+                C("1.84 crore", "farmers the government counts as benefiting from procurement in 2024-25", "green", PIBMSP),
+                C("266 LMT", "wheat procured by FCI in RMS 2024-25, against 188 LMT in 2022-23", "amber", PIBMSP),
+                C("&#8377;16.08 lakh crore", "MSP paid to paddy farmers, 2014-15 to 2025-26", "indigo", KMS)], cols=2)],
+           [B("A lakh metric tonnes (LMT) is 100,000 tonnes. The government reports that paddy "
+              "procurement over 2014-15 to 2025-26 totalled 8,418 LMT, against 4,590 LMT over 2004-05 "
+              "to 2013-14. Over the same periods MSP payments to paddy growers rose from &#8377;4.44 "
+              "lakh crore to &#8377;16.08 lakh crore. These are the government's own comparisons of two "
+              "periods of different length and should be read as such."),
+            B("Pulses and oilseeds are bought far less, through NAFED and NCCF under PM-AASHA, "
+              "which was allocated &#8377;7,200 crore in the 2026-27 budget. The government has raised "
+              "its procurement guarantee for pulses from &#8377;45,000 crore to &#8377;60,000 crore. "
+              "By 25 March 2025 it had procured 2.46 LMT of tur from 1,71,569 farmers in five states.", sm=True),
+            B("Sources: " + PIBMSP + "; " + KMS + "; " + BAG + ".", sm=True)]),
+    ]),
+
+    S("The cost of buying more than is needed", "The Economic Survey says rice and wheat stocks have outgrown food security needs", [
+        TC([P("amber", "Economic Survey 2025-26, Box VI.5",
+              "The Survey says the scale of procurement, particularly of rice and wheat, has grown faster "
+              "than food security requirements, leading to persistently high buffer stocks and rising "
+              "carrying costs for storage, handling, interest and stock rotation. At the same time India "
+              "imports edible oils and pulses."),
+            B("It proposes using savings from better stock management to pay farmers who voluntarily "
+              "shift part of their rice and wheat area to pulses, oilseeds and maize, starting in "
+              "eastern and central India, and over time moving from physical procurement towards "
+              "price-deficiency payments, bonuses and assured offtake.", sm=True)],
+           [T(["Instrument", "How it works", "Main risk"],
+              [["Open-ended procurement", "Agencies buy all grain of fair average quality offered at MSP", "Stocks pile up; benefits go where purchase centres exist"],
+               ["Price Support Scheme (PM-AASHA)", "Buys notified pulses, oilseeds and copra when prices fall below MSP", "Quantity caps; registration and land-record requirements"],
+               ["Price-deficiency payment", "Pays the gap between MSP and the market price, without buying the grain", "Traders may lower prices knowing the state will pay the gap"],
+               ["Per-acre diversification incentive", "Pays farmers to grow a different crop", "Needs reliable crop verification and a market for the new crop"]]),
+            H("cyan", "The Survey frames all of this as voluntary and phased, with food security protected "
+              "through procurement volumes and buffer norms.")]),
+    ]),
+]
