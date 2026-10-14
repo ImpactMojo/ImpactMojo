@@ -77,7 +77,7 @@
     var innerW = W - padX * 2;
 
     var svg = el("svg", {
-      class: "sm-svg", role: "img",
+      class: "sm-svg", role: "group",
       viewBox: "0 0 " + W + " " + H,
       preserveAspectRatio: "xMidYMid meet",
       "aria-label": "Barrier stack for " + d.name + ". Four barriers stand between a " +

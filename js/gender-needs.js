@@ -82,7 +82,7 @@
     var W = S + padL + padR, H = S + padT + padB;
 
     var svg = el("svg", {
-      class: "gn-svg", role: "img",
+      class: "gn-svg", role: "group",
       viewBox: "0 0 " + W + " " + H,
       preserveAspectRatio: "xMidYMid meet",
       "aria-label": "Twelve Indian interventions plotted by how much material " +

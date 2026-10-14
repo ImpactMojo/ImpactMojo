@@ -538,30 +538,30 @@ SEC3 = [
               "at &#8377;2,610 a quintal, up &#8377;25 from &#8377;2,585. The Indian Express reported "
               "it as a 0.97 per cent rise and the smallest increase in seventeen years. Safflower rose "
               "the most, by &#8377;675 to &#8377;7,215."),
-            B("The margin over cost is 106 per cent for wheat and 50 per cent for safflower. A large "
-              "margin on wheat and a small one on oilseeds says the cost estimate for wheat is low "
-              "relative to its price, which follows from high irrigated yields in Punjab, Haryana and "
-              "Madhya Pradesh spreading fixed costs over more grain.", sm=True),
+            B("The margin over cost is 106 per cent for wheat, 96 per cent for mustard, 92 per cent "
+              "for masur, 59 per cent for gram, 58 per cent for barley and 50 per cent for "
+              "safflower. The margin depends on how the cost is estimated as much as on the price.", sm=True),
             H("amber", "A margin of 106 per cent does not mean wheat farmers double their money. It "
               "compares the MSP with one particular cost concept, discussed on the next slide.")], ratio="a32"),
     ]),
 
     S("Cost concepts", "Which cost the 50 per cent is added to is the heart of the MSP dispute", [
-        TC([TERM("A1 and A2", "Paid-out costs. A1 is cash spent on seed, fertiliser, hired labour, "
-                 "machinery and irrigation by an owner-cultivator. A2 adds rent paid for leased-in land, "
-                 "so it is the cash cost of a tenant."),
+        TC([TERM("A1 and A2", "Paid-out costs: all out-of-pocket expenses plus the imputed value of owned "
+                 "animal and machine labour. A1 is the measure for an owner-cultivator and A2 for a "
+                 "tenant-cultivator, who also pays rent for leased-in land."),
             TERM("Family labour (FL)", "The imputed value of the work done by the farmer's own family, "
                  "valued at market wages."),
-            TERM("C2 and C3", "Comprehensive cost. C2 adds imputed rent on owned land and interest on "
-                 "owned capital to paid-out costs and family labour. C3 adds a further allowance for the "
-                 "farmer's management.")],
+            TERM("C2 and C3", "Comprehensive cost. C2 includes imputed costs on owned land and family "
+                 "labour. C3 also includes a value for the farmer's management input.")],
            [B("Bakshi describes the CACP as using nine cost concepts, all of which include some kind "
-              "of imputed cost. The National Commission on Farmers chaired by M. S. Swaminathan "
-              "recommended that MSP be set 50 per cent above total cost, defined as all paid-out and "
-              "imputed costs, which corresponds to C2. Farmers' unions have demanded that formula, "
-              "especially during the 2020-21 protests."),
-            B("The government's announced margins are calculated on a narrower cost. On a C2 basis, "
-              "which includes the rent of the farmer's own land, the same MSP shows a much smaller "
+              "of imputed cost. The Swaminathan Commission recommended that MSP be set 50 per cent "
+              "above the total cost of production, defined as all paid-out and imputed costs, "
+              "including family labour and the rental value of owned land. Farmers' movements have "
+              "insisted on that recommendation, and Bakshi notes it was central to the debate around "
+              "the 2020 farm laws."),
+            B("The margin in each MSP release is calculated on the cost column printed beside it, "
+              "and the release defines that cost in a footnote. If the cost leaves out the rental "
+              "value of the farmer's own land, a C2 calculation of the same MSP shows a smaller "
               "margin. When someone says MSP is or is not 1.5 times cost, ask which cost.", sm=True),
             H("cyan", "The SAS 77th round collected imputed costs for the first time, which lets "
               "researchers compute farm income on cost definitions close to the CACP's.")]),
@@ -579,11 +579,11 @@ SEC3 = [
               "Committee on restructuring the Food Corporation of India, chaired by Shanta Kumar, "
               "estimated from 2012-13 NSS data that only 6 per cent of farmers benefited from MSP "
               "through sales to official procurement."),
-            B("Procurement is concentrated where the state has built the buying system: Punjab, "
-              "Haryana, Madhya Pradesh, Chhattisgarh, Telangana and parts of Odisha and Uttar Pradesh "
-              "for paddy and wheat. A farmer in a district without a purchase centre lives with the "
-              "market price, whatever the MSP says.", sm=True),
-            H("amber", "Awareness of MSP fell for wheat between the two rounds even as MSPs rose.")]),
+            B("Procurement happens where states have built purchase centres and agencies to run "
+              "them. A farmer in a district without a purchase centre sells at the market price, "
+              "whatever the MSP says.", sm=True),
+            H("amber", "Awareness of MSP among wheat growers fell between the two rounds, and the share of "
+              "wheat output sold at MSP fell from 35 to 20.8 per cent.")]),
     ]),
 
     S("Scale", "Procurement is large, and it is mostly rice and wheat", [
@@ -620,5 +620,278 @@ SEC3 = [
                ["Per-acre diversification incentive", "Pays farmers to grow a different crop", "Needs reliable crop verification and a market for the new crop"]]),
             H("cyan", "The Survey frames all of this as voluntary and phased, with food security protected "
               "through procurement volumes and buffer norms.")]),
+    ]),
+]
+
+
+# ===================== SECTION 04: THE FARM LAWS =====================
+LAWS = "PRS Legislative Research, The Farm Laws Repeal Bill 2021; Wikipedia, 2020 Indian agriculture acts and 2020-2021 Indian farmers' protest"
+
+SEC4 = [
+    DIV("04", "Four", "The 2020 farm laws and their repeal"),
+
+    S("The three Acts", "Three laws passed in September 2020 set out to change how crops are traded", [
+        T(["Act", "What it provided", "What it would have changed"],
+          [["Farmers' Produce Trade and Commerce (Promotion and Facilitation) Act 2020",
+            "Trade in farm produce at any place of production, collection or aggregation, including electronic trading",
+            "Trade outside the state-notified APMC market yards, and a bar on states levying market fees on trade outside their designated trade areas"],
+           ["Farmers (Empowerment and Protection) Agreement on Price Assurance and Farm Services Act 2020",
+            "A legal framework for agreements between farmers and buyers made before sowing, including the price",
+            "A national framework for contract farming, with its own dispute resolution mechanism"],
+           ["Essential Commodities (Amendment) Act 2020",
+            "Removed cereals, pulses, potatoes, onions and edible oils from routine stock control",
+            "Stock limits allowed only in extraordinary circumstances or after a steep price rise"]]),
+        TC([B("Together the Acts would have opened a second channel of trade beside the APMC mandis, "
+              "free of the market fees the mandis charge, and given contract farming a national legal "
+              "basis.", sm=True)],
+           [B("Source: " + LAWS + ".", sm=True)]),
+    ], compact=True),
+
+    S("Timeline", "Fourteen months from passage to repeal", [
+        FL(["17 Sep 2020: passed by the Lok Sabha",
+            "20 Sep 2020: passed by the Rajya Sabha by voice vote",
+            "Late Sep 2020: presidential assent",
+            "12 Jan 2021: Supreme Court stays implementation",
+            "19 Nov 2021: Prime Minister announces repeal",
+            "1 Dec 2021: laws formally repealed"]),
+        TC([B("The Supreme Court stayed implementation of all three laws on 12 January 2021 and "
+              "appointed a committee to hear the parties. The laws therefore never operated in full. "
+              "On 19 November 2021 the Prime Minister announced in a televised address that the "
+              "government would repeal them in the coming session of Parliament."),
+            B("The Farm Laws Repeal Bill 2021 was introduced and passed by both Houses on 29 November "
+              "2021, without debate in either House, and the laws were formally repealed on 1 December "
+              "2021.", sm=True)],
+           [P("cyan", "Why the timeline matters",
+              "The Acts were passed in a single session as government bills and repealed in a single "
+              "day. The Rajya Sabha vote was by voice, which meant no recorded division. Most of the "
+              "argument took place outside Parliament: at the protest sites on Delhi's borders at "
+              "Singhu, Tikri and Ghazipur, which were declared over on 11 December 2021, and in the "
+              "Supreme Court."),
+            B("Source: " + LAWS + ".", sm=True)]),
+    ]),
+
+    S("The constitutional setting", "Agriculture, land and markets are state subjects", [
+        TC([T(["State List entry", "Subject"],
+              [["14", "Agriculture, including agricultural education and research, and protection against pests and plant diseases"],
+               ["17", "Water: water supplies, irrigation and canals, drainage and embankments, water storage and water power"],
+               ["18", "Land: rights in or over land, land tenures including the relation of landlord and tenant, and transfer and alienation of agricultural land"],
+               ["28", "Markets and fairs"]]),
+            B("Source: Seventh Schedule, List II, as reproduced on Wikipedia's State List page.", sm=True)],
+           [B("Agricultural marketing in India is organised under state APMC laws, and each state "
+              "decides which produce is regulated in its markets, what fee is charged and who may be "
+              "licensed to trade."),
+            B("A central law that barred states from charging fees on trade outside their market "
+              "yards therefore reached into a subject that the Constitution assigns to the states. "
+              "Six state governments (Kerala, Punjab, Chhattisgarh, Rajasthan, Delhi and West Bengal) "
+              "passed resolutions against the Acts. Whatever view one takes of the "
+              "economics, any future national reform of agricultural markets has to work through, or "
+              "with, state law.", sm=True),
+            H("amber", "Tenancy, irrigation and land records are also state subjects. Most of the "
+              "reforms discussed in this course are decided in state capitals.")]),
+    ]),
+
+    S("The argument for", "What the government said the laws would do", [
+        TC([P("green", "More buyers for the farmer",
+              "Allowing trade outside APMC yards would let farmers sell to any buyer, including "
+              "processors and exporters, in any place. Competition between the mandi and private buyers "
+              "was expected to raise the price farmers received."),
+            P("green", "Lower transaction costs",
+              "Trade outside the yards would pay no state market fee. Electronic trading would let "
+              "buyers from other districts and states bid.")],
+           [P("green", "Price certainty before sowing",
+              "A contract signed before sowing, with an agreed price, would shift price risk to the "
+              "buyer and give the farmer access to the buyer's inputs and technical advice."),
+            P("green", "Private storage investment",
+              "Removing routine stock limits on cereals, pulses, onions and edible oils was meant to "
+              "encourage private investment in warehouses and cold chains, on the argument that stock "
+              "limits discouraged it."),
+            H("cyan", "Some of these arguments have empirical support elsewhere. Goyal's study of "
+              "soybean markets in Madhya Pradesh, discussed in section 9, found that a private buyer's "
+              "direct purchase channel raised mandi prices.")]),
+    ]),
+
+    S("The argument against", "What farmers' organisations and critics said", [
+        TC([P("red", "The fear for MSP and procurement",
+              "Farmers in the states where procurement is large feared that a parallel trade channel "
+              "without fees would hollow out the mandis, and with them the procurement system through "
+              "which they sell rice and wheat at MSP. The protests were most widespread in Punjab, "
+              "Haryana and western Uttar Pradesh."),
+            P("red", "Bargaining power",
+              "Critics argued that a marginal farmer with under one hectare cannot negotiate a "
+              "contract with a large buyer on equal terms, and doubted that the Act's own dispute "
+              "process would protect them.")],
+           [P("red", "Federalism and revenue",
+              "State governments lost the power to levy fees on trade outside their market yards, "
+              "in a subject the Constitution gives them."),
+            P("red", "Process",
+              "The government promulgated the three measures as ordinances in the first week of June "
+              "2020, before Parliament met, and the Rajya Sabha passed the bills by voice vote."),
+            H("amber", "Among the protesters' demands was to make MSP and state procurement of crops a "
+              "legal right, which goes well beyond anything the three Acts had changed.")]),
+    ]),
+
+    S("After the repeal", "The MSP question remains open", [
+        TC([B("The repeal ended the laws but not the arguments behind them. Farmers' movements continue "
+              "to demand MSP calculated on comprehensive cost, and a legal right to MSP and "
+              "procurement. A legal guarantee for 22 crops would require either public purchase of very large "
+              "volumes or a mechanism that compels private buyers, and either is expensive."),
+            B("The Economic Survey 2025-26 points in a different direction. It argues for using "
+              "savings from smaller rice and wheat stocks to fund voluntary diversification, and over "
+              "time for price-deficiency payments, bonuses and assured offtake in place of physical "
+              "procurement. That is a proposal, and no such scheme has been announced nationally.", sm=True)],
+           [T(["Proposal", "Who argues for it", "Fiscal cost"],
+              [["Legal guarantee of MSP for all mandated crops", "Farmers' unions", "Very high; depends on how much the state must buy or top up"],
+               ["MSP on C2 cost plus 50%", "Swaminathan Commission, farmers' movements", "Raises every MSP and every procurement bill"],
+               ["Price-deficiency payments", "Economic Survey 2025-26, as a longer-term option", "Pays the gap only, but needs a reliable market price"],
+               ["Status quo with PM-AASHA for pulses and oilseeds", "Current policy", "Capped by budget, &#8377;7,200 crore in 2026-27"]]),
+            B("Sources: " + ES + ", Box VI.5; " + RAS + "; " + BAG + ".", sm=True)]),
+    ]),
+
+    S("Reading the episode", "What the data could and could not tell either side", [
+        TC([T(["Claim", "What the evidence in this course shows"],
+              [["Most farmers depend on MSP", "In 2019, 14.5% of paddy-growing and 9.7% of wheat-growing agricultural households sold to a procurement agency"],
+               ["The laws only affected Punjab and Haryana", "The fee and trade provisions applied nationally; the procurement stakes were highest where procurement is large"],
+               ["Private markets pay farmers more", "Some studies find gains where a credible buyer enters; results depend on competition in the local market"],
+               ["Small farmers would gain bargaining power", "Two-thirds of holdings are under one hectare; bargaining power depends on aggregation through FPOs or cooperatives"]])],
+           [B("The farm laws debate was conducted largely with national averages, while the effects "
+              "would have fallen very differently across states. A farmer selling wheat in Punjab at "
+              "MSP and a farmer selling soybean in Madhya Pradesh to private traders faced different "
+              "risks from the same law."),
+            BL(["Disaggregate by state and crop before predicting the effect of a market reform.",
+                "Separate the effect on prices from the effect on who captures them.",
+                "Ask what replaces a revenue source a state loses.",
+                "Ask what happens to the aggregation that a mandi currently provides."], "cyan")]),
+    ]),
+]
+
+
+# ===================== SECTION 05: PDS AND NFSA =====================
+SEC5 = [
+    DIV("05", "Five", "The PDS and the National Food Security Act"),
+
+    S("The Act", "The NFSA turned subsidised grain into a legal entitlement in 2013", [
+        T(["Section of the NFSA", "Entitlement"],
+          [["3(1)", "Every person in a priority household: 5 kg of foodgrains a month at the prices in Schedule I"],
+           ["3(1), first proviso", "Antyodaya Anna Yojana households: 35 kg a household a month"],
+           ["3(2)", "Coverage up to 75% of the rural population and 50% of the urban population"],
+           ["4", "Pregnant women and lactating mothers: free meals through the anganwadi, and a maternity benefit of not less than &#8377;6,000"],
+           ["5", "Children aged six months to six years: free meals through the anganwadi; children up to class VIII: a free mid-day meal on school days"],
+           ["13", "The eldest woman aged 18 or over is head of the household for the ration card"],
+           ["Schedule I", "Rice at no more than &#8377;3 a kg, wheat &#8377;2, coarse grains &#8377;1, for three years and then as the Centre fixes, capped at MSP"]]),
+        TC([B("The Act received assent on 10 September 2013. It covers about two-thirds of the "
+              "population and uses the existing Targeted Public Distribution System to deliver grain. "
+              "Source: " + NFSA + ".", sm=True)],
+           [B("Section 13 matters beyond food. Making the eldest woman the head of the household on "
+              "the ration card puts the card, and the authority to use it, in a woman's name.", sm=True)]),
+    ], compact=True),
+
+    S("Free grain", "Grain under the NFSA is now distributed free of cost", [
+        TC([B("Targeted PDS replaced the universal system in 1997, dividing households into Below "
+              "Poverty Line and Above Poverty Line categories. The Antyodaya Anna Yojana for the poorest "
+              "followed in 2000 and now covers about 2.5 crore households. The NFSA set coverage at 75 "
+              "per cent of the rural and 50 per cent of the urban population, about 81.35 crore people "
+              "on the 2011 Census."),
+            B("The Economic Survey 2025-26 states that wheat, rice and coarse grains are now "
+              "distributed free of cost to eligible households, and that the government has added "
+              "Aadhaar-based de-duplication, One Nation One Ration Card portability for migrants, and "
+              "fortified grain.", sm=True)],
+           [ST([C("80.56 crore", "persons identified by states, Feb 2026, against 81.35 crore intended", "cyan", PIBAG),
+                C("79.8 crore", "beneficiaries covered under NFSA, Dec 2025", "green", PIBAG),
+                C("&#8377;2,27,629 crore", "food subsidy, Budget Estimate 2026-27", "amber", BAG),
+                C("&#8377;25,530 crore", "SARTHAK PDS, for transport, handling and automation over five years", "indigo", PIBAG)], cols=2),
+            H("cyan", "The food subsidy was &#8377;1,99,867 crore in 2024-25 (actual) and &#8377;2,28,154 "
+              "crore in the revised estimate for 2025-26.")]),
+    ]),
+
+    S("From field to ration shop", "The PDS is the reason the state buys so much rice and wheat", [
+        FL(["Farmer sells paddy or wheat at MSP at a mandi or purchase centre",
+            "FCI and state agencies hold the grain in the central pool",
+            "Grain is allocated to states for NFSA and other welfare schemes",
+            "States move it to fair price shops",
+            "Households collect their entitlement with a ration card"]),
+        TC([B("Procurement and distribution are two ends of one system. The MSP purchases in section 3 "
+              "fill the central pool, and the NFSA draws on it. When procurement exceeds what the PDS "
+              "and buffer norms need, stocks accumulate and the carrying costs rise, which is the "
+              "Economic Survey's argument for diversification."),
+            B("Because the PDS distributes rice and wheat, it also shapes what is grown. A state that "
+              "procures millets for its PDS creates a market for millets.", sm=True)],
+           [P("amber", "Two policies, one budget line",
+              "The food subsidy pays for both the purchase of grain at MSP and its distribution. A "
+              "decision to raise MSP increases the cost of every tonne the PDS distributes. A decision "
+              "to widen PDS coverage increases how much must be procured. Changes on one side need to "
+              "be costed on the other.")]),
+    ]),
+
+    S("Leakage", "Diversion from the PDS was high and fell sharply where states reformed it", [
+        TC([BAR("chLeak", "Estimated share of PDS grain that did not reach households (%)", DK,
+                ["2004-05", "2011-12"],
+                [DS("NSS-based estimate", [54, 42], RED), DS("IHDS-based estimate", [49, 32], AMBER)],
+                legend=True, ytitle="per cent")],
+           [B("Leakage is estimated by comparing the grain the FCI released to states with the grain "
+              "households report buying in a survey. Dr&egrave;ze and Khera, writing in the Economic "
+              "and Political Weekly in February 2015, estimated that leakage fell from 54 to 42 per "
+              "cent between 2004-05 and 2011-12 using NSS data, and from about 50 to about 30 per cent "
+              "using the India Human Development Survey."),
+            B("They found the decline was driven by states that reformed their PDS, such as "
+              "Chhattisgarh, Odisha and Bihar, and that the largest remaining source of leakage was "
+              "the Above Poverty Line quota, which the NFSA was due to phase out. The Shanta Kumar "
+              "committee had cited 40 to 50 per cent leakage and a figure of 47 per cent for 2011-12, "
+              "which Dr&egrave;ze and Khera dispute.", sm=True),
+            H("amber", "A leakage estimate depends on how the offtake is counted. Ad hoc allocations "
+              "added wrongly moved the national figure from 42 to 47 per cent.")], ratio="a32"),
+    ]),
+
+    S("Identity and exclusion", "Biometric authentication cut corruption and also cut people off", [
+        TC([B("Karthik Muralidharan, Paul Niehaus and Sandip Sukhtankar evaluated the rollout of "
+              "Aadhaar-based biometric authentication in Jharkhand's PDS. The rollout was randomised "
+              "across 132 sub-districts in 10 districts. Their NBER working paper (No. 26744) finds "
+              "that the reform reduced corruption but imposed substantial costs on legitimate "
+              "beneficiaries, 1.5 to 2 million of whom lost access to benefits at some point during "
+              "the reforms."),
+            B("The authors argue that the adverse effects were driven mainly by decisions about how "
+              "the transition was managed. The table sets out, as reasoning for practitioners, how "
+              "common design choices trade one kind of error against the other.", sm=True)],
+           [T(["Design choice", "Effect on leakage", "Effect on exclusion"],
+              [["Biometric check at the shop", "Lowers impersonation", "Raises it where machines or networks fail"],
+               ["Cancel cards not seeded with Aadhaar", "Removes duplicates and ghosts", "Removes eligible people who could not seed"],
+               ["Portability (One Nation One Ration Card)", "Little direct effect", "Lowers it for migrants away from home"],
+               ["Fallback to manual entry or a nominee", "Some risk of misuse", "Lowers it for the old and disabled"]]),
+            H("cyan", "When you evaluate a delivery reform, measure both errors: payments to the wrong "
+              "people and payments missing from the right ones.")]),
+    ]),
+
+    S("Coverage", "The coverage ceiling is fixed in people counted in 2011", [
+        TC([B("The coverage percentages in section 3(2) were applied to the population of the 2011 "
+              "Census, giving about 81.35 crore people. As the population has grown since 2011 and no "
+              "new census count has been used, the same number of people is a smaller share of today's "
+              "population. Families formed after the lists were drawn, and migrants who moved, are "
+              "among those at risk of being left out."),
+            B("States identify the eligible households within their quota. By February 2026 they had "
+              "identified 80.56 crore people, close to the ceiling.", sm=True)],
+           [P("amber", "The 2015 proposals that were not adopted",
+              "The High Level Committee chaired by Shanta Kumar, reporting on 20 January 2015, "
+              "proposed cutting NFSA coverage from 67 per cent of the population to 40 per cent while "
+              "raising the entitlement from 5 to 7 kg, moving towards cash transfers in place of grain, "
+              "letting private firms procure and store grain, and paying fertiliser subsidy as cash of "
+              "&#8377;7,000 a hectare. Coverage was not cut."),
+            B("Source: Down To Earth's report of the committee, 22 January 2015.", sm=True)]),
+    ]),
+
+    S("Food and nutrition", "The PDS delivers calories, and the NFSA also promises meals", [
+        TC([B("The PDS moves cereals. A household's need for protein, fat and micronutrients is met "
+              "mostly by what it buys in the market: pulses, milk, eggs, vegetables and oil. A cheaper "
+              "staple frees income for these, but whether it is spent on food depends on the household."),
+            B("The NFSA reaches further than the ration shop. Sections 4, 5 and 6 entitle pregnant "
+              "women, lactating mothers and children to free meals through the anganwadi and the "
+              "school, and section 6 requires states to identify malnourished children and feed "
+              "them. Practitioners working on child nutrition should treat these entitlements as "
+              "part of the same Act as the ration shop.", sm=True)],
+           [T(["NFSA channel", "Who it reaches", "Section"],
+              [["Ration shop (TPDS)", "Priority and Antyodaya households", "3"],
+               ["Anganwadi meals", "Children 6 months to 6 years; pregnant women and lactating mothers", "4(a), 5(1)(a)"],
+               ["Mid-day meal", "Children up to class VIII in government, local body and aided schools", "5(1)(b)"],
+               ["Maternity benefit of at least &#8377;6,000", "Pregnant women, other than those in regular government or PSU employment", "4(b)"],
+               ["Meals for malnourished children", "Children identified through the anganwadi", "6"]]),
+            B("For the nutrition evidence, see " + L("nutrition.html", "Nutrition 101") + ".", sm=True)]),
     ]),
 ]
