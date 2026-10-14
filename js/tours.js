@@ -1,7 +1,7 @@
 /**
  * ImpactMojo Product Tours (Intro.js)
  * Provides guided walkthroughs for first-time visitors on major pages.
- * Tours auto-start once per page (tracked via localStorage).
+ * Tours start from a "Take a tour" button; completion is remembered in localStorage.
  */
 
 (function () {
@@ -136,20 +136,12 @@
   // keep the "<number> <type>" phrasing when editing.
   var TOURS = {
     index: [
-      { intro: '<strong>Welcome to ImpactMojo!</strong><br>Development know-how for South Asia: 22 flagship and 84 foundational courses, 135 games and 35 Free Studio tools, built by practitioners and free to use. Here’s a quick lay of the land.' },
-      { element: '#nav-learn', intro: '<strong>Courses</strong><br>22 flagship courses, the 84 shorter courses of the 101 Series, and Code School.' },
-      { element: '#nav-flagships', intro: '<strong>Flagship courses</strong><br>Semester-depth courses with progress tracking, self-assessments, and free certificates — MEL, development economics, gender studies, causal inference, and more.' },
-      { element: '#nav-labs', intro: '<strong>Free Studio</strong><br>35 Free Studio tools where you build real artefacts — a Theory of Change, a LogFrame, a sampling plan, a survey instrument.' },
-      { element: '#nav-specials', intro: '<strong>Read &amp; data</strong><br>185 reading companions, 27 deep dives, the Data Room, the libraries and the handouts.' },
-      { element: '#nav-libraries', intro: '<strong>Libraries &amp; data</strong><br>Reference collections: the Dataverse of data tools, the ImpactLex glossary, NudgeKit behaviour-change techniques, and Indian policy documents.' },
-      // Two steps, one per breakpoint; the filter above keeps whichever button
-      // is actually on screen. Splitting them is what lets the copy match the
-      // control: there is no keyboard shortcut to offer a reader on a phone.
-      { element: '.ims-nav-btn:not(.ims-nav-btn--m)', whenVisible: true, intro: '<strong>Search everything</strong><br>Press <kbd>Ctrl</kbd>+<kbd>K</kbd> anywhere to search across every course, studio, game and companion.' },
-      { element: '.ims-nav-btn--m', whenVisible: true, intro: '<strong>Search everything</strong><br>Tap the magnifier any time to search across every course, studio, game and companion.' },
-      { element: '#quiz', intro: '<strong>Not sure where to start?</strong><br>Six quick questions give you a personal starting path — and the homepage remembers it.' },
-      { element: '.theme-selector', intro: '<strong>Theme</strong><br>Light, dark, or follow your device.' },
-      { element: '#pro-studio', intro: '<strong>Pro Studio</strong><br>Professional tools for subscribers — and everything you’ve seen so far stays free, forever.' }
+      { intro: '<strong>Welcome to ImpactMojo</strong><br>Development know-how for South Asia: 22 flagship and 84 foundational courses, 135 games and 35 Free Studio tools, built by practitioners and free to use. Here is a quick look round.' },
+      { element: '.im-sc-menu', intro: '<strong>Menu</strong><br>Every part of the site, from the 22 flagship courses and the 84 shorter courses of the 101 Series to Code School, Free Studio, the reading companions and the Data Room. A small dot marks what changed recently.' },
+      { element: '.im-sc-search', whenVisible: true, intro: '<strong>Search everything</strong><br>Search every course, studio, game and companion. On a computer, Ctrl+K opens it from any page.' },
+      { element: '.im-sc-lang', whenVisible: true, intro: '<strong>Language</strong><br>Read any page in Hindi, Tamil, Bengali, Marathi or Telugu.' },
+      { element: '#quiz', intro: '<strong>Not sure where to start?</strong><br>Six quick questions give you a personal starting path, and the homepage remembers it.' },
+      { element: '#pro-studio', intro: '<strong>Pro Studio</strong><br>Professional tools for subscribers. Everything you have seen so far stays free.' }
     ]
     // Tours run on the homepage only. Do not add per-page tours here.
   };
@@ -162,17 +154,10 @@
     return path;
   }
 
-  function init() {
-    // Skip auto-start on mobile — tour is too heavy for small screens
-    if (window.innerWidth <= 768) return;
-
-    var page = detectPage();
-    if (!TOURS[page]) return;
-    if (hasSeenTour(page)) return;
-
-    // Delay tour start so page fully renders
-    setTimeout(function () { startTour(page, TOURS[page]); }, 1500);
-  }
+  // Tours start only when a reader asks for one, from a "Take a tour" button.
+  // They used to open by themselves on a first visit, over the very page the
+  // reader had come to read.
+  function init() {}
 
   // Expose manual trigger for "Take a Tour" buttons
   window.ImpactMojoTour = {

@@ -71,11 +71,13 @@
   // ── Opt-out (homepage) ─────────────────────────────────────────────
   var path = location.pathname.replace(/index\.html$/, '');
   var lpath = path.toLowerCase(); // Netlify lowercases paths, so match case-insensitively
+  // Pages that keep their own chrome opt out with data-im-home or
+  // <meta name="im-chrome" content="off">. The homepage itself takes the bar,
+  // so every page has the same header. The WhatsApp button, the floating-button
+  // slots and the consent notice (below) run on every page either way.
   var isHome = root.hasAttribute('data-im-home') || (document.body && document.body.hasAttribute('data-im-home'))
-    || meta('im-chrome') === 'off' || path === '/' || path === '';
-  // Note: on the homepage (isHome) we keep the page's own chrome and skip build(),
-  // but the WhatsApp button, the floating-button slots and the consent notice
-  // (below) still run on every page.
+    || meta('im-chrome') === 'off';
+  var isFront = path === '/' || path === '';
 
   // 101 decks: the slide pager, notes button and theme pill fill the bottom of
   // the screen, and the WhatsApp button covered them. Index, poster and practice
@@ -137,6 +139,29 @@
     return null;
   }
 
+  // ── "Recently updated" dots ────────────────────────────────────────
+  // scripts/stamp-nav-dots.py writes the dots into the homepage's own nav. The
+  // bar replaces that nav, so build() reads them first and keeps the list for
+  // a week, and the Menu sheet marks the same links on every page.
+  var FRESH_KEY = 'im-fresh-nav';
+  function normHref(h) {
+    return String(h || '').toLowerCase().replace(/^https?:\/\/[^/]+/, '').replace(/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '');
+  }
+  function harvestFresh() {
+    var dots = document.querySelectorAll('[title="Recently updated"]');
+    if (!dots.length) return;
+    var list = [];
+    [].forEach.call(dots, function (d) { var a = d.closest('a'); if (a) list.push(normHref(a.getAttribute('href'))); });
+    try { localStorage.setItem(FRESH_KEY, JSON.stringify({ t: Date.now(), l: list })); } catch (e) {}
+  }
+  function freshHrefs() {
+    try {
+      var v = JSON.parse(localStorage.getItem(FRESH_KEY) || 'null');
+      if (v && Date.now() - v.t < 7 * 864e5) return v.l || [];
+    } catch (e) {}
+    return [];
+  }
+
   // ── Site links: one list feeds the footer and the Menu sheet ───────
   var NAV = [
     ['Learn', [
@@ -149,14 +174,18 @@
       ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/law-guides/', 'Law Guides'],
       ['/game-library.html', 'Game Library'], ['/Games/', 'Simulations'], ['/handouts.html', 'Handouts'],
       ['/law-guides/development-law-docket.html', 'Law Docket'], ['/fundamentals/', 'Fundamentals'],
-      ['/dojos.html', 'Dojos &amp; Practice'], ['/products.html', 'Products'], ['/blog.html', 'Blog']]],
+      ['/field-radio.html', 'Field Radio'], ['/dojos.html', 'Dojos &amp; Practice'], ['/products.html', 'Products'],
+      ['/blog.html', 'Blog']]],
     ['ImpactMojo', [
       ['/about.html', 'About'], ['/premium.html', 'Membership'], ['/community/', 'Community'],
-      ['/partnerships.html', 'Partnerships'], ['https://github.com/ImpactMojo/ImpactMojo', 'GitHub']]],
+      ['/partnerships.html', 'Partnerships'], ['/contribute.html', 'Contribute'], ['/transparency.html', 'Transparency'],
+      ['/known-issues.html', 'Known issues'], ['https://github.com/ImpactMojo/ImpactMojo', 'GitHub']]],
     ['Help &amp; legal', [
       ['/contact.html', 'Contact'], ['/faq.html', 'FAQ'], ['/sitemap.html', 'Sitemap'],
       ['/verify-certificate.html', 'Verify a certificate'], ['/privacy-policy.html', 'Privacy'],
-      ['/terms-of-service.html', 'Terms'], ['/refund-policy.html', 'Refunds']]]
+      ['/terms-of-service.html', 'Terms'], ['/refund-policy.html', 'Refunds'], ['/accessibility.html', 'Accessibility'],
+      ['/disclaimer.html', 'Disclaimer'], ['/grievance.html', 'Grievance'], ['/data-protection.html', 'Data protection'],
+      ['/ai-policy.html', 'AI policy']]]
   ];
   // grid: wrap each column's links in a <div> (the sheet lays them out in two
   // columns; the footer lists them straight).
@@ -164,7 +193,9 @@
     return NAV.map(function (col) {
       var links = col[1].map(function (l) {
         var href = /^https?:/.test(l[0]) ? l[0] : SITE + l[0];
-        return '<a href="' + href + '">' + (l[2] ? '<b>' + l[1] + '</b>' : l[1]) + '</a>';
+        var dot = grid && freshHrefs().indexOf(normHref(l[0])) !== -1
+          ? '<span class="im-sc-dot" title="Recently updated" aria-label="Recently updated"></span>' : '';
+        return '<a href="' + href + '">' + (l[2] ? '<b>' + l[1] + '</b>' : l[1]) + dot + '</a>';
       }).join('');
       return '<div class="' + colClass + '"><h3>' + col[0] + '</h3>' + (grid ? '<div>' + links + '</div>' : links) + '</div>';
     }).join('');
@@ -252,6 +283,8 @@
 '.im-sc-sheet-col div{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}',
 '.im-sc-sheet a{display:flex;align-items:center;min-height:40px;color:var(--sc-fg);text-decoration:none;font-size:14px;font-weight:500}',
 '.im-sc-sheet a:hover{color:var(--sc-ink);text-decoration:underline}',
+'.im-sc-tour-row{margin:10px 0 4px}',
+'.im-sc-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:6px;vertical-align:middle}',
 // footer
 '.im-sc-foot{background:var(--sc-bg);border-top:1px solid var(--sc-bd);color:var(--sc-fg);font-family:\'Inter\',system-ui,sans-serif;padding:40px clamp(16px,4vw,32px) 28px;margin-top:48px}',
 'html[data-theme="dark"] .im-sc-foot,html.dark .im-sc-foot{--sc-bg:#0B1120}',
@@ -264,20 +297,25 @@
 '.im-sc-foot-col a:hover{color:var(--sc-ink);text-decoration:underline}',
 '.im-sc-foot-meta{max-width:1180px;margin:26px auto 0;padding-top:18px;border-top:1px solid var(--sc-bd);color:var(--sc-mut);',
  'font-size:12px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;align-items:center}',
-// Consent notice: a small card bottom-left, full width on a phone. It never
-// covers the page with a scrim, and the floating buttons are lifted above it.
-'.im-sc-consent{position:fixed;left:16px;bottom:16px;z-index:9997;max-width:380px;background:var(--sc-solid);color:var(--sc-fg);border:1px solid var(--sc-bd);',
- "border-radius:12px;box-shadow:0 10px 30px rgba(15,23,42,.18);padding:14px 16px;font:400 13px/1.5 'Inter',system-ui,-apple-system,sans-serif}",
-'.im-sc-consent p{margin:0 0 10px}',
+// Consent notice: one slim strip along the bottom edge, text and buttons on a
+// single line where they fit. It never covers the page with a scrim, and the
+// floating buttons are lifted above it.
+'.im-sc-consent{position:fixed;left:0;right:0;bottom:0;z-index:9997;background:var(--sc-solid);color:var(--sc-fg);border-top:1px solid var(--sc-bd);',
+ "box-shadow:0 -4px 16px rgba(15,23,42,.10);padding:8px 16px;font:400 13px/1.45 'Inter',system-ui,-apple-system,sans-serif;",
+ 'display:flex;align-items:center;justify-content:center;gap:8px 16px;flex-wrap:wrap}',
+'.im-sc-consent p{margin:0;max-width:720px}',
 '.im-sc-consent a{color:var(--sc-ink);text-decoration:underline}',
-'.im-sc-consent div{display:flex;gap:8px}',
-'.im-sc-consent button{flex:1;min-height:40px;border-radius:8px;font:600 13px/1 inherit;cursor:pointer;border:1px solid var(--sc-sel)}',
+'.im-sc-consent div{display:flex;gap:8px;flex:0 0 auto}',
+'.im-sc-consent button{min-height:36px;min-width:88px;padding:0 14px;border-radius:8px;font:600 13px/1 inherit;cursor:pointer;border:1px solid var(--sc-sel)}',
 'html body .im-sc-consent button.is-yes{background:var(--sc-sel)!important;color:var(--sc-sel-ink)!important}',
 'html body .im-sc-consent button.is-no{background:transparent!important;color:var(--sc-fg)!important}',
-'@media(max-width:600px){.im-sc-consent{left:10px;right:10px;bottom:10px;max-width:none}}',
+'@media(max-width:600px){.im-sc-consent{padding:8px 12px}.im-sc-consent div{flex:1 1 100%}.im-sc-consent button{flex:1;min-height:40px}}',
+// The share button waits until the reader has scrolled past the first screen,
+// so nothing but the consent strip covers the opening of a page.
+'#im-wa-fab.im-wa-wait{display:none!important}',
 // On a 101 deck the slide controls sit along the bottom edge, so the card goes
 // under the top bar instead of covering them.
-'.im-sc-consent.is-deck{top:56px;bottom:auto!important}',
+'.im-sc-consent.is-deck{top:56px;bottom:auto!important;border-top:0;border-bottom:1px solid var(--sc-bd)}',
 '@media(prefers-reduced-motion:reduce){.im-sc *{transition:none!important}}',
 '.im-sc-inv{filter:invert(.92) hue-rotate(180deg)}',
 // reconcile app-like pages (course shells): kill dead reserved padding + offset fixed sidebar/progress below the 46px bar
@@ -411,6 +449,7 @@
 
   // ── Build ──────────────────────────────────────────────────────────
   function build() {
+    harvestFresh();
     // 1. remove legacy chrome (broad: catches the many header/footer patterns across the site)
     var sel = '.im-topbar,#imTopbar,.top-nav,.site-header,header.header,.navbar,.site-nav,.main-nav,'
             + '.nav-container,.masthead,header.mobile-header,.mobile-header,'
@@ -429,7 +468,9 @@
     var sec = section();
     var name = escapeHtml(pageName());
     var trail;
-    if (sec && sec.isHub) {
+    if (isFront) {
+      trail = '';
+    } else if (sec && sec.isHub) {
       trail = '<span class="im-sc-sep" aria-hidden="true">/</span><span class="im-sc-page" aria-current="page">' + escapeHtml(sec.name) + '</span>';
     } else if (sec) {
       // Desktop: "Section › Page". Phone: "‹ Section", the way back to the hub.
@@ -483,7 +524,9 @@
           '<button class="im-sc-close" type="button" data-close aria-label="Close menu">' + I.close + '</button></div>' +
         '<div class="im-sc-set"><h3>Reading</h3>' + themeGroup(true) +
           '<div class="im-sc-set-row"><button class="im-sc-btn" type="button" data-im-dys aria-pressed="false">' +
-            '<span aria-hidden="true" style="font-weight:700">Aa</span>Dyslexia-friendly font</button></div></div>' +
+            '<span aria-hidden="true" style="font-weight:700">Aa</span>Dyslexia-friendly font</button></div>' +
+          '</div>' +
+        (isFront ? '<div class="im-sc-tour-row"><button class="im-sc-btn" type="button" data-im-tour>Take a tour of this page</button></div>' : '') +
         navCols('im-sc-sheet-col', true) +
       '</div>';
     document.body.appendChild(wrap);
@@ -562,7 +605,13 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
     btn.addEventListener('click', function () { if (wrap.hidden) open(); else close(); });
-    wrap.addEventListener('click', function (e) { if (e.target.closest('[data-close]')) close(); });
+    wrap.addEventListener('click', function (e) {
+      if (e.target.closest('[data-close]')) close();
+      if (e.target.closest('[data-im-tour]')) {
+        close();
+        if (window.ImpactMojoTour) window.ImpactMojoTour.start('index');
+      }
+    });
     // A link to a #fragment on this page should not leave the sheet over it.
     sheet.addEventListener('click', function (e) { if (e.target.closest('a[href]')) { wrap.hidden = true; btn.setAttribute('aria-expanded', 'false'); document.removeEventListener('keydown', onKey, true); } });
   }
@@ -663,6 +712,7 @@
     if (!document.body || isDeck || document.getElementById('im-wa-fab')) return;
     var a = document.createElement('a');
     a.id = 'im-wa-fab';
+    a.className = 'im-wa-wait';
     a.href = 'https://wa.me/?text=' + encodeURIComponent(waMessage());
     a.target = '_blank'; a.rel = 'noopener noreferrer';
     a.setAttribute('aria-label', 'Share this page on WhatsApp');
@@ -675,6 +725,14 @@
     wrap.setAttribute('aria-label', 'Share this page');
     wrap.appendChild(a);
     document.body.appendChild(wrap);
+    function reveal() {
+      if (window.scrollY < window.innerHeight * 0.6) return;
+      a.classList.remove('im-wa-wait');
+      window.removeEventListener('scroll', reveal);
+      scheduleFloating(30);
+    }
+    window.addEventListener('scroll', reveal, { passive: true });
+    reveal();
   }
 
   // ── Floating-button slots (R4) ─────────────────────────────────────
@@ -795,8 +853,8 @@
     box.className = 'im-sc im-sc-consent' + (isDeck ? ' is-deck' : '');
     box.setAttribute('role', 'region');
     box.setAttribute('aria-label', 'Cookie choice');
-    box.innerHTML = '<p>ImpactMojo uses analytics cookies to count visits and learn which pages are useful. Everything on the site works the same if you decline. '
-      + '<a href="' + SITE + '/privacy-policy.html">Read the privacy policy</a>.</p>'
+    box.innerHTML = '<p>We use analytics cookies to see which pages are useful. The site works the same if you decline. '
+      + '<a href="' + SITE + '/privacy-policy.html">Privacy policy</a>.</p>'
       + '<div><button type="button" class="is-yes" data-c="granted">Accept</button><button type="button" class="is-no" data-c="denied">Decline</button></div>';
     box.addEventListener('click', function (e) {
       var b = e.target.closest('button[data-c]'); if (!b) return;
