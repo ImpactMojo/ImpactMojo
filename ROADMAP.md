@@ -113,10 +113,15 @@ An instructor at a school of social work asked for a kit covering Sustainability
 - [x] **Live workshops integration**: Webinar listings + registration with `.ics` calendar export (`events.html`, `data/events.json`). _Operational follow-up: replace placeholder `join_url`s with real Zoom/Meet links._
 - [x] **Impact measurement dashboard**: Public community outcomes view + login-gated outcome logging (`impact-dashboard.html`, `impact_outcomes` table with RLS)
 - [x] **Analytics only after consent** (v10.378.0): Google Analytics stays off until a reader accepts, on every page.
-- [ ] **Paid Practice Pack modules served after sign-in** (v10.379.0, ready, publishing with the next release): the free modules stay in the page and the rest load only for a reader with access.
-- [ ] **Human check on the sign-in forms** (v10.379.0, ready): Cloudflare Turnstile on sign-up, sign-in, magic link and password reset, switched on once the site key is in place.
-- [ ] **DevDiscourses and PolicyDhara on their own addresses** (v10.379.0, ready): devdiscourses.impactmojo.in and policydhara.impactmojo.in, with the old links forwarding.
+- [x] **Paid Practice Pack modules served after sign-in** (v10.379.0): the free modules stay in the page and the rest load only for a reader with access.
+- [x] **Human check on the sign-in forms** (v10.379.0): Cloudflare Turnstile on sign-up, sign-in, magic link and password reset.
+- [x] **DevDiscourses and PolicyDhara on their own addresses** (v10.379.0): devdiscourses.impactmojo.in and policydhara.impactmojo.in, with the old links forwarding.
 - [x] **Translations after the English copy rewrite**: no separate pass is needed. Rewritten English pages are machine-translated afresh the first time a reader opens them in another language, so a translation never lags the English. Saved translations for the menus and the 33 checked pages are kept in step with the counts, names and dates in the English.
+- [x] **Social protection flagship** (v10.380.0): Social Protection and Welfare Delivery in India, the 22nd flagship, in 13 modules with a 50-term lexicon.
+- [x] **Four new 101 decks** (v10.380.0): agriculture and food systems, urban development and municipal governance, water, sanitation and hygiene, and disaster risk and heat resilience. The 101 Series has 84 decks.
+- [x] **Two new law guides** (v10.380.0): running an NGO in India, and land, forest and resource rights. There are eight law guides.
+- [x] **Analysing Indian survey data** (v10.380.0): a Code School course on NFHS, PLFS and HCES unit-level files in R and Python.
+- [x] **Every page checked for accessibility each day** (v10.380.0): light and dark, phone and laptop width.
 
 ---
 

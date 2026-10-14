@@ -10,10 +10,10 @@ Nothing is in progress that you would notice on the site. The Planned list below
 
 These were previously listed as planned or in progress, and are now live. Each names the page, so you can check rather than take our word for it.
 
-- **BookSummaries expansion**: the interactive reading companion library has grown to **172 companions** across development economics, statistics, research methods, communication, leadership, and productivity. ([#272](https://github.com/ImpactMojo/ImpactMojo/issues/272))
-- **Native 101 deck migration**: all **58 foundational course decks** are now self-hosted HTML with ~100 slides each, interactive charts, and keyboard/touch navigation. No third-party presentation embeds remain.
+- **BookSummaries expansion**: the interactive reading companion library has grown to **185 companions** across development economics, statistics, research methods, communication, leadership, and productivity. ([#272](https://github.com/ImpactMojo/ImpactMojo/issues/272))
+- **Native 101 deck migration**: all **84 foundational course decks** are now self-hosted HTML with ~100 slides each, interactive charts, and keyboard/touch navigation. No third-party presentation embeds remain.
 - **Every page in five Indian languages**: use the language menu on any page to read it in Hindi, Tamil, Bengali, Marathi or Telugu, the 101 decks, Handouts and Deep Dives included. The menus, the homepage and the flagship course pages use translations we have checked. The rest is machine translation, which is readable but not reviewed. If you spot an error, tell us and we will save the corrected wording. ([#29](https://github.com/ImpactMojo/ImpactMojo/issues/29))
-- **Practitioner voices**: this was listed as a planned "practitioner interview series". It shipped as **Field Radio**, a station of **19 clips**: voice notes and short videos from practitioners, each with a full transcript, playing back-to-back and filterable by track. Every clip is in site search, including its transcript, so a phrase you half-remember finds the clip. ([Listen](/field-radio.html))
+- **Practitioner voices**: this was listed as a planned "practitioner interview series". It shipped as **Field Radio**, a station of **23 clips**: voice notes and short videos from practitioners, each with a full transcript, playing back-to-back and filterable by track. Every clip is in site search, including its transcript, so a phrase you half-remember finds the clip. ([Listen](/field-radio.html))
 - **Peer review system**: get feedback on your work from other practitioners, and give it. ([/peer-review.html](/peer-review.html))
 - **Certificate verification for employers**: listed as a "certificate marketplace"; what shipped is the part that matters to a hiring manager, a page that checks whether a credential is real. ([/verify-certificate.html](/verify-certificate.html))
 - **Partner API**: for organisations integrating ImpactMojo content into their own training platforms. ([/api-docs.html](/api-docs.html))
@@ -22,6 +22,11 @@ These were previously listed as planned or in progress, and are now live. Each n
 - **Impact measurement dashboard**: a public view of community outcomes, and a signed-in route to log your own. ([/impact-dashboard.html](/impact-dashboard.html))
 - **Offline support, both halves**: browser notifications you can switch on from your account, and background sync, so progress recorded on a bad connection is replayed once you are back online rather than lost.
 - **Analytics only after consent**: Google Analytics does not run until you accept it in the cookie notice, on every page. (v10.378.0)
+- **Paid Practice Pack modules after sign-in, and a human check on the sign-in forms.** (v10.379.0)
+- **Social Protection and Welfare Delivery in India**, the 22nd flagship course, in 13 modules with a 50-term lexicon. ([/courses/social-protection/](/courses/social-protection/), v10.380.0)
+- **Four new 101 decks** on agriculture and food systems, urban governance, water and sanitation, and disaster and heat risk. ([/101-courses/](/101-courses/), v10.380.0)
+- **Two new law guides**, on running an NGO in India and on land, forest and resource rights. ([/law-guides/](/law-guides/), v10.380.0)
+- **Analysing Indian survey data**, a Code School course on NFHS, PLFS and HCES files. ([/code/survey-data.html](/code/survey-data.html), v10.380.0)
 
 ## Planned
 
