@@ -225,9 +225,20 @@ Before considering any change complete:
 
     **Running it in the agent sandbox.** The browser reaches CDNs only through the proxy, and a run without the CDN audits pages with no charts. Use `AXE_CHROME=/opt/pw-browsers/chromium AXE_PROXY=$HTTPS_PROXY AXE_SERVER_URL=http://localhost:<port>` with a local `python3 -m http.server`. The fixed lists in `tests/axe-accessibility.js` and `.pa11yci` stay: they audit four variants and a second engine on the core pages.
 
-### A note on the retired maintenance Routines
+### A note on the maintenance Routines
 
-Between 2026-07-19 and 2026-08-04 this repo was maintained by ~12 scheduled Claude Routines (daily Supabase health, count drift, content wiring; weekly backend/i18n/link/forms/SEO; monthly fact-check). **They no longer exist**, and they left a mess worth remembering: each run pushed a `claude/routine-<name>-<date>` branch and never opened a PR, so 41 such branches accumulated carrying work that never reached `main`. The Supabase routine spent eleven days re-deriving its own history from unmerged branches and recording, in its own snapshot file, that "none of the 11 daily PRs 20260721-20260802 have ever been merged to main".
+From 2026-07-19 this repo was maintained by 13 scheduled Claude Routines (daily Supabase health, count drift, content wiring; weekly backend/i18n/link/forms/SEO; monthly fact-check and others). This file said until 2026-10-14 that they no longer existed. All 13 were still enabled and firing, and on 2026-10-12 the Monday batch ran into the account's usage limit. On 2026-10-14 the nine that duplicate CI were deleted. Four remain, all report-first:
+
+| Routine | When (UTC) | What CI cannot do instead |
+|---|---|---|
+| page-by-page fact check | 1st of the month | checking claims against outside sources |
+| forms + email-hook health | 5th of the month | creating missing Netlify email hooks |
+| backup + restore drill + RLS audit | 15th of the month | reading backups back; RLS-disabled tables |
+| promise-vs-reality check | 22nd of the month | comparing what pages promise with what exists |
+
+The plain-language sweep and the ecosystem scan run quarterly (28th and 8th of January, April, July and October). Before adding a routine here, check whether a `ci.yml` job on `schedule:` can do it, because a CI job costs no Claude usage and fails visibly.
+
+The original set left a mess worth remembering: each run pushed a `claude/routine-<name>-<date>` branch and never opened a PR, so 41 such branches accumulated carrying work that never reached `main`. The Supabase routine spent eleven days re-deriving its own history from unmerged branches and recording, in its own snapshot file, that "none of the 11 daily PRs 20260721-20260802 have ever been merged to main".
 
 The lesson is in the design, not the tooling: **an automated check is only worth having if its failure is visible and its output lands somewhere.** Anything that can drift without a commit belongs in `ci.yml` on the `schedule:` trigger, where a red run notifies the owner. Most of what those Routines covered — counts, i18n, encoding, internal links, book companions — is already enforced there on every push *and* daily. What the schedule genuinely adds beyond a PR gate is the class of failure that needs no commit at all: external link rot and live-service drift, which is why the link crawl fails on its scheduled run and why `supabase-anon` exists.
 
