@@ -449,7 +449,7 @@ SLIDES_A = [
     C("India on the ladders", "India's WASH ladders in 2024, as the JMP estimates them", [
         table(["Rung", "Drinking water", "Sanitation", "Hygiene"],
               [["Safely managed", "76.4%", "Not estimated nationally", "Not defined"],
-               ["Basic", "19.3%", "20.6% above the SM line, 83.4% at least basic", "89.7%"],
+               ["Basic", "19.3%", "83.4% at least basic (see note)", "89.7%"],
                ["Limited", "2.3%", "9.9% (shared facilities)", "8.9%"],
                ["Unimproved", "1.5%", "0.0%", "Not defined"],
                ["Surface water / open defecation / no facility", "0.4%", "6.7%", "1.4%"]]),
@@ -499,9 +499,10 @@ SLIDES_A = [
                ["Sewer connection", "1.9%", "38.2%", "15.3%"],
                ["Basic hygiene", "85.9%", "96.1%", "89.7%"]]),
         tw(pp("cyan", "Rural",
-              "Sanitation is mostly on-site: pits and septic tanks serve 87.5% of rural "
-              "people. Water quality is the weaker link, with 11.9% using sources not "
-              "free from contamination (" + JMP + ")."),
+              "Sanitation is mostly on-site, with pits and septic tanks serving 87.5% of "
+              "rural people. Water quality is the weaker link. Among rural people using "
+              "improved sources, 11.9% do not have water free from contamination "
+              "(" + JMP + ")."),
            pp("amber", "Urban",
               "Shared toilets are commoner in towns, 12.6% against 8.3%. Fewer than four "
               "in ten urban residents are on a sewer, so most urban excreta still depends "
@@ -510,7 +511,7 @@ SLIDES_A = [
 
     C("Safely managed water", "For safely managed water, the binding constraint is the tap at home", [
         chart("washSmWater",
-              "Components of safely managed drinking water, India, 2024 (% of population)",
+              "Components of safely managed drinking water, India, 2024 (%)",
               JMP + ", Charts SM sheet",
               "bar",
               {"labels": ["Improved source", "Available when needed",
@@ -536,7 +537,7 @@ SLIDES_A = [
                 "70.2%", "Not on the fact sheet"],
                ["Children under 5 with diarrhoea in the past 2 weeks", "9.2%", "7.3%",
                 "7.9%"],
-               ["Women 15-24 using hygienic menstrual protection", "See Section 10",
+               ["Women 15-24 using hygienic menstrual protection", "Not compared here",
                 "77.3% (77.6% in NFHS-6 comparison column)", "79.2%"]]),
         tw(pp("cyan", "Rural and urban, NFHS-6",
               "Improved drinking water reached 99.1% urban and 95.4% rural. Diarrhoea "
@@ -648,8 +649,7 @@ SLIDES_B = [
                     YER)], cols=4),
         tw(pp("cyan", "Where the numbers come from",
               "Every figure on this slide is what states report on the SBM(G) management "
-              "information system (IMIS). A latrine is entered when it is built and "
-              "photographed. The record says nothing about whether the household uses it "
+              "information system (IMIS). A latrine is entered when it is built. The record says nothing about whether the household uses it "
               "five years later, whether the pit has filled, or whether the structure "
               "still stands."),
            pp("amber", "Maintenance as a campaign",
@@ -674,9 +674,9 @@ SLIDES_B = [
                ["Villages with liquid waste management arrangements", "5.41 lakh+"],
                ["Blocks with plastic waste management", "5,300+"],
                ["Functional community biogas plants under GOBARdhan", "970+"]]),
-        body("Declared and verified differ by about 74,000 villages. A declaration is made "
-             "by the village or block. Verification is a second check by a different "
-             "level of government. Neither is an independent household survey. Source: "
+        body("Declared and verified differ by about 74,000 villages. A declaration is a "
+             "statement by the village. Verification is a further check recorded in the "
+             "same programme system. Neither is an independent household survey. Source: "
              + YER + ", IMIS as on 16 December 2025.", sm=True),
     ], compact=True),
 
@@ -771,12 +771,11 @@ SLIDES_B = [
 
     C("Three verbs", "Declared, verified and measured mean different things", [
         term("Declared ODF",
-             "A gram panchayat or block resolves that no one in the village defecates in the "
-             "open and records it in the programme MIS."),
+             "The village or its panchayat states that no one defecates in the open, and the "
+             "status is entered in the programme MIS."),
         term("Verified ODF",
-             "A second visit, usually by a block or district team, checks the declaration "
-             "against a protocol. It is still conducted by the government that runs the "
-             "programme."),
+             "A later check of the declaration under the programme's own protocol. It is "
+             "carried out within the government that runs the programme."),
         term("Measured open defecation",
              "A sample survey asks households or individuals where they usually defecate, "
              "and estimates the share for a population with a known margin of error."),
@@ -944,8 +943,7 @@ SLIDES_B = [
         body("Jal Jeevan Mission (JJM) was launched on 15 August 2019 to provide a "
              "functional household tap connection to every rural household. When it "
              "began, about 3.23 crore rural households had a tap connection (Union Jal "
-             "Shakti Minister in the Rajya Sabha, reported by All India Radio, 16 March "
-             "2026). The February 2025 Budget extended the mission to 2028 with an "
+             "Shakti Minister C R Patil, reported by All India Radio, 16 March 2026). The February 2025 Budget extended the mission to 2028 with an "
              "enhanced total outlay to reach 100% coverage (Budget Speech 2025-26, para 55)."),
         term("Functional Household Tap Connection (FHTC)",
              "A tap connection to a rural household for providing drinking water in "
@@ -964,11 +962,11 @@ SLIDES_B = [
     C("Connections", "Tap connections grew about five-fold in six years", [
         chart("washJjmTaps",
               "Rural households with a tap connection, India (crore)",
-              "AIR report of Rajya Sabha reply, 16 March 2026; Budget Speech 2025-26; "
+              "All India Radio, 16 March 2026; Budget Speech 2025-26; "
               + YER + " (JJM-IMIS, 26 December 2025)",
               "bar",
               {"labels": ["Aug 2019 (launch)", "Feb 2025 (Budget)", "Dec 2025 (IMIS)",
-                          "Mar 2026 (Rajya Sabha)"],
+                          "Mar 2026 (Minister)"],
                "datasets": [{"label": "Crore households",
                              "data": [3.23, 15.0, 15.7, 15.83],
                              "backgroundColor": ["#94A3B8", "#0EA5E9", "#0EA5E9",
@@ -1121,7 +1119,7 @@ SLIDES_B = [
     C("Blocks by category", "One block in ten extracts more than it recharges", [
         chart("washGwCat",
               "Groundwater assessment units by category, India, 2025 (number of units)",
-              GW + ", Rajya Sabha reply on the 2025 assessment",
+              GW + ", reply to Parliament on the 2025 assessment",
               "bar",
               {"labels": ["Safe (under 70%)", "Semi-critical (70-90%)", "Critical (90-100%)",
                           "Over-exploited (over 100%)", "Saline"],
@@ -1437,9 +1435,8 @@ SLIDES_C = [
     C("Urban FSM", "Treating sludge in towns: what SBM-U reports", [
         tw(pp("cyan", "Plants on the dashboard",
               "The SBM-U 2.0 portal lists 984 sewage treatment plants of 5 MLD or more and "
-              "969 faecal sludge treatment plants of 5 KLD or more, and 3,158 cities "
-              "declared Safaimitra Surakshit, a certification aimed at safe sewer and tank "
-              "cleaning (" + SBMU + ")."),
+              "969 faecal sludge treatment plants of 5 KLD or more. It also lists 3,158 "
+              "cities declared Safaimitra Surakshit Shehar (" + SBMU + ")."),
            pp("amber", "What to check in a town",
               "Is the FSTP running, and how many trucks reached it last month? Does the "
               "municipality license desludging operators and record each trip? Are "
@@ -1485,9 +1482,8 @@ SLIDES_C = [
                     NAM + ", citing the National Commission for Safai Karamcharis")]),
         tw(pp("red", "What the figure records",
               "Deaths reported to the National Commission for Safai Karamcharis. Deaths "
-              "not reported, or recorded as accidents, are not in it. Parliamentary "
-              "answers on this subject have given different year-wise totals at different "
-              "times, so quote the date and source with any figure."),
+              "not reported, or recorded as accidents, are not in it. Quote the date and "
+              "the source with any figure on these deaths."),
            pp("amber", "Why they happen",
               "A worker enters a tank or manhole to clear a blockage, without breathing "
               "apparatus or a harness, and is overcome by gases. Others enter to rescue "
@@ -1707,3 +1703,308 @@ SLIDES_C = [
               "last period. Ask privately, and ask girls, as well as their mothers.")),
     ], compact=True),
 ]
+
+SLIDES_D = [
+
+    # ===================== SECTION 11 =====================
+    D("11", "Section Eleven", "Climate, drought and water security"),
+
+    C("Seasonal scarcity", "Shortage is already in the household data", [
+        tw([stats([card("12.4%", "rural households without sufficient drinking water from "
+                         "the principal source all year, 2018", "amber", NSS),
+                   card("43%", "households with a tap that faced a shortage in piped supply "
+                        "at some time, 2022", "red", FA),
+                   card("40%", "of those households with any way to cope", "cyan", FA)],
+                  cols=1)],
+           pp("cyan", "Reading the two surveys",
+              "The NSS 76th round found 87.6% of rural and 90.9% of urban households had "
+              "sufficient drinking water from their principal source throughout the year "
+              "(" + NSS + "). The 2022 JJM assessment found 43% of households with a tap had "
+              "faced a shortage in piped supply at some time. In Ladakh, Mizoram, "
+              "Rajasthan, Chhattisgarh, Himachal Pradesh, Jammu and Kashmir, Jharkhand, "
+              "Odisha and Meghalaya almost six in ten households reported shortages, and "
+              "the report found seasonal scarcity was being managed by households with "
+              "limited community action (" + FA + ").")),
+        hbox("A dry-season visit and a post-monsoon visit to the same village can give two "
+             "different answers to the question of whether a scheme works. Plan for both.",
+             "amber"),
+    ], compact=True),
+
+    C("Water stress", "Irrigation, groundwater and the projected gap", [
+        tw(pp("cyan", "What NITI Aayog reported (2019)",
+              "The Composite Water Management Index reported that about 74% of the area "
+              "under wheat and 65% of the area under rice faces significant water "
+              "scarcity, that groundwater accounts for 62% of irrigation water, and that "
+              "best estimates indicate demand will exceed supply by a factor of two by "
+              "2030 (NITI Aayog, CWMI, August 2019)."),
+           pp("amber", "How to use a projection",
+              "The doubling figure is a projection made from 2008 demand estimates and "
+              "assumptions about growth. Attribute it to NITI Aayog and say it is a "
+              "projection. The 2025 groundwater account, with 730 over-exploited units, "
+              "is a measurement and carries more weight in a district plan.")),
+        table(["Pressure", "How it reaches drinking water", "Evidence on this slide"],
+              [["Irrigation pumping", "Lowers water tables under village borewells",
+                "CWMI 2019; CGWB 2025"],
+               ["Weak monsoon or heat", "Sources fail before the rains", "NSS 76; JJM FA 2022"],
+               ["Contamination", "Fluoride, arsenic and nitrate in deeper or overused aquifers",
+                "CGWB quality report 2024"]]),
+    ], compact=True),
+
+    C("Source sustainability", "A pipe network is only as reliable as its source", [
+        body("The December 2025 review describes Jal Jeevan Mission moving from building "
+             "assets to sustaining service, and names source sustainability planning "
+             "among the topics in reviews with district collectors (" + YER + "). The 2022 "
+             "assessment recorded which villages had groundwater sources and recharge "
+             "structures, and recommended adding a scheme-level measure of seasonal "
+             "shortage to future assessments (" + FA + ")."),
+        tw(pp("green", "Recharge and storage",
+              "Jal Shakti Abhiyan has run each year since 2019. Mission Amrit Sarovar "
+              "built or rejuvenated nearly 69,000 ponds, which store water and recharge "
+              "groundwater (PIB, 4 December 2025)."),
+           pp("amber", "Questions for a scheme",
+              "Is the source a borewell in an over-exploited block? Has its yield been "
+              "measured in May? Is there a recharge structure upstream, and is it "
+              "maintained? Is there a fallback source, and who pays for tankers when the "
+              "main one fails?")),
+        hbox("Source sustainability is the climate adaptation measure that a drinking "
+             "water programme controls directly.", "indigo"),
+    ], compact=True),
+
+    C("Sanitation and climate", "Floods and droughts change how toilets behave", [
+        tw(pp("cyan", "Floods and high water tables",
+              "Pits and septic tanks that flood can release excreta into the lanes and "
+              "into shallow wells nearby. Raised plinths, sealed tanks and planned "
+              "emptying before the monsoon reduce the risk. DDWS's 2025 toilet repair "
+              "campaign included awareness on its Climate Resilient Sanitation and "
+              "Service Delivery Protocol (" + SBMN + ")."),
+           pp("amber", "Drought",
+              "A pour-flush toilet needs water. When water must be carried, households "
+              "ration it for drinking and cooking first, and toilet use can fall. In "
+              "2018, 4.5% of rural households using a latrine reported no water in or "
+              "around it (" + NSS + ", Highlights 15).")),
+        tw(pp("indigo", "Heat",
+              "Heat raises water demand for drinking and bathing and can shorten the hours "
+              "a stretched network supplies. Monitoring in summer catches failures that a "
+              "winter survey misses."),
+           pp("green", "Design responses",
+              "Twin pits sited away from drinking water sources, rainwater storage at "
+              "schools and anganwadis, and handwashing stations that use little water. "
+              "Each needs a named person responsible for upkeep.")),
+    ], compact=True),
+
+    C("Climate checklist", "A climate risk checklist for a WASH plan", [
+        table(["Hazard", "What fails", "What to check before investing"],
+              [["Drought", "Borewell yields, pour-flush use", "Block groundwater category, "
+                "May yield test, alternative source"],
+               ["Flood", "Pits, septic tanks, shallow wells", "Flood history, plinth height, "
+                "distance from pits to wells"],
+               ["Heat", "Supply hours, demand", "Summer supply data, storage capacity"],
+               ["Overextraction", "Water quality and quantity", "Fluoride, arsenic and "
+                "nitrate tests at the source"],
+               ["Saline intrusion (coast)", "Groundwater sources", "Whether the unit is "
+                "classed saline by CGWB"]]),
+        body("Groundwater categories and saline units: " + GW + ". Quality: " + GWQ +
+             ". The checklist turns the evidence in Sections 6, 7 and 11 into questions a "
+             "programme team can answer in its first month.", sm=True),
+        hbox("Ask each question for the dry season and the wet season separately.",
+             "indigo"),
+    ], compact=True),
+
+    # ===================== SECTION 12 =====================
+    D("12", "Section Twelve", "Monitoring a WASH programme"),
+
+    C("Kinds of data", "Four kinds of WASH data, each with its own typical error", [
+        table(["Kind", "Examples", "Good for", "Typical error"],
+              [["Programme MIS", "SBM(G) IMIS, JJM-IMIS", "What was built, where, when",
+                "Records construction and declarations, not use"],
+               ["Government-commissioned surveys", "JJM functionality assessments",
+                "Checking the programme at scale", "The commissioning agency runs the "
+                "programme"],
+               ["National statistical surveys", "NSS 76th and 78th rounds, NFHS, HCES, "
+                "CAMS", "Independent population estimates", "Infrequent, question order "
+                "and respondent effects"],
+               ["Independent studies and trials", "r.i.c.e. panels, SuperAmma, Odisha trial",
+                "Use, behaviour and causal effects", "Small areas, not national"]]),
+        tw(pp("cyan", "Triangulate",
+              "Use the MIS to find where things were built, a statistical survey to find "
+              "how many people use them, and a small independent check to understand why."),
+           pp("amber", "Disclose",
+              "Every report should name its data source, its date, its unit and who "
+              "collected it. Most disputes about WASH numbers disappear once those four "
+              "facts are on the page.")),
+    ], compact=True),
+
+    C("Indicators", "Indicators that match the ladders", [
+        table(["Indicator", "Definition to use", "How to collect"],
+              [["Safe drinking water at home", "JMP safely managed: on premises, available "
+                "when needed, free from contamination", "Household survey plus water tests"],
+               ["Days of supply last week", "Count of days the tap ran, 0-7",
+                "Household recall, cross-checked at the source"],
+               ["Litres per person per day", "Measured volume divided by members, against 55",
+                "Bucket and timer at the tap"],
+               ["Toilet use by each member", "Last defecation, each person over two, and "
+                "child faeces disposal", "Individual questions, private"],
+               ["Latrine functional", "Pan clean, water present, pit not full, door works",
+                "Enumerator observation"],
+               ["Basic hygiene", "Handwashing place with soap and water seen",
+                "Observation of the place"],
+               ["Sludge safely emptied", "Last emptying by machine, delivered to a plant",
+                "Household and operator records"]]),
+        hbox("Choose few indicators, define them in advance, and keep the definition fixed "
+             "across rounds so that change means change.", "indigo"),
+    ], compact=True),
+
+    C("Measuring behaviour", "Self-report, observation and spot checks", [
+        tw(pp("cyan", "Self-report",
+              "Cheap and fast. Inflated for socially approved behaviour such as "
+              "handwashing and toilet use. Ask about the last occasion rather than "
+              "usual practice, ask each person separately, and put programme-benefit "
+              "questions at the end, as the NSS's own warning suggests."),
+           pp("green", "Structured observation",
+              "An observer records behaviour at key events over several hours. SuperAmma "
+              "observed 20-25 households per village and told them the study was about "
+              "domestic water use to reduce bias (Biran et al., 2014). Expensive, and "
+              "people behave differently when watched.")),
+        tw(pp("amber", "Spot checks",
+              "Look for signs: a wet pan in the morning, a worn path to the toilet, soap "
+              "at the handwashing place, faeces in the lanes at dawn. Spot checks are "
+              "cheaper than observation and harder to fake than a questionnaire."),
+           pp("indigo", "Combining them",
+              "Use self-report for scale, spot checks for a sample, and observation for a "
+              "sub-sample, and report the gap between them. The gap is itself a finding "
+              "about how far reports can be trusted in your area.")),
+    ], compact=True),
+
+    C("Water quality", "Monitoring drinking water quality in practice", [
+        body("The 2022 JJM assessment tested twelve critical parameters in district labs: "
+             "turbidity, total hardness, total alkalinity, chloride, ammonia, iron, nitrate, "
+             "sulphate, total dissolved solids, bacteriological contamination, arsenic and "
+             "fluoride. pH and residual chlorine were measured on site (" + FA + ")."),
+        tw(pp("cyan", "Field test kits",
+              "Village women trained to use field test kits tested over 37 lakh samples in "
+              "2025-26 up to 29 December 2025 (" + YER + "). Kits screen for common "
+              "problems and should trigger a lab test when they show a problem."),
+           pp("amber", "Lab testing",
+              "Labs returned results for 83% of samples in 2022 and took over 48 hours. A "
+              "bacteriological test only describes the moment of sampling. Repeat tests "
+              "at the source, the storage tank and the household tap, in more than one "
+              "season (" + FA + ").")),
+        hbox("Residual chlorine at the tap is the quickest daily check that a piped supply "
+             "has been treated. In 2022 it was within limits in about a quarter of "
+             "households sampled.", "indigo"),
+    ], compact=True),
+
+    C("A district plan", "A monitoring plan for a district WASH programme", [
+        flow(["Baseline by survey", "Quarterly spot checks", "Seasonal water tests",
+              "Annual use survey", "Public report"]),
+        tw([bullets(["Draw a random sample of villages and households, and keep it as a "
+                     "panel across rounds.",
+                     "Ask each member about the last defecation, and record child faeces "
+                     "disposal.",
+                     "Measure litres and days of supply at the tap in May and in "
+                     "October.",
+                     "Test water at the source and at a household tap in each sampled "
+                     "village.",
+                     "Record who empties pits and tanks, by what method, and where the "
+                     "sludge goes.",
+                     "Publish the results with the MIS figures beside them, and explain "
+                     "any gap."], "cyan", sm=True)],
+           pp("amber", "Questions for any WASH claim",
+              "Is it access, use, safety or function? Who collected it and do they run "
+              "the programme? Person or household? Which season? What happens after the "
+              "pit fills? For further reading on use and behaviour, see the ImpactMojo "
+              "Deep Dive <a href=\"/deepdives/water-sanitation-behaviour-gap.html\">Water, "
+              "Sanitation, and the Behaviour Gap</a>, and for the survey gap, <a "
+              "href=\"/deepdives/nfhs6-stopped-counting.html\">What NFHS-6 stopped "
+              "counting</a>.")),
+    ], compact=True),
+
+    C("Sources", "Sources opened for this deck (October 2026)", [
+        tw([body("<strong>Data and surveys.</strong> "
+                 "<a href=\"https://washdata.org/data/country/IND/household/download\">WHO/UNICEF "
+                 "JMP India country file, August 2025</a>; "
+                 "<a href=\"https://washdata.org/monitoring/drinking-water\">JMP drinking water "
+                 "ladder</a>; "
+                 "<a href=\"https://mospi.gov.in/sites/default/files/publication_reports/Report_584_final_0.pdf\">NSS "
+                 "Report No. 584</a>; "
+                 "<a href=\"https://esankhyiki.mospi.gov.in/\">MoSPI eSankhyiki (NSS 76, NFHS)</a>; "
+                 "<a href=\"https://www.nfhsiips.in/nfhsuser/assets/National%20Family%20Health%20Survey%20(NFHS-6)%202023-2024%20Fact%20Sheets.pdf\">NFHS-6 "
+                 "fact sheets, May 2026</a>; "
+                 "<a href=\"https://jaljeevanmission.gov.in/sites/default/files/2022-10/national_report_of_functionality_assessment_2022.pdf\">JJM "
+                 "Functionality Assessment 2022</a>; "
+                 "<a href=\"https://ejalshakti.gov.in/jjmreport/JJMIndia.aspx\">JJM dashboard</a>; "
+                 "<a href=\"https://www.niti.gov.in/sites/default/files/2019-08/CWMI-2.0-latest.pdf\">NITI "
+                 "Aayog CWMI 2019</a>; "
+                 "<a href=\"https://sbmurban.org/\">SBM-Urban 2.0 portal</a>. "
+                 "<strong>Government statements.</strong> "
+                 "<a href=\"https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/jan/doc202611750301.pdf\">DDWS "
+                 "Year End Review 2025</a>; "
+                 "<a href=\"https://ejalshakti.gov.in/iwc_2026/images/Note_SBM.pdf\">DDWS note on "
+                 "SBM(G)</a>; "
+                 "<a href=\"https://www.indiabudget.gov.in/budget2025-26/doc/Budget_Speech.pdf\">Budget "
+                 "Speech 2025-26</a>; "
+                 "<a href=\"https://www.newsonair.gov.in/union-jal-shakti-minister-cr-patil-says-over-15-83-crore-households-now-have-tap-water-under-jal-jeevan-mission\">AIR, "
+                 "16 March 2026</a>; PIB releases "
+                 "<a href=\"https://www.pib.gov.in/PressReleasePage.aspx?PRID=2206073\">18 Dec 2025</a>, "
+                 "<a href=\"https://www.pib.gov.in/PressReleasePage.aspx?PRID=2220203\">29 Jan 2026</a>, "
+                 "<a href=\"https://www.pib.gov.in/PressReleasePage.aspx?PRID=2198937\">4 Dec 2025 (arsenic)</a>, "
+                 "<a href=\"https://www.pib.gov.in/PressReleasePage.aspx?PRID=2198942\">4 Dec 2025 (fluoride)</a>, "
+                 "<a href=\"https://www.pib.gov.in/PressReleasePage.aspx?PRID=2109942\">10 Mar 2025</a>, "
+                 "<a href=\"https://www.pib.gov.in/PressReleasePage.aspx?PRID=2111857\">17 Mar 2025</a>, "
+                 "<a href=\"https://www.pib.gov.in/PressReleasePage.aspx?PRID=1942478\">25 Jul 2023</a>, "
+                 "<a href=\"https://www.pib.gov.in/PressReleasePage.aspx?PRID=2247765\">1 Apr 2026</a>.",
+                 sm=True)],
+           [body("<strong>Research.</strong> "
+                 "<a href=\"https://doi.org/10.1016/S0140-6736(23)00458-0\">Wolf et al., Lancet 2023</a>; "
+                 "<a href=\"https://doi.org/10.1371/journal.pone.0073784\">Spears, Ghosh and "
+                 "Cumming, PLoS ONE 2013</a>; "
+                 "<a href=\"https://econpapers.repec.org/paper/izaizadps/dp12065.htm\">Gupta et "
+                 "al., IZA DP 12065, 2019</a>; "
+                 "<a href=\"https://www.downtoearth.org.in/news/waste/despite-toilets-in-place-a-quarter-of-rural-population-stuck-to-open-defecation-62770\">Down "
+                 "To Earth report of that survey</a>; "
+                 "<a href=\"https://doi.org/10.1016/S2214-109X(14)70307-9\">Clasen et al., 2014</a>; "
+                 "<a href=\"https://doi.org/10.1371/journal.pmed.1001709\">Patil et al., 2014</a>; "
+                 "<a href=\"https://doi.org/10.1016/S2214-109X(17)30490-4\">Luby et al., 2018</a>; "
+                 "<a href=\"https://doi.org/10.1016/S2214-109X(18)30005-6\">Null et al., 2018</a>; "
+                 "<a href=\"https://doi.org/10.1016/S2214-109X(18)30374-7\">Humphrey et al., 2019</a>; "
+                 "<a href=\"https://doi.org/10.1016/S1473-3099(03)00606-6\">Curtis and Cairncross, "
+                 "2003</a>; "
+                 "<a href=\"https://doi.org/10.1016/S0140-6736(05)66912-7\">Luby et al., 2005</a>; "
+                 "<a href=\"https://doi.org/10.1016/S2214-109X(13)70160-8\">Biran et al., 2014</a>; "
+                 "Coffey and Spears, <em>Where India Goes</em>, HarperCollins India, 2017. "
+                 "<strong>Background.</strong> "
+                 "<a href=\"https://en.wikipedia.org/wiki/Panchayati_raj_in_India\">Panchayati raj "
+                 "in India</a> and "
+                 "<a href=\"https://en.wikipedia.org/wiki/Municipal_governance_in_India\">Municipal "
+                 "governance in India</a> (Wikipedia), for the 73rd Amendment and the "
+                 "Twelfth Schedule.", sm=True)]),
+    ], **{"ultra-compact": True}),
+
+    # ===================== END =====================
+    {"type": "end",
+     "eyebrow": "Water, Sanitation and Hygiene 101",
+     "headline": "Count the toilets, then ask who uses them",
+     "byline": "ImpactMojo 101 Series &middot; Free foundational learning for development "
+               "practitioners in South Asia",
+     "ctas": [{"label": "Water, Sanitation and the Behaviour Gap",
+               "href": "/deepdives/water-sanitation-behaviour-gap.html"},
+              {"label": "Nutrition 101", "href": "/101-courses/nutrition.html"},
+              {"label": "All 101 courses", "href": "/101-courses/"}],
+     "meta": ["100 slides", "12 sections", "CC BY-NC-ND"]},
+]
+
+DECK = {
+    "slug": "wash",
+    "title": "Water, Sanitation and Hygiene 101",
+    "description": ("Water, Sanitation and Hygiene 101: a free foundational course for "
+                    "development practitioners in India and South Asia. The WHO/UNICEF JMP "
+                    "service ladders; India's figures from the JMP, NFHS-5, NFHS-6 and the "
+                    "NSS 76th round; Swachh Bharat Mission and the gap between ODF "
+                    "declarations and survey evidence; Jal Jeevan Mission and its "
+                    "functionality assessment; groundwater depletion, arsenic and "
+                    "fluoride; water governance; faecal sludge, sanitation work and the "
+                    "2013 Act on manual scavenging; handwashing and menstrual health; "
+                    "climate and drought; and how to monitor a WASH programme. ImpactMojo, "
+                    "CC BY-NC-ND."),
+    "slides": SLIDES_A + SLIDES_B + SLIDES_C + SLIDES_D,
+}

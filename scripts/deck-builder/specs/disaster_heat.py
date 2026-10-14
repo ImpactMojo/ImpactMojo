@@ -921,3 +921,453 @@ SLIDES += [
           B("The lightning figure is NCRB data as quoted by the Commission, para 11.70.", sm=True)]),
       compact=True),
 ]
+
+# ===================== SECTION 05: CYCLONES =====================
+SLIDES += [
+    D("05", "Section Five", "Cyclones and Odisha's record"),
+
+    C("The coast", "Why Odisha is the place to study cyclone preparedness",
+      TW([B("The Fani assessment, led by the Government of Odisha with the UN, World Bank and "
+            "Asian Development Bank, records that of 1,019 cyclonic disturbances in the Indian "
+            "subcontinent in the last century, 890 were on the eastern coast, and 260 of those "
+            "made landfall on the Odisha coast. Odisha has ten major river systems that flood "
+            "regularly, and is also exposed to flash floods, landslides, earthquakes and tsunami."),
+          B("The state is poor and rural. In 2011, 83 per cent of its 4.2 crore people lived in "
+            "rural areas, Scheduled Tribes were 22.8 per cent and Scheduled Castes 17.1 per cent "
+            "of the population, and poverty, though it fell from about 57 per cent in 2004-05 to "
+            "about 33 per cent in 2011-12, remained well above the national average of about 22 "
+            "per cent. That combination of high hazard and high vulnerability is what makes its "
+            "fall in cyclone deaths instructive.")],
+         [ST([CARD("260", "cyclonic disturbances that made landfall in Odisha in a century, of "
+                   "890 on the east coast", "cyan", FANI + ", executive summary"),
+              CARD("4.2 crore", "population, 83% rural", "indigo", "Same source, citing Census 2011"),
+              CARD("39.9%", "of Odisha's people were ST or SC in 2011", "amber", "Same source")], 1),
+          B("Source: " + FANI + ".", sm=True)])),
+
+    C("1999 and after", "What Odisha built after the 1999 super cyclone",
+      TW([B("The super cyclone of October 1999 killed nearly 10,000 people in Odisha, in the "
+            "figure the state's own assessment uses. In its immediate aftermath the government "
+            "set up the Odisha State Disaster Management Authority as an autonomous "
+            "organisation, before the national Act existed. It also raised the Odisha Disaster "
+            "Rapid Action Force, a trained and equipped state rescue force."),
+          B("Over the next two decades Odisha built multipurpose cyclone shelters with community "
+            "task forces linked to each one, an Early Warning Dissemination System with five "
+            "layers of communication and sirens on the coast, District Emergency Operation "
+            "Centres in all 30 districts, a GIS cell, a drought monitoring cell and a lightning "
+            "detection system. The statutory SDMA under the 2005 Act was constituted in 2010, "
+            "with the Chief Minister as chair and the Special Relief Commissioner's office as its "
+            "secretariat. Through the national Cyclone Risk Mitigation Project, Odisha "
+            "strengthened its last-mile warning system and built and maintained multipurpose "
+            "cyclone shelters.")],
+         [T(["Component", "What it does in a cyclone"],
+            [["OSDMA (after 1999)", "Plans, builds shelters, trains task forces"],
+             ["Special Relief Commissioner", "Runs the State Emergency Operation Centre round the "
+              "year and coordinates relief"],
+             ["ODRAF, 10 units by 2019", "Search, rescue, clearing roads"],
+             ["Multipurpose cyclone shelters", "Strong public buildings for people to shelter in "
+              "cyclones and floods; 879 were used during Fani"],
+             ["Early Warning Dissemination System", "Sirens and messages to the last mile"],
+             ["Community task forces", "Trained village volunteers linked to cyclone and flood "
+              "shelters in 25 districts"]]),
+          B("Source: " + FANI + ", ch. 15 (Disaster Risk Reduction).", sm=True)])),
+
+    C("The record", "Deaths in Odisha's major cyclones since 1999",
+      TW([CH("dhOdishaChart", "bar", "Deaths in Odisha, by cyclone (log scale)",
+             FANI + ", executive summary and ch. 15. 1999 is the report's figure of nearly "
+             "10,000; Hudhud (2014) recorded 0 deaths in Odisha and cannot be shown on a log scale.",
+             {"labels": ["Super cyclone 1999", "Phailin 2013", "Titli 2018", "Fani 2019"],
+              "datasets": [{"label": "Deaths", "data": [10000, 44, 61, 64],
+                            "backgroundColor": ["#EF4444", "#0EA5E9", "#0EA5E9", "#0EA5E9"]}]},
+             "{ plugins:{legend:{display:false}}, scales:{ y:{ type:'logarithmic', min:10, max:20000, title:{display:true,text:'Deaths (log scale)'} } } }")],
+         [B("The fall is about two orders of magnitude, from nearly 10,000 deaths to 44 in "
+            "Phailin (2013), none in Hudhud (2014), 61 in Titli (2018) and 64 in Fani (2019). "
+            "Fani was an extremely severe cyclonic storm "
+            "with sustained winds of 170 to 180 km per hour gusting to 205 km per hour at "
+            "landfall."),
+          B("The comparison has limits. Cyclones differ in track, strength and surge, so no two "
+            "are directly comparable. The state's own assessment draws the conclusion that "
+            "evacuation saved lives, and the size of the change is too large to be explained by "
+            "differences between storms alone. What the record cannot show is how many people "
+            "were saved by each part of the system: the forecast, the warning, the shelters or "
+            "the volunteers."),
+          H("amber", "The same report states the other half: zero mortality is close, but economic "
+            "losses from cyclones are rising. Phailin, Titli and Fani together caused losses of "
+            "about USD 5.7 billion.")]),
+      compact=True),
+
+    C("Fani, step by step", "Cyclone Fani: eleven days of warning",
+      FLOW("25 April 2019: IMD identifies a low pressure area",
+           "Storm meanders over the Bay of Bengal for 11 days; forecast track revised 9 times",
+           "29 April: landfall in Odisha confirmed",
+           "30 April, 1 PM: IMD cyclone watch for the Odisha coast",
+           "1 May: Collectors told to move vulnerable people, older, disabled people, women and children",
+           "3 May, about 8.30 AM: landfall between Satapada and Puri"),
+      TW([B("The long lead time helped. Fishing was suspended two days before landfall. Food "
+            "grains were placed in fair price shops, take-home rations and eggs reached "
+            "pregnant and lactating women and children under three by 1 May, and nearly 600 "
+            "pregnant women were moved to maternity waiting homes (Maa Gruhas) and delivery "
+            "points. Inspections of anganwadi centres and food stocks were done in advance."),
+          B("It was only the second time since 1891 that a cyclone made landfall in Odisha in "
+            "May, which shows why a system built for the October cyclone season had to work out "
+            "of season.")],
+         [B("Sources: " + FANI + ", executive summary and ch. 15. The report gives landfall as "
+            "between 0800 and 1000 hours in one place and about 8.30 AM in another, and wind "
+            "speeds of 175 to 180 and 170 to 180 km per hour in different chapters.", sm=True),
+          H("cyan", "Teaching point. Each step in the flow is a decision by a named office: IMD, "
+            "the Special Relief Commissioner, the Collector. A preparedness plan is good when "
+            "each of those decisions has a trigger, an owner and a deadline written down before "
+            "the season.")]),
+      compact=True),
+
+    C("Evacuation", "Moving 15.5 lakh people in about a day",
+      ST([CARD("15.5 lakh", "people evacuated to 9,177 shelters, including 879 multipurpose "
+               "cyclone and flood shelters", "cyan", FANI),
+          CARD("1.8 crore", "SMS alerts, with 274 siren alerts and 1,275 FM radio alerts, before "
+               "landfall", "indigo", FANI + ", ch. 15"),
+          CARD("25,000", "tourists moved out using 23 special trains and 18 buses", "amber", FANI),
+          CARD("~45,000", "volunteers mobilised for relief after landfall", "green", FANI)], 4),
+      TW([B("Warnings went out in Odia through the alert siren towers, with voice messages every "
+            "hour in coastal areas. A location-based alert system sent SMS to phones in the "
+            "projected path. Television, FM and community radio carried preparedness messages. "
+            "NGOs and community volunteers went door to door and helped move people. "
+            "Collectors were told to give special care to moving older people, physically "
+            "challenged people, women and children to shelters, and to secure residential "
+            "schools, child care institutions and old age homes.")],
+         [B("Polythene sheets for temporary shelter were stocked at district and sub-district "
+            "level, food packets were readied for air-dropping, and after landfall more than "
+            "6,000 free kitchens served cooked meals with the help of panchayats and self-help "
+            "groups. Main roads were cleared within 48 hours. Power took about two weeks to "
+            "restore in Puri and Bhubaneswar, with technicians brought from Andhra Pradesh and "
+            "West Bengal."),
+          B("Source: " + FANI + ", executive summary and ch. 15.", sm=True)]),
+      compact=True),
+
+    C("The damage", "Few deaths, very large losses",
+      TW([CH("dhFaniChart", "bar", "Cyclone Fani deaths by district",
+             FANI + ", Table 0.1, from the State Emergency Operation Centre",
+             {"labels": ["Puri", "Khordha", "Cuttack", "Mayurbhanj", "Jajpur", "Kendrapara"],
+              "datasets": [{"label": "Deaths", "data": [39, 9, 6, 4, 3, 3], "backgroundColor": "#EF4444"}]},
+             "{ plugins:{legend:{display:false}}, scales:{ y:{ min:0, title:{display:true,text:'Deaths'} } } }"),
+          B("The other eight affected districts reported no deaths. Total: 64.", sm=True)],
+         [T(["Measure", "Fani, 2019"],
+            [["People affected", "About 1.65 crore in 18,388 villages, 14 districts"],
+             ["Houses damaged", "3.62 lakh (2.96 lakh rural, 66,040 urban), 95% in Puri, Khordha "
+              "and Cuttack"],
+             ["Trees uprooted or damaged", "21.9 lakh"],
+             ["Damage", "₹16,465 crore"],
+             ["Loss", "₹7,712 crore"],
+             ["Recovery needs", "₹29,315 crore"],
+             ["Damage and loss as share of GSDP", "About 5%"]]),
+          B("Source: " + FANI + ". The assessment calls its estimates conservative because data "
+            "on private losses were very limited.", sm=True),
+          H("amber", "The households hit hardest lived in kutcha and semi-pucca houses in rural "
+            "areas, urban slums and coastal settlements. Low deaths and high losses fall on the "
+            "same people.")]),
+      compact=True),
+
+    C("Who was still hurt", "What the Fani assessment found about exclusion",
+      TW([P("red", "Relief tied to ration cards",
+            "The immediate cash transfer of ₹2,000 and 50 kg of rice was given only to ration "
+            "card holders. The assessment records that this excluded many vulnerable families, "
+            "including migrants and brick kiln workers who were not residents but were equally "
+            "affected. The 50 kg was the same for every family whatever its size. It recommended "
+            "giving cash and grain to all affected people without proof of residency, and "
+            "distributing grain by family size."),
+          P("red", "Segregation inside shelters",
+            "In the days after the cyclone, details emerged of segregated arrangements for food "
+            "and use of facilities by a dominant social class, which forced socially vulnerable "
+            "groups to shelter in other buildings such as anganwadi centres. The assessment "
+            "recommended placing new cyclone shelters closer to Dalit hamlets.")],
+         [B("These are the state government's own findings, in a report it led with the UN, the "
+            "World Bank and the ADB. They show that a system which saves lives can still "
+            "distribute shelter and relief unequally. Women, people with disabilities and other "
+            "socially and economically vulnerable groups were, in the report's words, severely "
+            "affected despite the evacuation."),
+          BL(["Recovery recommendations included housing help for women-led households, cash "
+              "for work, advance payment of social security entitlements, and assistive devices "
+              "for persons with disabilities.",
+              "It asked for the Odisha Relief Code and the SDRF and NDRF norms to be reviewed so "
+              "that relief conditions do not exclude affected people.",
+              "It recommended including low income communities in the bodies that decide on "
+              "reconstruction."], "amber"),
+          B("Source: " + FANI + ", executive summary, recommendations.", sm=True)])),
+
+    C("Lessons", "What travels from Odisha, and what does not",
+      T(["Element", "Transferable to other coasts", "Needs local adaptation"],
+        [["Long-lead forecasting by IMD", "Yes; national service", "Local warning language and "
+          "channels"],
+         ["Shelters with community task forces", "Yes, if maintained and staffed in normal "
+          "times", "Siting: within walking distance of the poorest hamlets, including Dalit "
+          "hamlets"],
+         ["Zero-casualty political commitment", "Yes", "Requires officers to be accountable for "
+          "each death"],
+         ["State rescue force", "Yes; now provided for by s. 44A", "Size and location"],
+         ["Relief through ration cards", "Common practice", "Must add people who are not on the "
+          "card system: migrants, brick kiln and salt pan workers, single women"],
+         ["Housing reconstruction", "Build Back Better principles", "Local materials, roof "
+          "anchoring, owner-driven rebuilding"]]),
+      TW([B("Illustrative synthesis drawn from the Fani assessment. The first five rows are about "
+            "saving lives, which Odisha does well. The last two are about protecting livelihoods "
+            "and dignity, where the state's own report says the work is unfinished.", sm=True)],
+         [H("cyan", "For the wider climate drivers of cyclone intensity, see ImpactMojo's "
+            "<a href=\"https://www.impactmojo.in/101-courses/climate-essentials.html\">Climate "
+            "Essentials 101</a>.")]),
+      compact=True),
+]
+
+# ===================== SECTION 06: FLOODS, LANDSLIDES, LIGHTNING =====================
+SLIDES += [
+    D("06", "Section Six", "Floods, landslides and lightning"),
+
+    C("Floods", "Floods take most of India's disaster money",
+      TW([B("Floods accounted for 55.09 per cent of what States spent on notified disasters from "
+            "2019-20 to 2023-24, far more than any other hazard (" + FC16 + ", Figure 11.5). "
+            "They are frequent, they cover large areas, and most of their cost is in lost crops, "
+            "damaged houses and broken roads rather than in deaths."),
+          B("Flood risk has four sources that call for different responses. Riverine floods "
+            "build over days and can be forecast from upstream gauges. Flash floods and "
+            "cloudbursts in the hills give minutes of warning. Urban floods happen when drains "
+            "cannot carry heavy rain, and are made worse by building over lakes and channels. "
+            "Coastal floods come with cyclone surge.")],
+         [T(["Flood type", "Lead time", "What reduces risk"],
+            [["Riverine", "Days", "Gauge-based forecasts, raised plinths, boats, flood shelters, "
+              "embankment maintenance"],
+             ["Flash flood and cloudburst", "Minutes to hours", "Keeping settlements off stream "
+              "beds, warnings from rainfall thresholds"],
+             ["Glacial lake outburst (GLOF)", "Minutes to hours", "Monitoring lakes, lowering "
+              "levels, downstream sirens"],
+             ["Urban", "Hours", "Drains, protected lakes and wetlands, no construction on "
+              "floodplains"],
+             ["Coastal surge", "Days", "Evacuation, mangroves and shelterbelts, raised shelters"]]),
+          B("Illustrative summary of standard practice. The FC-15 national mitigation fund "
+            "earmarked ₹2,500 crore for urban flooding in the seven most populous cities and "
+            "₹150 crore for a national GLOF programme (" + FC16 + ", Table 11.2).", sm=True)])),
+
+    C("Embankments", "Embankments protect some places and endanger others",
+      TW([B("An embankment keeps a river out of the land behind it up to its design height. When "
+            "the river exceeds that height, or the embankment breaches, the water arrives "
+            "suddenly into places that people had come to believe were safe. Embankments also "
+            "stop silt from spreading over the floodplain, so the river bed rises between the "
+            "walls over the years and the river sits higher than the land around it."),
+          B("This is why flood planners in India distinguish structural measures (embankments, "
+            "dams, channels) from non-structural ones (zoning, warning, insurance, raised houses, "
+            "flood-tolerant crops). The Sixteenth Commission records "
+            "that States have used SDMF for flood protection walls, dam restoration, drains and "
+            "groundwater recharge (" + FC16 + ", para 11.38).")],
+         [T(["Question to ask about an embankment", "Why"],
+            [["Who is behind it, and who is between it and the river?", "People living inside "
+              "the embankments are often the poorest and get the worst floods"],
+             ["When was it last inspected and repaired?", "Most breaches happen at weak points "
+              "that were known"],
+             ["Does it have sluices for drainage?", "Without them, rain trapped behind the wall "
+              "causes waterlogging"],
+             ["Does the warning system assume it will hold?", "A breach needs its own warning and "
+              "evacuation plan"]]),
+          B("Illustrative. These questions apply to any structural flood defence.", sm=True)])),
+
+    C("Pakistan 2022", "The largest recent flood disaster in South Asia",
+      TW([B("Between June and August 2022, torrential rain and a combination of riverine, urban "
+            "and flash flooding caused what the Pakistan Post-Disaster Needs Assessment calls an "
+            "unprecedented disaster. About 33 million people, one in seven Pakistanis, were "
+            "affected and nearly 8 million were displaced. More than 1,700 people died, a third "
+            "of them children. By 11 October, 94 districts had been declared calamity hit, and "
+            "19 of the country's 25 poorest districts were among them."),
+          B("The assessment projected that the floods would raise the national poverty rate by "
+            "3.7 to 4.0 percentage points, pushing between 8.4 and 9.1 million people into "
+            "poverty. Damage was estimated at USD 14.9 billion, about 4.8 per cent of FY22 GDP, "
+            "losses at USD 15.2 billion and recovery needs at USD 16.3 billion.")],
+         [CH("dhPakChart", "bar", "Pakistan floods 2022: damage, loss and needs (USD billion)",
+             PDNA + ", executive summary",
+             {"labels": ["Damage", "Loss", "Recovery and reconstruction needs"],
+              "datasets": [{"label": "USD billion", "data": [14.9, 15.2, 16.3],
+                            "backgroundColor": ["#EF4444", "#F59E0B", "#0EA5E9"]}]},
+             "{ plugins:{legend:{display:false}}, scales:{ y:{ min:0, max:20, title:{display:true,text:'USD billion'} } } }"),
+          H("amber", "The poverty projection is the number to remember. A flood that kills 1,700 "
+            "people can push more than 8 million into poverty. Counting deaths alone misses most "
+            "of the harm.")]),
+      compact=True),
+
+    C("Landslides", "Landslides: small share of spending, large share of fear in the hills",
+      TW([B("Landslides took 2.59 per cent of State disaster spending from 2019-20 to 2023-24, and "
+            "cloudbursts 0.32 per cent (" + FC16 + ", Figure 11.5). Those shares are small "
+            "because the hill States are small. For the people of the Himalayan and north-eastern "
+            "States and the Western Ghats, landslides cut roads for weeks and can bury a "
+            "settlement in minutes."),
+          B("Landslide risk is raised by rain, by cutting slopes for roads and buildings, by "
+            "removing vegetation, and by blocking natural drainage. Most landslide warning in "
+            "practice uses rainfall thresholds: when accumulated rain passes a level known to "
+            "trigger slides on a slope, people below are moved.")],
+         [T(["National mitigation line (FC-15 NDMF)", "Allocation, ₹ crore", "Released to 31 July 2025"],
+            [["Managing seismic and landslide risks in ten States", "750", "Nil"],
+             ["Landslide Risk Reduction and Mitigation Project", "1,000", "4.54"],
+             ["National GLOF Risk Mitigation Programme", "150", "27.73"]]),
+          B("Source: " + FC16 + ", Table 11.2.", sm=True),
+          H("cyan", "The Sixteenth Commission's ten-hazard risk index scores landslide hazard from "
+            "Geological Survey of India data, and NEH States contribute only 10 per cent to State "
+            "funds (paras 11.49, 11.61).")])),
+
+    C("Lightning", "Lightning kills more Indians than any other force of nature",
+      TW([B("NCRB data, as quoted by the Sixteenth Finance Commission, show lightning as the "
+            "leading cause of death from forces of nature in India. In 2022 it accounted for "
+            "2,887 of 8,060 deaths, or 35.8 per cent. The Annual Lightning Report prepared with "
+            "IMD for 2020-21 recorded about 18.5 million lightning strikes, a 34 per cent rise "
+            "on the previous year."),
+          B("The Commission notes who dies. Agricultural labourers working in open fields, with no "
+            "shelter and near water, face the highest risk, and people living in mud houses are "
+            "more exposed to ground strikes. Sixteen States had notified lightning as a "
+            "State-specific disaster when the Commission reported, and it recommended adding "
+            "lightning to the national list (" + FC16 + ", paras 11.69 to 11.73).")],
+         [ST([CARD("2,887", "lightning deaths in 2022", "red", "NCRB, cited in FC-16 para 11.70"),
+              CARD("35.8%", "of all deaths from forces of nature in 2022", "amber", "Same"),
+              CARD("16", "States had notified lightning as a State-specific disaster", "cyan",
+                   "FC-16 para 11.71")], 1),
+          H("green", "Lightning is the clearest case of a hazard where vulnerability is about work. "
+            "Warnings by SMS reach phone owners. Labourers in a field need a siren, a shelter "
+            "nearby and an employer who lets them stop.")])),
+
+    C("Measuring floods", "What a flood assessment should count",
+      T(["Measure", "Common source", "What it misses"],
+        [["Deaths", "Ex gratia records", "Missing persons; deaths from disease after the flood"],
+         ["Houses damaged", "Revenue surveys", "Rented houses, informal settlements without "
+          "title"],
+         ["Crop area affected", "Agriculture department", "Tenant and sharecropper losses when "
+          "relief goes to owners"],
+         ["Livestock lost", "Animal husbandry department", "Animals of landless households kept "
+          "without records"],
+         ["Days of work lost", "Rarely measured", "The main loss for daily wage workers"],
+         ["School days lost", "Education department", "Schools used as shelters for weeks"],
+         ["Poverty impact", "Post-disaster needs assessment", "Usually estimated once, not "
+          "followed up"]]),
+      TW([B("Illustrative. The Pakistan assessment's poverty estimate and the Fani assessment's "
+            "chapter on employment and livelihoods are examples of measuring beyond deaths and "
+            "houses.", sm=True)],
+         [H("amber", "Relief follows what is counted. Agricultural inputs were 55.6 per cent of "
+            "State relief spending because crop loss is counted carefully (" + FC16 +
+            ", para 11.44). Lost wages are not.")]),
+      compact=True),
+
+    C("For practitioners", "Working on floods, landslides and lightning in a district",
+      TW([BL(["Get the district hazard map and the list of villages flooded in each of the last "
+              "ten years. The pattern usually repeats.",
+              "Find out where the embankments are, when they were last repaired, and which "
+              "villages sit between them and the river.",
+              "For hill districts, ask whether the district has rainfall thresholds for "
+              "landslide alerts and who acts on them.",
+              "For lightning, ask whether the warning reaches people working in fields, and "
+              "whether schools and panchayat buildings have lightning conductors.",
+              "Check whether the district has proposed projects to the State mitigation fund. "
+              "Under-used mitigation money is common."], "cyan")],
+         [B("The same five questions work for a programme officer in an NGO and for a block "
+            "development officer. They turn a general concern about floods into a short list "
+            "of records to ask for and people to visit."),
+          H("green", "ImpactMojo's <a href=\"https://www.impactmojo.in/Labs/climate-adaptation-lab.html\">"
+            "Climate Risk and Adaptation Studio</a> lets you practise building a local risk "
+            "profile and adaptation plan.")])),
+]
+
+# ===================== SECTION 07: DROUGHT =====================
+SLIDES += [
+    D("07", "Section Seven", "Drought"),
+
+    C("Kinds of drought", "Drought is a slow disaster with several definitions",
+      TW([T(["Kind", "What it means", "First sign"],
+            [["Meteorological", "Rainfall well below normal for a place and season",
+              "Rainfall deficit at IMD stations"],
+             ["Agricultural", "Soil moisture too low for crops at the stage they need it",
+              "Delayed sowing, wilting, low vegetation index"],
+             ["Hydrological", "Reservoirs, rivers and groundwater fall below normal",
+              "Falling well levels, dry tanks"],
+             ["Socio-economic", "Water and food fall short of what people need, so income, "
+              "nutrition and work suffer", "Distress sales of livestock, migration, debt"]]),
+          B("These are standard textbook categories, used here for teaching.", sm=True)],
+         [B("The categories matter because they arrive in sequence. Rain fails first. Soil dries "
+            "and crops fail weeks later. Wells and tanks fail months later. People migrate, sell "
+            "animals and borrow throughout. A declaration based only on rainfall comes early "
+            "and may miss a district where rain was near normal but badly timed. A declaration "
+            "that waits for crop-cutting results comes late, after people have already sold "
+            "their assets."),
+          H("amber", "Drought harms people mainly through lost work and income, which is why the "
+            "response that matters most is often employment and food, not a single relief "
+            "payment.")])),
+
+    C("The money", "How drought is financed",
+      TW([B("Drought is on the national list of notified disasters, and took 17.26 per cent of "
+            "State disaster expenditure from 2019-20 to 2023-24, second only to floods (" + FC16 +
+            ", para 11.65, Figure 11.5). Relief spending as a whole is dominated by agricultural "
+            "input subsidy, at 55.6 per cent after removing COVID-19 spending, and drought is "
+            "where most of that subsidy is paid."),
+          B("The Fifteenth Commission earmarked ₹1,200 crore in the national mitigation fund for "
+            "catalytic assistance to the twelve most drought-prone States. By 31 July 2025, ₹350 "
+            "crore had been released (" + FC16 + ", Table 11.2). For agricultural disasters, "
+            "the Inter-Ministerial Group that scrutinises a State's request for central "
+            "assistance is chaired by the Secretary, Agriculture, not the Union Home Secretary "
+            "(para 11.11).")],
+         [ST([CARD("17.26%", "of State disaster spending went on drought, 2019-24", "amber",
+                   "FC-16 Figure 11.5"),
+              CARD("₹1,200 cr", "FC-15 earmark for 12 drought-prone States", "cyan",
+                   "FC-16 Table 11.2"),
+              CARD("₹350 cr", "released by 31 July 2025", "red", "FC-16 Table 11.2")], 1),
+          H("cyan", "Input subsidy reaches cultivators. Agricultural labourers, who lose the most "
+            "work in a drought, need a different instrument.")])),
+
+    C("Work in a drought", "Rural employment law in a drought, after July 2026",
+      TW([B("Rural employment guarantees have been India's main drought response for landless "
+            "households. The Mahatma Gandhi National Rural Employment Guarantee Act 2005 was "
+            "repealed from 1 July 2026, when the Viksit Bharat Guarantee for Rozgar and "
+            "Ajeevika Mission (Gramin) Act 2025 came into force, by Ministry of Rural "
+            "Development notification of 11 May 2026 (SCC Online, 12 May 2026)."),
+          B("The new Act guarantees not less than 125 days of employment a year to every rural "
+            "household whose adult members volunteer for unskilled manual work (s. 5(1)). It "
+            "also requires States to notify sixty days a year covering peak sowing and "
+            "harvesting, during which no work is undertaken (s. 6). In a drought year the "
+            "notified peak season may produce little farm work, which is something to watch.")],
+         [T(["Provision of " + VBG, "What it allows in a disaster"],
+            [["s. 7(1)", "A State may recommend special operational relaxations during natural "
+              "calamities or extraordinary circumstances"],
+             ["s. 7(2)", "The Centre may allow temporary expansion of permissible works, relaxed "
+              "documentation, or enhanced wage employment"],
+             ["s. 5(4)", "Work beyond the guaranteed days may be provided within economic "
+              "capacity"],
+             ["Schedule I, Category IV", "Works to mitigate extreme weather: shelters, "
+              "embankments, ponds for flood management, shelterbelts, forest fire management"]]),
+          B("Source: " + VBG + ", as published in India Code.", sm=True)])),
+
+    C("Declaring drought", "What a declaration decides, and who is left out",
+      TW([B("A drought declaration by a State government opens access to relief norms, central "
+            "assistance and scheme relaxations. The timing and the unit of declaration, usually "
+            "a block or tehsil, decide who gets help. A village in a block that is not declared "
+            "gets nothing, however badly its own crops failed."),
+          B("Declarations rely on a mix of rainfall, crop sowing, vegetation, soil moisture and "
+            "water indicators, followed by field verification. The Union Agriculture Ministry "
+            "publishes the procedure that States are expected to follow. Practitioners should "
+            "read the current version of that procedure before advising a State, because its "
+            "indicators and thresholds have been revised over time.")],
+         [T(["Design question", "Who loses if it is answered badly"],
+            [["How small is the unit declared?", "Villages in a block whose average looks "
+              "normal"],
+             ["How early is the declaration?", "Households that sell animals and borrow before "
+              "relief arrives"],
+             ["Is relief tied to land records?", "Tenants, sharecroppers and women farmers "
+              "without title"],
+             ["Is employment expanded at once?", "Landless labourers, who lose work first"],
+             ["Are migrants counted?", "Families whose members left to find work and are "
+              "absent from surveys"]]),
+          B("Illustrative. The specific indicators and thresholds of India's drought "
+            "declaration procedure are not set out here because the current text could not be "
+            "verified for this course.", sm=True)])),
+
+    C("Drought and people", "What a drought response should measure",
+      TW([BL(["Days of work demanded and provided under the rural employment guarantee, by "
+              "month, compared with the same months in a normal year.",
+              "Prices of fodder, and the number and price of livestock sold at local markets.",
+              "Seasonal migration from the district, including whole families.",
+              "Children's attendance at school and anganwadi, and meals served.",
+              "Debt taken for consumption, from microfinance and moneylenders.",
+              "Drinking water supplied by tanker, by village, and how long the queue is."], "cyan")],
+         [B("Each of these indicators moves before crop-cutting results are in. Taken together "
+            "they show whether a drought response is reaching people, which input subsidy "
+            "payments alone cannot."),
+          H("amber", "Heat makes drought worse and the two now overlap in the same months in "
+            "much of India. Section 08 turns to heat itself."),
+          B("Illustrative monitoring list.", sm=True)])),
+]
