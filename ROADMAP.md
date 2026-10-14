@@ -125,6 +125,8 @@ An instructor at a school of social work asked for a kit covering Sustainability
 - [x] **A reading list for every flagship** (v10.381.0): 1,099 readings checked against the publisher, free legal copies linked, and a request form for subscription articles.
 - [x] **Teaching kits and template bundles** (v10.381.0): the question banks as kits for institutions, and four bundles named for the job.
 - [x] **A plainer front page and course pages** (v10.381.0): three ways in on the home page, and every flagship opens with its modules.
+- [x] **Progress saved on every flagship** (v10.382.0): the six courses whose quizzes the tracker could not read now save progress toward a certificate.
+- [x] **Course notes offered at the end of each module** (v10.382.0): one line under every flagship module.
 
 ---
 
