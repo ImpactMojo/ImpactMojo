@@ -6,7 +6,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Changed
 
-- Vandana Soni's bio on the home page, the About page and the Gender course now describes her work, taken from her own profile: early literacy at Room to Read, national assessments with NCERT and MHRD at Central Square Foundation, programmes for rural schools at eVidyaloka Trust. Her title is now Head of Learning Programmes, as she gives it.
+- Vandana Soni's bio on the home page, the About page and the Gender course now describes her work in the same form as the founder's: 15+ years in education and development, specialising in early literacy, learning assessment and programme design for schools across India. Her title is Head of Learning Programmes, as she gives it.
 
 ## v10.382.0 — October 14, 2026 (corrected citations, the last Dropbox links, and course pages that fit a phone)
 
