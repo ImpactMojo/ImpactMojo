@@ -12,6 +12,13 @@
  * - professional (₹999/month)
  * - organization (₹1,499/user/month)
  * 
+ * This gate runs in the browser and can be bypassed by anyone who edits the
+ * page. That is a deliberate choice for the Pro Studio exports (2026-10-14):
+ * an export only packages what the visitor typed, so a bypass gives away
+ * convenience, not content. Paid content itself must be served by a function
+ * that checks the session, as the Practice Packs are (netlify/functions/
+ * pack-content.mjs), and the paid AI calls already are.
+ *
  * Usage:
  * Add data-required-tier="tierName" to any element to gate it
  * Example: <div class="card" data-required-tier="practitioner">...</div>

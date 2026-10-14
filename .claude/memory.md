@@ -12,7 +12,8 @@ Persistent context that carries across Claude Code sessions. Updated automatical
 - **Reference Library counts** (verified v10.23.2): ImpactLex 390 terms · FieldCases 200 cases / 117 countries · NudgeKit 203 BCTs / 26 categories · Dataverse 272 items · DevDiscourses 500+ papers · PolicyDhara (Indian policy docs)
 - **Deploy target**: Netlify (auto-deploy on push to main, HTML now edge-cached for 5 min)
 - **Backend**: Supabase project `ddyszmfffyedolkcugld`
-- **Edge functions**: `netlify/edge-functions/policydhara.ts` + `devdiscourses.ts` proxy GitHub Pages content with `<base>` injection
+- **DevDiscourses and PolicyDhara** move to devdiscourses.impactmojo.in and policydhara.impactmojo.in in v10.379.0 (PR #1238, with PolicyDhara #816 and development-discourses #17). The old `/devdiscourses` and `/policydhara` paths 301 there; the two proxy edge functions are deleted. Until v10.379.0 is published the edge functions still serve the old paths.
+- **Publishing is locked**: a merge builds but goes live only at the scheduled publish (07:47 and 19:47 IST, `tools/publish-locked.py` in Democracy-by-Design) or when that workflow is run by hand for `impactmojo`.
 
 ## Known drift (open)
 
@@ -189,6 +190,13 @@ The owner writes plainly, as a journalist or a professor does, and asked why the
 - **Chamber petition (AOR) lives in `Varnasr/Experiments/chamber-petition/`**: Migrated from Supabase to Netlify Forms on 2026-04-16, then moved out of impactmojo/impactmojo to Varnasr/Experiments as a sandbox project. Netlify site: `chamber-petition` (id `6581a696-c2d1-4a16-bcdf-681dc517762b`) is now linked to that repo (base_dir=`chamber-petition`, deploy_key_id=`69e0d3654796c31483fe0aa4`, GitHub deploy_key=`148764262`) — pushes to Varnasr/Experiments `main` trigger auto-deploy. Form `aor-petition` (id `69e0c835009c6c0008de271a`) routes to devvrat.SCAORA@gmail.com (hook `69e0c8a0add950870abd4b78`). No standalone GitHub repo ever existed for this project. 67-signature backup preserved in the subfolder.
 
 ## Session Log
+
+### Session 2026-10-13/14 — v10.378.0 live, v10.379.0 waiting to publish
+- **v10.378.0 (PR #1236) is live** via the scheduled publish: analytics wait for consent on 1,030 pages, shared site chrome stylesheet on 1,009, Supabase client vendored, old names swept, h1 on decks, contrast fixes. Issues #1230, #1232, #1233, #1234, #1235 closed after live spot checks.
+- **v10.379.0 (PR #1238, draft, CI green)** waits for the owner's word to publish, because the owner is saving deploy credits and wants one publish: paid Practice Pack modules served by `/api/pack-content` after a server-side access check (item 37 in testing.md), Cloudflare Turnstile on the sign-in forms (off until `TURNSTILE_SITE_KEY` is set in `js/config.js`; the owner has not yet sent the site key), DevDiscourses and PolicyDhara on their own subdomains, the security policy enforced on the account pages, and more contrast fixes. #1231 stays open until it is live.
+- **Owner decisions**: products sold separately; /subscribe/ offers Practitioner and Professional; Pro Studio exports stay a soft gate in the browser (deliberate, noted in `js/premium.js`).
+- **After publish**: merge PolicyDhara #816 and development-discourses #17 and set their Pages custom domains; the owner turns on CAPTCHA in Supabase with the Turnstile secret themselves; finish the remaining private follow-ups recorded outside the repository.
+- **Preview deploys no longer receive the server keys**: the eight secret Netlify variables are scoped to production only. A function that needs one fails on a deploy preview by design.
 
 ### Session 2026-09-08 — OpenStacks family rebuild (not ImpactMojo)
 - EquityStack `inequality/`, FieldStack `field_ops/`, InsightStack flattening and rebuild of the long tail, family tables in all READMEs; SignalStack rebuilt as the Research Rundown archive with companions and tools (PR #20, live). See "OpenStacks family" above.

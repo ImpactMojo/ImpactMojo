@@ -353,13 +353,13 @@ def discourses_block(t, base, entries):
     if not ids:
         return ('    <p>Development Discourses, the open-access reference library, holds no entry '
                 'that bears directly on this theory. Browse it at '
-                '<a href="/devdiscourses/">impactmojo.in/devdiscourses</a>.</p>')
+                '<a href="https://devdiscourses.impactmojo.in/">devdiscourses.impactmojo.in</a>.</p>')
     rows = []
     for did in ids:
         e = entries[did]
         rows.append('      <li><a href="%s">%s</a> by %s (%s)</li>'
                     % (esc(base + did), esc(e["title"]), esc(e["authors"]), esc(e["year"])))
-    return ('    <p>Open access, in <a href="/devdiscourses/">Development Discourses</a>:</p>\n'
+    return ('    <p>Open access, in <a href="https://devdiscourses.impactmojo.in/">Development Discourses</a>:</p>\n'
             '    <ul class="reading reading--dd">\n' + "\n".join(rows) + '\n    </ul>')
 
 

@@ -4,7 +4,7 @@
 
 PolicyDhara is a **curated collection of Indian public policy documents, government schemes, and legislative frameworks**, built for development practitioners and researchers. It gathers the source material of Indian policy (the schemes, laws, and frameworks that shape development work) into one browsable, **open-access** place.
 
-PolicyDhara is **free and browser-based**. It opens directly on the page at [/policydhara](/policydhara): no login, no download.
+PolicyDhara is **free and browser-based**. It opens directly on the page at [https://policydhara.impactmojo.in/](https://policydhara.impactmojo.in/): no login, no download.
 
 ---
 
@@ -16,26 +16,21 @@ PolicyDhara is organised around the documents practitioners actually reach for:
 - **Government schemes**: the programmes through which policy is delivered on the ground.
 - **Legislative frameworks**: the laws and statutory instruments that underpin it all.
 
-Browse the collection at [/policydhara](/policydhara).
+Browse the collection at [https://policydhara.impactmojo.in/](https://policydhara.impactmojo.in/).
 
 ---
 
-## How It Works
+## How it works
 
-PolicyDhara is a standalone **Astro application**, built and published separately, that ImpactMojo surfaces at [/policydhara](/policydhara) so it lives under the impactmojo.in domain alongside the rest of the platform.
+PolicyDhara is a standalone **Astro application**, built and published separately on GitHub Pages at its own address, [policydhara.impactmojo.in](https://policydhara.impactmojo.in/).
 
-Behind the scenes, a **Netlify Edge Function** (`netlify/edge-functions/policydhara.ts`) proxies the PolicyDhara app onto the site. When you request `/policydhara`, the edge function fetches the upstream app and returns it in place: the pages, styling, and assets all load as if they were native to impactmojo.in. You never leave the site or see the upstream address.
+Until October 2026 ImpactMojo showed it inside the main site at `impactmojo.in/policydhara`, through a Netlify Edge Function. It now has its own subdomain, as the Climate TRACE and SDG dashboards do, and the old address redirects there, so existing links and bookmarks still work.
 
 ---
 
-## Why It's Served This Way
+## Why it has its own address
 
-Serving PolicyDhara through the edge function keeps two things true at once:
-
-- **One home.** The tool sits at a clean `/policydhara` URL under the main domain, so it is bookmarkable and shareable like any other ImpactMojo page.
-- **Fast, fresh updates.** The proxy sets a short browser cache with stale-while-revalidate, so PolicyDhara loads quickly but still picks up upstream edits within about a minute of a new deploy: rather than waiting on the upstream host's longer cache.
-
-Static assets (CSS, JavaScript, images) ship with content-hashed filenames, so they pass straight through with their long cache intact.
+A page served on www.impactmojo.in runs alongside members' sign-in sessions. Giving PolicyDhara its own subdomain keeps its code apart from those sessions, with no proxy in between to maintain. It also loads straight from its host, so a new PolicyDhara deploy is visible as soon as GitHub Pages publishes it.
 
 ---
 

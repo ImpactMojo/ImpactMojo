@@ -15,6 +15,10 @@
 
   var cfg = {
     SUPABASE_URL:      'https://ddyszmfffyedolkcugld.supabase.co',
+    // Cloudflare Turnstile site key (public). Empty leaves the human check off;
+    // see js/turnstile.js for the order to switch it on in.
+    TURNSTILE_SITE_KEY: '0x4AAAAAAFWMjQ3rnyFTQo-x',
+
     SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkeXN6bWZmZnllZG9sa2N1Z2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MzMxMzEsImV4cCI6MjA4MDMwOTEzMX0.vPLlFkC3pqOBtofZ8B6_FBLbRfOKwlyv3DzLvJBS16w',
 
     // Allowed origin for premium resource launches. Derived from wherever the

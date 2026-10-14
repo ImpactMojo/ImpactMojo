@@ -11,12 +11,12 @@
  *   2. A standalone per-pack purchase recorded in the profile's
  *      `resource_grants` array (slug match).
  *
- * This is a CLIENT-SIDE freemium teaser gate, not a hard paywall. It reads the
- * cached Supabase profile written by js/auth.js (`impactmojo_cached_profile`)
- * so it works without loading the full auth stack into every pack. Modules 3-4
- * carry little value without the user's own Module 1-2 inputs (which never
- * leave their browser), so casual bypass is low-risk — the real value is the
- * personalised capstone, the subscription, and the optional expert review.
+ * The paid modules are not in the page. scripts/practice-packs/split-gated.py
+ * moved them to the private products bucket, and /api/pack-content returns
+ * them only after checking the reader's session and profile on the server.
+ * The cached profile below decides only whether to ask; the server decides
+ * whether to answer. The pack's own script is stored as type="text/x-im-pack"
+ * and run from here, after the paid panels are in place, so it binds to them.
  *
  * USAGE — add to a pack page, AFTER the pack's inline <script> that defines
  * goTab():
@@ -224,11 +224,66 @@
     };
   }
 
-  function init() {
-    if (hasAccess()) return; // full pack, nothing to do
+  // ── Session token for the server check ─────────────────────────────
+  function accessToken() {
+    try {
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        var k = keys[i];
+        if (k.indexOf('sb-') === 0 && k.indexOf('-auth-token') !== -1) {
+          var v = JSON.parse(localStorage.getItem(k));
+          var t = v && (v.access_token || (v.currentSession && v.currentSession.access_token));
+          if (t) return t;
+        }
+      }
+    } catch (e) { /* ignore */ }
+    return null;
+  }
+
+  // ── Run the pack's own script, once ─────────────────────────────────
+  var ran = false;
+  function runPack() {
+    if (ran) return; ran = true;
+    var src = document.getElementById('im-pack-js');
+    if (!src) return;
+    var s = document.createElement('script');
+    s.textContent = src.textContent;
+    src.parentNode.insertBefore(s, src.nextSibling);
+  }
+
+  function fillPanels(panels) {
+    var n = 0;
+    Object.keys(panels || {}).forEach(function (k) {
+      var el = document.getElementById('module-' + k);
+      if (el && el.getAttribute('data-gated') === '1') { el.innerHTML = panels[k]; el.removeAttribute('data-gated'); n++; }
+    });
+    return n;
+  }
+
+  function gateTabs() {
     injectStyles();
     lockTabs();
     installGate();
+  }
+
+  function init() {
+    var token = hasAccess() ? accessToken() : null;
+    if (!token) { runPack(); gateTabs(); return; }
+    fetch('/api/pack-content?slug=' + encodeURIComponent(CFG.slug), {
+      headers: { Authorization: 'Bearer ' + token },
+      credentials: 'same-origin'
+    }).then(function (r) {
+      if (!r.ok) throw new Error('status ' + r.status);
+      return r.json();
+    }).then(function (data) {
+      if (!fillPanels(data.panels)) throw new Error('empty');
+      runPack();
+    }).catch(function () {
+      // The server said no, or could not be reached: the free modules still
+      // work, and the paid tabs explain how to get access.
+      runPack();
+      gateTabs();
+    });
   }
 
   if (document.readyState === 'loading') {

@@ -2,6 +2,21 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.379.0 — October 13, 2026 (Practice Packs unlocked on the server)
+
+### Changed
+
+- The paid modules of all 18 Practice Packs, and their capstone builders, are no longer in the page. Members and buyers of a pack get them from the server after it checks their account, so the pack opens as before for them. Everyone else still gets the first two modules free.
+- The organisation invite lookup works only for people who run an organisation.
+- Two internal pages were removed from site search.
+- Development Discourses and PolicyDhara have their own addresses, devdiscourses.impactmojo.in and policydhara.impactmojo.in. The old /devdiscourses and /policydhara links redirect there.
+- The sign-in, account, organisation and admin pages now enforce a list of the outside services they may load code from.
+- The sign-in forms are ready for a Cloudflare Turnstile human check, which switches on once its key is added.
+
+### Fixed
+
+- **More pages fell short on contrast in one theme** (#1231): the cookie notice on game pages, quiz answers on ten flagship courses in dark mode, links and badges on the store and every product page, the upgrade page, the Pro Studio, Simulations, 101 Series and Reading Companions hubs, the Theory of Change Studio guide, the known issues page and the print notes on 22 handouts.
+
 ## v10.378.0 — October 13, 2026 (menus, colours and consent)
 
 ### For Learners
