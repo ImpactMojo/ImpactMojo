@@ -928,16 +928,26 @@ const ImpactMojoAuth = {
     // AUTHENTICATION METHODS
     // =====================================================
 
+    // Cloudflare Turnstile token from js/turnstile.js, or undefined when the
+    // human check is not configured. Supabase requires one once CAPTCHA
+    // protection is on; until then it is ignored.
+    async _captcha() {
+        try { return (window.IMCaptcha && (await window.IMCaptcha.token())) || undefined; }
+        catch (e) { return undefined; }
+    },
+
     // Sign up with email and password
     async signUp(email, password, fullName = '') {
         try {
             if ((await imxPwnedCount(password)) > 0) {
                 return { success: false, message: IMX_PWNED_MESSAGE, error: new Error('pwned_password') };
             }
+            const captchaToken = await this._captcha();
             const { data, error } = await supabaseClient.auth.signUp({
                 email: email,
                 password: password,
                 options: {
+                    captchaToken: captchaToken,
                     data: {
                         full_name: fullName,
                         display_name: fullName || email.split('@')[0]
@@ -966,9 +976,11 @@ const ImpactMojoAuth = {
     // Sign in with email and password
     async signIn(email, password) {
         try {
+            const captchaToken = await this._captcha();
             const { data, error } = await supabaseClient.auth.signInWithPassword({
                 email: email,
-                password: password
+                password: password,
+                options: { captchaToken: captchaToken }
             });
 
             if (error) throw error;
@@ -1034,9 +1046,11 @@ const ImpactMojoAuth = {
     // Sign in with magic link (passwordless)
     async signInWithMagicLink(email) {
         try {
+            const captchaToken = await this._captcha();
             const { data, error } = await supabaseClient.auth.signInWithOtp({
                 email: email,
                 options: {
+                    captchaToken: captchaToken,
                     emailRedirectTo: window.location.origin + '/account.html'
                 }
             });
@@ -1116,7 +1130,9 @@ const ImpactMojoAuth = {
 
     async resetPassword(email) {
         try {
+            const captchaToken = await this._captcha();
             const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                captchaToken: captchaToken,
                 redirectTo: window.location.origin + '/reset-password.html'
             });
 
