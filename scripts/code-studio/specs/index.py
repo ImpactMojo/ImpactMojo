@@ -20,7 +20,7 @@ PAGE = {
               'look for on your own screen. They do not try to run the software for you.</div>'),
     "sections": [
         ("runnable", "Run code in your browser",
-         "There is nothing to install. Every course loads the same small household survey, made up for practice."),
+         "There is nothing to install. Every course loads small practice datasets made up for the purpose, so nothing in them describes a real person."),
         ("guide", "Guided courses for desktop and online tools",
          "Step-by-step courses for software you install or use online, with every command written out."),
     ],

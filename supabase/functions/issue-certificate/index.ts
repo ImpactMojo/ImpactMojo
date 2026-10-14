@@ -11,16 +11,32 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.112.3";
 
 // ── Course catalog (certificate-eligible courses) ─────────────────────
+// Must match the CASE in public.auto_issue_certificate, which issues most
+// certificates; this path covers the self-service request.
 const COURSE_NAMES: Record<string, string> = {
   mel: "Monitoring, Evaluation & Learning",
   dataviz: "Data Visualization for Impact",
   devai: "AI for Development",
   devecon: "Development Economics",
-  gandhi: "Gandhi & Contemporary Development",
+  gandhi: "Gandhi's Political Thought",
   law: "Law & Development",
   media: "Media, Communication & Development",
   SEL: "Social & Emotional Learning",
-  poa: "Philosophy of Action",
+  sel: "Social-Emotional Learning for Development Practice",
+  poa: "Politics of Aspiration",
+  gender: "Gender Studies: Feminisms, Power & Social Change",
+  pubchoice: "Public Choice: Decisions, Incentives & Institutions",
+  pubpol: "Public Policy: Process, Design & Governance in India",
+  causal: "Causal Inference for Development",
+  livelihoods: "Livelihoods in India: Rural, Urban, and Skills",
+  powerBI: "Power BI for Practitioners",
+  intervention: "Designing What Works: Development Interventions from Model to Scale",
+  "nothing-about-us": "Nothing About Us Without Us: Disability, Justice & Development",
+  "nvc-rj": "Nonviolence in Practice: Communication, Resistance & Repair",
+  "social-movements": "Social Movements & Protests: Theory and South Asian Practice",
+  esg: "Sustainability, ESG & Corporate Responsibility for Development Practice",
+  "gender-mel": "Gender-Sensitive Monitoring, Evaluation & Learning",
+  "social-protection": "Social Protection and Welfare Delivery in India",
 };
 
 // ── CORS headers ──────────────────────────────────────────────────────

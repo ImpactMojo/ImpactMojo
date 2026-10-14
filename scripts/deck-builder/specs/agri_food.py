@@ -29,7 +29,7 @@ Sources opened while writing (October 2026):
 - Down To Earth, report on the High Level Committee on restructuring FCI, 22 January 2015:
   https://www.downtoearth.org.in/environment/reduce-food-security-benefits-from-67-to-40-population-says-panel-on-restructuring-fci--48344
 - PRS, The Farm Laws Repeal Bill 2021: https://prsindia.org/billtrack/the-farm-laws-repeal-bill-2021
-- Wikipedia, 2020 Indian agriculture acts: https://en.wikipedia.org/wiki/2020_Indian_agriculture_acts
+- PRS, The Farmers' Produce Trade and Commerce Bill 2020: https://prsindia.org/billtrack/the-farmers-produce-trade-and-commerce-promotion-and-facilitation-bill-2020
 - National Food Security Act 2013 (Act 20 of 2013), Gazette text via PRS:
   https://prsindia.org/files/bills_acts/acts_parliament/2013/national-food-security-act-2013.pdf
 - Ministry of Finance, Budget at a Glance 2026-27: https://www.indiabudget.gov.in/doc/Budget_at_Glance/budget_at_a_glance.pdf
@@ -53,9 +53,9 @@ Sources opened while writing (October 2026):
   https://www.mospi.gov.in/uploads/latestReleases/latest_release_1774607827733_3e8964a9-268b-4cc9-ad65-cfc8a9e32f08_Press_note_AR_PLFS_2025_23032025_V2.1_26032026_final.pdf
 - ICAR, Lok Sabha Unstarred Question 2365, 10 December 2024 (NICRA projections):
   https://www.icar.org.in/sites/default/files/Circulars/LU-2365.pdf
-- ORF, Reducing stunting, building human capital: lessons from NFHS-6 (June 2026):
-  https://www.orfonline.org/expert-speak/reducing-stunting-building-human-capital-lessons-from-nfhs-6
-- Wikipedia, State List (Seventh Schedule entries 14, 17, 18, 28): https://en.wikipedia.org/wiki/State_List
+- IIPS, NFHS-6 (2023-24) India and State/UT Fact Sheets (May 2026), indicators 68, 69, 70, 72:
+  https://www.nfhsiips.in/nfhsuser/assets/National%20Family%20Health%20Survey%20(NFHS-6)%202023-24%20Fact%20Sheets.pdf
+- Legislative Department, Constitution of India, Seventh Schedule, List II, entries 14, 17, 18, 28: https://legislative.gov.in/constitution-of-india/
 - Drèze and Khera (2015), Understanding Leakages in the Public Distribution System, EPW 50(7):
   https://web.iitd.ac.in/~suban/COP290/stuff/pds/Understanding_Leakages_in_the_Public_Distribution_System.pdf
 - Muralidharan, Niehaus and Sukhtankar, Identity Verification Standards in Welfare Programs, NBER WP 26744:
@@ -619,7 +619,7 @@ SEC3 = [
 
 
 # ===================== SECTION 04: THE FARM LAWS =====================
-LAWS = "PRS Legislative Research, The Farm Laws Repeal Bill 2021; Wikipedia, 2020 Indian agriculture acts and 2020-2021 Indian farmers' protest"
+LAWS = "PRS Legislative Research, bill pages for the three 2020 Acts and The Farm Laws Repeal Bill 2021"
 
 SEC4 = [
     DIV("04", "Four", "The 2020 farm laws and their repeal"),
@@ -659,7 +659,7 @@ SEC4 = [
               "The Acts were passed in a single session as government bills and repealed in a single "
               "day. The Rajya Sabha vote was by voice, which meant no recorded division. Most of the "
               "argument took place outside Parliament, at the protest sites on Delhi's borders at "
-              "Singhu, Tikri and Ghazipur, which were declared over on 11 December 2021, and in the "
+              "Singhu, Tikri and Ghazipur, which farmers left in December 2021, and in the "
               "Supreme Court."),
             B("Source: " + LAWS + ".", sm=True)]),
     ]),
@@ -670,7 +670,7 @@ SEC4 = [
                ["17", "Water: water supplies, irrigation and canals, drainage and embankments, water storage and water power"],
                ["18", "Land: rights in or over land, land tenures including the relation of landlord and tenant, and transfer and alienation of agricultural land"],
                ["28", "Markets and fairs"]]),
-            B("Source: Seventh Schedule, List II, as reproduced on Wikipedia's State List page.", sm=True)],
+            B("Source: Constitution of India, Seventh Schedule, List II.", sm=True)],
            [B("Agricultural marketing in India is organised under state APMC laws, and each state "
               "decides which produce is regulated in its markets, what fee is charged and who may be "
               "licensed to trade."),
@@ -1627,18 +1627,18 @@ SEC11 = [
         TC([ST([C("376.56 MT", "foodgrain production, 2025-26 (third advance estimates)", "green", PIBAG),
                 C("248 MT", "milk production, 2024-25, up from 146.31 MT in 2014-15", "cyan", PIBAG),
                 C("377.78 MT", "horticulture production, 2025-26 (second advance estimates)", "amber", PIBAG)], cols=3),
-            ST([C("29.3%", "of children under five stunted, NFHS-6 (2023-24), down from 35.5% in NFHS-5", "red", "ORF, from the NFHS-6 fact sheet"),
-                C("31.8%", "of children under five underweight, NFHS-6", "red", "Same"),
-                C("15.3%", "of children 6-23 months receiving a minimum adequate diet, NFHS-6", "indigo", "Same")], cols=3)],
-           [B("India produces more grain, milk, fruit and vegetables than ever. Yet according to "
-              "NFHS-6, as summarised by the Observer Research Foundation in June 2026, about three "
-              "in ten young children are stunted and fewer than one in six infants aged 6 to 23 months receives a minimum adequate diet."),
+            ST([C("29.3%", "of children under five stunted, NFHS-6 (2023-24), down from 35.5% in NFHS-5", "red", "IIPS, NFHS-6 India fact sheet, indicator 69"),
+                C("31.8%", "of children under five underweight, NFHS-6", "red", "Same, indicator 72"),
+                C("15.3%", "of children 6-23 months receiving an adequate diet, NFHS-6", "indigo", "Same, indicator 68")], cols=3)],
+           [B("India produces more grain, milk, fruit and vegetables than ever. Yet the NFHS-6 fact "
+              "sheet, published by IIPS in May 2026, finds about three "
+              "in ten young children stunted, and fewer than one in six children aged 6 to 23 months receiving an adequate diet."),
             B("The gap between production and nutrition is about access, prices, diets, care, water "
               "and sanitation, and disease. Agriculture affects all the food-related parts of that "
               "chain, from what is grown and what it costs to what is in it and the time and income "
               "of the women who grow it.", sm=True),
-            H("amber", "Stunting fell by about six percentage points between NFHS-5 and NFHS-6. "
-              "ORF reports that wasting has not improved.")]),
+            H("amber", "Stunting fell by about six percentage points between NFHS-5 and NFHS-6, from 35.5% to 29.3%. "
+              "Wasting barely moved, from 19.3% to 19.0%.")]),
     ]),
 
     S("Food systems", "Farm policy decides what is cheap to grow and cheap to eat", [
@@ -1799,7 +1799,7 @@ SEC12 = [
                 A("https://www.mospi.gov.in/uploads/latestReleases/latest_release_1774607827733_3e8964a9-268b-4cc9-ad65-cfc8a9e32f08_Press_note_AR_PLFS_2025_23032025_V2.1_26032026_final.pdf", "PLFS Annual Report 2025, press note"),
                 A("https://www.icar.org.in/sites/default/files/Circulars/LU-2365.pdf", "ICAR, Lok Sabha Unstarred Question 2365, 10 Dec 2024"),
                 A("https://www.etvbharat.com/en/bharat/nearly-11-per-cent-groundwater-assessment-units-over-exploited-govt-enn26072007475", "Groundwater assessment 2025, Rajya Sabha reply (ETV Bharat report)"),
-                A("https://en.wikipedia.org/wiki/State_List", "Seventh Schedule, State List")], sm=True)]),
+                A("https://legislative.gov.in/constitution-of-india/", "Constitution of India, Seventh Schedule")], sm=True)]),
     ], compact=True),
 
     S("Sources: studies and analysis", "Research and analysis cited in this course", [
@@ -1812,9 +1812,9 @@ SEC12 = [
            [BL([A("https://www.atai-research.org/wp-content/uploads/2020/06/ueaa084.pdf", "Cole and Fernando (2021), 'Mobile'izing Agricultural Advice, Economic Journal"),
                 A("https://ideas.repec.org/a/ucp/jpolec/doi10.1086-717045.html", "Ryan and Sudarshan (2022), Rationing the Commons, JPE 130(1): 210-257"),
                 A("https://www.nber.org/papers/w26744", "Muralidharan, Niehaus and Sukhtankar, Identity Verification Standards in Welfare Programs, NBER WP 26744"),
-                A("https://www.orfonline.org/expert-speak/reducing-stunting-building-human-capital-lessons-from-nfhs-6", "ORF (2026), Reducing stunting: lessons from NFHS-6"),
+                A("https://www.nfhsiips.in/nfhsuser/assets/National%20Family%20Health%20Survey%20(NFHS-6)%202023-24%20Fact%20Sheets.pdf", "IIPS (2026), NFHS-6 India and State/UT Fact Sheets"),
                 A("https://www.downtoearth.org.in/environment/reduce-food-security-benefits-from-67-to-40-population-says-panel-on-restructuring-fci--48344", "Down To Earth (2015) on the Shanta Kumar committee report"),
-                A("https://en.wikipedia.org/wiki/2020%E2%80%932021_Indian_farmers%27_protest", "Wikipedia, 2020-2021 Indian farmers' protest")], sm=True),
+                A("https://prsindia.org/billtrack/the-farmers-produce-trade-and-commerce-promotion-and-facilitation-bill-2020", "PRS, Farmers' Produce Trade and Commerce Bill 2020")], sm=True),
             H("cyan", "Figures were checked against these sources in October 2026. Where two official "
               "sources disagree, as on the PM-KISAN allocation, the course says so.")]),
     ], compact=True),

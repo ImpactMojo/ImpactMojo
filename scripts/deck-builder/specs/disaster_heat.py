@@ -206,7 +206,7 @@ SLIDES += [
         "no definition of hazard, exposure, vulnerability or disaster risk.", sm=True),
       compact=True),
 
-    C("The risk equation", "Why the three parts are multiplied, not added",
+    C("The risk equation", "Why the three parts are multiplied together",
       TW([B("Risk analysts write disaster risk as a product: risk = hazard &times; exposure "
             "&times; vulnerability. The Sixteenth Finance Commission built its Disaster Risk "
             "Index for allocating money to States on exactly this rule, and explained why. "
@@ -267,7 +267,7 @@ SLIDES += [
          ["Landslide", "Minutes, often after days of rain", "Deaths, cut-off settlements",
           "Western Ghats, Himalaya, North-East"],
          ["Lightning", "Seconds", "Deaths of people working or sheltering outdoors",
-          "Across India, high in central and eastern States"],
+          "Across India"],
          ["Drought", "Months to years", "Crop and income loss, water scarcity, distress migration",
           "Rainfed districts of the Deccan, Rajasthan, Bundelkhand, Balochistan"],
          ["Heatwave and humid heat", "Days, with warning", "Heatstroke, deaths of older and "
@@ -358,20 +358,24 @@ SLIDES += [
             "and endorsed by the UN General Assembly. It replaced the Hyogo Framework for Action "
             "2005-2015, and was the outcome of consultations that began in March 2012 and "
             "intergovernmental negotiations from July 2014 to March 2015."),
-          B("It is not a treaty and creates no binding obligations. Its force comes from "
-            "reporting: countries report against 38 global indicators through the online "
+          B("It is a voluntary agreement that creates no binding obligations. Countries "
+            "report against 38 global indicators through the online "
             "Sendai Framework Monitor, and UNDRR is charged with supporting implementation, "
             "follow-up and review. It sits alongside the Paris Agreement, the Addis Ababa "
             "Action Agenda, the New Urban Agenda and the Sustainable Development Goals.")],
-         [T(["Feature", "Hyogo 2005-2015", "Sendai 2015-2030"],
-            [["Focus", "Building resilience of nations and communities", "Managing risk as well "
-              "as disasters"],
-             ["Targets", "None quantified at global level", "Seven global targets, 38 indicators"],
-             ["Hazards covered", "Mainly natural", "Natural and man-made, including "
-              "environmental, technological and biological"],
-             ["Health", "Limited", "Health resilience promoted throughout"],
-             ["State role", "Primary", "Primary, with responsibility shared with local "
-              "government, private sector and others"]]),
+         [T(["Shift from Hyogo identified in the Sendai foreword", "What it means"],
+            [["Disaster risk management, as opposed to disaster management", "Act on risk "
+              "before the event as well as on the event"],
+             ["Seven global targets", "Progress measured against quantified goals, with 38 "
+              "indicators"],
+             ["A goal focused on preventing new risk and reducing existing risk", "Planning "
+              "decisions become disaster decisions"],
+             ["Scope broadened to natural and man-made hazards", "Includes environmental, "
+              "technological and biological hazards"],
+             ["Health resilience promoted throughout", "Hospitals and health systems count as "
+              "critical infrastructure"],
+             ["Primary responsibility of States, with all-of-society engagement", "Shared with "
+              "local government, the private sector and others"]]),
           B("Source: UNDRR, What is the Sendai Framework; " + SENDAI + ", foreword.", sm=True)])),
 
     C("Goal", "One outcome and one goal",
@@ -385,10 +389,10 @@ SLIDES += [
             "that prevent and reduce hazard exposure and vulnerability to disaster, increase "
             "preparedness for response and recovery, and thus strengthen resilience.",
             "Sendai Framework, para 17, goal")],
-         [B("Read the goal as three instructions. Prevent new risk: do not build the next "
-            "school on the floodplain. Reduce existing risk: retrofit the school that is "
-            "already there. Strengthen resilience: prepare to respond and recover when the "
-            "remaining risk becomes a disaster."),
+         [B("Read the goal as three instructions. Preventing new risk means not building the "
+            "next school on the floodplain. Reducing existing risk means retrofitting the school "
+            "that is already there. Strengthening resilience means preparing to respond and "
+            "recover when the remaining risk becomes a disaster."),
           B("The first instruction is the cheapest and the most often ignored. Most risk in "
             "fast-growing South Asian cities is being created now, by where housing, roads and "
             "industry are built. A framework that only funds response will keep paying for "
@@ -463,8 +467,8 @@ SLIDES += [
               "evacuate"],
              ["Migrants", "Paras 7, 27(h), 36(a)(vi)", "Often absent from household lists used "
               "for relief"],
-             ["Women", "Paras 7, 32, 36", "Relief often paid to male heads of household"],
-             ["Indigenous peoples", "Paras 7, 27(h)", "Adivasi land and forest rights shape "
+             ["Women", "Paras 7, 32, 36(a)(i)", "Relief often paid to male heads of household"],
+             ["Indigenous peoples", "Paras 7, 27(h), 36(a)(v)", "Adivasi land and forest rights shape "
               "exposure"]]),
           B("Source: " + SENDAI + ". Caste is not named in the framework. In South Asia it "
             "decides who is reached by relief, as section 10 shows.", sm=True)])),
@@ -624,8 +628,8 @@ SLIDES += [
             "districts. Urban flooding, heat islands, building collapse and fire behave "
             "differently, and the municipal corporation controls drains, building permits and "
             "street-level services. Placing the authority with the Municipal Commissioner puts "
-            "it with the body that controls those levers. Note the word may: the Act enables "
-            "these authorities and does not require them.")],
+            "it with the body that controls those levers. The Act says a State may create "
+            "these authorities. It does not require them.")],
          [TERM("State Disaster Response Force, s. 44A",
                "A State may constitute a State Disaster Response Force for specialist response to "
                "a threatening disaster situation or disaster, with functions and service "
@@ -1069,7 +1073,7 @@ SLIDES += [
       TW([P("red", "Relief tied to ration cards",
             "The immediate cash transfer of ₹2,000 and 50 kg of rice was given only to ration "
             "card holders. The assessment records that this excluded many vulnerable families, "
-            "including migrants and brick kiln workers who were not residents but were equally "
+            "including migrants and brick kiln workers who were non-residents and were equally "
             "affected. The 50 kg was the same for every family whatever its size. It recommended "
             "giving cash and grain to all affected people without proof of residency, and "
             "distributing grain by family size."),
@@ -1236,14 +1240,14 @@ SLIDES += [
           "without records"],
          ["Days of work lost", "Rarely measured", "The main loss for daily wage workers"],
          ["School days lost", "Education department", "Schools used as shelters for weeks"],
-         ["Poverty impact", "Post-disaster needs assessment", "Usually estimated once, not "
-          "followed up"]]),
+         ["Poverty impact", "Post-disaster needs assessment", "Usually estimated once and "
+          "never followed up"]]),
       TW([B("Illustrative. The Pakistan assessment's poverty estimate and the Fani assessment's "
             "chapter on employment and livelihoods are examples of measuring beyond deaths and "
             "houses.", sm=True)],
          [H("amber", "Relief follows what is counted. Agricultural inputs were 55.6 per cent of "
             "State relief spending because crop loss is counted carefully (" + FC16 +
-            ", para 11.44). Lost wages are not.")]),
+            ", para 11.44). Lost wages are rarely counted.")]),
       compact=True),
 
     C("For practitioners", "Working on floods, landslides and lightning in a district",
@@ -1287,8 +1291,8 @@ SLIDES += [
             "that waits for crop-cutting results comes late, after people have already sold "
             "their assets."),
           H("amber", "Drought harms people mainly through lost work and income, which is why the "
-            "response that matters most is often employment and food, not a single relief "
-            "payment.")])),
+            "response that matters most is often employment and food over months. A single relief "
+            "payment does not replace lost work.")])),
 
     C("The money", "How drought is financed",
       TW([B("Drought is on the national list of notified disasters, and took 17.26 per cent of "
@@ -1300,8 +1304,8 @@ SLIDES += [
             "catalytic assistance to the twelve most drought-prone States. By 31 July 2025, ₹350 "
             "crore had been released (" + FC16 + ", Table 11.2). For agricultural disasters, "
             "the Inter-Ministerial Group that scrutinises a State's request for central "
-            "assistance is chaired by the Secretary, Agriculture, not the Union Home Secretary "
-            "(para 11.11).")],
+            "assistance is chaired by the Secretary, Agriculture. For other disasters "
+            "it is the Union Home Secretary (para 11.11).")],
          [ST([CARD("17.26%", "of State disaster spending went on drought, 2019-24", "amber",
                    "FC-16 Figure 11.5"),
               CARD("₹1,200 cr", "FC-15 earmark for 12 drought-prone States", "cyan",
@@ -1728,7 +1732,7 @@ SLIDES += [
           "houses; close roads", "Disruption, loss of trust"],
          ["Drought", "Seasonal rainfall and vegetation", "Weeks to months", "Expand public "
           "works; fodder; school meals in vacation", "Spending in a year that recovers"]]),
-      TW([B("Illustrative. Lead times are typical orders of magnitude, not guarantees.", sm=True)],
+      TW([B("Illustrative. Lead times are typical orders of magnitude and vary by event.", sm=True)],
          [H("amber", "Write down the cost of acting in vain before the season. A system with no "
             "false alarms is probably acting too late.")]),
       compact=True),
@@ -1855,8 +1859,8 @@ SLIDES += [
       TW([B("Relief systems in India run on lists: ration cards, voter rolls, land records, "
             "panchayat household registers. A person who is not on the local list is invisible "
             "to relief. After Fani, the ₹2,000 cash transfer and 50 kg of rice went only to ration "
-            "card holders, which excluded many migrants and brick kiln workers who were not "
-            "residents but were equally affected (" + FANI + ")."),
+            "card holders, which excluded many migrants and brick kiln workers who were "
+            "non-residents and were equally affected (" + FANI + ")."),
           B("The new rural employment law contains a model provision. In a national calamity "
             "such as a flood, cyclone, tsunami or earthquake that dislocates rural people, "
             "adults from affected areas may register and get a job card from the Gram Panchayat "
@@ -1961,11 +1965,11 @@ SLIDES += [
           H("amber", "Loanee farmers made up almost half of enrolled applications. Insurance tied "
             "to credit reaches borrowers first.")])),
 
-    C("Parametric cover", "Insurance that pays on a measurement, not on a loss survey",
+    C("Parametric cover", "Insurance that pays when a measurement crosses a threshold",
       TW([TERM("Parametric insurance",
                "Cover that pays a pre-agreed amount when a measured index crosses a threshold, "
                "such as rainfall at a weather station, wind speed or temperature, without a "
-               "survey of each policyholder's loss. It pays fast. Its weakness is basis risk: a "
+               "survey of each policyholder's loss. It pays fast. Its weakness is basis risk. A "
                "household can suffer a loss when the index does not trigger, or receive money "
                "when it suffered none."),
           B("Nagaland is the Sixteenth Commission's example. Its Disaster Risk Transfer "
@@ -2119,8 +2123,8 @@ SLIDES += [
          ["Assumption", "Workers can stop without losing wages", "Wage protection orders in force",
           "Labour department"]]),
       B("Illustrative framework built on the Ahmedabad model (Knowlton et al. 2014; ILO 2019 on "
-        "cool roofs) and the gaps in the CPR review. The indicators are examples, not "
-        "standards.", sm=True),
+        "cool roofs) and the gaps in the CPR review. The indicators are "
+        "examples.", sm=True),
       compact=True),
 
     C("Sources", "Sources used in this course (1 of 2)",

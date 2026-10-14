@@ -250,7 +250,7 @@ ImpactMojo-வில் ஒரு **Model Context Protocol (MCP) server** உள
 - `lookup_bct` / `search_bcts` / `list_bct_categories` — தென்னாசிய சூழல் மற்றும் வழக்காய்வுகளுடன் 203 BCT நுட்பங்கள்
 - `browse_dataverse` / `search_dataverse` — 343 கருவிகள், தரவுத்தொகுப்புகள், API-கள்
 - `list_challenges` / `get_challenge` — rubric-கள் கொண்ட பயிற்சிகள்
-- `list_courses` — 21 flagship மற்றும் 80 foundational பாடநெறிகள்
+- `list_courses` — 22 flagship மற்றும் 84 foundational பாடநெறிகள்
 - `get_game_info` — AI agent persona கொண்ட 18 simulation விளையாட்டுகள்
 - `query_climate_data` — Climate TRACE-லிருந்து இந்திய GHG உமிழ்வுகள்
 
@@ -306,7 +306,7 @@ Practitioner (அல்லது அதற்கு மேற்பட்ட) �
 
 ## எது இலவசம் vs. Premium?
 
-ImpactMojo-வின் பெரும்பான்மைப் பகுதி **முற்றிலும் இலவசம்** — இது ஒரு உண்மையான உறுதிமொழி, மார்க்கெட்டிங் உத்தி அல்ல. அனைத்து 21 flagship மற்றும் 80 foundational பாடநெறிகள், 135 விளையாட்டுகள், 35 Free Studio கருவிகள், handouts, ImpactLex, வழக்காய்வுகள், DevDiscourses, மற்றும் Dataverse ஆகியவை எந்தச் செலவும் இல்லாமல் கிடைக்கின்றன.
+ImpactMojo-வின் பெரும்பான்மைப் பகுதி **முற்றிலும் இலவசம்** — இது ஒரு உண்மையான உறுதிமொழி, மார்க்கெட்டிங் உத்தி அல்ல. அனைத்து 22 flagship மற்றும் 84 foundational பாடநெறிகள், 135 விளையாட்டுகள், 35 Free Studio கருவிகள், handouts, ImpactLex, வழக்காய்வுகள், DevDiscourses, மற்றும் Dataverse ஆகியவை எந்தச் செலவும் இல்லாமல் கிடைக்கின்றன.
 
 Premium உறுப்பினர்கள் (₹399/மாதம் முதல் தொடங்கி) கூடுதல் கருவிகள், labs-லிருந்து PDF/PNG ஏற்றுமதி, சான்றிதழ்கள், மற்றும் coaching மற்றும் பட்டறைகளுக்கான முன்னுரிமை அணுகலைத் திறக்கின்றன.
 

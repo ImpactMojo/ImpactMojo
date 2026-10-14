@@ -1281,7 +1281,7 @@ SLIDES_C = [
              "receives funds for community sanitary complexes and waste management assets "
              "(" + YER + "). The 2022 assessment found VWSCs in charge of O&amp;M in 14% of "
              "villages, a measure of how far devolution had reached by then (" + FA + ")."),
-        hbox("Sources: Wikipedia summaries of the 73rd Amendment and the Twelfth Schedule; "
+        hbox("Sources: Constitution of India, Part IX, Part IXA and the Eleventh and Twelfth Schedules; "
              + YER + "; " + FA + ".", "indigo"),
     ], compact=True),
 
@@ -1975,11 +1975,8 @@ SLIDES_D = [
                  "<a href=\"https://doi.org/10.1016/S2214-109X(13)70160-8\">Biran et al., 2014</a>; "
                  "Coffey and Spears, <em>Where India Goes</em>, HarperCollins India, 2017. "
                  "<strong>Background.</strong> "
-                 "<a href=\"https://en.wikipedia.org/wiki/Panchayati_raj_in_India\">Panchayati raj "
-                 "in India</a> and "
-                 "<a href=\"https://en.wikipedia.org/wiki/Municipal_governance_in_India\">Municipal "
-                 "governance in India</a> (Wikipedia), for the 73rd Amendment and the "
-                 "Twelfth Schedule.", sm=True)]),
+                 "<a href=\"https://legislative.gov.in/constitution-of-india/\">Constitution of India</a>, "
+                 "Parts IX and IXA and the Eleventh and Twelfth Schedules.", sm=True)]),
     ], compact=True),
 
     # ===================== END =====================

@@ -136,8 +136,8 @@
   // keep the "<number> <type>" phrasing when editing.
   var TOURS = {
     index: [
-      { intro: '<strong>Welcome to ImpactMojo!</strong><br>Development know-how for South Asia: 21 flagship and 80 foundational courses, 135 games and 35 Free Studio tools, built by practitioners and free to use. Here’s a quick lay of the land.' },
-      { element: '#nav-learn', intro: '<strong>Courses</strong><br>21 flagship courses, the 80 shorter courses of the 101 Series, and Code School.' },
+      { intro: '<strong>Welcome to ImpactMojo!</strong><br>Development know-how for South Asia: 22 flagship and 84 foundational courses, 135 games and 35 Free Studio tools, built by practitioners and free to use. Here’s a quick lay of the land.' },
+      { element: '#nav-learn', intro: '<strong>Courses</strong><br>22 flagship courses, the 84 shorter courses of the 101 Series, and Code School.' },
       { element: '#nav-flagships', intro: '<strong>Flagship courses</strong><br>Semester-depth courses with progress tracking, self-assessments, and free certificates — MEL, development economics, gender studies, causal inference, and more.' },
       { element: '#nav-labs', intro: '<strong>Free Studio</strong><br>35 Free Studio tools where you build real artefacts — a Theory of Change, a LogFrame, a sampling plan, a survey instrument.' },
       { element: '#nav-specials', intro: '<strong>Read &amp; data</strong><br>185 reading companions, 27 deep dives, the Data Room, the libraries and the handouts.' },

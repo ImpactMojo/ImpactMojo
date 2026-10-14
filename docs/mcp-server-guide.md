@@ -18,7 +18,7 @@ ImpactMojo has a **Model Context Protocol (MCP) server** that lets any AI assist
 | `search_dataverse` | Keyword search across dataverse items |
 | `list_challenges` | List practice challenges by track/difficulty |
 | `get_challenge` | Full challenge with case context and rubric |
-| `list_courses` | 21 flagship and 80 foundational courses |
+| `list_courses` | 22 flagship and 84 foundational courses |
 | `get_game_info` | 16 economics games with AI agent personas |
 | `query_climate_data` | India GHG emissions from Climate TRACE |
 
