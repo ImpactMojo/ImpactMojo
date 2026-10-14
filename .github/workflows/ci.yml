@@ -853,6 +853,12 @@ jobs:
       - name: Check the breached-password lookup and its wiring
         run: node scripts/test-password-check.mjs
 
+      # "Sync now" merges the learner tools between this browser and the
+      # account. A merge that drops a field or compares the wrong timestamp
+      # loses data with no error (#1265, #1266).
+      - name: Check the account sync merge for streaks and notes
+        run: node scripts/test-sync-merge.mjs
+
   studio-submit:
     name: Studio submissions and gradebook CSV
     runs-on: ubuntu-latest

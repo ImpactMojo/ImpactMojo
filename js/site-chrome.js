@@ -162,24 +162,58 @@
     return [];
   }
 
-  // ── Site links: one list feeds the footer and the Menu sheet ───────
+  // ── Site links ─────────────────────────────────────────────────────
+  // MENU is the header: four groups and Membership, the grouping the owner
+  // chose on 2026-10-14 in place of a 22-link list. NAV is the footer and the
+  // phone Menu sheet, and holds everything MENU does plus the pages that left
+  // the header (About, Impact, Testimonials, Contribute, Roadmap...).
+  var MENU = [
+    ['Learn', [
+      ['/courses/', 'Flagship courses', '22 courses with several modules each'],
+      ['/101-courses/', '101 Series', '84 short courses, each a slide deck'],
+      ['/code/', 'Code School', 'R, Python and SQL in your browser'],
+      ['/practice-packs/', 'Practice Packs', 'Worked exercises by topic'],
+      ['/Games/', 'Simulations', 'Play out a policy or a programme'],
+      ['/game-library.html', 'Game Library', 'Classroom games and activities']]],
+    ['Tools', [
+      ['/Labs/', 'Free Studio', 'Browser tools for the work itself'],
+      ['/premium-tools/', 'Pro Studio', 'Research tools, exports with Membership'],
+      ['/law-guides/', 'Law guides', 'Indian laws for the social sector'],
+      ['/libraries.html', 'Libraries', 'Every collection in one place']]],
+    ['Data', [
+      ['/explorers.html', 'Data Room', 'Explorers built on official data'],
+      ['/dataverse.html', 'Dataverse', 'Data sources, listed and described']]],
+    ['Read', [
+      ['/BookSummaries/', 'Reading Companions', 'Companions to key books'],
+      ['/DeepDives/', 'Deep Dives', 'Curated readings on one question'],
+      ['/handouts.html', 'Handouts', 'Printable notes by track'],
+      ['/blog.html', 'Blog', 'Essays and updates']]],
+    ['Membership', [
+      ['/premium.html', 'Plans', 'What Membership adds'],
+      ['/catalog.html', 'Catalogue', 'Everything on the site, filterable'],
+      ['/updates#whats-new', 'What&rsquo;s new', 'Recent additions and changes']]]
+  ];
   var NAV = [
     ['Learn', [
-      ['/courses/', 'Flagship Courses'], ['/101-courses/', '101 Series'], ['/Labs/', 'Free Studio'],
-      ['/premium-tools/', 'Pro Studio'], ['/code/', 'Code School'], ['/practice-packs/', 'Practice Packs'],
+      ['/courses/', 'Flagship courses'], ['/101-courses/', '101 Series'], ['/code/', 'Code School'],
+      ['/practice-packs/', 'Practice Packs'], ['/Games/', 'Simulations'], ['/game-library.html', 'Game Library'],
       ['/teach.html', 'Teach with ImpactMojo'], ['/facilitator-kits/', 'Facilitator Kits'],
-      ['/teaching-principles.html', 'Teaching Principles'], ['/catalog.html', 'Full Catalog']]],
-    ['Explore', [
-      ['/libraries.html', 'All Libraries', 1], ['/dataverse.html', 'Dataverse'], ['/explorers.html', 'Data Room'],
-      ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/law-guides/', 'Law Guides'],
-      ['/game-library.html', 'Game Library'], ['/Games/', 'Simulations'], ['/handouts.html', 'Handouts'],
-      ['/law-guides/development-law-docket.html', 'Law Docket'], ['/fundamentals/', 'Fundamentals'],
-      ['/field-radio.html', 'Field Radio'], ['/dojos.html', 'Dojos &amp; Practice'], ['/products.html', 'Products'],
-      ['/blog.html', 'Blog']]],
+      ['/teaching-principles.html', 'Teaching Principles']]],
+    ['Tools', [
+      ['/Labs/', 'Free Studio'], ['/premium-tools/', 'Pro Studio'], ['/law-guides/', 'Law guides'],
+      ['/law-guides/development-law-docket.html', 'Law Docket'], ['/libraries.html', 'Libraries'], ['/products.html', 'Products']]],
+    ['Data', [
+      ['/explorers.html', 'Data Room'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals'],
+      ['/field-radio.html', 'Field Radio']]],
+    ['Read', [
+      ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/handouts.html', 'Handouts'],
+      ['/blog.html', 'Blog'], ['/dojos.html', 'Dojos &amp; Practice']]],
     ['ImpactMojo', [
-      ['/about.html', 'About'], ['/premium.html', 'Membership'], ['/community/', 'Community'],
-      ['/partnerships.html', 'Partnerships'], ['/contribute.html', 'Contribute'], ['/transparency.html', 'Transparency'],
-      ['/known-issues.html', 'Known issues'], ['https://github.com/ImpactMojo/ImpactMojo', 'GitHub']]],
+      ['/about.html', 'About'], ['/premium.html', 'Membership'], ['/catalog.html', 'Full catalogue'],
+      ['/updates#whats-new', 'What&rsquo;s new'], ['/impact-dashboard.html', 'Impact'], ['/testimonials.html', 'Testimonials'],
+      ['/updates#roadmap', 'Roadmap'], ['/community/', 'Community'], ['/partnerships.html', 'Partnerships'],
+      ['/contribute.html', 'Contribute'], ['/support.html', 'Support us'], ['/transparency.html', 'Transparency'], ['/known-issues.html', 'Known issues'],
+      ['https://github.com/ImpactMojo/ImpactMojo', 'GitHub']]],
     ['Help &amp; legal', [
       ['/contact.html', 'Contact'], ['/faq.html', 'FAQ'], ['/sitemap.html', 'Sitemap'],
       ['/verify-certificate.html', 'Verify a certificate'], ['/privacy-policy.html', 'Privacy'],
@@ -195,9 +229,35 @@
         var href = /^https?:/.test(l[0]) ? l[0] : SITE + l[0];
         var dot = grid && freshHrefs().indexOf(normHref(l[0])) !== -1
           ? '<span class="im-sc-dot" title="Recently updated" aria-label="Recently updated"></span>' : '';
-        return '<a href="' + href + '">' + (l[2] ? '<b>' + l[1] + '</b>' : l[1]) + dot + '</a>';
+        return '<a href="' + href + '">' + l[1] + dot + '</a>';
       }).join('');
       return '<div class="' + colClass + '"><h3>' + col[0] + '</h3>' + (grid ? '<div>' + links + '</div>' : links) + '</div>';
+    }).join('');
+  }
+  // The group the current page belongs to, so its heading can say so.
+  function currentGroup() {
+    var here = normHref(location.pathname);
+    for (var i = 0; i < MENU.length; i++) {
+      for (var j = 0; j < MENU[i][1].length; j++) {
+        var h = normHref(MENU[i][1][j][0].split('#')[0]);
+        if (h && h !== '/' && (here === h || here.indexOf(h + '/') === 0)) return MENU[i][0];
+      }
+    }
+    var sec = section();
+    if (sec && sec.name === 'Data Room') return 'Data';
+    return null;
+  }
+  function menuHtml() {
+    var cur = currentGroup();
+    return MENU.map(function (g, i) {
+      var id = 'im-sc-dd-' + i;
+      var items = g[1].map(function (l) {
+        return '<li><a href="' + SITE + l[0] + '"><b>' + l[1] + '</b><span>' + l[2] + '</span></a></li>';
+      }).join('');
+      return '<div class="im-sc-dd">' +
+        '<button class="im-sc-dd-btn" type="button" aria-expanded="false" aria-controls="' + id + '"' +
+          (cur === g[0] ? ' data-current="true"' : '') + '>' + g[0] + I.chev + '</button>' +
+        '<ul class="im-sc-dd-panel" id="' + id + '" hidden>' + items + '</ul></div>';
     }).join('');
   }
 
@@ -214,51 +274,70 @@
 '.im-sc{--sc-bg:rgba(255,255,255,.82);--sc-solid:#FFFFFF;--sc-fg:#0F172A;--sc-mut:#475569;--sc-bd:#E7EBF0;--sc-acc:#0EA5E9;--sc-ink:#0369A1;--sc-sel:#0369A1;--sc-sel-ink:#fff;--sc-grad:linear-gradient(135deg,#0369A1,#4F46E5)}',
 'html[data-theme="dark"] .im-sc,html.dark .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-solid:#0B1120;--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A;--sc-ink:#7DD3FC;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120;--sc-grad:linear-gradient(135deg,#38BDF8,#A5B4FC)}',
 '@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-solid:#0B1120;--sc-fg:#F1F5F9;--sc-mut:#94A3B8;--sc-bd:#25304A;--sc-ink:#7DD3FC;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120;--sc-grad:linear-gradient(135deg,#38BDF8,#A5B4FC)}}',
-'.im-sc-bar{position:sticky;top:0;z-index:9999;display:flex;align-items:center;gap:10px;height:46px;padding:0 clamp(10px,3vw,24px);',
+'.im-sc-bar{position:sticky;top:0;z-index:9999;display:flex;align-items:center;gap:14px;height:46px;padding:0 clamp(10px,3vw,28px);',
  'background:var(--sc-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--sc-bd);',
- "font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:13px;color:var(--sc-fg)}",
-// Home crumb: the logo is the whole visible target, so the link is padded out
-// to 44x44 (it was 22x22, under the 24px minimum for a target).
+ "font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:14px;color:var(--sc-fg)}",
+// Home link: the logo and the wordmark are one target, padded out to 44px.
 '.im-sc-crumb{display:inline-flex;align-items:center;gap:9px;min-height:44px;min-width:44px;padding:0 6px;margin-left:-6px;border-radius:8px;text-decoration:none;color:var(--sc-fg);flex:none}',
-'.im-sc-crumb img{width:22px;height:22px;border-radius:5px;flex:none}',
-'.im-sc-site{font-weight:800;letter-spacing:-.2px;background:var(--sc-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}',
-'.im-sc-trail{display:flex;align-items:center;gap:6px;min-width:0;color:var(--sc-mut);font-weight:500;white-space:nowrap}',
+'.im-sc-crumb img{width:24px;height:24px;border-radius:6px;flex:none}',
+"html .im-sc-site,html.im-dyslexic .im-sc-site{font-family:'Amaranth','Inter',system-ui,sans-serif;font-weight:700;font-size:19px;letter-spacing:0;color:var(--sc-fg);white-space:nowrap}",
+// Header groups: a disclosure button and a panel of links under it.
+'.im-sc-nav{display:flex;align-items:center;gap:2px;flex:none}',
+'.im-sc-dd{position:relative}',
+'.im-sc-dd-btn{display:inline-flex;align-items:center;gap:4px;height:34px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--sc-fg);font:500 14px/1 inherit;cursor:pointer;white-space:nowrap}',
+'.im-sc-dd-btn:hover,.im-sc-dd-btn[aria-expanded="true"]{background:color-mix(in srgb,var(--sc-acc) 10%,transparent);color:var(--sc-ink)}',
+'.im-sc-dd-btn[data-current="true"]{color:var(--sc-ink);box-shadow:inset 0 -2px 0 var(--sc-sel)}',
+'.im-sc-dd-btn .im-sc-i{width:13px;height:13px;transition:transform .15s}',
+'.im-sc-dd-btn[aria-expanded="true"] .im-sc-i{transform:rotate(180deg)}',
+'.im-sc-dd-panel{position:absolute;top:calc(100% + 6px);left:-6px;min-width:280px;margin:0;padding:6px;list-style:none;background:var(--sc-solid);border:1px solid var(--sc-bd);border-radius:12px;box-shadow:0 12px 32px rgba(15,23,42,.14);z-index:10000}',
+'.im-sc-dd-panel[hidden]{display:none}',
+'.im-sc-dd-panel a{display:flex;flex-direction:column;gap:2px;padding:9px 12px;border-radius:8px;color:var(--sc-fg);text-decoration:none}',
+'.im-sc-dd-panel a b{font-weight:600;font-size:14px}',
+'.im-sc-dd-panel a span{font-size:12.5px;color:var(--sc-mut);line-height:1.4}',
+'.im-sc-dd-panel a:hover,.im-sc-dd-panel a:focus-visible{background:color-mix(in srgb,var(--sc-acc) 10%,transparent);color:var(--sc-ink)}',
+'.im-sc-dd-panel a:hover span{color:var(--sc-mut)}',
+'.im-sc-trail{display:none;align-items:center;gap:6px;min-width:0;color:var(--sc-mut);font-weight:500;white-space:nowrap}',
 '.im-sc-sec{display:inline-flex;align-items:center;gap:4px;min-height:32px;min-width:0;color:var(--sc-mut);text-decoration:none;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
 '.im-sc-sec:hover{color:var(--sc-ink);text-decoration:underline}',
 '.im-sc-sec span{overflow:hidden;text-overflow:ellipsis}',
-'.im-sc-back{display:none;font-size:17px;line-height:1;font-weight:700}',
-'.im-sc-sep{flex:none}',
-'.im-sc-page{color:var(--sc-fg);font-weight:700;overflow:hidden;text-overflow:ellipsis;min-width:0}',
+'.im-sc-back{font-size:17px;line-height:1;font-weight:700}',
 '.im-sc-spacer{flex:1}',
-'.im-sc-right{display:flex;align-items:center;gap:4px;flex:none;min-height:38px}',
-'.im-sc-btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 11px;border-radius:8px;border:1px solid transparent;',
- 'background:transparent;color:var(--sc-fg);font:600 12.5px/1 inherit;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}',
-'.im-sc-btn:hover{background:color-mix(in srgb,var(--sc-acc) 10%,transparent);border-color:color-mix(in srgb,var(--sc-acc) 30%,transparent);color:var(--sc-ink)}',
-'.im-sc-btn:focus-visible,.im-sc-tbtn:focus-visible,.im-sc-crumb:focus-visible,.im-sc-sec:focus-visible,.im-sc-sheet a:focus-visible,.im-sc-consent button:focus-visible,.im-sc-close:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px}',
-// Icons are inline SVG drawn in currentColor, so they follow the ink of
-// whatever carries them and never depend on a CDN (M10).
-'.im-sc-i{width:15px;height:15px;flex:none;opacity:.85}',
+'.im-sc-right{display:flex;align-items:center;gap:6px;flex:none;min-height:38px}',
+'.im-sc-btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 11px;border-radius:8px;border:1px solid transparent;',
+ 'background:transparent;color:var(--sc-fg);font:500 14px/1 inherit;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}',
+'.im-sc-btn:hover{background:color-mix(in srgb,var(--sc-acc) 10%,transparent);color:var(--sc-ink)}',
+'.im-sc-btn:focus-visible,.im-sc-dd-btn:focus-visible,.im-sc-dd-panel a:focus-visible,.im-sc-tbtn:focus-visible,.im-sc-crumb:focus-visible,.im-sc-sec:focus-visible,.im-sc-sheet a:focus-visible,.im-sc-consent button:focus-visible,.im-sc-close:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px}',
+'.im-sc-i{width:16px;height:16px;flex:none;opacity:.85}',
 '.im-sc-btn:hover .im-sc-i{opacity:1}',
-'.im-sc-btn.im-sc-prem{background:linear-gradient(135deg,#B45309,#991B1B);color:#fff}',
-'.im-sc-btn.im-sc-prem:hover{opacity:.92;color:#fff}',
-'.im-sc-prem .im-sc-i{opacity:1}',
-'.im-sc-icon{width:34px;height:32px;padding:0;justify-content:center}',
-'.im-sc-theme{display:inline-flex;gap:2px;background:color-mix(in srgb,var(--sc-fg) 6%,transparent);border:1px solid var(--sc-bd);border-radius:9px;padding:3px}',
-'.im-sc-tbtn{width:26px;height:24px;border:0;border-radius:6px;background:transparent;color:var(--sc-fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;font:600 12.5px/1 inherit}',
+// Search looks like a field, so it reads as the way in that it is.
+'.im-sc-search{min-width:200px;justify-content:flex-start;border-color:var(--sc-bd);background:color-mix(in srgb,var(--sc-fg) 3%,transparent);color:var(--sc-mut)}',
+'.im-sc-search .im-sc-label{flex:1;text-align:left}',
+'.im-sc-kbd{font:500 11.5px/1 Inter,system-ui,sans-serif;border:1px solid var(--sc-bd);border-radius:5px;padding:3px 6px;color:var(--sc-mut);background:var(--sc-solid)}',
+'.im-sc-icon{width:36px;height:34px;padding:0;justify-content:center}',
+'.im-sc-signup{background:var(--sc-sel);color:var(--sc-sel-ink);font-weight:600}',
+'html body .im-sc .im-sc-signup,html body .im-sc .im-sc-signup:visited{background:var(--sc-sel);color:var(--sc-sel-ink)!important}',
+'html body .im-sc .im-sc-signup:hover{background:var(--sc-sel);color:var(--sc-sel-ink)!important;opacity:.92}',
+'.im-sc-signup[hidden],.im-sc-menu[hidden]{display:none}',
+'.im-sc-acct.is-in{border-color:var(--sc-bd)}',
+// Display settings: theme and reading font in one small panel.
+'.im-sc-setwrap{position:relative}',
+'.im-sc-setpanel{position:absolute;top:calc(100% + 6px);right:0;width:260px;padding:14px;background:var(--sc-solid);border:1px solid var(--sc-bd);border-radius:12px;box-shadow:0 12px 32px rgba(15,23,42,.14);z-index:10000}',
+'.im-sc-setpanel[hidden]{display:none}',
+'.im-sc-setpanel h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--sc-mut);margin:0 0 8px;font-weight:700}',
+'.im-sc-setpanel h3+*{margin-bottom:14px}',
+'.im-sc-theme{display:flex;gap:2px;background:color-mix(in srgb,var(--sc-fg) 6%,transparent);border:1px solid var(--sc-bd);border-radius:9px;padding:3px}',
+'.im-sc-tbtn{flex:1;height:34px;border:0;border-radius:6px;background:transparent;color:var(--sc-fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;font:500 13px/1 inherit}',
 'html body .im-sc-tbtn[aria-pressed="true"]{background:var(--sc-sel);color:var(--sc-sel-ink)!important}',
 '.im-sc-tbtn[aria-pressed="true"] .im-sc-i{opacity:1}',
-'.im-sc-acct.is-in{border-color:var(--sc-bd)}',
-// Mid widths: the logo is already the home link and About is in the menu, so
-// both go first; then Search and Language drop their labels.
-'@media(max-width:1180px){.im-sc-home,.im-sc-about{display:none}.im-sc-search .im-sc-label,.im-sc-lang .im-sc-label{display:none}.im-sc-search,.im-sc-lang{padding:0 8px}}',
-'@media(max-width:960px){.im-sc-bar .im-sc-site{display:none}}',
-// Phones: the bar keeps Search, Language, Membership, account and Menu, all as
-// icons. Reading font and theme move into the Menu sheet, where they stay one
-// tap away. The breadcrumb becomes a single "‹ Section" link (M5).
-'@media(max-width:720px){.im-sc-label{display:none}.im-sc-btn{padding:0 8px;min-width:34px;justify-content:center}.im-sc-icon{width:32px}',
- '.im-sc-bar>.im-sc-right>.im-sc-dys,.im-sc-bar>.im-sc-right>.im-sc-theme{display:none}',
- '.im-sc-sep,.im-sc-page{display:none}.im-sc-back{display:inline}.im-sc-sec{max-width:42vw}}',
-'@media(max-width:600px){.im-sc-bar{gap:6px;padding:0 10px}.im-sc-right{gap:2px}.im-sc-btn{min-width:32px;padding:0 6px}}',
+'.im-sc-setpanel .im-sc-btn{width:100%;height:40px;border-color:var(--sc-bd)}',
+'.im-sc-setpanel .im-sc-btn[aria-pressed="true"]{border-color:var(--sc-sel);background:color-mix(in srgb,var(--sc-sel) 14%,transparent)}',
+// Narrower screens: the keyboard hint goes, then the search label, then the
+// groups move into the Menu sheet and the trail back to the section appears.
+'@media(max-width:1180px){.im-sc-kbd{display:none}.im-sc-search{min-width:0}}',
+'@media(max-width:1060px){.im-sc-search .im-sc-label,.im-sc-acct .im-sc-label{display:none}.im-sc-search,.im-sc-acct{padding:0 9px}}',
+'@media(min-width:961px){.im-sc-menu{display:none!important}}',
+'@media(max-width:960px){.im-sc-nav{display:none}.im-sc-trail{display:flex}.im-sc-bar .im-sc-site{display:none}}',
+'@media(max-width:600px){.im-sc-bar{gap:6px;padding:0 10px}.im-sc-right{gap:2px}.im-sc-btn{padding:0 8px}.im-sc-signup{display:none}.im-sc-menu .im-sc-label{display:none}.im-sc-sec{max-width:38vw}}',
 // Menu sheet
 '.im-sc-sheet-wrap{position:fixed;inset:0;z-index:10001}',
 '.im-sc-sheet-wrap[hidden]{display:none}',
@@ -270,20 +349,14 @@
 '.im-sc-close{width:44px;height:44px;border:0;border-radius:10px;background:transparent;color:var(--sc-fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}',
 '.im-sc-close:hover{background:color-mix(in srgb,var(--sc-acc) 12%,transparent)}',
 '.im-sc-close .im-sc-i{width:20px;height:20px}',
-'.im-sc-set{display:none;border-bottom:1px solid var(--sc-bd);padding:6px 0 14px;margin-bottom:6px}',
-'.im-sc-set h3,.im-sc-sheet-col h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--sc-mut);margin:14px 0 6px;font-weight:700}',
-'.im-sc-set .im-sc-theme{display:flex;width:100%}',
-'.im-sc-set .im-sc-tbtn{flex:1;height:40px}',
-'.im-sc-set-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}',
-'.im-sc-set-row .im-sc-btn{height:40px;border-color:var(--sc-bd)}',
-'.im-sc-set-row .im-sc-btn[aria-pressed="true"]{border-color:var(--sc-sel);background:color-mix(in srgb,var(--sc-sel) 14%,transparent)}',
-'@media(max-width:720px){.im-sc-set{display:block}}',
+'.im-sc-sheet-col h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--sc-mut);margin:14px 0 6px;font-weight:700}',
 '.im-sc-sheet-col{border-bottom:1px solid var(--sc-bd);padding-bottom:10px}',
 '.im-sc-sheet-col:last-child{border-bottom:0}',
 '.im-sc-sheet-col div{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}',
 '.im-sc-sheet a{display:flex;align-items:center;min-height:40px;color:var(--sc-fg);text-decoration:none;font-size:14px;font-weight:500}',
 '.im-sc-sheet a:hover{color:var(--sc-ink);text-decoration:underline}',
 '.im-sc-tour-row{margin:10px 0 4px}',
+'.im-sc-sheet-acct{display:flex;gap:8px;margin:6px 0 4px}.im-sc-sheet-acct a{flex:1;justify-content:center;border:1px solid var(--sc-bd);border-radius:8px}',
 '.im-sc-cookie-set{background:none;border:0;padding:0;color:var(--sc-mut);font:inherit;text-decoration:underline;cursor:pointer}',
 '.im-sc-cookie-set:hover{color:var(--sc-ink)}',
 '.im-sc-cookie-set:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px}',
@@ -291,14 +364,16 @@
 // footer
 '.im-sc-foot{background:var(--sc-bg);border-top:1px solid var(--sc-bd);color:var(--sc-fg);font-family:\'Inter\',system-ui,sans-serif;padding:40px clamp(16px,4vw,32px) 28px;margin-top:48px}',
 'html[data-theme="dark"] .im-sc-foot,html.dark .im-sc-foot{--sc-bg:#0B1120}',
-'.im-sc-foot-in{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:28px 48px;justify-content:space-between}',
+'.im-sc-foot-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(180px,1.4fr) repeat(6,minmax(0,1fr));gap:28px 28px}',
 '.im-sc-foot-brand{max-width:280px}',
+'@media(max-width:1100px){.im-sc-foot-in{grid-template-columns:repeat(3,minmax(0,1fr))}.im-sc-foot-brand{grid-column:1/-1}}',
+'@media(max-width:600px){.im-sc-foot-in{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}}',
 '.im-sc-foot-brand .im-sc-site{font-size:18px}',
 '.im-sc-foot-brand p{margin:8px 0 0;color:var(--sc-mut);font-size:13px;line-height:1.6}',
 '.im-sc-foot-col h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--sc-mut);margin:0 0 10px;font-weight:700}',
 '.im-sc-foot-col a{display:block;color:var(--sc-fg);text-decoration:none;font-size:13.5px;font-weight:500;padding:4px 0}',
 '.im-sc-foot-col a:hover{color:var(--sc-ink);text-decoration:underline}',
-'.im-sc-foot-meta{max-width:1180px;margin:26px auto 0;padding-top:18px;border-top:1px solid var(--sc-bd);color:var(--sc-mut);',
+'.im-sc-foot-meta{max-width:1200px;margin:26px auto 0;padding-top:18px;border-top:1px solid var(--sc-bd);color:var(--sc-mut);',
  'font-size:12px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;align-items:center}',
 // Consent notice: one slim strip along the bottom edge, text and buttons on a
 // single line where they fit. It never covers the page with a scrim, and the
@@ -371,7 +446,9 @@
     moon: svg('<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>'),
     menu: svg('<path d="M4 7h16M4 12h16M4 17h16"/>'),
     user: svg('<circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/>'),
-    close: svg('<path d="M6 6l12 12M18 6 6 18"/>')
+    close: svg('<path d="M6 6l12 12M18 6 6 18"/>'),
+    chev: svg('<path d="m6 9 6 6 6-6"/>'),
+    sliders: svg('<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>')
   };
   var LOGO = SITE + '/assets/images/apple-touch-icon.png'; // 7KB vs the 599KB full logo
 
@@ -448,6 +525,74 @@
     a.setAttribute('aria-label', label);
     a.classList.toggle('is-in', inn);
     a.querySelector('.im-sc-label').textContent = label;
+    document.querySelectorAll('.im-sc-signup').forEach(function (b) { b.hidden = inn; });
+    var sa = document.querySelector('[data-sheet-acct]');
+    if (sa) { sa.textContent = label; sa.href = a.href; }
+  }
+
+  // ── Header groups and the settings panel ───────────────────────────
+  // Disclosure buttons: one panel open at a time; a click outside, Escape or
+  // moving focus out closes it, and Escape returns focus to its button.
+  function wireDropdowns(bar) {
+    var btns = [].slice.call(bar.querySelectorAll('.im-sc-dd-btn,.im-sc-setbtn'));
+    function panel(b) { return document.getElementById(b.getAttribute('aria-controls')); }
+    function closeAll(except) {
+      btns.forEach(function (b) {
+        if (b === except) return;
+        b.setAttribute('aria-expanded', 'false');
+        var p = panel(b); if (p) p.hidden = true;
+      });
+    }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = b.getAttribute('aria-expanded') !== 'true';
+        closeAll(b);
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+        var p = panel(b); if (p) p.hidden = !open;
+      });
+      // With a pointer, moving across the groups opens the next one while
+      // another is already open, the way a menu bar behaves.
+      if (b.classList.contains('im-sc-dd-btn')) b.addEventListener('mouseenter', function () {
+        if (!btns.some(function (o) { return o !== b && o.classList.contains('im-sc-dd-btn') && o.getAttribute('aria-expanded') === 'true'; })) return;
+        closeAll(b); b.setAttribute('aria-expanded', 'true'); var p = panel(b); if (p) p.hidden = false;
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.im-sc-dd,.im-sc-setwrap')) closeAll();
+    });
+    bar.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var open = btns.filter(function (b) { return b.getAttribute('aria-expanded') === 'true'; })[0];
+      if (open) { e.preventDefault(); closeAll(); open.focus(); }
+    });
+    bar.addEventListener('focusout', function (e) {
+      if (!e.relatedTarget || !bar.contains(e.relatedTarget)) closeAll();
+    });
+  }
+
+  // ── Search, from the bar and from Ctrl/Cmd+K on every page ─────────
+  // search.js ships on a minority of pages, so it is loaded on first use.
+  // Where it is already on the page it binds Ctrl/Cmd+K itself, and this
+  // handler stands aside.
+  function openSearch() {
+    if (window.ImpactMojoSearch && window.ImpactMojoSearch.open) return window.ImpactMojoSearch.open();
+    if (document.getElementById('im-search-loader')) return;
+    var s = document.createElement('script');
+    s.id = 'im-search-loader';
+    s.src = '/js/search.js';
+    s.onload = function () {
+      if (window.ImpactMojoSearch && window.ImpactMojoSearch.open) window.ImpactMojoSearch.open();
+    };
+    document.head.appendChild(s);
+  }
+  function wireSearchKey() {
+    document.addEventListener('keydown', function (e) {
+      if (!(e.ctrlKey || e.metaKey) || e.altKey || String(e.key).toLowerCase() !== 'k') return;
+      if (window.ImpactMojoSearch) return; // search.js handles its own shortcut
+      e.preventDefault();
+      openSearch();
+    });
   }
 
   // ── Build ──────────────────────────────────────────────────────────
@@ -469,36 +614,37 @@
 
     // 3. top bar
     var sec = section();
-    var name = escapeHtml(pageName());
-    var trail;
-    if (isFront) {
-      trail = '';
-    } else if (sec && sec.isHub) {
-      trail = '<span class="im-sc-sep" aria-hidden="true">/</span><span class="im-sc-page" aria-current="page">' + escapeHtml(sec.name) + '</span>';
-    } else if (sec) {
-      // Desktop: "Section › Page". Phone: "‹ Section", the way back to the hub.
-      trail = '<a class="im-sc-sec" href="' + sec.href + '"><span class="im-sc-back" aria-hidden="true">&lsaquo;</span><span>' + escapeHtml(sec.name) + '</span></a>'
-        + '<span class="im-sc-sep" aria-hidden="true">&rsaquo;</span><span class="im-sc-page" aria-current="page">' + name + '</span>';
-    } else {
-      trail = '<span class="im-sc-sep" aria-hidden="true">/</span><span class="im-sc-page" aria-current="page">' + name + '</span>';
-    }
+    // On a phone the groups live in the Menu sheet, so the bar carries one
+    // "‹ Section" link back to where this page belongs (desktop shows the
+    // section by underlining its group instead).
+    var trail = (sec && !sec.isHub)
+      ? '<a class="im-sc-sec" href="' + sec.href + '"><span class="im-sc-back" aria-hidden="true">&lsaquo;</span><span>' + escapeHtml(sec.name) + '</span></a>'
+      : '';
+    var mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent || '');
     var bar = document.createElement('div');
     bar.className = 'im-sc im-sc-bar'; bar.setAttribute('role', 'navigation'); bar.setAttribute('aria-label', 'Site');
     bar.innerHTML =
       '<a class="im-sc-crumb" href="/" aria-label="ImpactMojo home">' +
-        '<img src="' + LOGO + '" alt="ImpactMojo" width="22" height="22">' +
-        '<span class="im-sc-site">impactmojo.in</span>' +
+        '<img src="' + LOGO + '" alt="" width="24" height="24">' +
+        '<span class="im-sc-site">ImpactMojo</span>' +
       '</a>' +
+      '<div class="im-sc-nav">' + menuHtml() + '</div>' +
       '<span class="im-sc-trail">' + trail + '</span>' +
       '<span class="im-sc-spacer"></span>' +
       '<div class="im-sc-right">' +
-        '<button class="im-sc-btn im-sc-search" type="button" aria-label="Search the site">' + I.search + '<span class="im-sc-label">Search</span></button>' +
-        '<button class="im-sc-btn im-sc-lang" type="button" aria-label="Language">' + I.globe + '<span class="im-sc-label">Language</span></button>' +
-        '<a class="im-sc-btn im-sc-prem" href="' + SITE + '/premium.html" aria-label="Membership">' + I.star + '<span class="im-sc-label">Membership</span></a>' +
-        '<a class="im-sc-btn im-sc-about" href="' + SITE + '/about.html" aria-label="About">' + I.info + '<span class="im-sc-label">About</span></a>' +
-        themeGroup(false) +
-        '<a class="im-sc-btn im-sc-icon im-sc-home" href="' + SITE + '/" title="Home" aria-label="Home">' + I.home + '</a>' +
+        '<button class="im-sc-btn im-sc-lang im-sc-icon" type="button" aria-label="Language">' + I.globe + '</button>' +
+        '<button class="im-sc-btn im-sc-search" type="button" aria-label="Search the site">' + I.search + '<span class="im-sc-label">Search</span>' +
+          '<kbd class="im-sc-kbd" aria-hidden="true">' + (mac ? '&#8984;K' : 'Ctrl K') + '</kbd></button>' +
+        '<div class="im-sc-setwrap">' +
+          '<button class="im-sc-btn im-sc-icon im-sc-setbtn" type="button" aria-expanded="false" aria-controls="im-sc-setpanel" aria-label="Display settings">' + I.sliders + '</button>' +
+          '<div class="im-sc-setpanel" id="im-sc-setpanel" hidden>' +
+            '<h3>Theme</h3>' + themeGroup(true) +
+            '<h3>Reading font</h3><button class="im-sc-btn" type="button" data-im-dys aria-pressed="false">' +
+              '<span aria-hidden="true" style="font-weight:700">Aa</span>Dyslexia-friendly font</button>' +
+          '</div>' +
+        '</div>' +
         '<a class="im-sc-btn im-sc-acct" href="' + SITE + '/login.html" aria-label="Log in">' + I.user + '<span class="im-sc-label">Log in</span></a>' +
+        '<a class="im-sc-btn im-sc-signup" href="' + SITE + '/signup.html">Sign up free</a>' +
         '<button class="im-sc-btn im-sc-menu" type="button" aria-expanded="false" aria-controls="im-sc-sheet" aria-haspopup="dialog" aria-label="Menu">' + I.menu + '<span class="im-sc-label">Menu</span></button>' +
       '</div>';
     document.body.insertBefore(bar, document.body.firstChild);
@@ -508,7 +654,7 @@
     foot.className = 'im-sc im-sc-foot'; foot.setAttribute('role', 'contentinfo');
     foot.innerHTML =
       '<div class="im-sc-foot-in">' +
-        '<div class="im-sc-foot-brand"><span class="im-sc-site">impactmojo.in</span>' +
+        '<div class="im-sc-foot-brand"><span class="im-sc-site">ImpactMojo</span>' +
           '<p>Free, open-source development education for South Asia: flagship courses, the 101 Series, Free Studio, games, data and research tools.</p></div>' +
         navCols('im-sc-foot-col') +
       '</div>' +
@@ -533,16 +679,14 @@
       '<div class="im-sc-sheet" id="im-sc-sheet" role="dialog" aria-modal="true" aria-labelledby="im-sc-sheet-h">' +
         '<div class="im-sc-sheet-head"><h2 id="im-sc-sheet-h">Menu</h2>' +
           '<button class="im-sc-close" type="button" data-close aria-label="Close menu">' + I.close + '</button></div>' +
-        '<div class="im-sc-set"><h3>Reading</h3>' + themeGroup(true) +
-          '<div class="im-sc-set-row"><button class="im-sc-btn" type="button" data-im-dys aria-pressed="false">' +
-            '<span aria-hidden="true" style="font-weight:700">Aa</span>Dyslexia-friendly font</button></div>' +
-          '</div>' +
+        '<div class="im-sc-sheet-acct"><a class="im-sc-btn" href="' + SITE + '/login.html" data-sheet-acct>Log in</a><a class="im-sc-btn im-sc-signup" href="' + SITE + '/signup.html">Sign up free</a></div>' +
         (isFront ? '<div class="im-sc-tour-row"><button class="im-sc-btn" type="button" data-im-tour>Take a tour of this page</button></div>' : '') +
         navCols('im-sc-sheet-col', true) +
       '</div>';
     document.body.appendChild(wrap);
     wireSheet(bar.querySelector('.im-sc-menu'), wrap);
-    wrap.querySelector('[data-im-dys]').addEventListener('click', toggleDys);
+    bar.querySelector('[data-im-dys]').addEventListener('click', toggleDys);
+    wireDropdowns(bar);
 
     // 6. wire theme
     // theme.js always sets data-theme. A page without it (the homepage among
@@ -570,16 +714,8 @@
     });
     window.addEventListener('storage', function () { syncAccount(); });
 
-    // 8. search: search.js ships on a minority of pages; lazy-load it on demand
-    bar.querySelector('.im-sc-search').addEventListener('click', function () {
-      if (window.ImpactMojoSearch && window.ImpactMojoSearch.open) return window.ImpactMojoSearch.open();
-      var s = document.createElement('script');
-      s.src = '/js/search.js';
-      s.onload = function () {
-        if (window.ImpactMojoSearch && window.ImpactMojoSearch.open) window.ImpactMojoSearch.open();
-      };
-      document.head.appendChild(s);
-    });
+    // 8. search
+    bar.querySelector('.im-sc-search').addEventListener('click', openSearch);
     // 9. language: reuse translate-sarvam if present, else ask the page
     bar.querySelector('.im-sc-lang').addEventListener('click', function () {
       if (typeof window.ImpactMojoTranslate === 'function') return window.ImpactMojoTranslate();
@@ -655,7 +791,9 @@
   }
   function injectReadingFont() {
     if (document.getElementById('im-dys-btn')) return;
-    var host = document.querySelector('.im-sc-right') || document.querySelector('.theme-selector');
+    // The built bar carries the switch in its settings panel.
+    if (document.querySelector('.im-sc-setpanel')) { syncDys(); return; }
+    var host = document.querySelector('.theme-selector');
     if (!host) return;
     var inBar = host.classList.contains('im-sc-right');
 
@@ -899,6 +1037,7 @@
     injectReadingFont();
     injectWhatsApp();
     injectConsent();
+    wireSearchKey();
     registerSW();
     watchFloating();
   }

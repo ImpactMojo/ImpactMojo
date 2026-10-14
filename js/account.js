@@ -616,12 +616,18 @@
     style.textContent = '@keyframes spin{to{transform:rotate(360deg)}}.spinning{animation:spin 1s linear infinite}';
     document.head.appendChild(style);
 
+    // The tools in "My tools" (js/learner-tools.js) change the same data the
+    // counts above read, so refresh the counts whenever a tool saves.
+    window.addEventListener('imx-learner-data', function () { updateSavedItemsDisplay(); });
+
     // --- Auth Gate ---
     AuthGate.protect({
       loadingEl: document.getElementById('loadingOverlay'),
       redirectUrl: '/login.html',
       timeoutMs: 5000,
       onReady: function (user, profile) {
+        // A signed-in visit to the dashboard counts as a learning day.
+        try { if (window.IMXLearnerTools) IMXLearnerTools.streak.recordVisit(); } catch (e) {}
         updatePageData();
         updateSavedItemsDisplay();
         if (typeof DashboardTabs !== 'undefined') DashboardTabs.init('account', profile);

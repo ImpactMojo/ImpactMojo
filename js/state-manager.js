@@ -175,13 +175,18 @@
       get: function () {
         var raw = safeGet(KEYS.STREAK, null);
         if (!raw) return Object.assign({}, DEFAULTS.STREAK);
-        // Normalise old field names (current → currentStreak, etc.)
-        return {
-          currentStreak: raw.currentStreak || raw.current || 0,
-          longestStreak: raw.longestStreak || raw.longest || 0,
-          lastVisit: raw.lastVisit || raw.lastDate || null,
-          totalVisits: raw.totalVisits || 0
-        };
+        if (typeof raw !== 'object' || Array.isArray(raw)) return Object.assign({}, DEFAULTS.STREAK);
+        // Normalise old field names (current → currentStreak, etc.) and keep
+        // every other field. This object is what auth.js syncs, so dropping
+        // visitDates, totalDays or celebratedMilestone here emptied the
+        // streak calendar on the next sync (#1265).
+        var out = Object.assign({}, raw);
+        out.currentStreak = raw.currentStreak || raw.current || 0;
+        out.longestStreak = raw.longestStreak || raw.longest || 0;
+        out.lastVisit = raw.lastVisit || raw.lastDate || null;
+        out.totalVisits = raw.totalVisits || 0;
+        delete out.current; delete out.longest; delete out.lastDate;
+        return out;
       },
       set: function (obj) { return safeSet(KEYS.STREAK, obj); },
       clear: function () { safeRemove(KEYS.STREAK); }
