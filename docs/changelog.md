@@ -2,6 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.389.0 — October 15, 2026 (a line under every menu item)
+
+### For Learners
+
+- **A line under every menu item** — each link in the phone menu now says in a few words what the page is, and Libraries no longer runs its description into its name.
+
 ## v10.388.0 — October 15, 2026 (shorter screens in the phone menu)
 
 ### For Learners

@@ -256,29 +256,31 @@
   // The phone Menu sheet. SHEET holds every link in NAV, regrouped so that
   // no screen of the sheet lists more than six rows: a row is either a link
   // ([href, label]) or a section ([label, [rows]]) that opens a screen of its
-  // own with a Back button. When a link is added to NAV, add it here too.
+  // own with a Back button. A link's third item is the line under it, used
+  // where MENU has no description. When a link is added to NAV, add it here
+  // too, with its line.
   var SHEET = [
     ['Learn', [
       ['Courses', [['/courses/', 'Flagship courses'], ['/101-courses/', '101 Series'], ['/code/', 'Code School'], ['/practice-packs/', 'Practice Packs']]],
       ['Games', [['/Games/', 'Simulations'], ['/game-library.html', 'Game Library']]],
-      ['Teaching', [['/teach.html', 'Teach with ImpactMojo'], ['/facilitator-kits/', 'Facilitator Kits'], ['/teaching-principles.html', 'Teaching Principles']]]]],
+      ['Teaching', [['/teach.html', 'Teach with ImpactMojo', 'Run a course or workshop with our material'], ['/facilitator-kits/', 'Facilitator Kits', 'Workshop kits you can edit and run yourself'], ['/teaching-principles.html', 'Teaching Principles', 'How every course, Studio and game is designed']]]]],
     ['Tools', [
-      ['Studios and products', [['/Labs/', 'Free Studio'], ['/premium-tools/', 'Pro Studio'], ['/products.html', 'Products']]],
-      ['Law', [['/law-guides/', 'Law guides'], ['/law-guides/development-law-docket.html', 'Law Docket']]],
+      ['Studios and products', [['/Labs/', 'Free Studio'], ['/premium-tools/', 'Pro Studio'], ['/products.html', 'Products', 'Everything you can buy, in one place']]],
+      ['Law', [['/law-guides/', 'Law guides'], ['/law-guides/development-law-docket.html', 'Law Docket', 'Court judgments that changed development work']]],
       ['/libraries.html', 'Libraries']]],
     ['Data', [
-      ['/explorers.html', 'Data Room'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals'], ['/field-radio.html', 'Field Radio']]],
+      ['/explorers.html', 'Data Room'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals', 'Development frameworks, made interactive'], ['/field-radio.html', 'Field Radio', 'Voice notes and videos from practitioners']]],
     ['Read', [
       ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/handouts.html', 'Handouts'],
-      ['/blog.html', 'Blog'], ['/dojos.html', 'Dojos &amp; Practice']]],
+      ['/blog.html', 'Blog'], ['/dojos.html', 'Dojos &amp; Practice', '90-minute skill sessions, in person and online']]],
     ['ImpactMojo', [
-      ['About us', [['/about.html', 'About'], ['/impact-dashboard.html', 'Impact'], ['/testimonials.html', 'Testimonials'], ['/transparency.html', 'Transparency'], ['/known-issues.html', 'Known issues']]],
-      ['Membership and updates', [['/premium.html', 'Membership'], ['/catalog.html', 'Full catalogue'], ['/updates#whats-new', 'What&rsquo;s new'], ['/updates#roadmap', 'Roadmap']]],
-      ['Get involved', [['/community/', 'Community'], ['/partnerships.html', 'Partnerships'], ['/contribute.html', 'Contribute'], ['/support.html', 'Support us'], ['https://github.com/ImpactMojo/ImpactMojo', 'GitHub']]]]],
+      ['About us', [['/about.html', 'About', 'Who we are and why ImpactMojo exists'], ['/impact-dashboard.html', 'Impact', 'What learners have done with what they learned'], ['/testimonials.html', 'Testimonials', 'What learners say about ImpactMojo'], ['/transparency.html', 'Transparency', 'Our numbers, methods and revenue'], ['/known-issues.html', 'Known issues', 'Every bug we know about, open and fixed']]],
+      ['Membership and updates', [['/premium.html', 'Membership', 'What Membership adds'], ['/catalog.html', 'Full catalogue'], ['/updates#whats-new', 'What&rsquo;s new'], ['/updates#roadmap', 'Roadmap', 'What we are building next']]],
+      ['Get involved', [['/community/', 'Community', 'Practitioners on WhatsApp and Discord'], ['/partnerships.html', 'Partnerships', 'Who we work with, and how to partner'], ['/contribute.html', 'Contribute', 'Propose a free course of your own'], ['/support.html', 'Support us', 'Pay what you can to keep the site free'], ['https://github.com/ImpactMojo/ImpactMojo', 'GitHub', 'The open-source code behind the site']]]]],
     ['Help &amp; legal', [
-      ['Help', [['/contact.html', 'Contact'], ['/faq.html', 'FAQ'], ['/verify-certificate.html', 'Verify a certificate'], ['/accessibility.html', 'Accessibility'], ['/sitemap.html', 'Sitemap']]],
-      ['Privacy and data', [['/privacy-policy.html', 'Privacy'], ['/data-protection.html', 'Data protection'], ['/ai-policy.html', 'AI policy']]],
-      ['Terms and complaints', [['/terms-of-service.html', 'Terms'], ['/refund-policy.html', 'Refunds'], ['/disclaimer.html', 'Disclaimer'], ['/grievance.html', 'Grievance']]]]]
+      ['Help', [['/contact.html', 'Contact', 'Questions about courses, workshops or partnerships'], ['/faq.html', 'FAQ', 'Answers on courses, certificates and accounts'], ['/verify-certificate.html', 'Verify a certificate', 'Check that a certificate number is real'], ['/accessibility.html', 'Accessibility', 'Our standard, and how to report a barrier'], ['/sitemap.html', 'Sitemap', 'Every page, in one filterable map']]],
+      ['Privacy and data', [['/privacy-policy.html', 'Privacy', 'What we collect and how we use it'], ['/data-protection.html', 'Data protection', 'How we follow the DPDP Act, 2023'], ['/ai-policy.html', 'AI policy', 'How we use AI in courses and tools']]],
+      ['Terms and complaints', [['/terms-of-service.html', 'Terms', 'Your rights and ours when you use the site'], ['/refund-policy.html', 'Refunds', 'Refunds and cancellations for paid services'], ['/disclaimer.html', 'Disclaimer', 'What our educational content is, and is not'], ['/grievance.html', 'Grievance', 'Raise a complaint or concern']]]]]
   ];
   function isSection(r) { return Array.isArray(r[1]); }
   // Panes for the sheet: 'root', then one per section, keyed by its path
@@ -313,7 +315,7 @@
         var n = normHref(r[0]), isFresh = fresh.indexOf(n) !== -1;
         var cur = n && n !== '/' && here === normHref(r[0].split('#')[0]);
         anyHere = anyHere || cur; anyFresh = anyFresh || isFresh;
-        var d = desc[n] ? '<span class="im-sc-ld">' + desc[n] + '</span>' : '';
+        var d = (r[2] || desc[n]) ? '<span class="im-sc-ld">' + (r[2] || desc[n]) + '</span>' : '';
         var dot = isFresh ? '<span class="im-sc-dot" title="Recently updated" aria-label="Recently updated"></span>' : '';
         return '<li><a href="' + href + '"' + (cur ? ' aria-current="page"' : '') + '><span class="im-sc-lt">' + r[1] + dot + '</span>' + d + '</a></li>';
       }).join('');
@@ -472,7 +474,7 @@
 '.im-sc-rows{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--sc-bd)}',
 '.im-sc-pane h3+.im-sc-rows{margin-top:4px}',
 '.im-sc-rows li{border-bottom:1px solid var(--sc-bd)}',
-'.im-sc-row{display:flex;align-items:center;gap:10px;width:100%;min-height:60px;padding:8px 2px;border:0;background:none;color:var(--sc-fg);font:inherit;text-align:left;cursor:pointer}',
+'.im-sc-row{display:flex;align-items:center;gap:10px;width:100%;min-height:60px;padding:8px 0;border:0;background:none;color:var(--sc-fg);font:inherit;text-align:left;cursor:pointer}',
 '.im-sc-row:hover .im-sc-row-t{color:var(--sc-ink)}',
 '.im-sc-row:focus-visible,.im-sc-back:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px;border-radius:6px}',
 '.im-sc-row-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}',
@@ -486,12 +488,12 @@
 '.im-sc-links{list-style:none;margin:0;padding:0}',
 '.im-sc-links li{border-bottom:1px solid var(--sc-bd)}',
 '.im-sc-links li:last-child{border-bottom:0}',
-'.im-sc-sheet .im-sc-links a{flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:52px;padding:6px 0}',
-'.im-sc-links .im-sc-lt{font-size:15px;font-weight:600}',
-'.im-sc-links .im-sc-ld{font-size:12.5px;color:var(--sc-mut);font-weight:400}',
-'.im-sc-sheet .im-sc-links a,.im-sc-sheet .im-sc-links a:hover{text-decoration:none}',
-'.im-sc-links a:hover .im-sc-lt{color:var(--sc-ink);text-decoration:underline}',
-'.im-sc-links a[aria-current=page] .im-sc-lt{color:var(--sc-ink);font-weight:700}',
+'.im-sc-sheet :is(.im-sc-links,.im-sc-rows) a{flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:52px;padding:6px 0}',
+'.im-sc-sheet .im-sc-lt{font-size:15px;font-weight:600}',
+'.im-sc-sheet .im-sc-ld{font-size:12.5px;color:var(--sc-mut);font-weight:400}',
+'.im-sc-sheet :is(.im-sc-links,.im-sc-rows) a,.im-sc-sheet :is(.im-sc-links,.im-sc-rows) a:hover{text-decoration:none}',
+'.im-sc-sheet a:hover .im-sc-lt{color:var(--sc-ink);text-decoration:underline}',
+'.im-sc-sheet a[aria-current=page] .im-sc-lt{color:var(--sc-ink);font-weight:700}',
 '.im-sc-sheet a{display:flex;align-items:center;min-height:40px;color:var(--sc-fg);text-decoration:none;font-size:14px;font-weight:500}',
 '.im-sc-sheet a:hover{color:var(--sc-ink);text-decoration:underline}',
 '.im-sc-tour-row{margin:10px 0 4px}',
