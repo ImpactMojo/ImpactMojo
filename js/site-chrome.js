@@ -253,39 +253,84 @@
       return '<div class="' + colClass + '"><h3>' + col[0] + '</h3>' + (grid ? '<div>' + links + '</div>' : links) + '</div>';
     }).join('');
   }
-  // The phone Menu sheet: a root list of NAV's groups, then one pane per
-  // group. Descriptions come from MENU where the header already has one.
+  // The phone Menu sheet. SHEET holds every link in NAV, regrouped so that
+  // no screen of the sheet lists more than six rows: a row is either a link
+  // ([href, label]) or a section ([label, [rows]]) that opens a screen of its
+  // own with a Back button. When a link is added to NAV, add it here too.
+  var SHEET = [
+    ['Learn', [
+      ['Courses', [['/courses/', 'Flagship courses'], ['/101-courses/', '101 Series'], ['/code/', 'Code School'], ['/practice-packs/', 'Practice Packs']]],
+      ['Games', [['/Games/', 'Simulations'], ['/game-library.html', 'Game Library']]],
+      ['Teaching', [['/teach.html', 'Teach with ImpactMojo'], ['/facilitator-kits/', 'Facilitator Kits'], ['/teaching-principles.html', 'Teaching Principles']]]]],
+    ['Tools', [
+      ['Studios and products', [['/Labs/', 'Free Studio'], ['/premium-tools/', 'Pro Studio'], ['/products.html', 'Products']]],
+      ['Law', [['/law-guides/', 'Law guides'], ['/law-guides/development-law-docket.html', 'Law Docket']]],
+      ['/libraries.html', 'Libraries']]],
+    ['Data', [
+      ['/explorers.html', 'Data Room'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals'], ['/field-radio.html', 'Field Radio']]],
+    ['Read', [
+      ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/handouts.html', 'Handouts'],
+      ['/blog.html', 'Blog'], ['/dojos.html', 'Dojos &amp; Practice']]],
+    ['ImpactMojo', [
+      ['About us', [['/about.html', 'About'], ['/impact-dashboard.html', 'Impact'], ['/testimonials.html', 'Testimonials'], ['/transparency.html', 'Transparency'], ['/known-issues.html', 'Known issues']]],
+      ['Membership and updates', [['/premium.html', 'Membership'], ['/catalog.html', 'Full catalogue'], ['/updates#whats-new', 'What&rsquo;s new'], ['/updates#roadmap', 'Roadmap']]],
+      ['Get involved', [['/community/', 'Community'], ['/partnerships.html', 'Partnerships'], ['/contribute.html', 'Contribute'], ['/support.html', 'Support us'], ['https://github.com/ImpactMojo/ImpactMojo', 'GitHub']]]]],
+    ['Help &amp; legal', [
+      ['Help', [['/contact.html', 'Contact'], ['/faq.html', 'FAQ'], ['/verify-certificate.html', 'Verify a certificate'], ['/accessibility.html', 'Accessibility'], ['/sitemap.html', 'Sitemap']]],
+      ['Privacy and data', [['/privacy-policy.html', 'Privacy'], ['/data-protection.html', 'Data protection'], ['/ai-policy.html', 'AI policy']]],
+      ['Terms and complaints', [['/terms-of-service.html', 'Terms'], ['/refund-policy.html', 'Refunds'], ['/disclaimer.html', 'Disclaimer'], ['/grievance.html', 'Grievance']]]]]
+  ];
+  function isSection(r) { return Array.isArray(r[1]); }
+  // Panes for the sheet: 'root', then one per section, keyed by its path
+  // ('0', '0-1'). Descriptions come from MENU where the header has one.
   function sheetPanes() {
     var desc = {};
     MENU.forEach(function (g) { g[1].forEach(function (l) { desc[normHref(l[0])] = l[2]; }); });
     var fresh = freshHrefs(), here = normHref(location.pathname);
-    var hereGroup = -1;
-    var panes = NAV.map(function (col, i) {
-      var anyFresh = false;
-      var items = col[1].map(function (l) {
-        var href = /^https?:/.test(l[0]) ? l[0] : SITE + l[0];
-        var n = normHref(l[0]), isFresh = fresh.indexOf(n) !== -1;
-        if (isFresh) anyFresh = true;
-        var cur = n && n !== '/' && here === normHref(l[0].split('#')[0]);
-        if (cur && hereGroup < 0) hereGroup = i;
+    var panes = [];
+    function names(rows) { return rows.map(function (r) { return isSection(r) ? r[0] : r[1]; }); }
+    function hint(rows) {
+      var n = names(rows);
+      // Up to four names in full; past that, three and a count, never "and 1 more".
+      return n.length <= 4 ? n.join(', ') : n.slice(0, 3).join(', ') + ' and ' + (n.length - 3) + ' more';
+    }
+    // Renders rows; returns {html, here, fresh} so a section row can say it
+    // holds the current page or something recently updated.
+    function render(rows, path) {
+      var anyHere = false, anyFresh = false;
+      var html = rows.map(function (r, i) {
+        if (isSection(r)) {
+          var id = path ? path + '-' + i : String(i);
+          var sub = pane(r[0], r[1], id, path || 'root', path ? paneTitle[path] : 'Menu');
+          anyHere = anyHere || sub.here; anyFresh = anyFresh || sub.fresh;
+          return '<li><button type="button" class="im-sc-row" data-open="' + id + '">' +
+            '<span class="im-sc-row-tx"><span class="im-sc-row-t">' + r[0] +
+              (sub.here ? '<span class="im-sc-row-here">This page</span>' : '') +
+              (sub.fresh ? '<span class="im-sc-dot" title="Recently updated" aria-label="Recently updated"></span>' : '') +
+            '</span><span class="im-sc-row-h">' + hint(r[1]) + '</span></span>' + I.next + '</button></li>';
+        }
+        var href = /^https?:/.test(r[0]) ? r[0] : SITE + r[0];
+        var n = normHref(r[0]), isFresh = fresh.indexOf(n) !== -1;
+        var cur = n && n !== '/' && here === normHref(r[0].split('#')[0]);
+        anyHere = anyHere || cur; anyFresh = anyFresh || isFresh;
         var d = desc[n] ? '<span class="im-sc-ld">' + desc[n] + '</span>' : '';
         var dot = isFresh ? '<span class="im-sc-dot" title="Recently updated" aria-label="Recently updated"></span>' : '';
-        return '<li><a href="' + href + '"' + (cur ? ' aria-current="page"' : '') + '><span class="im-sc-lt">' + l[1] + dot + '</span>' + d + '</a></li>';
+        return '<li><a href="' + href + '"' + (cur ? ' aria-current="page"' : '') + '><span class="im-sc-lt">' + r[1] + dot + '</span>' + d + '</a></li>';
       }).join('');
-      return { anyFresh: anyFresh, html: '<div class="im-sc-pane" data-pane="' + i + '" role="group" aria-labelledby="im-sc-pane-h' + i + '" hidden>' +
-        '<button type="button" class="im-sc-back" data-back>' + I.prev + 'Menu</button>' +
-        '<h3 id="im-sc-pane-h' + i + '">' + col[0] + '</h3><ul class="im-sc-links">' + items + '</ul></div>' };
-    });
-    var rows = NAV.map(function (col, i) {
-      var names = col[1].map(function (l) { return l[1]; });
-      var hint = names.slice(0, 3).join(', ') + (names.length > 3 ? ' and ' + (names.length - 3) + ' more' : '');
-      return '<li><button type="button" class="im-sc-row" data-open="' + i + '">' +
-        '<span class="im-sc-row-tx"><span class="im-sc-row-t">' + col[0] +
-          (i === hereGroup ? '<span class="im-sc-row-here">This page</span>' : '') +
-          (panes[i].anyFresh ? '<span class="im-sc-dot" title="Recently updated" aria-label="Recently updated"></span>' : '') +
-        '</span><span class="im-sc-row-h">' + hint + '</span></span>' + I.next + '</button></li>';
-    }).join('');
-    return { rows: '<ul class="im-sc-rows">' + rows + '</ul>', panes: panes.map(function (p) { return p.html; }).join('') };
+      return { html: html, here: anyHere, fresh: anyFresh };
+    }
+    var paneTitle = {};
+    function pane(title, rows, id, parent, parentTitle) {
+      paneTitle[id] = title;
+      var out = render(rows, id);
+      var list = rows.some(isSection) ? 'im-sc-rows' : 'im-sc-links';
+      panes.push('<div class="im-sc-pane" data-pane="' + id + '" role="group" aria-labelledby="im-sc-pane-h' + id + '" hidden>' +
+        '<button type="button" class="im-sc-back" data-back="' + parent + '">' + I.prev + parentTitle + '</button>' +
+        '<h3 id="im-sc-pane-h' + id + '">' + title + '</h3><ul class="' + list + '">' + out.html + '</ul></div>');
+      return out;
+    }
+    var root = render(SHEET, '');
+    return { rows: '<ul class="im-sc-rows">' + root.html + '</ul>', panes: panes.join('') };
   }
   // The group the current page belongs to, so its heading can say so.
   function currentGroup() {
@@ -425,6 +470,7 @@
 // links with a Back button, so the sheet never scrolls past one screen.
 '.im-sc-pane[hidden]{display:none}',
 '.im-sc-rows{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--sc-bd)}',
+'.im-sc-pane h3+.im-sc-rows{margin-top:4px}',
 '.im-sc-rows li{border-bottom:1px solid var(--sc-bd)}',
 '.im-sc-row{display:flex;align-items:center;gap:10px;width:100%;min-height:60px;padding:8px 2px;border:0;background:none;color:var(--sc-fg);font:inherit;text-align:left;cursor:pointer}',
 '.im-sc-row:hover .im-sc-row-t{color:var(--sc-ink)}',
@@ -902,7 +948,6 @@
     function focusables() {
       return [].slice.call(sheet.querySelectorAll('a[href],button:not([disabled])')).filter(function (el) { return el.offsetParent !== null; });
     }
-    var opener = null;
     function show(name) {
       [].forEach.call(sheet.querySelectorAll('.im-sc-pane'), function (p) { p.hidden = p.getAttribute('data-pane') !== name; });
       sheet.scrollTop = 0;
@@ -935,10 +980,17 @@
       if (e.target.closest('[data-close]')) close();
       var row = e.target.closest('[data-open]');
       if (row) {
-        opener = row; show(row.getAttribute('data-open'));
+        show(row.getAttribute('data-open'));
         var b = sheet.querySelector('.im-sc-pane:not([hidden]) [data-back]'); b && b.focus();
       }
-      if (e.target.closest('[data-back]')) { show('root'); opener && opener.focus(); }
+      // Back returns to the parent screen and puts focus on the row that
+      // opened this one.
+      var back = e.target.closest('[data-back]');
+      if (back) {
+        var from = back.closest('.im-sc-pane').getAttribute('data-pane');
+        show(back.getAttribute('data-back'));
+        var r = sheet.querySelector('[data-open="' + from + '"]'); r && r.focus();
+      }
       if (e.target.closest('[data-im-tour]')) {
         close();
         if (window.ImpactMojoTour) window.ImpactMojoTour.start('index');
