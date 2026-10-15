@@ -2,6 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.387.0 — October 15, 2026 (a shorter menu on phones)
+
+### For Learners
+
+- **A shorter menu on phones** — the menu now opens on six sections (Learn, Tools, Data, Read, ImpactMojo, Help and legal), each with a page of its own links and a Back button, in place of 52 links on one long scroll. The section you are in is marked.
+
 ## v10.386.0 — October 15, 2026 (games in the site's type, slides clear of the menu bar)
 
 ### For Learners
