@@ -2,6 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.388.0 — October 15, 2026 (shorter screens in the phone menu)
+
+### For Learners
+
+- **Shorter screens in the phone menu** — Learn, Tools, ImpactMojo and Help and legal now open on a few named groups (Courses, Games and Teaching under Learn, for example), so no screen of the menu lists more than six items. Back takes you up one level at a time.
+
 ## v10.387.0 — October 15, 2026 (a shorter menu on phones)
 
 ### For Learners
