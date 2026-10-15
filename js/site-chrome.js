@@ -253,6 +253,40 @@
       return '<div class="' + colClass + '"><h3>' + col[0] + '</h3>' + (grid ? '<div>' + links + '</div>' : links) + '</div>';
     }).join('');
   }
+  // The phone Menu sheet: a root list of NAV's groups, then one pane per
+  // group. Descriptions come from MENU where the header already has one.
+  function sheetPanes() {
+    var desc = {};
+    MENU.forEach(function (g) { g[1].forEach(function (l) { desc[normHref(l[0])] = l[2]; }); });
+    var fresh = freshHrefs(), here = normHref(location.pathname);
+    var hereGroup = -1;
+    var panes = NAV.map(function (col, i) {
+      var anyFresh = false;
+      var items = col[1].map(function (l) {
+        var href = /^https?:/.test(l[0]) ? l[0] : SITE + l[0];
+        var n = normHref(l[0]), isFresh = fresh.indexOf(n) !== -1;
+        if (isFresh) anyFresh = true;
+        var cur = n && n !== '/' && here === normHref(l[0].split('#')[0]);
+        if (cur && hereGroup < 0) hereGroup = i;
+        var d = desc[n] ? '<span class="im-sc-ld">' + desc[n] + '</span>' : '';
+        var dot = isFresh ? '<span class="im-sc-dot" title="Recently updated" aria-label="Recently updated"></span>' : '';
+        return '<li><a href="' + href + '"' + (cur ? ' aria-current="page"' : '') + '><span class="im-sc-lt">' + l[1] + dot + '</span>' + d + '</a></li>';
+      }).join('');
+      return { anyFresh: anyFresh, html: '<div class="im-sc-pane" data-pane="' + i + '" role="group" aria-labelledby="im-sc-pane-h' + i + '" hidden>' +
+        '<button type="button" class="im-sc-back" data-back>' + I.prev + 'Menu</button>' +
+        '<h3 id="im-sc-pane-h' + i + '">' + col[0] + '</h3><ul class="im-sc-links">' + items + '</ul></div>' };
+    });
+    var rows = NAV.map(function (col, i) {
+      var names = col[1].map(function (l) { return l[1]; });
+      var hint = names.slice(0, 3).join(', ') + (names.length > 3 ? ' and ' + (names.length - 3) + ' more' : '');
+      return '<li><button type="button" class="im-sc-row" data-open="' + i + '">' +
+        '<span class="im-sc-row-tx"><span class="im-sc-row-t">' + col[0] +
+          (i === hereGroup ? '<span class="im-sc-row-here">This page</span>' : '') +
+          (panes[i].anyFresh ? '<span class="im-sc-dot" title="Recently updated" aria-label="Recently updated"></span>' : '') +
+        '</span><span class="im-sc-row-h">' + hint + '</span></span>' + I.next + '</button></li>';
+    }).join('');
+    return { rows: '<ul class="im-sc-rows">' + rows + '</ul>', panes: panes.map(function (p) { return p.html; }).join('') };
+  }
   // The group the current page belongs to, so its heading can say so.
   function currentGroup() {
     var here = normHref(location.pathname);
@@ -387,10 +421,31 @@
 '.im-sc-close{width:44px;height:44px;border:0;border-radius:10px;background:transparent;color:var(--sc-fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}',
 '.im-sc-close:hover{background:color-mix(in srgb,var(--sc-acc) 12%,transparent)}',
 '.im-sc-close .im-sc-i{width:20px;height:20px}',
-'.im-sc-sheet-col h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--sc-mut);margin:14px 0 6px;font-weight:700}',
-'.im-sc-sheet-col{border-bottom:1px solid var(--sc-bd);padding-bottom:10px}',
-'.im-sc-sheet-col:last-child{border-bottom:0}',
-'.im-sc-sheet-col div{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}',
+// The phone menu is one short list of sections; each opens its own page of
+// links with a Back button, so the sheet never scrolls past one screen.
+'.im-sc-pane[hidden]{display:none}',
+'.im-sc-rows{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--sc-bd)}',
+'.im-sc-rows li{border-bottom:1px solid var(--sc-bd)}',
+'.im-sc-row{display:flex;align-items:center;gap:10px;width:100%;min-height:60px;padding:8px 2px;border:0;background:none;color:var(--sc-fg);font:inherit;text-align:left;cursor:pointer}',
+'.im-sc-row:hover .im-sc-row-t{color:var(--sc-ink)}',
+'.im-sc-row:focus-visible,.im-sc-back:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px;border-radius:6px}',
+'.im-sc-row-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}',
+'.im-sc-row-t{font-size:15.5px;font-weight:700}',
+'.im-sc-row-h{font-size:12.5px;color:var(--sc-mut);line-height:1.35}',
+'.im-sc-row-here{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--sc-ink);margin-left:6px}',
+'.im-sc-row .im-sc-chev{width:18px;height:18px;flex:none;color:var(--sc-mut)}',
+'.im-sc-back{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 10px 0 2px;border:0;background:none;color:var(--sc-ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}',
+'.im-sc-back .im-sc-chev{width:18px;height:18px}',
+'.im-sc-pane h3{font-size:20px;font-weight:800;margin:6px 0 8px;color:var(--sc-fg)}',
+'.im-sc-links{list-style:none;margin:0;padding:0}',
+'.im-sc-links li{border-bottom:1px solid var(--sc-bd)}',
+'.im-sc-links li:last-child{border-bottom:0}',
+'.im-sc-sheet .im-sc-links a{flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:52px;padding:6px 0}',
+'.im-sc-links .im-sc-lt{font-size:15px;font-weight:600}',
+'.im-sc-links .im-sc-ld{font-size:12.5px;color:var(--sc-mut);font-weight:400}',
+'.im-sc-sheet .im-sc-links a,.im-sc-sheet .im-sc-links a:hover{text-decoration:none}',
+'.im-sc-links a:hover .im-sc-lt{color:var(--sc-ink);text-decoration:underline}',
+'.im-sc-links a[aria-current=page] .im-sc-lt{color:var(--sc-ink);font-weight:700}',
 '.im-sc-sheet a{display:flex;align-items:center;min-height:40px;color:var(--sc-fg);text-decoration:none;font-size:14px;font-weight:500}',
 '.im-sc-sheet a:hover{color:var(--sc-ink);text-decoration:underline}',
 '.im-sc-tour-row{margin:10px 0 4px}',
@@ -494,6 +549,8 @@
     user: svg('<circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/>'),
     close: svg('<path d="M6 6l12 12M18 6 6 18"/>'),
     chev: svg('<path d="m6 9 6 6 6-6"/>'),
+    next: svg('<path d="m9 6 6 6-6 6"/>', 'im-sc-i im-sc-chev'),
+    prev: svg('<path d="m15 6-6 6 6 6"/>', 'im-sc-i im-sc-chev'),
     a11y: svg('<circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="7.2" r="1.3"/><path d="M7.5 10h9M12 10v4.5M12 14.5l-2.5 4M12 14.5l2.5 4"/>'),
     sliders: svg('<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>')
   };
@@ -778,8 +835,9 @@
     });
     }
 
-    // 5. menu sheet (H2): the footer's columns, plus the reading settings that
-    // a phone's bar has no room for.
+    // 5. menu sheet (H2): the footer's groups as a list of sections, each
+    // opening its own pane of links (sheetPanes).
+    var sp = sheetPanes();
     var wrap = document.createElement('div');
     wrap.className = 'im-sc im-sc-sheet-wrap'; wrap.hidden = true;
     wrap.innerHTML =
@@ -787,9 +845,11 @@
       '<div class="im-sc-sheet" id="im-sc-sheet" role="dialog" aria-modal="true" aria-labelledby="im-sc-sheet-h">' +
         '<div class="im-sc-sheet-head"><h2 id="im-sc-sheet-h">Menu</h2>' +
           '<button class="im-sc-close" type="button" data-close aria-label="Close menu">' + I.close + '</button></div>' +
-        '<div class="im-sc-sheet-acct"><a class="im-sc-btn" href="' + SITE + '/login.html" data-sheet-acct>Log in</a><a class="im-sc-btn im-sc-signup" href="' + SITE + '/signup.html">Sign up free</a></div>' +
-        (isFront ? '<div class="im-sc-tour-row"><button class="im-sc-btn" type="button" data-im-tour>Take a tour of this page</button></div>' : '') +
-        navCols('im-sc-sheet-col', true) +
+        '<div class="im-sc-pane" data-pane="root">' +
+          '<div class="im-sc-sheet-acct"><a class="im-sc-btn" href="' + SITE + '/login.html" data-sheet-acct>Log in</a><a class="im-sc-btn im-sc-signup" href="' + SITE + '/signup.html">Sign up free</a></div>' +
+          (isFront ? '<div class="im-sc-tour-row"><button class="im-sc-btn" type="button" data-im-tour>Take a tour of this page</button></div>' : '') +
+          sp.rows +
+        '</div>' + sp.panes +
       '</div>';
     document.body.appendChild(wrap);
     wireSheet(bar.querySelector('.im-sc-menu'), wrap);
@@ -842,7 +902,13 @@
     function focusables() {
       return [].slice.call(sheet.querySelectorAll('a[href],button:not([disabled])')).filter(function (el) { return el.offsetParent !== null; });
     }
+    var opener = null;
+    function show(name) {
+      [].forEach.call(sheet.querySelectorAll('.im-sc-pane'), function (p) { p.hidden = p.getAttribute('data-pane') !== name; });
+      sheet.scrollTop = 0;
+    }
     function open() {
+      show('root');
       wrap.hidden = false;
       btn.setAttribute('aria-expanded', 'true');
       var f = sheet.querySelector('.im-sc-close'); f && f.focus();
@@ -867,6 +933,12 @@
     btn.addEventListener('click', function () { if (wrap.hidden) open(); else close(); });
     wrap.addEventListener('click', function (e) {
       if (e.target.closest('[data-close]')) close();
+      var row = e.target.closest('[data-open]');
+      if (row) {
+        opener = row; show(row.getAttribute('data-open'));
+        var b = sheet.querySelector('.im-sc-pane:not([hidden]) [data-back]'); b && b.focus();
+      }
+      if (e.target.closest('[data-back]')) { show('root'); opener && opener.focus(); }
       if (e.target.closest('[data-im-tour]')) {
         close();
         if (window.ImpactMojoTour) window.ImpactMojoTour.start('index');
