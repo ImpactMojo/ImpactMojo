@@ -2,6 +2,12 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.390.0 — October 18, 2026 (Campbell paper opens from the archive)
+
+### Fixed
+
+- **A source link on The Indicator Ate the Village pointed at a site that no longer hosts the paper** (#1278). The full text now opens from an Internet Archive copy of the original file.
+
 ## v10.389.0 — October 15, 2026 (a line under every menu item)
 
 ### For Learners
