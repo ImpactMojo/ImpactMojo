@@ -2,6 +2,21 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.391.0 — October 19, 2026 (Measure of India and This Indian Life join the Dataverse)
+
+### For Learners
+
+- **Measure of India** — plain-language guides to India's official economic statistics (prices, growth, jobs, credit, trade), a profile of every state and series you can download, now listed in the Dataverse.
+- **This Indian Life** — sourced charts and plain answers to questions about how India lives, now listed in the Dataverse.
+
+### Fixed
+
+- **The daily accessibility check of every page had failed since 15 October**: eight handouts and the Gandhi lexicon ran wider than a phone, the header's Search label was too faint in dark mode on pages with a light top, and the story section of the Counterfactual game turned into a dark band with dark text in the light theme (#1281).
+
+### Changed
+
+- The Dataverse holds 345 resources, and every page that states the number says so. The Dataverse guide now describes all 24 categories and all nine resource types (it said 16 categories and described 14), and the README said 22 categories.
+
 ## v10.390.0 — October 18, 2026 (Campbell paper opens from the archive)
 
 ### Fixed

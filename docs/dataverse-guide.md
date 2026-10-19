@@ -2,7 +2,7 @@
 
 ## What Is the Dataverse?
 
-The ImpactMojo Dataverse is a **curated collection of 343 data sources, tools, and services** organized into 16 categories: designed specifically for development researchers and practitioners working in South Asia and beyond.
+The ImpactMojo Dataverse is a **curated collection of 345 data sources, tools, and services** organized into 24 categories: designed specifically for development researchers and practitioners working in South Asia and beyond.
 
 Think of it as a map to the world's most useful data for development work, organized so you can actually find what you need. Instead of spending hours searching for the right dataset or tool, the Dataverse puts vetted, relevant resources at your fingertips.
 
@@ -12,7 +12,7 @@ Every entry in the Dataverse has been reviewed for relevance, accessibility, and
 
 ## Understanding Resource Types
 
-The Dataverse contains seven types of resources. If some of these terms are new to you, don't worry: here's what each one means and when you'd use it.
+The Dataverse contains nine types of resources. If some of these terms are new to you, don't worry: here's what each one means and when you'd use it.
 
 ### 1. Dataset
 
@@ -74,11 +74,28 @@ A **Skill** is a pre-built command for the Claude AI assistant that performs a s
 
 **Example:** A skill like "/analyze-program" might guide you through a structured evaluation of a development intervention, asking you the right questions, pulling relevant data, and helping you organize your findings.
 
+
+### 8. Portal
+
+A **portal** gathers many datasets or series from one domain or one publisher in a single place, usually with guides, search and downloads. It sits between a platform and a single dataset.
+
+**When you'd use one:** You want official figures on one subject, such as prices, jobs or growth in India, explained and ready to download.
+
+**Example:** Measure of India, which collects India's official economic statistics with a plain-language guide to each.
+
+### 9. Research
+
+**Research** entries are bodies of analysis: briefs, working papers and reports that interpret data rather than supply it.
+
+**When you'd use one:** You want an informed reading of a budget, a scheme or a policy before you look at the numbers yourself.
+
+**Example:** ResGov's Budget Insights, ministry-by-ministry analysis of the Union Budget.
+
 ---
 
-## The 16 Categories
+## The 24 categories
 
-The Dataverse organizes its 343 resources into 16 categories. Here's what each one contains and who it's most useful for.
+The Dataverse organizes its 345 resources into 24 categories. Here's what each one contains and who it's most useful for.
 
 ### 1. India Government Data
 
@@ -136,7 +153,45 @@ ImpactMojo's custom AI commands for development research: pre-built skills that 
 
 AI-powered tools for qualitative analysis, research discovery, literature mapping, and data exploration. **Start here if** you want to use artificial intelligence to speed up tasks like coding interview transcripts, finding relevant papers, or exploring patterns in data.
 
-*Note: Categories 15 and 16 include additional specialized resources. Visit the Dataverse on [impactmojo.in](https://www.impactmojo.in) to explore the full collection.*
+### 15. Web & Communication
+
+Web scraping, translation, news aggregation, messaging and workflow automation. **Start here if** you need to collect material from websites or move information between tools.
+
+### 16. Developer Infrastructure
+
+Version control, deployment, AI agent SDKs, MCP frameworks and monitoring. **Start here if** you are building or running your own tools.
+
+### 17. MEL & Field Data Tools
+
+Open-source tools for data collection, field pipelines, data quality and MEL dashboards. **Start here if** you are running a survey or monitoring system in the field.
+
+### 18. Electoral & Political Data Tools
+
+Scrapers, parsers and datasets for Indian electoral rolls, election results and political data. **Start here if** you work on elections, representation or political economy.
+
+### 19. Air Quality Tools & Dashboards
+
+Tools, SDKs and visualisation platforms for monitoring and analysing air quality. **Start here if** you work on pollution or environmental health.
+
+### 20. Legal Research Tools
+
+Tools and datasets for Indian legal research, court data and legal text analysis. **Start here if** you need judgments, statutes or court records.
+
+### 21. Data Infrastructure & Pipelines
+
+Workflow orchestration, data transformation and reporting tools for production data pipelines. **Start here if** the same dataset has to be cleaned and reported again every month.
+
+### 22. Productivity & Workflow
+
+Scheduling assistants, meeting tools, project management and workflow automation. **Start here if** you want to spend less time on coordination.
+
+### 23. Gender & Inclusion Data
+
+Datasets and indices on gender equality, women's empowerment and social inclusion. **Start here if** you need to measure who is left out and by how much.
+
+### 24. Agriculture & Food Systems Data
+
+Datasets and early-warning systems for agriculture, food security and rural livelihoods. **Start here if** you work on farms, food prices or rural incomes.
 
 ---
 
