@@ -158,6 +158,23 @@ console.log('service-worker.js');
   ok(cached && cached.body === 'COURSE', 'CACHE_COURSE stores the course entry page offline');
 }
 
+// ── Test 6b: the page's own stamped assets are cached with the course (#1287) ──
+{
+  const { listeners, sandbox } = loadSW({ fetchImpl: async (u) => makeResponse({ url: String(u), ok: true, body: 'ASSET' }) });
+  let msgP;
+  const handler = (listeners.message || [])[0];
+  handler({ data: { type: 'CACHE_COURSE', courseId: 'social-movements', urls: ['/courses/social-movements/', '/js/site-chrome.js?v=abc123', 'https://evil.example/x.js', '//evil.example/y.js', '/.netlify/functions/z'] }, waitUntil: (p) => { msgP = p; } });
+  await msgP;
+  const stamped = await sandbox.caches.match('/js/site-chrome.js?v=abc123');
+  ok(stamped && stamped.body === 'ASSET', 'CACHE_COURSE stores the stamped asset URLs the page sent');
+  const keys = await sandbox.caches.keys();
+  ok(keys.includes('impactmojo-course-social-movements'), 'Social Movements can be saved for offline');
+  const foreign = await sandbox.caches.match('https://evil.example/x.js');
+  const protoRel = await sandbox.caches.match('//evil.example/y.js');
+  const fn = await sandbox.caches.match('/.netlify/functions/z');
+  ok(!foreign && !protoRel && !fn, 'CACHE_COURSE ignores cross-origin and function URLs');
+}
+
 // ── Test 7: push event shows a notification with the payload ──
 {
   const { listeners, self } = loadSW({ fetchImpl: async () => makeResponse({}) });

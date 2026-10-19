@@ -21,6 +21,7 @@ These were previously listed as planned or in progress, and are now live. Each n
 - **Live workshop listings**: workshops with registration and a calendar file you can add to your own diary. ([/events.html](/events.html))
 - **Impact measurement dashboard**: a public view of community outcomes, and a signed-in route to log your own. ([/impact-dashboard.html](/impact-dashboard.html))
 - **Offline support, both halves**: browser notifications you can switch on from your account, and background sync, so progress recorded on a bad connection is replayed once you are back online rather than lost.
+- **Save a flagship course for offline reading**: every flagship course page has a Save for offline button under Start module 1. The course then opens on that device without a connection, and the button removes the copy again. (v10.392.0)
 - **Analytics only after consent**: Google Analytics does not run until you accept it in the cookie notice, on every page. (v10.378.0)
 - **Paid Practice Pack modules after sign-in, and a human check on the sign-in forms.** (v10.379.0)
 - **Social Protection and Welfare Delivery in India**, the 22nd flagship course, in 13 modules with a 50-term lexicon. ([/courses/social-protection/](/courses/social-protection/), v10.380.0)

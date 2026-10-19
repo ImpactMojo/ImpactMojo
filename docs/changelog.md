@@ -7,6 +7,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 ### For Learners
 
 - **Survey Instrument Library** — 26 validated scales and modules for mental health, food security, nutrition, empowerment, disability, learning and social capital, each with the source to cite, its length and recall period, and the thing that most often goes wrong in the field. Every instrument is in site search.
+- **Save a course for offline reading** — every flagship course page has a Save for offline button under Start module 1. The course then opens on that device with no connection, which helps in the field, and the same button removes the copy.
 - **Excel lexicons for Gender Studies and Public Policy** — the download buttons on both lexicon pages now give you the workbook.
 
 ### Fixed
@@ -14,6 +15,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **The Dataverse listed seven tools twice** under two names each, among them J-PAL, 3ie, KoboToolbox and the World Inequality Database. Each is listed once now, and the Dataverse holds 338 resources (#1283).
 - **The Gender and Public Policy lexicon downloads said Coming Soon** although both workbooks were on the site (#1284).
 - **Some translated pages showed blank text**, where a translation had been saved empty, and Telugu pages showed a stray "&amp;amp;". Brand names written in Indian scripts are back in their English form, and the menus and footer have translations in all five languages for the first time (#1285). The new menu translations are machine-written and await a native reader.
+- **Offline course saving could not be reached and would have failed for two courses**: nothing on the site called it, SEL was listed under a name the worker did not know, Social Movements was missing, a course saved before a deploy would have opened without its styles, and the status messages were too faint to read (#1287).
 - **Code School's R runtime was following a development build**, because the page asked for the latest release. It is fixed to version 0.6.0 (#1286).
 
 ### Changed
