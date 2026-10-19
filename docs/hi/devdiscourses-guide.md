@@ -6,7 +6,7 @@ Development Discourses (DevDiscourses), ImpactMojo का विकास, स�
 
 Google Scholar (जो विविध गुणवत्ता वाले हज़ारों परिणाम लौटाता है) के विपरीत, DevDiscourses एक हाथ से चुना गया (hand-curated) संग्रह है जहाँ हर संसाधन को प्रासंगिकता, सुलभता और गुणवत्ता के लिए चुना गया है। यह **ओपन-एक्सेस संसाधनों** को प्राथमिकता देता है — ताकि जो आपको मिले, उसे आप वास्तव में पढ़ सकें।
 
-**पहुँच:** निःशुल्क — [DevDiscourses ब्राउज़ करें](https://on-web.link/DevDiscourses)
+**पहुँच:** निःशुल्क — [DevDiscourses ब्राउज़ करें](https://devdiscourses.impactmojo.in/)
 
 ---
 
