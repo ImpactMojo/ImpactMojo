@@ -12,7 +12,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Fixed
 
-- **The Dataverse listed seven tools twice** under two names each, among them J-PAL, 3ie, KoboToolbox and the World Inequality Database. Each is listed once now, and the Dataverse holds 338 resources (#1283).
+- **The Dataverse listed seven tools twice** under two names each, among them J-PAL, 3ie, KoboToolbox and the World Inequality Database, and it listed 16 Claude slash commands as live that are not published anywhere. Each tool is listed once now, the 16 commands and their category are gone, and the Dataverse holds 322 resources in 23 categories (#1283).
 - **The Gender and Public Policy lexicon downloads said Coming Soon** although both workbooks were on the site (#1284).
 - **Some translated pages showed blank text**, where a translation had been saved empty, and Telugu pages showed a stray "&amp;amp;". Brand names written in Indian scripts are back in their English form, and the menus and footer have translations in all five languages for the first time (#1285). The new menu translations are machine-written and await a native reader.
 - **Offline course saving could not be reached and would have failed for two courses**: nothing on the site called it, SEL was listed under a name the worker did not know, Social Movements was missing, a course saved before a deploy would have opened without its styles, and the status messages were too faint to read (#1287).
