@@ -35,12 +35,15 @@
       const course = el.getAttribute('data-course') || '';
       const courseTerms = (data.terms || []).filter((t) => (t.courses || []).includes(course));
       const href = course ? `/impactlex/?course=${encodeURIComponent(course)}` : '/impactlex/';
+      // The row wraps: on a phone the link drops under the text. As one
+      // unwrappable row it ran 36px past a 390px screen on the course
+      // lexicon pages in CI (#1281).
       el.innerHTML = `
-        <a href="${href}" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:linear-gradient(135deg, rgba(14, 165, 233, 0.08), rgba(99, 102, 241, 0.08));border:1px solid var(--border-color, #e2e8f0);border-radius:12px;text-decoration:none;color:inherit;margin:1rem auto;max-width:900px;transition:all 0.2s ease;">
+        <a href="${href}" style="display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem 1rem;padding:1rem 1.25rem;background:linear-gradient(135deg, rgba(14, 165, 233, 0.08), rgba(99, 102, 241, 0.08));border:1px solid var(--border-color, #e2e8f0);border-radius:12px;text-decoration:none;color:inherit;margin:1rem auto;max-width:900px;transition:all 0.2s ease;">
           <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg, #0284C7, #4338CA);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg viewBox="0 0 24 24" width="20" height="20" stroke="white" fill="none" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           </div>
-          <div style="flex:1;">
+          <div style="flex:1 1 12rem;min-width:0;">
             <div style="font-family:'Inter',sans-serif;font-weight:600;font-size:1rem;">Looking for more development terms?</div>
             <div style="color:#64748B;font-size:0.9rem;margin-top:0.15rem;">This course has ${courseTerms.length ? `<strong>${courseTerms.length} terms</strong> in ` : ''}<strong>ImpactLex</strong> — ${total} terms across all ImpactMojo courses.</div>
           </div>
