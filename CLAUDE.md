@@ -30,7 +30,7 @@ Free development education platform for South Asia. Static HTML/CSS/JS, Supabase
 
 ## Watch out for
 
-- **A merge builds but goes live only at 07:47 or 19:47 IST.** Auto-publishing is locked to save Netlify credits; see `.claude/rules/testing.md`, "Ship checklist".
+- **A merge builds but goes live only at 20:00 IST, once a day.** Auto-publishing is locked to save Netlify credits; see `.claude/rules/testing.md`, "Ship checklist".
 - `index.html` is ~620KB — backup to `Backups/` before major changes
 - Content counts in nav, hero, cards, sidebar — update ALL occurrences
 - Stale `101.impactmojo.in` links — should point to self-hosted files
