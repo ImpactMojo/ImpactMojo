@@ -22,6 +22,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - Formula pages on five flagship courses load KaTeX 0.16.21, and the Development Finance deck loads the same Chart.js version as every other deck.
 - The roadmap's count of reading companions said 185. It is 192.
+- The subscription payment page draws its UPI QR code from a copy of the QR library kept on the site, so it no longer depends on a file a CDN generates on request.
 
 ## v10.391.0 — October 19, 2026 (Measure of India and This Indian Life join the Dataverse)
 
