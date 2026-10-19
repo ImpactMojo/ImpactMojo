@@ -563,7 +563,7 @@ Specials dropdown ছিল 13টি আইটেমের একটি সম�
 ## v10.17.0 — April 12, 2026
 
 ### যোগ করা হয়েছে
-- **Formspree দূর করা হয়েছে** — সব 12টি ফর্ম info@impactmojo.in-এ ইমেল নোটিফিকেশন সহ Netlify Forms-এ migrate করা হয়েছে। প্ল্যাটফর্ম এখন তিনটির পরিবর্তে দুটি সার্ভিসে (Netlify + Supabase) চলে।
+- **Formspree দূর করা হয়েছে** — সব 12টি ফর্ম [info@impactmojo.in](mailto:info@impactmojo.in)-এ ইমেল নোটিফিকেশন সহ Netlify Forms-এ migrate করা হয়েছে। প্ল্যাটফর্ম এখন তিনটির পরিবর্তে দুটি সার্ভিসে (Netlify + Supabase) চলে।
 - **Engagement email pipeline** — নতুন ব্যবহারকারীদের জন্য 5-ইমেল drip ক্রম: welcome (Day 0), first course nudge (Day 3), content showcase (Day 7), re-engagement (Day 14), premium soft pitch (Day 21)। Netlify Scheduled Function-এর মাধ্যমে প্রতিদিন 08:00 IST-এ চলে।
 - **Streak tracking** — learning streak এখন প্রতিটি লগইনে স্বয়ংক্রিয়ভাবে বাড়ে এবং একটি মিস হওয়া দিনের পর রিসেট হয়।
 - **Post-certificate email** — শেয়ারযোগ্য certificate লিঙ্ক সহ অভিনন্দন ইমেল, একজন ব্যবহারকারী কোর্স সম্পন্ন করলে স্বয়ংক্রিয়ভাবে পাঠানো হয়। free-tier ব্যবহারকারীদের জন্য একটি সূক্ষ্ম premium উল্লেখ অন্তর্ভুক্ত।

@@ -8,7 +8,7 @@ python3 scripts/notebooklm-manage.py add-source causal https://miguelhernan.org/
 python3 scripts/notebooklm-manage.py add-source causal https://www.tandfonline.com/doi/abs/10.1080/01621459.1986.10478354
 python3 scripts/notebooklm-manage.py add-source causal https://press.princeton.edu/books/paperback/9780691120355/mostly-harmless-econometrics
 python3 scripts/notebooklm-manage.py add-source causal https://www.aeaweb.org/articles?id=10.1257/app.20130401
-python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/05-matching_and_subclassification
+python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/05-causal_cross_sectional_designs
 python3 scripts/notebooklm-manage.py add-source causal https://academic.oup.com/biomet/article/70/1/41/240879
 python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/03-directed_acyclical_graphs
 python3 scripts/notebooklm-manage.py add-source causal https://journals.sagepub.com/doi/10.1177/00491241221099552
@@ -27,7 +27,7 @@ python3 scripts/notebooklm-manage.py add-source causal https://rdpackages.github
 python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/09-difference_in_differences
 python3 scripts/notebooklm-manage.py add-source causal https://www.sciencedirect.com/science/article/pii/S0304407621001445
 python3 scripts/notebooklm-manage.py add-source causal https://bcallaway11.github.io/did/
-python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/10-synthetic_control
+python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/11-synthetic_control
 python3 scripts/notebooklm-manage.py add-source causal https://www.aeaweb.org/articles?id=10.1257/jel.20191450
 python3 scripts/notebooklm-manage.py add-source causal https://web.stanford.edu/~jhain/Paper/JASA2010.pdf
 python3 scripts/notebooklm-manage.py add-source causal https://arxiv.org/abs/1608.00060
@@ -49,7 +49,7 @@ python3 scripts/notebooklm-manage.py add-source causal https://www.3ieimpact.org
 - https://www.tandfonline.com/doi/abs/10.1080/01621459.1986.10478354
 - https://press.princeton.edu/books/paperback/9780691120355/mostly-harmless-econometrics
 - https://www.aeaweb.org/articles?id=10.1257/app.20130401
-- https://mixtape.scunning.com/05-matching_and_subclassification
+- https://mixtape.scunning.com/05-causal_cross_sectional_designs
 - https://academic.oup.com/biomet/article/70/1/41/240879
 - https://mixtape.scunning.com/03-directed_acyclical_graphs
 - https://journals.sagepub.com/doi/10.1177/00491241221099552
@@ -68,7 +68,7 @@ python3 scripts/notebooklm-manage.py add-source causal https://www.3ieimpact.org
 - https://mixtape.scunning.com/09-difference_in_differences
 - https://www.sciencedirect.com/science/article/pii/S0304407621001445
 - https://bcallaway11.github.io/did/
-- https://mixtape.scunning.com/10-synthetic_control
+- https://mixtape.scunning.com/11-synthetic_control
 - https://www.aeaweb.org/articles?id=10.1257/jel.20191450
 - https://web.stanford.edu/~jhain/Paper/JASA2010.pdf
 - https://arxiv.org/abs/1608.00060

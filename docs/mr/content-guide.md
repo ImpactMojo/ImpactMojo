@@ -101,7 +101,7 @@ Lexicon:   65 terms with definitions
 - Telugu
 - Marathi
 
-अनुवादाचं योगदान स्वागतार्ह आहे. मार्गदर्शक तत्त्वांसाठी [Contributing](Contributing) पाहा.
+अनुवादाचं योगदान स्वागतार्ह आहे. मार्गदर्शक तत्त्वांसाठी [Contributing](contributing.md) पाहा.
 
 ## स्टाइल गाइड
 

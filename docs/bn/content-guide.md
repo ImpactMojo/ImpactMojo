@@ -101,7 +101,7 @@ Lexicon:   65 terms with definitions
 - Telugu
 - Marathi
 
-অনুবাদের অবদান স্বাগত। নির্দেশিকার জন্য দেখুন [Contributing](Contributing)।
+অনুবাদের অবদান স্বাগত। নির্দেশিকার জন্য দেখুন [Contributing](contributing.md)।
 
 ## স্টাইল গাইড
 

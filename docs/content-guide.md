@@ -100,7 +100,7 @@ Content is available in 6 languages:
 - Telugu
 - Marathi
 
-Translation contributions are welcome. See [Contributing](Contributing) for guidelines.
+Translation contributions are welcome. See [Contributing](contributing.md) for guidelines.
 
 ## Style Guide
 
