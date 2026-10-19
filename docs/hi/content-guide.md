@@ -101,7 +101,7 @@ Lexicon:   65 terms with definitions
 - Telugu
 - Marathi
 
-अनुवाद में योगदान का स्वागत है। दिशानिर्देशों के लिए [Contributing](Contributing) देखें।
+अनुवाद में योगदान का स्वागत है। दिशानिर्देशों के लिए [Contributing](contributing.md) देखें।
 
 ## स्टाइल गाइड
 

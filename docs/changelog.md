@@ -2,6 +2,13 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.391.0 — October 19, 2026 (pages that fit a phone, a readable search label, a working link check)
+
+### Fixed
+
+- **Fifteen pages failed the daily accessibility check from 15 October** (#1281). The Search label in the top bar was 4.43:1 in the dark theme on pages that stay light underneath it, because the bar is see-through; it is now 5.15:1 at worst. Nine handouts scrolled sideways on a phone by 6 to 20px after the body type changed to Inter, which is wider than Amaranth: their two-column card grids now take one column on a phone, as they already did in print. The opening story of the counterfactual game showed brown text on its dark scene in the light theme, at 1.44:1, and is now light text. The ImpactLex banner on the course glossaries could not wrap, and now lets its link drop under the text on a narrow screen.
+- **The daily link check reported 40,086 errors, almost none of them real** (#1281). The checker had changed how it reads two settings, so it skipped none of the backup copies and could not follow links that start with a slash. It now reads them correctly, and its report fits on the run page. Dead links it did find are replaced where the source has moved: three sanitation papers, two Fairwork pages, two chapters of The Mixtape, and a learning-science paper.
+
 ## v10.390.0 — October 18, 2026 (Campbell paper opens from the archive)
 
 ### Fixed

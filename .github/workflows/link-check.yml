@@ -41,12 +41,28 @@ jobs:
       - name: Broken link check
         uses: lycheeverse/lychee-action@v2
         with:
+          # Lychee now reads --exclude-path as a pattern on the input path, so
+          # ./Backups matched nothing and 111 backup copies were crawled; it
+          # also refuses to resolve root-relative links (/101-courses/) in
+          # local files without --root-dir, which was 37,327 of the 40,086
+          # errors on 2026-10-18 (#1281). Netlify serves /premium as
+          # premium.html, hence --fallback-extensions. 202 and 429 are publishers deferring
+          # or throttling a crawler, not dead links. Templates hold
+          # placeholders ({{SLUG}}, [URL]) by design, and the LinkedIn visual
+          # page answers a forced 404 on purpose (netlify.toml).
           args: >
-            --verbose
             --no-progress
-            --accept 200,204,301,302,403
-            --exclude-path ./netlify-env-files
-            --exclude-path ./Backups
+            --root-dir ${{ github.workspace }}
+            --fallback-extensions html
+            --index-files index.html
+            --accept 200,202,204,301,302,403,429
+            --exclude-path 'netlify-env-files'
+            --exclude-path 'node_modules/'
+            --exclude-path 'Backups/'
+            --exclude-path '_template\.html$'
+            --exclude-path 'scripts/templates/'
+            --exclude-path 'supabase/email-templates/'
+            --exclude-path 'linkedin-claude-code-visual\.html$'
             --exclude 'chat.whatsapp.com'
             --exclude 'discord.gg'
             --exclude 't.me'
@@ -60,6 +76,22 @@ jobs:
           # 322 of them URLs that appear in no page anyone can reach. Checking
           # links in a file nobody serves is 10.3% of the crawl for no signal.
           fail: true
+          # The full report goes up as an artifact below. As a job summary it
+          # was 6.7 MB against GitHub's 1 MB limit, so the upload aborted and
+          # the run page showed nothing at all.
+          jobSummary: false
+
+      - name: Short summary
+        if: always()
+        run: |
+          {
+            echo "## Link check"
+            sed -n '1,/^## /p' lychee/out.md | head -16
+            echo
+            echo "First 40 errors (the full list is the broken-links-report artifact):"
+            echo
+            grep -E '^\* \[' lychee/out.md | head -40
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload link check report
         if: always()
