@@ -18,7 +18,9 @@
 (function () {
     'use strict';
 
-    var WEBR_VERSION = 'latest';
+    // Pinned: 'latest' on webr.r-wasm.org serves a development build (0.6.1-dev on
+    // 2026-10-19), so a webR change could alter every R cell with no commit here.
+    var WEBR_VERSION = 'v0.6.0';
     var PYODIDE_VERSION = 'v0.26.4';
     var SQLJS_VERSION = '1.10.3';
     var LZ_URL = 'https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js';

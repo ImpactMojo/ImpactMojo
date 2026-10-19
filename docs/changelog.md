@@ -2,6 +2,25 @@
 
 What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](https://github.com/ImpactMojo/ImpactMojo/blob/main/CHANGELOG.md) in the repository.
 
+## v10.392.0 — October 19, 2026 (a Survey Instrument Library)
+
+### For Learners
+
+- **Survey Instrument Library** — 26 validated scales and modules for mental health, food security, nutrition, empowerment, disability, learning and social capital, each with the source to cite, its length and recall period, and the thing that most often goes wrong in the field. Every instrument is in site search.
+- **Excel lexicons for Gender Studies and Public Policy** — the download buttons on both lexicon pages now give you the workbook.
+
+### Fixed
+
+- **The Dataverse listed seven tools twice** under two names each, among them J-PAL, 3ie, KoboToolbox and the World Inequality Database. Each is listed once now, and the Dataverse holds 338 resources (#1283).
+- **The Gender and Public Policy lexicon downloads said Coming Soon** although both workbooks were on the site (#1284).
+- **Some translated pages showed blank text**, where a translation had been saved empty, and Telugu pages showed a stray "&amp;amp;". Brand names written in Indian scripts are back in their English form, and the menus and footer have translations in all five languages for the first time (#1285). The new menu translations are machine-written and await a native reader.
+- **Code School's R runtime was following a development build**, because the page asked for the latest release. It is fixed to version 0.6.0 (#1286).
+
+### Changed
+
+- Formula pages on five flagship courses load KaTeX 0.16.21, and the Development Finance deck loads the same Chart.js version as every other deck.
+- The roadmap's count of reading companions said 185. It is 192.
+
 ## v10.391.0 — October 19, 2026 (Measure of India and This Indian Life join the Dataverse)
 
 ### For Learners
@@ -15,7 +34,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Changed
 
-- The Dataverse holds 345 resources, and every page that states the number says so. The Dataverse guide now describes all 24 categories and all nine resource types (it said 16 categories and described 14), and the README said 22 categories.
+- The Dataverse guide now describes all 24 categories and all nine resource types (it said 16 categories and described 14). The README said 22 categories.
 
 ## v10.390.0 — October 18, 2026 (Campbell paper opens from the archive)
 
