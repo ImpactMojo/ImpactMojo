@@ -2769,7 +2769,7 @@ This is a **Phase B (architectural) commit + partial Phase A (content)**. The de
 ## [9.1.0] - 2026-03-07
 
 ### Added
-- **PolicyDhara** as 4th free resource (homepage, mobile, nav dropdown) linking to https://on-web.link/PolicyDhara
+- **PolicyDhara** as 4th free resource (homepage, mobile, nav dropdown) linking to `on-web.link/PolicyDhara`
 - Organization Dashboard content: welcome getting-started guide, "What's Included" feature grid, "Coming Soon for Teams" roadmap preview
 - New roadmap items: Open Badges & Micro-credentials (#30), Live Case Challenges (#31)
 - GitHub Issues for all roadmap features (#25-#31)
@@ -2846,18 +2846,4 @@ This is a **Phase B (architectural) commit + partial Phase A (content)**. The de
 - Dojos skill session page
 - Blog (Learning Loops) and podcast (Between the Logframes)
 
-[10.7.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.6.0...v10.7.0
-[10.6.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.5.1...v10.6.0
-[10.5.1]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.5.0...v10.5.1
-[10.5.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.4.1...v10.5.0
-[10.4.1]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.4.0...v10.4.1
-[10.4.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.3.0...v10.4.0
-[10.3.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.2.0...v10.3.0
-[10.2.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.1.0...v10.2.0
-[10.1.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v10.0.0...v10.1.0
-[10.0.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v9.5.0...v10.0.0
-[9.5.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v9.1.0...v9.5.0
-[9.1.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v9.0.0...v9.1.0
-[9.0.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v8.0.0...v9.0.0
-[8.0.0]: https://github.com/ImpactMojo/ImpactMojo/compare/v7.0.0...v8.0.0
-[7.0.0]: https://github.com/ImpactMojo/ImpactMojo/releases/tag/v7.0.0
+[10.0.0]: https://github.com/ImpactMojo/ImpactMojo/releases/tag/v10.0.0

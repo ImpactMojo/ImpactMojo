@@ -16,6 +16,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **The Gender and Public Policy lexicon downloads said Coming Soon** although both workbooks were on the site (#1284).
 - **Some translated pages showed blank text**, where a translation had been saved empty, and Telugu pages showed a stray "&amp;amp;". Brand names written in Indian scripts are back in their English form, and the menus and footer have translations in all five languages for the first time (#1285). The new menu translations are machine-written and await a native reader.
 - **Offline course saving could not be reached and would have failed for two courses**: nothing on the site called it, SEL was listed under a name the worker did not know, Social Movements was missing, a course saved before a deploy would have opened without its styles, and the status messages were too faint to read (#1287).
+- **65 source links led nowhere**, across reading lists, Deep Dives, two Specials, a Code School page and a 101 deck. Moved works now open at their current address, removed pages open from a dated Internet Archive copy, and links that never pointed at a real page (among them an invented Cambridge University Press address) are gone, with the citation kept (#1288).
 - **Code School's R runtime was following a development build**, because the page asked for the latest release. It is fixed to version 0.6.0 (#1286).
 
 ### Changed
