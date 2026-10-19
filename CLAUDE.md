@@ -1,5 +1,7 @@
 # ImpactMojo
 
+Shared engineering standard: @.claude/engineering-standards.md. It applies to all work in this repository. This file adds what is specific to the project, and wins where the two disagree.
+
 Free development education platform for South Asia. Static HTML/CSS/JS, Supabase backend, Netlify hosting.
 
 ## Commands
