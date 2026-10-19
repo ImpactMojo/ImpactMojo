@@ -10,7 +10,7 @@ Nothing is in progress that you would notice on the site. The Planned list below
 
 These were previously listed as planned or in progress, and are now live. Each names the page, so you can check rather than take our word for it.
 
-- **BookSummaries expansion**: the interactive reading companion library has grown to **185 companions** across development economics, statistics, research methods, communication, leadership, and productivity. ([#272](https://github.com/ImpactMojo/ImpactMojo/issues/272))
+- **BookSummaries expansion**: the interactive reading companion library has grown to **192 companions** across development economics, statistics, research methods, communication, leadership, and productivity. ([#272](https://github.com/ImpactMojo/ImpactMojo/issues/272))
 - **Native 101 deck migration**: all **84 foundational course decks** are now self-hosted HTML with ~100 slides each, interactive charts, and keyboard/touch navigation. No third-party presentation embeds remain.
 - **Every page in five Indian languages**: use the language menu on any page to read it in Hindi, Tamil, Bengali, Marathi or Telugu, the 101 decks, Handouts and Deep Dives included. The menus, the homepage and the flagship course pages use translations we have checked. The rest is machine translation, which is readable but not reviewed. If you spot an error, tell us and we will save the corrected wording. ([#29](https://github.com/ImpactMojo/ImpactMojo/issues/29))
 - **Practitioner voices**: this was listed as a planned "practitioner interview series". It shipped as **Field Radio**, a station of **23 clips**: voice notes and short videos from practitioners, each with a full transcript, playing back-to-back and filterable by track. Every clip is in site search, including its transcript, so a phrase you half-remember finds the clip. ([Listen](/field-radio.html))
@@ -21,6 +21,7 @@ These were previously listed as planned or in progress, and are now live. Each n
 - **Live workshop listings**: workshops with registration and a calendar file you can add to your own diary. ([/events.html](/events.html))
 - **Impact measurement dashboard**: a public view of community outcomes, and a signed-in route to log your own. ([/impact-dashboard.html](/impact-dashboard.html))
 - **Offline support, both halves**: browser notifications you can switch on from your account, and background sync, so progress recorded on a bad connection is replayed once you are back online rather than lost.
+- **Save a flagship course for offline reading**: every flagship course page has a Save for offline button under Start module 1. The course then opens on that device without a connection, and the button removes the copy again. (v10.392.0)
 - **Analytics only after consent**: Google Analytics does not run until you accept it in the cookie notice, on every page. (v10.378.0)
 - **Paid Practice Pack modules after sign-in, and a human check on the sign-in forms.** (v10.379.0)
 - **Social Protection and Welfare Delivery in India**, the 22nd flagship course, in 13 modules with a 50-term lexicon. ([/courses/social-protection/](/courses/social-protection/), v10.380.0)

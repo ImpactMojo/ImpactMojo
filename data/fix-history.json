@@ -4,6 +4,55 @@
   "count": 120,
   "entries": [
     {
+      "title": "The Dataverse listed seven tools twice",
+      "detail": "under two names each, among them J-PAL, 3ie, KoboToolbox and the World Inequality Database, and it listed 16 Claude slash commands as live that are not published anywhere. Each tool is listed once now, the 16 commands and their category are gone, and the Dataverse holds 322 resources in 23 categories (#1283).",
+      "fixed_on": "2026-10-19",
+      "release": "v10.392.0",
+      "issue": 1283
+    },
+    {
+      "title": "The Gender and Public Policy lexicon downloads said Coming Soon",
+      "detail": "although both workbooks were on the site (#1284).",
+      "fixed_on": "2026-10-19",
+      "release": "v10.392.0",
+      "issue": 1284
+    },
+    {
+      "title": "Some translated pages showed blank text",
+      "detail": ", where a translation had been saved empty, and Telugu pages showed a stray \"&amp;amp;\". Brand names written in Indian scripts are back in their English form, and the menus and footer have translations in all five languages for the first time (#1285). The new menu translations are machine-written and await a native reader.",
+      "fixed_on": "2026-10-19",
+      "release": "v10.392.0",
+      "issue": 1285
+    },
+    {
+      "title": "Offline course saving could not be reached and would have failed for two courses",
+      "detail": ": nothing on the site called it, SEL was listed under a name the worker did not know, Social Movements was missing, a course saved before a deploy would have opened without its styles, and the status messages were too faint to read (#1287).",
+      "fixed_on": "2026-10-19",
+      "release": "v10.392.0",
+      "issue": 1287
+    },
+    {
+      "title": "65 source links led nowhere",
+      "detail": ", across reading lists, Deep Dives, two Specials, a Code School page and a 101 deck. Moved works now open at their current address, removed pages open from a dated Internet Archive copy, and links that never pointed at a real page (among them an invented Cambridge University Press address) are gone, with the citation kept (#1288).",
+      "fixed_on": "2026-10-19",
+      "release": "v10.392.0",
+      "issue": 1288
+    },
+    {
+      "title": "Code School's R runtime was following a development build",
+      "detail": ", because the page asked for the latest release. It is fixed to version 0.6.0 (#1286).",
+      "fixed_on": "2026-10-19",
+      "release": "v10.392.0",
+      "issue": 1286
+    },
+    {
+      "title": "The daily accessibility check of every page had failed since 15 October",
+      "detail": ": eight handouts and the Gandhi lexicon ran wider than a phone, the header's Search label was too faint in dark mode on pages with a light top, and the story section of the Counterfactual game turned into a dark band with dark text in the light theme (#1281).",
+      "fixed_on": "2026-10-19",
+      "release": "v10.391.0",
+      "issue": 1281
+    },
+    {
       "title": "A source link on The Indicator Ate the Village pointed at a site that no longer hosts the paper",
       "detail": "(#1278). The full text now opens from an Internet Archive copy of the original file.",
       "fixed_on": "2026-10-18",
@@ -793,55 +842,6 @@
       "fixed_on": "2026-09-08",
       "release": "v10.290.0",
       "issue": 1074
-    },
-    {
-      "title": "The results chain legend rendered one word per line, at every width, from the day the page shipped",
-      "detail": "(#1072). Reported from a phone. drawLegend() wrote each row as a swatch <span>, a <b> for the label, and then the note as a bare text node, into .rc-legend li { display: grid; grid-template-columns: 26px 1fr }. That is three grid items, not two: CSS wraps a loose text node in an anonymous grid item and auto-places it like any other cell, so the note went to row 2, column 1, the 26px swatch track, widened only as far as its longest unbreakable word. Measured in Chromium, the four rows rendered 83×370, 72×535, 78×488 and 69×158, identical at 390px, 768px and 1280px. The note is now wrapped in its own element, which puts exactly two children in the grid. Nothing was going to catch it. The markup is valid, every word is present and in the right order, contrast and tap targets are fine. axe passed 64 of 64 variants over that page and pa11y 23 of 23 pages, twice, because neither has an opinion about a paragraph laid out four words tall. git log -L puts both the CSS rule and the markup in the same commit as the page itself, and it survived two later passes over the same file, both spent looking at the diagram above the legend. So tests/stray-grid-text.js is new, in the mobile CI job. It renders every page under fundamentals/ and theories/ at 390px and 1280px and fails on any bare text node inside a grid or flex container that renders under half its container's width and more than three lines tall. Both conditions have to hold, because a loose text node beside an element is usually deliberate and this repo is full of the good kind: .chip, .cat and the results chain's own link key all put a swatch or a number next to a bare label in a flex row, one line, most of the container's width. The two populations are nowhere near each other — the broken rows measured 6 to 22 per cent of container width and 6.7 to 22.7 lines; every deliberate case is a single line. Verified by reintroducing the defect, which the guard reported on all four rows at both widths, and by removing it again. The page list is read from the filesystem, so a page added later is covered without anyone remembering.",
-      "fixed_on": "2026-09-07",
-      "release": "v10.289.0",
-      "issue": 1072
-    },
-    {
-      "title": "The results chain and the empowerment page drew charts instead of the framework, the only two Fundamentals without an interactive diagram",
-      "detail": "(#1070). Every other page in the library draws the framework it teaches as a shape you can interact with: the wheel's twelve axes and three rings, the cube's three faces, the ladder's eight rungs, the capability chain, the two axes of practical and strategic gender needs, the asset pentagon, the barrier stack, the gap matrix. The two pages added last week drew evidence and left the framework in prose. On the results chain that mattered specifically. There was no chain in it: five bars, no nodes, no arrows, and the break rendered as a one-pixel vertical rule drawn only when the next state's weight fell by more than 20. The page's headline claim is that the chain breaks one link later, and a bar chart cannot show a break in a chain because it never draws one. On the empowerment page, drawBands() emitted three cards, two screens below prose reading \"The three parts are a sequence and not a menu\". Both now draw the framework first and keep the evidence below, which is what capabilities.html and gender-needs.html already did. Three things fell out of building it that are worth recording. The diagrams are HTML, not SVG. js/ladder.js has said why since it was written: \"Renders the eight rungs as real <button>s (not SVG), so every target scales.\" Text inside an SVG is multiplied by the ratio of rendered width to viewBox, which is what produced the 5.2px labels in #1068 a day earlier. HTML has no such scaling, wraps and stacks by itself, and gives each node real button semantics without being handed them. The small multiples stay SVG and now carry no text at all: the five links are named once, in HTML, above the grid, and each figure carries a full sentence as its accessible name. The chain reacts to its container, not to the window. A @media rule would have been wrong here and quietly so. Five nodes and four arrows need about 670px across, and the narrow column of the two-column layout is 493px on a 1600px screen, so a viewport rule would have kept the row horizontal and squeezed every node to 65px on the widest displays. Measured: 39px at a 900px viewport, 65px at 1280px and above. @container asks the question that actually matters, and the results chain also moved out of the two-column layout to a full width the row can use. A new colour token, because the obvious one failed. The severed link is marked in --color-break, added per theme (#be123c light, #fb7185 dark). The existing --color-accent-pink could not do it: #f093fb is 2.04:1 on the light card, which is why every other use of it in css/fundamentals.css is a 4px border and never ink. As a break marker it would have been below the 3:1 a meaningful graphic needs and the 4.5:1 its label needs, in the default theme, on the one mark carrying the page's argument. Caught by measuring every text node in the diagram against its painted background at five widths in both themes, not by eye and not by axe.",
-      "fixed_on": "2026-09-07",
-      "release": "v10.288.0",
-      "issue": 1070
-    },
-    {
-      "title": "Chart text on the two new Fundamentals pages rendered at 5.2px on a phone, and the results chain's bars were 7px tap targets",
-      "detail": "(#1068). Both charts draw into a fixed-width viewBox that the browser then scales into whatever column it lands in, and every font size inside an SVG is multiplied by that ratio. Measured in Chromium: on /fundamentals/results-chain.html a 560-unit chart lands in a 337px column at a 390px viewport, so a 9.5px tick renders at 5.71px, and at 360px it is 5.20px. /fundamentals/empowerment.html was worse, because its two figures stack in one column at every width: a 620-unit chart in a 493px column at 1280px put the same 9.5px label at 7.55px, small enough next to a 9.5 in the source to look deliberate. The results chain carried a second defect at those widths. Bar height encodes how the link is measured, so the weakest states are slivers: an absent bar is 8 per cent of the plot height, about 7px tall in a 55px slot, far under the 24×24 minimum, and it is the cell the page is arguing about. Below 640px the chain is now drawn top to bottom, five rows with length carrying the weight, each row backed by a transparent full-width hit rect so a short bar is still a full target. Measured after: every target 343×30 at 390px and 313×28 at 360px, labels 12 to 15px, no horizontal overflow, desktop unchanged. The empowerment page computes its viewBox from the real column at render time, so the scale is 1.003 at 390px and 1.002 at 1280px, and its tick tilt and bottom margin adapt for the crowded indicators, which removed three label collisions at 390px and one at 1280px. Both pages redraw on a debounced resize, and only when the orientation actually changes, so the address bar collapsing on a mobile browser does not rebuild the SVGs. Nothing was going to catch this. rules/testing.md item 12 already records that axe does not evaluate SVG text contrast; size is the same blind spot, and both pages report zero axe violations at 390px in both themes with every label unreadable. pa11y does not look at SVG text either. The pages were built and reviewed at 1280px, where the results chain is legible and the empowerment page's 7.55px passes for a small caption.",
-      "fixed_on": "2026-09-07",
-      "release": "v10.287.0",
-      "issue": 1068
-    },
-    {
-      "title": "The homepage tour's search step pointed at a hidden element on desktop, and told phone visitors to press Ctrl+K",
-      "detail": "(#1066). The first half was a regression from the previous release: the new mobile search button carries the same .ims-nav-btn class as the desktop one, and startTour() picked steps by !!document.querySelector(s.element), which returns the first match in DOM order. The mobile button is injected into .nav-container ahead of .mobile-menu-toggle, so it won at every width — including 1280px, where it is display: none. Measured in Chromium: at 1280px the selector resolved to the mobile button (hidden) while the real one sat visible at 118×30 a few pixels away. Nothing errored; the step simply highlighted nothing. The step is now two steps, one per breakpoint, each with a selector that can match only one button, and copy that matches the control it points at. Steps may set whenVisible: true to require the element to be rendered rather than merely present; only these two do. Deliberately opt-in: measured against the real homepage, requiring visibility for every step drops seven of ten on a phone, because the desktop nav items and the theme selector are display: none at 390px and live in the hamburger menu instead. Those seven do currently anchor to nothing on mobile, which is a real defect and is recorded in #1066 rather than fixed here, because repairing it changes what a phone visitor is shown. With the flag opt-in, each width keeps nine of ten steps and every step other than the search pair behaves exactly as before.",
-      "fixed_on": "2026-09-07",
-      "release": "v10.286.0",
-      "issue": 1066
-    },
-    {
-      "title": "Site-wide search was unreachable on mobile",
-      "detail": "(#1062). js/search.js injected its button into .nav-buttons, and css/imx-main.css sets that container to display: none !important below 768px, so on a phone the button sat in the DOM at 0×0 with the correct class and a working click handler. The hamburger menu carried no search entry either, and Ctrl+K is not something a phone offers. Every desktop check passed throughout, which is why it lasted: measured in Chromium on /index.html, the button is 118×30 and visible at 1280px and 0×0 at 390px. axe and pa11y would not have reported it — a zero-size element with a valid aria-label is a layout outcome, not a WCAG violation. There is now an icon-only button in .nav-container, which stays laid out at every width, shown only below the breakpoint that hides the other one. It carries order: 98 because that bar sequences itself with flex order rather than DOM order, and a button left at the default renders to the left of the logo, which is where the first attempt put it.",
-      "fixed_on": "2026-09-07",
-      "release": "v10.285.0",
-      "issue": 1062
-    },
-    {
-      "title": "The shared top bar's search button collapsed to an 18px sliver when its icon failed to load",
-      "detail": "(#1062). Below 720px that bar hides the text label, so the icon is the button, and ic() hides the <img> on error — one failed CDN fetch and search became a near-invisible 18×32 stub on every phone. Found by the new test rather than by eye. The search icon is now inline SVG rather than a CDN fetch, since it is the one control in that bar whose absence leaves nothing to press, and .im-sc-btn has a 34px floor below 720px so no icon button in the bar can shrink past a tap target.",
-      "fixed_on": "2026-09-07",
-      "release": "v10.285.0",
-      "issue": 1062
-    },
-    {
-      "title": "The Fundamentals cards on index.html and libraries.html described four frameworks and 171 statistics; there are eight",
-      "detail": "(#1064). The homepage card also said \"Open the wheel\", inviting the reader into one page rather than into the library. Nothing covered them: check-counts.py reads data/counts.json, which has no Fundamentals entry, and check-fundamentals-index.py deliberately stopped at the library's own directory. Both cards now describe the library, and the guard was extended to the two entry points with a rule that is checkable rather than a number to maintain: those cards may not state a count at all. Verified by reintroducing \"Eight clickable maps\" (caught) and by repointing the homepage card at wheel.html (caught).",
-      "fixed_on": "2026-09-07",
-      "release": "v10.285.0",
-      "issue": 1064
     }
   ]
 }

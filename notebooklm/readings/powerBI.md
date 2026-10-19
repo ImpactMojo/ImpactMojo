@@ -9,7 +9,7 @@ python3 scripts/notebooklm-manage.py add-source powerBI https://powerbi.microsof
 python3 scripts/notebooklm-manage.py add-source powerBI https://learn.microsoft.com/power-bi/fundamentals/
 python3 scripts/notebooklm-manage.py add-source powerBI https://www.microsoft.com/power-platform/products/power-bi/pricing
 python3 scripts/notebooklm-manage.py add-source powerBI https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-data-sources
-python3 scripts/notebooklm-manage.py add-source powerBI http://rchiips.org/nfhs/factsheet_NFHS-5.shtml
+python3 scripts/notebooklm-manage.py add-source powerBI https://web.archive.org/web/20240711214912/http://rchiips.org/nfhs/factsheet_NFHS-5.shtml
 python3 scripts/notebooklm-manage.py add-source powerBI https://data.gov.in/
 python3 scripts/notebooklm-manage.py add-source powerBI https://learn.microsoft.com/power-bi/connect-data/
 python3 scripts/notebooklm-manage.py add-source powerBI https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-query-overview
@@ -43,7 +43,7 @@ python3 scripts/notebooklm-manage.py add-source powerBI https://learn.microsoft.
 - https://learn.microsoft.com/power-bi/fundamentals/
 - https://www.microsoft.com/power-platform/products/power-bi/pricing
 - https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-data-sources
-- http://rchiips.org/nfhs/factsheet_NFHS-5.shtml
+- https://web.archive.org/web/20240711214912/http://rchiips.org/nfhs/factsheet_NFHS-5.shtml
 - https://data.gov.in/
 - https://learn.microsoft.com/power-bi/connect-data/
 - https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-query-overview
