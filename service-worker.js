@@ -92,7 +92,6 @@ self.addEventListener('fetch', (event) => {
 
   // Always go straight to the network for backend / dynamic endpoints.
   if (url.hostname.includes('supabase') ||
-      url.hostname.includes('instantdb') ||
       url.pathname.startsWith('/.netlify/') ||
       url.hostname.includes('google-analytics') ||
       url.hostname.includes('googletagmanager') ||

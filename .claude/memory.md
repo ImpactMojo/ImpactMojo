@@ -1349,3 +1349,8 @@ attribution matches what every other explorer here already does.
 ## Ratings and user counts are real (owner, 2026-10-07)
 - **Do not describe catalogue or product ratings, stars or user counts as invented.** They came from the platform ImpactMojo used before its migration; the data was lost in the move and restored by hand from an Excel export. The transparency page explains this. Leave them as they are unless the owner asks otherwise.
 - The 17 Pro Studio tool ratings removed on 2026-10-05 (v10.319.0, #1132) on the mistaken assumption that they had no source were restored on 2026-10-07 (v10.347.0). Never remove ratings or reviews.
+
+## Session 2026-10-21 (ImpactLex off InstantDB)
+- InstantDB Cloud shuts down 2026-08-31 2027. Exported the live data read-only with the admin token the user pasted into chat (rotate it; the app is to be deleted after the move): 385 terms, 5 case studies, 10 formulae, 0 contributions, 0 bookmarks. All 385 terms exist in the snapshot, which has 109 more and is richer (335 published vs 75). The live copy was an older import and nothing in it was unique, so the snapshot is the glossary.
+- app.js no longer imports `@instantdb/core`; contributions POST to Supabase `impactlex_contributions` (anon insert, admin read via `public.is_admin()`); review.html uses a Supabase magic link. Bookmarks were never synced; they stay in localStorage.
+- Migration file `supabase/migrations/20261021_impactlex_contributions.sql`. The MCP `apply_migration` call came back cancelled, so confirm the table exists in production before merging.

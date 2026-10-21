@@ -697,14 +697,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # Two failures that are invisible on the page. An entry nobody has
-      # reviewed rendered exactly like one an editor had: 159 of 494 are still
-      # `seed`, 226 were first drafted by a language model, and 460 carry no
-      # citation at all. And the offline snapshot is what every visitor sees
-      # first -- app.js paints it before InstantDB answers -- so its age is
-      # everyone's first paint, not a fallback. It cannot be regenerated
-      # without INSTANTDB_ADMIN_TOKEN, which is why the age has to report
-      # itself rather than be remembered.
+      # An entry nobody has reviewed rendered exactly like one an editor had:
+      # 159 of 494 are still `seed`, 226 were first drafted by a language model,
+      # and 460 carry no citation at all. The check also holds the glossary to
+      # one source, the snapshot: until 2026-10-21 a second, older copy in
+      # InstantDB replaced it on every load.
       - name: Check ImpactLex states its provenance
         run: python3 scripts/check-impactlex.py
 
