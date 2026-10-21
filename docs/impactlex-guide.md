@@ -74,7 +74,7 @@ We especially welcome:
 
 ## Under the hood
 
-ImpactLex is a static Progressive Web App hosted on Netlify with ImpactMojo. Data lives in InstantDB; a snapshot JSON file provides the offline fallback, so the app works even when InstantDB is unreachable. Content is drafted with AI assistance (Gemini/Grok/DeepSeek) and reviewed by a human editor before publishing.
+ImpactLex is a static Progressive Web App hosted on Netlify with ImpactMojo. The glossary is a snapshot JSON file in the repository, so the app works offline. Reader suggestions are stored in Supabase and reviewed by an admin. Content is drafted with AI assistance (Gemini/Grok/DeepSeek) and reviewed by a human editor before publishing.
 
 Source: `/impactlex/` in the [ImpactMojo repo](https://github.com/ImpactMojo/ImpactMojo). Legacy repo (pre-2026): [Varnasr/ImpactLex](https://github.com/Varnasr/ImpactLex).
 

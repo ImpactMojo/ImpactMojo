@@ -7,21 +7,30 @@
  * Usage:
  *   node scripts/impactlex-migrate.mjs                    # local only (courses)
  *   node scripts/impactlex-migrate.mjs --with-external    # also pull external ImpactLex
- *   node scripts/impactlex-migrate.mjs --push             # also push to InstantDB
+ *   node scripts/impactlex-migrate.mjs --out /tmp/rebuild.json   # write elsewhere
  *
- * Env (required for --push):
- *   INSTANTDB_APP_ID, INSTANTDB_ADMIN_TOKEN
+ * The snapshot in the repository is the glossary and has been edited since this
+ * script last built it (AI drafts, editor notes, checked entries). Rebuilding
+ * from the course lexicons would overwrite those edits, so the script refuses
+ * to write to impactlex/data/seed-snapshot.json unless --overwrite-curated is
+ * given. Use --out to compare a rebuild with it.
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createHash } from 'node:crypto';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const COURSES_DIR = join(ROOT, 'courses');
-const OUT = join(ROOT, 'impactlex/data/seed-snapshot.json');
+const CANONICAL = join(ROOT, 'impactlex/data/seed-snapshot.json');
+const outArg = process.argv.indexOf('--out');
+const OUT = outArg >= 0 ? resolve(process.argv[outArg + 1]) : CANONICAL;
+if (OUT === CANONICAL && !process.argv.includes('--overwrite-curated')) {
+  console.error('[refused] impactlex/data/seed-snapshot.json is the glossary and carries edits this script does not know about.');
+  console.error('          Pass --out <file> to write a rebuild elsewhere, or --overwrite-curated if you mean to discard them.');
+  process.exit(1);
+}
 const EXTERNAL_URL = 'https://raw.githubusercontent.com/Varnasr/ImpactLex/main/index.html';
 
 const args = process.argv.slice(2);
@@ -218,51 +227,6 @@ async function loadExternal() {
   };
 }
 
-/**
- * Deterministic UUID v4-formatted string derived from a slug.
- * Same slug always yields the same UUID → re-pushes are idempotent upserts.
- * InstantDB requires UUIDs as entity IDs; we keep the slug queryable in `slug`.
- */
-function slugToUuid(slug, namespace = 'impactlex') {
-  const h = createHash('sha256').update(`${namespace}:${slug}`).digest('hex');
-  const variant = (parseInt(h.slice(16, 17), 16) & 0x3 | 0x8).toString(16);
-  return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-${variant}${h.slice(17, 20)}-${h.slice(20, 32)}`;
-}
-
-async function pushToInstantDB(snapshot) {
-  const appId = process.env.INSTANTDB_APP_ID;
-  const adminToken = process.env.INSTANTDB_ADMIN_TOKEN;
-  if (!appId || !adminToken) {
-    console.error('[err] --push requires INSTANTDB_APP_ID and INSTANTDB_ADMIN_TOKEN');
-    process.exit(1);
-  }
-  const endpoint = `https://api.instantdb.com/admin/transact`;
-  const pushCollection = async (collection, rows, slugField = 'slug') => {
-    for (let i = 0; i < rows.length; i += 100) {
-      const chunk = rows.slice(i, i + 100);
-      const steps = chunk.map((row) => {
-        const slug = row.id; // original slug
-        const uuid = slugToUuid(`${collection}:${slug}`);
-        const { id, ...rest } = row;
-        return ['update', collection, uuid, { ...rest, [slugField]: slug }];
-      });
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${adminToken}`,
-          'App-Id': appId,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ steps }),
-      });
-      if (!res.ok) throw new Error(`InstantDB push ${collection} failed (${res.status}): ${await res.text()}`);
-      console.log(`[push] ${collection} ${i + chunk.length}/${rows.length}`);
-    }
-  };
-  await pushCollection('terms', snapshot.terms);
-  if (snapshot.caseStudies.length) await pushCollection('caseStudies', snapshot.caseStudies);
-  if (snapshot.formulae.length) await pushCollection('formulae', snapshot.formulae);
-}
 
 async function main() {
   const courses = listCoursesWithLexicons();
@@ -296,7 +260,6 @@ async function main() {
   writeFileSync(OUT, JSON.stringify(snapshot, null, 2));
   console.log(`[ok] wrote ${merged.length} terms + ${external.caseStudies.length} case studies + ${external.formulae.length} formulae to ${OUT}`);
 
-  if (hasFlag('--push')) await pushToInstantDB(snapshot);
 }
 
 main().catch((err) => { console.error(err); process.exit(1); });

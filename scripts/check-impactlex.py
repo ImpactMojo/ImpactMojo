@@ -14,11 +14,13 @@ that is the whole ballgame. `provenanceOf()` now states all three on every
 term, and the Sources block is never hidden, because an absent citation is
 information rather than a reason to omit the heading.
 
-**The snapshot is what every visitor sees first.** `app.js` renders it
-immediately and only then swaps in InstantDB, so a stale snapshot is the first
-paint for everyone on every load, not merely an offline fallback. It cannot be
-regenerated without `INSTANTDB_ADMIN_TOKEN`, which is exactly why its age needs
-to be visible rather than remembered.
+**The snapshot is the glossary, and there is nothing behind it.** Until
+2026-10-21 `app.js` rendered the snapshot and then swapped in a copy held in
+InstantDB, which was an older import: 385 terms against the snapshot's 494, 75
+published against 335, and 154 shorter definitions. Visitors saw the older copy.
+InstantDB is shutting down on 2026-08-31 2027, so the live copy is gone from
+the code and the snapshot is the only source. This check holds it there: a
+second source that nobody compares is how the two came apart.
 
     python3 scripts/check-impactlex.py
 """
@@ -26,17 +28,11 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SNAP = os.path.join(ROOT, "impactlex", "data", "seed-snapshot.json")
 APP = os.path.join(ROOT, "impactlex", "app.js")
 INDEX = os.path.join(ROOT, "impactlex", "index.html")
-
-# The snapshot is regenerated from the live database, which needs a token this
-# repository does not hold. Six months is generous; it is here so the drift
-# reports itself instead of being discovered by a reader.
-MAX_AGE_DAYS = 180
 
 failures = []
 
@@ -58,16 +54,19 @@ def main():
           snap.get("count") == len(terms),
           f"count={snap.get('count')} terms={len(terms)}")
 
-    generated = snap.get("generatedAt")
-    age = None
-    if generated:
-        when = datetime.fromisoformat(generated.replace("Z", "+00:00"))
-        age = (datetime.now(timezone.utc) - when).days
-    check("the offline snapshot is not stale",
-          age is not None and age <= MAX_AGE_DAYS,
-          f"generated {generated}, {age} days ago (limit {MAX_AGE_DAYS}); "
-          "regenerate with INSTANTDB_ADMIN_TOKEN set"
-          if age is not None else "no generatedAt in the snapshot")
+    # No second source for the glossary. The InstantDB client, its app id and
+    # its admin scripts are gone; a copy that is edited somewhere else is the
+    # drift this repository had.
+    config = open(os.path.join(ROOT, "impactlex", "config.js"), encoding="utf-8").read()
+    check("the glossary has one source: the snapshot",
+          "instantdb" not in app.lower() and "instantdb" not in config.lower()
+          and "esm.sh" not in app,
+          "app.js and config.js name no live database")
+
+    # Contributions are the one thing that needs a database. They go to a
+    # Supabase table that anyone can insert into and only an admin can read.
+    check("contributions go to Supabase",
+          "impactlex_contributions" in app and "supabaseUrl" in config)
 
     # Provenance has to be read off the record, not inferred, so the fields it
     # reads must still be there. `aiProvider` is deliberately not in this list:
@@ -117,8 +116,8 @@ def main():
     # Rejected entries must stay invisible. That was true before and is the one
     # status the reader should not be offered.
     check("rejected entries are still filtered out",
-          app.count("t.status !== 'rejected'") >= 2,
-          "both the snapshot path and the InstantDB path")
+          app.count("t.status !== 'rejected'") >= 1,
+          "the snapshot path")
 
     counts = {}
     for t in terms:

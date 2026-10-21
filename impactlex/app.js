@@ -2,17 +2,16 @@
  * ImpactLex app logic.
  *
  * Data flow:
- *   1. Load seed-snapshot.json immediately → render anything.
- *   2. If window.IMPACTLEX_CONFIG.instantDbAppId is set, subscribe to live terms
- *      collection and re-render when it arrives. (Progressive enhancement.)
+ *   Load seed-snapshot.json and render. The snapshot is the glossary: it is
+ *   edited by pull request, so there is no second copy to fall behind it.
  *
  * Features:
  *   - Fuzzy search (term, acronym, aliases, definition)
  *   - Category + course filters
  *   - Term-of-the-day (deterministic by date)
- *   - Bookmarks (localStorage; cloud sync when logged in)
+ *   - Bookmarks (localStorage)
  *   - Deep-link via ?term=<slug>
- *   - Submit-a-term form (writes to `contributions` collection)
+ *   - Submit-a-term form (writes to the Supabase table impactlex_contributions)
  */
 
 (() => {
@@ -28,7 +27,6 @@
     formulae: [],
     filter: { category: 'all', course: 'all', provenance: 'all', query: '' },
     bookmarks: new Set(JSON.parse(localStorage.getItem('impactlex:bookmarks') || '[]')),
-    liveSource: 'snapshot', // 'snapshot' | 'instantdb'
     checked: {}, // slug -> corrections from impactlex/data/reviewed.json
   };
 
@@ -85,38 +83,6 @@
       render();
     } catch (err) {
       showStatus(`Could not load glossary: ${err.message}`, 'offline');
-    }
-  }
-
-  async function connectInstantDB() {
-    if (!CONFIG.instantDbAppId) return;
-    try {
-      // Lazy-load the SDK only when configured. Kept as an ES module import.
-      // A dynamic import() cannot carry Subresource Integrity, and esm.sh
-      // builds the module on request, so this pinned version is trusted as
-      // served. Vendoring a built copy under /impactlex/ would remove that.
-      const { init, tx, i } = await import('https://esm.sh/@instantdb/core@0.14.22');
-      // devtool: false. InstantDB draws an unlabelled devtool button on
-      // localhost, which is an unnamed control to a screen reader.
-      const db = init({ appId: CONFIG.instantDbAppId, devtool: false });
-      window.__impactlexDb = db;
-      db.subscribeQuery({ terms: {}, caseStudies: {}, formulae: {} }, (resp) => {
-        if (resp.error) { console.warn('InstantDB error:', resp.error); return; }
-        const d = resp.data;
-        // InstantDB uses UUIDs as entity ids; the app routes on slugs. Normalize.
-        const useSlug = (row) => ({ ...row, uuid: row.id, id: row.slug || row.id });
-        // Show everything that isn't explicitly rejected. Seed/draft/published all visible.
-        // (Drafts only appear in /impactlex/review.html for editors.)
-        if (d.terms?.length) state.terms = applyChecked(d.terms.filter((t) => t.status !== 'rejected').map(useSlug));
-        if (d.caseStudies?.length) state.caseStudies = d.caseStudies.map(useSlug);
-        if (d.formulae?.length) state.formulae = d.formulae.map(useSlug);
-        state.liveSource = 'instantdb';
-        updateStats();
-        render();
-        // No user-facing status on success; backend choice is implementation detail.
-      });
-    } catch (err) {
-      console.warn('InstantDB connection failed, staying on snapshot:', err);
     }
   }
 
@@ -260,8 +226,7 @@
   }
 
   function termCard(t) {
-    // Every field from the glossary store is escaped: entries can come from
-    // InstantDB, so none of them is trusted markup.
+    // Every field from the glossary is escaped, so none of it is trusted markup.
     const courseBadges = (t.courses || []).slice(0, 3)
       .map((c) => `<span class="course-badge">${escapeHtml(c)}</span>`).join('');
     const bookmarked = state.bookmarks.has(t.id) ? ' active' : '';
@@ -413,30 +378,58 @@
   }
 
   // ─── Submission ─────────────────────────────────────────────────────────
+  /* A suggestion is kept in localStorage first, then sent to Supabase. The
+     table accepts inserts from anyone and only an admin can read them, so a
+     failed send leaves the entry queued and the next visit tries again. */
+  const QUEUE_KEY = 'impactlex:contributions-queue';
+  const readQueue = () => { try { return JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]'); } catch (e) { return []; } };
+  const writeQueue = (q) => localStorage.setItem(QUEUE_KEY, JSON.stringify(q));
+
+  async function sendContribution(entry) {
+    if (!CONFIG.supabaseUrl || !CONFIG.supabaseAnonKey) return false;
+    const row = {
+      term: entry.term,
+      category: entry.category || null,
+      definition: entry.definition || null,
+      example: entry.example || null,
+      email: entry.email || null,
+    };
+    try {
+      const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/impactlex_contributions`, {
+        method: 'POST',
+        headers: {
+          apikey: CONFIG.supabaseAnonKey,
+          Authorization: `Bearer ${CONFIG.supabaseAnonKey}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify(row),
+      });
+      return res.ok;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  async function flushQueue() {
+    const left = [];
+    for (const entry of readQueue()) {
+      if (!(await sendContribution(entry))) left.push(entry);
+    }
+    writeQueue(left);
+    return left.length === 0;
+  }
+
   async function submitContribution(payload) {
-    // Offline queue: if InstantDB not connected, store in localStorage.
-    const queueKey = 'impactlex:contributions-queue';
-    const queue = JSON.parse(localStorage.getItem(queueKey) || '[]');
     const entry = {
       id: `c-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       ...payload,
       status: 'pending',
       createdAt: new Date().toISOString(),
     };
-    queue.push(entry);
-    localStorage.setItem(queueKey, JSON.stringify(queue));
-
-    if (window.__impactlexDb) {
-      try {
-        const { tx } = await import('https://esm.sh/@instantdb/core@0.14.22');
-        await window.__impactlexDb.transact([tx.contributions[entry.id].update(entry)]);
-        return { ok: true, queued: false };
-      } catch (err) {
-        console.warn('Contribution push failed, kept in local queue:', err);
-        return { ok: true, queued: true };
-      }
-    }
-    return { ok: true, queued: true };
+    writeQueue([...readQueue(), entry]);
+    const sent = await flushQueue();
+    return { ok: true, queued: !sent };
   }
 
   // ─── Utilities ──────────────────────────────────────────────────────────
@@ -567,7 +560,7 @@
       const result = await submitContribution(payload);
       if (result.ok) {
         const msg = result.queued
-          ? 'Thanks! Saved locally — will sync when contributions backend is live.'
+          ? 'Thanks! Saved on this device. It will be sent the next time you open the glossary with a connection.'
           : 'Thanks! Your submission is in the moderation queue.';
         showStatus(msg, '');
         closeModal();
@@ -575,19 +568,13 @@
         if (window.gtag) window.gtag('event', 'submit_contribution', { queued: result.queued });
       }
     });
-
-    // Admin link visibility
-    const email = localStorage.getItem('impactlex:user-email');
-    if (email && (CONFIG.adminEmails || []).includes(email)) {
-      $('nav-review').hidden = false;
-    }
   }
 
   // ─── Init ───────────────────────────────────────────────────────────────
   async function init() {
     wire();
     await loadSnapshot();
-    connectInstantDB(); // fire-and-forget; progressively enhances
+    flushQueue(); // send any suggestion saved while offline
   }
 
   document.addEventListener('DOMContentLoaded', init);
