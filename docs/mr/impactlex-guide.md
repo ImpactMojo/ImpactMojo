@@ -74,7 +74,7 @@ ImpactMojo च्या प्रत्येक फ्लॅगशिप को
 
 ## पडद्यामागे
 
-ImpactLex हे ImpactMojo सोबत Netlify वर होस्ट केलेले एक स्थिर (static) Progressive Web App आहे. डेटा InstantDB मध्ये राहतो; एक स्नॅपशॉट JSON फाइल ऑफलाइन फॉलबॅक देते, त्यामुळे InstantDB पर्यंत पोहोचता येत नसले तरीही अॅप काम करते. सामग्री AI सहाय्याने (Gemini/Grok/DeepSeek) तयार केली जाते आणि प्रकाशनापूर्वी एका मानवी संपादकाकडून पुनरावलोकित केली जाते.
+ImpactLex हे ImpactMojo सोबत Netlify वर होस्ट केलेले एक स्थिर (static) Progressive Web App आहे. शब्दकोश हा रिपॉझिटरीतील एक स्नॅपशॉट JSON फाइल आहे, त्यामुळे अॅप ऑफलाइनही काम करते. वाचकांच्या सूचना Supabase मध्ये साठवल्या जातात आणि एक अॅडमिन त्यांचे पुनरावलोकन करतो. सामग्री AI सहाय्याने (Gemini/Grok/DeepSeek) तयार केली जाते आणि प्रकाशनापूर्वी एका मानवी संपादकाकडून पुनरावलोकित केली जाते.
 
 स्रोत: [ImpactMojo repo](https://github.com/ImpactMojo/ImpactMojo) मध्ये `/impactlex/`. लेगसी repo (२०२६ पूर्वीचा): [Varnasr/ImpactLex](https://github.com/Varnasr/ImpactLex).
 
