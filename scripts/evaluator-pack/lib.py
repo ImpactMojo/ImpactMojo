@@ -82,6 +82,11 @@ def _fixed(table, widths_cm):
     for row in table.rows:
         for i, w in enumerate(widths_cm):
             row.cells[i].width = Cm(w)
+    # LibreOffice and Google Docs size columns from the grid, Word from the cells.
+    grid = table._tbl.tblGrid
+    for i, gc in enumerate(grid.findall(qn("w:gridCol"))):
+        if i < len(widths_cm):
+            gc.set(qn("w:w"), str(int(widths_cm[i] / 2.54 * 1440)))
 
 
 def _para_space(p, before=0, after=4, line=1.15):

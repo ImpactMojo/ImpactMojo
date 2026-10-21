@@ -22,149 +22,22 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 TEMPLATE = ROOT / "products" / "mel-plan" / "index.html"
-OLD_N, NEW_N = 27, 30
+OLD_N, NEW_N = 30, 45
 TODAY = "2026-10-21"
 
-PRODUCTS = [
-    dict(
-        slug="bid-no-bid-scorecard",
-        title="Bid or No-Bid Scorecard",
-        form_title="Bid or No-Bid Scorecard",
-        file="ImpactMojo-Bid-No-Bid-Scorecard.zip",
-        ext="XLSX",
-        eyebrow="Template · XLSX",
-        crumb="Template",
-        meta="An Excel scorecard that tells you whether to bid on a terms of reference: eight weighted criteria, four knockout checks, clarification questions and a cost-of-bidding test, with a Word guide. ₹199.",
-        og="Decide whether to bid on a ToR before you spend days on the proposal. Excel scorecard and Word guide. ₹199.",
-        lede="Score a terms of reference before you spend days on a proposal. Eight weighted criteria, four knockout checks, the questions to send the client, and a test of whether the bid pays for itself.",
-        note="Editable XLSX workbook + a Word guide · delivered to your inbox within 24 hours of payment.",
-        letter_h="Why this matters",
-        letter=[
-            "A serious proposal takes days of unpaid work. Most of the assignments that cost an evaluator money were visible in the ToR: a question set nobody could answer, a budget half the size of the work, a payment clause that left the fieldwork unfunded.",
-            "This workbook turns that early warning into a number. You score eight criteria from 1 to 5, answer four knockout checks, and read a decision: go, go with conditions or no-bid. Every low score becomes a clarification question you can send to the client before the deadline. A second sheet tests whether the expected return on a bid covers its cost, and a log records every decision so that after ten bids you can see your own pattern.",
-            'It is written for the evaluator or consultant who receives the ToR. If you are the one writing a ToR, the <a href="/products/tor-template/">ToR Template</a> and the <a href="/products/proposal-scoring/">Proposal Scoring Rubric</a> are the other side of this table.',
-        ],
-        inside=[
-            "A scorecard with eight weighted criteria, live formulas and a decision cell",
-            "Four knockout checks that end the discussion whatever the score",
-            "Clarification questions that write themselves for every criterion scored 1 or 2",
-            "A cost-of-bidding sheet: expected value, and the win chance you need to break even",
-            "A bid log that tracks your win rate and your no-bids",
-            "A Word guide: what a 1, a 3 and a 5 look like, eleven red-flag ToR clauses with the question to ask for each, and a worked example",
-        ],
-        sample=[
-            ("Criteria and weights", "eight criteria, weights that add to 100"),
-            ("Knockout checks", "any Yes means no-bid"),
-            ("Decision", "GO, GO WITH CONDITIONS or NO-BID, calculated for you"),
-            ("Cost of bidding", "expected value and the win chance you need"),
-        ],
-        sample_file=None,
-        faq=[
-            ("What format is it?", "An Excel workbook (.xlsx) with live formulas, plus a Word guide. It also opens in Google Sheets and LibreOffice."),
-            ("Can I change the weights and thresholds?", "Yes. The weights and the two thresholds are yellow cells you can edit. Set them before you score, so the number cannot be bent to fit a decision you have already made."),
-            ("Does it work for public tenders?", "It works for any terms of reference. For a public tender, read the eligibility, earnest money and performance security rules in the tender document before you score."),
-            ("How fast is delivery?", "Within 24 hours of confirming payment, usually much sooner."),
-        ],
-        search_desc="An Excel scorecard that decides whether to bid on a ToR: eight weighted criteria, four knockout checks, clarification questions, a cost-of-bidding test and a bid log. Ships with a Word guide and a worked example. Buy for ₹199 via UPI.",
-        search_tags=["template", "bid", "no-bid", "tor", "tender", "consulting", "evaluation", "Excel", "premium", "paid", "₹199"],
-        search_id="PROD-BID-NO-BID",
-        card="Bid or No-Bid Scorecard",
-        card_p="Score a ToR before you write the proposal.",
-        before="Stakeholder Map",
-    ),
-    dict(
-        slug="sow-change-request-template",
-        title="Statement of Work & Change Request Template",
-        form_title="Statement of Work & Change Request Template",
-        file="ImpactMojo-SOW-Change-Request-Template.docx",
-        ext="DOCX",
-        eyebrow="Template · DOCX",
-        crumb="Template",
-        meta="An annotated statement of work for evaluators, with a change request form, a clause bank and a worked example. Settle scope, review rounds, payment and change control before the work starts. ₹199.",
-        og="An annotated statement of work and change request form for evaluators. ₹199.",
-        lede="Settle scope, review rounds, payment and change control before the work starts. An annotated statement of work, a one-page change request form, a clause bank and a worked example.",
-        note="Editable DOCX file · delivered to your inbox within 24 hours of payment.",
-        letter_h="Why the contract is where scope is won or lost",
-        letter=[
-            "Most disputes in an evaluation assignment are about one of four things: what was included, how many rounds of comments there would be, when the money was due, and who had the last word on the findings. Each can be settled in an afternoon before signing. After signing, each takes weeks and costs goodwill.",
-            "This pack is the evaluator's side of the contract. It gives you a thirteen-section statement of work with guidance under every section, a change request form that turns extra work into a priced decision, and plain-language clauses to adapt for acceptance, independence, late payment, data handling and the use of AI tools.",
-            'It pairs with the <a href="/products/bid-no-bid-scorecard/">Bid or No-Bid Scorecard</a> before you bid and the <a href="/products/inception-report-template/">Inception Report &amp; Evaluation Matrix Template</a> after you sign. The <a href="/products/tor-template/">ToR Template</a> is the commissioner\'s side of the same table.',
-        ],
-        inside=[
-            "A thirteen-section annotated statement of work, each section with guidance, what good looks like and the mistakes to avoid",
-            "A one-page change request form, so every extra task has days, a fee and a signature",
-            "A clause bank in plain language: change control, acceptance, independence, late client inputs, late payment, early termination, data handling and AI use",
-            "A payment-milestone chooser with a cash test",
-            "Ten questions to ask when the client sends its own contract",
-            "A worked example from the maternal and newborn health case, with a priced change request",
-        ],
-        sample=[
-            ("3. Scope: in and out", "write down what sits outside the work"),
-            ("4. Deliverables and schedule", "length, format, review rounds and due date"),
-            ("8. Fees and payment milestones", "payments tied to submission"),
-            ("10. Change control", "extra work becomes a priced decision"),
-        ],
-        sample_file="ImpactMojo-SOW-Change-Request-Template-SAMPLE.docx",
-        faq=[
-            ("What format is it?", "An editable DOCX file that opens in Microsoft Office, Google, LibreOffice and Pages."),
-            ("Is it legal advice?", "It is a drafting aid. Where a statute, a tax rule or your client's own contract changes the answer, the file says so and tells you what to confirm. Have a lawyer read the final contract."),
-            ("Can I use it if the client sends its own contract?", "Yes. Use the thirteen sections as a checklist and the ten questions in Part C as a list to raise before you sign."),
-            ("How fast is delivery?", "Within 24 hours of confirming payment, usually much sooner."),
-        ],
-        search_desc="An annotated statement of work for evaluators with a change request form, a clause bank, a payment-milestone chooser and a worked example. Settle scope, review rounds, payment and change control before the work starts. Buy for ₹199 via UPI.",
-        search_tags=["template", "statement of work", "SOW", "change request", "contract", "consulting", "evaluation", "premium", "paid", "₹199"],
-        search_id="PROD-SOW-CHANGE",
-        card="Statement of Work &amp; Change Request",
-        card_p="Scope, review rounds, payment and change control.",
-        before="Survey Instrument",
-    ),
-    dict(
-        slug="inception-report-template",
-        title="Inception Report & Evaluation Matrix Template",
-        form_title="Inception Report & Evaluation Matrix Template",
-        file="ImpactMojo-Inception-Report-Template.docx",
-        ext="DOCX",
-        eyebrow="Template · DOCX",
-        crumb="Template",
-        meta="An annotated inception report for evaluators, with an evaluation matrix guide, a sample-size method, a client sign-off checklist and a worked example. Turn a bid into a plan before any data is collected. ₹199.",
-        og="An annotated inception report with an evaluation matrix guide and a sample-size method. ₹199.",
-        lede="Turn a bid into a plan before any data is collected. An annotated inception report, an evaluation matrix guide, a sample-size method you can reproduce, a sign-off checklist for the client and a worked example.",
-        note="Editable DOCX file · delivered to your inbox within 24 hours of payment.",
-        letter_h="What the inception report settles",
-        letter=[
-            "The inception report is where an evaluation is won or lost quietly. It confirms the questions, shows how each will be answered, and gives the client a chance to correct a misunderstanding while the correction costs a conversation. After fieldwork the same correction costs a second round of surveys.",
-            "This pack walks you through thirteen sections, from the changes since your bid to an outline of the final report written as headlines to test. The evaluation matrix has its own guide, with a weak entry and a stronger entry for every column. The sample-size section shows the arithmetic in steps, with a lookup table, so the client can check every number.",
-            'It follows the <a href="/products/sow-change-request-template/">Statement of Work &amp; Change Request Template</a> and works with the <a href="/products/survey-instrument/">Survey Instrument Template</a>, the <a href="/products/fgd-guide/">FGD Facilitator\'s Guide</a> and the <a href="/products/data-consent/">Data Management &amp; Consent Pack</a>, which hold the tools it refers to.',
-        ],
-        inside=[
-            "A thirteen-section annotated inception report, from changes since the bid to the outline of the final report",
-            "An evaluation matrix guide, column by column, with weak and stronger entries",
-            "A sample-size method for comparing two proportions, with every step shown and a lookup table",
-            "An evidence-strength scale: strong, moderate and limited, with the wording to use in the report",
-            "A ten-question checklist the client can use to approve the report",
-            "A worked example from the maternal and newborn health case: matrix, sample, risks and report headlines",
-        ],
-        sample=[
-            ("4. Evaluation matrix", "question, criterion, indicator, source, method, analysis"),
-            ("6. Sampling and sample size", "every assumption stated and sourced"),
-            ("12. Limitations", "tell the client now what the evaluation cannot say"),
-            ("13. Outline of the final report", "headlines to test, not conclusions"),
-        ],
-        sample_file="ImpactMojo-Inception-Report-Template-SAMPLE.docx",
-        faq=[
-            ("What format is it?", "An editable DOCX file that opens in Microsoft Office, Google, LibreOffice and Pages."),
-            ("Does it help with sample size?", "Yes. Part C gives a step-by-step method for comparing two proportions, with a lookup table, and Part D works one example from start to finish. It gives a planning figure. Take the final design to a statistician."),
-            ("Which designs does it suit?", "Mixed-methods and outcome evaluations of programmes, with or without a comparison group. The worked example combines difference-in-differences on monitoring data with a household survey."),
-            ("How fast is delivery?", "Within 24 hours of confirming payment, usually much sooner."),
-        ],
-        search_desc="An annotated inception report for evaluators with an evaluation matrix guide, a step-by-step sample-size method, an evidence-strength scale, a client sign-off checklist and a worked example. Buy for ₹199 via UPI.",
-        search_tags=["template", "inception report", "evaluation matrix", "sample size", "consulting", "evaluation", "premium", "paid", "₹199"],
-        search_id="PROD-INCEPTION",
-        card="Inception Report &amp; Evaluation Matrix",
-        card_p="Turn a bid into a plan before fieldwork.",
-        before="Stakeholder Map",
-    ),
-]
+def _load_products():
+    """The fifteen further templates: each t_*.py module carries its own PAGE."""
+    import build_more
+
+    out = []
+    for m in build_more.load():
+        d = dict(m.PAGE)
+        d.setdefault("form_title", d["title"])
+        out.append(d)
+    return out
+
+
+PRODUCTS = _load_products()
 
 
 def esc(t):
@@ -400,7 +273,10 @@ def sitemap():
             if m and m.group(1) > p["slug"] and "notes-101" not in m.group(1):
                 idx = i
                 break
-        lines.insert(idx if idx is not None else len(lines) - 1, new)
+        if idx is None:
+            last = max(i for i, ln in enumerate(lines) if re.search(r"<loc>https://www\.impactmojo\.in/products/(?!notes-101)[^<]+/</loc>", ln))
+            idx = last + 1
+        lines.insert(idx, new)
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -424,27 +300,32 @@ def kit_page():
     s = s.replace(f"all {OLD_N} ImpactMojo products", f"all {NEW_N} ImpactMojo products")
     s = s.replace(f"Bundle · {OLD_N} products", f"Bundle · {NEW_N} products")
     s = s.replace(f"What's inside: all {OLD_N} products", f"What's inside: all {NEW_N} products")
-    s = s.replace("<s>₹6,373</s>", "<s>₹6,970</s>")
-    s = s.replace("all 12 templates, all four workbooks, both trainer decks", "all 15 templates, all four workbooks, both trainer decks")
-    if "evaluator's side is in the kit too" not in s:
-      s = s.replace(
-        "Buy them as a set and you have the whole pipeline.</p>",
-        "Buy them as a set and you have the whole pipeline. The evaluator's side is in the kit too: the <strong>bid or no-bid scorecard</strong> decides whether to bid, the <strong>statement of work</strong> fixes scope and payment, and the <strong>inception report</strong> turns the bid into a plan.</p>",
-        1,
-    )
-    s = s.replace("The five Excel templates each come with a Word companion guide", "The six Excel templates each come with a Word companion guide")
-    for item in ("Bid or No-Bid Scorecard", "Statement of Work & Change Request Template", "Inception Report & Evaluation Matrix Template"):
-        if f"<li>{item}</li>" not in s and f"<li>{esc(item)}</li>" not in s:
-            s = s.replace("<li>Data Management & Consent Pack</li></ul>", f"<li>Data Management & Consent Pack</li><li>{esc(item)}</li></ul>", 1) if "<li>Data Management & Consent Pack</li></ul>" in s else s.replace("<li>Data Management &amp; Consent Pack</li></ul>", f"<li>Data Management &amp; Consent Pack</li><li>{esc(item)}</li></ul>", 1)
+    s = s.replace("<s>₹6,970</s>", "<s>₹9,955</s>")
+    s = s.replace("all 15 templates, all four workbooks, both trainer decks", "all 30 templates, all four workbooks, both trainer decks")
+    s = s.replace("The six Excel templates each come with a Word companion guide", "The eleven Excel templates each come with a Word companion guide")
+    marker = "The rest of the evaluator's desk is in the kit too"
+    if marker not in s:
+        s = s.replace(
+            "Buy them as a set and you have the whole pipeline.",
+            "Buy them as a set and you have the whole pipeline. " + marker + ": the clarification letter, three-option offer, engagement charter, invoice pack, kick-off workplan, RAID log, weekly status note, evidence strength rating, storyline, validation workshop plan, prioritisation, management response tracker, after-action review, client feedback survey and case study with consent.",
+            1,
+        )
+    a = s.index("<h3 style=\"margin:.9rem 0 .3rem;font-size:1rem\">Templates")
+    end = s.index("</ul>", a)
+    items = ""
+    for p in PRODUCTS:
+        li = f"<li>{esc(p['title'])}</li>"
+        if li not in s:
+            items += li
+    s = s[:end] + items + s[end:]
     path.write_text(s, encoding="utf-8")
-    # the other pages that offer the kit, and the runbook
     for f in (ROOT / "products").glob("*/index.html"):
         t = f.read_text(encoding="utf-8")
         if f"All {OLD_N} products (every template" in t:
             f.write_text(t.replace(f"All {OLD_N} products (every template", f"All {NEW_N} products (every template"), encoding="utf-8")
     rb = ROOT / "ops" / "money-flow-runbook.md"
     t = rb.read_text(encoding="utf-8")
-    t = t.replace("| 27 one-time products", f"| {NEW_N} one-time products").replace("Evaluation Essentials Kit (all 27)", f"Evaluation Essentials Kit (all {NEW_N})").replace("(all 27 + bundle", f"(all {NEW_N} + bundle")
+    t = t.replace(f"| {OLD_N} one-time products", f"| {NEW_N} one-time products").replace(f"Evaluation Essentials Kit (all {OLD_N})", f"Evaluation Essentials Kit (all {NEW_N})").replace(f"(all {OLD_N} + bundle", f"(all {NEW_N} + bundle")
     rb.write_text(t, encoding="utf-8")
 
 
