@@ -74,7 +74,7 @@ ImpactMojo-র প্রতিটি ফ্ল্যাগশিপ কোর্
 
 ## পর্দার আড়ালে
 
-ImpactLex হল ImpactMojo-র সঙ্গে Netlify-তে হোস্ট করা একটি স্ট্যাটিক Progressive Web App। ডেটা থাকে InstantDB-তে; একটি স্ন্যাপশট JSON ফাইল অফলাইন ফলব্যাক দেয়, তাই InstantDB-তে পৌঁছানো না গেলেও অ্যাপটি কাজ করে। বিষয়বস্তু AI সহায়তায় (Gemini/Grok/DeepSeek) খসড়া করা হয় এবং প্রকাশের আগে একজন মানব সম্পাদক দ্বারা পর্যালোচিত হয়।
+ImpactLex হল ImpactMojo-র সঙ্গে Netlify-তে হোস্ট করা একটি স্ট্যাটিক Progressive Web App। শব্দকোষটি রিপোজিটরির একটি স্ন্যাপশট JSON ফাইল, তাই অ্যাপটি অফলাইনেও কাজ করে। পাঠকদের পরামর্শ Supabase-এ সংরক্ষিত হয় এবং একজন অ্যাডমিন সেগুলি পর্যালোচনা করেন। বিষয়বস্তু AI সহায়তায় (Gemini/Grok/DeepSeek) খসড়া করা হয় এবং প্রকাশের আগে একজন মানব সম্পাদক দ্বারা পর্যালোচিত হয়।
 
 উৎস: [ImpactMojo repo](https://github.com/ImpactMojo/ImpactMojo)-তে `/impactlex/`। লিগ্যাসি repo (২০২৬-এর আগে): [Varnasr/ImpactLex](https://github.com/Varnasr/ImpactLex)।
 
