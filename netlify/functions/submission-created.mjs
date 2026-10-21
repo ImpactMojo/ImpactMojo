@@ -50,6 +50,9 @@ const FILES = {
   "Evaluation & Research Costing Calculator": "ImpactMojo-Calculator-Evaluation-Costing.zip",
   "Programme Unit Economics & Pricing Calculator": "ImpactMojo-Calculator-Unit-Economics-Pricing.zip",
   "Evaluation Essentials Kit": "ImpactMojo-Evaluation-Essentials-Kit.zip",
+  "Bid or No-Bid Scorecard": "ImpactMojo-Bid-No-Bid-Scorecard.zip",
+  "Statement of Work & Change Request Template": "ImpactMojo-SOW-Change-Request-Template.docx",
+  "Inception Report & Evaluation Matrix Template": "ImpactMojo-Inception-Report-Template.docx",
   // Flagship Course Notes (PDF) — ₹350 each
   "Gandhi's Political Thought: Philosophy for Praxis, Course Notes": "ImpactMojo-Notes-gandhi.pdf",
   "Understanding Development: An Economics Perspective, Course Notes": "ImpactMojo-Notes-devecon.pdf",
