@@ -18,7 +18,7 @@ def build(path):
         "**Part C.** Reference assets: a clause bank in plain language, a payment-milestone chooser, questions to ask when the client sends its own contract, a glossary and sources.",
         "**Part D.** A worked example: the evaluator's statement of work and one change request for the maternal and newborn health programme, the same case used across the ImpactMojo kit.",
     ])
-    k.guide("Replace every [bracketed prompt] and write on the ruled lines. Keep the grey guidance while drafting and delete it before you send the document. A statement of work is written by the person who does the work for the person who pays for it, so write it in the plain language both can read. This pack is a drafting aid, so have a lawyer read the final contract. Yellow [LEGAL CHECK] notes mark the places where a statute, a tax rule or a signed contract changes the answer.")
+    k.guide("Replace every [bracketed prompt] and write on the ruled lines. Keep the grey guidance while drafting and delete it before you send the document. A statement of work is written by the person who does the work for the person who pays for it, so write it in the plain language both can read. This pack is a drafting aid, so have a lawyer read the final contract. Blue boxes headed 'Law as checked' state the rule as read on 21 October 2026, with its source. Laws change, so check the date before you rely on one.")
 
     # ---------------- PART A ----------------
     k.part("PART A", "Why the contract is where scope is won or lost")
@@ -99,7 +99,7 @@ def build(path):
     k.purpose("Define how a deliverable is accepted, and what happens if nobody replies.")
     k.guide("Fix the comment period, ask for one consolidated set of comments, limit the rounds, and say when silence counts as acceptance. Acceptance means the deliverable matches its description in section 4. The client's agreement with the findings is a separate matter, covered in section 7.")
     k.lines(3)
-    k.legal("Check that a deemed-acceptance clause is valid under the governing contract and that the client's own contract template does not override it.")
+    k.legal("Parties may agree how acceptance is shown, so a clause that treats a deliverable as accepted when the client sends no comments inside the stated period binds both sides (Indian Contract Act, 1872, section 7 lets the proposal prescribe the manner of acceptance). Silence alone binds nobody, so the clause must be in the signed contract. If the client's own template says its terms override yours, theirs prevail, so read it before you sign. For a micro or small enterprise the Micro, Small and Medium Enterprises Development Act, 2006 fixes its own deemed acceptance: when the buyer makes no written objection within 15 days of delivery, acceptance is the day of delivery (section 15, Explanation). The payment clock runs from there.")
     k.good("One comment period, one consolidated set of comments, a fixed number of rounds and a stated result when the period lapses.")
     k.mistakes("Open-ended review, with several people at the client sending separate comments weeks apart.")
 
@@ -126,7 +126,7 @@ def build(path):
     k.purpose("State which taxes the fee includes, and note the deductions the client may make before paying you.")
     k.guide("Write one sentence for each of three points: whether the fee includes or excludes GST, whether you are registered for GST, and that the client may deduct tax at source from the professional fee and must give you a certificate. Ask when and how the certificate arrives, because you claim credit for the deduction in your own return.")
     k.lines(2)
-    k.legal("Confirm the GST rate and service code for evaluation and research services, the place of supply, any reverse charge where the client is a government body, and the section number and rate for tax deducted on professional fees under the Income-tax Act, 2025, which renumbered the 1961 Act from 1 April 2026.")
+    k.legal("GST: evaluation and research services carry 18 per cent. Use SAC 9983 (other professional, technical and business services, 998399 where nothing closer fits) or 9981 (research and experimental development; 99812 covers social sciences and humanities), and match the code to the work you invoice. Between two parties in India the place of supply of a service is the location of the recipient (section 12(2), IGST Act), which decides whether you charge CGST and SGST or IGST. A client outside India that pays in convertible foreign exchange makes this an export of services, zero rated under section 16 of the IGST Act if the conditions in section 2(6) are met. Reverse charge applies only to the services listed in Notification 13/2017-Central Tax (Rate); professional and research services supplied to a government body are not on it, so you charge GST. Government departments must deduct GST at source at 2 per cent under section 51 of the CGST Act where a contract's taxable value exceeds ₹2.5 lakh. Income tax: under the Income-tax Act, 2025 (in force from 1 April 2026) tax on fees is deducted under section 393(1), table serial 6(iii), formerly section 194J. The rate is 10 per cent on fees for professional services and 2 per cent on fees for technical services that are not professional services, with a threshold of ₹50,000 a year. Evaluation and research advice is normally treated as professional services, so ask the client's accounts team how they classify it. When GST is shown separately on the invoice, tax is deducted on the fee without the GST (CBDT Circular 23/2017).")
     k.good("The tax treatment of the fee fits in three sentences and matches the invoice you will send.")
     k.mistakes("A fee quoted as 'inclusive of taxes' when you meant to add GST on top. The client pays the figure and the tax comes out of your fee.")
 
@@ -141,7 +141,7 @@ def build(path):
     k.purpose("Say who owns the report, the dataset and the instruments, and who is responsible for personal data.")
     k.guide("A common position is that the client owns the final report and the cleaned dataset, and the evaluator keeps its own tools and methods with a licence to the client. Anonymised learning may be reused only with written permission. Under the Digital Personal Data Protection Act, 2023 the client is usually the data fiduciary and the evaluator a data processor, which calls for a written term on how data is handled. The ImpactMojo Data Management & Consent Pack carries the plan, the consent forms and the checklist.")
     k.lines(3)
-    k.legal("Confirm the roles of the parties and the processing terms required by the Digital Personal Data Protection Act, 2023 and the Rules made under it, and the cross-border transfer position if any tool or storage sits outside India.")
+    k.legal("The Digital Personal Data Protection Act, 2023 requires a data fiduciary to engage a processor only under a valid contract (section 8(2)). The client that decides why and how personal data is collected is usually the fiduciary and the evaluator its processor, although an evaluator who designs the instrument and holds the dataset can be a fiduciary as well, so state the roles. Section 9 requires verifiable parental or guardian consent for anyone under 18. The DPDP Rules, 2025 were notified in November 2025 and the main obligations, including consent and children's data, start on 13 May 2027. Section 16 allows transfer of personal data outside India except to countries the government restricts by notification, and a sector law or funder rule may restrict more, so list every tool and server that sits abroad.")
     k.good("Ownership of each output is stated, and the data handling term points to a dated data management plan.")
     k.mistakes("Silence on who owns the dataset, followed by a dispute when the client wants to share it with another evaluator.")
 
@@ -156,7 +156,7 @@ def build(path):
     k.purpose("Say how the contract ends and what is paid if it ends early.")
     k.guide("State the notice period, payment for work completed to the date of notice plus costs already committed that cannot be cancelled, what you hand over on early termination, the governing law and where disputes are heard.")
     k.lines(3)
-    k.legal("Have a lawyer settle the governing law, the dispute forum, any arbitration clause and limits on liability. This pack does not draft them.")
+    k.legal("A contract between two Indian parties is governed by the Indian Contract Act, 1872. Section 28 voids a term that absolutely restrains legal proceedings or shortens the limitation period, but an arbitration clause is allowed. Where more than one court has jurisdiction, parties may agree on one of them, and a clause that names a court which has none is void (A.B.C. Laminart v A.P. Agencies, (1989) 2 SCC 163). Under the Arbitration and Conciliation Act, 1996 the seat of arbitration decides which court supervises it (BALCO v Kaiser Aluminium, (2012) 9 SCC 552). Section 74 of the Contract Act lets a court award reasonable compensation up to the sum named for breach, so a liability cap is enforceable between businesses when it is reasonable. An unstamped agreement is not void but cannot be used as evidence until the stamp duty and penalty are paid, and the rates differ by state. The pack gives you the clause topics; a lawyer should settle the final wording for a high-value contract.")
     k.good("A cancelled assignment leaves nobody unpaid for work already done.")
     k.mistakes("No early termination term, so a cancellation after fieldwork leaves the enumerator costs with the evaluator.")
 
@@ -202,7 +202,7 @@ def build(path):
         ["Use of AI tools", "The evaluator may use AI tools for [drafting, translation and code]. No respondent data is entered into a tool the client has not approved, and any data that is entered is de-identified first. The methodology note states which tools were used and who checked the outputs.", "No"],
         ["Portfolio use", "The evaluator may describe the assignment in its portfolio only in the anonymised form approved in writing by the client.", "No"],
     ], [2.9, 11.4, 1.6])
-    k.legal("If the evaluator is registered as a micro or small enterprise, statutory payment periods and interest under the Micro, Small and Medium Enterprises Development Act, 2006 may apply whatever the contract says. Check the Act and the registration before relying on the late payment clause.")
+    k.legal("If you are a micro or small enterprise registered on Udyam, sections 15 and 16 of the Micro, Small and Medium Enterprises Development Act, 2006 apply whatever the contract says. The buyer must pay by the agreed date, and an agreed period may not exceed 45 days from the day of acceptance or deemed acceptance. With no written agreement the limit is 15 days. After that the buyer owes compound interest with monthly rests at three times the bank rate notified by the Reserve Bank of India. A payment dispute goes to the Micro and Small Enterprises Facilitation Council under section 18, and the Supreme Court held on 31 October 2022 that an arbitration clause does not displace it (Gujarat State Civil Supplies Corporation v Mahakali Foods). The same decision held that an enterprise that was not registered on the date it entered the contract cannot claim for that contract. A buyer that pays a micro or small supplier late also loses its tax deduction for the amount (section 43B(h) of the 1961 Act). Medium enterprises and unregistered suppliers are outside the Act.")
 
     k.h("C2.  Payment milestone chooser")
     k.table(["Pattern", "Suits", "Risk to you"], [
@@ -302,7 +302,7 @@ def build(path):
         ["Effect on risk", "Fieldwork in the hill block is slightly longer. Logged in the risk table."],
         ["Decision", "Accepted as priced, week 5."],
     ], [4.6, 11.3])
-    k.legal("The day rates and the survey cost in this example sit inside the indicative ranges in the ImpactMojo Terms of Reference pack, which are for orders of magnitude and not for quoting. Replace them with your own.")
+    k.figures("The day rates and the survey cost in this example are round numbers that sit inside the indicative ranges in the ImpactMojo Terms of Reference pack. Those ranges give orders of magnitude and are no basis for a quote. Replace each with your own.")
     k.save(path)
 
 

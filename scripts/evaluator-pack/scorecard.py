@@ -332,7 +332,7 @@ def build_guide(path):
         "**Part C.** Reference assets: red-flag clauses to look for in a ToR, with the question to ask for each, and rules for when to bid anyway.",
         "**Part D.** A worked example: scoring the first draft ToR for the maternal and newborn health programme.",
     ])
-    k.guide("Write down your thresholds before you open the ToR. A threshold set after you have seen the score is a rationalisation. Yellow [LEGAL CHECK] notes mark points where a statute, tender rule or contract changes the answer.")
+    k.guide("Write down your thresholds before you open the ToR. A threshold set after you have seen the score is a rationalisation. The blue box in Part C states the central tender rules as read on 21 October 2026. Rules change, so check the date and the tender document.")
 
     k.part("PART A", "Why a gate")
     k.body("A serious proposal takes days of unpaid work. Most of the assignments that cost an evaluator money were visible in the ToR: a question set nobody could answer, a budget half the size of the work, a payment clause that left the fieldwork unfunded. A short, repeatable gate moves those signals from a feeling to a number and turns each one into a question you can put to the client before you commit days.")
@@ -375,7 +375,7 @@ def build_guide(path):
         ["Eligibility rules, such as a minimum number of similar assignments or turnover.", "You may be ineligible before you start.", "Check the eligibility rules before you spend any days."],
         ["Earnest money, performance security or a penalty clause in a tender.", "A cost and a risk that sits outside the fee.", "What are the amounts, and when are they returned?"],
     ], [5.2, 5.0, 5.7], size=8.5)
-    k.legal("For a public tender, read the tender document and the procuring body's rules on eligibility, earnest money and performance security before you score. This pack does not state their amounts or conditions.")
+    k.legal("For central government tenders, General Financial Rules 2017 Rule 170 asks for bid security (earnest money) of ordinarily 2 to 5 per cent of the estimated value, valid for 45 days beyond the bid validity. Micro and small enterprises and DPIIT-recognised startups are exempt, and the buyer may take a signed bid-securing declaration in place of a deposit. Rule 171 asks the winning bidder for performance security. After a 2022 amendment the range for goods and non-consultancy services is 3 to 5 per cent of the contract value, held until 60 days beyond completion of all obligations. Evaluation is consultancy, which the GFR and the Ministry of Finance Manual for Procurement of Consultancy and Other Services (2022) treat separately, so the tender document sets the amounts that apply to you. State governments, multilateral banks and donors use their own rules. Read the tender document before you score.")
     k.h("C2.  When to bid anyway")
     k.body("A bid that scores no-bid or a weak go can still be worth writing, if you can name the reason and cap the cost. Three reasons hold up: the client is a relationship you want for the next ten years, the assignment gives you a reference in a sector you are entering, or you will learn a method you intend to offer. Write the reason in the Bid log, set a ceiling on the days, and decide in advance that you will walk away if the clarification answers are poor.")
     k.h("C3.  Glossary")

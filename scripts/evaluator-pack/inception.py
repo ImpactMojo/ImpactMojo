@@ -18,7 +18,7 @@ def build(path):
         "**Part C.** Reference assets: how to fill the evaluation matrix row by row, a sample-size method with a lookup table, an evidence-strength scale, a checklist your client can use to approve the report, a glossary and sources.",
         "**Part D.** A worked example: selected sections of the inception report for the maternal and newborn health programme, the same case used across the ImpactMojo kit.",
     ])
-    k.guide("Replace every [bracketed prompt] and write on the ruled lines. Keep the grey guidance while drafting and delete it before you send the report. An inception report is a contract between you and the client about how the evaluation will run, so write each section as a commitment you can be held to. Yellow [LEGAL CHECK] notes mark the places where a statute or a signed contract changes the answer.")
+    k.guide("Replace every [bracketed prompt] and write on the ruled lines. Keep the grey guidance while drafting and delete it before you send the report. An inception report is a contract between you and the client about how the evaluation will run, so write each section as a commitment you can be held to. Blue boxes headed 'Law as checked' state the rule as read on 21 October 2026, with its source. Laws change, so check the date before you rely on one.")
 
     # ---------------- PART A ----------------
     k.part("PART A", "What the inception report settles")
@@ -126,7 +126,7 @@ def build(path):
     k.purpose("State the protections for participants and for their data, as conditions of the work.")
     k.guide("Cover informed consent and the right to withdraw, assent and guardian consent for anyone under 18, a referral route if a respondent discloses harm, who sees identifiable data, where it is stored, how long it is kept and when it is deleted, whether an ethics review applies, and how AI tools will and will not be used. The ImpactMojo Data Management & Consent Pack and the Ethics & DPDP Consent Checklist carry the forms and the plan.")
     k.lines(4)
-    k.legal("Confirm the roles of the parties and the rules on children's data under the Digital Personal Data Protection Act, 2023 and the Rules made under it, and any ethics board approval the client or the funder requires.")
+    k.legal("The Digital Personal Data Protection Act, 2023 defines a child as anyone under 18 (section 2(f)), and section 9 requires verifiable consent from a parent or lawful guardian before a data fiduciary processes a child's data. The DPDP Rules, 2025 were notified in November 2025. The rules on notice, consent and children (Rules 3 and 5 to 16) start 18 months later, on 13 May 2027, so an evaluation that runs across that date should be designed to the stricter regime from the start. Section 17(2)(b) exempts processing necessary for research or statistical purposes only where the data is not used to take a decision specific to the person and the processing follows the standards the Rules prescribe. A follow-up of named programme participants will often fall outside that exemption. In practice the client that decides why and how data is collected acts as the data fiduciary and the evaluator as its processor under a written contract (section 8(2)). An evaluator who designs the instrument and holds the dataset may be a fiduciary too, so write the role down. If the study involves human participants in health research, check whether an institutional ethics committee must review it under the ICMR National Ethical Guidelines for Biomedical and Health Research Involving Human Participants (2017).")
     k.good("Consent, referral, storage and deletion each have a named person and a date.")
     k.mistakes("A line saying 'data will be kept confidential', with no storage, access or deletion plan behind it.")
 
@@ -309,7 +309,7 @@ def build(path):
         ["3", "ASHA home visits explain most of the rise in antenatal visits.", "Interview themes linked to the rise by block", "Interviews and focus groups"],
         ["4", "The labour-room upgrades depend on state posts that are not yet funded.", "Table of budget lines and filled posts", "State budget documents; interviews"],
     ], [1.8, 6.6, 4.1, 3.4], size=8.5)
-    k.legal("The figures in this example (design effect, non-response, comparison level, the hospital opened in 2025) are illustrative planning values. Replace them with values from your own programme data and cite the source.")
+    k.figures("The design effect, non-response rate, comparison level and the hospital opened in 2025 are illustrative planning values chosen to show the arithmetic. They come from no real programme. In your own report, take each from programme data or a cited source.")
     k.save(path)
 
 

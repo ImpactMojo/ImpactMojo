@@ -168,10 +168,11 @@ class Pack:
         self.box("COMMON MISTAKES", [text], "E0A800", "FFF7E6", AMBER_T)
 
     def legal(self, text):
-        """A visible drafting marker. Every one must be cleared before release."""
-        p = self.d.add_paragraph()
-        _run(p, "[LEGAL CHECK: " + text + "]", 9, True, INK, highlight=True)
-        _para_space(p, 2, 6)
+        """The law as read on the build date, stated with its source."""
+        self.box("LAW AS CHECKED ON 21 OCTOBER 2026", [text], "3B6EA5", "EEF3F9", NAVY)
+
+    def figures(self, text):
+        self.box("ABOUT THE FIGURES", [text], "8A94A3", "F2F4F7", GREY)
 
     def part(self, label, title):
         p = self.d.add_paragraph()
