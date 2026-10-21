@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build the upgraded Evaluation Essentials Kit zip: the delivered 27-product kit plus the Evaluator's Desk files.
+"""Build the upgraded Evaluation Essentials Kit zip: the delivered 30-product kit plus the fifteen further templates.
 
     python3 scripts/evaluator-pack/build-kit.py CURRENT_KIT.zip BUILD_DIR OUT.zip
 
-CURRENT_KIT.zip is the file now in the private `products` bucket (32 files). BUILD_DIR is the
-output of build.py. OUT.zip has 35 files for 30 products. Nothing is uploaded here.
+CURRENT_KIT.zip is the file now in the private `products` bucket (36 files). BUILD_DIR is the
+output of build.py. OUT.zip has 56 files for 45 products. Nothing is uploaded here.
 Refuses to run while any added file still carries a [LEGAL CHECK] note.
 """
 import re
@@ -14,12 +14,21 @@ from pathlib import Path
 
 from docx import Document
 
-ADD = [
-    "ImpactMojo-SOW-Change-Request-Template.docx",
-    "ImpactMojo-Inception-Report-Template.docx",
-    "ImpactMojo-Bid-No-Bid-Scorecard.xlsx",
-    "ImpactMojo-Bid-No-Bid-Scorecard-GUIDE.docx",
-]
+def _add():
+    """Every file of the fifteen further templates: Word files as they are, Excel as workbook plus guide."""
+    import build_more
+
+    out = []
+    for m in build_more.load():
+        if hasattr(m, "SPEC"):
+            out.append(m.SPEC["file"])
+        else:
+            base = m.PAGE["file"][: -len(".zip")]
+            out += [base + ".xlsx", base + "-GUIDE.docx"]
+    return out
+
+
+ADD = _add()
 
 
 def has_legal_note(path):
