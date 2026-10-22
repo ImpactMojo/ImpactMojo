@@ -282,8 +282,9 @@ DECK = {
                   "FCDO, USAID and the Gates Foundation. The press release calls the 70% an "
                   "estimate and the regional figures predictions, because they were simulated "
                   "from school closure data.", sm=True)],
-               [B("Read these as the scale of the problem. For a country's measured figure, use "
-                  "the World Development Indicators series on the next slide and quote the year "
+               [B("Read these as the scale of the problem. The next slide gives a later World Bank figure of "
+                  "55.8% for South Asia in 2019, from the series as updated in July 2026. For a "
+                  "country's measured figure, use the World Development Indicators series on the next slide and quote the year "
                   "the underlying assessment was done.", sm=True)]),
         ]),
 
@@ -946,7 +947,8 @@ DECK = {
                   "PARAKH tests children in school, on written items spanning the grade's "
                   "competencies, and reports an average score. ASER tests children at home on a "
                   "floor-level ladder and reports the share who reach a level. A 64% average and "
-                  "a 23% reading rate can both be true. Quote each with its method.")]),
+                  "a 23% reading rate (ASER 2024, Std III in government schools; 27.1% across all "
+                  "schools) can both be true. Quote each with its method.")]),
         ]),
 
         S("EGRA and EGMA", "EGRA and EGMA: the international toolkits", [

@@ -868,7 +868,7 @@ DECK = {
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "chart", "canvas": "ugRevMix", "type": "doughnut",
                         "title": "Revenue receipts of 232 municipal corporations, 2023-24 (budget), %",
-                        "source": "RBI, Report on Municipal Finances, Chapter II, November 2024. 'Other' is the remainder after own revenue (61.9%) and transfers (31.3%)",
+                        "source": "RBI, Report on Municipal Finances, Chapter II, November 2024. 'Other' is the remainder after own revenue (61.9%) and transfers (31.2%)",
                         "data": {"labels": ["Own tax revenue", "Own non-tax revenue", "State transfers", "Central transfers", "Other receipts"],
                                  "datasets": [{"data": [30.0, 31.9, 28.7, 2.5, 6.9],
                                                "backgroundColor": ["#0369A1", "#38BDF8", "#B45309", "#F59E0B", "#94A3B8"]}]},
@@ -1072,6 +1072,7 @@ DECK = {
                             ["Urban local bodies", "1,21,055"],
                             ["Health grants through local governments", "70,051"],
                             ["Incubation of new cities", "8,000"],
+                            ["Shared municipal services", "450"],
                             ["Total for local governments", "4,36,361"]]},
                        {"t": "body", "cls": "sm", "html": "Grants other than health were distributed "
                         "among states by population (90 per cent weight) and area (10 per cent)."}],
@@ -1175,8 +1176,8 @@ DECK = {
                         "supply project."}],
               "right": [{"t": "body", "html": "The 2026-27 Budget speech kept the AMRUT incentive for "
                          "issues up to ₹200 crore for small and medium towns. Borrowing from financial "
-                         "institutions was ₹13,364 crore in 2023-24, 5.2 per cent of corporation "
-                         "receipts, so banks and state agencies still lend more than bond markets."}]},
+                         "institutions was ₹13,364 crore in 2023-24, 5.2 per cent of total corporation "
+                         "receipts, revenue and capital together, so banks and state agencies still lend more than bond markets."}]},
              src("RBI, Nov 2024. SEBI regulations page, 15 July 2015. Ramanath Jha, ORF Expert Speak, 3 "
                  "September 2019. Union Budget 2026-27, speech paragraph 46."),
          ]},
@@ -1396,7 +1397,7 @@ DECK = {
               "left": [{"t": "table",
                         "head": ["Item", "SBM-U 2.0 (approved October 2021)"],
                         "rows": [
-                            ["Outlay", "₹1,41,600 crore for 2021-22 to 2025-26, central share ₹36,465 crore, 2.5 times the ₹62,009 crore of the first phase"],
+                            ["Outlay", "₹1,41,600 crore for 2021-22 to 2025-26, central share ₹36,465 crore, 2.5 times the ₹14,623 crore central share of the first phase (whose total outlay was ₹62,009 crore)"],
                             ["Centre to state share", "25:75 in cities over 10 lakh, 33:67 for 1 to 10 lakh, 50:50 under 1 lakh"],
                             ["Sanitation", "All statutory towns at least ODF+, towns under 1 lakh ODF++, 3.5 lakh more toilets"],
                             ["Solid waste", "Every town at least 3-star garbage free, 100% scientific management of municipal solid waste"],

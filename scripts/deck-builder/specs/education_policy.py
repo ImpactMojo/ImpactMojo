@@ -865,8 +865,9 @@ DECK = {
                   "transport)", "cyan", PRS + ", citing NSO CMS: Education 2025"),
                 C("9.6 crore", "children in private schools, 2024-25", "indigo",
                   PRS + ", citing UDISE+ 2024-25")], cols=4),
-            TC([B("About 8% of government school students in Grades 1 to 8 pay an average course "
-                  "fee of Rs 229 a year, inside the RTE age band.", sm=True)],
+            TC([B("The 27% covers all levels of education. In Grades 1 to 8, the band the RTE Act "
+                  "promises free, about 8% of government school students pay an average course "
+                  "fee of Rs 229 a year.", sm=True)],
                [B("Private enrolment kept rising despite the tenfold cost gap, which tells you "
                   "parents are paying for something they value. Section 7 asks what.", sm=True)]),
         ]),
