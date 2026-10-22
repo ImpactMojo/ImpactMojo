@@ -1646,8 +1646,8 @@ DECK = {
                     "Name and monitor the riskiest assumptions",
                     "Budget for safeguarding, data protection and learning",
                     "Pilot with the system that will scale it"], sm=True)])]),
-            hbox("Each principle corresponds to a section of this course. Return to that "
-                 "section when a design review raises a question.", "indigo"),
+            hbox("Each principle draws on one or more of the twelve sections of this course. Return to the "
+                 "relevant section when a design review raises a question.", "indigo"),
         ], compact=True),
 
         C("Where next", "Where next: related 101 Series courses", [

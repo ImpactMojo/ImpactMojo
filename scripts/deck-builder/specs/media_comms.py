@@ -490,8 +490,8 @@ S03 = [
 
     C("Television", "Television: pay channels, free channels and the decline of pay DTH", [
         body("Television remains a mass medium, but how households receive it is changing. TRAI "
-             "reports that of 908 permitted satellite channels available for downlinking in India, "
-             "342 were pay channels on 31 March 2026 and the remaining 566 were treated as free-to-air. "
+             "reports that 917 private satellite channels are permitted, of which 908 are available for downlinking in India. "
+             "Of those 908, 342 were pay channels on 31 March 2026 and the remaining 566 were treated as free-to-air. "
              "Pay DTH active subscribers fell from 50.99 million at the end of December 2025 to "
              "49.05 million at the end of March 2026, not counting DD FreeDish."),
         table(["Indicator, India", "Figure", "Date"], [
@@ -832,7 +832,7 @@ S06 = [
     ]),
 
     C("Defamation: the defences", "The exceptions a careful communicator relies on", [
-        body("Section 356 lists ten exceptions. Four matter most to development communicators, "
+        body("Section 356 lists ten exceptions. Five matter most to development communicators, "
              "because they protect accurate reporting of evidence and fair criticism of public "
              "action. Each depends on facts you can prove and good faith you can show, so keep "
              "your notes, data and drafts."),
@@ -899,7 +899,7 @@ S06 = [
              "useful checklist for any organisation that publishes."),
         table(["Norm (2022 edition)", "What it requires"], [
             ["9. Corrections", "Publish a correction promptly and with due prominence, with apology or regret in serious lapses"],
-            ["34. Pre-publication verification", "Check imputations against a citizen with the person concerned and carry their version"],
+            ["34. Pre-publication verification", "Check the accuracy of imputations against a citizen with the person concerned and carry their version"],
             ["41. Right of reply", "Publish the reply of a person or body criticised"],
             ["42. Right to privacy", "No names or photographs of victims of rape, abduction or sexual assault on children"],
             ["39(b). Reporting suicide", "No method, no location details, no sensational headlines, no photographs"],

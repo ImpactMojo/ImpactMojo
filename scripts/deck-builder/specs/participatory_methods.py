@@ -1500,7 +1500,7 @@ SLIDES += [
             "template you can fill in for your own team.")]),
       H("amber", "Suggested exercise: use the Lab's mapping steps to plan the Pipalgaon social "
         "map session, fill in the positionality template for your own team, then compare your "
-        "plan with the session record template two slides back.")),
+        "plan with the session record template six slides back.")),
 ]
 
 # ===================== SECTION 11 =====================

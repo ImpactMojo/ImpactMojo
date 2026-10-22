@@ -349,7 +349,7 @@ SLIDES += [
          [P("green", "What it means in a school",
             "A refused admission becomes a legal wrong with a forum to hear it. A "
             "parent can cite section 16 of the Act. A court can order posts to be filled, as the "
-            "Supreme Court has been doing for special educators since 2021.")]),
+            "Supreme Court has done for special educators in a case begun in 2016 and decided in 2021.")]),
       B("Source: Rights of Persons with Disabilities Act 2016 (No. 49 of 2016), ss 2(s) and 3(1).",
         sm=True)),
 
