@@ -1782,7 +1782,7 @@ DECK = {
                [panel("green", "Evidence and practice", [bullets([
                     "Missing girls reflect son preference meeting technology",
                     "Women's work is undercounted unless asked carefully",
-                    "Women aged 6 and over who do unpaid domestic work spend 289 minutes a day on it",
+                    "Women aged 6 and over who do unpaid domestic work spend 289 minutes a day on it (2024)",
                     "Violence is common and help-seeking is rare",
                     "Reserved seats change policy, slowly and unevenly"], sm=True)])]),
             body("Behind each idea is a source you can open: NFHS-5, PLFS, the Time Use "
