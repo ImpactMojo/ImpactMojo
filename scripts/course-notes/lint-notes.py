@@ -30,6 +30,8 @@ def main(files):
     for f in files:
         doc = json.load(open(f, encoding="utf-8"))
         for path, s in strings(doc):
+            if path == "/slug":  # an identifier, not prose
+                continue
             for _, rule, ctx in lint(Path(f).name, [s]):
                 print(f"{Path(f).name}{path}: {rule} | {ctx}")
                 hits += 1
