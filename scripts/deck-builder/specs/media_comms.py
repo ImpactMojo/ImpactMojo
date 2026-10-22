@@ -899,7 +899,7 @@ S06 = [
              "useful checklist for any organisation that publishes."),
         table(["Norm (2022 edition)", "What it requires"], [
             ["9. Corrections", "Publish a correction promptly and with due prominence, with apology or regret in serious lapses"],
-            ["34. Pre-publication verification", "Check the accuracy of imputations against a citizen with the person concerned and carry their version"],
+            ["34. Pre-publication verification", "Check the factual accuracy of imputations against a citizen with the person or organisation concerned and publish their version"],
             ["41. Right of reply", "Publish the reply of a person or body criticised"],
             ["42. Right to privacy", "No names or photographs of victims of rape, abduction or sexual assault on children"],
             ["39(b). Reporting suicide", "No method, no location details, no sensational headlines, no photographs"],

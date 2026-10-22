@@ -836,7 +836,8 @@ SLIDES_B = [
               "children with inflammation (Sachdev et al., Lancet Global Health, 2021).")),
         hbox("Iron supplements treat iron deficiency anaemia. If a large share of anaemia "
              "has other causes, more iron alone will not close the gap. That is the policy "
-             "stake in the debate in the next section.", "indigo"),
+             "stake in the debate in the next section. These are age-group figures; across the "
+             "whole CNNS sample the overall anaemia figure is about 30%.", "indigo"),
     ], compact=True),
 
     C("Adolescents", "Adolescents: the missing middle of nutrition policy", [
@@ -1256,7 +1257,10 @@ SLIDES_B = [
              "(2023-24) at 29.3% (NFHS-6 India Fact Sheet, 2026), short of the 25% "
              "ambition. The mission's lasting contributions are its convergence "
              "plans, height measurement at Anganwadis, the ICT tracker and the annual "
-             "Poshan Maah campaign.", "amber"),
+             "Poshan Maah campaign. Read as percentage points a year, the annual targets do not "
+             "add up to the ambition: 2 points a year is 6 points over the 3-year budget "
+             "period and about 10 over the five years to 2022, against the 13.4 points "
+             "that 38.4% to 25% needs.", "amber"),
     ], compact=True),
 
     C("Maternity benefit", "Maternity benefits: the NFSA promise and PMMVY", [
