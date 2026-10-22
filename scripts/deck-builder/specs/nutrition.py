@@ -999,7 +999,8 @@ SLIDES_B = [
               "Venous whole blood, analysed with the cyanmethaemoglobin method and "
               "automated counters (CNNS 2016-18 National Report, 2019, Ch. 2 and 6). Kurpad "
               "and Sachdev put its anaemia prevalence at 30.7%, less than half the NFHS "
-              "figure (Indian Pediatrics, 2022).")),
+              "figure (Indian Pediatrics, 2022). Sachdev and colleagues give 30.0% for the "
+              "whole sample on WHO cut-offs, so read both as about 30%.")),
         quote("The burden of anemia in Indian children, based on capillary blood sampling, "
               "is believed to be profound and worsening (67.1%) according to the "
               "successive National Family Health Surveys. This might be an overestimate.",
