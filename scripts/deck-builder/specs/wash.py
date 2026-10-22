@@ -1385,7 +1385,8 @@ SLIDES_C = [
                ["Pit latrine with slab", "11.0%", "1.9%", "7.3%"],
                ["Ventilated improved pit", "1.4%", "0.4%", "1.0%"],
                ["Flush to elsewhere (open drain, open pit, field)", "0.2%", "0.6%", "0.3%"],
-               ["Pit latrine without slab or open pit", "0.8%", "0.1%", "0.5%"]]),
+               ["Pit latrine without slab or open pit", "0.8%", "0.1%", "0.5%"],
+               ["Other types (remainder to 100%, derived)", "1.8%", "0.3%", "1.3%"]]),
         body("In 2018 fewer than one in five Indian households with latrine access used a "
              "toilet connected to a sewer. Half used septic tanks. Every septic tank and "
              "pit fills, so their safety depends on emptying, transport and treatment "
