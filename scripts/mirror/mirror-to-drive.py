@@ -53,6 +53,7 @@ def walk(prefix=""):
 def main(out, listing):
     drive = {i["Path"]: i for i in json.load(open(listing)) if not i.get("IsDir")}
     out = Path(out)
+    out.mkdir(parents=True, exist_ok=True)
     changed = []
     seen = 0
     for path, meta in walk():
