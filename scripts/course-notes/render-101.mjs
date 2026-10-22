@@ -30,6 +30,8 @@ const server = http.createServer((req, res) => {
 }).listen(0);
 const base = `http://localhost:${server.address().port}`;
 
+const SLIDES = process.env.SLIDES_DIR || path.join(ROOT, "build/slides");
+const decode = (t) => String(t).replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 const SCALE = 0.56, MARGIN = { top: "8mm", bottom: "12mm", left: "9mm", right: "9mm" };
 // Printable height 297 - 20 = 277 mm = 1047 px at 96 dpi; in layout px that is 1047 / SCALE.
 const SHEET = Math.floor(1047 / SCALE) - 8;
@@ -55,6 +57,7 @@ html,body{background:#fff!important;margin:0!important;overflow:visible!importan
 .notes-cover .legal{position:absolute;bottom:40px;left:0;right:0;font-size:18px;color:#64748B}
 `.replace(/SHEET/g, SHEET);
 
+const NOTES_CSS = fs.readFileSync(path.join(ROOT, "scripts/course-notes/notes.css"), "utf8").replace(/SHEET/g, SHEET);
 const browser = await chromium.launch({ executablePath: CHROME });
 const manifest = [];
 let failed = 0;
@@ -81,31 +84,38 @@ for (const slug of slugs) {
   for (let i = 0; i < n; i++) { await page.keyboard.press("ArrowRight"); }
   step("visited slides"); await page.waitForTimeout(800);
   await page.addStyleTag({ content: PRINT });
-  const sections = meta.sections || [];
-  await page.evaluate(({ meta, sections }) => {
+  // The notes were written for this deck and are checked against it by validate-notes.mjs.
+  const notes = JSON.parse(fs.readFileSync(path.join(ROOT, "content/course-notes", `${slug}.json`), "utf8"));
+  const deckText = JSON.parse(fs.readFileSync(path.join(SLIDES, `${slug}.json`), "utf8"));
+  await page.addStyleTag({ content: NOTES_CSS });
+  await page.addScriptTag({ url: `${base}/scripts/course-notes/vendor/rough.js` });
+  await page.addScriptTag({ url: `${base}/scripts/course-notes/notes-layout.js` });
+  await page.evaluate(() => Promise.all(["700 28px NCaveat", "600 28px NCaveat", "400 26px NCaveat", "400 25px NKalam", "300 25px NKalam"].map((f) => document.fonts.load(f))));
+  const built = await page.evaluate(({ meta, notes, deckText, SHEET }) => {
     document.documentElement.setAttribute("data-theme", "light");
     document.body.classList.add("light"); document.body.classList.remove("dark-mode");
-    const esc = (t) => String(t).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
-    const cover = document.createElement("section");
-    cover.className = "notes-cover";
-    cover.innerHTML = `<div class="brand">IMPACTMOJO · IMPACTMOJO.IN</div><div class="series">ImpactMojo 101 Series</div><h1>${esc(meta.title)}</h1><div class="kind">Course Notes</div><div class="meta">${meta.slides} slides · ${sections.length} sections</div><p class="blurb">${esc(meta.desc)} Every slide of the course, two to a page, ready to print, annotate and keep.</p>${sections.length ? "<ol>" + sections.map((s) => `<li>${esc(s)}</li>`).join("") + "</ol>" : ""}<div class="legal">© 2026 ImpactMojo · CC BY-NC-ND 4.0 · For the personal use of the purchaser</div>`;
-    const deck = document.getElementById("deck") || document.body;
-    deck.parentNode.insertBefore(cover, deck);
     // Anything fixed to the viewport (chat bubble, nav pills) would repeat on every page.
     for (const el of document.querySelectorAll("body *")) if (getComputedStyle(el).position === "fixed") el.style.setProperty("display", "none", "important");
-    const slides = [...document.querySelectorAll(".slide")];
-    const host = slides[0].parentNode;
-    for (let i = 0; i < slides.length; i += 2) {
-      const sheet = document.createElement("div"); sheet.className = "sheet";
-      host.appendChild(sheet);
-      sheet.appendChild(slides[i]); if (slides[i + 1]) sheet.appendChild(slides[i + 1]);
-      const lines = document.createElement("div"); lines.className = "lines"; lines.textContent = "NOTES"; sheet.appendChild(lines);
-    }
+    const slideEls = [...document.querySelectorAll(".slide")];
+    const host = slideEls[0].parentNode;
+    const deck = document.getElementById("deck") || document.body;
+    const stage = host;
+    const r = NotesLayout.build({ meta, notes, deck: deckText, slideEls, host: stage, SHEET });
     window.dispatchEvent(new Event("resize"));
     if (window.Chart && Chart.instances) Object.values(Chart.instances).forEach((c) => { try { c.resize(); c.update("none"); } catch (e) {} });
     if (window.echarts) document.querySelectorAll("[_echarts_instance_]").forEach((el) => { try { echarts.getInstanceByDom(el).resize(); } catch (e) {} });
-  }, { meta, sections });
+    return r.problems;
+  }, { meta: { ...meta, title: decode(meta.title) }, notes, deckText, SHEET });
   await page.waitForTimeout(600);
+  const overflow = await page.evaluate(() => {
+    const bad = [];
+    document.querySelectorAll(".nsheet").forEach((sh, i) => {
+      if (sh.scrollHeight > sh.clientHeight + 2) bad.push(`page ${i + 2} overflows by ${sh.scrollHeight - sh.clientHeight}px`);
+      sh.querySelectorAll(".nnote").forEach((nn) => { if (nn.scrollHeight > nn.clientHeight + 2) bad.push(`page ${i + 2}: a note is cut off (${nn.scrollHeight - nn.clientHeight}px)`); });
+    });
+    return bad;
+  });
+  for (const m of [...built, ...overflow]) console.log(`  ${slug}: ${m}`);
   // A chart that never drew prints as an empty box and nothing else says so.
   const charts = await page.evaluate(() => {
     let total = 0, blank = 0;
@@ -122,11 +132,11 @@ for (const slug of slugs) {
   });
   await page.emulateMedia({ media: "print", colorScheme: "light" });
   const file = path.join(out, `ImpactMojo-101-Notes-${slug}.pdf`);
-  const foot = `<div style="font-size:7pt;color:#64748B;width:100%;padding:0 9mm;display:flex;justify-content:space-between;font-family:Arial"><span>${meta.title.replace(/&/g, "&amp;")}: ImpactMojo Course Notes</span><span class="pageNumber"></span></div>`;
+  const foot = `<div style="font-size:7pt;color:#64748B;width:100%;padding:0 9mm;display:flex;justify-content:space-between;font-family:Arial"><span>${decode(meta.title).replace(/&/g, "&amp;")}: ImpactMojo Course Notes</span><span class="pageNumber"></span></div>`;
   step("printing"); await page.pdf({ path: file, format: "A4", scale: SCALE, printBackground: true, displayHeaderFooter: true, headerTemplate: "<span></span>", footerTemplate: foot, margin: MARGIN });
   const pages = Number(execFileSync("pdfinfo", [file]).toString().match(/Pages:\s+(\d+)/)[1]);
-  const want = 1 + Math.ceil(n / 2);
-  const ok = pages === want && charts.blank === 0;
+  const want = await page.evaluate(() => document.querySelectorAll(".ncover,.nsheet").length);
+  const ok = pages === want && charts.blank === 0 && !built.length && !overflow.length;
   if (!ok) failed++;
   console.log(`${ok ? "ok  " : "FAIL"} ${path.basename(file)}: ${n} slides, ${pages} pages, ${charts.total} charts${charts.blank ? ", " + charts.blank + " BLANK" : ""}${pages === want ? "" : " (expected " + want + " pages)"}`);
   manifest.push({ slug, title: meta.title, slides: n, pages, charts: charts.total, pdf: path.basename(file) });

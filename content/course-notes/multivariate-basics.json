@@ -1,0 +1,1114 @@
+{
+ "slug": "multivariate-basics",
+ "intro": "Read the deck for the facts and these notes for the thinking. The notes under each slide explain it, tell you what to remember and warn you where people slip. Work the examples in pencil with the illustrative figures, answer the questions at the end of each section without looking, and write your own notes in the space around mine.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "From Bivariate to Multivariate",
+   "big_idea": "Outcomes have many correlated causes, so a raw comparison **mixes the effect of X with everything linked to X**. Multiple regression separates them, imperfectly.",
+   "in_plain_words": [
+    "A bivariate slope describes the raw association between two variables with nothing else held constant. Stunting depends on income, schooling, sanitation, diet and birth order together, and these arrive as a bundle. Leave one out and its effect leaks into the coefficients of the variables correlated with it.",
+    "A confounder affects both the predictor and the outcome and is not caused by the predictor. A variable caused by X is a mediator, and controlling for it removes part of the effect you want. Holding other variables constant is **arithmetic on comparable units**, and it controls only what you measured. Credible causal claims come from design."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Bivariate",
+     "items": [
+      "Two variables, nothing held fixed",
+      "The raw association",
+      "Mixes in correlated causes"
+     ]
+    },
+    "right": {
+     "title": "Multivariate",
+     "items": [
+      "Several predictors at once",
+      "A partial effect of each",
+      "Net of the measured others"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Confounder",
+     "meaning": "A variable that influences both predictor and outcome."
+    },
+    {
+     "term": "Mediator",
+     "meaning": "A variable on the causal path from X to Y."
+    },
+    {
+     "term": "Partial effect",
+     "meaning": "A predictor's contribution net of the other predictors."
+    },
+    {
+     "term": "Residual",
+     "meaning": "What the model fails to predict, holding every omitted cause."
+    },
+    {
+     "term": "Exogeneity",
+     "meaning": "The claim that nothing in the residual correlates with a predictor."
+    }
+   ],
+   "worked_example": {
+    "title": "Is it a confounder?",
+    "setup": "Districts with more private clinics show worse average health. Apply the three-condition test from slide 6 to age.",
+    "steps": [
+     "Does age affect health, the outcome? Yes, since older and sicker populations have worse health.",
+     "Does age affect the predictor, clinics? Yes, because clinics open where the population is older and sicker.",
+     "Is age caused by clinics? No, so it passes the third test.",
+     "All three hold, so age is a confounder. Note the link may also run from health to clinics, which looks identical in a table."
+    ],
+    "answer": "Age is a confounder of the clinic and health link."
+   },
+   "mistakes": [
+    "Reading a bivariate slope as an effect when it is a raw association.",
+    "Controlling for a variable caused by X, which is a mediator and removes part of the effect.",
+    "Treating control as causation. Unmeasured variables such as motivation and local prices still bias the estimate.",
+    "Calling predictors independent as if they were unrelated. The word describes the model's structure only."
+   ],
+   "recall": [
+    {
+     "q": "What does a multivariate coefficient represent?",
+     "a": "A partial effect, net of the other variables in the model."
+    },
+    {
+     "q": "What are the three conditions for a confounder Z?",
+     "a": "Z affects Y, Z affects X, and Z is not caused by X."
+    },
+    {
+     "q": "What does the gap between the bivariate and multivariate coefficient tell you?",
+     "a": "How much of the raw association was confounding."
+    },
+    {
+     "q": "Which row of the comparison table controls for everything, observed and not?",
+     "a": "A randomised intervention."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Multiple Linear Regression",
+   "big_idea": "The model is **one line**: an outcome built from an intercept, slopes times predictors and an error. Residuals are where the diagnostics live.",
+   "in_plain_words": [
+    "Y equals β0 plus β1X1 and so on up to βkXk, plus an error. It assumes effects add up, each is a straight line and the same for everyone, and errors behave. Additivity and linearity are assumptions about the world and both are fixable inside the same framework with interactions, logs and squared terms.",
+    "OLS picks the coefficients that minimise the sum of squared residuals. It always returns an answer, even when the data violate every assumption. The intercept is often uninterpretable because all Xs at zero may be impossible, so **centre predictors** if you want it to mean something. Every modelling choice, such as one 0/1 toilet dummy, is a substantive claim."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Outcome Y",
+      "hint": "e.g. height-for-age"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "Intercept β0",
+      "hint": "prediction at all X = 0"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Slopes × predictors",
+      "hint": "partial effects"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Error e",
+      "hint": "what the model misses"
+     }
+    ],
+    "note": "fitted value = the model's guess; residual = observed − fitted"
+   },
+   "key_terms": [
+    {
+     "term": "OLS",
+     "meaning": "Chooses coefficients minimising the sum of squared residuals."
+    },
+    {
+     "term": "Intercept",
+     "meaning": "Predicted Y when every X is zero."
+    },
+    {
+     "term": "Slope",
+     "meaning": "A predictor's partial effect on the outcome."
+    },
+    {
+     "term": "Fitted value",
+     "meaning": "The model's prediction for one unit."
+    },
+    {
+     "term": "Residual",
+     "meaning": "Observed minus fitted."
+    }
+   ],
+   "worked_example": {
+    "title": "Fitted value and residual",
+    "setup": "Illustrative coefficients from slide 95: intercept −1.42, income 0.03 per ₹1,000, schooling 0.06, toilet 0.18. A household earns ₹30,000, the mother has 10 years of schooling, there is a toilet, and observed HAZ is 0.50.",
+    "steps": [
+     "Income contribution: 0.03 × 30 = 0.90.",
+     "Schooling contribution: 0.06 × 10 = 0.60.",
+     "Toilet contribution: 0.18 × 1 = 0.18.",
+     "Add the contributions: 0.90 + 0.60 = 1.50, then 1.50 + 0.18 = 1.68.",
+     "Subtract the intercept 1.42: 1.68 − 1.42 = 0.26, the fitted HAZ.",
+     "Residual is observed minus fitted: 0.50 − 0.26 = 0.24, an under-prediction."
+    ],
+    "answer": "Fitted HAZ is 0.26 and the residual is 0.24."
+   },
+   "mistakes": [
+    "Reading the intercept as meaningful when X = 0 describes nobody in the sample.",
+    "Trusting OLS because it returned an answer.",
+    "Ignoring a curve or clusters in the residuals, which signal wrong form or a missing grouping variable.",
+    "Skipping the largest residuals. They are often data-entry errors."
+   ],
+   "recall": [
+    {
+     "q": "What does OLS minimise?",
+     "a": "The sum of squared residuals."
+    },
+    {
+     "q": "Why does the deck say measurement error in X matters?",
+     "a": "It attenuates the coefficient toward zero."
+    },
+    {
+     "q": "What does centring a predictor do for the intercept?",
+     "a": "It becomes the prediction at the sample mean, a real household."
+    },
+    {
+     "q": "Which assumption failure affects only standard errors?",
+     "a": "Clustering or changing spread of errors."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Interpreting Coefficients",
+   "big_idea": "Read every slope with one sentence: **a one-unit increase in X is associated with a β-unit change in Y, holding the other variables constant.**",
+   "in_plain_words": [
+    "Each phrase carries load. Check the units, because a coefficient is glued to them: 0.00003 per rupee equals 0.03 per thousand rupees. Say associated with, which keeps the claim from becoming causal. Holding constant covers only the variables in the model. Judge size against what matters for the decision.",
+    "A dummy codes a category as 0 or 1 and measures a gap from the baseline, so always name the baseline. A variable with k categories gets k minus 1 dummies. Report unstandardised coefficients for meaning and standardised ones for comparison, except for dummies. Treat a coefficient that is **suspiciously large** as a warning."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Reading a coefficient",
+    "spokes": [
+     {
+      "label": "State the units",
+      "sub": "per rupee or per ₹1,000?"
+     },
+     {
+      "label": "Name the baseline",
+      "sub": "every dummy needs one"
+     },
+     {
+      "label": "Say associated with",
+      "sub": "avoid causal verbs"
+     },
+     {
+      "label": "Hold others constant",
+      "sub": "only those in the model"
+     },
+     {
+      "label": "Judge the size",
+      "sub": "against a decision"
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "Dummy variable",
+     "meaning": "A 0/1 indicator for a category."
+    },
+    {
+     "term": "Baseline",
+     "meaning": "The omitted category every dummy is compared with."
+    },
+    {
+     "term": "Unstandardised b",
+     "meaning": "Effect of one real unit of X."
+    },
+    {
+     "term": "Standardised β",
+     "meaning": "Effect of a one-SD change in X."
+    },
+    {
+     "term": "Dummy-variable trap",
+     "meaning": "Including all k dummies plus an intercept."
+    }
+   ],
+   "worked_example": {
+    "title": "Rescale a coefficient",
+    "setup": "Income is measured in rupees and the coefficient is 0.00003. Rescale it using slide 23, then translate a schooling slope of 0.06.",
+    "steps": [
+     "Per thousand rupees: 0.00003 × 1,000 = 0.03.",
+     "Per lakh rupees: 0.00003 × 100,000 = 3.",
+     "Five extra years of schooling at 0.06 per year: 0.06 × 5 = 0.30.",
+     "All three describe the same relationship, expressed in units a reader can feel."
+    ],
+    "answer": "0.03 per thousand rupees, 3 per lakh, and about 0.30 for five years of schooling."
+   },
+   "mistakes": [
+    "Reporting a coefficient without units.",
+    "Interpreting a dummy without naming its baseline.",
+    "Collapsing different categories into one dummy, which assumes they are equivalent.",
+    "Using standardised coefficients on dummies. A standard deviation of a 0/1 variable has no picture."
+   ],
+   "recall": [
+    {
+     "q": "What does a dummy coefficient show?",
+     "a": "The gap between that category and the baseline."
+    },
+    {
+     "q": "How many dummies for a variable with 5 categories?",
+     "a": "Four."
+    },
+    {
+     "q": "What is the danger of a 1.0 z-score coefficient from one covariate?",
+     "a": "It is implausible, so check confounding, coding errors or collinearity."
+    },
+    {
+     "q": "When do you use standardised coefficients?",
+     "a": "To compare the importance of predictors."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Model Fit & Inference",
+   "big_idea": "Fit statistics describe prediction. **Report effect sizes with intervals**, and let significance follow.",
+   "in_plain_words": [
+    "R² is the share of outcome variation the predictors explain, and 0.05 to 0.40 is normal in social data. A very high value is a warning. R² only rises as predictors are added, so use adjusted R², AIC, BIC or out-of-sample error to compare models. For causal work the control set comes from the causal story.",
+    "The F-test asks whether all slopes are zero together, and t-tests ask about each one. A significant F with no significant t points to collinearity. A t-statistic is the coefficient over its standard error, with about 2 matching the 5% threshold. Intervals beat stars, and in large samples **significance carries little information** about importance."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Is the model worth reading?",
+    "children": [
+     {
+      "label": "R² and adjusted R²",
+      "items": [
+       "Share of variation explained",
+       "Adjusted penalises useless terms"
+      ]
+     },
+     {
+      "label": "F-test",
+      "items": [
+       "Are all slopes zero together?",
+       "A low bar in large samples"
+      ]
+     },
+     {
+      "label": "t-tests",
+      "items": [
+       "Coefficient over standard error",
+       "About 2 is the 5% threshold"
+      ]
+     },
+     {
+      "label": "Confidence intervals",
+      "items": [
+       "Direction and precision",
+       "Judge against a size that matters"
+      ]
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "R²",
+     "meaning": "The share of outcome variation the predictors explain."
+    },
+    {
+     "term": "Adjusted R²",
+     "meaning": "R² penalised for each added predictor."
+    },
+    {
+     "term": "F-test",
+     "meaning": "Tests that all slope coefficients are zero at once."
+    },
+    {
+     "term": "Standard error",
+     "meaning": "The estimated uncertainty in a coefficient."
+    },
+    {
+     "term": "Confidence interval",
+     "meaning": "The plausible range for a coefficient."
+    }
+   ],
+   "worked_example": {
+    "title": "From coefficient to interval",
+    "setup": "Illustrative: schooling has coefficient 0.06 and standard error 0.02. A second predictor has 0.06 and 0.05.",
+    "steps": [
+     "First t-statistic: 0.06 ÷ 0.02 = 3, clearly distinguishable from zero.",
+     "Second t-statistic: 0.06 ÷ 0.05 = 1.2, which is indistinguishable from zero.",
+     "Rough 95% interval for the first: 2 × 0.02 = 0.04.",
+     "Lower end: 0.06 − 0.04 = 0.02.",
+     "Upper end: 0.06 + 0.04 = 0.10."
+    ],
+    "answer": "t of 3 and an interval of 0.02 to 0.10 for the first, and t of 1.2 for the second."
+   },
+   "mistakes": [
+    "Choosing predictors to raise raw R², which can never fall.",
+    "Reading a high R² as correctness. A model at 0.6 can be entirely confounded.",
+    "Reporting stars alone, which make a precise small effect and no information at all look alike.",
+    "Calling a result important because it is significant in an NFHS-sized sample."
+   ],
+   "recall": [
+    {
+     "q": "Why is raw R² useless for choosing models?",
+     "a": "It rises or stays flat whenever you add a predictor."
+    },
+    {
+     "q": "What does a significant F with no significant t suggest?",
+     "a": "Collinearity."
+    },
+    {
+     "q": "What does an interval containing zero show?",
+     "a": "The data are compatible with zero, and often with a substantial effect either way."
+    },
+    {
+     "q": "What should effect sizes be expressed in?",
+     "a": "Units a decision-maker feels, such as children moved out of stunting."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Assumptions & Residual Diagnostics",
+   "big_idea": "Residual plots show whether the model is well specified. **They cannot show whether the coefficient is causal.**",
+   "in_plain_words": [
+    "The four assumptions are linearity, independence, homoscedasticity and normal residuals. Only linearity threatens the estimate itself. The others affect uncertainty, and corrected or clustered standard errors fix most of what diagnostics find. Normality applies to residuals only, and it matters least in large samples.",
+    "Plot residuals against fitted values first. A curve says add a squared or log term, a fan says heteroscedasticity, and clusters say a grouping variable is missing. NFHS and DHS are clustered by design, so use survey weights and cluster-aware commands. Always add a Q–Q plot and an influence plot, because **numbers alone hide trouble**, as Anscombe's quartet shows."
+   ],
+   "diagram": {
+    "type": "stack",
+    "levels": [
+     {
+      "label": "Linearity",
+      "sub": "biases estimate and inference"
+     },
+     {
+      "label": "Independence",
+      "sub": "standard errors too small"
+     },
+     {
+      "label": "Homoscedasticity",
+      "sub": "standard errors wrong"
+     },
+     {
+      "label": "Normal residuals",
+      "sub": "small samples only"
+     }
+    ],
+    "caption": "from most to least damaging when it fails"
+   },
+   "key_terms": [
+    {
+     "term": "Homoscedasticity",
+     "meaning": "Residuals have roughly constant spread."
+    },
+    {
+     "term": "Q–Q plot",
+     "meaning": "Checks whether residuals are roughly normal."
+    },
+    {
+     "term": "Influence",
+     "meaning": "How far an observation bends the fit."
+    },
+    {
+     "term": "Clustered errors",
+     "meaning": "Standard errors that allow correlation within groups."
+    },
+    {
+     "term": "Anscombe's quartet",
+     "meaning": "Four datasets with identical statistics and different shapes."
+    }
+   ],
+   "worked_example": {
+    "title": "Read four residual plots",
+    "setup": "Match each pattern to a diagnosis and a fix, using the slide 43 and 46 tables.",
+    "steps": [
+     "A random cloud around zero: linearity is fine, so do nothing.",
+     "A curve or U-shape: wrong functional form, so add a squared or log term.",
+     "A widening fan: heteroscedasticity, so use corrected standard errors or log Y.",
+     "Distinct clusters: a grouping variable is missing, so add it or cluster the errors."
+    ],
+    "answer": "Cloud, curve, fan and clusters each lead to a different response."
+   },
+   "mistakes": [
+    "Treating a clean residual plot as proof that the coefficient is unconfounded. Omitted confounders leave no signature.",
+    "Ignoring clustering in NFHS-type data, which inflates significance.",
+    "Requiring Y or the predictors to be normal. Only the residuals matter.",
+    "Dismissing fat tails in a Q–Q plot. They usually mean influential outliers."
+   ],
+   "recall": [
+    {
+     "q": "Which assumption failure biases coefficients?",
+     "a": "Linearity."
+    },
+    {
+     "q": "What is the single most informative diagnostic?",
+     "a": "The residual-versus-fitted plot."
+    },
+    {
+     "q": "Why are standard errors too small under clustering?",
+     "a": "Children in one village share water, clinics and shocks, so outcomes are correlated."
+    },
+    {
+     "q": "What does an influence plot catch?",
+     "a": "Data errors, such as one household with income in the wrong units."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Multicollinearity",
+   "big_idea": "Overlap between predictors makes coefficients **imprecise and unstable**, and leaves them unbiased. The question you ask decides the remedy.",
+   "in_plain_words": [
+    "When predictors overlap, the model cannot tell which deserves the credit. Standard errors inflate, signs can flip and individual effects become untrustworthy, while prediction and the F-test stay fine. The symptoms are a high R² with no significant predictor, flipping coefficients and huge standard errors.",
+    "VIF measures the inflation, and thresholds of 5 to 10 are conventions that matter only for coefficients you intend to read. Interactions and squared terms inflate VIFs mechanically, so centre first. Then decide by construct: combine or drop two measures of one thing, and **keep two distinct causes**. Dropping a real confounder trades visible imprecision for invisible bias."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Same construct",
+     "items": [
+      "Income and expenditure",
+      "Two assets measuring living standards",
+      "Combine into an index, or drop one"
+     ]
+    },
+    "right": {
+     "title": "Distinct causes",
+     "items": [
+      "Education and income",
+      "Each confounds the other",
+      "Keep both, accept wider intervals"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Multicollinearity",
+     "meaning": "Predictors highly correlated with each other."
+    },
+    {
+     "term": "VIF",
+     "meaning": "How much a coefficient's variance is inflated by overlap."
+    },
+    {
+     "term": "Centring",
+     "meaning": "Subtracting the mean before squaring or interacting."
+    },
+    {
+     "term": "Index",
+     "meaning": "One score built from several proxies for a concept."
+    },
+    {
+     "term": "Joint significance",
+     "meaning": "Slopes significant together by the F-test."
+    }
+   ],
+   "worked_example": {
+    "title": "Drop, combine, centre or keep?",
+    "setup": "Choose a response for four correlated pairs using the slide 56 table.",
+    "steps": [
+     "Income and expenditure: nearly the same construct, so drop one.",
+     "Education and income: distinct and each confounds, so keep both.",
+     "Age and age-squared: correlated by construction, so centre instead of dropping.",
+     "Two asset indicators: combine them into an index."
+    ],
+    "answer": "Drop, keep, centre and combine, one response for each pair."
+   },
+   "mistakes": [
+    "Dropping a confounder to lower a VIF.",
+    "Applying a blanket VIF threshold to every variable, including controls you never interpret.",
+    "Treating every sign flip as collinearity. It may mean the dropped variable was a real confounder.",
+    "Forgetting that collinearity barely matters when you only want prediction."
+   ],
+   "recall": [
+    {
+     "q": "Does multicollinearity bias coefficients?",
+     "a": "No, it inflates standard errors."
+    },
+    {
+     "q": "What is the classic signature?",
+     "a": "A significant F-test with no individually significant predictor."
+    },
+    {
+     "q": "What remedy applies to age and age-squared?",
+     "a": "Centre before squaring."
+    },
+    {
+     "q": "Why is accepting a wide interval often right?",
+     "a": "Collinearity biases nothing, so the interval accurately describes the uncertainty."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Interactions & Non-Linearity",
+   "big_idea": "When an effect depends on context or on its own level, **add the term that says so** and show the result as a plot.",
+   "in_plain_words": [
+    "An interaction multiplies two predictors so that the effect of one varies with the other. Once it is in the model, the coefficient on X1 alone is the effect when X2 is zero, and the full effect is β1 plus β3 times X2. Centring makes the main effect meaningful, and a plot of predicted values shows the finding.",
+    "Squared terms bend the line for diminishing returns or U-shapes, and the marginal effect is β1 plus 2β2X. Logs compress skew and give percentage readings, such as an elasticity in a log–log model. Interactions need considerably more data than main effects, so **a null interaction is often uninformative**. Say whether you assumed or tested each form."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Effect of X1"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "β1",
+      "hint": "effect when X2 = 0"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "β3",
+      "hint": "interaction coefficient"
+     },
+     {
+      "op": "×"
+     },
+     {
+      "t": "X2",
+      "hint": "the context"
+     }
+    ],
+    "note": "the effect differs at every value of X2"
+   },
+   "key_terms": [
+    {
+     "term": "Interaction term",
+     "meaning": "The product of two variables (X1 × X2)."
+    },
+    {
+     "term": "Squared term",
+     "meaning": "X² added to bend the line."
+    },
+    {
+     "term": "Elasticity",
+     "meaning": "In a log–log model, % change in Y per 1% change in X."
+    },
+    {
+     "term": "Marginal effect",
+     "meaning": "The change in Y for a small change in X at a given level."
+    },
+    {
+     "term": "Simple slope",
+     "meaning": "The effect of X at a chosen value of the moderator."
+    }
+   ],
+   "worked_example": {
+    "title": "Schooling's effect with and without a toilet",
+    "setup": "Illustrative: β1 for schooling is 0.04 and β3 for schooling × toilet is 0.05.",
+    "steps": [
+     "Without a toilet, X2 = 0, so the effect of schooling is β1 = 0.04.",
+     "With a toilet, X2 = 1, and the interaction part is 0.05 × 1 = 0.05.",
+     "Add it to the main effect: 0.04 + 0.05 = 0.09.",
+     "A positive β3 means schooling helps more where sanitation exists, so sequence sanitation first or bundle them."
+    ],
+    "answer": "0.04 per year of schooling without a toilet and 0.09 with one."
+   },
+   "mistakes": [
+    "Reading the main-effect coefficient in an interaction model as the effect of X1 for everyone.",
+    "Squaring a variable without centring, which sends VIFs up.",
+    "Going past a quadratic. High-order polynomials wiggle and overfit.",
+    "Logging income without deciding what happens to zero values."
+   ],
+   "recall": [
+    {
+     "q": "What does the coefficient on X1 mean in an interaction model?",
+     "a": "The effect of X1 when X2 = 0."
+    },
+    {
+     "q": "How does a log–level model read?",
+     "a": "About 100β % change in Y per unit of X."
+    },
+    {
+     "q": "When is the log-Y approximation poor?",
+     "a": "Above about 0.1, so use exp(β) − 1."
+    },
+    {
+     "q": "What does a null interaction in a modest sample usually mean?",
+     "a": "The test is uninformative and gives no evidence of a uniform effect."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Logistic Regression",
+   "big_idea": "For yes or no outcomes, model the **log-odds**. Then report predicted probabilities, since odds ratios are easy to misread.",
+   "in_plain_words": [
+    "A straight line fitted to a 0/1 outcome can predict probabilities below 0 or above 1. Logistic regression models the log-odds linearly, so predictions stay inside 0 to 1 and form an S-curve. It is fitted by maximum likelihood and can fail to converge when a predictor perfectly separates the outcome.",
+    "The raw coefficient is in log-odds, and exp(β) is the odds ratio. The null value for an odds ratio is 1, so an interval is significant when it excludes 1. An odds ratio is not a risk ratio, and for common outcomes it overstates the change in probability. Say 'odds are higher' and **report predicted probabilities** where you can."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Probability p",
+      "sub": "0 to 1"
+     },
+     {
+      "label": "Odds",
+      "sub": "p ÷ (1 − p)"
+     },
+     {
+      "label": "Log-odds",
+      "sub": "ln of the odds"
+     },
+     {
+      "label": "Coefficient β",
+      "sub": "change in log-odds"
+     },
+     {
+      "label": "Odds ratio",
+      "sub": "exp(β)"
+     }
+    ],
+    "caption": "the translation chain"
+   },
+   "key_terms": [
+    {
+     "term": "Odds",
+     "meaning": "Probability divided by one minus probability."
+    },
+    {
+     "term": "Log-odds",
+     "meaning": "The natural log of the odds, also called the logit."
+    },
+    {
+     "term": "Odds ratio",
+     "meaning": "exp(β), the multiplicative effect on the odds."
+    },
+    {
+     "term": "Marginal effect",
+     "meaning": "Change in probability for a change in a predictor."
+    },
+    {
+     "term": "Pseudo-R²",
+     "meaning": "A fit measure that is not a share of variance explained."
+    }
+   ],
+   "worked_example": {
+    "title": "An odds ratio of 2 at a probability of 0.5",
+    "setup": "Illustrative baseline probability 0.5 and an odds ratio of 2, as in slide 73.",
+    "steps": [
+     "Baseline odds: 0.5 ÷ 0.5 = 1.",
+     "Odds after the effect: 1 × 2 = 2.",
+     "New probability: 2 ÷ 3 = 0.67.",
+     "Risk ratio: 0.667 ÷ 0.5 = 1.33."
+    ],
+    "answer": "The odds double and the probability rises by a third, a risk ratio of about 1.33."
+   },
+   "mistakes": [
+    "Reading the raw logistic coefficient as a probability.",
+    "Testing an odds-ratio interval against zero. The null value is 1.",
+    "Writing '85% more likely' for an odds ratio of 1.85.",
+    "Plotting odds ratios on a linear axis. An OR of 2 and one of 0.5 then look unequal."
+   ],
+   "recall": [
+    {
+     "q": "What scale are logistic coefficients on?",
+     "a": "Log-odds."
+    },
+    {
+     "q": "What is a probability of 0.8 in odds and log-odds?",
+     "a": "Odds of 4 and log-odds of about 1.39."
+    },
+    {
+     "q": "Why do some applied economists use the linear probability model?",
+     "a": "Its coefficients are direct marginal effects on the probability."
+    },
+    {
+     "q": "What does an OR of 0.62 mean?",
+     "a": "The odds are about 38% lower."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Data Reduction: PCA & Factor Analysis",
+   "big_idea": "Many correlated indicators of one concept can become **one summary score**, and the cost is information you should report.",
+   "in_plain_words": [
+    "Twenty asset variables proxy one idea, living standards. Putting all of them in is messy and collinear, picking one is arbitrary and counting them treats a fridge and a fan alike. PCA re-expresses them as uncorrelated components ordered by variance, and the first usually captures the shared dimension. Standardise before running it.",
+    "The DHS and NFHS wealth index is the first component of asset, housing and utility variables, cut into quintiles. It measures relative standing within a sample. Factor analysis posits something unmeasured that caused the items, and PCA only summarises what was measured. Always **report the variance the first component keeps**, because it shows how much was discarded."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Wealth index",
+    "spokes": [
+     {
+      "label": "Inputs",
+      "sub": "assets, housing, utilities"
+     },
+     {
+      "label": "Method",
+      "sub": "first principal component"
+     },
+     {
+      "label": "Output",
+      "sub": "a score per household"
+     },
+     {
+      "label": "Reported as",
+      "sub": "five equal quintiles"
+     },
+     {
+      "label": "Known limitation",
+      "sub": "urban-skewed asset basket"
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "PCA",
+     "meaning": "Re-expresses correlated variables as uncorrelated components."
+    },
+    {
+     "term": "Scree plot",
+     "meaning": "Variance explained by each component."
+    },
+    {
+     "term": "Wealth quintile",
+     "meaning": "A fifth of households by wealth score."
+    },
+    {
+     "term": "Factor analysis",
+     "meaning": "Models latent factors that cause the variables."
+    },
+    {
+     "term": "Variance retained",
+     "meaning": "The share of variation the kept components hold."
+    }
+   ],
+   "worked_example": {
+    "title": "How much did the index discard?",
+    "setup": "Illustrative: 1,000 households are split into wealth quintiles, and the first component explains 48% of the variance.",
+    "steps": [
+     "Households per quintile: 1,000 ÷ 5 = 200.",
+     "Variance discarded at 48% kept: 100 − 48 = 52 percent.",
+     "If the first component kept 30%, 100 − 30 = 70 percent is discarded, and calling it wealth is a stretch.",
+     "If it kept 60%, 100 − 60 = 40 percent is discarded, and the single-dimension story is defensible."
+    ],
+    "answer": "200 households per quintile, and 52% of the variance discarded at 48% kept."
+   },
+   "mistakes": [
+    "Saying PCA finds latent causes. That is factor analysis.",
+    "Running PCA on unstandardised variables, so the largest units dominate.",
+    "Comparing wealth quintiles across countries. The index is relative.",
+    "Cutting a continuous score into bands when the score itself is available."
+   ],
+   "recall": [
+    {
+     "q": "What is the first principal component of asset variables used as?",
+     "a": "The wealth score in the DHS and NFHS wealth index."
+    },
+    {
+     "q": "Why are quintiles relative?",
+     "a": "By construction 20% of households are always in the poorest fifth."
+    },
+    {
+     "q": "What does the elbow rule rest on?",
+     "a": "Convention, with no statistical basis."
+    },
+    {
+     "q": "Is data reduction lossless?",
+     "a": "No."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Pitfalls",
+   "big_idea": "Six traps, **one habit**: decide the model from the causal diagram before opening the data.",
+   "in_plain_words": [
+    "Overfitting fits noise, and stepwise selection invalidates every p-value. Omitted-variable bias contaminates included coefficients, and you can sign it: if Z raises both X and Y, the coefficient on X is too big. Collinearity pulls the other way, since dropping a collinear confounder creates that bias. The diagram resolves the conflict.",
+    "Controlling for a mediator blocks the pathway and understates the effect. Extrapolation predicts beyond your data, and relationships bend at the extremes. Forking paths inflate false findings without bad faith. **Pre-specify**, declare subgroups, fix the outcome, report the range of your predictors and show the specification curve."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Six pitfalls",
+    "children": [
+     {
+      "label": "Fitting the sample too closely",
+      "items": [
+       "Overfitting",
+       "Extrapolation"
+      ]
+     },
+     {
+      "label": "Wrong controls",
+      "items": [
+       "Omitted-variable bias",
+       "Collinearity confusion",
+       "Controlling a mediator"
+      ]
+     },
+     {
+      "label": "Chance findings",
+      "items": [
+       "p-hacking and forking paths"
+      ]
+     }
+    ],
+    "caption": "one habit prevents four of the six"
+   },
+   "key_terms": [
+    {
+     "term": "Overfitting",
+     "meaning": "Fitting noise so the model fails on new data."
+    },
+    {
+     "term": "Omitted-variable bias",
+     "meaning": "Bias from leaving out a real confounder."
+    },
+    {
+     "term": "Collider",
+     "meaning": "A variable caused by two others; controlling for it creates bias."
+    },
+    {
+     "term": "Extrapolation",
+     "meaning": "Predicting outside the range of the data."
+    },
+    {
+     "term": "Forking paths",
+     "meaning": "Many defensible analysis choices, one reported."
+    }
+   ],
+   "worked_example": {
+    "title": "Sign the bias",
+    "setup": "Slide 86 gives a table for an omitted variable Z. Apply it to four cases.",
+    "steps": [
+     "Z raises X and raises Y: the coefficient on X is biased upward.",
+     "Z lowers X and lowers Y: also upward.",
+     "Z raises X and lowers Y: downward.",
+     "Z unrelated to X: no bias, so Z is not a confounder."
+    ],
+    "answer": "Upward, upward, downward and none."
+   },
+   "mistakes": [
+    "Choosing controls by which specification gives the nicer result.",
+    "Dropping a collinear predictor that is a real confounder.",
+    "Controlling for a mediator such as income when estimating education's effect.",
+    "Predicting for a household at ₹5 lakh from a model fitted on ₹5,000 to ₹40,000."
+   ],
+   "recall": [
+    {
+     "q": "What is the rule on controls?",
+     "a": "Control for confounders, never for mediators or things caused by the outcome."
+    },
+    {
+     "q": "What does a held-out sample test?",
+     "a": "Whether the model memorised the sample."
+    },
+    {
+     "q": "What is the guard against p-hacking?",
+     "a": "Pre-specify the model and show all specifications."
+    },
+    {
+     "q": "Which two pitfalls need honesty about the sample?",
+     "a": "Overfitting and extrapolation."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Reporting & Tools",
+   "big_idea": "Think before the software runs, and report so a reader can **judge the uncertainty and the assumptions**.",
+   "in_plain_words": [
+    "The workflow is ask, draw, fit, check, report. The first two need no software and decide whether the rest means anything. Write down the model before fitting it, so later changes are visible decisions.",
+    "A results table shows coefficients with units, intervals, sample size, which controls are included, and weighting and clustering. State the reference category for every dummy. Report diagnostics, including failed ones. For NFHS or DHS work use tools with real survey support, such as Stata's svy prefix or R's survey package, and **keep the analysis as a script**."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Ask",
+      "sub": "a precise question"
+     },
+     {
+      "label": "Draw",
+      "sub": "confounders and mediators"
+     },
+     {
+      "label": "Fit",
+      "sub": "linear or logistic"
+     },
+     {
+      "label": "Check",
+      "sub": "residuals, VIF, fit"
+     },
+     {
+      "label": "Report",
+      "sub": "effects, intervals, caveats"
+     }
+    ],
+    "caption": "the thinking comes before the software"
+   },
+   "key_terms": [
+    {
+     "term": "Reference category",
+     "meaning": "The comparison group for a dummy."
+    },
+    {
+     "term": "Survey weights",
+     "meaning": "Weights that correct for the sampling design."
+    },
+    {
+     "term": "Clustered errors",
+     "meaning": "Standard errors allowing correlation inside clusters."
+    },
+    {
+     "term": "Specification curve",
+     "meaning": "A display of estimates across many specifications."
+    },
+    {
+     "term": "svy:",
+     "meaning": "Stata's prefix for survey-aware estimation."
+    }
+   ],
+   "worked_example": {
+    "title": "What does ₹5,000 more income predict?",
+    "setup": "Use the illustrative income row of slide 95: coefficient 0.03 per ₹1,000, 95% interval 0.01 to 0.05.",
+    "steps": [
+     "Number of ₹1,000 steps: 5,000 ÷ 1,000 = 5.",
+     "Predicted change in HAZ: 0.03 × 5 = 0.15.",
+     "Lower end of the interval: 0.01 × 5 = 0.05.",
+     "Upper end: 0.05 × 5 = 0.25.",
+     "Write it as associated with 0.15 higher HAZ, interval 0.05 to 0.25, holding the other included variables constant."
+    ],
+    "answer": "About 0.15 higher HAZ, with an interval of 0.05 to 0.25."
+   },
+   "mistakes": [
+    "Leaving out weighting and clustering, which tells the reader nothing about whether the standard errors mean anything.",
+    "Reporting a table of stars with no units or intervals.",
+    "Reporting a clean results section with no mention of checks.",
+    "Using a menu-driven sequence that cannot be re-run, checked or corrected."
+   ],
+   "recall": [
+    {
+     "q": "What are the five workflow steps?",
+     "a": "Ask, draw, fit, check, report."
+    },
+    {
+     "q": "Why does the deck recommend writing the model down first?",
+     "a": "Every later deviation becomes a visible decision."
+    },
+    {
+     "q": "Which tools handle survey weights and clusters?",
+     "a": "R's survey package, Python's statsmodels, and Stata's svy commands."
+    },
+    {
+     "q": "Which book does the deck recommend for judgement calls?",
+     "a": "Gelman, Hill and Vehtari, Regression and Other Stories."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "2": "The course moves from one predictor to many, then to fit, assumptions, collinearity, interactions, logistic regression, data reduction, pitfalls and reporting. Read the **partial effect** idea in section 01 first, since every later section reuses it. The examples lean on NFHS and PLFS-style data.",
+  "4": "A bivariate slope answers a narrower question than people read into it. It mixes the effect of X with everything correlated with X. Compute it anyway: **the gap between the bivariate and multivariate coefficient** shows how much of the raw association was confounding.",
+  "5": "Outcomes arrive from many correlated causes at once. Stunting depends on income, schooling, sanitation, diet and birth order together. In the table, **omitting a determinant inflates the coefficients** of the variables correlated with it. Coefficients shrink as controls enter, and that sequence is worth reporting.",
+  "6": "Use the three-condition test for a confounder: Z affects Y, Z affects X, and X does not cause Z. The third is the one people skip, and **it reverses the advice**, because a variable caused by X is a mediator. The clinic example also shows that reverse causality looks identical in a table.",
+  "7": "Walk the table row by row. The bivariate diet coefficient credits diet with income's effect. Each added control narrows the claim, and none reaches a causal one, since unmeasured causes stay outside the model. The honest phrasing is **associated with, among households similar on the measured characteristics**.",
+  "8": "This is the single most important idea in the course: a coefficient is a **partial effect**, net of the other variables. Read the table downward, where each row controls for more and only the randomised intervention controls for everything. Remember that holding constant is arithmetic.",
+  "9": "Control is necessary and insufficient for causal claims. The table lists four unmeasured variables, such as maternal motivation and local prices, that plausibly affect both a predictor and the outcome. **Credible causal claims come from designs**, so controls give a better description and no counterfactual.",
+  "10": "Learn the vocabulary pairs: outcome and Y, predictor and X, coefficient and slope, control, residual. Two warnings from the second table matter. 'Independent' implies nothing about causality, and the **residual holds every omitted cause**. Exogeneity claims that none of it correlates with your predictor.",
+  "11": "A map of what follows: the workhorse model, then reading it correctly, then fit and diagnostics, then interactions, curves and yes/no outcomes, then data reduction, pitfalls and tools. Keep the **partial effect** in mind as the thread running through all of it.",
+  "13": "Everything builds on one line: Y equals an intercept plus slopes times predictors plus error. The table lists four assumptions and how each fails. The fourth, clustering or changing spread, **affects standard errors and leaves coefficients unbiased**. Knowing which failures move the estimate and which move the uncertainty is half of diagnostics.",
+  "14": "Learn the five symbols. The intercept is the prediction when every X is zero, which is often impossible, such as a household with zero adults. The slopes carry the story. **Centring the predictors** makes the intercept the prediction at the sample mean, a real household.",
+  "15": "This HAZ model is the example reused throughout, with illustrative coefficients. Notice that every modelling choice is a claim: HAZ measures chronic nutrition, income is a control, and one 0/1 toilet variable asserts that **shared and private improved toilets have the same effect**.",
+  "16": "With one predictor you fit a line, with two a plane, with more a hyper-plane you cannot draw. That is why residual plots matter: they are the only view of the model's shape that survives into higher dimensions. Added-variable plots restore a **two-dimensional view of a multivariate slope**.",
+  "17": "OLS minimises the sum of squared vertical gaps. Squaring penalises large misses, so outliers pull the line. The slide's warning is that OLS **always returns an answer**, even for data that violate every assumption. Because it treats X as exact, measurement error in X pulls the coefficient toward zero.",
+  "18": "Read each slope as a partial effect. Compare the bivariate and multivariate slope on schooling: a fall from 0.15 to 0.06 when income enters tells the reader **most of the raw association was income**. Report both. If the slope barely moves, say so, since unmeasured controls could still matter.",
+  "19": "The fitted value is the model's guess, and the residual is observed minus fitted. Large positive residuals mean under-prediction. Diagnostics live here: a curve means the wrong form, and clusters mean a missing grouping variable. **Inspect the largest residuals individually**, since they are often data-entry errors.",
+  "20": "Start with the linear model because it stretches a long way: logs and squared terms for curves, interactions for groups, dummies for categories, clustered errors for clustered data. Only binary outcomes **need a different tool**. Even there, the interpretive discipline carries over.",
+  "22": "Use the golden sentence for every slope: a one-unit increase in X is associated with a β-unit change in Y, holding the other variables constant. People drop the third phrase first. **Without it the claim becomes causal by implication.** Say it aloud for each coefficient you report.",
+  "23": "A coefficient is glued to its units. The same relationship gives 0.00003 per rupee, 0.03 per thousand rupees and 3.0 per lakh. Raw coefficients cannot be compared across predictors. **Rescale to a unit the reader can feel**, such as per ₹1,000 or per year of schooling.",
+  "24": "Translate a slope of 0.06 into changes people can picture: one year gives 0.06 and five years about 0.30. A policy-relevant unit, such as completing secondary school, is something a decision-maker can act on. Keep the phrase **compared with otherwise-similar households** attached.",
+  "25": "A dummy codes a category as 0 or 1, and its coefficient is the gap relative to the baseline. Reversing the coding flips the sign and keeps the magnitude. One dummy for a combined category **assumes the categories are equivalent**, which you can test by using separate dummies.",
+  "26": "A variable with k categories needs k minus 1 dummies, and the omitted one is the baseline. Name the baseline whenever you read a dummy. Including all k with an intercept is the **dummy-variable trap**. Pick the baseline deliberately, since every coefficient compares with it.",
+  "27": "Read 0.18 as a gap between otherwise-similar children with and without an improved toilet. Then resist the causal reading: toilets are chosen, and **households that build them differ in unrecorded ways**. The slide notes that the observational association exceeds what sanitation trials found, and that gap is confounding.",
+  "28": "Use unstandardised coefficients for meaning and standardised ones for comparison. Standardised coefficients answer which predictor matters most in this sample, but they lose per-rupee meaning and depend on sample variance. For dummies they are **close to meaningless**, so report those unstandardised.",
+  "29": "Read direction first, then size against what matters for the decision. The scale for HAZ runs from 0.02, negligible, through 0.40, large enough to check for confounding, to 1.0, implausible from one covariate. **Too large is a warning as much as too small.** Build a mental scale for your outcome.",
+  "31": "R² is the share of outcome variation the predictors explain. In social data 0.05 to 0.40 is normal, and a very high value usually signals trouble such as a predictor restating the outcome. **R² measures prediction and says nothing about correctness**: a model at 0.08 can carry an unbiased coefficient.",
+  "32": "Low R² is normal in social data because outcomes have thousands of causes. The slide gives typical ranges: 0.05 to 0.20 for individual behaviour and 0.15 to 0.40 for household outcomes. Aggregating to districts **inflates R² without adding knowledge**. Aim for an honest, well-specified model.",
+  "33": "R² never falls when you add a variable, even random noise, so it fails as a tool for choosing models. With as many predictors as observations it reaches 1. Adjusted R² falls for a useless addition. For real comparison, **test out of sample**.",
+  "34": "Adjusted R² penalises each extra predictor, and AIC, BIC and out-of-sample error are sounder still than raw R². One caution: for causal work the control set comes from the causal story. A falling adjusted R² is **no reason to drop a real confounder**.",
+  "35": "The F-test asks whether all slopes are zero together, and each t-test asks about one slope. Memorise the pattern: **a significant F with no significant t** suggests collinearity. In NFHS-scale data almost any predictors beat nothing, so passing the F-test says little.",
+  "36": "A t-statistic is the coefficient divided by its standard error, and about 2 matches the 5% threshold. Read the table: 0.06 over 0.02 gives about 3. The standard error is the more informative number, so **always report it or the interval** derived from it.",
+  "37": "Prefer intervals to stars. An interval shows direction and precision, while stars show only that the estimate differs from zero. An interval containing zero shows the data are compatible with zero, and often with a large effect either way. **Read the width.**",
+  "38": "The chart shows illustrative coefficients with 95% intervals. The last row of the interval table is the case large samples produce all the time: real, nonzero and too small to fund. Judge the interval against **a threshold that matters** for the decision. Zero is the wrong yardstick.",
+  "39": "With a large sample, even a 0.01 z-score effect becomes significant, so significance says nothing about size. At NFHS scale, nearly everything is significant. Report **effect sizes in units a decision-maker feels**, such as children moved out of stunting, and treat significance as a footnote.",
+  "41": "OLS estimates depend on assumptions, and most checks use residuals. The first row of the table is the one diagnostics cannot check: exogeneity, since omitted confounders leave no signature in residuals. Diagnostics test whether the model is well specified, and **identification needs a research design**.",
+  "42": "Memorise the four: linearity, independence, homoscedasticity and normal residuals. Only linearity threatens the estimate itself. The other three affect uncertainty, which is why corrected and clustered standard errors solve most of what diagnostics find. Normality applies to **residuals only**, with no demand on Y.",
+  "43": "Plot residuals against fitted values. A random cloud means linearity is fine, a curve means add a squared or log term, a fan means heteroscedasticity, and clusters mean a missing grouping variable. The plot takes **one line of code**. A curve left alone shows up as a spurious effect elsewhere.",
+  "44": "Children in one village share water, clinics and shocks, so treating them as independent shrinks standard errors falsely. NFHS and DHS use stratified multi-stage cluster designs. Use survey weights and survey commands. Clustering leaves coefficients unbiased and **makes them look more precise** than they are.",
+  "45": "Heteroscedasticity is a fan in the residuals: spread grows with the fitted value, as with income and spending. Coefficients stay unbiased and the standard errors are wrong. **Heteroscedasticity-corrected standard errors** are cheap and should be close to a default in applied work.",
+  "46": "The chart contrasts an even band with a widening fan. The fan is the most common pattern in development data, because monetary variables have variance that grows with their level. Log Y often fixes the fan and the curve together, and **changes how every coefficient is read**.",
+  "47": "Check normality with a Q–Q plot. Points hugging the diagonal are good, an S-shape means skew, and ends peeling away mean fat tails. Normality matters least of the four, because with a large sample the central limit theorem helps. Still read the tails, since they point to **influential outliers**.",
+  "48": "Run the four diagnostic plots on every model: residual vs fitted, Q–Q, scale–location and influence. The influence plot catches data errors, such as one income in the wrong units. Anscombe's quartet is the standing lesson that **identical fit statistics can hide different shapes**.",
+  "50": "Multicollinearity means predictors overlap with each other. The construct question decides the remedy: two measures of one thing should be combined or one dropped, while two distinct causes that correlate should both stay. High correlation is a problem only when the model **cannot attribute variation** between them.",
+  "51": "Collinearity inflates standard errors and makes signs unstable, and it leaves coefficients unbiased. Prediction and the F-test stay fine. So it matters when you want to interpret one coefficient, which policy work usually does. Remember it as **a precision problem with no bias**.",
+  "52": "Know the four symptoms: high R² and significant F with no significant predictor, flipping coefficients, huge standard errors, and related predictors both included. The second row is ambiguous, since a flip can mean collinearity or a real confounder. **Draw the diagram** before deciding which.",
+  "53": "VIF measures how much a coefficient's variance is inflated by overlap, found by regressing each predictor on the others. The thresholds are conventions. A VIF of 12 on a control you do not interpret is harmless, and a **VIF of 6 on your variable of interest** may not be. Centre before building squares.",
+  "54": "The chart shows income and expenditure both past the 5 to 10 rule of thumb, because they measure the same wealth. Apply the threshold only to coefficients you intend to read. For squared or interaction terms, **centre the base variable first**.",
+  "55": "Five remedies: drop one, combine into an index, centre before squaring, get more data, accept it. Choose by the table's 'use when' column. The fourth remedy is under-used: **report the wide interval**, which accurately describes a model that cannot separate overlapping predictors.",
+  "56": "Do not fix collinearity you need. Education and income are distinct and each confounds, so dropping one trades a precision problem for a bias problem. Wide intervals are visible and honest. **Omitted-variable bias is invisible.** Let your question decide what stays.",
+  "57": "A one-breath recap: overlap between predictors, inflated standard errors with unbiased coefficients, VIF and unstable signs as diagnostics, three remedies. The trap is in the last row: dropping a predictor always lowers the VIF, and if it was a confounder you swapped **imprecision for bias**.",
+  "59": "Plain regression assumes the same effect for everyone, constant at every level, and additive. All three can be tested inside the framework. Use interactions for the first, transformations for the second and both for the third. Say which you assumed, because testing costs power and many analysts **assume without saying so**.",
+  "60": "An interaction term multiplies two variables. In the model, β3 shows whether schooling's payoff differs by toilet access. A positive β3 and a negative one imply opposite policy conclusions. Interactions need more data than main effects, so **a null interaction is often uninformative**.",
+  "61": "The chart shows two slopes from one model: schooling helps more where sanitation exists. Without the interaction term you would force the lines to be parallel. Show interactions as **predicted-value plots**, since two fitted lines communicate the finding and the product term does not.",
+  "62": "With an interaction, the coefficient on X1 alone is the effect of X1 when X2 is zero, and the full effect is β1 plus β3 times X2. If X2 is never zero, that is an extrapolation. **Centring X2** makes the main effect the effect at the mean. Show the result as a plot.",
+  "63": "A squared term bends the line for diminishing returns or U-shapes. Centre X before squaring, or X and X² are almost perfectly correlated and VIFs explode. Do not read the coefficient on X alone, since the marginal effect is β1 plus 2β2X. **Stop at a quadratic.**",
+  "64": "Logging a right-skewed variable such as income compresses the tail, often straightens a curve and often cures the residual fan. It changes the reading to percentage terms. In a log–log model the coefficient is an **elasticity**. Decide explicitly what happens to zero values, which logs drop.",
+  "65": "Learn the four readings: level–level gives β units, level–log gives β/100 per 1% rise, log–level gives about 100β% per unit, log–log gives β% per 1%. The log-Y approximation fails above about 0.1: for β of 0.5 the true change is roughly 65%, so use **exp(β) − 1**.",
+  "67": "A line fitted to a 0/1 outcome can predict probabilities below 0 or above 1. The linear probability model still has defenders because its coefficients are probability changes, easy to communicate. The common compromise is to report the **LPM for interpretation and logistic as a robustness check**.",
+  "68": "Logistic regression models the log-odds linearly, which keeps predictions inside 0 to 1 and produces an S-curve. It is fitted by maximum likelihood and can fail to converge, usually through perfect separation. That signals a feature of the data, so **look at your predictors** first.",
+  "69": "Convert between the three scales: probability, odds equal to p over 1 minus p, and log-odds equal to ln of the odds. A probability of 0.8 is odds of 4 and log-odds of about 1.39. Odds grow explosively near 1, so **a doubling of the odds means different things** at p = 0.1 and p = 0.8.",
+  "70": "The raw logistic coefficient is in log-odds. Exponentiate it to get an odds ratio, and never read the raw coefficient as a probability. For non-technical readers, report predicted probabilities or average marginal effects: **'62% versus 41%' needs no explanation**.",
+  "71": "Odds ratios multiply, so the null value is 1. An OR of 1.5 means odds 50% higher, and 0.7 means odds 30% lower. A confidence interval is significant when it **excludes 1**. Plot odds ratios on a log axis, because intervals are asymmetric on the natural scale.",
+  "72": "Read across the line at OR = 1, never at zero. Urban residence and wealth raise the odds of facility delivery, and a high birth order lowers them by about 38%. All figures are illustrative. On a log scale, **an OR of 2 and an OR of 0.5** look equal and opposite, as they are.",
+  "73": "An odds ratio of 2 and a risk ratio of 2 are different claims. For rare outcomes the OR is close to the risk ratio, and for common ones such as facility delivery it overstates the change. Say 'the odds are 85% higher'. **Report predicted probabilities** for audiences who need probabilities.",
+  "74": "Logistic regression is the same thinking on a new scale. Coefficients are still partial effects, intervals still matter, and dummies, interactions and multicollinearity behave as before. What changes is the scale, the null value of 1, and fit measured by **pseudo-R², classification and AUC**. Marginal effects translate results back to probabilities.",
+  "76": "Twenty asset variables are one idea, living standards, so putting them all in is messy and collinear. The table weighs the options. Counting assets is more defensible than it looks, because it is transparent. PCA weights depend on your data, so **an index from one survey is not comparable to another**.",
+  "77": "PCA re-expresses correlated variables as uncorrelated components ordered by variance. The first captures the largest shared share. PCA is blind to your outcome, and you should **standardise first**, or the variable with the biggest units dominates the first component.",
+  "78": "Read a scree plot for how many components to keep. One dominant component signals a single dimension, such as wealth underlying assets. The elbow rule is a convention with no statistical basis, so **report the variance shares** and let the reader judge.",
+  "79": "The DHS and NFHS wealth index is the first principal component of asset, housing and utility variables, cut into five quintiles. It measures **relative standing within a sample**, and the poorest quintile in one country differs from another's. Its asset basket skews urban, so rural households cluster in lower quintiles partly by construction.",
+  "80": "The chart shows a continuous score split into quintiles, each holding about 20% by construction. So 20% are always in the poorest quintile, even where absolute poverty has fallen. Cutting a score into bands also **discards information**, so use the underlying score where available.",
+  "81": "Keep PCA and factor analysis apart. PCA summarises what you measured, and factor analysis posits something unmeasured that produced it. For a wealth index of observable assets use PCA. For a theoretical construct such as empowerment or an attitude, **factor analysis** is the right framework.",
+  "82": "Reduction has costs. Components are hard to name, PCA is scale-sensitive, an asset basket biases the index and compression discards information. The first component is usually interpretable and the rest usually are not. Report its variance share: **30% makes 'wealth' a stretch and 60% makes it defensible**.",
+  "83": "Self-test with the true-or-false table. The first row is the most common misstatement: PCA finding latent causes is factor analysis. Always report variance kept: **'the first component explains 48%'** tells a reader exactly how much was discarded.",
+  "85": "Overfitting means a model that fits noise and fails on the next dataset. Watch for many predictors relative to observations and a dazzling in-sample R². Stepwise selection is the most common route, and choosing predictors by p-value **invalidates every p-value** in the final model. Hold out 20% before modelling.",
+  "86": "Omitted-variable bias is the dangerous pitfall because it biases coefficients. You can sign it without measuring Z: if Z raises both X and Y, the coefficient on X is too big. A **signed bound** is often enough: if the upward-biased estimate is already too small to fund, the direction settles the question.",
+  "87": "Collinearity and omitted variables pull in opposite directions. Dropping a collinear predictor cures imprecision and, for a real confounder, creates bias. The causal diagram resolves it: keep the confounder, drop duplicates, drop mediators. Ten minutes with a pen **settles most control-set decisions**.",
+  "88": "A mediator sits on the path from X to Y, while a confounder causes both. The same variable can be either, depending on which effect you estimate. Income is a mediator for education and a confounder for diet. Ask which comes first in time and **which causes which**.",
+  "89": "Controlling for a mediator blocks the pathway and understates the total effect. The rule: control for confounders, never for mediators or things caused by the outcome. Colliders also create bias. Two of the four roles make things worse, so **'control for everything available' is no strategy**.",
+  "90": "A model fitted on ₹5,000 to ₹40,000 a month says nothing reliable about ₹5 lakh. Extrapolation assumes the line continues, and social relationships bend at the extremes. **Report the range of your predictors** alongside results so readers know where the model applies.",
+  "91": "Forking paths means trying specifications until something crosses p < 0.05. It requires no bad faith: reasonable choices informed by the data inflate false findings equally. Guards: pre-specify, declare subgroups, fix the outcome, choose controls from the diagram. A **specification curve** shows all estimates.",
+  "92": "Six traps, one habit. Four of the six are prevented by deciding the model from the causal diagram before opening the data. The other two, overfitting and extrapolation, need honesty about what the sample contains. Use the **guard column** as a pre-submission checklist.",
+  "94": "Follow the five steps in order: ask, draw, fit, check, report. The first two involve no software and decide whether the rest means anything. Write down the model you intend to fit, so that every later change is **a visible decision**.",
+  "95": "A results table shows coefficients with units, intervals, sample size, the controls included, and weighting and clustering. The last row is routinely omitted with NFHS data. In the example, income is per ₹1,000. State the **reference category for every dummy**.",
+  "96": "These habits earn trust: question and model first, effect sizes with units, intervals with n and weights, diagnostics reported, and 'associated with' language. Report a failed diagnostic and what you did about it. **State limitations before a reader finds them.**",
+  "97": "Choose a tool that handles survey weights and clustered standard errors: R's survey package, Python's statsmodels, or Stata's svy commands. Naive commands do not. Whatever you pick, **keep the analysis as a script**, because a menu-driven sequence cannot be re-run or checked.",
+  "98": "A short reading list. Gelman, Hill and Vehtari is the place to start if you already fit models, because it covers judgement calls such as controls and reporting. Read the **DHS wealth-index methodology** paper directly if you use NFHS data. Pair the deck with the named 101 courses.",
+  "99": "Five takeaways: partial effects, adjusted R² and intervals, residual plots, log-odds and odds ratios, and controlling confounders. The last produces wrong conclusions most often, because **controlling a mediator can shrink a real effect** to nothing and look like careful work. Draw the causal story first."
+ }
+}

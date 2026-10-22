@@ -1,0 +1,1157 @@
+{
+ "slug": "bi-analysis",
+ "intro": "Read the deck for the facts and these notes for the thinking. Each note explains a slide, tells you what to remember and warns you where people slip. Work the exercises in pencil, check yourself with the questions, and write your own notes in the space beside mine.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "What Bivariate Analysis Is",
+   "big_idea": "Bivariate analysis asks how two variables relate: **which way, how strongly, and could it be chance?** A relationship it finds is a clue.",
+   "in_plain_words": [
+    "Univariate analysis describes one variable at a time, and bivariate analysis is the next step: do these two move together? Programme questions live here. Name an explanatory variable X and a response variable Y, but remember the labels are a decision you make and prove nothing about cause. Four questions get conflated: direction, strength, size and chance.",
+    "Bivariate analysis can show that two things move together and that a difference exceeds noise. It cannot show that one causes the other, because wealth, education and location correlate with nearly everything. The relationship is a clue that tells you where to look next. The rest of the course builds tools to read the clue, and the checks that stop you overclaiming."
+   ],
+   "diagram": {
+    "type": "stack",
+    "levels": [
+     {
+      "label": "Multivariate",
+      "sub": "hold other things constant"
+     },
+     {
+      "label": "Bivariate",
+      "sub": "relate two variables"
+     },
+     {
+      "label": "Univariate",
+      "sub": "describe one variable"
+     }
+    ],
+    "caption": "the analysis ladder; this course lives on the middle rung"
+   },
+   "key_terms": [
+    {
+     "term": "Bivariate analysis",
+     "meaning": "The study of how two variables move together, how strongly and in which direction."
+    },
+    {
+     "term": "Explanatory variable (X)",
+     "meaning": "The variable you treat as doing the explaining or predicting."
+    },
+    {
+     "term": "Response variable (Y)",
+     "meaning": "The outcome you want to understand or predict."
+    },
+    {
+     "term": "Effect size",
+     "meaning": "How big the relationship is, in real units."
+    },
+    {
+     "term": "Confounder",
+     "meaning": "A third variable linked to both X and Y that distorts the relationship."
+    }
+   ],
+   "worked_example": {
+    "title": "Place the question on the ladder",
+    "setup": "Use the deck's own questions, and then name X and Y for the bivariate one.",
+    "steps": [
+     "'What is median household income?' It describes one variable: univariate.",
+     "'Does income differ between migrant and non-migrant households?' It relates two variables: bivariate. Migrant status is X and income is Y.",
+     "'Does the difference hold once wealth and education are held constant?' It uses many variables: multivariate.",
+     "Remember the labels are a decision. Swapping X and Y gives a line too, and the software has no opinion about which story is believable."
+    ],
+    "answer": "Univariate, bivariate, multivariate. Only the second belongs to this course."
+   },
+   "mistakes": [
+    "Treating naming X and Y as proof that X causes Y. It only states which one you treat as the outcome.",
+    "Skipping the univariate step. Impossible values, spikes at zero and missingness would have changed everything downstream.",
+    "Reporting 'significantly lower' alone. It answers one of the four questions and leaves the reader unable to judge the other three.",
+    "Treating a bivariate relationship as a verdict. It is a clue about where to look next."
+   ],
+   "recall": [
+    {
+     "q": "What does bivariate analysis study?",
+     "a": "Whether two variables move together, how strongly, and in what direction."
+    },
+    {
+     "q": "Which four questions are constantly conflated?",
+     "a": "Which way, how strong, how big in real units, and could it be chance."
+    },
+    {
+     "q": "Which tool answers 'could it be chance?'",
+     "a": "The p-value or the confidence interval."
+    },
+    {
+     "q": "What can bivariate analysis not show on its own?",
+     "a": "That one variable causes the other."
+    },
+    {
+     "q": "Which two sections does the deck say change practice?",
+     "a": "Sections 10 and 11, on pitfalls and reporting."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Choosing a Method by Variable Type",
+   "big_idea": "Classify both variables first and **the method chooses itself.** Most confusion about which test is confusion about variable types.",
+   "in_plain_words": [
+    "Each variable is categorical or numeric. Ordinal categories such as wealth quintiles are ordered with unequal gaps, so treating them as categorical is always defensible and treating them as numeric only sometimes. The pair of types gives the method: two categories use a cross-tab and chi-square, a group and a number use means and a t-test or ANOVA, and two numbers use a scatter, correlation and regression.",
+    "Every row of the decision table starts with a picture. For a group and a number, report the mean or median, N, spread and difference in units, and use medians for skewed variables. For two numbers, plot first and compute r only if the shape is roughly linear. A yes/no outcome with a numeric predictor needs logistic regression, which this deck does not cover."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Types of your two variables",
+    "children": [
+     {
+      "label": "Category × category",
+      "items": [
+       "Cross-tab with row %",
+       "Chi-square test"
+      ]
+     },
+     {
+      "label": "Group × number",
+      "items": [
+       "Box plots and group means",
+       "t-test, or ANOVA for 3+ groups"
+      ]
+     },
+     {
+      "label": "Number × number",
+      "items": [
+       "Scatter plot first",
+       "Correlation, then regression"
+      ]
+     }
+    ],
+    "caption": "the decision table in one picture"
+   },
+   "key_terms": [
+    {
+     "term": "Categorical",
+     "meaning": "Labels or groups, including ordered categories such as wealth quintile."
+    },
+    {
+     "term": "Numeric",
+     "meaning": "Counts and measurements that you can meaningfully average."
+    },
+    {
+     "term": "Ordinal",
+     "meaning": "Ordered categories with unequal gaps."
+    },
+    {
+     "term": "Binary",
+     "meaning": "A yes/no variable, the commonest outcome in this work."
+    },
+    {
+     "term": "Decision table",
+     "meaning": "Method chosen by the types of X and Y."
+    }
+   ],
+   "worked_example": {
+    "title": "Pick the method for five pairs",
+    "setup": "Classify X and Y, then name the first method from the decision table.",
+    "steps": [
+     "Caste group × has a toilet (yes/no): category × category. Cross-tab with row %, then chi-square.",
+     "Trained or not × yield: two groups × number. Box plots, difference in means, t-test.",
+     "Block (five blocks) × test score: three or more groups × number. Box plots, then ANOVA and pairwise tests.",
+     "Distance in km × days attended: number × number. Scatter, correlation, simple regression.",
+     "Distance in km × delivered in a facility (yes/no): number × binary. Logistic regression, beyond this deck, so seek help."
+    ],
+    "answer": "Chi-square, t-test, ANOVA, correlation or regression, and a signal to seek help."
+   },
+   "mistakes": [
+    "Choosing a fancy test first and hunting for variables to feed it. Start from the real question.",
+    "Recoding a variable so a familiar test runs. Collapsing five categories into two throws away information.",
+    "Treating an ordinal variable as numeric without thinking. Its gaps are not equal.",
+    "Computing r before plotting. The number then frames how you read the picture."
+   ],
+   "recall": [
+    {
+     "q": "What two types does the decision table use?",
+     "a": "Categorical and numeric."
+    },
+    {
+     "q": "Which method fits a categorical X with three or more groups and a numeric Y?",
+     "a": "One-way ANOVA."
+    },
+    {
+     "q": "Why use the median for income?",
+     "a": "Income, expenditure and landholding are skewed, so the median is more honest than the mean."
+    },
+    {
+     "q": "Who is quoted on approximate answers to the right question?",
+     "a": "John Tukey."
+    },
+    {
+     "q": "What should you write before opening the software?",
+     "a": "The question, in one sentence."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Cross-Tabulation & Contingency Tables",
+   "big_idea": "Percentage in the direction of the cause: **put X in the rows, make each row 100%,** and compare down a column.",
+   "in_plain_words": [
+    "A cross-tab counts cases in each combination of two categories. The marginals carry the context, and cells with fewer than about five expected cases make chi-square unreliable. Raw counts mislead when groups differ in size, as 600 rural and 400 urban households do. Percentages make the table comparable, but the direction you percentage in decides which question you answer.",
+    "Row percentages answer 'of rural households, what share have a toilet?' (53% against 85% urban). Column percentages answer 'of households without a toilet, what share are rural?' (82%). The rule is to percentage within categories of the explanatory variable and to say so in the heading. Report the percentage-point gap with both percentages, because ratios and relative changes can be used to sound larger."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Put X in the rows",
+      "sub": "the presumed cause"
+     },
+     {
+      "label": "Percentage each row",
+      "sub": "so each row sums to 100"
+     },
+     {
+      "label": "Compare down a column",
+      "sub": "the same Y across rows"
+     }
+    ],
+    "caption": "the rule for percentaging a cross-tab"
+   },
+   "key_terms": [
+    {
+     "term": "Cross-tabulation",
+     "meaning": "A table counting cases in each combination of two categorical variables."
+    },
+    {
+     "term": "Marginals",
+     "meaning": "Row and column totals for each variable on its own."
+    },
+    {
+     "term": "Row percentage",
+     "meaning": "Percent within each row; each row adds to 100%."
+    },
+    {
+     "term": "Column percentage",
+     "meaning": "Percent within each column; each column adds to 100%."
+    },
+    {
+     "term": "Percentage-point gap",
+     "meaning": "The simple difference between two percentages."
+    }
+   ],
+   "worked_example": {
+    "title": "Percentage the toilet table both ways",
+    "setup": "Illustrative counts from the deck: rural 320 with a toilet and 280 without; urban 340 with and 60 without.",
+    "steps": [
+     "Rural row: 320 ÷ 600 = 53% have a toilet.",
+     "Urban row: 340 ÷ 400 = 85% have a toilet.",
+     "Gap: 85 − 53 = 32 percentage points, urban higher.",
+     "Column view of households without a toilet: 280 ÷ 340 = 82% are rural. This is a different question.",
+     "Write the direction in the table heading: percentages within location."
+    ],
+    "answer": "A 32-point gap, urban over rural. The 82% answers another question and should not replace it."
+   },
+   "mistakes": [
+    "Percentaging the wrong way, which reads the relationship backwards.",
+    "Publishing percentages without counts. A 67% uptake means different things for 300 households and for three.",
+    "Reporting only the largest-sounding framing of a gap. Give the point gap and both percentages.",
+    "Ignoring cells with fewer than about five expected cases. The table still prints normal-looking percentages."
+   ],
+   "recall": [
+    {
+     "q": "What does a row percentage answer in the toilet table?",
+     "a": "Of rural (or urban) households, what share have a toilet."
+    },
+    {
+     "q": "Which direction does the rule say to percentage in?",
+     "a": "Within categories of the explanatory variable."
+    },
+    {
+     "q": "What is the gap between 85% and 53%?",
+     "a": "32 percentage points."
+    },
+    {
+     "q": "What format does the deck suggest for a cell?",
+     "a": "Percentage with the count, such as 62.4% (n=187)."
+    },
+    {
+     "q": "For 62% against 48%, what are the three ways to express it?",
+     "a": "A 14-point gap, 1.3 times as likely, and 29% higher."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Visualising Relationships",
+   "big_idea": "Plot first. A picture shows **curves, clusters, outliers and ceilings** that a single number hides.",
+   "in_plain_words": [
+    "Every row of the plot-first table gives a plausible-looking number that is wrong. A curve makes r near zero, one extreme point makes r look strong, two clusters put a line through empty space, and a ceiling distorts the ends. Match the chart to the types: scatter for two numbers, box plots or grouped bars for a group and a number, stacked bars for two categories.",
+    "Read a scatter by asking about shape, tightness, outliers, changing spread and the unit. A box plot shows five numbers where a bar shows one, so state the whisker rule. Honest charts start bars at zero, label units, show N and keep causation out of the title. With fewer than about twenty points per group, show the points."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Pick the chart",
+    "spokes": [
+     {
+      "label": "Scatter plot",
+      "sub": "number × number"
+     },
+     {
+      "label": "Box plot by group",
+      "sub": "group × number"
+     },
+     {
+      "label": "Points for small N",
+      "sub": "under about 20 per group"
+     },
+     {
+      "label": "Grouped bars",
+      "sub": "mean per group, with spread"
+     },
+     {
+      "label": "Stacked or grouped bars",
+      "sub": "category × category"
+     }
+    ],
+    "caption": "match the chart to the pair of variable types"
+   },
+   "key_terms": [
+    {
+     "term": "Scatter plot",
+     "meaning": "X on the horizontal axis, Y on the vertical, one dot per case."
+    },
+    {
+     "term": "Box plot",
+     "meaning": "Shows median, middle 50%, range and outliers for each group."
+    },
+    {
+     "term": "Overplotting",
+     "meaning": "Thousands of points hiding density; fix with transparency or hexbins."
+    },
+    {
+     "term": "Whisker rule",
+     "meaning": "The stated convention for which points count as outliers, such as 1.5×IQR."
+    },
+    {
+     "term": "Honest chart",
+     "meaning": "Zero-based bars, labelled units, N shown, source noted, no causal title."
+    }
+   ],
+   "worked_example": {
+    "title": "Choose the chart and the title",
+    "setup": "Use the deck's table to pick a chart for each pair, then fix one title.",
+    "steps": [
+     "Years of schooling × monthly earnings is number × number: use a scatter, and check shape and outliers.",
+     "Treatment or control × test score with only 12 children per group: show the raw points, since the deck advises points below about twenty per group, or add a box plot.",
+     "Caste group × scheme use (yes/no) is category × category: use grouped or stacked bars, and avoid pies.",
+     "A title 'Training raises yields' claims a cause. Change it to 'Yields by training status'."
+    ],
+    "answer": "Scatter, points or box plot, grouped bars, and a neutral title."
+   },
+   "mistakes": [
+    "Using a bar of group means with no spread. It conceals the spread, the N and the outliers.",
+    "Computing r on a curved relationship. The software gives no warning.",
+    "Truncating a bar axis. It exaggerates a group gap.",
+    "Reading a scatter of state averages as a statement about people. Put the unit in the title."
+   ],
+   "recall": [
+    {
+     "q": "Which chart suits a numeric × numeric pair?",
+     "a": "A scatter plot."
+    },
+    {
+     "q": "What does the box in a box plot cover?",
+     "a": "The middle 50% of the data, from Q1 to Q3."
+    },
+    {
+     "q": "When should you show the points instead of a box?",
+     "a": "With fewer than about twenty points per group."
+    },
+    {
+     "q": "What should a bivariate chart title avoid?",
+     "a": "Implying causation."
+    },
+    {
+     "q": "Which four chart features can the statistic hide?",
+     "a": "A curve, one extreme point, two clusters, and a ceiling or floor."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Correlation",
+   "big_idea": "r summarises the **direction and tightness** of a straight-line relationship from −1 to +1, and says nothing about steepness or cause.",
+   "in_plain_words": [
+    "Pearson's r measures only the linear component of a relationship, so a curve can give a near-zero r. The sign gives direction and the distance from zero gives strength, so −0.8 and +0.8 are equally strong. Report r with N and the scatter, and use a slope when the question is how much.",
+    "Spearman's rho is Pearson on ranks. Use it for ordinal and skewed data and when outliers or monotonic curves are present, accepting that ranking discards magnitude. Run both and look into any sharp disagreement. Strength and significance differ: with a large N a tiny r can be significant. Squaring r gives R², the share of variation shared, and deflates moderate correlations."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Pearson r",
+     "items": [
+      "Linear association",
+      "Numeric, roughly symmetric data",
+      "One outlier can swing it"
+     ]
+    },
+    "right": {
+     "title": "Spearman rho",
+     "items": [
+      "Monotonic (rank) association",
+      "Ordinal or skewed data",
+      "Uses ranks, so outliers matter less"
+     ]
+    },
+    "vs": "vs",
+    "caption": "run both; a sharp disagreement is a diagnostic"
+   },
+   "key_terms": [
+    {
+     "term": "Correlation coefficient r",
+     "meaning": "One number for direction and tightness of a straight-line relationship."
+    },
+    {
+     "term": "Spearman rho",
+     "meaning": "Pearson's correlation computed on the ranks of the data."
+    },
+    {
+     "term": "Monotonic",
+     "meaning": "Moving consistently in one direction, though not necessarily in a straight line."
+    },
+    {
+     "term": "R²",
+     "meaning": "r squared: the share of variation in one variable accounted for by the other."
+    },
+    {
+     "term": "Effect size",
+     "meaning": "The practical magnitude, as against the p-value's evidence of non-zero."
+    }
+   ],
+   "worked_example": {
+    "title": "Pick the correlation and square it",
+    "setup": "Illustrative cases, then use r² as the corrective.",
+    "steps": [
+     "Wealth quintile against a score: the variable is ordinal, so use Spearman.",
+     "Income against landholding with one very large district: skewed with an outlier, so compute Pearson and Spearman and compare.",
+     "r = 0.5 gives r² = 0.5 × 0.5 = 0.25: a quarter of the variation, though 0.5 sounds like half.",
+     "r = 0.7 gives r² = 0.7 × 0.7 = 0.49.",
+     "N = 20,000 with r = 0.03: significant and tiny, so report the size as well as the star."
+    ],
+    "answer": "Spearman, both, 25%, 49%, and size reported with significance."
+   },
+   "mistakes": [
+    "Reading r as steepness. It measures scatter around a line.",
+    "Choosing between Pearson and Spearman after seeing which is larger. Decide by variable type and shape.",
+    "Calling a non-significant result in a small sample 'no association'. It is an absence of evidence.",
+    "Treating an r above about 0.9 in survey data as a triumph. The variables often measure the same thing."
+   ],
+   "recall": [
+    {
+     "q": "What range does r take?",
+     "a": "From −1 to +1."
+    },
+    {
+     "q": "Does Pearson's r detect a U-shaped relationship?",
+     "a": "No; it can be near zero even when the variables are tightly related."
+    },
+    {
+     "q": "When should you use Spearman?",
+     "a": "For ordinal data, skewed data, outliers, or a monotonic but curved relationship."
+    },
+    {
+     "q": "What is R² when r = 0.9?",
+     "a": "0.81, or 81% shared variation."
+    },
+    {
+     "q": "Why does 'significant correlation' say little in a big dataset?",
+     "a": "With a large enough N, almost any correlation becomes significant."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Comparing Two Groups",
+   "big_idea": "A t statistic is **signal over noise.** A gap convinces when it is big, the groups are tight, and the samples are large.",
+   "in_plain_words": [
+    "For a two-valued X and a numeric Y, split the data, compute each group's mean and ask whether the gap exceeds chance. First check how the groups formed, N in each, the distribution and independence. Randomly assigned groups support a causal reading, while self-selected ones differ in more than the label. Clustered samples make a standard t-test overstate precision.",
+    "The t statistic divides the difference in means by its uncertainty. A p-value is the probability of data this extreme if there were no real difference, which is not the probability that the effect is real or a measure of importance. Always report effect size in units with an interval. Welch's test is a sensible default, and a paired test fits before-after data."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Difference in means",
+      "hint": "the signal"
+     },
+     {
+      "op": "÷"
+     },
+     {
+      "t": "Uncertainty",
+      "hint": "the noise"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "t statistic",
+      "hint": "bigger means more convincing"
+     }
+    ],
+    "note": "a bigger gap, tighter groups and larger samples all raise t"
+   },
+   "key_terms": [
+    {
+     "term": "t-test",
+     "meaning": "Tests whether a gap between two means exceeds what sampling variation alone gives."
+    },
+    {
+     "term": "p-value",
+     "meaning": "Probability of data this extreme if there were no real difference."
+    },
+    {
+     "term": "Cohen's d",
+     "meaning": "A standardised effect size, useful for comparing across studies."
+    },
+    {
+     "term": "Welch's t-test",
+     "meaning": "A t-test that does not assume equal variances."
+    },
+    {
+     "term": "Paired t-test",
+     "meaning": "For the same people measured before and after."
+    }
+   ],
+   "worked_example": {
+    "title": "The same 7-point gap in two studies",
+    "setup": "Illustrative: control schools average 54 and treatment schools average 61.",
+    "steps": [
+     "The raw gap is 61 − 54 = 7 points. This is the signal.",
+     "Study A has 20 noisy pupils per arm: large spread and a small sample, so t is small and the gap is unconvincing.",
+     "Study B has 2,000 tightly clustered pupils per arm: small noise and a large sample, so t is large.",
+     "In both, report the 7 marks with its confidence interval and N per group.",
+     "Then check whether pupils in the same school are correlated, because clustering makes the p-value too small."
+    ],
+    "answer": "The same 7 marks is weak evidence in study A and compelling in study B."
+   },
+   "mistakes": [
+    "Treating a p-value as the probability that the effect is real. It addresses only whether chance could explain the gap.",
+    "Writing 'no difference' for a small, non-significant result. Write 'no evidence of a difference'.",
+    "Treating 0.049 and 0.051 as categorically different. 0.05 is a convention.",
+    "Running a t-test on households within villages as if they were independent."
+   ],
+   "recall": [
+    {
+     "q": "What does the t statistic measure?",
+     "a": "The difference in means relative to the uncertainty in that difference."
+    },
+    {
+     "q": "Which of the three drivers can you plan for at design stage?",
+     "a": "The size of the sample."
+    },
+    {
+     "q": "What is a good way to state an effect size?",
+     "a": "The raw difference in units with a confidence interval, such as '0.4 kg (95% CI 0.1 to 0.7)'."
+    },
+    {
+     "q": "Which t-test is a sensible default in field data?",
+     "a": "Welch's, which does not assume equal variances."
+    },
+    {
+     "q": "What does a confidence interval from −5 to 12 say?",
+     "a": "We do not know."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Comparing Several Groups (ANOVA)",
+   "big_idea": "One overall test first, then a search for which pair: **ANOVA says there is a difference somewhere and leaves 'where' open.**",
+   "in_plain_words": [
+    "With five groups there are ten pairwise comparisons, and at 5% each the chance of at least one false positive is around 40%. ANOVA asks one overall question at a controlled error rate. It compares between-group variation, the signal, with within-group variation, the noise, and the F ratio is their quotient.",
+    "A significant ANOVA is a permission slip and not a finding. Follow it with an adjusted post-hoc test such as Tukey or Bonferroni, say how many comparisons you made, and report every group mean with its interval. A steady gradient across ordered groups is more informative than any single pair. Define groups before looking at the outcome, and use Kruskal-Wallis or Welch's ANOVA when assumptions fail."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Overall F test",
+      "sub": "any difference at all?"
+     },
+     {
+      "label": "Significant?",
+      "sub": "if not, stop and say so"
+     },
+     {
+      "label": "Post-hoc test",
+      "sub": "Tukey or Bonferroni"
+     },
+     {
+      "label": "Report",
+      "sub": "all means with intervals"
+     }
+    ],
+    "caption": "the ANOVA sequence; the smoke alarm, then the room"
+   },
+   "key_terms": [
+    {
+     "term": "One-way ANOVA",
+     "meaning": "A single test of whether three or more group means differ."
+    },
+    {
+     "term": "F ratio",
+     "meaning": "Between-group variation divided by within-group variation."
+    },
+    {
+     "term": "Post-hoc test",
+     "meaning": "A follow-up pairwise comparison that adjusts for multiple testing."
+    },
+    {
+     "term": "Kruskal-Wallis",
+     "meaning": "The rank-based alternative for skewed data."
+    },
+    {
+     "term": "Multiple comparisons",
+     "meaning": "The chance of a false positive piling up across many tests."
+    }
+   ],
+   "worked_example": {
+    "title": "Test nutrition scores across five quintiles",
+    "setup": "Illustrative: height-for-age z-scores for the five wealth quintiles rise steadily.",
+    "steps": [
+     "Count the pairs for five groups: 5 × 4 ÷ 2 = 10 pairwise comparisons.",
+     "At 5% each, the chance of at least one false positive is around 40%, so unadjusted pairs mislead.",
+     "Run one-way ANOVA first to ask whether the means differ anywhere.",
+     "If it is significant, run a Tukey or Bonferroni post-hoc test and say how many comparisons were made.",
+     "Report every quintile mean with its interval and describe the ordering of the gradient."
+    ],
+    "answer": "Ten pairs; one overall test first; adjusted follow-ups; all means reported with intervals."
+   },
+   "mistakes": [
+    "Running a t-test on every pair. The chance of a false positive piles up fast.",
+    "Running unadjusted t-tests after a significant ANOVA. It brings back the error rate ANOVA protected.",
+    "Defining groups after inspecting the outcome, such as 'the blocks that did badly'. A difference is guaranteed.",
+    "Treating the F test as the result. The group means and intervals are the result."
+   ],
+   "recall": [
+    {
+     "q": "Why does ANOVA exist?",
+     "a": "To answer 'do the groups differ?' with one test at a controlled error rate."
+    },
+    {
+     "q": "What are the numerator and denominator of F?",
+     "a": "Between-group variation over within-group variation."
+    },
+    {
+     "q": "What does a significant ANOVA not tell you?",
+     "a": "Which groups differ, or by how much."
+    },
+    {
+     "q": "Name two post-hoc tests.",
+     "a": "Tukey and Bonferroni."
+    },
+    {
+     "q": "Which test suits three or more groups with skewed data?",
+     "a": "Kruskal-Wallis."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Association Between Categories (Chi-Square)",
+   "big_idea": "Chi-square asks whether a table differs from what **independence** would predict. It reports that an association exists and is silent on how strong it is.",
+   "in_plain_words": [
+    "Two variables are independent if the distribution of Y is the same within every category of X. Chi-square works from counts, never percentages. It computes an expected count for every cell as row total times column total divided by the grand total, then sums the scaled squared gaps from the observed counts. A large total is evidence against independence.",
+    "The test is silent on strength and on which cell drives the result, so report Cramér's V or the percentage gap and lead with the table. Check that most expected counts reach about 5, and use Fisher's exact test for thin tables. Count each case once, so multiple-response questions break the rules. Risk ratios and odds ratios exist for health work, but odds ratios exaggerate when the outcome is common."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Category × category toolkit",
+    "children": [
+     {
+      "label": "Describe",
+      "items": [
+       "Cross-tab with row percentages"
+      ]
+     },
+     {
+      "label": "Test",
+      "items": [
+       "Chi-square, on counts",
+       "Expected counts of about 5 or more"
+      ]
+     },
+     {
+      "label": "Strength",
+      "items": [
+       "Cramér's V",
+       "The percentage-point gap"
+      ]
+     },
+     {
+      "label": "Thin cells",
+      "items": [
+       "Fisher's exact test"
+      ]
+     }
+    ],
+    "caption": "four jobs, four tools"
+   },
+   "key_terms": [
+    {
+     "term": "Independence",
+     "meaning": "Knowing one variable tells you nothing about the other."
+    },
+    {
+     "term": "Expected count",
+     "meaning": "Row total × column total ÷ grand total for a cell."
+    },
+    {
+     "term": "Cramér's V",
+     "meaning": "A measure of strength of association to report beside the test."
+    },
+    {
+     "term": "Fisher's exact test",
+     "meaning": "The test for small tables with thin cells."
+    },
+    {
+     "term": "Odds ratio",
+     "meaning": "A ratio of odds that exaggerates when the outcome is common."
+    }
+   ],
+   "worked_example": {
+    "title": "Expected counts for the toilet table",
+    "setup": "Illustrative counts from the deck: 600 rural, 400 urban, 660 with a toilet, 340 without, 1,000 in total.",
+    "steps": [
+     "Expected rural with a toilet: 660 × 600 ÷ 1,000 = 396.",
+     "Observed is 320, so the gap is 396 − 320 = 76 fewer than independence predicts.",
+     "Expected urban with a toilet: 660 × 400 ÷ 1,000 = 264. Observed 340 is 340 − 264 = 76 more.",
+     "Expected counts for the other two cells are 204 and 136, all above 5, so chi-square is valid.",
+     "Report 53% rural against 85% urban, with N and p, and name wealth as a confounder."
+    ],
+    "answer": "Every cell is 76 from its expected count, a consistent gap that pushes chi-square up."
+   },
+   "mistakes": [
+    "Running chi-square on percentages. The result depends on whether you scaled to 100 or 1,000.",
+    "Ignoring sparse cells. The p-value looks normal and is unreliable.",
+    "Reporting 'associated with social group (p < 0.01)' alone. It hides which group and by how much.",
+    "Using a 'tick all that apply' question as one variable. It puts one respondent in several cells."
+   ],
+   "recall": [
+    {
+     "q": "What does chi-square compare?",
+     "a": "Observed counts with the counts expected under independence."
+    },
+    {
+     "q": "How do you compute an expected count?",
+     "a": "Row total times column total divided by the grand total."
+    },
+    {
+     "q": "What is the validity rule for expected counts?",
+     "a": "About 5 or more in most cells."
+    },
+    {
+     "q": "Which test replaces chi-square for small tables?",
+     "a": "Fisher's exact test."
+    },
+    {
+     "q": "Name two ways to report strength.",
+     "a": "Cramér's V and the percentage-point gap."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Simple Linear Regression",
+   "big_idea": "The slope is the number that belongs in the report: **change in Y per unit of X,** read as an association.",
+   "in_plain_words": [
+    "Simple regression fits the line Y = a + bX through a scatter by minimising squared vertical distances, which is why extreme points pull so hard. The slope b is the change in Y for a one-unit rise in X. The intercept is Y at X = 0, and it is meaningful only when X = 0 is meaningful and in your data. Centring on the mean makes the intercept interpretable.",
+    "R² is the share of variation in Y the line explains, and in simple regression it equals r². Low values are normal in social data, while very high values deserve suspicion. A slope from observational data is an association per unit. Distinguish prediction from explanation. Refuse to extrapolate beyond the range of X, and judge fit by the residual plot."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Y",
+      "hint": "response"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "a",
+      "hint": "intercept: Y at X = 0"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "b",
+      "hint": "slope: change per unit"
+     },
+     {
+      "op": "×"
+     },
+     {
+      "t": "X",
+      "hint": "explanatory variable"
+     }
+    ],
+    "note": "residual = what the line got wrong for a case"
+   },
+   "key_terms": [
+    {
+     "term": "Slope (b)",
+     "meaning": "Change in Y for each one-unit rise in X."
+    },
+    {
+     "term": "Intercept (a)",
+     "meaning": "Predicted Y when X is zero."
+    },
+    {
+     "term": "Residual",
+     "meaning": "What the line got wrong for a case."
+    },
+    {
+     "term": "R²",
+     "meaning": "Share of the variation in Y explained by X through the line."
+    },
+    {
+     "term": "Extrapolation",
+     "meaning": "Using the line outside the range of X you observed."
+    }
+   ],
+   "worked_example": {
+    "title": "Read the schooling slope",
+    "setup": "Illustrative line from the deck: monthly earnings in ₹000 rise by b = 1.25 per additional year of schooling.",
+    "steps": [
+     "Read the slope in plain words: each additional year goes with about ₹1,250 more monthly earnings.",
+     "For four more years: 4 × 1.25 = 5, so about ₹5,000 more a month, within the observed range of X.",
+     "Phrase it as 'is associated with', and keep 'causes' for causal designs.",
+     "If simple-regression r = 0.7, then R² = 0.7 × 0.7 = 0.49.",
+     "Do not predict for 30 years of schooling if the line was fitted on 0 to 16."
+    ],
+    "answer": "About ₹5,000 more for four more years, R² of 0.49, and no predictions outside the range."
+   },
+   "mistakes": [
+    "Interpreting an intercept where X = 0 is impossible, such as mother's age or the calendar year.",
+    "Reading a slope as the effect of intervening. Distance is entangled with everything else that differs.",
+    "Treating a high R² as a good model. Trends, aggregation and derived variables inflate it.",
+    "Using a predictive model as an explanatory one. A roof-type targeting model does not show roofs cause deprivation."
+   ],
+   "recall": [
+    {
+     "q": "What does least squares minimise?",
+     "a": "The total squared vertical distance from points to the line."
+    },
+    {
+     "q": "When is the intercept worth interpreting?",
+     "a": "When X = 0 is meaningful and within your data."
+    },
+    {
+     "q": "What is R² in simple regression?",
+     "a": "r squared, the proportion of variation in Y explained by X."
+    },
+    {
+     "q": "What does a low R² with a clear slope tell you?",
+     "a": "The slope can still matter for policy even if the line explains little of the scatter."
+    },
+    {
+     "q": "What should you state about the model's range?",
+     "a": "The range of X it was fitted on, with predictions refused outside it."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Pitfalls",
+   "big_idea": "Before you believe a relationship, **plot it, name the confounder, find the unit, remove the outlier and disaggregate.**",
+   "in_plain_words": [
+    "Correlation is not causation, and five things need ruling out: reverse causation, confounding, selection, chance and shared measurement error. Wealth is the confounder in most development data, and stratifying by wealth quintile is a cheap partial fix. Bivariate work is good for describing who is worse off and where to look next, and claiming why needs design.",
+    "The ecological fallacy reads a group pattern as an individual one. One outlier with high pull can swing a correlation, so refit without it. Straight-line tools miss curves. Anscombe's quartet shows four datasets with identical statistics and different shapes. Simpson's paradox shows a pooled trend flipping within every subgroup. Seven checks, none needing new statistics, catch most of this."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Pitfalls",
+    "spokes": [
+     {
+      "label": "Confounding",
+      "sub": "wealth, almost always"
+     },
+     {
+      "label": "Ecological fallacy",
+      "sub": "group is not individual"
+     },
+     {
+      "label": "Outliers and pull",
+      "sub": "one point swings the fit"
+     },
+     {
+      "label": "Non-linearity",
+      "sub": "r is blind to curves"
+     },
+     {
+      "label": "Simpson's paradox",
+      "sub": "the trend flips on splitting"
+     },
+     {
+      "label": "Reverse causation",
+      "sub": "Y might cause X"
+     }
+    ],
+    "caption": "six ways a real-looking relationship misleads"
+   },
+   "key_terms": [
+    {
+     "term": "Confounder",
+     "meaning": "A variable linked to both X and Y that creates or distorts their relationship."
+    },
+    {
+     "term": "Ecological fallacy",
+     "meaning": "Inferring about individuals from a pattern seen only across groups."
+    },
+    {
+     "term": "High-pull point",
+     "meaning": "A point with an extreme X value that can swing the slope hard."
+    },
+    {
+     "term": "Anscombe's quartet",
+     "meaning": "Four datasets with near-identical statistics and different shapes."
+    },
+    {
+     "term": "Simpson's paradox",
+     "meaning": "A pooled relationship that flips within every subgroup."
+    }
+   ],
+   "worked_example": {
+    "title": "Stress-test a claim",
+    "setup": "Claim: states with higher female literacy have lower fertility. Apply the deck's checks to it.",
+    "steps": [
+     "Plot it: is the shape really linear, and are there clusters or outliers?",
+     "Unit: the scatter is of states, so it describes states and not literate women within a state.",
+     "Confounder: richer states also have better health systems, later marriage and more contraception. Stratify by wealth if you can.",
+     "Outlier: refit without a very large or very small state and report both results.",
+     "Disaggregate once by the obvious grouping variable to see whether the trend reverses."
+    ],
+    "answer": "At most an association between states, to be written with the unit and the confounder named."
+   },
+   "mistakes": [
+    "Checking a bivariate relationship against nothing. If wealth has not been checked, the relationship has not really been checked.",
+    "Reading a scatter of states as a fact about women.",
+    "Fitting a straight line to a U-shape and reporting a slope, an r and a p-value anyway.",
+    "Discovering a Simpson's reversal after publication instead of splitting the aggregate beforehand."
+   ],
+   "recall": [
+    {
+     "q": "Name the five things to rule out before a causal sentence.",
+     "a": "Reverse causation, confounding, selection, chance, and shared measurement error."
+    },
+    {
+     "q": "What is the cheap partial fix for confounding?",
+     "a": "Stratification: repeat the analysis within each wealth quintile."
+    },
+    {
+     "q": "What is the difference between an outlier, a high-pull point and an influential point?",
+     "a": "An outlier is far in Y, a high-pull point is far in X, and an influential point is both, so removing it changes the conclusion."
+    },
+    {
+     "q": "What does Anscombe's quartet teach?",
+     "a": "Always plot your data."
+    },
+    {
+     "q": "Give an example of Simpson's paradox from the deck.",
+     "a": "Hospital A does worse overall but better in each severity band, because it takes the severe cases."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Reporting, Practice & Tools",
+   "big_idea": "Report **direction, size in units, uncertainty, N and the confounder you could not rule out,** with verbs that match the design.",
+   "in_plain_words": [
+    "A defensible report has five parts: the pattern in plain words, numbers with units, N per group, uncertainty, and the obvious confounder. Safe verbs for observational data are associated with, linked to, higher among. Causes, leads to and reduces need a causal design. Watch 'predicts', which readers hear as causal. Common sins are a p-value without an effect size, 'no difference' from a non-significant result, and testing many pairs but reporting one.",
+    "The workflow is six steps: classify, plot, describe, test, interpret and add caution. Write the question in a sentence first. The tools are spreadsheets, R, Python and Stata or SPSS, and every method in the deck exists in all of them. The reason to move beyond a spreadsheet is reproducibility. Treat a bivariate result as where the investigation starts."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Classify",
+      "sub": "type of each variable"
+     },
+     {
+      "label": "Plot",
+      "sub": "scatter, box or bars"
+     },
+     {
+      "label": "Describe",
+      "sub": "direction, strength, shape"
+     },
+     {
+      "label": "Test",
+      "sub": "the matching method"
+     },
+     {
+      "label": "Interpret",
+      "sub": "effect size and uncertainty"
+     },
+     {
+      "label": "Caution",
+      "sub": "confounders and fallacies"
+     }
+    ],
+    "caption": "the reliable bivariate workflow, in order"
+   },
+   "key_terms": [
+    {
+     "term": "Causal verb",
+     "meaning": "'Causes', 'leads to', 'reduces': reserve for causal designs."
+    },
+    {
+     "term": "Safe verb",
+     "meaning": "'Is associated with', 'tends to go with', 'is correlated with'."
+    },
+    {
+     "term": "Confidence interval",
+     "meaning": "A range showing the uncertainty around a gap."
+    },
+    {
+     "term": "Reproducibility",
+     "meaning": "Rerunning the whole analysis from raw data after a correction."
+    },
+    {
+     "term": "Sample size note",
+     "meaning": "N per group and how the sample was drawn."
+    }
+   ],
+   "worked_example": {
+    "title": "Write the uptake sentence",
+    "setup": "Use the deck's report example: uptake of a scheme among SC/ST and other households.",
+    "steps": [
+     "Pattern in plain words: uptake was lower among SC/ST households.",
+     "Numbers with units: 61% against 44%, a gap of 61 − 44 = 17 points.",
+     "N per group: 312 and 908, so 312 + 908 = 1,220 households in all.",
+     "Uncertainty: 95% CI for the gap, 11 to 23 points.",
+     "Confounder: not adjusted for wealth or block, and use 'was lower among', never 'caused lower uptake'."
+    ],
+    "answer": "Uptake was 44% against 61% (n = 312 and 908), a gap of 17 points (95% CI 11 to 23), with no adjustment for wealth or block."
+   },
+   "mistakes": [
+    "Letting 'associated' in the analysis become 'improves' in the summary and 'proves' in the press release.",
+    "Writing 'significantly lower (p < 0.01)' alone. It withholds everything a reader needs.",
+    "Hiding the scatter behind a single coefficient.",
+    "Using a state-level relationship to make claims about individuals."
+   ],
+   "recall": [
+    {
+     "q": "Name the five parts of an accurate report.",
+     "a": "The pattern in plain words, numbers with units, N per group, uncertainty, and the obvious confounder."
+    },
+    {
+     "q": "Which verbs are safe with observational data?",
+     "a": "Associated with, linked to, higher among, accompanied by, varies with."
+    },
+    {
+     "q": "What are the six workflow steps?",
+     "a": "Classify, plot, describe, test, interpret, caution."
+    },
+    {
+     "q": "Why move beyond a spreadsheet?",
+     "a": "Reproducibility: rerunning the whole analysis from raw data after a correction."
+    },
+    {
+     "q": "What should you write beside every percentage?",
+     "a": "N, for example 62% (n = 187)."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "2": "Eleven sections move from definitions to choosing a method, then through each method by variable type, then pitfalls and reporting. Use the slide ranges as a map. Slide 10 later says sections 10 and 11 are the ones that change practice, so budget time for them.",
+  "4": "Bivariate analysis asks how two variables relate: whether they move together, how strongly and in which direction. Programme questions live here, because nobody funds a programme for an 18 per cent average. **They fund it because the figure is concentrated somewhere.** It is also where overclaiming begins.",
+  "5": "Think of a ladder: describe one variable, relate two, then hold others fixed. This course sits on the middle rung. **Do not skip the first rung**, because impossible values, spikes at zero and missingness show up there. Expect bivariate findings to shrink once wealth or education is held constant.",
+  "6": "Four questions get conflated: which way, how strong, how big, could it be chance? Each has its own answer, and a p-value answers only the last. **Report direction, magnitude and uncertainty together**, as in 'three percentage points lower (95% CI 1 to 5)'.",
+  "7": "X is what you treat as explaining, Y is what you want to account for. The labels record a decision you made. **Nothing in the dataset says which variable is the cause**, and the arithmetic runs identically if you swap them. Choose X and Y with a story you actually believe.",
+  "8": "Five typical questions, each a pair of variables with one first method. The table maps programme questions to cross-tab, t-test, correlation or ANOVA. **The variable types choose the method, and your preference does not.** Notice the caution under it: trained and untrained farmers differ in more than training.",
+  "9": "A relationship is a clue and a verdict is a different thing. Bivariate analysis shows that two things move together and that a difference exceeds noise. **Wealth, education and location correlate with nearly everything**, so expect a confounder. Clues still direct effort, which is why they are worth having.",
+  "10": "Read the roadmap as tools plus judgement. The tools are standard and exist in any software. **What separates a defensible analysis from a misleading one is the checking and the wording**, which is where most training stops. Sections 10 and 11 carry that, so do not skip them.",
+  "12": "Classify both variables before anything else: categorical or numeric. The pair of answers points to the tool. Ordinal variables are the awkward middle: **treating one as categorical is always defensible, and treating it as numeric only sometimes.** When unsure which test to use, open the codebook before a textbook.",
+  "13": "Pin this table up. Four rows cover nearly every case: categories get chi-square, two groups get a t-test, three or more get ANOVA, two numbers get correlation or regression. **Every row begins with a picture before any test.** The last row, a yes/no outcome with a numeric predictor, is your cue to seek help.",
+  "14": "For two categories, describe with a cross-tab and percentages, then test with chi-square. Most equity findings a programme produces are a two-way table with row percentages. **Print counts alongside percentages**: 67 per cent means one thing for 300 households and another for three.",
+  "15": "For a group label and a number, compare the numeric outcome across groups. Report each group's mean or median, N, spread and the difference in units. **The spread is often the finding**: a programme can raise average yield while widening the gap between farmers. Use medians for skewed variables such as income.",
+  "16": "For two numbers, follow the order: plot, look for outliers, compute r only if the shape is roughly linear, then fit a line if you need a rate. **Plot before you compute**, so the picture decides whether the number is meaningful and the number does not frame how you read the picture.",
+  "17": "The method serves the question. Write the question in a sentence before opening the software, because it takes a minute and determines the method. **Collapsing a five-category variable into two to suit a familiar test throws away information**, and the cut point is usually chosen after seeing the data.",
+  "19": "A cross-tab counts cases in each combination of two categories. Learn to read the marginals, the row and column totals, which carry the context. Watch for small cells: **below about five expected cases, chi-square becomes unreliable**, yet the table still prints a percentage that looks like all the others.",
+  "20": "Read this 2×2 slowly: 320 of 600 rural households have a toilet, and 340 of 400 urban ones. The four inner cells are joint counts and the margins are totals. Check that each row adds to its total. **You cannot yet say which group is better off**, because the groups differ in size.",
+  "21": "Rural and urban totals differ, 600 against 400, so raw counts mislead. Convert to percentages, but choose the direction carefully. **Percentaging the wrong way reads a relationship backwards.** Publish both: percentages for the comparison, counts so the reader sees the base, such as '62.4% (n=187)'.",
+  "22": "Row percentages answer 'of rural households, what share have a toilet?' Each row adds to 100%: 53% rural against 85% urban. **Compare down one column across the rows** to see the gap. Check the sums yourself, since a row that does not reach 100 is a warning.",
+  "23": "Column percentages answer a different question: of households without a toilet, what share are rural? 82%. **Same table, different story.** Each column adds to 100%. This does not say rural households are less likely to own toilets; it says most households without one are rural.",
+  "24": "The rule: percentage within categories of the explanatory variable, then compare across them. Put X in the rows so each row sums to 100. **State in the table heading which direction you used**, because readers otherwise assume whichever suits their expectation. Getting it backwards answers a question nobody asked.",
+  "25": "A 2×2 gap can be stated three ways: percentage-point difference, ratio of proportions or relative change. For 62% against 48% these read as 14 points, 1.3 times and 29% higher. **Give the percentage-point gap and both percentages**, so no reader can be led by the framing.",
+  "27": "Look before you compute. A picture reveals curvature, clusters, outliers and ceilings that a single number hides. The table pairs each feature with the way a statistic misleads. **Plot first, every time**, because one line of code catches all four failures and the software gives no warning.",
+  "28": "Match the chart to the pair of types: scatter for two numbers, box plot for a group and a number, bars for two categories. **Avoid a bar of means with no spread**, the sector's commonest chart. With fewer than about twenty points per group, show the points themselves.",
+  "29": "A scatter puts X on the horizontal axis, Y on the vertical and one dot per case. Work down the five reading questions each time. The last one, **what is the unit: person, village, district?**, decides what the pattern can be about. With large N, use transparency, jitter or hexbins.",
+  "30": "Three clouds on the same axes: rising, falling, shapeless. Your eye reads direction and strength before any number appears, so train yourself to name both whenever you meet a scatter. The chart is illustrative, so use it to calibrate your eye and quote no figures from it.",
+  "31": "Higher female literacy goes with lower under-5 mortality across states. The chart is illustrative, patterned on Census 2011 and NFHS-5. Read it as a strong negative pattern, then ask the next question: **the unit here is the state**, so the pattern describes states.",
+  "32": "A box plot shows the median, the middle half, the range and the outliers for each group. It beats a single average because it shows centre and spread together. **State the whisker rule in the caption**, since software differs. 1.5×IQR is common but not universal.",
+  "33": "Grouped bars show a mean rising across ordered categories, here earnings by education level, with illustrative figures. Use them when the message is a comparison of means. **Pair them with N and a view of spread**, because bars of means conceal everything else, as slide 28 warned.",
+  "34": "A bivariate chart is an argument. Start bar axes at zero, label units, show N, order categories meaningfully and put the source on it. **Keep causation out of the title**: 'Yields by training status' says what you know, and 'Training raises yields' says what you cannot support.",
+  "36": "r is one number for the direction and strength of a straight-line relationship, from −1 to +1. The second row is the one to hold: **r measures how tightly points follow a line.** It says nothing about steepness. For 'how much', report a slope in real units.",
+  "37": "Read r by its sign and its distance from zero. The sign gives direction and the distance gives strength. **r = −0.8 and r = +0.8 are equally strong**, in opposite directions. Zero means no linear relationship, which is a narrower claim than no relationship at all.",
+  "38": "Pearson sees only straight lines. A curved relationship can give an r near zero while the variables are tightly related. Three of its four assumptions are routinely broken in development data. **Compute Spearman as well and compare**: a sharp disagreement points to an outlier or a curve.",
+  "39": "Treat the bands as conventions. The slide gives two versions that differ, for example 0.5 to 0.7 is 'strong' in one and 'moderate to strong' in the other, so name the scheme you use. **Report r with N and the scatter**, and be suspicious of an r above about 0.9 in survey data.",
+  "40": "The cloud tilts clearly downward, giving an r near −0.9 in the illustrative chart. Strong and negative. Then pause: **strength is no evidence of cause**, since literacy may stand in for income, health and more. This is a scatter of states, so the pattern describes states.",
+  "41": "Spearman is Pearson computed on ranks. Use it for ordinal data, skewed data, outliers and monotonic curves. It drops the linearity requirement. **Its cost is information**: ranking discards magnitude, so it cannot show that the first two districts are far apart while the rest sit close together.",
+  "42": "Run both and compare. If they agree, report either and say which. If they differ substantially, look for an outlier, a curve or heavy skew, and report Spearman with an explanation. **Never choose after seeing which is larger.** Decide by variable type and shape, and state your rule.",
+  "43": "Strength and significance answer different questions, and sample size drives significance far more than strength. In the table, N = 20,000 with r = 0.03 is real and tiny, while N = 10 with r = 0.55 is possibly important but unproven. **Report the size as well as the star.**",
+  "44": "Squaring r gives R², the share of variation accounted for. r = 0.7 gives 0.49. The table is a corrective: **0.5 sounds like half the story and accounts for a quarter.** Remember that 'variance explained' is a statistical phrase and does not mean X produces that share of the outcome.",
+  "46": "Before comparing two groups, check how they were formed, N in each, the distributions and independence. The first row decides the meaning: randomly assigned groups support a causal reading and self-chosen ones differ in more than the label. **Households in a village are correlated**, so a standard t-test overstates precision.",
+  "47": "The raw difference is 7 points (61 − 54). That settles the size and leaves two questions: could a 7-point gap arise by chance, and is 7 points big enough to matter? **Keep these two questions apart.** The next slides handle the first, and effect size handles the second.",
+  "48": "The t statistic is signal over noise: the difference in means divided by its uncertainty. A bigger gap, less spread and a larger sample each raise t. **Understanding the ratio is enough to read a result critically.** It also explains why small noisy samples miss real gaps and huge samples catch trivial ones.",
+  "49": "Three things make a gap convincing: a bigger difference, less spread within groups, and a larger sample. The same 7 points means little with 20 noisy pupils per arm. **Sample size is decided at design**, so power calculations belong before data collection. Better measurement also shrinks spread, often more cheaply than extra respondents.",
+  "50": "A p-value is the probability of data this extreme if there were no real difference. It is a statement about the data given a hypothesis, and **it does not give the probability that there is no difference.** It is sensitive to sample size and silent on importance. 0.05 is a convention.",
+  "51": "Significance asks whether there is a difference, and effect size asks how big. Report the raw difference in units, with a confidence interval. **Translate it into the unit a programme works in**, such as children per 20 households. Within one programme, prefer raw units to Cohen's d.",
+  "52": "Read the p-value and the effect size together. A huge sample makes a 0.3-mark difference significant and meaningless, and a tiny pilot can miss a promising 9-point gap. **Write 'no evidence of a difference' for a small, non-significant result.** A confidence interval resolves all four cases at once.",
+  "53": "The simple t-test assumes independent groups, roughly symmetric outcomes or a large n, similar spread and no extreme outliers. Use a paired test for before-after data on the same people. **Welch's version is a sensible default** because it does not assume equal variances. No test statistic repairs a clustered design.",
+  "55": "With five groups there are ten pairwise comparisons, and at 5% each the chance of at least one false positive is around 40%. That is the multiple-comparisons problem and the reason ANOVA exists. **One overall test comes first, then a search for which pair.** Subgroup analysis follows the same logic.",
+  "56": "ANOVA compares between-group with within-group variation to test whether three or more means differ. It answers 'is there a difference somewhere' and **leaves open which groups differ and by how much.** Treat a significant result as permission to look at pairs with an adjusted method. Always report group means with intervals.",
+  "57": "F is between-group variation divided by within-group variation: the t-test's signal-to-noise idea for many groups. A large F means the means sit far apart relative to internal scatter. **Look at the box plots first**, since five quintiles with enormous internal scatter will not give a large F.",
+  "58": "Five group means rise steadily across wealth quintiles in this illustrative, NFHS-5-style chart. ANOVA asks whether that spread of means exceeds the scatter within each quintile. **The steady gradient is informative in itself**, and you can see it without any pairwise test.",
+  "59": "ANOVA is the smoke alarm: it says there is a fire somewhere, and post-hoc tests find the room. Use Tukey or Bonferroni, report every mean with its interval, and say how many comparisons you made. **Do not run unadjusted t-tests afterwards**, which brings back the error rate ANOVA protected.",
+  "60": "ANOVA extends the t-test to many groups. Check independence, rough symmetry and similar spreads, and above all that **groups were defined before looking**. Groups formed after inspecting the outcome guarantee a difference. Choose Kruskal-Wallis or Welch's ANOVA from the data's shape and never from the result you prefer.",
+  "61": "Pick the row from the number of groups and the column from the shape of the data. Two groups use a t-test or Mann-Whitney, three or more use ANOVA or Kruskal-Wallis, then adjusted post-hoc comparisons. **Whichever cell you land in, report means or medians with intervals.** The test decides whether to believe the pattern.",
+  "63": "Chi-square tests whether two categorical variables are independent, using counts. It gives a yes or no answer and is silent on strength. **Feed it counts and never percentages**, because the result depends on whether you scaled to 100 or 1,000. Use the cross-tab gap to judge whether the pattern matters.",
+  "64": "Chi-square compares observed counts with the counts expected under independence. Follow the four steps: compute expected, compare, sum the scaled squared gaps, refer to the distribution. **The scaling matters**: ten extra cases is a lot in a cell expected to hold twelve and almost nothing where two thousand are expected.",
+  "65": "Expected count = row total × column total ÷ grand total. Here 66% of 600 rural households would own a toilet if the variables were independent, which is 396, against 320 observed. **Check expected counts before trusting the p-value**, since the validity rule is about the expected counts.",
+  "66": "Work the table: each observed count sits 76 away from its expected count, so the gaps are consistent. Rural areas hold fewer toilets than independence predicts and urban areas more. **Consistent gaps push chi-square up.** Check an expected figure yourself with row total × column total ÷ 1,000.",
+  "67": "A small p rejects independence, and a large p gives no evidence of association. Chi-square cannot tell you which cell differs or how strongly. **Lead with the table**: 'Uptake was 61% among general-category and 44% among SC/ST households (p < 0.01)' carries test and finding together. Add Cramér's V or the percentage gap.",
+  "68": "Four requirements: independent cases, counts in the cells, expected counts of about 5 or more in most cells, and mutually exclusive categories. Thin cells call for Fisher's exact test. **A 'tick all that apply' question breaks the last rule**, because one respondent lands in several cells.",
+  "69": "Chi-square goes wrong in four ways, and all are avoided by looking at the cross-tab first. The table shows counts, sparse cells and direction. **The test adds one number to a picture you should already understand.** Remember the fourth mistake: the test says nothing about strength.",
+  "70": "Follow the workflow in order: cross-tab, row percentages, expected counts, test, report, confounders. Steps one and two do most of the work and are the ones people skip. **Step six costs a sentence and buys credibility**: name wealth or location before a reviewer does.",
+  "71": "The recap lists the toolkit: describe with a cross-tab, test with chi-square, measure strength with Cramér's V, use Fisher for thin cells. For health work, risk ratios and odds ratios exist, and **odds ratios exaggerate when the outcome is common.** For most reporting the percentage-point gap is enough.",
+  "73": "Regression fits one straight line through the scatter. It adds a slope in real units, predictions, an explicit direction and residuals. The line minimises squared vertical distance, so **extreme points pull it hard**. Plot residuals against fitted values: it takes one line of code and few people do it.",
+  "74": "The red line sits closest to all the points at once, minimising the total squared vertical distance. That is least squares. The data are illustrative, showing years of schooling against monthly earnings. **Look at how far individual points sit from the line**, because that scatter is what R² later summarises.",
+  "75": "In Y = a + bX, the intercept a is predicted Y at X = 0 and the slope b is the change in Y per one-unit rise in X. **The slope belongs in the report**, with its units written out: '0.42 fewer days attended per additional kilometre' reads better than 'b = −0.42'.",
+  "76": "Interpret the intercept only when X = 0 is meaningful and within your data. Years of schooling and distance pass; mother's age and calendar year fail. **Centring fixes it**: subtract the mean of X before fitting and the intercept becomes predicted Y at the average X, which exists and is worth quoting.",
+  "77": "Read b as 'associated with'. In the example, each additional year of schooling goes with about ₹1,250 more monthly earnings. The table lists safe phrases. **A slope from observational data is an association per unit**, so halving everyone's distance tomorrow would not change attendance by the slope.",
+  "78": "R² is the share of variation in Y that the line explains, and in simple regression it equals r². Low values are normal for social data. **A very high R², such as 0.95, deserves suspicion**: usually one variable was computed from the other. A precisely estimated slope can matter even when R² is small.",
+  "79": "A high R² is not always good. It can come from shared trends over time, aggregated data, one variable derived from the other, or a few extreme points. State-level data fit tightly because averaging removes individual noise. **Judge a model by its residual plot** and its slope before looking at R².",
+  "80": "Prediction and explanation use the same line for different goals. Prediction cares about accuracy and ignores confounders if the fit holds. Explanation cares about the slope and its uncertainty, and confounders matter completely. **A targeting model that flags roof type does not show that roofs cause deprivation.**",
+  "81": "Extrapolation uses the line beyond the range of X you observed. A line fitted on 0 to 16 years of schooling says nothing reliable about 30. **State the range of X your model was fitted on and refuse predictions outside it.** A trend fitted to five years and projected to twenty is arithmetic.",
+  "83": "Correlation is not causation, and five things need ruling out before you write a causal sentence: reverse causation, confounding, selection, chance and shared measurement error. **If you cannot say why each is unlikely, write the finding as an association.** That is an accurate claim and no weaker one.",
+  "84": "A confounder links to both X and Y. Wealth is the usual one in development data because it correlates with nearly everything. **A bivariate relationship not checked against wealth has not really been checked.** The cheap partial fix is stratification: repeat the analysis within each wealth quintile.",
+  "85": "Literacy and fertility illustrate the problem: richer states also have better health systems, later marriage and more contraception. Use the two columns as a boundary. **Bivariate work describes who is worse off and where to look next.** Claiming why, or what to change, needs design, which cannot be added at analysis stage.",
+  "86": "The ecological fallacy reads a group pattern as an individual one. A scatter of states describes states, and the two can point in opposite directions. **Put the unit in the chart title**: 'by state' or 'by household' costs two words and prevents the inference.",
+  "87": "One extreme point can dominate a correlation or drag the regression line. An outlier is far in Y, a high-pull point is far in X, and an influential point is both. **Refit without the most extreme point and report both results.** If the conclusion changes, your result depends on one observation, and the reader should know.",
+  "88": "Pearson's r and linear regression assume a straight line. A U-shape can give a near-zero r despite a strong relationship, and diminishing returns average steep early gains with flat later ones. **The cheapest fix in statistics is the scatter.** A curve is obvious to the eye and invisible to r.",
+  "89": "Anscombe's quartet has four datasets with near-identical means, variances and correlation and utterly different shapes. The chart is after F. J. Anscombe (1973). **Always plot your data.** Return to this slide whenever you are tempted to report a coefficient without showing the picture.",
+  "90": "Simpson's paradox: a pooled trend can flip within every subgroup. Hospital A looks worse overall yet does better in every severity band, because it takes the severe cases. **Split an aggregate result by the obvious grouping variable once.** Neither view is wrong; they answer different questions.",
+  "91": "Seven checks, none needing new statistics: plot it, find the unit, name the confounder, stratify, remove the outlier, count the tests, state the size in units. **Run them on every finding before it leaves your desk.** The six questions above the table cover the same ground.",
+  "93": "Five things belong in a report on a relationship: the pattern in plain words, numbers with units, N per group, uncertainty and the obvious confounder. All fit in two sentences. **Naming the confounder yourself counts as a strength**, because a competent reviewer will ask first. Reporting only 'p < 0.01' withholds everything else.",
+  "94": "Verbs are where causal claims slip in. Use associated with, linked to, higher among, varies with. Reserve causes, leads to, raises and reduces for causal designs. **The analysis says 'associated', the summary says 'improves', the press release says 'proves'.** Watch 'predicts', which readers hear as causal.",
+  "95": "These sins survive because they make findings sound stronger and nobody in the review chain is assigned to catch them, so keep a personal checklist. The corrections table is the useful part: **give the gap in units with an interval, say how many relationships you examined, and write N beside every percentage.**",
+  "96": "Six steps, every time: classify, plot, describe, test, interpret, caution. Write the question in one sentence first. **Steps three and four are the analysis and step five is a check on it**, so do not run the test and look afterwards. Step one prevents the most waste.",
+  "97": "Pick the tool your collaborators already use. Spreadsheets handle cross-tabs and simple charts and let you share with non-analysts. **The reason to move to R or Python is reproducibility**: rerunning everything from raw data after a correction. Every method in the deck exists in all four tools.",
+  "98": "Reinhart is the most useful for a working analyst: short, free online, and about the errors people actually make, such as multiple comparisons, misread p-values and underpowered studies. **Pair this deck with Data Literacy, Exploratory Data Analysis and Statistics Without Code 101.** Add The Book of Why for the causal side.",
+  "99": "Five habits and no techniques: classify, plot, report effect size, name the confounder, match the verb to the design. The section numbers show where each lives. **A bivariate relationship is where the investigation starts.** Treating it as where it ends is the error the whole deck is arranged against."
+ }
+}

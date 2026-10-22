@@ -1,0 +1,1122 @@
+{
+ "slug": "quant-methods",
+ "intro": "Read the deck for the facts and these notes for the thinking. Each note explains a slide, tells you what to remember and warns you where people slip. Redo the sums on paper, answer the recall questions without looking, and write your own notes in the margins beside mine.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "Why quantitative methods",
+   "big_idea": "Most practitioners read, approve and fund numbers and seldom compute them. Ask **four questions of every figure** before you use it.",
+   "in_plain_words": [
+    "A number rests on a definition, a sample, a reference period and a margin of error. If you know those four things you can use it well. If not, you will eventually compare two figures that were never measuring the same thing, such as usual-status and weekly-status unemployment from the same survey.",
+    "The deck follows a pipeline from question to interpretation, and errors enter at every stage. Later stages cannot repair earlier ones. So when you review a report, **start at the left**: the questionnaire item, then the sample, then the weights, then the coefficient."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Question",
+      "sub": "what do we need to know?"
+     },
+     {
+      "label": "Measure",
+      "sub": "define and operationalise"
+     },
+     {
+      "label": "Sample",
+      "sub": "select who is asked"
+     },
+     {
+      "label": "Estimate",
+      "sub": "weight and summarise"
+     },
+     {
+      "label": "Quantify error",
+      "sub": "SE, CI, design effect"
+     },
+     {
+      "label": "Interpret",
+      "sub": "compare, explain, decide"
+     }
+    ],
+    "caption": "errors enter at every stage; review from the left"
+   },
+   "key_terms": [
+    {
+     "term": "Operational definition",
+     "meaning": "The exact rule that turns a concept into a measured variable."
+    },
+    {
+     "term": "Usual status",
+     "meaning": "Activity over the 365 days before the PLFS interview."
+    },
+    {
+     "term": "Current weekly status",
+     "meaning": "Activity in the seven days before the interview."
+    },
+    {
+     "term": "Sampling frame",
+     "meaning": "The list from which respondents are selected."
+    },
+    {
+     "term": "Margin of error",
+     "meaning": "The precision of an estimate, usually 95%."
+    }
+   ],
+   "worked_example": {
+    "title": "Same survey, two unemployment rates",
+    "setup": "PLFS calendar year 2024 gives 3.2% on usual status and 4.9% on current weekly status.",
+    "steps": [
+     "Compute the gap: 4.9 − 3.2 = 1.7 percentage points.",
+     "Ask what was counted: the first looks back over 365 days, the second at seven.",
+     "The weekly rate catches seasonal gaps in farm work, so it runs higher.",
+     "Quote the status beside the number, every time."
+    ],
+    "answer": "The gap is 1.7 points and both rates are right; name the status in every citation."
+   },
+   "mistakes": [
+    "Comparing two figures without checking that they use the same definition and reference period.",
+    "Treating a point estimate as exact when it is a number with a margin of error.",
+    "Reading a regression table before you have read the questionnaire item and the sampling section.",
+    "Generalising from a survey whose sampling frame leaves out the group your question is about."
+   ],
+   "recall": [
+    {
+     "q": "What are the four questions to ask of any number?",
+     "a": "What was counted, who was asked and who was left out, how precise it is, and compared with what."
+    },
+    {
+     "q": "Why review a report from the left of the pipeline?",
+     "a": "Later stages cannot repair earlier ones, and most arguments about a figure turn out to be about measurement and sampling."
+    },
+    {
+     "q": "What three roles does the deck name?",
+     "a": "Reader, commissioner and analyst."
+    },
+    {
+     "q": "What does the DPDP Act apply to, in the deck's terms?",
+     "a": "Anyone holding unit-level data about people is a data fiduciary."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Variables and measurement",
+   "big_idea": "The level of measurement limits the arithmetic, and **a built indicator is its formula**. Check units, zeros and definitions before you compute.",
+   "in_plain_words": [
+    "A case is a row and a variable is a column. The unit of analysis, such as a household or a woman, decides which file and weight you use. Variables are nominal, ordinal, interval or ratio, and each level allows different summaries. Averaging category codes, such as 1 for ST and 2 for SC, produces a meaningless number.",
+    "Zero and missing are different facts, and 98 and 99 codes must come out before you average. Most indicators are built from formulas, so the build is the definition. **Validity is argued and reliability is tested**, and signs such as age heaping show how the data were collected."
+   ],
+   "diagram": {
+    "type": "stack",
+    "levels": [
+     {
+      "label": "Ratio",
+      "sub": "true zero; ratios make sense"
+     },
+     {
+      "label": "Interval",
+      "sub": "equal gaps, arbitrary zero"
+     },
+     {
+      "label": "Ordinal",
+      "sub": "ordered, gaps unknown"
+     },
+     {
+      "label": "Nominal",
+      "sub": "categories with no order"
+     }
+    ],
+    "caption": "more arithmetic is allowed as you go up"
+   },
+   "key_terms": [
+    {
+     "term": "Unit of analysis",
+     "meaning": "The kind of case your question is about."
+    },
+    {
+     "term": "Nominal",
+     "meaning": "Categories with no order, such as state or fuel type."
+    },
+    {
+     "term": "Ordinal",
+     "meaning": "Ordered categories with unequal or unknown gaps."
+    },
+    {
+     "term": "Interval",
+     "meaning": "Equal gaps with an arbitrary zero, such as a z-score."
+    },
+    {
+     "term": "Ratio",
+     "meaning": "Equal gaps and a true zero, such as consumption."
+    },
+    {
+     "term": "Operationalisation",
+     "meaning": "Moving from a concept to a measured column."
+    }
+   ],
+   "worked_example": {
+    "title": "Build two indicators from counts",
+    "setup": "Illustrative: in a population of 1,000 people, 600 are employed and 60 are unemployed. The deck's formulas: LFPR = (employed + unemployed) ÷ population; unemployment rate = unemployed ÷ labour force.",
+    "steps": [
+     "Labour force: 600 + 60 = 660.",
+     "LFPR: 660 ÷ 1,000 = 66%.",
+     "Unemployment rate: 60 ÷ 660 = 9.1%.",
+     "Worker population ratio: 600 ÷ 1,000 = 60%, which divides by everyone."
+    ],
+    "answer": "LFPR 66%, unemployment 9.1% and a worker population ratio of 60%."
+   },
+   "mistakes": [
+    "Averaging a nominal code such as social group. The mean changes if you reorder the codes.",
+    "Computing a percentage change on a variable with no true zero, such as a z-score.",
+    "Leaving 98 and 99 codes inside a numeric column before computing a mean.",
+    "Storing 'did not answer' as zero, which understates earnings and overstates the share with none."
+   ],
+   "recall": [
+    {
+     "q": "Which summary suits an ordinal variable?",
+     "a": "The median, percentiles or percentages by category."
+    },
+    {
+     "q": "Why is it wrong to say the richest wealth quintile is five times the poorest?",
+     "a": "Wealth quintile is ordinal, so its gaps are unequal or unknown."
+    },
+    {
+     "q": "What is the difference between validity and reliability?",
+     "a": "Validity asks whether the variable measures its concept; reliability asks whether repeated measurement gives the same answer."
+    },
+    {
+     "q": "What is age heaping?",
+     "a": "Reported ages piling up on numbers ending in 0 and 5, showing people estimate."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Describing data",
+   "big_idea": "Lead with the **median in skewed data**, report both when they differ, and always give a spread beside a centre.",
+   "in_plain_words": [
+    "The mean adds up to a total and is pulled by extreme values. The median is the middle value and is unmoved by tails. Consumption, income and land are skewed to the right, so one rich household can move the mean far more than the median. A centre without a spread is half a description, so add the IQR or SD.",
+    "Describe change with care: percentage points for differences between percentages, per cent for relative change. Name the numerator and denominator before comparing ratios. In a cross-tabulation, **percentage across the cause**, comparing within categories of the explanatory variable."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Mean",
+     "items": [
+      "Uses every observation",
+      "Multiplies back to a total",
+      "Pulled hard by extremes"
+     ]
+    },
+    "right": {
+     "title": "Median",
+     "items": [
+      "Middle value once sorted",
+      "Unmoved by a few extremes",
+      "Cannot be summed across groups"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Interquartile range",
+     "meaning": "75th percentile minus 25th; pairs with the median."
+    },
+    {
+     "term": "Standard deviation",
+     "meaning": "The square root of the variance, in original units."
+    },
+    {
+     "term": "Percentage point",
+     "meaning": "The difference between two percentages."
+    },
+    {
+     "term": "Gini coefficient",
+     "meaning": "0 for equal consumption, 1 if one person has everything."
+    },
+    {
+     "term": "Row percentage",
+     "meaning": "A share within each category of the row variable."
+    }
+   ],
+   "worked_example": {
+    "title": "One rich household moves the mean",
+    "setup": "Illustrative: ten households with monthly per capita consumption of 2,000, 2,200, 2,400, 2,600, 2,800, 3,000, 3,200, 3,400, 3,800 and 30,000 rupees.",
+    "steps": [
+     "Mean: 55,400 ÷ 10 = 5,540.",
+     "Median is the average of the 5th and 6th values: (2,800 + 3,000) ÷ 2 = 2,900.",
+     "Drop the 30,000 household: 25,400 ÷ 9 = 2,822.",
+     "The mean moved by 5,540 − 2,822 = 2,718 while the median moved by 100."
+    ],
+    "answer": "Mean ₹5,540, median ₹2,900. The median describes a typical household."
+   },
+   "mistakes": [
+    "Reporting the mean consumption of a skewed hamlet as if it described a typical household.",
+    "Writing 'stunting fell by 2.9%' when the fall is 2.9 percentage points.",
+    "Comparing the Census and NFHS sex ratios without noting that they count different populations.",
+    "Mixing row and column percentages in one sentence."
+   ],
+   "recall": [
+    {
+     "q": "Why does a finance department need the mean?",
+     "a": "Only the mean multiplies back to a total."
+    },
+    {
+     "q": "How do you compute a sample variance?",
+     "a": "Sum the squared deviations from the mean and divide by n − 1."
+    },
+    {
+     "q": "What are the rural and urban top-to-bottom 5% ratios in HCES 2023–24?",
+     "a": "6.0 times rural and 8.5 times urban."
+    },
+    {
+     "q": "What is the rule of thumb for cross-tabulations?",
+     "a": "Compute percentages within categories of the explanatory variable and compare across them."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Distributions",
+   "big_idea": "Plot before you summarise. Read **centre, spread, shape and outliers**, and remember that the sampling distribution is what makes inference work.",
+   "in_plain_words": [
+    "A distribution shows how often each value occurs. The normal curve gives the 68–95–99.7 rule, and 1.96 is the multiplier behind every 95% interval. A z-score puts a value on a common scale, which is how stunting is defined: a child below −2 is stunted.",
+    "Many development variables are skewed, binary or counts, and need different treatment: medians, logs, proportions with variance p(1 − p). Frequency tables show fingerprints such as heaping. **The central limit theorem links one sample to the true value**, via the standard error."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Reading a distribution",
+    "spokes": [
+     {
+      "label": "Centre",
+      "sub": "where is the bulk?"
+     },
+     {
+      "label": "Spread",
+      "sub": "how wide?"
+     },
+     {
+      "label": "Shape",
+      "sub": "skew, one peak or two"
+     },
+     {
+      "label": "Outliers",
+      "sub": "real or errors?"
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "z-score",
+     "meaning": "How many SDs a value sits from a reference."
+    },
+    {
+     "term": "Standard error",
+     "meaning": "The SD of an estimate across repeated samples."
+    },
+    {
+     "term": "Central limit theorem",
+     "meaning": "Averages of large samples are near normal."
+    },
+    {
+     "term": "Skew",
+     "meaning": "A long tail on one side, as in consumption."
+    },
+    {
+     "term": "Heaping",
+     "meaning": "Values piling up on convenient numbers."
+    }
+   ],
+   "worked_example": {
+    "title": "Compute a height-for-age z-score",
+    "setup": "Illustrative: a child measures 82.0 cm. The reference median for her age and sex is 87.1 cm with an SD of 3.2 cm.",
+    "steps": [
+     "Distance below the median: 87.1 − 82.0 = 5.1 cm.",
+     "In SD units: 5.1 ÷ 3.2 = 1.59.",
+     "She is below the median, so z = −1.59.",
+     "The stunting cut-off is −2, so she is short for her age and not stunted by definition.",
+     "Variance of a binary outcome at p = 0.5: 0.5 × 0.5 = 0.25."
+    ],
+    "answer": "z = −1.59, above the −2 cut-off. The variance of a 50% indicator is 0.25."
+   },
+   "mistakes": [
+    "Applying the 68–95–99.7 rule to consumption, income or loans, which are not normal.",
+    "Taking the log of a variable with many zeros without saying how zeros were handled.",
+    "Confusing the SD of a variable, which describes people, with the standard error, which describes the estimate.",
+    "Reporting stunting prevalence alone when the mean z-score would show gains below the cut-off."
+   ],
+   "recall": [
+    {
+     "q": "Which multiplier gives a 95% interval?",
+     "a": "1.96."
+    },
+    {
+     "q": "What does a log coefficient of 0.08 mean?",
+     "a": "About 8% higher; exactly e^0.08 − 1 = 8.3%."
+    },
+    {
+     "q": "Why do sample size calculations often assume p = 0.5?",
+     "a": "The variance p(1 − p) is largest there, so it needs the biggest sample."
+    },
+    {
+     "q": "What does age heaping do to stunting estimates?",
+     "a": "A wrong age shifts the z-score and moves children across age bands."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Sampling and sampling error",
+   "big_idea": "A random sample describes a country because **selection probabilities are known**. Precision grows with the square root of n, and non-sampling error does not shrink.",
+   "in_plain_words": [
+    "Probability selection means every unit has a known, non-zero chance, so the sample can be weighted back and its error quantified. Simple random, stratified, cluster and multistage designs differ in cost to precision. Sampling error is random and shrinks with sample size, while non-sampling error can be systematic and does not.",
+    "The standard error of a proportion is √[p(1 − p) ÷ n]. Quadruple the sample to halve it. Small areas collapse: a district of 300 children carries ±5.4 points. **Ask for the interval before acting on a district rank**, and check who is outside the frame."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Probability sampling designs",
+    "children": [
+     {
+      "label": "Simple random",
+      "items": [
+       "Every unit equally likely",
+       "Needs a full list"
+      ]
+     },
+     {
+      "label": "Stratified",
+      "items": [
+       "Sample in each group",
+       "Usually improves precision"
+      ]
+     },
+     {
+      "label": "Cluster",
+      "items": [
+       "Villages or blocks first",
+       "Usually worsens precision"
+      ]
+     },
+     {
+      "label": "Multistage",
+      "items": [
+       "Clusters, then households",
+       "Standard for NFHS, PLFS, HCES"
+      ]
+     }
+    ],
+    "caption": "how units are chosen"
+   },
+   "key_terms": [
+    {
+     "term": "Sampling error",
+     "meaning": "Chance difference between estimate and truth."
+    },
+    {
+     "term": "Non-sampling error",
+     "meaning": "Frame gaps, refusals, misunderstanding and processing slips."
+    },
+    {
+     "term": "PSU",
+     "meaning": "Primary sampling unit, the first-stage cluster."
+    },
+    {
+     "term": "Square-root law",
+     "meaning": "Four times the sample halves the error."
+    },
+    {
+     "term": "Frame",
+     "meaning": "The list from which a sample is drawn."
+    }
+   ],
+   "worked_example": {
+    "title": "Standard error and interval for Nepal's stunting",
+    "setup": "Nepal DHS 2022: p = 0.248 and n = 2,687 measured children.",
+    "steps": [
+     "p(1 − p): 0.248 × 0.752 = 0.1865.",
+     "Divide by n and take the root: 0.1865 ÷ 2,687 = 0.0000694, and its square root is 0.00833, so SE is 0.83 points.",
+     "95% margin: 1.96 × 0.83 = 1.63 points.",
+     "Interval: 24.8 − 1.63 = 23.17 and 24.8 + 1.63 = 26.43, about 23.2% to 26.4%.",
+     "Quadruple the sample: 400 × 4 = 1,600, which halves the margin."
+    ],
+    "answer": "SE about 0.83 points and an interval of 23.2% to 26.4%, before any design effect."
+   },
+   "mistakes": [
+    "Treating a convenience sample as if its error could be computed.",
+    "Reporting a margin of error as if it covered measurement and frame problems.",
+    "Ranking districts on estimates built from a few hundred children.",
+    "Assuming a bigger survey is always more accurate when non-sampling error may grow."
+   ],
+   "recall": [
+    {
+     "q": "What makes probability sampling special?",
+     "a": "Every unit has a known, non-zero chance of selection."
+    },
+    {
+     "q": "What does a larger sample do to non-sampling error?",
+     "a": "It does not shrink it, and may add to it if supervision thins out."
+    },
+    {
+     "q": "How many extra interviews cost the step from ±4.7 to ±2.3 points?",
+     "a": "1,200 extra interviews."
+    },
+    {
+     "q": "Whom do household surveys under-cover?",
+     "a": "People in institutions, the houseless, many seasonal migrants and unlisted settlements."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Survey weights and design effects",
+   "big_idea": "Weights undo deliberate over-sampling. **Declare weights, strata and PSUs**, and keep the whole sample when you analyse a subgroup.",
+   "in_plain_words": [
+    "A design weight is the inverse of the selection probability. Surveys sample some groups at higher rates, so unweighted shares are wrong by construction. NFHS weights divide by 1,000,000 and are relative, so they give correct proportions but no totals. PLFS uses the MLTS rules, with /100 or /200 depending on NSS and NSC.",
+    "Clustering cuts precision through the design effect, deff ≈ 1 + (m − 1)ρ, and stratification usually helps. Tell the software about weights, PSUs and strata. **Reproduce one published figure to the decimal** before you compute anything new."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Design weight",
+      "hint": "households represented"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "1",
+      "hint": ""
+     },
+     {
+      "op": "÷"
+     },
+     {
+      "t": "Selection probability",
+      "hint": "1 in 500 gives 500"
+     }
+    ],
+    "note": "then adjust for non-response and scale to known totals"
+   },
+   "key_terms": [
+    {
+     "term": "Design weight",
+     "meaning": "The inverse of a unit's probability of selection."
+    },
+    {
+     "term": "v005",
+     "meaning": "The NFHS women's weight; divide by 1,000,000."
+    },
+    {
+     "term": "MLTS",
+     "meaning": "The PLFS multiplier calculated at second-stage stratum level."
+    },
+    {
+     "term": "Design effect",
+     "meaning": "How much clustering inflates the variance."
+    },
+    {
+     "term": "Intra-cluster correlation",
+     "meaning": "The share of variation lying between clusters."
+    }
+   ],
+   "worked_example": {
+    "title": "A weight changes the answer",
+    "setup": "Illustrative: 400 urban households (selection 1 in 500, mean MPCE ₹7,000) and 400 rural households (1 in 2,000, mean ₹4,000).",
+    "steps": [
+     "Households represented: 400 × 500 = 200,000 urban and 400 × 2,000 = 800,000 rural.",
+     "Unweighted mean: 7,000 + 4,000 = 11,000, and 11,000 ÷ 2 = 5,500.",
+     "Weighted: 200,000 × 7,000 = 1,400,000,000, and 800,000 × 4,000 = 3,200,000,000.",
+     "Total spending: 1,400,000,000 + 3,200,000,000 = 4,600,000,000, and 4,600,000,000 ÷ 1,000,000 = 4,600.",
+     "Overstatement without weights: 5,500 − 4,600 = 900."
+    ],
+    "answer": "Weighted mean ₹4,600 against an unweighted ₹5,500, an overstatement of ₹900."
+   },
+   "mistakes": [
+    "Using the women's weight on men's data, or an unweighted figure for a population estimate.",
+    "Forgetting to divide NFHS weights by 1,000,000, which inflates counts a million-fold.",
+    "Using MLTS/100 for every combined PLFS estimate, which roughly doubles totals where NSS ≠ NSC.",
+    "Deleting rows to get a subgroup, which understates the SE."
+   ],
+   "recall": [
+    {
+     "q": "What is the NFHS weight variable for women and children?",
+     "a": "v005, divided by 1,000,000."
+    },
+    {
+     "q": "What is the PLFS weight where NSS ≠ NSC?",
+     "a": "MLTS ÷ 200."
+    },
+    {
+     "q": "What does Kish's formula for the design effect use?",
+     "a": "deff ≈ 1 + (m − 1)ρ, with m interviews per cluster and ρ the intra-cluster correlation."
+    },
+    {
+     "q": "How do you estimate for a subgroup in Stata?",
+     "a": "Use svy, subpop() and keep the whole sample."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Intervals, tests and p-values",
+   "big_idea": "An interval is a statement about the procedure and a p-value is surprise under the null. **Report the difference, its interval and the p-value together.**",
+   "in_plain_words": [
+    "A 95% interval equals the estimate ± 1.96 × SE. It covers sampling error only, and a narrow interval around a biased estimate is precisely wrong. To compare two estimates, compute the difference and its own SE. A hypothesis test asks how surprising the data would be if there were no difference.",
+    "The ASA statement warns that a p-value is not the probability that the hypothesis is true and does not measure effect size. Type I and II errors trade off. Many tests inflate false positives: with twenty independent tests the chance of at least one is 64%. **Name primary outcomes in a pre-analysis plan.**"
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Null",
+      "sub": "assume no difference"
+     },
+     {
+      "label": "Statistic",
+      "sub": "distance in SEs"
+     },
+     {
+      "label": "Reference",
+      "sub": "how often by chance?"
+     },
+     {
+      "label": "P-value",
+      "sub": "that probability"
+     },
+     {
+      "label": "Judgement",
+      "sub": "with effect size and context"
+     }
+    ],
+    "caption": "the logic of a hypothesis test"
+   },
+   "key_terms": [
+    {
+     "term": "Confidence interval",
+     "meaning": "Estimate ± 1.96 × SE for 95%."
+    },
+    {
+     "term": "p-value",
+     "meaning": "How surprising the data are if the null were true."
+    },
+    {
+     "term": "Type I error",
+     "meaning": "A false positive, with probability α."
+    },
+    {
+     "term": "Type II error",
+     "meaning": "A false negative, with probability β."
+    },
+    {
+     "term": "Pre-analysis plan",
+     "meaning": "A registered plan naming primary outcomes before data arrive."
+    }
+   ],
+   "worked_example": {
+    "title": "Tutored schools against comparison schools",
+    "setup": "Illustrative: 100 children per group, means 52 and 47 marks, SD 20 in both groups.",
+    "steps": [
+     "Difference: 52 − 47 = 5 marks.",
+     "SE of the difference: 20 × 0.1414 = 2.83.",
+     "t statistic: 5 ÷ 2.83 = 1.77, a two-sided p of about 0.08.",
+     "95% margin: 1.96 × 2.83 = 5.55, about 5.5, so the interval is −0.5 to 10.5 marks, since 5 + 5.5 = 10.5.",
+     "Read it as consistent with no effect and with a gain of about half an SD."
+    ],
+    "answer": "Difference 5 marks, t = 1.77, p ≈ 0.08; the study is too small to settle the question."
+   },
+   "mistakes": [
+    "Reading p = 0.08 as proof that the programme failed. The study may be too small.",
+    "Treating a significant p-value as proof that an effect is large or important.",
+    "Reporting only the three significant outcomes out of twenty tested.",
+    "Assuming overlapping intervals mean no significant difference."
+   ],
+   "recall": [
+    {
+     "q": "What does a 95% interval say?",
+     "a": "About 95% of intervals built the same way would contain the true value."
+    },
+    {
+     "q": "What is the chance of at least one false positive in 20 independent tests at 5%?",
+     "a": "64%."
+    },
+    {
+     "q": "What are the two kinds of error in testing?",
+     "a": "Type I, a false positive with probability α, and type II, a false negative with probability β."
+    },
+    {
+     "q": "What did the NFHS-4 to NFHS-5 stunting test show?",
+     "a": "A fall of 2.9 points was far beyond sampling noise, with z about 20."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Correlation, causation, regression",
+   "big_idea": "A significant association can still mislead. **Only the design of the comparison** supports a causal claim.",
+   "in_plain_words": [
+    "Pearson's r measures straight-line association, and r² shows the share of variation explained. Look at the scatter before reporting r. An association can arise from confounding, reverse causation or selection, and each can be real and significant.",
+    "Simpson's paradox shows an aggregate reversing the groups. Regression gives a slope with units, and controls compare like with like but can introduce bias if they follow the cause. Randomised trials, difference-in-differences, regression discontinuity and instruments make causal claims. **State the unit in every sentence**, since district patterns are not individual facts."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Why an association misleads",
+    "children": [
+     {
+      "label": "Confounding",
+      "items": [
+       "A third factor drives both",
+       "Schooling goes with land and roads"
+      ]
+     },
+     {
+      "label": "Reverse causation",
+      "items": [
+       "The outcome drives the cause",
+       "Richer villages form more groups"
+      ]
+     },
+     {
+      "label": "Selection",
+      "items": [
+       "Programme villages not random",
+       "NGOs pick easier places"
+      ]
+     }
+    ],
+    "caption": "the design of the comparison tells them apart"
+   },
+   "key_terms": [
+    {
+     "term": "Pearson's r",
+     "meaning": "A −1 to +1 measure of straight-line association."
+    },
+    {
+     "term": "Confounder",
+     "meaning": "A third factor that drives both variables."
+    },
+    {
+     "term": "Simpson's paradox",
+     "meaning": "An aggregate reverses the pattern inside each group."
+    },
+    {
+     "term": "Omitted variable bias",
+     "meaning": "A left-out factor pushes a coefficient up or down."
+    },
+    {
+     "term": "Ecological fallacy",
+     "meaning": "Reading group averages as individual facts."
+    }
+   ],
+   "worked_example": {
+    "title": "Simpson's paradox in a scheme",
+    "setup": "Illustrative institutional births. Urban: users 90 of 100, non-users 160 of 200. Rural: users 120 of 400, non-users 25 of 100.",
+    "steps": [
+     "Urban: 90 ÷ 100 = 90% users and 160 ÷ 200 = 80% non-users.",
+     "Rural: 120 ÷ 400 = 30% users and 25 ÷ 100 = 25% non-users.",
+     "All areas, users: 90 + 120 = 210, and 210 ÷ 500 = 42%.",
+     "All areas, non-users: 160 + 25 = 185, and 185 ÷ 300 = 62%.",
+     "Users do better in both areas and worse overall, because most users are rural."
+    ],
+    "answer": "Users lead 90% to 80% and 30% to 25% within areas, but trail 42% to 62% overall."
+   },
+   "mistakes": [
+    "Reporting r without looking at the scatter plot.",
+    "Reading the intercept as a finding when x = 0 lies outside the data.",
+    "Controlling for a variable the treatment itself changed.",
+    "Using causal verbs, such as 'drives', on a correlation."
+   ],
+   "recall": [
+    {
+     "q": "What does r² of 0.25 mean?",
+     "a": "A straight line accounts for a quarter of the variation; three-quarters lies elsewhere."
+    },
+    {
+     "q": "How is a regression slope read?",
+     "a": "As the average change in y when x is one unit higher, 'associated with' unless the design supports a causal reading."
+    },
+    {
+     "q": "Which design relies on parallel trends?",
+     "a": "Difference-in-differences."
+    },
+    {
+     "q": "Why weight districts by population?",
+     "a": "An unweighted district analysis gives Lakshadweep and Thane equal votes."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Effect sizes and power",
+   "big_idea": "A p-value says whether, an effect size says how much. **Size a study by its minimum detectable effect** before you collect any data.",
+   "in_plain_words": [
+    "Report raw effects in natural units first, standardised effects second. Cohen's 0.2, 0.5 and 0.8 are rough guides, and context beats convention: 0.2 SD on learning is substantial in South Asian schools. Translate standardised results back into marks or other units for a district officer.",
+    "Power is the probability of detecting a real effect, designed at 80% with a 5% level. More sample or a larger effect raises it, and variance, intra-cluster correlation and a stricter α lower it. Underpowered studies mislead twice, with false reassurance and exaggerated discoveries. **Ask how the MDE was calculated and from which data.**"
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Statistical power",
+    "spokes": [
+     {
+      "label": "Sample size",
+      "sub": "and number of clusters"
+     },
+     {
+      "label": "True effect size",
+      "sub": "raises power"
+     },
+     {
+      "label": "Outcome variance",
+      "sub": "lowers power"
+     },
+     {
+      "label": "Cluster correlation",
+      "sub": "intra-cluster, lowers power"
+     },
+     {
+      "label": "Strictness of alpha",
+      "sub": "5% to 1% lowers power"
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "Effect size",
+     "meaning": "How large an effect is, in natural or SD units."
+    },
+    {
+     "term": "Cohen's d",
+     "meaning": "Difference in means divided by an SD."
+    },
+    {
+     "term": "MDE",
+     "meaning": "The minimum detectable effect a design can find."
+    },
+    {
+     "term": "Type M error",
+     "meaning": "An exaggerated estimate from a low-powered study."
+    },
+    {
+     "term": "Take-up",
+     "meaning": "The share of the treatment group that participates."
+    }
+   ],
+   "worked_example": {
+    "title": "Minimum detectable effect, two designs",
+    "setup": "N = 1,000, half treated, 5% two-sided, 80% power, outcome in SD units.",
+    "steps": [
+     "z values: 1.96 + 0.84 = 2.80.",
+     "Share term: √[1 ÷ (0.5 × 0.5)] is √4, which is 2.",
+     "Sample term: √(1 ÷ 1,000) is 0.0316.",
+     "MDE: 2.80 × 2 × 0.0316 = 0.177 SD.",
+     "With 50 villages of 20 and deff 1.95, multiply by √1.95 = 1.40: 0.177 × 1.40 = 0.25 SD, about 40% larger."
+    ],
+    "answer": "0.177 SD with individual randomisation and about 0.25 SD when clustered."
+   },
+   "mistakes": [
+    "Calling an effect small because Cohen's labels say so, without comparing it with other programmes and cost.",
+    "Running a power calculation after a null result to explain it away.",
+    "Ignoring partial take-up. At 60% take-up the sample needed rises by a factor of 2.8.",
+    "Trusting a striking effect from a small pilot."
+   ],
+   "recall": [
+    {
+     "q": "What is the conventional power and significance level?",
+     "a": "80% power at a 5% significance level."
+    },
+    {
+     "q": "In clustered designs, what matters more?",
+     "a": "The number of clusters, more than households per cluster."
+    },
+    {
+     "q": "What is a type M error?",
+     "a": "An exaggerated magnitude: a low-powered study that crosses p < 0.05 usually overstates the effect."
+    },
+    {
+     "q": "What happens to the MDE if take-up is 60%?",
+     "a": "It grows by 1 ÷ 0.6, and the sample needed rises by 1 ÷ 0.6² = 2.8."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Reading and commissioning analysis",
+   "big_idea": "Read a table **title, N, notes, then coefficients**. Write the quantitative clauses into the terms of reference, because they cannot be obtained after the final payment.",
+   "in_plain_words": [
+    "A results table has a dependent variable with units, an N, notes on weights, clustering and the estimator, and then coefficients with reference categories. Check a t-statistic by dividing coefficient by SE. Turn each coefficient into an interval with coef ± 1.96 × SE, and say what the table does not identify.",
+    "Commissioning needs numbers on the page: sample size from a precision calculation, subgroups chosen before the sample is drawn, and clauses for weighting, a pre-analysis plan, design-based SEs and code. **Reproduce a published table first** when you use public microdata, and suspect your own code before the published figure."
+   ],
+   "diagram": {
+    "type": "stack",
+    "levels": [
+     {
+      "label": "Title and dependent variable",
+      "sub": "with units"
+     },
+     {
+      "label": "N and sample",
+      "sub": "does it match the methods?"
+     },
+     {
+      "label": "Notes",
+      "sub": "weights, clustering, estimator"
+     },
+     {
+      "label": "Coefficients",
+      "sub": "unit and reference category"
+     },
+     {
+      "label": "Intervals and meaning",
+      "sub": "what the table supports"
+     }
+    ],
+    "caption": "the order in which to read a results table"
+   },
+   "key_terms": [
+    {
+     "term": "Dependent variable",
+     "meaning": "The outcome the regression explains."
+    },
+    {
+     "term": "Clustered SE",
+     "meaning": "A standard error allowing for shared villages or schools."
+    },
+    {
+     "term": "Fixed effects",
+     "meaning": "Comparisons made only within units such as districts."
+    },
+    {
+     "term": "Conditional gap",
+     "meaning": "A difference holding listed variables constant."
+    },
+    {
+     "term": "Terms of reference",
+     "meaning": "The contract document stating deliverables."
+    }
+   ],
+   "worked_example": {
+    "title": "Check and interpret one row",
+    "setup": "Illustrative table: years of schooling coefficient 812, SE 140, dependent variable monthly earnings in rupees.",
+    "steps": [
+     "t-statistic: 812 ÷ 140 = 5.80.",
+     "Margin: 1.96 × 140 = 274.4.",
+     "Lower end: 812 − 274.4 = 537.6, so about ₹538.",
+     "Upper end: 812 + 274.4 = 1,086.4, so about ₹1,086.",
+     "Sizing a baseline: 589 × 1.95 = 1,148.6, rounded up to 1,149 interviews."
+    ],
+    "answer": "t = 5.80 and an interval of about ₹538 to ₹1,086 per year of schooling."
+   },
+   "mistakes": [
+    "Discussing only the starred coefficients in a table.",
+    "Accepting a table whose N changes between columns without explanation.",
+    "Reading a conditional gap in earnings as proof of discrimination.",
+    "Adding subgroup figures after the sample is drawn, which analysis cannot fix."
+   ],
+   "recall": [
+    {
+     "q": "In what order should a results table be read?",
+     "a": "Title and dependent variable, N, notes, then coefficients with units and reference categories."
+    },
+    {
+     "q": "What does R² = 0.21 mean?",
+     "a": "The model accounts for a fifth of the variation in earnings."
+    },
+    {
+     "q": "Name three quantitative clauses for a ToR.",
+     "a": "Any three of: sampling plan, power calculation, weighting note, questionnaires, pre-analysis plan, design-based SEs, de-identified data and code, data protection plan."
+    },
+    {
+     "q": "How should an unexpected estimate from microdata be treated?",
+     "a": "Suspect your code first."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Errors in published statistics",
+   "big_idea": "Many published errors are comparability errors: **definition, weight, denominator or round**. Check them before you accept a trend.",
+   "in_plain_words": [
+    "Questionnaire, recall period, design or processing can move an indicator as much as real change. The 2017–18 consumption survey was withheld and later surveys changed design, so comparisons with 2011–12 need care. A national average also hides groups: female participation is 63.7% for ST women and 31.3% for women of other social groups.",
+    "The review checklist lists ten errors, from points read as per cent to causal verbs on correlations. Look ahead too: Census 2027, monthly PLFS and new laws will create breaks. **Check the date of any break** before reading a trend."
+   ],
+   "diagram": {
+    "type": "timeline",
+    "events": [
+     {
+      "when": "15 Nov 2019",
+      "what": "2017–18 consumption survey withheld"
+     },
+     {
+      "when": "2025",
+      "what": "PLFS monthly indicators begin"
+     },
+     {
+      "when": "21 Nov 2025",
+      "what": "Four Labour Codes come into force"
+     },
+     {
+      "when": "1 Apr 2026",
+      "what": "Income-tax Act 2025 in force"
+     },
+     {
+      "when": "1 Jul 2026",
+      "what": "MGNREGA replaced by G RAM G Act"
+     },
+     {
+      "when": "1 Mar 2027",
+      "what": "Census reference date"
+     }
+    ],
+    "caption": "breaks in series to check, as of October 2026"
+   },
+   "key_terms": [
+    {
+     "term": "Comparability",
+     "meaning": "Same questionnaire, recall period, design and season."
+    },
+    {
+     "term": "Composition effect",
+     "meaning": "A national change driven by group shares."
+    },
+    {
+     "term": "Series break",
+     "meaning": "A date where a definition or law changes."
+    },
+    {
+     "term": "Percentage points",
+     "meaning": "The unit for a difference between percentages."
+    },
+    {
+     "term": "Reproduce a headline",
+     "meaning": "Match a published figure before new analysis."
+    }
+   ],
+   "worked_example": {
+    "title": "Fix two common errors",
+    "setup": "Error 1: 'Stunting fell by 2.9%' (NFHS-4 38.4%, NFHS-5 35.5%). Error 2: PLFS combined weight with MLTS 2,450,000 where NSS ≠ NSC.",
+    "steps": [
+     "Absolute change: 38.4 − 35.5 = 2.9 percentage points.",
+     "Relative change: 2.9 ÷ 38.4 = 7.6%.",
+     "Where NSS ≠ NSC the weight is MLTS ÷ 200: 2,450,000 ÷ 200 = 12,250.",
+     "Annual from four quarters: 12,250 ÷ 4 = 3,062.5.",
+     "The wrong MLTS ÷ 100 gives 24,500, double the right combined weight."
+    ],
+    "answer": "2.9 percentage points, or 7.6% relative; a combined annual weight of 3,062.5."
+   },
+   "mistakes": [
+    "Drawing a trend line through points from non-comparable rounds.",
+    "Quoting a district rank as fact without intervals.",
+    "Comparing a Census sex ratio with an NFHS one without naming the populations.",
+    "Attributing a national trend to a policy before checking within groups."
+   ],
+   "recall": [
+    {
+     "q": "Why was the 2017–18 consumption survey not released?",
+     "a": "MoSPI cited data quality issues."
+    },
+    {
+     "q": "What is the review fix for 'Stunting fell 2.9%'?",
+     "a": "Write 2.9 percentage points, or 7.6% relative."
+    },
+    {
+     "q": "What is the 40.3% figure in PLFS 2024?",
+     "a": "Female labour force participation for all women, 15+, usual status."
+    },
+    {
+     "q": "What is the one-sentence summary of the course?",
+     "a": "Know what was measured, among whom, how precisely and against what."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "2": "Use the agenda to see the arc: the first four sections are about what a number is and how to summarise it, then sampling, weights and error, then tests and regression, and finally commissioning and checking. If you only read reports, **focus on sections 5, 7 and 10**.",
+  "4": "Decide which role you play: reader, approver, funder or defender of a budget. Each asks for the same skill, which is knowing what a number can and cannot carry. The six outcomes at the end are **your self-test for the course**. Keep a pencil nearby, because every example shows its sums.",
+  "5": "Take each of the three headline figures and ask four things: how was it defined, among whom, over what period and with what margin of error. The slide says a reader who knows those four things can use the number well. **Quantitative literacy is a habit of asking.**",
+  "6": "Memorise the four questions: what was counted, who was asked and who was left out, how precise, and compared with what. Each row has a trap. The unemployment example shows that the same survey gives two rates. Use the questions as **a filter for every report** you review.",
+  "7": "Read the pipeline from left to right and remember that later stages cannot repair earlier ones. A brilliant regression on a badly worded question still answers the wrong question. The practical rule: **review a report from the left**. Read the questionnaire item, then the sampling, then the weights, then the coefficient.",
+  "8": "One survey, two unemployment rates: 3.2% on usual status and 4.9% on current weekly status for 2024. Neither is wrong, because they ask about different periods. Usual status looks back over 365 days and weekly status looks at seven. **Quote the status with the number, every time.**",
+  "9": "Find your own role among the three. Readers need to know what an indicator means and whether a difference is real. Commissioners need to ask for power calculations, weighting notes and code. Analysts run the numbers. The data protection paragraph is a reminder that **unit-level data about people carries legal duties**.",
+  "11": "Distinguish a case, which is a row, from a variable, which is a column, and then choose the unit of analysis. That choice decides which file and which weight you use. Note the warning about merging NFHS and PLFS files wrongly. **Write the unit of analysis into the first line** of every plan.",
+  "12": "Learn the four levels as a ladder of allowed arithmetic: nominal, ordinal, interval, ratio. The level limits what you may compute. A household may spend twice as much as another, since consumption is a ratio variable, but the richest wealth quintile is **not five times the poorest**. Ask which operations the numbers will bear.",
+  "13": "Treat numeric codes for categories as labels. A mean of 2.7 for social group describes nothing, because reordering the codes changes it. For a single satisfaction item, report the distribution, since a mean of 3.4 can hide strong disagreement. **Drop special codes such as 98 and 99 first**, or the mean will jump.",
+  "14": "Use the interval-ratio distinction to decide whether a percentage makes sense. A z-score of 0 is a reference point, so you cannot call one child twice as stunted as another. Consumption has a true zero, so 6,996 ÷ 4,122 = 1.70 is a fair ratio. **Check for a true zero** before computing a percentage change.",
+  "15": "Keep three rules. Report the share of zeros beside the mean when zeros are common. Never let a missing value silently become a zero, because earned nothing and did not answer are different facts. And read the codebook for how each was recorded. The MGNREGA note shows why **series across a law change need care**.",
+  "16": "Treat every indicator as a recipe: inputs plus a formula. The build is the definition. Note the two cautions on the slide. The unemployment rate divides by the labour force, so it can fall while the share of people working also falls. And MPCE gives every member the household average, **hiding inequality inside the household**.",
+  "17": "Walk the five steps from concept to indicator and notice that each arrow is a decision someone made. Unpaid work at the boundary of economic and domestic activity can move measured female participation by many points. **Find the operational definition in the annex** and ask for one if there is none.",
+  "18": "Separate validity from reliability. A scale that always reads 2 kg light is reliable and invalid. Validity is argued, and reliability can be tested with repeat measurement and back-checks. Look for age heaping and whole-centimetre heights in raw frequency tables. **They are signs of estimation**, visible before you compute anything.",
+  "20": "Match the centre to the question. Only the mean multiplies back to a total, so a finance department needs it. The median describes the typical household in skewed data. When mean and median are far apart, report both: **the gap tells you the data are lopsided** and which way.",
+  "21": "Work the sums yourself with the ten households. The mean is ₹5,540 and the median ₹2,900, because one landowner at 30,000 drags the mean. Remove him and the mean drops to ₹2,822. A report quoting the mean describes nobody, so **lead with the median in skewed data**.",
+  "22": "See the same lesson in real data. Rural India's mean MPCE of ₹4,122 sits above the median class, and the richest 5% average ₹10,137. Urban India is more skewed still, with a mean of ₹6,996 against 40th to 60th percentile classes of ₹5,622 and ₹6,334. **Consumption is skewed to the right.**",
+  "23": "A centre without a spread is half a description. Learn the four measures: range, interquartile range, variance and standard deviation. Pair the median with the IQR and the mean with the SD. Work the example: deviations squared sum to 40, 40 ÷ 4 = 10, SD 3.16. **Divide by n − 1** for a sample.",
+  "24": "Percentile ratios are easy to explain: the top 5% in rural India average 6.0 times the bottom 5%, and 8.5 times in urban India. The Gini compresses a whole distribution into one number, so very different distributions can share it. **Never compare a consumption Gini with an income Gini elsewhere.**",
+  "25": "Master the distinction. Stunting fell from 38.4% to 35.5%, which is 2.9 percentage points, or 7.6 per cent in relative terms. Writing 'fell by 2.9%' is wrong on both readings. The rule: **levels first, then the absolute change, then the relative change if it helps**.",
+  "26": "Before comparing two ratios, write down each numerator and denominator. The Census counts everyone, including institutions, while NFHS counts usual members of sampled households. That is why 943 females per 1,000 males and 1,020 are different measures. The NFHS sex ratio at birth, 929, **points the other way**.",
+  "27": "Percentage across the cause. Row percentages compare visited households with the rest: 240 ÷ 300 = 80% against 350 ÷ 700 = 50%. Column percentages answer a different question about who the users are. Mixing them gives sentences that sound like findings. The 30-point gap is **an association and nothing more yet**.",
+  "29": "Plot a variable before you summarise it. Read four things in any distribution: centre, spread, shape and outliers. Two peaks usually mean two populations mixed together, such as rural and urban, which should be analysed apart. **A summary assumes a shape, and the plot checks it.**",
+  "30": "Remember the 68–95–99.7 rule and the exact figure 1.96 for 95%. That 1.96 sits behind every confidence interval in section 7. Many averages of repeated samples are bell-shaped. But income, consumption, land and loans are not normal, so **do not apply normal-based rules to raw values**.",
+  "31": "A z-score says how many SDs a value sits from a reference. The worked child measures 82.0 cm against a median of 87.1 and an SD of 3.2, giving −1.59, short but above the −2 cut-off. Because stunting is a cut-off, **report the mean z-score beside the prevalence**.",
+  "32": "Skewed variables suit medians and the log scale. Equal ratios become equal distances on a log scale, so ₹2,000 to ₹4,000 equals ₹10,000 to ₹20,000. A log coefficient of 0.08 means about 8% higher. And the log of zero is undefined, so **ask how zeros were handled**.",
+  "33": "Code binary outcomes 1 and 0 and the mean becomes the proportion: a mean of 0.36 reads as 36%. The variance p(1 − p) peaks at p = 0.5, which is why sample size calculations often assume 50%. Counts are right-skewed, so **their SD often exceeds the symmetric expectation**.",
+  "34": "Look for fingerprints in frequency tables: ages heaped on 0 and 5, heights rounded to whole centimetres, and a mis-programmed skip that removes a category for one field team. None of these appear in a table of means. A wrong age shifts a child's z-score, so **check impossible values against the questionnaire**.",
+  "35": "This is the hinge of the deck. We see one sample, yet the central limit theorem tells us how far that estimate is likely to sit from the truth. The standard error is the SD of the sampling distribution. **Keep two SDs apart**: the variable's SD describes people and the SE describes the estimate.",
+  "37": "Understand why a sample of well under 1% of households can describe a state. Precision depends mainly on the sample size and very little on the share sampled. That works only because of probability selection, with known chances for every unit. A convenience sample's error **cannot be computed at all**.",
+  "38": "Learn the five designs and their cost to precision: stratified usually helps, cluster usually hurts, and multistage combines both. Know which units in a survey are clusters and which are strata, because **you need both facts to compute correct standard errors**. The sampling chapter tells you.",
+  "39": "Split error into two. Sampling error is random, shrinks with the sample and is what a confidence interval describes. Non-sampling error, from frames, refusals and measurement, can be systematic and does not shrink with sample size. In large national surveys it often exceeds the first. **A margin of error addresses only half the problem.**",
+  "40": "Work the Nepal example line by line: 0.248 × 0.752 = 0.1865, divided by 2,687, square root 0.00833, so an SE of 0.83 points. The 95% interval is 23.2% to 26.4%. Three habits from the slide: **square-root of p(1−p)/n, multiply by 1.96, treat the result as a floor** until the design effect is applied.",
+  "41": "Read the table before the bars. The sample sizes range from 2,687 children in Nepal to 206,407 in India, because NFHS-5 was designed for district estimates. The survey years also differ, so the bars are not one moment. Note the closing remark that NFHS-6 is **not yet in the DHS API**.",
+  "42": "Compare the two calculations. Nationally the 95% interval is ±0.21 points. For a district of 300 children it is ±5.4, or ±7.6 with a design effect of 1.95. District ranks therefore rest on noise: **ask for the interval before acting on a rank**, and prefer groupings to exact positions.",
+  "43": "Study the square-root law: quadruple the sample to halve the error. The margin falls from ±9.3 at n = 100 to ±4.7 at 400, ±2.3 at 1,600 and ±1.2 at 6,400. Precision gets expensive at the margin, so **decide what precision the decision needs** before you buy the survey.",
+  "44": "Check who sits outside the frame: institutions, the houseless, many seasonal migrants. For some topics those are the very people the question is about. Non-response bias is not fixed by more interviews with the reachable. **Ask for response rates by stratum** and a comparison with a known benchmark.",
+  "46": "A design weight is the inverse of the chance of selection. A household selected with probability 1 in 500 stands for 500 households. Samples deliberately over-represent small states or urban areas, and weights undo that. **An unweighted figure needs a reason**; a weighted estimate is the default.",
+  "47": "Work this example by hand. Equal samples of 400 urban and 400 rural households give an unweighted mean of ₹5,500. The weights restore four rural households for every urban one and the weighted mean falls to ₹4,600. The unweighted figure overstates by ₹900, **purely because of the sample's mix**.",
+  "48": "For NFHS and DHS data, divide v005 by 1,000,000 and match the weight variable to the unit: hv005, v005, mv005 or d005. These are relative weights, so they give correct proportions but not population totals. The quiet error: **forgetting the division leaves means intact and breaks counts and sometimes SEs**.",
+  "49": "PLFS weights come from the MLTS rules. Divide by 100 for a single sub-sample or where NSS = NSC, and by 200 where NSS ≠ NSC, then by the number of quarters for annual figures. Apply the rule record by record. Using MLTS/100 everywhere **roughly doubles totals** in some strata while rates barely move.",
+  "50": "Treat this table as a debugging guide. Each mistake leaves a symptom you can check. The fastest test is the last paragraph: **reproduce one headline number from the official report, to the decimal**, before you compute anything new. If you cannot, the fault is usually in the weights, filters or merge.",
+  "51": "Households in a village resemble each other, so twenty from one village carry less information than twenty from twenty villages. Kish's formula deff ≈ 1 + (m − 1)ρ quantifies it. With m = 20 and ρ = 0.05, deff = 1.95 and SEs grow by 1.40. **Even a small ρ matters when clusters are large.**",
+  "52": "Compare the three design features. Stratification usually helps, with a design effect below 1. Unequal weights add variance. Clustering saves cost and costs precision. A single reported design effect is an average, so **look for the sampling-errors appendix** for the indicators you care about.",
+  "53": "Weights fix the point estimate, but correct SEs also need the PSUs and strata. In Stata that is svyset with v021 and v022 for DHS files. For subgroups, use subpop or subset and **never delete rows**, which discards PSUs and understates the error. Ask any analyst the three short questions on the slide.",
+  "54": "Use this as a pre-submission checklist. Its items run from the right file and weight to declaring PSU and strata, subpopulation options, reproducing a published figure and flagging small denominators. The last line is the one to keep: **keep the weighting code in the deliverable**, so a reviewer can rerun it.",
+  "56": "A 95% interval is a statement about the procedure: repeat the survey and about 95% of the intervals would contain the true value. Write results as an estimate with its interval. A narrow interval around a biased estimate is **precisely wrong**, since the interval covers sampling error only.",
+  "57": "Follow the Pakistan example: SE 0.82 points and an interval of 36.0% to 39.2%. Allowing for an illustrative design effect of 2 widens it to 35.3% to 39.9%. The lesson for reports: **if an interval says nothing about design, assume it is too narrow**. Look for design-based SEs.",
+  "58": "Compare two estimates by testing the difference with its own SE. Nepal 24.8% and Bangladesh 23.6% differ by 1.2 points, the SE of the difference is 1.05, and z = 1.14 is below 1.96. The overlap shortcut works one way only: **non-overlapping intervals imply significance, overlapping ones do not rule it out**.",
+  "59": "Follow the logic as five steps: assume no difference, compute how many SEs away the data are, ask how often that happens by chance, read the p-value and judge it with effect size and context. Use two-sided tests by default. **Choose a one-sided test before seeing the data**, with a stated reason.",
+  "60": "Learn the six ASA principles, and especially the fifth: a p-value does not measure the size or importance of an effect. A tiny effect in a huge sample can give p < 0.001. The quote closes the point: **the p-value was never a substitute for scientific reasoning**.",
+  "61": "Work the tutoring example: a 5-mark difference with SE 2.83 gives t = 1.77 and p ≈ 0.08, and the interval runs from −0.5 to 10.5 marks. The better reading is the range of effects the data allow, which is more informative than a verdict. **Report the difference, interval and p-value together.**",
+  "62": "Apply the test to real rounds. The fall in stunting from 38.4% to 35.5% has an SE of 0.15 points, so z ≈ 20, far beyond noise. But significance settles only chance. Whether 2.9 points is large for policy, and what caused it, are **separate questions**.",
+  "63": "Fill the two-by-two table from memory: type I is a false positive with probability α, type II a false negative with probability β = 1 − power. Demanding stronger evidence lowers one and raises the other. A study with 50% power misses a real effect half the time, so **its null is a weak finding**.",
+  "64": "Work out why many tests mislead: with twenty independent tests at 5%, the chance of at least one false positive is 64%. An evaluation testing many outcomes and subgroups and reporting the three significant ones has told you little. **Require a pre-analysis plan** and full reporting of every outcome.",
+  "66": "Treat r as a number from −1 to +1 for straight-line association only. Square it to see the share explained: r = 0.5 gives 0.25, so three-quarters of the variation lies elsewhere. A U-shaped relation can have r near 0. **Always look at the scatter plot before reporting r.**",
+  "67": "Read a scatter plot in this order: direction, form, strength, exceptions. In the illustration thirteen districts follow a rising line and one sits well above it. The plot shows where to look and leaves the reason open. Remember the closing point: **richer districts tend to have both**, so literacy and births may simply travel together.",
+  "68": "Memorise three reasons an association misleads: confounding, reverse causation and selection. Each can produce a real, reproducible, significant association. Significance cannot say which story is true; **the design of the comparison can**. The Causal Inference and Impact Evaluation decks carry this further.",
+  "69": "Check the arithmetic in the table: users do better in urban (90% against 80%) and rural areas (30% against 25%), yet worse overall (42% against 62%), because users are mostly rural. **Look within groups before trusting a total** whenever baselines differ widely.",
+  "70": "Regression finds the best-fitting line. The slope answers how much y changes when x is one unit higher: ₹812 more per year of schooling in the example. Say 'associated with'. The intercept is the prediction at zero and is **often outside the data**, so it is rarely worth interpreting.",
+  "71": "Adding controls lets you compare like with like, much as the Simpson's table did. Leaving out a variable that affects earnings and goes with schooling pushes the schooling coefficient up. And controlling for something the treatment changed removes part of the effect. **Choose controls fixed before the cause** and say why.",
+  "72": "Use the table as a translation guide from coefficients to plain language. Always find the units of y and x, and for a dummy find the omitted category, since the coefficient is a comparison with it. For logs, the simple reading works below about 0.1. **Above that, compute e to the b minus 1.**",
+  "73": "Match the design to the source of comparison: lottery, change over time, a cut-off, an instrument or controls. The design, decided before the data, makes the causal claim and regression is only the arithmetic. Regression with controls is the weakest, so **state it plainly**.",
+  "74": "A correlation across districts describes districts. It does not show that literate women are more likely to deliver in hospitals, although that may also be true. Group-level associations are often stronger than individual ones and can even flip sign. **State the unit in every sentence** and use unit-level data for questions about people.",
+  "76": "A p-value says whether an effect is distinguishable from zero and an effect size says how large it is. Report raw effects in natural units first, then standardised ones. From the tutoring study, d = 5 ÷ 20 = 0.25. **Policy decisions turn on the size** as well as on the p-value.",
+  "77": "Cohen offered 0.2, 0.5 and 0.8 as rough guides for psychology. Use them cautiously: in South Asian school programmes 0.2 SD on learning is substantial, and a cheap programme with d = 0.1 that reaches millions can matter more. **Judge an effect against other programmes, its cost and the decision it informs.**",
+  "78": "Use the two Indian experiments as benchmarks: remedial teaching moved from 0.14 to 0.28 SD and computer-assisted learning from 0.35 to 0.47 SD. Translate back into marks, as the example does with 0.28 × 20 = 5.6. Standardised effects depend on the SD used, so **check which SD a paper used**.",
+  "79": "Know the four ingredients that move power: more sample or true effect raises it, while more variance, higher intra-cluster correlation and a stricter α lower it. Compute power before data collection and never to explain away a null. In clustered designs, **add villages before you add households per village**.",
+  "80": "Work the minimum detectable effect: 2.80 × 2 × 0.0316 = 0.177 SD for 1,000 people with half treated. Clustering at deff 1.95 lifts it to 0.247 SD, about 40% larger. If the programme moves the outcome by 0.15 SD, neither design is big enough, and **you have to change the design or not run it**.",
+  "81": "Work the sample size to detect a fall in stunting from 35% to 30%: 7.85 × 0.4375 ÷ 0.0025 gives 1,374 per arm, and 2,679 with the design effect. Halving the effect roughly quadruples the sample. Many evaluations therefore pick **a more sensitive outcome**, such as mean z-score.",
+  "82": "Underpowered studies mislead twice. A null from a small study gets read as 'the programme did not work', and the interval would show large benefits were not ruled out. A significant result from a small study is usually exaggerated, which the slide calls a type M error. **Distrust a striking pilot effect.**",
+  "83": "Use the table as questions in a commissioning meeting. A good answer names the primary outcome, gives the MDE with its formula, sources the variance and ρ, states clusters and adjusts for take-up. If only 60% take part, **the sample needed rises by a factor of 2.8**.",
+  "85": "Read a results table in order: title and dependent variable with units, then N, then the notes on weights and clustering, then each coefficient with its unit and reference category. Check a t-statistic yourself: 812 ÷ 140 = 5.80. **Transcription errors are common**, so spot-check a row or two.",
+  "86": "Turn coefficients into intervals with coef ± 1.96 × SE. Schooling runs from ₹538 to ₹1,086. The table supports a conditional gap in earnings, but it does not identify discrimination and it is silent on women outside paid work. R² = 0.21 means a fifth of the variation, and **a low R² does not make coefficients wrong**.",
+  "87": "Read the notes under the table as carefully as the coefficients. Clustered SEs are needed when observations share villages, fixed effects mean within-district comparisons, and star legends vary. Stop and ask when N changes unexplained or only starred results are discussed. **Ask for code and a log file.**",
+  "88": "Follow the sizing from a ±4 point margin: 589 women, 1,149 with the design effect and 1,277 with non-response. The subgroup problem is the lesson: 230 SC women give ±8.9 points. **Decide the subgroups to be reported before the sample is drawn**, since analysis cannot fix it afterwards.",
+  "89": "Use this table to place your question before you pick a method. Each row gives a summary and what to report with it. The last line is a project-management tip: most disputes about analysis are disputes about **which row a question belongs in**, so settle it in the terms of reference.",
+  "90": "Tick the checklist for the number and for the comparison. The slide allows one exit: if an item cannot be ticked, you may still quote the number, with the gap stated. The comparison items insist on the same definition, a tested difference and **causal language only with a causal design**.",
+  "91": "Write these eight clauses into the terms of reference. The slide gives the reason in its last line: each clause costs little at the start and is nearly impossible to obtain after the final payment. Most important are the **pre-analysis plan, design-based SEs and code and log files** as deliverables.",
+  "92": "Work with microdata in the order the slide gives: read the README and questionnaire, reproduce one published table exactly, then compute new estimates with the design variables, and log every filter and recode. If an estimate surprises you, **suspect your code first**. Do not try to link microdata to other sources.",
+  "94": "Before you compare rounds, ask whether the questionnaire, recall period, sample design and season matched. The 2017–18 consumption survey was not released, and later surveys changed design, so comparisons with 2011–12 need care. **A trend line through non-comparable points** is the commonest error in published charts.",
+  "95": "Look at the groups under the average. Female participation is 63.7% for ST women, 40.3% for all women and 31.3% for women of 'others', a gap of more than 30 points. Before attributing a national trend to a policy, **check whether it holds within groups**, and use standard errors for small samples.",
+  "96": "Use the ten errors as a review checklist. Each has a typical form and a fix, such as writing 2.9 percentage points instead of 2.9%, or naming usual status. The slide notes that every example appears earlier with sources and arithmetic. **Run a draft report against the whole list.**",
+  "97": "Watch for breaks in the data: Census 2027 will refresh frames and totals, PLFS now publishes monthly figures with wider margins, and several laws changed in 2025 and 2026. A 0.2-point monthly move is usually noise. Where a series tracks a law, **check the date of the break** before reading a trend.",
+  "98": "Read the ten ideas as the course in miniature, and test yourself by explaining each in a sentence. The final line compresses them: know what was measured, among whom, how precisely and against what. **Weights, precision and design** recur across the list.",
+  "99": "Choose your next course by the gap you want to fill. Statistics Without Code works the same ideas in spreadsheets, and Survey Design covers questionnaires and sampling. The slide suggests an order for a practitioner: **Survey Design, then Exploratory Data Analysis, then Bivariate Analysis and Impact Evaluation**."
+ }
+}
