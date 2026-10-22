@@ -1,0 +1,1274 @@
+{
+ "slug": "causal-inference",
+ "intro": "Read the deck for the facts and these notes for the thinking. Each note explains a slide, tells you what to remember and warns you where people slip. Work the exercises in pencil, check yourself with the questions, and write your own notes in the space beside mine.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "Why causal questions are hard",
+   "big_idea": "A causal question asks what would change if someone acted differently, and **the answer compares the world we see with a world we never see.**",
+   "in_plain_words": [
+    "Programme teams ask three kinds of question. Descriptive ones ask what is the case, predictive ones ask what we expect next, and causal ones ask what would change if someone did something differently. Only the third tells a ministry whether to spend money. A wrong causal answer costs money and lives, because every large programme is a bet about cause and effect.",
+    "Four routes lead from a real pattern to a false conclusion: selection, confounding, reverse causation, and chance combined with choice of analysis. The credibility revolution rewarded economists who asked where the variation in treatment came from. Each design in this course is a defence against one or more of the four routes."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Pattern",
+      "sub": "participants do better"
+     },
+     {
+      "label": "Question",
+      "sub": "better than whom?"
+     },
+     {
+      "label": "Check",
+      "sub": "why did they participate?"
+     },
+     {
+      "label": "Design",
+      "sub": "variation they did not choose"
+     },
+     {
+      "label": "Claim",
+      "sub": "effect, assumptions stated"
+     }
+    ],
+    "caption": "the route from a pattern to a defensible claim"
+   },
+   "key_terms": [
+    {
+     "term": "Causal effect",
+     "meaning": "Outcome with treatment minus outcome the same unit would have had without it."
+    },
+    {
+     "term": "Association",
+     "meaning": "A pattern where two things tend to move together."
+    },
+    {
+     "term": "Selection",
+     "meaning": "Programme takers differ from non-takers in ways that also shape the outcome."
+    },
+    {
+     "term": "Confounding",
+     "meaning": "A third factor drives both treatment and outcome."
+    },
+    {
+     "term": "Reverse causation",
+     "meaning": "The outcome drives the treatment."
+    }
+   ],
+   "worked_example": {
+    "title": "Sort three questions",
+    "setup": "Use the deck's categories to label each question and name the evidence that answers it.",
+    "steps": [
+     "'What share of births in Bihar happen in a health facility?' It asks what is the case: descriptive. A weighted survey such as NFHS answers it.",
+     "'Which blocks will report the most malnourished children next year?' It asks what to expect: predictive. A model that fits past data answers it.",
+     "'Did a cash incentive to mothers raise facility births?' It asks what would change if someone acted differently: causal.",
+     "The causal question needs a comparison that stands in for the births that would have happened without the incentive."
+    ],
+    "answer": "Descriptive, predictive, causal. Only the third needs a counterfactual."
+   },
+   "mistakes": [
+    "Reading a correlation as an effect. Banks open branches where incomes already exist, so branches and incomes move together.",
+    "Reading the wrong arrow. Tuberculosis budgets follow caseloads, so spending and cases rise together.",
+    "Trusting a regression because it has many controls. Ask where the variation in treatment came from.",
+    "Reporting only the result that came out significant. With enough subgroups, something will look significant."
+   ],
+   "recall": [
+    {
+     "q": "Which of descriptive, predictive and causal questions tells a ministry whether to spend money?",
+     "a": "The causal question."
+    },
+    {
+     "q": "Name the four ways to go wrong.",
+     "a": "Selection, confounding, reverse causation, and chance plus choice of analysis."
+    },
+    {
+     "q": "Which scheme is the running example, and in what year did it start?",
+     "a": "The Janani Suraksha Yojana, in 2005."
+    },
+    {
+     "q": "What did the 2019 and 2021 Nobel prizes reward?",
+     "a": "The shift to asking where the variation in treatment comes from."
+    },
+    {
+     "q": "Which other 101 courses cover regressions and sample size?",
+     "a": "Econometrics 101 covers regressions; Impact Evaluation 101 covers sample size and power."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Potential outcomes and the counterfactual",
+   "big_idea": "Every unit has two potential outcomes and we see one, so **every method fills in the missing one** with something defensible.",
+   "in_plain_words": [
+    "For each unit there is an outcome if treated, Y(1), and one if untreated, Y(0). The causal effect is the difference, and only one of the two is ever observed. Holland called this the fundamental problem of causal inference. The way out is to estimate averages by finding a group whose untreated average stands in for the treated group's missing one.",
+    "A naive comparison equals the effect plus selection bias. The right average depends on the policy question: ATE for everyone, ATT for the treated, ITT for the offer, LATE for those who respond. Comparison groups and before-after comparisons both work as counterfactuals, and each brings its own assumption. SUTVA adds no spillovers and one version of treatment."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Observed gap",
+      "hint": "treated minus untreated"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "ATT",
+      "hint": "effect on the treated"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Selection bias",
+      "hint": "gap with no programme"
+     }
+    ],
+    "note": "each design attacks the selection bias term"
+   },
+   "key_terms": [
+    {
+     "term": "Potential outcomes",
+     "meaning": "Y(1) if treated and Y(0) if untreated, for each unit."
+    },
+    {
+     "term": "Estimand",
+     "meaning": "The average effect a study aims to estimate, such as ATE, ATT, ITT or LATE."
+    },
+    {
+     "term": "Counterfactual",
+     "meaning": "The outcome that would have occurred without the treatment."
+    },
+    {
+     "term": "Selection bias",
+     "meaning": "The difference between groups that would exist even with no treatment."
+    },
+    {
+     "term": "SUTVA",
+     "meaning": "No spillovers between units, and one version of treatment."
+    }
+   ],
+   "worked_example": {
+    "title": "Split the gap in the tailoring table",
+    "setup": "Illustrative figures from the deck: three women trained and two did not. Rupees a month.",
+    "steps": [
+     "Observed mean, trained: 6,000 + 7,000 + 5,500 = 18,500, and 18,500 ÷ 3 = 6,167.",
+     "Observed mean, untrained: 2,500 + 2,000 = 4,500, and 4,500 ÷ 2 = 2,250.",
+     "Naive gap: 6,167 − 2,250 = 3,917.",
+     "True effect on the trained, from the individual effects: 1,000 + 500 + 1,500 = 3,000, and 3,000 ÷ 3 = 1,000.",
+     "Selection bias is the rest: 3,917 − 1,000 = 2,917."
+    ],
+    "answer": "The naive gap of ₹3,917 holds ₹1,000 of effect and ₹2,917 of selection bias."
+   },
+   "mistakes": [
+    "Hoping more data of the same kind solves the problem. A million participants still tell you nothing about what they would have done otherwise.",
+    "Reporting 'the effect' without saying which average. ATE, ATT, ITT and LATE answer different policy questions.",
+    "Treating a before-after change as an effect. It credits the programme with rain, prices and other schemes.",
+    "Comparing against people who declined or districts the state left out. Their own choices or the implementer's judgement shaped the group."
+   ],
+   "recall": [
+    {
+     "q": "Who named the fundamental problem of causal inference?",
+     "a": "Paul Holland, in 1986."
+    },
+    {
+     "q": "Which estimand answers 'what if we gave it to everybody?'",
+     "a": "The ATE, the average treatment effect."
+    },
+    {
+     "q": "What are the two conditions of SUTVA?",
+     "a": "No interference between units, and one version of treatment."
+    },
+    {
+     "q": "In the tailoring table, how much of the naive gap was selection bias?",
+     "a": "₹2,917 of the ₹3,917 gap."
+    },
+    {
+     "q": "What is the most useful question to put to any causal claim?",
+     "a": "Compared with whom?"
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Selection bias and confounding",
+   "big_idea": "Who joins a programme is never an accident, so **a naive comparison mixes the effect with the reasons for joining.**",
+   "in_plain_words": [
+    "Participation is a decision, and the reasons usually relate to the outcome. Positive selection makes the naive estimate too large, and negative selection can make it too small or flip its sign. A confounder causes both treatment and outcome. You can reason about the direction of bias from two signs before seeing any results.",
+    "Reverse causation arises where programmes respond to need, such as drought relief going to poor harvests. Bias can also arrive after assignment, through attrition and through measurement that differs by group. LaLonde's test showed that standard controls often failed to recover a known experimental answer, and most evaluations have no experiment to check against."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Why a naive comparison fails",
+    "children": [
+     {
+      "label": "Selection",
+      "items": [
+       "Positive: estimate too large",
+       "Negative: too small, may flip sign"
+      ]
+     },
+     {
+      "label": "Confounding",
+      "items": [
+       "A third factor drives both",
+       "Unrecorded factors stay hidden"
+      ]
+     },
+     {
+      "label": "Reverse causation",
+      "items": [
+       "Outcome drives the treatment",
+       "Relief goes to poor harvests"
+      ]
+     },
+     {
+      "label": "Data problems",
+      "items": [
+       "Differential attrition",
+       "Measurement differs by group"
+      ]
+     }
+    ],
+    "caption": "four ways a comparison goes wrong"
+   },
+   "key_terms": [
+    {
+     "term": "Positive selection",
+     "meaning": "Better-off or more motivated people join, so the naive estimate is too large."
+    },
+    {
+     "term": "Confounder",
+     "meaning": "A variable that affects both treatment and outcome."
+    },
+    {
+     "term": "Omitted variable",
+     "meaning": "A confounder left out, which biases the estimate."
+    },
+    {
+     "term": "Differential attrition",
+     "meaning": "Follow-up loses different kinds of people in each arm."
+    },
+    {
+     "term": "LaLonde's test",
+     "meaning": "Standard methods run on a known experiment, to see if they recover the answer."
+    }
+   ],
+   "worked_example": {
+    "title": "Predict the direction of bias",
+    "setup": "Use the deck's rule: matching signs push the estimate up, opposite signs push it down.",
+    "steps": [
+     "Motivated farmers adopt drip irrigation and manage crops better: positive link to treatment, positive to outcome. Bias is upward.",
+     "Sicker patients get the new drug and are likelier to die: positive to treatment, negative to outcome. Bias is downward.",
+     "Richer households use the ration shop less and have better nutrition: negative to treatment, positive to outcome. Bias is downward.",
+     "Remote villages get fewer schools and have lower learning: negative to treatment, negative to outcome. Bias is upward."
+    ],
+    "answer": "Up, down, down, up. If every plausible omitted factor pushes up, a modest reported effect may be close to zero."
+   },
+   "mistakes": [
+    "Assuming a long list of controls makes a result safe. It says nothing about what is missing from the list.",
+    "Trusting a timing argument alone. Measuring treatment first rules out one direction but a third factor can still drive both.",
+    "Ignoring follow-up losses in a trial. Random assignment protects only the moment of assignment.",
+    "Asking enumerators who know the treatment status to measure outcomes. They probe differently."
+   ],
+   "recall": [
+    {
+     "q": "What is negative selection, and what does it do to the naive estimate?",
+     "a": "The worse-off join out of need, so the estimate is too small and can flip sign."
+    },
+    {
+     "q": "What did the Roodman and Morduch reanalysis conclude?",
+     "a": "That questions about impact cannot be answered in those data."
+    },
+    {
+     "q": "What two signs determine the direction of omitted variable bias?",
+     "a": "The confounder's link to treatment and its link to outcome."
+    },
+    {
+     "q": "What should you report about attrition?",
+     "a": "Attrition by arm, a test of whether leavers differ, and bounds if they do."
+    },
+    {
+     "q": "Why is LaLonde's study valuable?",
+     "a": "It measured how wrong the usual non-experimental tools could be against a known answer."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Causal diagrams",
+   "big_idea": "Draw your assumptions before you estimate anything: **a diagram tells you what to hold fixed and what to leave alone.**",
+   "in_plain_words": [
+    "A directed acyclic graph joins variables with arrows, and each arrow is a causal claim. Missing arrows are claims too. Every larger diagram is built from forks, chains and colliders. Adjust for the middle of a fork, which is a confounder. Leave alone the middle of a chain, a mediator, if you want the total effect, and never adjust for a collider.",
+    "Controlling for a mediator removes part of the effect, and restricting a sample to one level of a collider is the same as adjusting for it. Collider bias often arrives through who is in the dataset. The backdoor rule says to block every backdoor path and open none, and when no measured set can do that you need a design from Sections 5 to 8."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Three building blocks",
+    "children": [
+     {
+      "label": "Fork: T ← Z → Y",
+      "items": [
+       "Z is a confounder",
+       "Adjust for it"
+      ]
+     },
+     {
+      "label": "Chain: T → M → Y",
+      "items": [
+       "M is a mediator",
+       "Leave alone for the total effect"
+      ]
+     },
+     {
+      "label": "Collider: T → K ← Y",
+      "items": [
+       "K is a collider",
+       "Do not adjust; do not select on it"
+      ]
+     }
+    ],
+    "caption": "every diagram is made of these three shapes"
+   },
+   "key_terms": [
+    {
+     "term": "DAG",
+     "meaning": "A diagram of variables where an arrow from A to B means A is assumed to cause B."
+    },
+    {
+     "term": "Mediator",
+     "meaning": "A step on the causal path between treatment and outcome."
+    },
+    {
+     "term": "Collider",
+     "meaning": "A variable caused by both treatment and outcome."
+    },
+    {
+     "term": "Backdoor path",
+     "meaning": "A path into treatment that carries association other than its effect."
+    },
+    {
+     "term": "Adjustment set",
+     "meaning": "Variables to control for so that backdoor paths are blocked."
+    }
+   ],
+   "worked_example": {
+    "title": "Name the middle variable",
+    "setup": "Label each shape and say whether to adjust.",
+    "steps": [
+     "Wealth raises the chance of a toilet and, separately, buys food and care for the child: a fork. Wealth is a confounder, so adjust for it.",
+     "A transfer raises food spending, which raises child height: a chain. Food spending is a mediator, so leave it out for the total effect.",
+     "Entrance score and family income both affect admission: a collider. Studying only admitted students conditions on it, so avoid that sample or reason about the bias.",
+     "Then ask whether any backdoor path remains that no measured variable can block."
+    ],
+    "answer": "Confounder, mediator, collider. Adjust only for the first."
+   },
+   "mistakes": [
+    "Adding a control because it is available. Controlling for everything is safe only for forks.",
+    "Controlling for a mediator and reporting that the treatment had no effect. You removed the main channel.",
+    "Studying only surviving firms or admitted students without noting the sample was selected.",
+    "Treating the diagram as an estimator. It estimates nothing; it shows what your assumptions imply."
+   ],
+   "recall": [
+    {
+     "q": "What does an arrow from A to B mean in a DAG?",
+     "a": "A is assumed to cause B."
+    },
+    {
+     "q": "Which of fork, chain and collider should you never adjust for?",
+     "a": "The collider."
+    },
+    {
+     "q": "What was the birth weight paradox?",
+     "a": "Among low birth weight babies, those of smokers had lower mortality, a pattern produced by selecting on a collider."
+    },
+    {
+     "q": "State the backdoor rule.",
+     "a": "Block every backdoor path, and include no variable caused by the treatment."
+    },
+    {
+     "q": "Why does comparing Bihar girls with boys, and with Jharkhand, work?",
+     "a": "It blocks both the time and the place backdoor paths."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Randomisation",
+   "big_idea": "A lottery makes the two groups alike in expectation, so **the selection bias term is zero** and a simple difference in means is the effect.",
+   "in_plain_words": [
+    "When a lottery decides assignment, nothing about a unit predicts the coin. Treatment and control have the same expected values of every characteristic, measured or not. In any single draw the groups differ by chance, which is what the standard error measures. Check the lottery with a balance table, and stratify on key baseline variables.",
+    "Randomise at the level where treatment is delivered and spillovers stop, and cluster the standard errors there. Governments can randomise the order of a rollout that has to happen anyway, and a lottery for an offer gives the intention-to-treat effect. Randomisation protects assignment only, so plan for non-compliance, attrition, spillovers and specification searching, and run the trial ethically."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Randomisation buys",
+     "items": [
+      "Balance on unmeasured traits",
+      "A simple difference in means",
+      "Transparent inference",
+      "Credibility with sceptics"
+     ]
+    },
+    "right": {
+     "title": "It does not buy",
+     "items": [
+      "External validity",
+      "Freedom from attrition",
+      "A correct theory of why it worked"
+     ]
+    },
+    "vs": "vs",
+    "caption": "what a lottery guarantees, and what it leaves open"
+   },
+   "key_terms": [
+    {
+     "term": "Balance table",
+     "meaning": "Baseline means by arm, checking that the lottery was implemented properly."
+    },
+    {
+     "term": "Stratification",
+     "meaning": "Randomising within groups so the arms are balanced on them by construction."
+    },
+    {
+     "term": "Clustering",
+     "meaning": "Units in the same school or village share traits, so they carry less information."
+    },
+    {
+     "term": "Intention to treat",
+     "meaning": "Effect of being offered or assigned, whether or not the unit took it up."
+    },
+    {
+     "term": "Pre-analysis plan",
+     "meaning": "A document fixing outcomes and analysis before data are seen."
+    }
+   ],
+   "worked_example": {
+    "title": "Choose the unit to randomise",
+    "setup": "Match each illustrative treatment to the unit in the deck's table.",
+    "steps": [
+     "An SMS reminder is delivered person by person with little spillover: randomise individuals.",
+     "A teaching method is delivered by a whole institution: randomise schools, and cluster the standard errors by school.",
+     "Community mobilisation or a local market effect: randomise villages, and expect to need many of them.",
+     "A government administrative reform: randomise blocks or districts, and accept low power unless the effect is large."
+    ],
+    "answer": "Individual, school, village, district. Randomise where the treatment is delivered and spillovers stop."
+   },
+   "mistakes": [
+    "Running a balance table as a test of design validity. Randomisation already guarantees it; the table tests the implementation.",
+    "Reading 40 pupils from one school as 40 independent observations. They carry much less information than 40 from 40 schools.",
+    "Treating an effect size table as a league table. The studies differ in duration, grade and test.",
+    "Forgetting what happens after assignment: non-compliance, attrition, spillovers and implementation failure."
+   ],
+   "recall": [
+    {
+     "q": "What does 'in expectation' mean for balance?",
+     "a": "Groups are alike on average across draws, though any one draw differs by chance."
+    },
+    {
+     "q": "Which Indian trial found a 0.28 SD rise from the balsakhi programme?",
+     "a": "Banerjee, Cole, Duflo and Linden's trials in Vadodara and Mumbai."
+    },
+    {
+     "q": "How did the Smartcards study create a control group?",
+     "a": "It randomised the order of rollout across 157 subdistricts, and units waiting served as controls."
+    },
+    {
+     "q": "Where should social science trials be registered?",
+     "a": "The AEA RCT Registry; health trials in India go on CTRI."
+    },
+    {
+     "q": "Name two conditions that make a lottery fair.",
+     "a": "Any two of: demand exceeds supply, real uncertainty, phased rollout, no entitlement denied, consent with ethics approval."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Natural experiments and difference-in-differences",
+   "big_idea": "Compare the **change** for the exposed with the change for the unexposed, and keep only the part of the change they did not share.",
+   "in_plain_words": [
+    "A natural experiment assigns treatment through something outside the units' control, such as a constitutional rotation, a cutoff or a phased rollout. Your task is to show the rule was followed and could not be manipulated. Difference-in-differences uses two comparisons. The first removes what is fixed about the treated unit and the second removes what changed for both groups.",
+    "The one assumption is parallel trends, which can never be proved but can be checked before treatment. Staggered adoption can mislead the usual two-way fixed effects regression, so newer estimators are used. Triple differences add a second comparison group. Check any DiD with an event study, placebo tests and the questions on slide 54."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Change in treated",
+      "hint": "after minus before"
+     },
+     {
+      "op": "−"
+     },
+     {
+      "t": "Change in comparison",
+      "hint": "after minus before"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "DiD estimate",
+      "hint": "effect if trends parallel"
+     }
+    ],
+    "note": "parallel trends is the assumption that makes this an effect"
+   },
+   "key_terms": [
+    {
+     "term": "Natural experiment",
+     "meaning": "Treatment assigned by something outside the units' control, without the researcher designing it."
+    },
+    {
+     "term": "Parallel trends",
+     "meaning": "Without the programme, treated and comparison groups would have moved together."
+    },
+    {
+     "term": "Event study",
+     "meaning": "Gap estimates for each year before and after the start."
+    },
+    {
+     "term": "Placebo test",
+     "meaning": "A pretend start date or an unaffected outcome, which should show zero."
+    },
+    {
+     "term": "Staggered adoption",
+     "meaning": "Units start treatment at different times."
+    }
+   ],
+   "worked_example": {
+    "title": "Work the school bus table",
+    "setup": "Illustrative figures from the deck: girls' attendance in District A (bus from 2024) and District B (no bus).",
+    "steps": [
+     "District A changed from 71% to 82%: 82 − 71 = 11 points.",
+     "District B changed from 64% to 70%: 70 − 64 = 6 points.",
+     "Difference-in-differences: 11 − 6 = 5 points.",
+     "Before-after in A alone says +11, which credits the bus with the statewide trend.",
+     "After-only, A against B: 82 − 70 = 12 points, which credits the bus with A's head start."
+    ],
+    "answer": "Only +5 points survives. Each single comparison overstates the bus."
+   },
+   "mistakes": [
+    "Treating parallel pre-trends as proof. A shock that hits only the treated area at the same time still breaks the design.",
+    "Using a two-way fixed effects regression on a staggered rollout without checking. It can give some comparisons negative weight.",
+    "Comparing a period that spans the July 2026 change in the employment guarantee as if nothing else changed.",
+    "Skipping the event study plot. It is the most informative figure in a DiD paper."
+   ],
+   "recall": [
+    {
+     "q": "Why was the West Bengal reservation a credible natural experiment?",
+     "a": "One third of pradhan posts were randomly selected, unrelated to a village's needs or politics."
+    },
+    {
+     "q": "What does the first difference in DiD remove?",
+     "a": "Everything fixed about the treated unit."
+    },
+    {
+     "q": "What can be checked about parallel trends?",
+     "a": "Whether the trends were parallel before treatment."
+    },
+    {
+     "q": "What did Card and Krueger compare?",
+     "a": "Fast-food employment in New Jersey and eastern Pennsylvania before and after the minimum wage rise."
+    },
+    {
+     "q": "Name the four staggered-timing papers.",
+     "a": "Goodman-Bacon, de Chaisemartin and D'Haultfœuille, Callaway and Sant'Anna, and Sun and Abraham."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Regression discontinuity",
+   "big_idea": "Units just either side of a cutoff are nearly identical, so **a jump in outcomes at the line** estimates the effect for units near it.",
+   "in_plain_words": [
+    "Many programmes assign treatment by a score and a cutoff: population thresholds, marks, backwardness ranks, even vote shares. A village of 990 and one of 1,010 differ in little except which side of the rule they fall on. The price is that the estimate applies near the cutoff.",
+    "A sharp RD treats everyone above the line. Most government rules are fuzzy, so crossing the line only raises the chance of treatment, and the estimate is a ratio of two jumps. Show the jump in a plot, check baseline traits and placebo cutoffs, and watch for sorting at the line. Close elections apply the same idea with winning margin as the score."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Sharp RD",
+     "items": [
+      "Everyone above the line is treated",
+      "Estimate: jump in outcome",
+      "Example: automatic scholarship at 80%"
+     ]
+    },
+    "right": {
+     "title": "Fuzzy RD",
+     "items": [
+      "Crossing the line raises the chance",
+      "Jump in outcome ÷ jump in treatment",
+      "Example: roads near a 1,000 threshold"
+     ]
+    },
+    "vs": "vs",
+    "caption": "how strictly the rule is followed"
+   },
+   "key_terms": [
+    {
+     "term": "Running variable",
+     "meaning": "The score that decides treatment."
+    },
+    {
+     "term": "Cutoff",
+     "meaning": "The score at which treatment changes."
+    },
+    {
+     "term": "Bandwidth",
+     "meaning": "The window around the cutoff used in the comparison."
+    },
+    {
+     "term": "Bunching",
+     "meaning": "Too many units just above the cutoff, a sign of manipulation."
+    },
+    {
+     "term": "McCrary density test",
+     "meaning": "A check for bunching in the running variable."
+    }
+   ],
+   "worked_example": {
+    "title": "Sharp or fuzzy, and the fuzzy ratio",
+    "setup": "Illustrative figures. A road programme prioritises villages above 1,000 people, but some below get roads and some above do not.",
+    "steps": [
+     "A scholarship paid automatically to everyone scoring 80% or more is sharp. The estimate is the jump in outcome at the cutoff.",
+     "The road programme is fuzzy, since the rule only raises the chance of a road.",
+     "Suppose the share of non-farm workers jumps by 4 points at the cutoff, and the chance of a road jumps from 0.2 to 0.7, a rise of 0.7 − 0.2 = 0.5.",
+     "The fuzzy estimate is the ratio of the two jumps: 4 ÷ 0.5 = 8 points.",
+     "It describes villages whose treatment the rule changed, near the cutoff."
+    ],
+    "answer": "A fuzzy RD effect of 8 points, for compliers near the cutoff."
+   },
+   "mistakes": [
+    "Applying a cutoff result to units far from the line. The effect on a village of 300 people may be quite different.",
+    "Fitting high-order polynomials across the whole range. They can create spurious jumps.",
+    "Ignoring other programmes using the same cutoff. The jump then measures all of them together.",
+    "Assuming close races are coin tosses without checking incumbents. Frequent wins by the ruling party break the logic."
+   ],
+   "recall": [
+    {
+     "q": "What does an RD estimate?",
+     "a": "The effect of treatment for units near the cutoff, from the jump in outcomes there."
+    },
+    {
+     "q": "What were the PMGSY population thresholds?",
+     "a": "500 and 1,000 people."
+    },
+    {
+     "q": "What did Zimmermann's RD find about wages?",
+     "a": "Private sector wages rose substantially for women, but not for men."
+    },
+    {
+     "q": "What does bunching just above a cutoff suggest?",
+     "a": "That people can push their score across the line."
+    },
+    {
+     "q": "What does current practice use for estimation?",
+     "a": "Local linear regression with a data-driven bandwidth and bias-corrected confidence intervals."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Instrumental variables",
+   "big_idea": "An instrument moves the treatment and touches nothing else, so **its effect on the outcome, scaled by its effect on take-up**, gives the effect of treatment.",
+   "in_plain_words": [
+    "When people choose treatment, find something that shifts the choice for reasons unrelated to the outcome. Four conditions apply: relevance, independence, the exclusion restriction and monotonicity. The exclusion restriction cannot be tested, so write it as one sentence and try to break it. Lotteries usually pass; rainfall and distance usually fail.",
+    "An IV estimate is the average effect for compliers, the people the instrument moved. The Wald estimator divides the offer's effect on the outcome by its effect on take-up. Weak instruments magnify small violations and shrink confidence intervals, so report the first stage, the reduced form and valid intervals. Ask five questions of any IV claim."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Effect on outcome",
+      "hint": "offer: 0.12 SD"
+     },
+     {
+      "op": "÷"
+     },
+     {
+      "t": "Effect on take-up",
+      "hint": "offer: 0.6"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "LATE",
+      "hint": "attending: 0.20 SD"
+     }
+    ],
+    "note": "the Wald estimator, with the deck's illustrative numbers"
+   },
+   "key_terms": [
+    {
+     "term": "Instrument",
+     "meaning": "Something that shifts treatment for reasons unrelated to the outcome."
+    },
+    {
+     "term": "Exclusion restriction",
+     "meaning": "The instrument affects the outcome only through the treatment."
+    },
+    {
+     "term": "Compliers",
+     "meaning": "Units whose treatment was changed by the instrument."
+    },
+    {
+     "term": "LATE",
+     "meaning": "Local average treatment effect: the average effect for compliers."
+    },
+    {
+     "term": "Reduced form",
+     "meaning": "The effect of the instrument on the outcome."
+    }
+   ],
+   "worked_example": {
+    "title": "From the offer to attending",
+    "setup": "Illustrative arithmetic from the deck: a lottery offers free remedial classes.",
+    "steps": [
+     "Winners score 0.12 SD above losers. This is the intention-to-treat effect.",
+     "60% of winners attend and 0% of losers do, so the offer raised attendance by 0.60 − 0 = 0.60.",
+     "Divide the outcome effect by the take-up effect: 0.12 ÷ 0.6 = 0.20 SD.",
+     "The 0.20 SD is the effect of attending, for compliers.",
+     "It assumes the offer helped only by causing attendance, and winners who did not attend gained nothing."
+    ],
+    "answer": "0.20 SD for compliers. The offer effect, 0.12 SD, answers a different question."
+   },
+   "mistakes": [
+    "Using rainfall, distance or history as an instrument without testing other routes. Each can reach the outcome in many ways.",
+    "Quoting the larger IV number for a scaled programme with low take-up. The offer effect is the relevant one.",
+    "Relying on an F above 10 as proof of a strong instrument. Conventional t-tests can still be distorted.",
+    "Treating LATE as the effect for everyone. A policy reaching other people may have a different average effect."
+   ],
+   "recall": [
+    {
+     "q": "Which of the four IV conditions can data not check?",
+     "a": "The exclusion restriction."
+    },
+    {
+     "q": "What are the four types in the compliers table?",
+     "a": "Always-takers, never-takers, compliers and defiers."
+    },
+    {
+     "q": "What did Duflo and Pande use as an instrument for dams?",
+     "a": "River gradient."
+    },
+    {
+     "q": "Why does a weak first stage matter?",
+     "a": "The estimate divides by it, so a small exclusion failure becomes a large bias."
+    },
+    {
+     "q": "What does the Mindspark IV estimate say that the lottery effect does not?",
+     "a": "What using the programme does, as against offering a place."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Matching and synthetic control",
+   "big_idea": "Matching removes only the differences you measured, and **synthetic control needs a close pre-treatment fit** before any gap is believable.",
+   "in_plain_words": [
+    "Matching pairs each participant with a similar non-participant. It rests on selection on observables, so it cannot touch motivation or networks that were not recorded. A propensity score reduces many characteristics to one probability, but it balances only what you measured. Show common support, standardised differences and units dropped, and run a sensitivity analysis.",
+    "Matching plus differencing removes unmeasured differences fixed over time. The two JSY papers disagree because they rely on different assumptions. Synthetic control suits a single treated state: weight untreated donors so they track the treated unit before treatment. With one treated unit there is no standard error in the usual sense, so placebo distributions are the evidence."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Model",
+      "sub": "participation vs traits"
+     },
+     {
+      "label": "Score",
+      "sub": "predicted probability"
+     },
+     {
+      "label": "Trim",
+      "sub": "drop units with no overlap"
+     },
+     {
+      "label": "Match or weight",
+      "sub": "similar scores"
+     },
+     {
+      "label": "Check",
+      "sub": "balance after matching"
+     },
+     {
+      "label": "Estimate",
+      "sub": "with sensitivity analysis"
+     }
+    ],
+    "caption": "the propensity score route, six steps"
+   },
+   "key_terms": [
+    {
+     "term": "Selection on observables",
+     "meaning": "Among units with the same measured traits, treatment is as good as random."
+    },
+    {
+     "term": "Propensity score",
+     "meaning": "The probability of treatment given observed characteristics."
+    },
+    {
+     "term": "Common support",
+     "meaning": "The range where treated and untreated units with similar traits both exist."
+    },
+    {
+     "term": "Donor pool",
+     "meaning": "Untreated units from which a synthetic control is built."
+    },
+    {
+     "term": "In-space placebo",
+     "meaning": "Re-running the method pretending each donor was the treated unit."
+    }
+   ],
+   "worked_example": {
+    "title": "Build and test a synthetic state",
+    "setup": "Illustrative figures. The deck's weights are 40%, 35% and 25% on three donor states, for female labour force participation.",
+    "steps": [
+     "Weights: 40 + 35 + 25 = 100 per cent, so the synthetic state is a weighted average of three donors.",
+     "2023, donors at 30, 25 and 20: 0.4 × 30 + 0.35 × 25 = 20.75, plus 0.25 × 20 = 5, giving 25.75. The treated state is at 25.8, a close fit.",
+     "2025, donors at 31, 26 and 21: 0.4 × 31 + 0.35 × 26 = 21.5, plus 0.25 × 21 = 5.25, giving 26.75.",
+     "The treated state is at 31.75 in 2025, so the gap is 31.75 − 26.75 = 5 points.",
+     "Re-run with each donor as the treated state and compare the real gap with those placebo gaps."
+    ],
+    "answer": "A gap of 5 points, believable only if it is unusually large next to the placebo gaps."
+   },
+   "mistakes": [
+    "Reading a perfectly balanced matched sample as safe. Something with no column can still confound it.",
+    "Extrapolating where one group barely exists. Estimates without overlap come from a model.",
+    "Reporting a synthetic control estimate when the pre-treatment fit is poor. No estimate should be reported then.",
+    "Leaving in donors that had their own similar reform. They are not untreated."
+   ],
+   "recall": [
+    {
+     "q": "Who showed that matching on the propensity score balances characteristics?",
+     "a": "Rosenbaum and Rubin, in 1983."
+    },
+    {
+     "q": "Which standardised difference is the rough target after matching?",
+     "a": "Below about 0.1 for each characteristic."
+    },
+    {
+     "q": "What did Smith and Todd find on the LaLonde data?",
+     "a": "Matching estimates were sensitive to the score variables and sample, and DiD matching did best."
+    },
+    {
+     "q": "Which two papers form the JSY pair?",
+     "a": "Lim and colleagues in The Lancet, and Powell-Jackson, Mazumdar and Mills in the Journal of Health Economics."
+    },
+    {
+     "q": "Who built a synthetic Basque Country?",
+     "a": "Abadie and Gardeazabal."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "External validity and heterogeneity",
+   "big_idea": "A well-identified effect is **a measurement of one programme in one context**, and whether it travels needs separate evidence.",
+   "in_plain_words": [
+    "Internal validity asks whether the estimate is right for the units studied. External validity asks whether it holds for other people, places, times, implementers and scales. Vivalt found large variation across studies, with government-implemented programmes showing smaller effects. Plan for less at scale, and ask for evidence from government-run versions.",
+    "The implementer matters: the same contract produced results with an NGO and none with a government. Teaching at the Right Level scaled through a process of testing, failing and redesigning. Replication across countries is the most direct evidence on generalisation. Averages hide who gains, and at scale prices, wages and competition can change the answer."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Will the effect travel?",
+    "children": [
+     {
+      "label": "Who delivers it",
+      "items": [
+       "NGO against government",
+       "Incentives and capacity at scale"
+      ]
+     },
+     {
+      "label": "Where and when",
+      "items": [
+       "Starting level of children",
+       "What the control group got instead"
+      ]
+     },
+     {
+      "label": "For whom",
+      "items": [
+       "Subgroups from a pre-analysis plan",
+       "Weaker pupils gained more at Mindspark"
+      ]
+     },
+     {
+      "label": "At what scale",
+      "items": [
+       "Prices and wages move",
+       "Displacement and competition"
+      ]
+     }
+    ],
+    "caption": "four questions to ask of any tested programme"
+   },
+   "key_terms": [
+    {
+     "term": "Internal validity",
+     "meaning": "Whether the estimate is correct for the units and period studied."
+    },
+    {
+     "term": "External validity",
+     "meaning": "Whether the effect would hold elsewhere, later, or at scale."
+    },
+    {
+     "term": "Heterogeneity",
+     "meaning": "Effects that differ across people, places or implementers."
+    },
+    {
+     "term": "Proof of concept",
+     "meaning": "A test of an idea where it can work, before testing in the system."
+    },
+    {
+     "term": "General equilibrium",
+     "meaning": "Wider effects on prices and wages when everyone gets the programme."
+    }
+   ],
+   "worked_example": {
+    "title": "Should a ministry adopt an NGO-tested programme?",
+    "setup": "An NGO trial found an effect. The ministry plans to run it in every school. Apply the section's questions.",
+    "steps": [
+     "Record who implemented the tested version and how.",
+     "Ask whether the ministry has the same incentives and capacity. In Kenya the same contract worked with an NGO and produced nothing with the government.",
+     "Plan for a smaller effect than the trial reported, and check the budget case survives that.",
+     "Ask for evidence from government-run versions, and test inside the system before scaling.",
+     "Check whether prices, wages or competition would change when everyone is treated."
+    ],
+    "answer": "Adopt only if the case holds at a smaller effect, with government-run evidence and a process of testing and redesign."
+   },
+   "mistakes": [
+    "Treating a well-identified effect as a constant of nature.",
+    "Assuming a trial in 120 schools in one district says what a state department will get across 30,000 schools.",
+    "Reporting one significant subgroup out of twenty found after the fact. It is most likely chance.",
+    "Comparing participants with non-participants in one labour market when a national programme moves wages."
+   ],
+   "recall": [
+    {
+     "q": "What did Vivalt find about government-implemented programmes?",
+     "a": "They had smaller effects than those run by academics or NGOs."
+    },
+    {
+     "q": "What happened with teachers on identical contracts in Kenya?",
+     "a": "NGO-offered contracts raised scores; government-offered ones produced zero impact."
+    },
+    {
+     "q": "What scaled in Teaching at the Right Level?",
+     "a": "A process: test, expect failures, learn why, redesign and retest."
+    },
+    {
+     "q": "How many countries were in the multi-site graduation trial?",
+     "a": "Six: Ethiopia, Ghana, Honduras, India, Pakistan and Peru."
+    },
+    {
+     "q": "Which two things must a credible subgroup result have?",
+     "a": "A name in a pre-analysis plan and a mechanism, reported with all other subgroups tested."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Reading a causal claim in practice",
+   "big_idea": "Put ten questions to any causal claim, and **match the report's verbs to its design** before repeating it.",
+   "in_plain_words": [
+    "The checklist asks what the claimed effect is, compared with whom, who decided treatment, what the key assumption is, what supports it, which effect is meant, whether analysis was fixed in advance, how many were lost, who ran it and whether other designs agree. The decision table maps a situation to a design and the assumption you must defend. The best time to choose is before the programme starts.",
+    "Causal verbs such as 'led to' claim a counterfactual, while descriptive verbs report patterns, and summaries often turn one into the other. Several large legal changes in 2025 and 2026 will tempt before-after claims. When you commission an evaluation, ask for the identification strategy, a pre-analysis plan, power, implementation data, costs, publication of nulls, and shareable data and code."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "A causal claim",
+    "spokes": [
+     {
+      "label": "Compared with whom?",
+      "sub": "a named comparison group"
+     },
+     {
+      "label": "Who chose?",
+      "sub": "lottery, rule or schedule"
+     },
+     {
+      "label": "Key assumption",
+      "sub": "one sentence"
+     },
+     {
+      "label": "Evidence for it",
+      "sub": "pre-trends, balance, tests"
+     },
+     {
+      "label": "Which effect?",
+      "sub": "ITT, ATT or LATE"
+     },
+     {
+      "label": "Who was lost?",
+      "sub": "attrition by arm"
+     }
+    ],
+    "caption": "six of the ten questions that do most of the work"
+   },
+   "key_terms": [
+    {
+     "term": "Identification strategy",
+     "meaning": "One page saying what the comparison is and which assumption it needs."
+    },
+    {
+     "term": "Causal verb",
+     "meaning": "'Led to', 'resulted in', 'increased': each claims a counterfactual."
+    },
+    {
+     "term": "Descriptive verb",
+     "meaning": "'Was associated with', 'coincided with': honest pattern words."
+    },
+    {
+     "term": "Power",
+     "meaning": "Whether a study can detect an effect large enough to matter."
+    },
+    {
+     "term": "Cost per extra enrolment",
+     "meaning": "Total cost divided by the extra enrolments caused."
+    }
+   ],
+   "worked_example": {
+    "title": "Read the scholarship result and cost it",
+    "setup": "Illustrative figures from the deck's scholarship case, plus invented counts: 20,000 girls passed Class 10, and 6,000 receive ₹10,000 each.",
+    "steps": [
+     "Girls' DiD: 9 − 4 = 5 points. Boys: 4 − 4 = 0, which supports the comparison.",
+     "Additional enrolments: 0.05 × 20,000 = 1,000.",
+     "Total cost: 6,000 × 10,000 = 60,000,000 rupees.",
+     "Cost per additional enrolment: 60,000,000 ÷ 1,000 = 60,000 rupees.",
+     "Dividing by all recipients gives 60,000,000 ÷ 6,000 = 10,000, which counts girls who would have enrolled anyway."
+    ],
+    "answer": "About ₹60,000 per additional enrolment. The ₹10,000 figure would understate the cost."
+   },
+   "mistakes": [
+    "Letting an executive summary turn 'was associated with' into 'led to'. Compare its verbs with the methods section.",
+    "Reading a share of satisfied users as an effect size.",
+    "Comparing outcomes across the 2025 and 2026 legal changes as if one scheme explained the move.",
+    "Commissioning only a final report at the end of the programme. It almost guarantees a before-after study of participants."
+   ],
+   "recall": [
+    {
+     "q": "What is the best time to choose a design?",
+     "a": "Before the programme starts, when a lottery or phase-in can still be built in."
+    },
+    {
+     "q": "Which design fits 'eligibility decided by a score with a cutoff'?",
+     "a": "Regression discontinuity."
+    },
+    {
+     "q": "Which assumption must you defend for DiD?",
+     "a": "Parallel trends between early and late areas."
+    },
+    {
+     "q": "Name two things to ask for when commissioning an evaluation.",
+     "a": "Any two of: written identification strategy, pre-analysis plan, power, implementation data, costs, publication of results, shareable data and code."
+    },
+    {
+     "q": "What do the labour codes change for evaluators?",
+     "a": "Definitions of wages, workers and establishments, so administrative series may break."
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "title": "Summary and next steps",
+   "big_idea": "Every causal claim rests on a comparison and an assumption: **name both, check what can be checked, and say plainly what cannot.**",
+   "in_plain_words": [
+    "A causal effect compares an outcome with treatment against what the same units would have had without it, and half of that comparison is always missing. A naive comparison equals the effect plus selection bias, and every design makes the second term zero or small. Draw a diagram first, adjust for confounders, and leave mediators and colliders alone.",
+    "Each design names its own assumption. Randomisation needs good implementation and low attrition, DiD needs parallel trends, RD needs no sorting at the cutoff, IV needs an exclusion restriction, matching needs selection on measured traits, and synthetic control needs a close fit. Effects vary with implementer, context and scale, so the question 'compared with whom?' comes first every time."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Pick a design by your situation",
+    "children": [
+     {
+      "label": "You can shape assignment",
+      "items": [
+       "Randomised lottery or phase-in"
+      ]
+     },
+     {
+      "label": "A rule or rollout exists",
+      "items": [
+       "DiD: parallel trends",
+       "RD: no sorting at the cutoff"
+      ]
+     },
+     {
+      "label": "Offer random, take-up not",
+      "items": [
+       "ITT, then IV: exclusion"
+      ]
+     },
+     {
+      "label": "Only observed data",
+      "items": [
+       "Matching: measured selection",
+       "Synthetic control: close fit"
+      ]
+     }
+    ],
+    "caption": "the decision table in one picture"
+   },
+   "key_terms": [
+    {
+     "term": "Counterfactual",
+     "meaning": "What would have occurred without the treatment, for the same units."
+    },
+    {
+     "term": "Parallel trends",
+     "meaning": "The DiD assumption that groups would have moved together."
+    },
+    {
+     "term": "Exclusion restriction",
+     "meaning": "The IV assumption that the instrument works only through treatment."
+    },
+    {
+     "term": "External validity",
+     "meaning": "Whether an effect holds in other places, times and scales."
+    },
+    {
+     "term": "Pre-analysis plan",
+     "meaning": "Outcomes and analysis fixed before data are seen."
+    }
+   ],
+   "worked_example": {
+    "title": "Match a situation to a design",
+    "setup": "Use the decision table to pick a design and its main assumption for three illustrative situations.",
+    "steps": [
+     "A new scheme has not started and demand exceeds places: use a randomised lottery or phase-in. It needs good implementation and low attrition.",
+     "Eligibility is decided by a score with a cutoff: use regression discontinuity. Defend that the score was not manipulated.",
+     "One state adopts a reform, many do not, and there is a long pre-period: use synthetic control. Defend a close pre-treatment fit.",
+     "If you only have participants' data, describe the outcomes and claim no effect."
+    ],
+    "answer": "Lottery, regression discontinuity, synthetic control, and description only."
+   },
+   "mistakes": [
+    "Naming a design without naming its assumption. The assumption is what a reader needs to check.",
+    "Treating the glossary terms as interchangeable. ATT, ATE, ITT and LATE answer different questions.",
+    "Skipping the diagram step. It is cheap and surfaces disagreements early.",
+    "Stopping at one study. Agreement across designs with different weaknesses is stronger evidence."
+   ],
+   "recall": [
+    {
+     "q": "What is a causal effect, in one sentence?",
+     "a": "The outcome with treatment minus the outcome the same units would have had without it."
+    },
+    {
+     "q": "What does the naive comparison equal?",
+     "a": "The effect plus selection bias."
+    },
+    {
+     "q": "Which question does most of the work in every section?",
+     "a": "Compared with whom, and why were they not treated?"
+    },
+    {
+     "q": "What is the suggested order of courses after this deck?",
+     "a": "Impact Evaluation 101, then Econometrics 101, then the flagship Causal Inference course."
+    },
+    {
+     "q": "Name a free tool for drawing diagrams.",
+     "a": "DAGitty, at dagitty.net."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "2": "Twelve sections build one argument: a causal claim is a comparison plus an assumption. Skim the slide ranges and notice the order. The deck moves from the problem to diagrams, then through each design, and ends with how to read a claim. **Return to this map when a design confuses you.**",
+  "4": "Sort every question you meet into descriptive, predictive or causal before choosing evidence. Only the causal kind tells a ministry whether to spend money, and it is hardest because **the answer compares the world we see with a world we never see.** The last row adds scale and context.",
+  "5": "Association can mislead in two ways: a third thing drives both, or the arrow runs backwards. Memorise the two illustrations. **Banks open branches where incomes already exist**, and tuberculosis budgets follow caseloads. Whenever you read a correlation, ask which of the two stories could apply.",
+  "6": "Every large programme is a bet on cause and effect, and the school feeding and cash transfer examples show a two-link chain. If the first link holds and the second fails, the money is spent and mortality stays put. **Causal evidence tells you what a decision is likely to do**, which you can check.",
+  "7": "The prizes mark a shift in what economists trust. **Ask where the variation in treatment came from**: a lottery, a rule, a border, a date. If the answer is 'people chose it', the estimate inherits every reason they chose. Note that much of the 2019 work was run in India.",
+  "8": "Four routes to a false conclusion: selection, confounding, reverse causation, and chance plus choice of analysis. Keep this list beside you for the whole course. **Each later design defends against one or more of these**, so knowing which defence a study used tells you which failure to hunt for.",
+  "9": "One scheme, two careful studies, different answers on newborn deaths. Do not decide who is right yet. Treat it as a puzzle to solve later: **the designs differ, so their assumptions differ.** Section 9 returns to the pair, and by then you will be able to say why they disagree.",
+  "10": "Use this slide to set expectations. The course covers the logic and the reading of causal claims, and the 'elsewhere' list sends you to other 101 courses for regressions, evaluation design, surveys and systematic reviews. **No mathematics beyond averages and subtraction is needed**, and formulas arrive in words.",
+  "12": "Write Y(1) and Y(0) on a card. Both exist in principle before assignment, and assignment decides which one you see. The framework's strength is precision: **the scholarship claim becomes a statement about one girl with and without it.** Then the missing half is obvious.",
+  "13": "Holland's fundamental problem is missing data, and more data of the same kind cannot fix it. The way out is to estimate averages. **Find a group whose untreated average stands in for the treated group's missing one.** The two routes, other people or your own past, each carry an assumption.",
+  "14": "Work this table with a pencil. In real data you would see only the last column, but here you can see everything, so you can check the answer. **The naive gap of ₹3,917 is nearly four times the true ₹1,000**, because the women who chose the course already earned more.",
+  "15": "Five estimands, five policy questions. Learn to ask which one a report means. ATE asks about everyone, ATT about those treated, ATU about those left out, ITT about the offer, LATE about those who respond. **A report that says 'the effect' without naming one has dropped its most useful sentence.**",
+  "16": "Ask 'compared with whom?' of every claim. The weak list shares a flaw: people's own choices, or the implementer's judgement, decided who was compared. In the strong list **something other than the units' own choices decided who was treated.** Use that sentence as your test.",
+  "17": "A before-after comparison credits the programme with everything else that changed, such as rain, prices and other schemes. The soil card example cannot separate the card drive from the monsoon. **If before-after is all you have, report a change over time and call it an effect only with a comparison group.**",
+  "18": "SUTVA has two parts: no spillovers and one version of treatment. Interference corrupts the control group, as with deworming and with wages under the employment guarantee. Hidden versions average different treatments. **Record what was delivered, where and how much**, and randomise whole villages to contain spillovers.",
+  "19": "This is the equation behind the whole course: observed gap = effect on the treated + selection bias. In the tailoring table, ₹3,917 = ₹1,000 + ₹2,917. **Each design attacks the same second term in its own way.** Check the arithmetic yourself before moving on.",
+  "21": "Participation is a choice, and the reasons usually relate to the outcome. Positive selection makes the naive estimate too large; negative selection makes it too small and can flip its sign. **Targeting is itself selection**, so a well-targeted programme has beneficiaries who differ from everyone else.",
+  "22": "A cautionary tale about modelling away selection. A famous Bangladesh result vanished on reanalysis, and the replicators concluded that impact questions could not be answered with those data. **When participation is chosen, the estimate rests on assumptions that can fail.** A Hyderabad trial found no significant rise in consumption.",
+  "23": "Draw the confounder before you adjust. Wealth raises the chance of a toilet and separately buys food and care, so it confounds the toilet-height link. **Adjusting for measured confounders helps but cannot remove the unrecorded ones**, and a long list of controls says nothing about what is missing.",
+  "24": "Predict the direction of bias before you see results. Two signs decide it: the confounder's link to treatment and its link to outcome. Matching signs push the estimate up and opposite signs push it down. **If every plausible omitted factor pushes up, a modest reported effect may be near zero.**",
+  "25": "Reverse causation is common wherever programmes respond to need. Drought relief goes to bad harvests, so relief correlates with low yields. Measuring treatment first helps but does not settle it. For simultaneity you need variation from outside, **such as a rule or an instrument**, to separate the two directions.",
+  "26": "Even a good comparison can be spoiled afterwards. Two problems: people lost at follow-up, and outcomes measured differently by group. Report attrition by arm and use bounds. **Random assignment protects only the moment of assignment**, so trials face these problems as much as observational studies do.",
+  "27": "LaLonde had the experimental answer, so he could test the usual non-experimental methods against it. Many failed to reproduce it and disagreed with each other. **In most evaluations no experiment exists to check against**, so a wrong estimate looks as credible as a right one.",
+  "29": "A DAG is a diagram of assumptions: arrows are causal claims, and missing arrows are claims too. It estimates nothing. Its value is turning 'there might be confounding' into a precise question about **which variables to hold fixed and which to leave alone.** Draw one with your team.",
+  "30": "Memorise three shapes: fork, chain, collider. Adjust for the middle of a fork, the confounder. Leave alone the middle of a chain, the mediator, if you want the total effect. **Never adjust for a collider.** The habit of controlling for everything is safe for forks only.",
+  "31": "The transfer example shows how a careful-looking control destroys a result. Adding food spending removes the main channel, so the coefficient falls towards zero. The rule: **variables measured after treatment that it could have changed are not controls.** Treat mediation results as weaker than total effects.",
+  "32": "The birth weight paradox shows a collider at work. Smoking and defects both cause low birth weight, so among small babies those not explained by smoking are likelier to be small for a deadlier reason. **Restricting a sample to one level of a collider is the same as adjusting for it.**",
+  "33": "Collider bias often arrives through who is in the dataset. Surviving firms, admitted students and facility records are all samples picked by something that treatment and outcome both affect. **Draw how units got into the data as an arrow**, and prefer population samples when the question allows.",
+  "34": "Block every backdoor path and open no new ones. A backdoor path starts with an arrow pointing into the treatment. Use the six steps as a routine, ending with ADMIT. **If an unmeasured variable sits on an unblocked backdoor path, no regression with observed controls identifies the effect**, so you need a design.",
+  "35": "Practise on a real scheme before choosing a method. Time confounds a before-after comparison and place confounds a Bihar-versus-others one. **Comparing girls with boys, before and after, in Bihar and a neighbour, blocks both.** Distance to school is a mediator, so do not control for it.",
+  "37": "Randomisation makes the selection bias term zero in expectation, because nothing about a unit predicts the coin. **'In expectation' matters**: any one draw differs by chance, and the standard error measures that. Learn the closing line, which lists what randomisation does not buy.",
+  "38": "A balance table checks that the lottery was run properly. It does not test the design's validity, which randomisation already guarantees. Expect about one in twenty characteristics to differ at 5% by chance. **Decide controls in advance and stratify the lottery** on the most important baseline variables.",
+  "39": "Randomise where the treatment is delivered and where spillovers stop. The price is clustering: 40 pupils from one school carry less information than 40 pupils from 40 schools. **Cluster standard errors at the level of randomisation**, and base power calculations on the number of clusters.",
+  "40": "Read three numbers: 0.28 SD from the balsakhi programme, 0.47 SD from computer-assisted maths, and about 0.10 SD a year after the programmes ended. Two lessons stand out: **a cheap input matched costlier ones, and gains faded**, which only a follow-up could reveal.",
+  "41": "Both studies randomised inside government. Performance pay raised scores after two years, and Smartcards made payments faster and less corrupt. The practical trick is in the last paragraph: **randomise the order of a rollout that has to happen anyway.** Units waiting their turn serve as controls.",
+  "42": "When you cannot assign treatment, assign the offer. Both studies compare winners with losers, which is the intention-to-treat effect. The Bangladesh offer moved only 22% of households, so **the effect of the offer and the effect of migrating are different numbers.** Section 8 shows how to convert.",
+  "43": "Read the chart as a rough guide only. The studies differ in duration, grade and test, so the bars are not a league table. Notice the report card result in Pakistan: **scores rose, private school fees fell 17% and primary enrolment rose 4.5%**, which a single score effect would miss.",
+  "44": "Randomisation protects assignment and nothing after it. Learn the table as pairs of threat and defence. The Hyderabad example makes non-compliance concrete: take-up rose only 8.4 points and the control areas gained credit later. **Fix the outcomes in a pre-analysis plan** to guard against specification searching.",
+  "45": "A lottery is fair when places are scarce, benefit is uncertain, rollout is phased, no entitlement is denied, and consent and ethics approval exist. **Enter the trial in a public registry before baseline and write a pre-analysis plan.** Check the date: DPDP duties apply from 13 May 2027, so plan studies that run past it.",
+  "47": "A natural experiment is assignment by something outside the units' control that the researcher did not design. West Bengal's random reservation of pradhan posts is the model. **Your task shifts to documenting that the rule really was followed**, and asking who could have influenced the 'natural' assignment.",
+  "48": "Work the two-by-two by hand. The first difference removes what is fixed about District A, and the second removes what changed for both districts. **+11 credits the bus with the statewide trend and +12 credits it with A's head start**, so only +5 survives. Fill in the grid yourself.",
+  "49": "Parallel trends is the one assumption: without the programme, both groups would have moved together. Levels may differ and trends must match. It concerns a counterfactual, so it can never be proved. **Parallel pre-trends support it without proving it**, because a shock hitting only the treated area can break the design.",
+  "50": "Two canonical natural experiments share one logic: compare the change for the exposed with the change for the unexposed. The Indonesian study uses birth cohorts as before and after. **Each school built per 1,000 children raised education by 0.12 to 0.19 years.** Learn the logic first and the figures second.",
+  "51": "The employment guarantee's phased rollout gives a DiD, with a catch: early districts were poorer. The October 2026 box matters, since the old Act was repealed from 1 July 2026. **Any before-after comparison spanning that date mixes the new law with everything else**, which is why you need a comparison group.",
+  "52": "Triple differences add a second comparison when one is not enough. Bihar girls against Bihar boys removes Bihar-wide changes, and Jharkhand removes differing gender trends. The gains came mostly **in villages farther from a school**, the pattern you would expect if bicycles cut the cost of getting there.",
+  "53": "Staggered rollouts can break the usual two-way fixed effects regression, which can compare newly treated units against units treated earlier and give some comparisons negative weight. Four papers propose fixes. **When you read a staggered study from before about 2021, ask whether its results survive a modern estimator.**",
+  "54": "Read the event-study plot before the main table. Before the start the gap should sit near zero with no trend. Run placebos, then work down the six questions. **A non-zero placebo means something other than the programme differs between the groups.** Cluster at the level treatment was assigned.",
+  "56": "RD turns a cutoff rule into a local experiment: units just either side of the line are nearly identical. Keep the 990 versus 1,010 villages in mind. **The price is that the estimate applies near the cutoff**, and the effect on a village of 300 people may differ.",
+  "57": "Sharp RD treats everyone above the line, while fuzzy RD only raises the chance of treatment. Most government rules are fuzzy because officers use discretion. A fuzzy estimate is a ratio of two jumps, so it needs **a large jump in take-up at the cutoff** and is noisier than a sharp one.",
+  "58": "PMGSY used population thresholds of 500 and 1,000. Four years after a road, workers had moved out of agriculture, while income and assets showed no major change. **A null result on income is still a finding**, and a reader can weigh it against the claims made for roads.",
+  "59": "Same scheme, second design. Zimmermann used the rank cutoff between phases as an RD and found that private wages rose for women. Compare her assumptions with the DiD's. **When designs with different weaknesses agree, the finding is stronger than either alone.**",
+  "60": "Learn to read an RD plot: bins of the running variable, a fitted line each side, and a visible jump at the cutoff. Then run the checks in the list. **Baseline characteristics should show no jump** and placebo cutoffs should show nothing. The chart here is illustrative.",
+  "61": "Two threats. Manipulation shows up as bunching just above the cutoff, which McCrary's density test checks. Bandwidth trades cleanness for sample size, and high-order polynomials can create spurious jumps. **Also ask whether other programmes use the same cutoff**, because then the jump measures all of them together.",
+  "62": "Close elections work like coin tosses. Compare places where a type of candidate barely won with places where it barely lost. You need only constituency results and one outcome. **Check that close races are not won disproportionately by incumbents or the ruling party**, which would break the logic.",
+  "64": "An instrument must move the treatment and touch nothing else. Learn the four conditions with the last column: relevance can be tested, independence partly, and **the exclusion restriction cannot be tested at all.** That is why most failed IV studies fail there.",
+  "65": "Write the exclusion restriction as one sentence for your study, then try to break it by listing other routes. Lotteries usually pass. **A variable that affects many things is a poor instrument for any one of them**, as the rainfall example shows: disease, child labour, migration and roads.",
+  "66": "River gradient predicts where dams went, and the exclusion claim is that it affects output and poverty only through dams. The results cut both ways: downstream districts gained, while the dam's own district saw more rural poverty. **Do the 'try to break it' exercise** with soil, drainage and roads.",
+  "67": "IV estimates the effect for compliers only. Place yourself in the table: always-takers, never-takers, compliers, defiers. **Monotonicity assumes defiers away.** LATE is a real effect for a real group, and a policy reaching other people, such as compulsory attendance, may have a different average effect.",
+  "68": "Run the arithmetic: 0.12 ÷ 0.6 = 0.20 SD. The Wald estimator scales the offer effect by the rise in attendance. **The offer effect says what offering a place does, and the IV estimate says what using the programme does.** If take-up at scale is low, the offer effect is the relevant one.",
+  "69": "Weak instruments make the IV estimate divide by a small number, so a small exclusion failure becomes a large bias. The old rule of an F above 10 is not enough. Look for the **first stage and F-statistic reported prominently**, plus the reduced form. An IV many times the simple comparison is a warning.",
+  "70": "Use the five questions as a checklist: name, first stage, exclusion, compliers, compare. Lotteries and random assignment to judges usually convince, while rainfall, distance and history need hard scrutiny. **If the exclusion restriction cannot be stated in one checkable sentence, treat the estimate as a correlation.**",
+  "72": "Matching relies on selection on observables: among units with the same measured traits, treatment is as good as random. It is transparent because you see who stands in for whom. Its weakness is the assumption. **A matched sample balanced on every column can still be confounded by something with no column.**",
+  "73": "The propensity score squeezes many characteristics into one probability. Follow the six steps in order. **The score balances what you measured and adds no protection against what you did not.** A well-fitting model of participation says nothing about whether the key assumption holds.",
+  "74": "Matching only works where both groups exist. Show the score distributions for both groups and say how many units were dropped. Read the diagnostics table as a quality check. **Report the effect for the population that was actually matched**, and say who that is.",
+  "75": "Strengthen matching with differencing and sensitivity analysis. Matching plus DiD removes unmeasured differences fixed over time. Ask how strong a hidden confounder would need to be to overturn the result, and compare it with your strongest measured one. **A study with neither asks you to accept its assumption on trust.**",
+  "76": "Use the comparison table to see why two careful papers disagree. One uses individual women who received payment, the other districts with different implementation. Women who reach a facility may differ in ways surveys miss. **Both are careful, and the disagreement shows how assumptions shape answers.**",
+  "77": "Synthetic control builds a comparison from a weighted mix of untreated units that tracks the treated unit before treatment. It suits a single treated state. **The post-treatment path of the synthetic unit stands in for the counterfactual.** The Basque and California applications are the standard references.",
+  "78": "A good pre-treatment fit is the entry ticket, and with a poor fit you report no estimate. Inference comes from placebos, since one treated unit has no usual standard error. **Compare the real gap with the placebo gaps**, drop donors with their own reform, and test dropping each donor.",
+  "80": "Separate internal from external validity. A perfect trial in 120 schools in one district tells you what the programme did there, delivered by that organisation. **A well-identified effect is a measurement of one programme in one context.** Whether it travels needs separate evidence.",
+  "81": "Vivalt found large variation in effect sizes for the same type of programme, and government-implemented programmes had smaller effects. For planning, **assume a smaller effect than the trial reported** and make sure the budget case survives that. Ask for evidence from government-run versions.",
+  "82": "Same contract on paper, different employer, different result: the NGO's teachers raised scores and the government's produced zero impact. **Treat 'the programme' as including its delivery system.** Record who implemented the tested version, and ask whether the implementer at scale has the same incentives and capacity.",
+  "83": "Teaching at the Right Level worked under Pratham, then some designs produced no impact in government schools. The lesson is the process: **test the idea, test it inside the system, learn why failures happened, redesign and retest.** Report nulls alongside successes. Two models eventually worked at scale.",
+  "84": "Replication across countries is the most direct evidence on external validity. The graduation approach ran in Bangladesh and in a six-country trial with common outcome measures. Notice the scale: 1,309 villages in one trial, 10,495 households across six sites. **The same design in many places found lasting progress for the very poor.**",
+  "85": "Averages hide who gains. Each row pairs a headline average with what the split revealed. Subgroup findings are useful and fragile. **Credible ones were named in advance, have a mechanism, and are reported with all the other subgroups tested.** One significant subgroup out of twenty is most likely chance.",
+  "86": "Scale changes the question. A national programme can move wages and prices, and a trial comparing participants with non-participants in one labour market misses both effects. **The partial effect in a trial and the total effect of a policy can differ in size and sign.** Randomise whole markets to measure it.",
+  "88": "Keep the ten questions as a card, each with its good-answer column. Questions 2 to 5 carry the weight: compared with whom, who decided, what is the key assumption, what supports it. **If a report cannot answer those four, treat the claim as unproven.**",
+  "89": "Use the decision table in reverse when you design: start from your situation and read across. **The best time to choose a design is before the programme starts**, when a lottery or phase-in can still be built into the rollout. The last row is honest: with only participants' data, describe the outcomes and claim no effect.",
+  "90": "Work the case before reading the answer. Reject the three weak designs and say why: recipients chose to enrol, statewide change mixes other changes, and pilot districts were picked for a reason. Then ask who certifies income. **If families or officers could adjust it once the scheme was known, the RD option is weak.**",
+  "91": "Check the arithmetic: 9 − 4 = 5 points. Boys show no difference, which supports the comparison. It is an intention-to-treat effect for all girls who passed Class 10. **For cost per extra enrolment, divide total cost by the additional enrolments implied.** Dividing by all recipients counts girls who would have enrolled anyway.",
+  "92": "Read verbs as clues to the design. Causal verbs claim a counterfactual, and descriptive verbs report patterns. **Check that the summary's verbs match the design in the methods.** If no comparison group appears there, read every causal verb as 'was associated with'. A share of satisfied users is no effect size.",
+  "93": "Several large legal changes took effect close together, so any before-after comparison spanning those dates mixes many causes. Use the table as a calendar of breaks in data: labour codes, tax law, the employment guarantee replacement, DPDP, the census. **Facts are as of October 2026**, so check for later changes.",
+  "94": "These seven asks are the commissioner's lever. The first matters most: involve evaluators before the programme starts, while rollout can still be randomised or phased. **A contract that asks only for a final report almost guarantees a before-after study of participants.** Ask for costs, data and publication of nulls.",
+  "96": "Use the summary as a revision list and tick each line against a section. The question that does most of the work is **'compared with whom, and why were they not treated?'** Notice how each design line names its key assumption, because that is what you must check in any report.",
+  "97": "Treat the glossary as a quick test: cover the right column and define each term aloud. Pay special attention to the two confusable groups, confounder, mediator and collider, and ITT, ATT, ATE and LATE. **If you can place each on a diagram, you have the vocabulary.**",
+  "98": "Pick by need. For free introductions with code try Cunningham or Huntington-Klein, and for diagrams use DAGitty. The slide adds that the papers cited on each slide are the best starting points, many with free working paper versions. **Start with one book and one tool.**",
+  "99": "Follow the suggested order: this deck, then Impact Evaluation 101, then Econometrics 101, then the flagship course. Pair each with the skill course you need, such as Survey Design for outcomes or Cost Effectiveness 101 for funding decisions. **Choose the next course that matches the gap you felt most.**"
+ }
+}
