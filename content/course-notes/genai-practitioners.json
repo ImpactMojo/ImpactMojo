@@ -1,0 +1,1030 @@
+{
+ "slug": "genai-practitioners",
+ "intro": "Read the deck for the facts and these notes for the thinking. Each note explains a slide, gives you something to remember and warns you where people slip. Keep a chatbot open in another tab, work each exercise on a real task of your own, and answer the recall questions before you check.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "Orientation",
+   "big_idea": "Treat AI output as a draft from a fast, confident intern. **Use it to draft language, never to decide facts or futures**, and keep a named human accountable.",
+   "in_plain_words": [
+    "Generative AI helps with writing, translation, summaries and first-pass analysis, which is most of what development organisations do. A small team can draft a donor report and summarise a long evaluation in an afternoon. The tools make confident mistakes, so speed is a means and good work is the goal.",
+    "Five ground rules frame the course: humans stay accountable, verify before you use, protect people first, be honest about AI's help, and support judgement without replacing it. Priya's day shows the split. AI did the first-draft labour, and she did the thinking, checking and deciding."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Good at",
+     "items": [
+      "Turning bullet points into prose",
+      "Plain-language rewriting",
+      "Translating and summarising",
+      "First-pass sorting and tagging"
+     ]
+    },
+    "right": {
+     "title": "Unreliable or unsafe at",
+     "items": [
+      "Facts, figures and citations",
+      "Events after its cutoff",
+      "Personal or confidential data",
+      "Judgements about people's lives"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "GenAI",
+     "meaning": "Software that creates new text, images, audio or code from a request."
+    },
+    {
+     "term": "LLM",
+     "meaning": "The engine behind chat tools, trained on huge text to predict likely next words."
+    },
+    {
+     "term": "Prompt",
+     "meaning": "The instruction you type; role, context and format improve it."
+    },
+    {
+     "term": "Hallucination",
+     "meaning": "A false statement, such as a made-up statistic, delivered as fact."
+    },
+    {
+     "term": "Accountable human",
+     "meaning": "A named person who owns and signs off the final work."
+    }
+   ],
+   "worked_example": {
+    "title": "Sort the task",
+    "setup": "Five tasks arrive on one Monday. Put each in the draft-language pile or the do-not-delegate pile.",
+    "steps": [
+     "Rewrite a dense paragraph in plain language: draft-language pile, since you supply the meaning.",
+     "Summarise a 60-page evaluation you are allowed to upload: draft-language pile, with a spot-check against the original.",
+     "State the exact fall in school dropouts, with a citation: do-not-delegate, since the model invents figures and citations.",
+     "Decide who gets aid: do-not-delegate, since decisions about people are human.",
+     "Paste participants' phone numbers to tidy a list: do-not-delegate, since personal data stays out of public tools."
+    ],
+    "answer": "Two tasks suit AI drafting; three stay with a human."
+   },
+   "mistakes": [
+    "Treating speed as the goal. The deck says good work is the goal, and these tools make confident mistakes.",
+    "Letting AI author the final work. A named person always owns and signs off.",
+    "Practising with real beneficiary names, phone numbers or case details in a public tool.",
+    "Assuming you need to be technical. The course needs no code, only a keyboard and care for the people you serve."
+   ],
+   "recall": [
+    {
+     "q": "What is the one-line rule of the course?",
+     "a": "Use it to draft language, never to decide facts or futures."
+    },
+    {
+     "q": "Name the five ground rules.",
+     "a": "Humans stay accountable; verify before you use; protect people first; be honest about AI's help; support judgement and never replace it."
+    },
+    {
+     "q": "What is the central risk of these tools?",
+     "a": "Hallucination: stating something false as if it were fact."
+    },
+    {
+     "q": "What did AI do and what did Priya do in her day?",
+     "a": "AI did the fast first-draft labour; Priya did the thinking, checking and deciding."
+    },
+    {
+     "q": "What kind of tool should you imagine when you read an output?",
+     "a": "A fast, confident intern whose work needs a knowledgeable human check."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "What GenAI Actually Is",
+   "big_idea": "An LLM predicts the likeliest next word, so it produces **plausible text, which is not always true text**. Pick a model family your team can use safely.",
+   "in_plain_words": [
+    "A generative model composes a new answer word by word. It learned patterns from huge amounts of text, stores no articles, has no memory of you by default, and does not understand as a human does. Its knowledge stops at a training cutoff, and it may not say so.",
+    "Training rewards fluent, confident text, so every answer arrives in the same assured voice and tone says nothing about accuracy. The 2026 field includes closed models (GPT, Claude, Gemini), open-weight models (Llama, Qwen, DeepSeek) and Sarvam for 22 Indian languages. Quality among the top options is close."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Read the text so far"
+     },
+     {
+      "label": "Predict the next token",
+      "sub": "the likeliest word"
+     },
+     {
+      "label": "Add it and repeat"
+     },
+     {
+      "label": "A full answer emerges"
+     }
+    ],
+    "caption": "millions of tiny guesses make an essay"
+   },
+   "key_terms": [
+    {
+     "term": "Token",
+     "meaning": "A word or word-piece; the unit the model predicts one at a time."
+    },
+    {
+     "term": "Knowledge cutoff",
+     "meaning": "The date after which a model has seen no training text."
+    },
+    {
+     "term": "Open-weight model",
+     "meaning": "A model you can download and run on your own servers."
+    },
+    {
+     "term": "Closed model",
+     "meaning": "A service you reach online; your request goes to the company's servers."
+    },
+    {
+     "term": "Sovereign AI",
+     "meaning": "Models built and hostable within a country, keeping data and language capability local."
+    }
+   ],
+   "worked_example": {
+    "title": "Pick the model",
+    "setup": "Illustrative: a team has four jobs. Match each to a kind of model using the deck's advice.",
+    "steps": [
+     "Everyday drafting and brainstorming: one closed model on a paid plan with data-use controls, chosen once.",
+     "A Hindi leaflet: a strong general model handles Hindi and major languages well.",
+     "A Santali leaflet: an India-focused model such as Sarvam, then a native-speaker check.",
+     "Real personal data: an open-weight model on your own hardware, or a vetted vendor, so data stays in your control."
+    ],
+    "answer": "One standard tool for daily work, a Sarvam option for low-resource languages, and an open-weight model for sensitive data."
+   },
+   "mistakes": [
+    "Believing the model looks facts up. It composes plausible text and can fabricate a statistic.",
+    "Assuming it knows this year's events. A model trained through 2025 will not know a scheme launched in 2026.",
+    "Trusting a confident tone. Fluency reads as competence to us, and the model is always fluent.",
+    "Chasing the best model. The top options are close, so consistent, safe use matters more."
+   ],
+   "recall": [
+    {
+     "q": "What does a language model do at its core?",
+     "a": "It estimates the likeliest next word (token), adds it, and repeats."
+    },
+    {
+     "q": "What does 'open-weight' mean?",
+     "a": "The company releases the model so a technical team can run it themselves."
+    },
+    {
+     "q": "Which models target 22 Indian languages?",
+     "a": "Sarvam-M, Sarvam-30B and Sarvam-105B."
+    },
+    {
+     "q": "Name two reasons it sounds confident when wrong.",
+     "a": "Training rewards fluent text, and it has no inner fact-checker; also fluency reads as competence."
+    },
+    {
+     "q": "What should you do with anything time-sensitive?",
+     "a": "Confirm it against a live, authoritative source."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Everyday Uses: Writing",
+   "big_idea": "In writing, **you supply the facts and judgement, and the AI supplies structure and phrasing**. Skip step one and it will invent the substance.",
+   "in_plain_words": [
+    "The pattern is four beats: you supply facts and context, AI drafts the language, you edit and verify, and you own and sign off. Reports, proposals, ToRs, donor emails, plain-language rewrites, edits, translation and summaries all follow it. Feed the model your real notes and numbers.",
+    "Some uses are low-risk because you supply the meaning, such as plain-language rewriting and editing, provided you re-read to confirm nothing changed. Others need care. Translation always needs a native-speaker check for public material, and summaries need a spot-check against the original and permission to upload the document."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "You supply facts",
+      "sub": "and context"
+     },
+     {
+      "label": "AI drafts",
+      "sub": "the language"
+     },
+     {
+      "label": "You edit and verify"
+     },
+     {
+      "label": "You own and sign off"
+     }
+    ],
+    "caption": "skip step 1 and AI writing becomes a liability"
+   },
+   "key_terms": [
+    {
+     "term": "Golden rule",
+     "meaning": "Feed the model your real data and context; let it shape the words."
+    },
+    {
+     "term": "Plain language",
+     "meaning": "The same meaning at a stated reading level, without jargon."
+    },
+    {
+     "term": "Grounded summary",
+     "meaning": "A summary built from the actual document you paste or upload."
+    },
+    {
+     "term": "Native-speaker review",
+     "meaning": "A fluent person checks tone, idiom and sensitive terms before publication."
+    },
+    {
+     "term": "Sign-off",
+     "meaning": "A named person owns the final work."
+    }
+   ],
+   "worked_example": {
+    "title": "Cut 30 per cent without losing facts",
+    "setup": "Illustrative: a 900-word section must shrink by 30%. You prompt: 'Keep every fact and number exactly, only improve clarity and cut 30%.'",
+    "steps": [
+     "Words to cut = 900 × 0.30 = 270.",
+     "Target length = 900 − 270 = 630 words.",
+     "Compare the edit against the original for any dropped or altered claim.",
+     "Read it as if checking someone else's draft, since an over-eager edit can insert a claim you never made."
+    ],
+    "answer": "About 630 words, with every fact checked against your original."
+   },
+   "mistakes": [
+    "Giving vague inputs to a report prompt. The model fills gaps with invented achievements and numbers.",
+    "Letting it write the problem statement's evidence. Add local evidence and citations yourself.",
+    "Treating machine translation as final for public IEC material. A native speaker signs off every time.",
+    "Summarising a confidential document by uploading it to a public tool."
+   ],
+   "recall": [
+    {
+     "q": "What are the four beats of the writing pattern?",
+     "a": "You supply facts, AI drafts, you edit and verify, you own and sign off."
+    },
+    {
+     "q": "Why is plain-language rewriting low-risk?",
+     "a": "You supply the meaning and the model only simplifies the words."
+    },
+    {
+     "q": "What should you ask a summary to include for verification?",
+     "a": "Page or section references."
+    },
+    {
+     "q": "What does 'Extract, don't infer' ask for?",
+     "a": "Quoted references so you can verify each point."
+    },
+    {
+     "q": "Why avoid private details in donor email prompts?",
+     "a": "You rarely need them; use a role such as a long-term institutional funder instead."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Everyday Uses: Analysis & Ops",
+   "big_idea": "AI does the first pass and you do the analysis. **Anonymise, validate a sample and document** before any result informs a decision.",
+   "in_plain_words": [
+    "AI can propose themes from open-ended answers, apply a codebook at scale, draft M&E indicators and theories of change, transcribe meetings and explain spreadsheet formulas. A person must still decide which themes are real, interpret meaning, catch what people did not say and stand behind the conclusions.",
+    "The safe pattern is to ask how to clean data and run the steps yourself on the real file. Never paste a raw beneficiary dataset. Recordings of real people are personal data, so tell participants before transcribing and keep sensitive conversations out of public tools. Document where AI helped in your method."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Anonymise",
+      "sub": "strip names and identifiers"
+     },
+     {
+      "label": "Derive codes",
+      "sub": "from a sample"
+     },
+     {
+      "label": "Hand-code examples",
+      "sub": "for consistency"
+     },
+     {
+      "label": "Apply at scale",
+      "sub": "multiple codes allowed"
+     },
+     {
+      "label": "Validate a sample",
+      "sub": "re-check by hand"
+     },
+     {
+      "label": "Report",
+      "sub": "with a method note"
+     }
+    ],
+    "caption": "Case B: the same steps work for any open-ended data"
+   },
+   "key_terms": [
+    {
+     "term": "Codebook",
+     "meaning": "The agreed list of codes or themes applied to responses."
+    },
+    {
+     "term": "First-pass coding",
+     "meaning": "AI tagging of responses, to be validated by a person."
+    },
+    {
+     "term": "Few-shot examples",
+     "meaning": "A few hand-coded responses that teach the model your codes."
+    },
+    {
+     "term": "De-identified sample",
+     "meaning": "Data with real values replaced so people cannot be traced."
+    },
+    {
+     "term": "SMART indicator",
+     "meaning": "Specific, measurable and realistic to collect in your setting."
+    }
+   ],
+   "worked_example": {
+    "title": "Size the validation sample",
+    "setup": "Illustrative: you coded 500 responses with AI and re-check 50 by hand. Agreement is found on 46.",
+    "steps": [
+     "Share checked by hand = 50 ÷ 500 = 0.10, or 10%.",
+     "Agreement = 46 ÷ 50 = 0.92, or 92%.",
+     "The deck says if agreement is high, proceed; if not, refine and re-run.",
+     "Record the sample size and agreement in the method note."
+    ],
+    "answer": "A 10% sample with 92% agreement supports proceeding, and the note documents it."
+   },
+   "mistakes": [
+    "Skipping the hand-checked sample. You then hold fast numbers you cannot defend.",
+    "Pasting names and phone numbers into a free chatbot to save time.",
+    "Assuming AI cleaned the data correctly. Check any transformation on real data yourself.",
+    "Trusting an AI formula without testing it on a few rows you can verify by hand."
+   ],
+   "recall": [
+    {
+     "q": "What must you do before analysis touches a public tool?",
+     "a": "Anonymise: strip names and identifiers or use dummy data."
+    },
+    {
+     "q": "What is mandatory before a coded result informs a decision?",
+     "a": "Validate a sample by hand."
+    },
+    {
+     "q": "What is the safe pattern for data cleaning?",
+     "a": "Ask the model for the steps, then run them yourself on the real file."
+    },
+    {
+     "q": "What must you do before transcribing a meeting?",
+     "a": "Tell participants it is recorded and processed by AI; avoid sensitive cases."
+    },
+    {
+     "q": "Why document AI's role in your method?",
+     "a": "Donors and journals increasingly expect it, and it shows how you validated."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Prompting Well",
+   "big_idea": "A prompt is a brief to a capable new colleague. **Role, context, task and format** turn a generic answer into one that fits your work.",
+   "in_plain_words": [
+    "The weak prompt, 'Write about women's empowerment', gives a bland essay. The strong one names a role, an audience, a place, a length and the real results. Context is where NGO users gain most and invest least, and the new-intern test checks it: could a bright intern do this from what you wrote?",
+    "Few-shot examples teach style and coding faster than description. Treat the chat as a conversation: react specifically, fix one thing at a time and ask for options. Ask for step-by-step reasoning and for self-critique, but verify anyway. Keep five reusable patterns in a shared library."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "A good prompt",
+    "spokes": [
+     {
+      "label": "Role",
+      "sub": "who to be"
+     },
+     {
+      "label": "Context",
+      "sub": "what it cannot know"
+     },
+     {
+      "label": "Task",
+      "sub": "one clear instruction"
+     },
+     {
+      "label": "Format",
+      "sub": "length, shape, tone"
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "R-C-T-F",
+     "meaning": "Role, context, task, format: the four parts of a good prompt."
+    },
+    {
+     "term": "Few-shot prompting",
+     "meaning": "Giving one or two examples of the style or coding you want."
+    },
+    {
+     "term": "Iterating",
+     "meaning": "Steering across several turns until the output fits."
+    },
+    {
+     "term": "Self-critique",
+     "meaning": "Asking the model to flag weaknesses and unverified claims."
+    },
+    {
+     "term": "Pattern library",
+     "meaning": "A shared page of reusable prompts the team fills in."
+    }
+   ],
+   "worked_example": {
+    "title": "Upgrade a weak prompt",
+    "setup": "Weak prompt: 'Write a funding proposal.' Rebuild it with R-C-T-F using the deck's example.",
+    "steps": [
+     "Role: 'You are an experienced grant writer.'",
+     "Context: 'For a 3-year girls' education project in rural Bihar, for a corporate CSR funder.'",
+     "Task: 'Draft the problem statement and objectives from these facts: ...'",
+     "Format: '500 words, three objectives as bullets, no invented statistics.'"
+    ],
+    "answer": "A four-line prompt that takes thirty extra seconds and saves an hour of rework."
+   },
+   "mistakes": [
+    "Asking a vague question and expecting a usable draft. No role means a generic voice and no context means guessing.",
+    "Accepting the first draft. The deck says the first answer is rarely the best.",
+    "Changing tone, structure and length in one go. Fix one thing at a time.",
+    "Treating the model's self-critique as fact-checking. It shares your blind spots."
+   ],
+   "recall": [
+    {
+     "q": "What does R-C-T-F stand for?",
+     "a": "Role, context, task and format."
+    },
+    {
+     "q": "What is the new-intern test?",
+     "a": "Could a bright new intern do the task well from what you wrote?"
+    },
+    {
+     "q": "What is few-shot prompting?",
+     "a": "Showing the model one or two samples of the style, format or coding you expect."
+    },
+    {
+     "q": "Name two ways to ask the model to show its thinking.",
+     "a": "Any two of: think step by step, explain the reasoning, list assumptions, show the working."
+    },
+    {
+     "q": "Name two of the five reusable prompt patterns.",
+     "a": "Any two of draft-from-notes, simplify, summarise, code responses, critique."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Risks I: Accuracy, Hallucination & Bias",
+   "big_idea": "A language model is a language engine and a poor source of truth. **Verify every specific**, read for bias, and judge content instead of confidence.",
+   "in_plain_words": [
+    "Hallucination is a confident invention of dates, statistics, studies or laws. It happens because the model predicts plausible text. Fake citations are the sharpest case, with perfect formatting and links that lead nowhere. Never cite a statistic the AI gave you: cite the primary source you confirmed, or drop the number.",
+    "Bias follows the training text, which over-represents wealthy, English-speaking, Global-North views. Watch for gender stereotypes, flattened caste and community, and weaker language coverage. Other limits include shaky maths, missed nuance and silent knowledge cutoffs. Match trust to the stakes, and treat high-stakes output as an unknown intern's."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "If you trust it",
+     "items": [
+      "A fabricated statistic goes in",
+      "A fake citation goes in",
+      "A donor checks and finds it wrong",
+      "Your credibility is damaged"
+     ]
+    },
+    "right": {
+     "title": "If you verify it",
+     "items": [
+      "You open the actual survey portal",
+      "You find the real figure and citation",
+      "You use those",
+      "AI saved drafting time; the source gave the truth"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Hallucination",
+     "meaning": "A confident false fact, figure, citation or event."
+    },
+    {
+     "term": "Fake citation",
+     "meaning": "An invented reference that copies the shape of a real one."
+    },
+    {
+     "term": "Global-North default",
+     "meaning": "Examples and norms assuming a Western context."
+    },
+    {
+     "term": "Knowledge cutoff",
+     "meaning": "The silent gap: out-of-date answers given without warning."
+    },
+    {
+     "term": "Fluency",
+     "meaning": "Smooth, assured wording; it is a style and gives no evidence of accuracy."
+    }
+   ],
+   "worked_example": {
+    "title": "Match trust to stakes",
+    "setup": "Illustrative: three AI outputs need a decision on how hard to check.",
+    "steps": [
+     "A brainstorm of workshop names: low stakes, so a light check is enough.",
+     "A piped-water percentage for a donor proposal: high stakes, so take it to the actual survey portal and cite the primary source.",
+     "A section number of an Act in a campaign leaflet: high stakes, so open the real Act and confirm it exists and says that.",
+     "If you cannot find a source, the deck says it probably is not real, so drop the claim."
+    ],
+    "answer": "Light check, verify at source, verify at source."
+   },
+   "mistakes": [
+    "Treating fluent, detailed output as evidence. The most specific fabrications are the most dangerous.",
+    "Copying an AI statistic into a proposal and citing the AI's source.",
+    "Skipping a bias read on text about the communities you serve.",
+    "Assuming the model would say if its knowledge were out of date. It often answers anyway."
+   ],
+   "recall": [
+    {
+     "q": "Why does a model hallucinate?",
+     "a": "It predicts plausible text, and a convincing fabrication can be the likeliest continuation."
+    },
+    {
+     "q": "Where does hallucination bite hardest?",
+     "a": "On specifics: numbers, names, dates, laws, quotes and references."
+    },
+    {
+     "q": "What is the rule for citations?",
+     "a": "Open the real source and confirm it exists and says what the model claimed."
+    },
+    {
+     "q": "Name two forms of bias the deck lists.",
+     "a": "Any two of Global-North default, gender, caste and community, language skew, missing voices."
+    },
+    {
+     "q": "What is the 2026 cutoff example?",
+     "a": "A model trained before late 2025 may not know the DPDP Rules were notified in November 2025."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Risks II: Privacy, Rights & Cost",
+   "big_idea": "Never paste beneficiary personal data into a public AI tool. **A public tool is outside your organisation**, and under the DPDP Act you are the Data Fiduciary.",
+   "in_plain_words": [
+    "When you send text to a public tool it leaves your control: stored externally, possibly reviewed, sometimes used to improve the model. The people cannot consent to that. Anonymise or generalise instead. The DPDP Act, 2023 applies to NGOs: the Board has existed since 13 November 2025 and organisations' duties start on 13 May 2027.",
+    "The duties include lawful basis and consent, purpose limitation, itemised notice, reasonable security, breach reporting and protection for children's data. Confidentiality also covers unpublished documents, partner information and HR matters. Ownership of AI output is unsettled, so add human authorship. Over-reliance erodes skills, and large models use real electricity and water."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Generally safe",
+     "items": [
+      "Your own draft text and notes",
+      "Published reports and public data",
+      "Anonymised, aggregated statistics",
+      "Dummy or synthetic sample data"
+     ]
+    },
+    "right": {
+     "title": "Never in a public tool",
+     "items": [
+      "Beneficiary names, phones, addresses",
+      "Health, caste, religion, disability data",
+      "Survivor, GBV or legal-case details",
+      "ID, Aadhaar, bank or financial details"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Data Principal",
+     "meaning": "The person the data is about; for your NGO, the beneficiary."
+    },
+    {
+     "term": "Data Fiduciary",
+     "meaning": "The organisation deciding how and why data is processed; it carries the duties."
+    },
+    {
+     "term": "Data Protection Board",
+     "meaning": "The body that oversees compliance and handles breaches, from 13 November 2025."
+    },
+    {
+     "term": "Anonymise or generalise",
+     "meaning": "Replace identifying details with general descriptions."
+    },
+    {
+     "term": "Deskilling",
+     "meaning": "Skills fading because AI does the writing and thinking."
+    }
+   ],
+   "worked_example": {
+    "title": "Anonymise one sentence",
+    "setup": "The deck gives: 'Sunita, 34, HIV-positive, from Ward 5.' Make it safe to paste, and place the dates on a timeline.",
+    "steps": [
+     "Direct identifiers: the name, the age, the health status and the ward.",
+     "Generalise to 'a middle-aged woman living with a chronic illness', which keeps the use and protects the person.",
+     "Test: could this identify or harm a real person if it leaked? Now it could not.",
+     "Dates: from the Board on 13 November 2025 to duties on 13 May 2027 is 12 + 6 = 18 months."
+    ],
+    "answer": "A general description is safe to use, and organisations have 18 months between the Board and the duties."
+   },
+   "mistakes": [
+    "Pasting a participant list to save time. Anonymise first, or keep the data in your own tools.",
+    "Relying on a summary of the law, including an AI's. Check the current position on meity.gov.in.",
+    "Treating AI output as automatically owned and free of others' rights.",
+    "Letting AI do all the thinking until the skill fades."
+   ],
+   "recall": [
+    {
+     "q": "What is the one rule that prevents most harm?",
+     "a": "Never paste beneficiary personal data into a public AI tool."
+    },
+    {
+     "q": "What is a Data Fiduciary in your work?",
+     "a": "Your NGO, which carries the legal duties."
+    },
+    {
+     "q": "When do organisations' DPDP duties apply?",
+     "a": "From 13 May 2027."
+    },
+    {
+     "q": "What is the test for what can go in?",
+     "a": "Could this identify or harm a real person if it leaked?"
+    },
+    {
+     "q": "Name two forms of over-reliance harm.",
+     "a": "Any two of skill fade, loss of critical distance, a homogenised voice, weaker memory, juniors learning less."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Responsible Use In Your Org",
+   "big_idea": "A one-page policy turns personal caution into a team default. **Anonymise, verify, disclose, decide-by-human**, and name someone who owns it.",
+   "in_plain_words": [
+    "The template has two halves. The data rules list what may go in (your drafts, published material, anonymised statistics, dummy data) and what must not (beneficiary data, sensitive categories, confidential or HR material). The how-we-use-it rules require human-in-the-loop, verification, disclosure, no AI decisions about people, approved tools and prompt reporting.",
+    "Scale the loop to the stakes: a quick read for an internal email, full verification and senior sign-off for a donor report. Name an AI focal point, train everyone, keep an approved-tools list and review every few months. For sensitive data use enterprise tiers with a data-processing agreement, or run an open model on-device."
+   ],
+   "diagram": {
+    "type": "stack",
+    "levels": [
+     {
+      "label": "On-device open model",
+      "sub": "the most sensitive data"
+     },
+     {
+      "label": "Vetted enterprise tool",
+      "sub": "confidential work, with agreement"
+     },
+     {
+      "label": "Public free tool",
+      "sub": "anonymised, low-risk drafting"
+     }
+    ],
+    "caption": "match the tool to the sensitivity"
+   },
+   "key_terms": [
+    {
+     "term": "Human-in-the-loop",
+     "meaning": "A person is never removed from a meaningful process."
+    },
+    {
+     "term": "AI focal point",
+     "meaning": "One person or small group who owns the policy and keeps it current."
+    },
+    {
+     "term": "Approved-tools list",
+     "meaning": "Which tools are sanctioned for which kinds of data."
+    },
+    {
+     "term": "Data-processing agreement",
+     "meaning": "A contract you can hold an enterprise vendor to."
+    },
+    {
+     "term": "Disclosure",
+     "meaning": "Telling others where AI assisted, when accuracy or trust is at stake."
+    }
+   ],
+   "worked_example": {
+    "title": "Decide whether to disclose",
+    "setup": "Use the deck's table on four pieces of work.",
+    "steps": [
+     "Fixing your own grammar and spelling: not necessary.",
+     "AI-assisted analysis in a report: yes, note it in the methodology.",
+     "A journal submission: yes, follow the outlet's AI policy.",
+     "An AI-generated image of a 'beneficiary': yes, clearly, and never pass it off as real."
+    ],
+    "answer": "Disclose in three of four cases; routine grammar help needs no flag."
+   },
+   "mistakes": [
+    "Relying on individual judgement. Interns, volunteers and rushed colleagues need clear shared rules.",
+    "Writing a long policy nobody reads. One or two pages that people use beat a perfect document that never ships.",
+    "Letting AI decide aid, eligibility, hiring, discipline or flagging. Those are human decisions.",
+    "Using free public tools for sensitive work."
+   ],
+   "recall": [
+    {
+     "q": "Which four words summarise the policy?",
+     "a": "Anonymise, verify, disclose, decide-by-human."
+    },
+    {
+     "q": "Why must humans decide about people?",
+     "a": "AI can be wrong and biased, nobody is accountable, dignity requires it, and law and ethics expect it."
+    },
+    {
+     "q": "What does an enterprise tier offer?",
+     "a": "A promise not to train on your data, a data-processing agreement, admin controls and audit logs."
+    },
+    {
+     "q": "What size of governance suits a five-person NGO?",
+     "a": "A one-page policy and a named focal point."
+    },
+    {
+     "q": "What do light-touch and heavy-touch loops depend on?",
+     "a": "The stakes of the work."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "In Practice",
+   "big_idea": "Every worked case puts a human check where a risk would bite. **AI handles volume and first drafts; humans handle data, verification, judgement and accountability.**",
+   "in_plain_words": [
+    "Case A turns real data into a donor report in four steps and saves time without losing accountability. Case B codes 500 farmer responses after anonymising, deriving codes, hand-coding examples and validating a random sample. Case C translates a leaflet into Hindi and Santali with mandatory native-speaker review.",
+    "Across six sectors the safe uses repeat: drafting, translating and first-pass analysis, and never individual personal data or decisions about people. The do and don't lists mirror each other, and the common-mistakes table pairs each slip with a habit. Almost every real failure traces to one of those rows."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Three worked cases",
+    "children": [
+     {
+      "label": "Case A: donor report",
+      "items": [
+       "Gather real data",
+       "Prompt with structure",
+       "Verify and sign off"
+      ]
+     },
+     {
+      "label": "Case B: coding 500",
+      "items": [
+       "Anonymise first",
+       "Hand-code examples",
+       "Validate a random sample"
+      ]
+     },
+     {
+      "label": "Case C: translating IEC",
+      "items": [
+       "Simple English source first",
+       "Right model for each language",
+       "Native-speaker review"
+      ]
+     }
+    ],
+    "caption": "each case has one human check where AI's risk bites"
+   },
+   "key_terms": [
+    {
+     "term": "Method note",
+     "meaning": "A record of AI's role and the validation step."
+    },
+    {
+     "term": "Native-speaker review",
+     "meaning": "Mandatory check of tone, accuracy and sensitivity before print."
+    },
+    {
+     "term": "Load-bearing step",
+     "meaning": "The step the whole method depends on; in coding, validation."
+    },
+    {
+     "term": "Division of labour",
+     "meaning": "AI handles volume; humans handle weight and risk."
+    },
+    {
+     "term": "Field test",
+     "meaning": "Showing a few community members before printing at scale."
+    }
+   ],
+   "worked_example": {
+    "title": "Time saved in Case A",
+    "setup": "The deck says a two-hour report job took forty minutes with AI.",
+    "steps": [
+     "Two hours in minutes = 2 × 60 = 120.",
+     "Time saved = 120 − 40 = 80 minutes.",
+     "Share saved = 80 ÷ 120 = 0.67, or about two-thirds.",
+     "The saving held because the facts were hers and the verification was real."
+    ],
+    "answer": "80 minutes saved, about two-thirds, with accuracy and accountability intact."
+   },
+   "mistakes": [
+    "Skipping the hand-checked sample in a coding case, which leaves numbers you cannot defend.",
+    "Translating from messy English. Errors in the source multiply in every language.",
+    "Using AI to diagnose individuals in health work. Messages need clinical review.",
+    "Passing off fabricated people or stories as real."
+   ],
+   "recall": [
+    {
+     "q": "How long did Case A take with AI?",
+     "a": "Forty minutes, for a two-hour job."
+    },
+    {
+     "q": "How big is the validation sample in Case B?",
+     "a": "About 50 responses, re-checked by hand."
+    },
+    {
+     "q": "Which model suits Santali, per the deck?",
+     "a": "An India-focused model such as Sarvam."
+    },
+    {
+     "q": "Name two sectors with a safe, high-value use.",
+     "a": "Any two of education, health, WASH, livelihoods, humanitarian, rights and advocacy."
+    },
+    {
+     "q": "What is the single-line summary of the do and don't lists?",
+     "a": "Never put real people's private data into a public tool and never trust an unverified fact."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Getting Started & Wrap",
+   "big_idea": "Start with one capable free tool and one real task this week. **Upgrade when volume or sensitivity grows**, and run the eight-box checklist before sending.",
+   "in_plain_words": [
+    "Five categories of tool exist: free chat, paid or enterprise, open-weight, Indian-language and on-device. Free tiers are capable in 2026, but check the data-use settings before sensitive work. A golden pairing is a paid general tool with data-use turned off for daily work plus an on-device or India-hosted model for real personal data.",
+    "The starter routine runs four weeks: one real task, better prompts, a second use, then team and rules. The checklist has eight boxes. The FAQ and myths tables answer common worries: AI changes tasks, the free tier suits low-risk drafting, and public tools are never for beneficiary data. Confirm names, prices and legal timelines with current sources."
+   ],
+   "diagram": {
+    "type": "timeline",
+    "events": [
+     {
+      "when": "Week 1",
+      "what": "Draft one real report or email"
+     },
+     {
+      "when": "Week 2",
+      "what": "Better prompts with R-C-T-F"
+     },
+     {
+      "when": "Week 3",
+      "what": "A second use: summarise or code"
+     },
+     {
+      "when": "Week 4",
+      "what": "Share, adopt the policy, name a focal point"
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "Free tier",
+     "meaning": "Capable in 2026, perfect for learning; inputs may be used."
+    },
+    {
+     "term": "Enterprise tier",
+     "meaning": "Business plan with data-protection guarantees and admin controls."
+    },
+    {
+     "term": "On-device model",
+     "meaning": "A smaller open model run locally, for sensitive data or offline use."
+    },
+    {
+     "term": "Golden pairing",
+     "meaning": "A paid tool with data-use off, plus an on-device or India-hosted model."
+    },
+    {
+     "term": "Starter routine",
+     "meaning": "A four-week plan that begins with one real task."
+    }
+   ],
+   "worked_example": {
+    "title": "Match the tier to the data",
+    "setup": "Illustrative: an NGO has three jobs and must choose a tier for each.",
+    "steps": [
+     "Brainstorming event names with no real data: a free tool is enough.",
+     "Daily donor and board writing with confidential budgets: a paid or enterprise tool with data-use off.",
+     "Coding open-ended interviews that contain real personal data: an on-device or India-hosted model.",
+     "Before sending any output, run the eight-box checklist."
+    ],
+    "answer": "Free, paid or enterprise, and on-device, matched to sensitivity as well as budget."
+   },
+   "mistakes": [
+    "Over-thinking the choice. Consistency beats collecting tools.",
+    "Assuming the free version is safe for confidential work. Free often means your inputs may be used.",
+    "Learning from tutorials alone. One real task beats a week of them.",
+    "Relying on a fixed summary of model names, prices and legal timelines, including this course."
+   ],
+   "recall": [
+    {
+     "q": "What are the five tool categories?",
+     "a": "Free chat, paid or enterprise, open-weight, Indian-language and on-device."
+    },
+    {
+     "q": "What is the golden pairing?",
+     "a": "A paid general tool with data-use off for daily work, and an on-device or India-hosted model for personal data."
+    },
+    {
+     "q": "What happens in week 4 of the routine?",
+     "a": "Share what you learned, adopt the one-page policy and name a focal point."
+    },
+    {
+     "q": "How many boxes are on the before-you-send checklist?",
+     "a": "Eight."
+    },
+    {
+     "q": "Which myth does the deck correct about public tools?",
+     "a": "'It's safe to paste anything in': public tools take your data outside your control."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "3": "Read these eight outcomes as your checklist for the course. Each maps to a part: plain-language explanation, daily writing, analysis, prompting, risks, DPDP, policy and a starter routine. Pick the two that matter most to your job now and **read those parts first**.",
+  "4": "The speed gain is real: minutes to a usable first draft. The Bihar NGO example shows who benefits most, small teams with no communications officer. Hold the second paragraph beside it. **Speed is the means and good work is the goal**, because these tools make confident mistakes.",
+  "5": "Check the 'this is for you if' list against yourself. The course assumes no programming and no prior knowledge, only that you can type a WhatsApp message and care about doing right by beneficiaries, donors and staff. If you wear every hat in a small organisation, **this is aimed at you**.",
+  "6": "Use the ten-part map to plan your reading. Parts 3 and 4 give the uses, Part 5 the technique, Parts 6 and 7 the risks and Part 8 the policy. Read in order if you are new. If you need to act now, go to **Part 7 for data and Part 8 for the template**.",
+  "7": "These seven habits tell you how to read the course. Pick one real job, keep a chatbot open and copy the templates. Two lines matter most: do not skip Parts 6 and 7, and treat every output as **a draft from a fast, confident intern**. Practise without real beneficiary data.",
+  "8": "Learn the one-line rule: **draft language, never decide facts or futures**. The left column lists where AI saves time. The right lists where it fails or is unsafe, including handling personal data and knowing when it is wrong. A human who knows the context must own the final output.",
+  "9": "Four terms carry the whole course: GenAI, LLM, prompt and hallucination. Note the contrast in the first: generative tools create new text and do not retrieve stored answers. Hallucination is called **the central risk**, so keep its definition handy: a made-up statistic, citation or event stated as fact.",
+  "10": "Priya's story shows the division of labour. AI produced a report draft, a translation for review and a themes list, and she flagged the Santali text for a native speaker to check. Keep the last line: **AI did the first-draft labour; Priya did the thinking, checking and deciding**.",
+  "11": "Memorise the five ground rules: humans stay accountable, verify, protect people, be honest about AI's help, and support judgement. Every later part is technique under these guardrails. The sharpest is the third: **no beneficiary names, contact details, health, caste, religion or case data in a public tool. Ever.**",
+  "13": "'Generative' means the model composes a new answer word by word and fetches nothing from a folder. Asking twice can give two different answers, which is flexibility and danger together. Memorise the closing line: it is **optimised to produce plausible text, and plausible text is not always true text**.",
+  "14": "Picture an LLM as a pattern-completer. It absorbed how language fits together and stores no articles to quote, so it answers by continuing your text. 'Large' means billions of adjustable settings called parameters. Chat tools are thin interfaces on top, and by default **no memory of you** carries across conversations.",
+  "15": "Learn the loop: read the text so far, predict the likeliest next word (a token), add it, repeat. Everything else follows from this. The model chases the likeliest wording, and facts are only sometimes the likeliest wording, so a fabricated statistic can **come out with total confidence**.",
+  "16": "A model knows the past up to its knowledge cutoff and is blind after it, and it may not say so. A model trained through 2025 will not know a scheme launched in 2026. For laws, prices, office-holders and statistics, **treat the model as a starting point and confirm against a live source**.",
+  "17": "Use this table as a vocabulary list. It names the families, makers and strengths, from GPT and Claude to open-weight models and Sarvam for 22 Indian languages. The advice in the last line matters most: the top options are close in quality, so **pick one your team can use safely and consistently**.",
+  "18": "Closed models run on the provider's servers, so your request travels out. That convenience is the privacy trade-off covered in Part 7. Names and versions change within months, so learn the families and check the provider's page as of October 2026. For an NGO, **choose one and standardise**.",
+  "19": "'Open-weight' means a technical team can download the model and run it on their own servers, so data never has to leave your control. Llama, Qwen and DeepSeek are the families named. Small NGOs will usually use them through a hosted service, but **knowing they exist** gives you a privacy-respecting route.",
+  "20": "Global models handle Hindi reasonably and weaken on Maithili, Santali, Bhojpuri and code-mixed Hinglish, which is the language of field work. Sarvam models target 22 official Indian languages and are open-source under Apache-2.0. Even so, **a native speaker must review anything public-facing**.",
+  "21": "The tone is the trap: every answer, right or wrong, arrives in the same fluent voice. Four reasons are listed: built to sound fluent, no inner fact-checker, fluency reads as competence, politeness makes it worse. The habit to adopt is to **judge the content and ignore the tone**.",
+  "22": "Read the two columns together. The left shows where AI saves hours: drafting, translating, reorganising, sorting. The right shows what it cannot do: guarantee truth, catch dialect, know your context, take responsibility. Good practice is to **use the left while a human stays in the loop for the right**.",
+  "24": "Writing is where AI helps first. Remember the three verbs: draft, refine, transform. The golden rule is about direction: **you supply facts and judgement, and AI supplies structure and phrasing**. If you let it invent the substance, you import its hallucinations into official documents.",
+  "25": "Follow the five steps: gather real material, give structure and voice, paste your notes, iterate by section, edit as the author. The warning matters most. Vague input invites the model to fill gaps with invented achievements, so **only your verified data should appear in a donor report**.",
+  "26": "Use AI to beat the blank page and to match the funder's format, but keep the evidence yours. It can sharpen a problem statement, draft a theory of change and generate risks, while you add local evidence and citations. The line to remember: **a proposal is a promise**, so build it only on verified facts.",
+  "27": "ToRs and routine documents are repetitive and structured, so they are great fits. Give purpose, scope, deliverables, timeline and budget range, then add the specifics only you know. The tip with the best payoff: **paste your best past ToR as an example** and ask for a new one like it.",
+  "28": "Give the model the three things you need to say and ask for a warm, professional email. For awkward news, ask for a tactful draft and then make it truthful and specific. Privacy habit: use a role such as 'a long-term institutional funder' and **leave real names and amounts out**.",
+  "29": "Plain language is one of the safest uses, because you supply the meaning and the model only simplifies the words. Set a reading level, remove jargon, repackage for each audience. Whenever you simplify, **re-read to confirm the meaning did not change**. Try it on a dense scheme circular.",
+  "30": "Editing tasks run from grammar to cutting 900 words to 400. Prompt precisely: 'Keep every fact and number exactly' and ask it to add no new claims. The risk is an over-eager 'improve this' that **inserts a claim you never made**, so read the edit as if checking someone else's draft.",
+  "31": "Translation gives a strong first draft and never a final for public material. Use a global model for Hindi and major languages, and an India-focused model for Maithili, Santali or code-mixing. Ask for natural, culturally appropriate wording, and **have a native speaker sign off** every community-facing message.",
+  "32": "Summarising works when the model has the actual document: paste or upload it, ask for a shaped summary and for page references. Two cautions apply. A summary can drop the one caveat that matters, so spot-check, and **only upload documents you are allowed to share**.",
+  "33": "This is the four-beat pattern behind every writing use: you supply facts and context, AI drafts the language, you edit and verify, you own and sign off. If you notice you skipped step 1, **stop**. Carry forward the phrase: a brilliant drafting partner and a terrible source of truth.",
+  "35": "Analysis and operations are the second big win: qualitative coding, M&E drafts, meeting records and spreadsheet help. The rule holds: AI assists the process and a knowledgeable human owns the conclusions. Read this part with Part 7 open, since analysis touches raw data, and **anonymise before you analyse**.",
+  "36": "Follow the five steps: propose themes from an anonymised sample, refine the codebook with your context, apply codes at scale, get counts and quotes, validate by hand. The last step is mandatory. The model can misread sarcasm and dialect, so **re-read a random slice yourself** before results inform any decision.",
+  "37": "Split the work as the two columns do. AI surfaces patterns, relates themes, pulls quotes and drafts the write-up. Humans decide which themes are real, interpret meaning, catch what people did not say and stand behind conclusions. Also **document your method**, including how you validated the AI's coding.",
+  "38": "AI widens the menu for M&E: indicators, SMART checks, a theory of change narrative, evaluation questions, a first log-frame and data-collection methods. It cannot know what you can measure with your resources. **Your team decides what is meaningful and collectable.**",
+  "39": "Transcription, minutes, action lists, absentee summaries and translated records are all good uses. Do the consent step first: tell participants the meeting is recorded and processed by AI. **Keep sensitive conversations, such as a survivor interview, out of public tools**, because recordings of real people are personal data.",
+  "40": "The safe pattern is to ask the model how to clean your data and then run the steps yourself on the real file. That keeps data with you and still gets you the expertise. If you must show structure, **replace real values with dummy ones**. The pattern is what the model needs.",
+  "41": "Spreadsheet help covers formulae, explanations of inherited formulas, error fixing, pivots and small scripts. Test scripts on copies. A formula can be off by one or use the wrong range, so **check it against a few rows you can verify by hand** before applying it to thousands.",
+  "42": "Use this hypothetical as a case study in a team meeting. The good parts: first-pass coding, indicator ideas, time saved. The failures: names and phone numbers pasted into a public tool, no validated sample, no consent for the data to leave. The fix keeps the workflow and adds **anonymise, validate, never send PII**.",
+  "43": "Six habits close the part: AI does the first pass, validate a sample, anonymise first, ask for instructions and keep the data, get consent for recordings, document AI's role. Carry the final sentence forward: analysis is where speed tempts most and **the risks are most serious**.",
+  "45": "The prompt makes the biggest difference between people who find AI useless and people who find it valuable. Compare the weak and strong examples. The mindset shift is the point: you are **briefing a capable new colleague who knows nothing about your work** until you say, so more context gives better output.",
+  "46": "Memorise R-C-T-F: role, context, task, format. The slide lists what you lose without each: no role, wrong voice; no context, generic; no task, rambling; no format, unusable shape. Use it as **a four-box check** before you press send.",
+  "47": "Context is where NGO users gain most and invest least. Give five things: who you are, who it is for, the real material, the constraints and the purpose. Use the new-intern test: **could a bright new intern do this task well from what you wrote?** If not, the model cannot either.",
+  "48": "Few-shot prompting means showing one or two examples of the style, format or coding you want. It suits house style, table formats, survey coding and tone. The rule of thumb is practical: when a request is hard to describe, **show it**. Two good examples usually beat a paragraph of instructions.",
+  "49": "Treat the first answer as the opening of a dialogue. React specifically, change one thing at a time, ask for options, feed corrections back and start over when stuck. The reframing to keep: **you are having a working conversation**, so draft one is rarely the delivery.",
+  "50": "Ask the model to think step by step, explain its reasoning, list its assumptions and show its working. You can then check each link in the chain and avoid trusting a black-box result. A side benefit: **the reasoning shown is a free tutorial** on how to approach the task yourself.",
+  "51": "Self-critique prompts get the model to flag weak points: what might be inaccurate, what the weaknesses are, what you forgot, and a list of claims to verify. Use them as prompts for your own checking. The model shares your blind spots, so **never mistake this for real fact-checking**.",
+  "52": "Compare the two columns row by row: each missing element of R-C-T-F has a matching fix. The weak prompt gives bland, wrong output that gets rewritten from scratch, and the strong one a draft you lightly edit. The summary is memorable: **thirty extra seconds to write, an hour of rework saved**.",
+  "53": "Keep five reusable patterns: draft from notes, simplify, summarise, code responses and critique. Fill in the blanks and go. Notice that the first includes 'Using only these facts' and 'Do not invent any figures'. Store them in **a one-page team prompt library** so good practice spreads.",
+  "54": "Seven prompting habits to remember: brief, give context, show examples, iterate, ask for reasoning, self-critique and then verify, and keep a pattern library. The final line is the bridge: even a perfect prompt cannot make the model truthful, which is **why the risk parts come next**.",
+  "56": "This slide opens the risk parts with a framing: none of these risks is a reason to avoid AI, and each is a reason to use it with open eyes. The three named are hallucination, bias and cutoffs. Keep the phrase **a language engine and a poor source of truth**, and treat its confidence as decoration.",
+  "57": "Hallucination is false information stated as confidently as true. It is worst on specifics: numbers, names, dates, laws, quotes and references. It is not lying, because there is no intent. Newer models and web search reduce it but nothing removes it. The habit is simple: **assume any specific fact could be invented**.",
+  "58": "Walk through the Bihar water example. The answer looks authoritative, with a percentage, a named survey and a year, and any of it may be blended or invented. The two outcomes sit side by side. The rule: **never cite a statistic the AI gave you**. Cite the primary source you confirmed, or drop the number.",
+  "59": "Fake citations are the sharpest case of hallucination because they copy the shape of real ones: authors, titles, journals, even DOIs and links. The same goes for Acts and section numbers. Apply the hard rule: **open the real source and confirm it exists and says what the model claimed**.",
+  "60": "The internet's text over-represents wealthy, English-speaking, Global-North views, so the model's defaults carry that skew. Five forms are listed: Global-North default, gender, caste and community blind spots, language skew, and missing voices. The slide assigns the job: **you are the corrective**, because you know the context.",
+  "61": "Use this table as a review checklist for AI output. Each row names a place bias shows up, from personas to images to translations, and the question to ask. Add one more habit: **prompt against bias explicitly**, asking for non-stereotyped examples and a South-Asian, rural or community-specific framing.",
+  "62": "Beyond hallucination the deck lists six limits: shaky maths, missed nuance, oversimplified complexity, self-contradiction, guessing in place of admitting gaps, and inherited errors. If two asks give different answers, trust no single reply. **Match your trust to the stakes** and verify high-stakes claims as if an unknown intern wrote them.",
+  "63": "The danger of the cutoff is silence: the model answers anyway. Learn what can be out of date, from laws and statistics to office-holders and deadlines, and the protections listed. The 2026 example makes it concrete: a model trained before late 2025 may not know about the DPDP Rules. **Confirm legal facts live.**",
+  "64": "Memorise the pull-quote: the model is trying to sound right. Fluency is no evidence, confidence is a style, detail can be a warning, and your trust instincts are miscalibrated for a machine that is always confident. When an answer sounds most impressive, **slow down and verify**.",
+  "65": "Six defences for this part: verify every specific, never cite what the AI cited, read for bias, match trust to stakes, confirm time-sensitive claims live, and judge the content and ignore the tone. They cost minutes. The last line points to Part 7, which asks whether use is **safe for the people whose data you hold**.",
+  "67": "Part 7 covers the risks that can end a programme: privacy breaches, broken confidentiality, copyright and law, and over-reliance and environmental cost. Accuracy mistakes damage credibility, while these can harm people and breach the law. Read the part **as a team**, because these risks need shared rules.",
+  "68": "This is the one rule that prevents most harm: never paste beneficiary personal data into a public tool. The reasons are control (it sits on external servers), consent (the people cannot agree) and harm (leaks expose people). The remedy is to **anonymise or generalise**, as in the Sunita example.",
+  "69": "The DPDP Act, 2023 applies to you if your NGO holds people's personal data. Learn the three terms: the Data Principal is the beneficiary, the Data Fiduciary is your NGO and carries the duties, and the Data Protection Board oversees compliance. Dates: Rules notified 13 November 2025, duties from 13 May 2027. **Verify current specifics**.",
+  "70": "Six duties are listed: lawful basis and consent, purpose limitation, itemised notice, reasonable security safeguards, breach notification, and extra protection for children's data. The AI link is the useful part. Pasting beneficiary data into a public chatbot can conflict with **security, purpose limitation and consent at once**.",
+  "71": "Use the two columns as a quick filter. Safe: your own drafts, published reports, anonymised and aggregated statistics, generic descriptions, dummy data, general questions. Never: names, phones, health, caste, religion, survivor details, ID numbers, photos, partner confidences. Apply the test: **could this identify or harm a real person if it leaked?**",
+  "72": "Confidentiality extends beyond personal data: unpublished documents, partner and donor information, HR matters, community-sensitive knowledge and security-relevant details. Ask 'Am I allowed to share this outside the organisation?' A public AI tool counts as outside. If the answer is no or unsure, **use an approved enterprise tool** or keep it out.",
+  "73": "Ownership of AI output is legally unsettled and varies by country. For anything you must clearly own, add meaningful human authorship and check the tool's terms. Inputs matter too: do not feed in others' protected work without rights. For contracts and publications, **treat AI output as a draft and get advice**.",
+  "74": "Over-reliance is the subtle risk, because nothing announces it. Five forms are listed: skill fade, loss of critical distance, a homogenised voice, weaker institutional memory and juniors learning less. The remedy is to give AI the drudgery and **keep doing the thinking, judging and final crafting yourselves**.",
+  "75": "Data centres use electricity and water, and the largest models cost more per query. The slide asks you to acknowledge this openly as a reason to use the tools thoughtfully. Practical moves: purposeful use over idle experimenting, and **right-size the tool** with a smaller or on-device model for routine work.",
+  "76": "Six essentials: beneficiary data never enters a public tool, DPDP applies to you from 13 May 2027, protect confidential material, mind IP, guard against deskilling, use thoughtfully. The closing sentence points forward: knowing the risks is half the job, and **Part 8 turns them into shared rules**.",
+  "78": "Individual good judgement does not cover interns, volunteers and rushed colleagues. A short policy gives clarity, consistency and protection, and one or two pages that people read beat a legal document nobody opens. Start small: adopt the template, adapt it in a team meeting and **revisit it as tools and law evolve**.",
+  "79": "This is the data half of the template. The left column says what may go in, from your drafts to dummy data. The right says what must not, from beneficiary identifiers to HR records. Copy the default rule: if it could identify or harm a real person, or you may not share it, **it stays out of a public tool**.",
+  "80": "This is the behaviour half of the template, and four words summarise it: anonymise, verify, disclose, decide-by-human. It also requires approved tools only and a reporting route to an AI focal point. **Print the four words** where the team can see them, and use the six rules as the body of your one-pager.",
+  "81": "Human-in-the-loop means a person is never removed from a meaningful process: AI drafts, a human reviews and verifies, edits and approves, and owns the result. Scale the loop to the stakes. A **light-touch loop** suits an internal email, and a heavy-touch loop with senior sign-off suits a donor report.",
+  "82": "Use the table to decide when to disclose: unnecessary for your own grammar fixes, yes for analysis in a report, evidence submissions, public content where trust is affected, academic publication and AI-generated images of beneficiaries. The firm line: **never present AI-generated people, quotes or case studies as real**.",
+  "83": "This is a hard line: AI advises, and humans decide anything that affects a person's life. Four reasons are given: it can be wrong and biased, nobody is accountable, dignity requires a human, and law and ethics expect it. AI can help **prepare a decision**, while the decision and its responsibility stay with a named person.",
+  "84": "Governance for a small NGO is light: name an AI focal point, have leaders model good practice, train everyone including interns and volunteers, keep an approved-tools list, build a blame-light reporting route, and review every few months. The right size is **a one-page policy and a named owner**. A committee is overkill.",
+  "85": "Procurement answers 'we must use AI on sensitive data' with 'use the right tool'. Enterprise tiers offer a promise not to train on your data, a data-processing agreement, admin controls and audit logs. On-device open models keep data entirely with you. **Match the tool to the sensitivity**, in three tiers.",
+  "86": "Seven checklist items form your organisational baseline: a short policy, human-in-the-loop, verify and disclose and never decide by machine, a focal point and training, an approved-tools list, proper procurement for sensitive data, and regular review. Use it as **an audit of your own team** and mark the gaps.",
+  "88": "Part 9 walks through three worked cases, sector examples, and the do, don't and mistake lists. Each case builds in a verification or human-judgement step at exactly the point where a risk would otherwise bite. As you read, **find that step in each case**, since it is the lesson.",
+  "89": "Case A runs in four steps: gather real data, prompt with structure, iterate, verify and sign off. The model prompt includes 'Using only these facts' and 'Do not invent figures'. The outcome is quantified: **two hours became forty minutes** with accuracy intact, because the facts were hers and the verification was real.",
+  "90": "Case B has six steps: anonymise first, derive codes, hand-code examples, apply at scale, validate a random sample, report with a method note. The sample check is about 50 responses by hand, and if agreement is low you refine and re-run. **Validation is the load-bearing step**, since without it the numbers cannot be defended.",
+  "91": "Case C translates a drinking-water leaflet into Hindi and Santali. Finalise simple English first, since errors multiply in translation. Use a general model for Hindi and an India-focused one for Santali, prompt for natural wording, then **require native-speaker review** and field-test if you can. A mistranslated health message harms the people it protects.",
+  "92": "Six sectors each get a safe, high-value use: education, health, WASH, livelihoods, humanitarian, and rights and advocacy. Spot the pattern in the closing line: AI is safe for drafting, translating and first-pass analysis, and **off-limits for individual personal data and decisions about people**. Find your sector's row and note its caveat.",
+  "93": "Eight 'dos' keep AI in its best role, a fast assistant that supports your expertise. Treat output as a draft, give context, verify, anonymise, use it for drudgery, disclose, validate samples and keep learning. If a colleague asks where to begin, **hand them this list**.",
+  "94": "The eight 'don'ts' mirror the dos: no sensitive data in public tools, no unchecked facts, no AI decisions about people, no passing AI content off as human, no confidential uploads, no assumptions about recent events, no flattened voice, no skipping native-speaker review. The one-line version: **never put real people's private data in, never trust an unverified fact**.",
+  "95": "Seven common mistakes, each with a one-line fix. Read down the fix column and note how many are habits you can build: anonymise, confirm in the primary source, iterate, add role and context, get a native speaker, verify live, judge the content. The slide claims **almost every real failure traces to one of these rows**.",
+  "96": "The through-line is a division of labour. AI handles volume and first drafts, and humans handle data protection, verification, judgement and accountability. Use the two boxes as a test for any new task: **which side of the line does it fall on?** The next part makes the plan concrete.",
+  "98": "Five categories of tool appear: free chat, paid or enterprise, open-weight, Indian-language and on-device, each with a best use. Avoid over-thinking the choice. Start with one capable free tool plus an Indian-language option for translation, and **add a paid or enterprise tier** when volume or sensitivity grows.",
+  "99": "Start free, and upgrade when volume, data protection, team admin controls or confidential material demand it. Free often means your inputs may be used, so check the data-use settings. The golden pairing is worth copying: **a paid tool with data-use off for daily work, and an on-device or India-hosted model** for real personal data.",
+  "100": "This is a four-week routine: one real task, better prompts, a second use, then team and rules. In week 1 compare the AI draft with your usual effort, in week 2 apply R-C-T-F, in week 3 summarise or code anonymised data, in week 4 adopt the policy and name a focal point. **Start tiny and real**.",
+  "101": "Print this eight-box checklist and run it before anything AI-assisted leaves your hands: no personal data in public tools, facts verified, human approval, fit with voice, bias checked, time-sensitive claims current, disclosure, no decision about a person by the model. **Eight quick boxes** separate help from avoidable mistakes.",
+  "102": "Four questions with direct answers. Jobs: AI changes tasks and takes on drudgery. Free tier: fine for learning and low-risk drafting. Hindi or regional languages: yes, with India-focused models better for low-resource languages. Beneficiary data: **never in public tools**, so anonymise or use a vetted tool and mind the DPDP Act.",
+  "103": "Six myths, each corrected by a fact. Pick the one your colleagues believe most and prepare to explain it. The closing sentence sets the tone: the truth sits between the hype and the fear, with **a powerful assistant that has real limits** and rewards informed, careful users.",
+  "104": "Because the field moves fast, favour primary and current sources: the MeitY portal for the DPDP Act and Rules, each tool's own guides, sector responsible-AI guidance and digital-rights explainers. Keep a running note of prompts and lessons. The last sentence applies to this course too: **confirm the latest position** on names, prices and timelines.",
+  "105": "Seven points to carry. The first is the root of the others: GenAI is a language engine and a poor source of truth. Notice the pairing: you supply substance, AI supplies fluency. Then prompt well, protect data, keep humans in charge, adopt a team policy, and **start small this week**."
+ }
+}
