@@ -16,6 +16,10 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **ImpactLex no longer depends on InstantDB, which shuts down on 31 August 2027.** The glossary now reads only the snapshot in the repository. The live copy that used to replace it on every load was an older import (385 terms against 494, 75 published against 335, 154 shorter definitions), so the glossary now shows the fuller text and 109 more terms. Reader suggestions are stored in a Supabase table, `impactlex_contributions`, that anyone can add to and only an ImpactMojo admin can read. The review page signs an admin in with a Supabase magic link instead of the old email allow-list, which checked nothing. The InstantDB schema and permission files, the decision note and the `--push` options in the glossary scripts are removed, and `scripts/impactlex-migrate.mjs` now refuses to overwrite the curated snapshot without `--overwrite-curated`. `scripts/check-impactlex.py` drops the snapshot-age rule, whose premise was a live database to drift from, and checks instead that no live source returns. The translated ImpactLex guides (`docs/bn`, `hi`, `mr`, `ta`, `te`) still describe InstantDB and need a native reader before they are changed.
 
+### Fixed
+
+- **The header tabs (Learn, Tools, Data, Read, Membership) were about 13px** (#1300). Their font rule was written in a form browsers reject, so they fell back to the default button size. They are 16px now, and the dropdown links are 16px and 14px.
+
 ## v10.391.0 — October 19, 2026 (pages that fit a phone, a readable search label, a working link check)
 
 ### Fixed
