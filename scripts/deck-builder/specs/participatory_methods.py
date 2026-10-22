@@ -198,7 +198,7 @@ SLIDES += [
         "numbers describe a real village."),
       TW([P("indigo", "Illustrative: Pipalgaon",
             "A gram panchayat of three revenue villages and five hamlets in a drought-prone "
-            "block. Roughly 900 households. A main village on the road, a Dalit hamlet across "
+            "block. Roughly 750 households. A main village on the road, a Dalit hamlet across "
             "a seasonal stream, two Adivasi hamlets on the forest edge, and a fishing settlement "
             "by the tank.")],
          [P("cyan", "The questions we bring",
