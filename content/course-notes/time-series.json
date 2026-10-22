@@ -1,0 +1,1150 @@
+{
+ "slug": "time-series",
+ "intro": "Read the deck for the methods and these notes for the thinking. Each note beside a slide explains how to read it, what to remember and where people slip. Work the section examples with a pencil, answer the recall questions without looking, and plot your own series before trusting any model.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "Why Time Series Is Different",
+   "big_idea": "Observations remember each other, so ordinary regression is fooled. Keep asking: **a relationship, or two things moving together?**",
+   "in_plain_words": [
+    "A time series is one unit watched many times in order, such as monthly inflation or weekly clinic attendance. The order carries information, because this month is usually close to last month. Methods built for independent draws from a population give standard errors that are too small when applied to such data.",
+    "Five features explain most trouble: autocorrelation, trend, seasonality, non-stationarity and having only one history. **Plot the series before modelling it**, then plot the autocorrelation function to see how much memory it has. The plot also decides which later section you need."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "A time series",
+    "spokes": [
+     {
+      "label": "Autocorrelation",
+      "sub": "nearby points are alike"
+     },
+     {
+      "label": "Trend",
+      "sub": "the mean moves"
+     },
+     {
+      "label": "Seasonality",
+      "sub": "repeats within the year"
+     },
+     {
+      "label": "Non-stationarity",
+      "sub": "the distribution shifts"
+     },
+     {
+      "label": "One history",
+      "sub": "no repeat experiments"
+     }
+    ],
+    "caption": "five features that break ordinary regression"
+   },
+   "key_terms": [
+    {
+     "term": "Autocorrelation",
+     "meaning": "Correlation of a series with its own earlier values."
+    },
+    {
+     "term": "Effective sample size",
+     "meaning": "How many independent observations the data are worth."
+    },
+    {
+     "term": "White noise",
+     "meaning": "Errors with zero mean, constant variance and no autocorrelation."
+    },
+    {
+     "term": "Ljung-Box test",
+     "meaning": "Tests whether the first m autocorrelations are jointly zero."
+    },
+    {
+     "term": "HAC errors",
+     "meaning": "Standard errors corrected for autocorrelation, such as Newey-West."
+    }
+   ],
+   "worked_example": {
+    "title": "What 120 months are really worth",
+    "setup": "Illustrative: ten years of monthly data with lag-one autocorrelation of 0.8. The deck's rule is that the variance of the mean is inflated by (1 + ρ) ÷ (1 − ρ).",
+    "steps": [
+     "Top of the fraction: 1 + 0.8 = 1.8.",
+     "Bottom of the fraction: 1 − 0.8 = 0.2.",
+     "Variance factor: 1.8 ÷ 0.2 = 9.",
+     "Effective observations: 120 ÷ 9 = 13.3.",
+     "Standard errors computed as if the data were independent are too small by about 3, the square root of 9."
+    ],
+    "answer": "120 months act like about 13 independent observations, and naive t-statistics are about three times too large."
+   },
+   "mistakes": [
+    "Treating 120 monthly observations as 120 independent ones, which makes every standard error too small.",
+    "Starting with a model instead of a plot of the level, the first difference and the ACF.",
+    "Comparing a pre-programme and post-programme month without asking whether the difference is the season.",
+    "Ignoring a base-year change in a CPI or GDP series, so an artefact looks like a real jump."
+   ],
+   "recall": [
+    {
+     "q": "Name the five features that make time series different.",
+     "a": "Autocorrelation, trend, seasonality, non-stationarity and a single realisation of history."
+    },
+    {
+     "q": "What does a significant bar outside the ACF band mean on its own?",
+     "a": "It is significant at 5% by itself, but with about 40 bars two will be outside by chance."
+    },
+    {
+     "q": "What is the first fix for autocorrelated errors?",
+     "a": "Model the dynamics with lags of y and x. HAC standard errors are a second best, and ignoring it is never acceptable."
+    },
+    {
+     "q": "Which test checks whether model residuals still have structure?",
+     "a": "The Ljung-Box test, which asks whether the first m autocorrelations are jointly zero."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Components and Decomposition",
+   "big_idea": "Split a series into **trend, season and remainder** before comparing any two months, so you compare like with like.",
+   "in_plain_words": [
+    "Decomposition writes the series as a trend-cycle, a seasonal pattern and a remainder. Use the additive form when seasonal swings stay the same size, and the multiplicative form when they grow with the level. Taking logs turns the second into the first.",
+    "Classical decomposition uses a centred moving average and monthly averages. It is simple but forces the same pattern every year and loses six months at each end. **STL and X-13 are the tools to publish with.** Missing values, zeros that mean 'not reported' and data revisions need decisions written in your methods."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Observed y",
+      "hint": "clinic visits"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "Trend-cycle T",
+      "hint": "smooth movement"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Seasonal S",
+      "hint": "same shape each year"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Remainder R",
+      "hint": "should look like noise"
+     }
+    ],
+    "note": "multiplicative form: T × S × R; taking logs makes it additive"
+   },
+   "key_terms": [
+    {
+     "term": "Trend-cycle",
+     "meaning": "The smooth movement of the series, with trend and cycle often kept together."
+    },
+    {
+     "term": "Seasonal index",
+     "meaning": "The average effect of each month after detrending."
+    },
+    {
+     "term": "STL",
+     "meaning": "Loess-based decomposition that lets the seasonal pattern change slowly."
+    },
+    {
+     "term": "X-13ARIMA-SEATS",
+     "meaning": "The US Census Bureau program used by statistical offices."
+    },
+    {
+     "term": "Vintage",
+     "meaning": "The version of a series as it stood on a given release date."
+    }
+   ],
+   "worked_example": {
+    "title": "Is August a surge?",
+    "setup": "Use the deck's illustrative additive decomposition of monthly clinic attendance, year 3. Seasonally adjusted = observed minus seasonal.",
+    "steps": [
+     "August observed is 1,585 and its seasonal component is +210.",
+     "Adjusted August: 1,585 − 210 = 1,375.",
+     "August trend-cycle is 1,348, so the gap from trend is 1,375 − 1,348 = 27.",
+     "April observed is 1,190 and its seasonal component is −140, so adjusted April: 1,190 + 140 = 1,330.",
+     "April trend-cycle is 1,325, so the gap from trend is 1,330 − 1,325 = 5."
+    ],
+    "answer": "Adjusted, August is 27 above trend and April is 5 above trend. Neither is a surge or a collapse."
+   },
+   "mistakes": [
+    "Claiming a programme effect for a rise that is the monsoon, because months were compared without removing the season.",
+    "Seasonally adjusting a series and then fitting a seasonal model to it. Use one or the other.",
+    "Leaving one outlier March in a classical decomposition, so it distorts every March's seasonal index.",
+    "Citing a seasonally adjusted figure without the series, the method and the vintage."
+   ],
+   "recall": [
+    {
+     "q": "When is the additive form right, and when the multiplicative?",
+     "a": "Additive when seasonal swings are roughly constant; multiplicative when they grow with the level."
+    },
+    {
+     "q": "Name two faults of classical decomposition.",
+     "a": "It forces an identical seasonal pattern every year, and it cannot reach the ends of the series."
+    },
+    {
+     "q": "What should a zero from an unfiled form be treated as?",
+     "a": "Missing. Check the reporting completeness field before using the zero."
+    },
+    {
+     "q": "Why do some series need a moving-holiday adjustment?",
+     "a": "Festival dates move against the Gregorian month, so a fixed calendar-month effect mis-times them."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Stationarity and Unit Roots",
+   "big_idea": "Decide whether a series **wanders or returns** before any model. The answer sets whether you difference, detrend or use cointegration.",
+   "in_plain_words": [
+    "A stationary series has a stable mean, variance and lag structure, so the past describes the future. A random walk does not: it adds each shock permanently and produces swings that look like trends. A deterministic trend returns to its line after a shock. A stochastic trend never returns.",
+    "The augmented Dickey-Fuller test has a unit root as its null, so failing to reject is weak evidence. Pair it with KPSS, whose null is stationarity. **Report the statistic, the critical value, the terms and the lags in one table**, and remember that low power and breaks can mislead both."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Plot the series",
+      "sub": "look for trend and breaks"
+     },
+     {
+      "label": "ADF on the level",
+      "sub": "H0: unit root"
+     },
+     {
+      "label": "KPSS on the level",
+      "sub": "H0: stationary"
+     },
+     {
+      "label": "Difference once",
+      "sub": "if both say I(1)"
+     },
+     {
+      "label": "Retest the difference",
+      "sub": "expect I(0)"
+     }
+    ],
+    "caption": "two tests with opposite nulls, then difference"
+   },
+   "key_terms": [
+    {
+     "term": "Weak stationarity",
+     "meaning": "Constant mean and variance; covariance depends only on the lag."
+    },
+    {
+     "term": "Unit root",
+     "meaning": "A series whose shocks never fade, so it is I(1)."
+    },
+    {
+     "term": "ADF test",
+     "meaning": "Tests the null of a unit root using lagged differences."
+    },
+    {
+     "term": "KPSS test",
+     "meaning": "Tests the reverse null, that the series is stationary."
+    },
+    {
+     "term": "I(1)",
+     "meaning": "Stationary after one difference."
+    },
+    {
+     "term": "Over-differencing",
+     "meaning": "Differencing a stationary series, adding a harmful MA term."
+    }
+   ],
+   "worked_example": {
+    "title": "Classify log GDP",
+    "setup": "Use the deck's illustrative table. ADF rejects a unit root when its statistic is more negative than the critical value. KPSS rejects stationarity when its statistic is larger than its critical value.",
+    "steps": [
+     "Level: ADF is −2.11 against a 5% critical value of −3.45. It is less negative, so the unit root is not rejected.",
+     "Level: KPSS is 0.19 against 0.146. It is larger, so stationarity is rejected. Both tests agree: I(1).",
+     "Difference: ADF is −5.87 against −2.89, so the unit root is rejected, by a margin of 5.87 − 2.89 = 2.98.",
+     "Difference: KPSS is 0.09 against 0.463, so stationarity is not rejected. Both agree: I(0)."
+    ],
+    "answer": "Log GDP is I(1) and its growth rate is I(0), so it enters regressions as growth rates or in error-correction form."
+   },
+   "mistakes": [
+    "Reading 'ADF not rejected' as proof of a random walk. The test has low power against roots near 0.95.",
+    "Running six unit-root tests and reporting the one that suited the model.",
+    "Including a trend term for a series that does not trend, or omitting one for a series that does.",
+    "Writing 'stationary at first difference' with no table of terms, lags and critical values."
+   ],
+   "recall": [
+    {
+     "q": "What is the null hypothesis of the ADF test?",
+     "a": "The series has a unit root, so it is I(1)."
+    },
+    {
+     "q": "What does it mean when ADF does not reject and KPSS rejects?",
+     "a": "Both tests agree that the series is I(1)."
+    },
+    {
+     "q": "How does a deterministic trend differ from a stochastic one?",
+     "a": "A shock to a deterministic trend fades and the series returns; a shock to a stochastic trend is permanent."
+    },
+    {
+     "q": "What did Perron show about breaks?",
+     "a": "A stationary series with one shift in mean or trend is nearly always classified as a unit root by ADF."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "ARIMA Modelling",
+   "big_idea": "An ARIMA model reproduces a series' memory with **a few parameters**. Check the residuals before you trust it.",
+   "in_plain_words": [
+    "AR terms describe memory of past values, MA terms describe memory of past shocks, and the d in ARIMA is the number of differences. The ACF and PACF give a first guess at the orders. For monthly data, the airline model is a sensible first candidate.",
+    "The Box-Jenkins cycle is transform, difference, identify, estimate, check and forecast, repeated until the residuals look like noise. Compare candidates on AIC or BIC with the same differencing, and report **every model you tried, and the winner**. Automatic selection is a starting point to be checked."
+   ],
+   "diagram": {
+    "type": "cycle",
+    "nodes": [
+     {
+      "label": "Transform",
+      "sub": "logs if variance grows"
+     },
+     {
+      "label": "Difference",
+      "sub": "d and D from tests"
+     },
+     {
+      "label": "Identify",
+      "sub": "p and q from ACF, PACF"
+     },
+     {
+      "label": "Estimate",
+      "sub": "maximum likelihood"
+     },
+     {
+      "label": "Check residuals",
+      "sub": "Ljung-Box, ACF"
+     },
+     {
+      "label": "Forecast",
+      "sub": "with intervals"
+     }
+    ],
+    "center": "Box-Jenkins",
+    "caption": "a failed check sends you back to identify"
+   },
+   "key_terms": [
+    {
+     "term": "AR(p)",
+     "meaning": "Today depends on its own p past values; shocks decay geometrically."
+    },
+    {
+     "term": "MA(q)",
+     "meaning": "Today depends on q recent shocks; a shock lasts exactly q periods."
+    },
+    {
+     "term": "Airline model",
+     "meaning": "ARIMA(0,1,1)(0,1,1)12, a first candidate for monthly data."
+    },
+    {
+     "term": "AIC and BIC",
+     "meaning": "Fit criteria where lower is better; BIC penalises parameters more."
+    },
+    {
+     "term": "Intervention dummy",
+     "meaning": "A 0/1 variable that models a known event instead of deleting it."
+    }
+   ],
+   "worked_example": {
+    "title": "How fast a shock fades",
+    "setup": "Illustrative, using the deck's monthly inflation model with φ1 = 0.58. After a one-point shock, each month keeps 58% of the previous month's deviation.",
+    "steps": [
+     "After one month: 1 × 0.58 = 0.58.",
+     "After two months: 0.58 × 0.58 = 0.34.",
+     "After three months: 0.34 × 0.58 = 0.20.",
+     "The deviation falls below one half between month one and month two, matching the deck's half-life of about 1.3 months.",
+     "On BIC, 371.2 is lower than 379.4, so the simpler seasonal model is preferred."
+    ],
+    "answer": "A shock loses more than half its size within two months, and the simpler seasonal AR model has the better BIC."
+   },
+   "mistakes": [
+    "Comparing the AIC of a model of levels with the AIC of a model of differences. They describe different series.",
+    "Choosing ARIMA(5,1,5) for 80 observations, which fits noise.",
+    "Deleting an outlier such as demonetisation instead of adding a dummy and reporting its coefficient.",
+    "Reporting 'an ARIMA model was fitted' without the orders, coefficients and standard errors."
+   ],
+   "recall": [
+    {
+     "q": "What do the ACF and PACF look like for an AR(p) process?",
+     "a": "The ACF decays and the PACF cuts off after lag p."
+    },
+    {
+     "q": "Which special cases are ARIMA(0,1,0) and ARIMA(0,1,1)?",
+     "a": "The random walk and simple exponential smoothing."
+    },
+    {
+     "q": "Name two residual checks.",
+     "a": "Residual ACF with Ljung-Box, and a plot or test for constant variance such as ARCH-LM."
+    },
+    {
+     "q": "What are ARIMA forecasts beyond about two seasonal cycles?",
+     "a": "The mean plus the trend, whatever the model says."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Exponential Smoothing and Forecasting",
+   "big_idea": "Start from **four cheap benchmarks**, then add level, trend and season only as far as the data repay it.",
+   "in_plain_words": [
+    "The mean, naive, seasonal naive and drift forecasts cost nothing and are hard to beat on the right series. Simple smoothing forgets the past geometrically, Holt adds a slope, and Holt-Winters adds a season. A damped trend flattens the slope with the horizon.",
+    "ETS puts these methods into a statistical framework, so models are chosen by AICc. ARIMA and ETS overlap, so fit both and average them. For many series, such as blocks within districts, **reconcile forecasts so levels add up**, and record every judgemental adjustment with a reason."
+   ],
+   "diagram": {
+    "type": "stack",
+    "levels": [
+     {
+      "label": "Holt-Winters",
+      "sub": "level + trend + season"
+     },
+     {
+      "label": "Holt (damped)",
+      "sub": "level + flattening slope"
+     },
+     {
+      "label": "Simple smoothing",
+      "sub": "level only"
+     },
+     {
+      "label": "Four benchmarks",
+      "sub": "mean, naive, seasonal, drift"
+     }
+    ],
+    "caption": "each layer must beat the one below it out of sample"
+   },
+   "key_terms": [
+    {
+     "term": "Naive forecast",
+     "meaning": "The last observed value, repeated at every horizon."
+    },
+    {
+     "term": "Smoothing parameter α",
+     "meaning": "Weight on the latest observation; near 1 trusts it fully."
+    },
+    {
+     "term": "Damped trend",
+     "meaning": "A slope that flattens as the horizon grows."
+    },
+    {
+     "term": "ETS",
+     "meaning": "Error, Trend, Seasonal state-space form of smoothing methods."
+    },
+    {
+     "term": "Reconciliation",
+     "meaning": "Adjusting forecasts at every level so they add up."
+    }
+   ],
+   "worked_example": {
+    "title": "One step of simple smoothing",
+    "setup": "Illustrative: α = 0.3, last observation 1,200, previous forecast 1,000. The deck's rule is new forecast = α × observation + (1 − α) × previous forecast.",
+    "steps": [
+     "Weight on the past forecast: 1 − 0.3 = 0.7.",
+     "Share from the observation: 0.3 × 1,200 = 360.",
+     "Share from the old forecast: 0.7 × 1,000 = 700.",
+     "New forecast: 360 + 700 = 1,060.",
+     "Simple smoothing gives a flat forecast, so 1,060 applies at every horizon."
+    ],
+    "answer": "The forecast moves from 1,000 to 1,060, which is 30% of the way to the latest value of 1,200."
+   },
+   "mistakes": [
+    "Presenting a forecasting model with no benchmark. 'MAPE 4.2%' means nothing alone.",
+    "Using Holt-Winters with fewer than two full seasons of data.",
+    "Choosing estimated combination weights instead of equal weights, which overfit.",
+    "Adjusting a model's forecast by habit or optimism with no stated reason."
+   ],
+   "recall": [
+    {
+     "q": "Name the four benchmarks.",
+     "a": "Mean, naive, seasonal naive and drift."
+    },
+    {
+     "q": "Which ARIMA is simple exponential smoothing?",
+     "a": "ARIMA(0,1,1)."
+    },
+    {
+     "q": "When should the multiplicative Holt-Winters be used?",
+     "a": "When the seasonal swing grows with the level, which is common for counts and sales."
+    },
+    {
+     "q": "What does MinT do?",
+     "a": "It combines forecasts from every level using the errors' covariance, so they are coherent and usually more accurate."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Evaluating Forecasts",
+   "big_idea": "A forecast is judged **out of sample, by horizon, against a benchmark**, with interval coverage checked.",
+   "in_plain_words": [
+    "In-sample fit shows only that a model can describe history. To measure accuracy, hold back data, fit on the rest and score the holdout. Rolling the origin forward gives many errors at each horizon and a reliable accuracy profile. Shuffled cross-validation lets the model see the future.",
+    "MASE is a good default because 1 means as good as naive. Use the Diebold-Mariano test to see whether a difference is real. Prediction intervals are usually too narrow, so **check coverage and widen by simulation or conformal methods**, then report coverage beside the point scores."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Judging a forecast",
+    "children": [
+     {
+      "label": "Out of sample",
+      "items": [
+       "Fit on the past, score the holdout",
+       "Roll the origin forward",
+       "Never shuffle the folds"
+      ]
+     },
+     {
+      "label": "Accuracy measures",
+      "items": [
+       "MASE and RMSE by horizon",
+       "MAPE breaks near zero"
+      ]
+     },
+     {
+      "label": "Against a benchmark",
+      "items": [
+       "Seasonal naive in every table",
+       "Diebold-Mariano test"
+      ]
+     },
+     {
+      "label": "Intervals",
+      "items": [
+       "Check coverage against the label",
+       "Widen by bootstrap or conformal"
+      ]
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "Rolling origin",
+     "meaning": "Moving the forecast start forward and repeating the evaluation."
+    },
+    {
+     "term": "MASE",
+     "meaning": "MAE scaled by the naive in-sample MAE; 1 equals naive."
+    },
+    {
+     "term": "Diebold-Mariano",
+     "meaning": "A test of whether two forecasts have equal loss."
+    },
+    {
+     "term": "Coverage",
+     "meaning": "The share of outcomes falling inside the stated interval."
+    },
+    {
+     "term": "Encompassing",
+     "meaning": "Whether one forecast contains all the information of another."
+    }
+   ],
+   "worked_example": {
+    "title": "How much better than naive?",
+    "setup": "Use the deck's illustrative table, where seasonal naive has MASE 1.00. Improvement over the benchmark is 1 minus MASE.",
+    "steps": [
+     "ETS at one month ahead: 1 − 0.71 = 0.29, so 29% better.",
+     "ARIMA at one month: 1 − 0.74 = 0.26, and with the rainfall regressor: 1 − 0.66 = 0.34.",
+     "Average of ETS and ARIMA at one month: 1 − 0.68 = 0.32.",
+     "At twelve months, ETS is 1 − 0.92 = 0.08 better and the average is 1 − 0.90 = 0.10 better.",
+     "The average's 80% interval covered 79%, close to its label."
+    ],
+    "answer": "Gains are 26 to 34% at one month and under 10% at twelve months, where seasonality is all anyone knows."
+   },
+   "mistakes": [
+    "Reporting R-squared or in-sample RMSE as forecast accuracy.",
+    "Using one twelve-month holdout as the whole evaluation.",
+    "Selecting the best of 30 models on the test set and reporting that score.",
+    "Using MAPE on counts with zeros and silently dropping the infinite values."
+   ],
+   "recall": [
+    {
+     "q": "Why is random k-fold cross-validation wrong for time series?",
+     "a": "It shuffles observations, so the model sees the future."
+    },
+    {
+     "q": "What does MASE equal to 1 mean?",
+     "a": "The forecast is as good as the in-sample seasonal naive."
+    },
+    {
+     "q": "Why are model-based prediction intervals too narrow?",
+     "a": "They count only error variance and ignore parameter uncertainty, model uncertainty and breaks."
+    },
+    {
+     "q": "When should you correct Diebold-Mariano for small samples?",
+     "a": "With fewer than about 50 forecasts, using the Harvey-Leybourne-Newbold correction."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Regression with Time Series",
+   "big_idea": "Regressing one wandering series on another **fakes a relationship**. Cointegration and error correction are the tested exception.",
+   "in_plain_words": [
+    "Granger and Newbold showed that regressing independent random walks gives a significant slope in about three-quarters of cases, with high R-squared and a very low Durbin-Watson. Test integration orders first. If I(1) series are cointegrated, their gap is stationary and the error-correction model estimates the long-run relationship and the speed of adjustment.",
+    "Pick the method by the situation: Engle-Granger for two series, Johansen for several, ARDL bounds for a mix of I(0) and I(1) regressors. **Running all three and reporting the one that worked is not robustness.** Report impact and long-run effects, and scale your causal verb to the exogeneity you can defend."
+   ],
+   "diagram": {
+    "type": "compare",
+    "vs": "vs",
+    "left": {
+     "title": "Spurious regression",
+     "items": [
+      "Two unrelated I(1) series",
+      "High R², very low Durbin-Watson",
+      "t-statistic grows with sample size"
+     ]
+    },
+    "right": {
+     "title": "Cointegration",
+     "items": [
+      "The gap between I(1) series is I(0)",
+      "Levels regression is meaningful",
+      "ECM gives speed of adjustment"
+     ]
+    }
+   },
+   "key_terms": [
+    {
+     "term": "Cointegration",
+     "meaning": "I(1) series with a stationary linear combination."
+    },
+    {
+     "term": "ECM term",
+     "meaning": "Share of last period's gap closed this period; negative."
+    },
+    {
+     "term": "Bounds test",
+     "meaning": "ARDL F-test compared against I(0) and I(1) bounds."
+    },
+    {
+     "term": "Long-run multiplier",
+     "meaning": "Total effect after all lags; β ÷ (1 − φ) in the simple model."
+    },
+    {
+     "term": "HAC errors",
+     "meaning": "Newey-West standard errors, corrected for autocorrelation."
+    },
+    {
+     "term": "Exogeneity",
+     "meaning": "Weak, strong or super, each a stronger claim about x."
+    }
+   ],
+   "worked_example": {
+    "title": "Speed of adjustment and the long run",
+    "setup": "Illustrative. An ECM term of −0.25, and a simple ARDL with φ = 0.5 and β = 0.4. The deck's rule for the long-run effect is β ÷ (1 − φ).",
+    "steps": [
+     "Share of the gap left after one period: 1 − 0.25 = 0.75.",
+     "After two periods: 0.75 × 0.75 = 0.56.",
+     "After three periods: 0.56 × 0.75 = 0.42, so half the gap closes between periods two and three, matching the deck's half-life of about 2.4.",
+     "For the ARDL, the denominator is 1 − 0.5 = 0.5.",
+     "Long-run effect: 0.4 ÷ 0.5 = 0.8, twice the impact effect of 0.4."
+    ],
+    "answer": "A quarter of the gap closes each period, and the long-run effect of 0.8 is double the 0.4 impact."
+   },
+   "mistakes": [
+    "Regressing one trending series on another in levels with no cointegration test.",
+    "Adding Newey-West errors to a spurious regression and treating the result as valid.",
+    "Running the ARDL bounds test on 30 annual observations with five regressors.",
+    "Writing 'causes' from a model that only shows the variables adjust toward each other."
+   ],
+   "recall": [
+    {
+     "q": "What is the Granger and Newbold rule of thumb for suspecting a spurious regression?",
+     "a": "R-squared greater than the Durbin-Watson statistic."
+    },
+    {
+     "q": "What are the two steps of Engle-Granger?",
+     "a": "Regress y on x in levels and test the residual, then estimate the ECM with the lagged residual."
+    },
+    {
+     "q": "Which situation points to Johansen?",
+     "a": "Three or more I(1) variables with possibly several relationships and no obvious dependent variable."
+    },
+    {
+     "q": "What does the ECM license you to say?",
+     "a": "That variables are associated in the long run and adjust toward each other. It stops short of showing that one causes the other."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "VAR and Granger Causality",
+   "big_idea": "A VAR **describes joint dynamics**. Everything causal in it comes from the identification you add.",
+   "in_plain_words": [
+    "A vector autoregression regresses each variable on lags of all variables, so no one is assumed exogenous. Because coefficients grow quickly, VARs stay small. Check lag length, stability and residuals before using one for forecasting, Granger tests, impulse responses or variance decompositions.",
+    "Granger causality means a variable helps predict another. It does not mean it causes it. Impulse responses show a shock's path, but a Cholesky ordering is an assumption and must be reported. **Show confidence bands and try the reverse ordering.** If the variables are cointegrated, use a VECM instead."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Test integration",
+      "sub": "stationary or VECM?"
+     },
+     {
+      "label": "Choose lags",
+      "sub": "AIC, HQ, SC"
+     },
+     {
+      "label": "Check stability",
+      "sub": "eigenvalues inside 1"
+     },
+     {
+      "label": "State the ordering",
+      "sub": "Cholesky or structural"
+     },
+     {
+      "label": "Read the IRF",
+      "sub": "with bootstrap bands"
+     }
+    ],
+    "caption": "the VAR workflow, with identification in the middle"
+   },
+   "key_terms": [
+    {
+     "term": "VAR",
+     "meaning": "Each variable regressed on lags of itself and the others."
+    },
+    {
+     "term": "Granger causality",
+     "meaning": "Past x helps predict y beyond past y."
+    },
+    {
+     "term": "IRF",
+     "meaning": "Impulse response: the path of a one-time shock."
+    },
+    {
+     "term": "FEVD",
+     "meaning": "Share of forecast error variance due to each shock."
+    },
+    {
+     "term": "Local projection",
+     "meaning": "One regression per horizon giving the impulse response."
+    },
+    {
+     "term": "VECM",
+     "meaning": "A VAR for cointegrated variables with error correction."
+    }
+   ],
+   "worked_example": {
+    "title": "Can this VAR be estimated?",
+    "setup": "Illustrative, using the deck's rule that a VAR with k variables and p lags has k² × p slope coefficients, plus one constant per equation.",
+    "steps": [
+     "Three variables, two lags: 3 × 3 × 2 = 18 slope coefficients.",
+     "Add one constant for each of the three equations: 18 + 3 = 21 coefficients.",
+     "Four variables and four lags would need 4 × 4 × 4 = 64 slope coefficients.",
+     "The deck's post-2016 sample has under 40 quarters, so 40 ÷ 21 = 1.9 quarters per coefficient at most.",
+     "Variance decomposition check: 68 + 12 + 20 = 100, so the three shares for inflation add to the whole."
+    ],
+    "answer": "A three-variable VAR(2) is tight on a short sample and a four-variable VAR(4) is out of reach, so say so."
+   },
+   "mistakes": [
+    "Reporting a Granger-causality table as the finding and calling it 'causes'.",
+    "Using a Cholesky ordering without stating it or trying the alternative.",
+    "Showing impulse responses without confidence bands.",
+    "Fitting a VAR in I(1) levels without Toda-Yamamoto or a VECM."
+   ],
+   "recall": [
+    {
+     "q": "How many slope coefficients does a VAR have?",
+     "a": "k squared times p, for k variables and p lags."
+    },
+    {
+     "q": "What is Toda-Yamamoto for?",
+     "a": "Valid Granger tests with I(1) variables: estimate in levels with p plus dmax lags and test the first p."
+    },
+    {
+     "q": "What does the Cholesky ordering assume?",
+     "a": "Each variable responds within the period only to variables placed before it."
+    },
+    {
+     "q": "What do the adjustment coefficients in a VECM tell you?",
+     "a": "Which variable does the adjusting toward the long-run relationship."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Volatility, Breaks and Seasonality",
+   "big_idea": "Variance, parameters and seasons **all move**. Model the movement and state your choice, especially for 2020.",
+   "in_plain_words": [
+    "Some series have a variance that clusters: large changes follow large changes. GARCH(1,1) describes this with three parameters, and alpha plus beta gives the persistence. Test for ARCH effects first. GARCH forecasts the variance and says nothing about direction.",
+    "Breaks can be tested at known dates with Chow or at unknown dates with Quandt-Andrews or Bai-Perron. Once found, use an intercept dummy, interactions, a split sample or rolling estimates. **Match any break to an event**, and build holiday regressors from the real calendar dates."
+   ],
+   "diagram": {
+    "type": "timeline",
+    "events": [
+     {
+      "when": "1991",
+      "what": "Liberalisation"
+     },
+     {
+      "when": "2008–09",
+      "what": "Candidate break date"
+     },
+     {
+      "when": "2016",
+      "what": "Inflation targeting"
+     },
+     {
+      "when": "November 2016",
+      "what": "Demonetisation"
+     },
+     {
+      "when": "July 2017",
+      "what": "GST introduced"
+     },
+     {
+      "when": "April 2020",
+      "what": "Lockdown"
+     }
+    ],
+    "caption": "dates every Indian analyst should test for a break"
+   },
+   "key_terms": [
+    {
+     "term": "ARCH effect",
+     "meaning": "Conditional variance depending on recent squared errors."
+    },
+    {
+     "term": "GARCH(1,1)",
+     "meaning": "Variance depends on last squared error and last variance."
+    },
+    {
+     "term": "Persistence",
+     "meaning": "α + β; near 1 means volatility shocks fade slowly."
+    },
+    {
+     "term": "Chow test",
+     "meaning": "Tests equal coefficients before and after a known date."
+    },
+    {
+     "term": "Bai-Perron",
+     "meaning": "Finds the number and dates of multiple unknown breaks."
+    },
+    {
+     "term": "Fourier terms",
+     "meaning": "Sine and cosine pairs capturing long seasonal cycles."
+    }
+   ],
+   "worked_example": {
+    "title": "Reading a GARCH(1,1)",
+    "setup": "Illustrative, from the deck's daily rupee-dollar model: ω = 0.0012, α = 0.08, β = 0.90. Persistence is α + β and the unconditional variance is ω ÷ (1 − α − β).",
+    "steps": [
+     "Persistence: 0.08 + 0.90 = 0.98.",
+     "Denominator: 1 − 0.98 = 0.02.",
+     "Unconditional variance: 0.0012 ÷ 0.02 = 0.06.",
+     "The square root of 0.06 is about 0.245, so the unconditional daily SD is about 0.25%.",
+     "With persistence 0.98, the deck gives a volatility half-life of about 34 days."
+    ],
+    "answer": "Daily volatility settles near 0.25% and a shock to variance takes about 34 days to halve."
+   },
+   "mistakes": [
+    "Fitting GARCH without first testing for ARCH effects.",
+    "Using GARCH output to predict the exchange rate itself.",
+    "Running a model across 2016, 2017 or 2020 without a break test or a stated treatment.",
+    "Putting a March 2015 CPI break down to a dummy when the real cause is a base-year revision that needs splicing."
+   ],
+   "recall": [
+    {
+     "q": "What does GARCH(1,1) forecast?",
+     "a": "The variance of a series. It says nothing about direction."
+    },
+    {
+     "q": "Which test is the standard for several unknown breaks?",
+     "a": "Bai-Perron."
+    },
+    {
+     "q": "Name two options for handling the 2020 months.",
+     "a": "Pulse dummies for the lockdown months, and results shown with and without 2020."
+    },
+    {
+     "q": "Why does a monthly dummy for October fail for Diwali?",
+     "a": "The festival moves within a window of about a month, so build the regressor from the actual dates."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Time Series for Programme Evaluation",
+   "big_idea": "An interrupted time series draws a counterfactual from the pre-period. **Controls and placebos** are what make it credible.",
+   "in_plain_words": [
+    "The ITS design asks whether the level or the slope of a series changed at a known start date, against the pre-trend continuing. State the impact model in advance, include the season, and model autocorrelated errors. The assumption is that nothing else changed at the same time.",
+    "A control series, synthetic control or CausalImpact strengthens the design when the threats are real. Choose by data shape: one series with no controls, one unit with many donors, or one series with several controls. **Always plot treated against counterfactual**, and report placebo tests and the pre-period length."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "β0",
+      "hint": "starting level"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "β1 × t",
+      "hint": "pre-trend"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "β2 × D",
+      "hint": "level change"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "β3 × (t − t0) × D",
+      "hint": "slope change"
+     }
+    ],
+    "note": "D = 1 from the start date; effect later = β2 + β3 × time since launch"
+   },
+   "key_terms": [
+    {
+     "term": "ITS",
+     "meaning": "Interrupted time series: a level or slope change at a known date."
+    },
+    {
+     "term": "Counterfactual",
+     "meaning": "What the series would have done without the programme."
+    },
+    {
+     "term": "Controlled ITS",
+     "meaning": "An ITS with a comparison series for co-interventions."
+    },
+    {
+     "term": "Synthetic control",
+     "meaning": "A weighted average of donors matching the treated unit."
+    },
+    {
+     "term": "CausalImpact",
+     "meaning": "A Bayesian state-space forecast used as the counterfactual."
+    },
+    {
+     "term": "Placebo test",
+     "meaning": "Applying the method where no effect is expected."
+    }
+   ],
+   "worked_example": {
+    "title": "Effect at 12 and 24 months",
+    "setup": "Use the deck's illustrative ITS of institutional deliveries: pre-trend 0.21 points a month, level change 4.8, slope change 0.09 points a month.",
+    "steps": [
+     "Pre-trend in a year: 0.21 × 12 = 2.52 points.",
+     "Slope gain over 12 months: 0.09 × 12 = 1.08.",
+     "Effect at 12 months: 4.8 + 1.08 = 5.88, which the deck rounds to 5.9.",
+     "Slope gain over 24 months: 0.09 × 24 = 2.16.",
+     "Effect at 24 months: 4.8 + 2.16 = 6.96, rounded to 7.0."
+    ],
+    "answer": "About 5.9 points at one year and 7.0 at two years, with the later effect resting on a longer extrapolation."
+   },
+   "mistakes": [
+    "Estimating an ITS with six points before and after and quoting a p-value as if it settled the question.",
+    "Ignoring seasonality, so a May launch seems to cut diarrhoea by October.",
+    "Choosing a control district because it looks similar today, perhaps on the outcome itself.",
+    "Launching a scheme at the worst point and attributing the recovery to it, which is regression to the mean."
+   ],
+   "recall": [
+    {
+     "q": "What does β3 measure in the segmented regression?",
+     "a": "The change in slope after the intervention date."
+    },
+    {
+     "q": "What is the one-sentence assumption of an ITS?",
+     "a": "Nothing else that affects the outcome changed at the same time."
+    },
+    {
+     "q": "When does synthetic control fit best?",
+     "a": "One treated unit with many donors and a long pre-period of ten or more points."
+    },
+    {
+     "q": "How do you test CausalImpact?",
+     "a": "Run it on a placebo date in the pre-period; an 'effect' there means the model is fitting noise."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Indian Data, Software and Practice",
+   "big_idea": "Know where the series come from, **script every decision** and name the vintage so a reader can reproduce your numbers.",
+   "in_plain_words": [
+    "Macro data come from RBI DBIE, MoSPI, DPIIT, the Labour Bureau, IMD and others. Base changes need splicing and GDP revisions can be large. Programme data from HMIS, MGNREGA MIS, Agmarknet and CPCB have their own traps: zeros that mean no report, changing monitors and shifting definitions.",
+    "Choose software for the job: gretl to see every method, R with fpp3 for forecasting, Stata if your department uses it. Whatever you use, write the workflow as a script. **Results are sensitive to small choices**, so the script and the data vintage are the defence."
+   ],
+   "diagram": {
+    "type": "compare",
+    "vs": "vs",
+    "left": {
+     "title": "Macro series",
+     "items": [
+      "Base changes need splicing",
+      "GDP revisions are large",
+      "Record the extraction date"
+     ]
+    },
+    "right": {
+     "title": "Programme series",
+     "items": [
+      "A zero is often a non-report",
+      "Completeness varies by district",
+      "Software changes alter definitions"
+     ]
+    }
+   },
+   "key_terms": [
+    {
+     "term": "DBIE",
+     "meaning": "The RBI's Database on Indian Economy, a bulk-download portal."
+    },
+    {
+     "term": "Splicing",
+     "meaning": "Joining series across a base-year change."
+    },
+    {
+     "term": "HMIS",
+     "meaning": "Health Management Information System, monthly facility data."
+    },
+    {
+     "term": "Reporting completeness",
+     "meaning": "Share of facilities that actually reported in a month."
+    },
+    {
+     "term": "Replication package",
+     "meaning": "Script and data download code that reproduce the paper."
+    }
+   ],
+   "worked_example": {
+    "title": "A rainfall and MGNREGA plan",
+    "setup": "Illustrative, from the deck's study outline: a 20% monsoon deficit raises person-days by 11% at a four to six month lag. Assume a state baseline of 120 person-days per 1,000 rural population.",
+    "steps": [
+     "Implied response per point of deficit: 11 ÷ 20 = 0.55.",
+     "If the response were proportional (an assumption), a 10% deficit gives 0.55 × 10 = 5.5% more person-days.",
+     "For the 20% deficit: 120 × 0.11 = 13.2 extra person-days.",
+     "New level: 120 + 13.2 = 133.2 person-days per 1,000.",
+     "The four to six month lag is the policy finding, because it says when funds must be in state accounts."
+    ],
+    "answer": "A 20% deficit lifts demand from 120 to about 133, and the lag tells you when the funds must arrive in state accounts."
+   },
+   "mistakes": [
+    "Using a time series without noting the base year, source and download date.",
+    "Treating a zero in HMIS as a real zero.",
+    "Running Granger tests or six unit-root tests and reporting only the convenient one.",
+    "Leaving 2016, 2020 and base-year changes untreated in a monthly model."
+   ],
+   "recall": [
+    {
+     "q": "Which portal does the deck call the single best for Indian macro series?",
+     "a": "RBI DBIE."
+    },
+    {
+     "q": "What should sit beside a programme outcome series when you plot it?",
+     "a": "The reporting-completeness series."
+    },
+    {
+     "q": "What is the deck's advice on the first software to learn?",
+     "a": "gretl to see every method with menus, then R with fpp3 for forecasting and urca and vars for the econometrics."
+    },
+    {
+     "q": "Which two items are most often missing from a checklist before submission?",
+     "a": "The unit-root table and the benchmark comparison."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "2": "Treat this agenda as a route map. Eleven sections run from describing one series to evaluating programmes. If you work with monthly programme data, read sections 2, 6 and 10 first, then come back for the econometrics in sections 3, 7 and 8.",
+  "4": "The slide's last line is the question to carry through the whole course: **a relationship, or two things moving through time together?** Each of the five features listed (memory, trend, season, drift, one history) is a way for the second answer to pass as the first.",
+  "5": "Find your own row in this table and read across: series, frequency, question. Notice the programme monitoring row, which asks whether a month is unusual. That question needs a model of normal first, which is why **a plotted line alone cannot answer it**.",
+  "6": "This slide is a glossary to return to as you go. Learn four symbols now: the lag operator, the first difference, white noise and I(1). **Every later slide uses them without explanation**, and the I(0) and I(1) labels carry most of the course's decisions.",
+  "7": "Do the plotting list before touching a model. The plot answers which section of the course you need: wandering means differencing, annual peaks mean seasonal treatment, growing swings mean logs. **No test will tell you that two series were spliced**, but your eyes will.",
+  "8": "Read the ACF table as a set of fingerprints. A slow decay near one points to a random walk, spikes at 12, 24 and 36 point to seasonality, one spike then nothing points to MA(1). With 40 bars on a plot, expect **two false alarms** at 5%.",
+  "9": "Work the formula for your own data. A lag-one autocorrelation of 0.8 gives a factor of 9, so ten years of monthly data behave like 13 observations. That is why **'significant' is cheap in time series**: the standard errors you would naively trust are far too small.",
+  "10": "The course follows the order you would work in: describe, test, model, relate, handle complications, evaluate, practise. Check the assumed background before you start. If regression output is unfamiliar, **read Econometrics 101 first**, since every method here builds on it.",
+  "12": "Pick additive when the seasonal swings stay the same size and multiplicative when they grow with the level. Logs turn the second into the first. The South Asian list is a reminder that **festival dates move**, so a fixed calendar-month effect will mis-time them.",
+  "13": "Follow the five steps with a spreadsheet in mind: smooth, subtract, average by month, subtract again, adjust. The method is easy to explain and easy to break. Use it to learn, and note the warning that **adjusted figures get revised**, so cite their vintage.",
+  "14": "Choose STL for research because it is easier to explain, and X-13 when your adjusted series must match an official one. If your result differs from the official figure, **the gap comes from the method while the data are identical**. Never seasonally adjust and then fit a seasonal model.",
+  "15": "Everything here depends on which kind of trend you have. A deterministic trend returns to its line after a shock, so you detrend. A stochastic trend never returns, so you difference. **Treating one as the other gives spurious cycles or lost information**, and a fifty-year plot cannot tell them apart.",
+  "16": "Use this table as a checklist before any test. Pick the transformation that matches how the series grows, then say which deflator or base you chose. The warning in the last column matters most: **over-differencing a stationary series** adds a damaging MA term.",
+  "17": "Administrative data break the assumptions quietly. Decide what each gap means: a zero from an unfiled form is a missing value. Keep the raw download untouched and dated, and put every cleaning step in code, so a reviewer sees **what each gap became**.",
+  "18": "Read the August row slowly. The raw 1,585 looks like a surge, but removing the +210 seasonal gives 1,375, close to trend. A programme starting in May could claim that rise. **Always compare adjusted figures**, or you credit the monsoon to the scheme.",
+  "20": "Memorise the definition as three constants: the mean, the variance and the autocovariance by lag. Stationarity does not forbid memory. It forbids drift and changing spread. The closing sentence is a warning: **what follows 'stationary at first difference' decides whether the paper is right.**",
+  "21": "Run the simulation yourself: ten minutes with cumsum(rnorm(200)) shows trends, cycles and breaks appearing from pure noise. Then regress one walk on another. **That t-statistic is the single best lesson in the course**, and slide 54 explains the numbers behind it.",
+  "22": "Learn the null first: the series has a unit root. Failing to reject says you could not show stationarity, which is weaker than showing a random walk. Report the statistic, critical value, terms, lags and sample, because **a bare 'ADF = −1.84' cannot be checked**.",
+  "23": "Use the table to pair tests. Collecting more adds nothing. ADF and KPSS have opposite nulls, so agreement is strong evidence. If both reject or neither does, say the data are uninformative. **Running six tests and reporting the convenient one** is easy to spot and gets rejected.",
+  "24": "Read down the last column. GDP is I(1) and its growth is I(0). CPI needs a second look for I(2), and inflation is borderline with a 2020 break. The practical result is the lower box: **enter GDP and CPI as growth rates or in error-correction form**. Note the critical value printed beside every statistic.",
+  "25": "Unit-root tests often label a persistent stationary series as I(1), and a series with a break looks I(1) too. Treat the label as a working assumption. **Check that your result survives the other label**, and use the honest sentence given on the slide.",
+  "26": "Difference only as many times as the tests demand. Over-differencing leaves a lag-1 autocorrelation near −0.5 and a larger variance, which is your signal to stop. If you need a second difference, **suspect a break first**, and keep the order: logs, seasonal, ordinary, test.",
+  "27": "Pooling states gives power that one short series lacks, but it answers a question about states in general. It says nothing about Bihar alone. Run the cross-sectional dependence test first. Indian states share national shocks, so **expect to need second-generation tests**.",
+  "28": "Copy the reporting list into your own template: one table, every series, level and difference, every test. The quoted sentence on the slide hides at least three unproven claims. **A reviewer reads the unit-root table first** to judge the whole model.",
+  "30": "Think of AR as memory of values and MA as memory of shocks. An AR shock fades geometrically, while an MA shock lasts exactly q periods. The ACF and PACF table is the quick tool: **whichever cuts off tells you the order** of that part.",
+  "31": "Write the model in full when you report it, with coefficients and standard errors. Remember the special cases: ARIMA(0,1,0) is the random walk, and ARIMA(0,1,1) is simple smoothing. For monthly data with seasonality, **try the airline model first**.",
+  "32": "Treat the cycle as a loop. A failed residual check sends you back to identification. Compare AIC and BIC only between models with the same differencing, since **a model of levels and a model of differences describe different series**. Report the models you tried.",
+  "33": "Read the verdict column. The first model fails the Ljung-Box test, the second passes and has the best BIC, and the third adds parameters for nothing. The half-life of about 1.3 months is **the number a policymaker can use**, so give it beside the coefficient.",
+  "34": "Run these seven checks in order after every fit. Each failure has a named fix: seasonal terms for autocorrelation, logs or GARCH for changing variance, a dummy for an outlier. Passing everything means the data do not contradict the model, which is **weaker than being right**.",
+  "35": "Use auto.arima as a fast first draft. Check its unit-root decision by hand, run the usual residual checks, and compare it with seasonal naive. **If it cannot beat a simple benchmark out of sample, publish the simple model.** The software goes in a footnote.",
+  "36": "Model known events and keep the data. Choose a pulse for a one-off, a step for a permanent shift, and report the coefficient with its standard error. **Deleting the observation is falsification** even when you disclose it, because the event happened.",
+  "37": "Show forecasts as a fan of bands. For a stationary model the forecast drifts to the mean, and for an I(1) model the interval widens without limit. Give users the interval in the same sentence as the midpoint, since **a point forecast alone is a guess**.",
+  "39": "Compute these four before any clever model. The mean, naive, seasonal naive and drift forecasts cost nothing. Your model must beat the right one on the horizon that matters, so **'MAPE of 4.2%' means nothing without the benchmark's MAPE beside it**.",
+  "40": "Think of alpha as how much you trust the latest value. Near 1, the series behaves like a random walk and naive does as well. Prefer the damped trend over plain Holt unless you believe growth continues unchecked, because **long-run growth usually flattens**.",
+  "41": "Choose additive or multiplicative by watching whether the seasonal swing grows with the level; counts and sales usually grow, so use multiplicative. Check you have enough history first: **two full seasons to start, three or four to trust** the seasonal indices.",
+  "42": "ETS turns smoothing methods into statistical models, so you get likelihoods and AICc selection. Fit both ETS and ARIMA on short seasonal operational series and average them. The M4 lesson is on the slide: **a simple average of two good models beats either**.",
+  "43": "Use dynamic regression when you know a driver, such as rainfall. The ARIMA errors carry memory and keep the standard errors honest. Prefer regressors you will know ahead, like holiday dummies or Fourier terms, since **a regressor you must forecast adds its own uncertainty**.",
+  "44": "Choose among bottom-up, top-down and MinT by what you need: no aggregation bias, smoothness, or accuracy at every level. At scale, the useful output is the list where the model lost to the benchmark. **Those districts are where something is changing.**",
+  "45": "Log every judgemental adjustment with a reason and a size. The evidence on the slide is clear: large, reasoned adjustments help and small habitual ones hurt. Then combine models by equal weights, since **estimated weights overfit and equal weights are hard to beat**.",
+  "47": "Remember the rule: fit on the past, score on a future the model never saw. R-squared in sample proves nothing. Roll the origin forward to get many forecast errors, and **never shuffle folds**, because random cross-validation lets the model see the future.",
+  "48": "Use MASE as your default, since 1 means 'as good as naive' on any scale. MAPE breaks near zero and punishes over-forecasts more. Report accuracy by horizon with the benchmark's values and **interval coverage beside the point scores**.",
+  "49": "A lower RMSE alone does not prove a better model. Use the Diebold-Mariano test against the benchmark first, and apply the small-sample correction below about 50 forecasts. With 36 points, **do not quote three decimals on a p-value**.",
+  "50": "Read the table as a results section. Every model beats the benchmark at one month and almost none does at twelve. Coverage below 80% means all intervals are too narrow. The average of ETS and ARIMA is the **production choice**, as the conclusion explains.",
+  "51": "Check coverage in your own rolling evaluation, because ARIMA and ETS 95% intervals often cover only 80 to 90%. Widen by simulation or conformal methods. Choose the quantile that matches the cost of being wrong, since **stock-outs and budget overruns have unequal costs**.",
+  "52": "Scan this table against your own draft. Each row pairs a common mistake with a one-line fix, and none is expensive. The one that catches many people is **selecting the best of thirty models on the test set** and reporting that score as the forecast.",
+  "54": "Hold on to the numbers: about three-quarters of regressions between independent walks look significant, with a typical Durbin-Watson near 0.3. Granger and Newbold's rule helps: **suspect a spurious regression when R² exceeds the Durbin-Watson**. More data make it worse.",
+  "55": "Cointegration is the exception to spurious regression. Two I(1) series stay tied by a force such as arbitrage, so their gap is I(0). The onion price example shows the idea: **prices in two markets wander together**. Remember that 'equilibrium' is an argument that no test result settles.",
+  "56": "Follow the four steps, then focus on alpha. A value of −0.25 closes a quarter of the gap each period, with a half-life near 2.4 periods. Use Engle-Granger's own critical values for the step-1 residual test, because **a standard ADF table over-rejects**.",
+  "57": "Read the trace table downward and stop at the first non-rejection. Here that gives one relationship. The choices around it (lags, deterministic case) can change the rank, so report them. With short samples and four variables, **Johansen tests over-reject**.",
+  "58": "Treat the bounds test as three outcomes: above the upper bound, cointegration; below the lower, none; between, inconclusive. It tolerates a mix of I(0) and I(1) but not I(2). Report the long-run coefficients and the ECM term, and **avoid it on 30 annual observations**.",
+  "59": "Read each row as a decision a reader can dispute. The bounds F of 6.31 beats the upper bound of 4.35, and the ECM term of −0.31 gives the half-life of about 1.9 quarters. Quote that half-life, because **policy readers understand 'half arrives in two quarters'**.",
+  "60": "Use this table by matching your situation to a row before running anything. Two I(1) series with one dependent point to Engle-Granger or ARDL, three or more series to Johansen. **Running all three and reporting the winner is not robustness**, so choose first and explain why.",
+  "61": "Separate the impact effect from the long-run effect. In the simple model the impact is beta and the long run is beta divided by one minus phi. Report both with standard errors. **The lag shape is itself a finding** about how markets pass shocks through.",
+  "62": "Use HAC errors when stationary variables have messy dynamics and you need one coefficient. They fix standard errors only. Order your work: integration orders, model form, standard errors. **Corrected errors on a spurious regression are precise nonsense**, as the slide puts it.",
+  "63": "Match your verb to the evidence. An ECM licenses 'associated with in the long run' and 'adjusts toward'. 'Causes' needs argued exogeneity. Write the causal sentence you want, list its assumptions, and **weaken the verb if you cannot defend them**.",
+  "64": "Treat the table as the layout of a methods section. Each row records a decision that could change the answer, so each must appear. 'The model passes all diagnostic tests' on its own **reports the answer without the working**. Express magnitudes in units a reader can use.",
+  "66": "Remember why VARs stay small: k variables with p lags give k squared times p coefficients. Keep to three or four variables and two to four lags, and check the stability eigenvalues. A VAR **describes the dynamics**, and everything causal is added afterwards.",
+  "67": "Say 'helps forecast', never 'causes'. Anticipation, common causes, omitted variables and policy set in response to forecasts all fool the test. With I(1) variables, use Toda and Yamamoto's extra-lag fix. **A Granger table between GDP and one series is not a contribution.**",
+  "68": "Learn the IRF as the VAR's real result: a shock now, its path over time. The Cholesky ordering is an assumption, so report it and try alternatives. Show bootstrap bands and stop the plot where they cover zero. **Granger tables belong in the appendix.**",
+  "69": "Pair the tools. FEVD says which shocks matter for which variable, and local projections estimate each horizon with its own regression. Plot local-projection and VAR responses together. **Where they differ, the VAR's lag structure is doing the work.**",
+  "70": "Read the rows as the study's design. A VAR(2) is chosen by criteria, ordered by an argued Cholesky, then tested with reversed order and a post-2016 sample. The slide ends with a caution: **under 40 quarters for 21 coefficients** is a stretch, so say so.",
+  "71": "Use the VECM when variables are I(1) and cointegrated. The adjustment coefficients show who does the adjusting. If only the exchange rate adjusts, prices are weakly exogenous. **Report the cointegration test** that justified the VECM, or the choice of differences instead.",
+  "72": "Scan this table before submitting a VAR. Each pitfall names its consequence, so you can see why it matters. The most common is **leaving the Cholesky ordering unreported**, which hides the identification. The VAR is the easiest model here to over-interpret.",
+  "74": "Test for ARCH effects before fitting any GARCH. Persistence is alpha plus beta, and values near 0.95 mean volatility shocks fade slowly. The variants add one parameter each, so use them only when the data show asymmetry. **A GARCH of onion prices tells you when the market is dangerous.**",
+  "75": "Read alpha as the response to yesterday's surprise and beta as memory of yesterday's variance. With 0.08 and 0.90, persistence is 0.98 and the half-life is about 34 days. **GARCH forecasts the variance and says nothing about direction**, so do not use it to predict the rate.",
+  "76": "Choose the test by what you know. A known date uses Chow, an unknown single date Quandt-Andrews, several unknown dates Bai-Perron. The closing paragraph names Indian candidate dates. **A model run across them without a test assumes they did not matter.**",
+  "77": "Pick the cheapest fix that matches what changed: an intercept dummy for a level shift, interactions for slopes, a split when everything changed. For 2020, state your choice and show results with and without it. **A CPI break in 2015 calls for splicing.**",
+  "78": "Choose the seasonal tool by whether the pattern is fixed or drifting and how many periods it has. Dummies suit short fixed patterns and Fourier terms suit daily data. For festivals, **build the holiday regressor from actual dates**, because Eid and Diwali move.",
+  "79": "Test for nonlinearity before fitting it, and let a policy meaning guide the threshold. A cut-off at 6.37% with no story is just a fit. A simpler route is local projections split by state, and **a nonlinear model must beat the linear one out of sample**.",
+  "80": "Aggregate to the frequency your question needs. Daily data bring several seasonal cycles, gaps and huge samples where everything is significant, so ask about size. The AQI example shows why: **a naive trend can come from a change in the monitor network** and say nothing about air.",
+  "81": "You need to know what the filter assumes. You never need to program it. State-space models handle gaps natively and give trend and cycle estimates with uncertainty. Remember the link to section 10: **CausalImpact's counterfactual is the pre-period model continuing**.",
+  "83": "State the impact model before looking at the data: level, slope, both, delayed or temporary. The segmented regression has four parts, and the effect later on is beta two plus beta three times time since launch. Write the assumption, then test it: **nothing else changed at the same time.**",
+  "84": "Read the table from the top: a pre-trend of 0.21 per month, an immediate jump of 4.8 points and a slope change that cannot be told from zero. The two-year interval is wider because the counterfactual is extrapolated. **Draw Figure 1 first**, with the dashed counterfactual.",
+  "85": "Use the table as a pre-mortem for your own design. Co-interventions, anticipation and changed measurement are the usual killers. The final row matters after crises: **a scheme launched at the worst point will appear to work**, because bad years end.",
+  "86": "Add a comparison series to turn the ITS into a time-series difference-in-differences. A location control assumes common shocks and an outcome control assumes the co-intervention would have moved it too. **Check parallel pre-trends**, and say how the control was chosen.",
+  "87": "Use synthetic control when one unit is treated and many are not. Weights are non-negative and sum to one, so there is no extrapolation. Judge it by pre-period fit and the placebo plot. **If Bihar cannot be synthesised, the poor fit says so.**",
+  "88": "Choose CausalImpact for one treated series with several controls and many time points. Its controls must be untouched by the intervention. Run it on a placebo date in the pre-period: **if it finds an effect there, the model is fitting noise.** The last paragraph matches design to situation.",
+  "89": "Use this as the outline for an evaluation write-up. Each row exists so the reader can see the counterfactual, which is the weakest and most important part. The language row matters: **earn a causal verb** through controls and checks, otherwise write 'associated with'.",
+  "91": "Pick the source that fits and record the download date. Base changes in CPI, GDP and IIP need splicing, and GDP revisions are large. RBI DBIE is the single best portal. For neighbouring countries, **the central bank and statistics bureau are the equivalents**.",
+  "92": "Keep the reporting-completeness series next to your outcome series and plot both. A change in one often explains a change in the other. In HMIS, **a zero is often a non-report**, and in programme MIS a software change can alter definitions.",
+  "93": "Choose software by your situation. The slide recommends gretl to see methods through menus, then R with fpp3 for forecasting and urca and vars for the econometrics. **Excel is fine for a first look**, but it cannot run unit-root tests or give reproducibility.",
+  "94": "Treat the seven steps as a script. Results here depend on small decisions, so keep each in code that a reader can change. Write the vintage into the report, for example **'downloaded from MoSPI on 12 March 2026, base 2011–12'**, so numbers can be reconciled later.",
+  "95": "Read the table as a methods section written as a plan. Each step names the course section that governs it. The finding is illustrative, but the logic carries over: **the lag structure is the policy result**, because it tells you when the funds must be in the accounts.",
+  "96": "Tick off the twelve before you submit. Each row points to the section that explains it, so you can go back. Slide 97 names the two items most often missing, the **unit-root table and the benchmark comparison**, so check those first.",
+  "97": "Use the fourteen lines as a final audit, and tick them carefully against your own draft. The slide singles out two: the unit-root table and the benchmark comparison. **Identification assumptions stated in words** is the line people forget, and referees notice it.",
+  "98": "Start with Hyndman and Athanasopoulos, which is free and covers forecasting with R code. Add Enders for the econometric half. Read Abadie before using synthetic control and the original Pesaran paper for ARDL. **Read the original papers.**",
+  "99": "Use this page as the revision card. Read the first line aloud: plot first. The last line returns to the opening question. For each result you meet, ask the final question: **is it a relationship, or two things moving through time together?**"
+ }
+}
