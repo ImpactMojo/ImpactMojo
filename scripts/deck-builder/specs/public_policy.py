@@ -1613,7 +1613,9 @@ DECK = {
                ["Combine nominee and audited override", "3", "2", "2", "2"]]),
             H("indigo", "Adding the scores is not the decision. Make the weights explicit: a team "
               "that weights exclusion highest, given the Jharkhand evidence in Section 7, would "
-              "favour the last option and plan the audit carefully."),
+              "narrow the choice to the two options that score 3 on it. They differ only on "
+              "leakage control (the combined option) and feasibility now (the manual override), "
+              "so that trade-off decides, and either way the audit needs careful planning."),
         ]),
 
         S("Engaging", "Where and how to engage the Indian policy process", [

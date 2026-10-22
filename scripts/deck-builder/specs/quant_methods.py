@@ -648,7 +648,7 @@ DECK = {
              {"t": "twocol", "ratio": "half",
               "left": [
                   {"t": "raw", "html": "<div style='text-align:center;font-size:1.4rem;margin:0.4rem 0;'>"
-                   "z&nbsp;=&nbsp;<span style='border-bottom:2px solid #475569;padding:0 .4rem;'>value &minus; reference median</span>"
+                   "z&nbsp;=&nbsp;(<span style='border-bottom:2px solid #475569;padding:0 .4rem;'>value &minus; reference median</span>)"
                    "&nbsp;/&nbsp;reference SD</div>"},
                   {"t": "body", "cls": "sm", "html": "A z-score says how many standard deviations a value "
                    "sits from a reference. It puts measurements on a common scale, so a two-year-old and a "

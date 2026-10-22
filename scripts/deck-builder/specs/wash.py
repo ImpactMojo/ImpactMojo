@@ -266,7 +266,7 @@ SLIDES_A = [
     ], compact=True),
 
     C("Course map", "How the twelve sections fit together", [
-        flow(["Ladders", "India's numbers", "Swachh Bharat", "ODF evidence", "Jal Jeevan",
+        flow(["Why WASH", "Ladders", "India's numbers", "Swachh Bharat", "ODF evidence", "Jal Jeevan",
               "Groundwater", "Governance", "Sludge and workers", "Hygiene", "Climate",
               "Monitoring"]),
         tw(pp("cyan", "What you will be able to do",
