@@ -243,7 +243,9 @@ function imxMergeNotes(localNotes, cloudNotes) {
 // ---------------------------------------------------------------------------
 // Breached-password check (Have I Been Pwned "Pwned Passwords" range API).
 //
-// Supabase's own leaked-password protection is a Pro-plan setting. This does the same job in
+// Supabase's own leaked-password protection has been on since the Pro upgrade of 25 October 2026.
+// This check stays as well: it tells the reader why a password was refused, which the server's
+// error does not, and it also covers the sign-in nudge for passwords set before either existed. It works in
 // the browser: only the first five characters of the password's SHA-1 hash are sent (k-anonymity),
 // never the password. Responses are padded so their size does not reveal the match.
 //
