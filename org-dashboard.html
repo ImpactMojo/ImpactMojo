@@ -2845,10 +2845,11 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 
     window.removeMember = async function(memberId) {
         if (!confirm('Remove this member from your organization?')) return;
-        await supabaseClient
+        var removal = await supabaseClient
             .from('organization_members')
             .update({ status: 'removed' })
             .eq('id', memberId);
+        if (removal.error) { alert('Could not remove this member: ' + removal.error.message); return; }
         await loadMembers();
         updateStats();
     };
