@@ -375,11 +375,20 @@ serve(async (req: Request) => {
         return json({ message: "No users for drip", count: 0 });
       }
 
+      // The drip is "course updates" mail. Anyone who switched that off in
+      // account settings gets none of it (no email and no in-app notice).
+      const { data: optedOut } = await admin
+        .from("notification_preferences")
+        .select("user_id")
+        .eq("email_course_updates", false);
+      const dripOptOut = new Set((optedOut || []).map((r: { user_id: string }) => r.user_id));
+
       const now = new Date();
       let sent = 0;
       const actions: string[] = [];
 
       for (const user of users) {
+        if (dripOptOut.has(user.id)) continue;
         const daysSinceSignup = Math.floor(
           (now.getTime() - new Date(user.created_at).getTime()) / (24 * 60 * 60 * 1000)
         );
