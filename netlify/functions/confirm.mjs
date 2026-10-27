@@ -45,10 +45,23 @@ const page = (title, body) => new Response(
 const sb = (path, opts = {}) => fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
   ...opts, headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json", ...(opts.headers || {}) },
 });
+// status-alert answers {sent:true} when the provider accepted the message,
+// {skipped:true} when no key is configured and 502 when the provider refused
+// it. A mail is treated as sent only on {sent:true}, and tried twice, because
+// a "Delivered" page for an email that never left is the failure this guards.
 async function mail(to, subject, html) {
-  try { await fetch(`${SUPABASE_URL}/functions/v1/status-alert`, { method: "POST", headers: { Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ to, subject, html }) }); }
-  catch (e) { console.log("[confirm] mail failed", e.message); }
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const r = await fetch(`${SUPABASE_URL}/functions/v1/status-alert`, { method: "POST", headers: { Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ to, subject, html }) });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j && j.sent === true) return true;
+      console.log("[confirm] mail not sent, attempt", attempt, "status", r.status, JSON.stringify(j).slice(0, 200));
+    } catch (e) { console.log("[confirm] mail failed, attempt", attempt, e.message); }
+    if (attempt === 1) await new Promise((res) => setTimeout(res, 1500));
+  }
+  return false;
 }
+const notSent = (email) => page("Email not sent", `The email to <b>${esc(email)}</b> could not be sent, so nothing was delivered. This link has not been used up: open it again in a minute, or deliver by hand.`);
 
 export default async (req) => {
   if (!ADMIN_KEY || !SERVICE_KEY) return page("Not configured", "ADMIN_KEY / service key missing.");
@@ -93,7 +106,7 @@ export default async (req) => {
         ? btn(links[0].url, "Download your file →")
         : `<p>Your bundle has ${links.length} files. Each link below downloads one of them.</p>` +
           links.map((l) => btn(l.url, esc(l.file.replace(/^.*\//, "").replace(/^ImpactMojo-/, "").replace(/\.[a-z]+$/i, "").replace(/-/g, " ")))).join("");
-      await mail(email, "Your ImpactMojo download", `<p>Thank you for your purchase!</p>${body}<p>${links.length === 1 ? "This link works" : "These links work"} for 7 days. Reply to this email if you have any trouble.</p>`);
+      if (!(await mail(email, "Your ImpactMojo download", `<p>Thank you for your purchase!</p>${body}<p>${links.length === 1 ? "This link works" : "These links work"} for 7 days. Reply to this email if you have any trouble.</p>`))) return notSent(email);
       await markUsed();
       return page("Delivered ✓", `${links.length === 1 ? "The file was" : links.length + " files were"} emailed to <b>${esc(email)}</b>.`);
     }
@@ -103,7 +116,7 @@ export default async (req) => {
       if (!rows.length) return page("Reference not found", `No invoice with reference ${esc(key)}.`);
       const today = new Date().toISOString().slice(0, 10);
       await sb(`subscriptions?id=eq.${rows[0].subscription_id}`, { method: "PATCH", body: JSON.stringify({ status: "active", last_paid: today }) });
-      await mail(email, "Your ImpactMojo subscription is active", `<p>Payment received — your subscription is active. Thank you!</p><p>We'll email your next UPI QR when it's time to renew.</p>`);
+      if (!(await mail(email, "Your ImpactMojo subscription is active", `<p>Payment received — your subscription is active. Thank you!</p><p>We'll email your next UPI QR when it's time to renew.</p>`))) return notSent(email);
       await markUsed();
       return page("Activated ✓", `Subscription for <b>${esc(email)}</b> marked paid and active.`);
     }

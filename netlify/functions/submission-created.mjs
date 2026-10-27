@@ -252,15 +252,26 @@ const esc = (v) => String(v == null ? "" : v)
 
 const sign = (parts) => crypto.createHmac("sha256", ADMIN_KEY).update(parts.join("|")).digest("hex").slice(0, 32);
 
+// True only when the provider accepted the message ({sent:true} from
+// status-alert). Tried twice and every failure is logged with its status, so a
+// refused "Confirm payment" mail leaves a trace instead of looking like an
+// order that never happened.
 async function sendMail(to, subject, html) {
-  if (!SERVICE_KEY) return;
-  try {
-    await fetch(`${SUPABASE_URL}/functions/v1/status-alert`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ to, subject, html }),
-    });
-  } catch (e) { console.log("[submission] mail failed:", e.message); }
+  if (!SERVICE_KEY) { console.log("[submission] mail skipped: no service key"); return false; }
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const r = await fetch(`${SUPABASE_URL}/functions/v1/status-alert`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ to, subject, html }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j && j.sent === true) return true;
+      console.log("[submission] mail not sent, attempt", attempt, "status", r.status, JSON.stringify(j).slice(0, 200), "subject:", subject);
+    } catch (e) { console.log("[submission] mail failed, attempt", attempt, e.message, "subject:", subject); }
+    if (attempt === 1) await new Promise((res) => setTimeout(res, 1500));
+  }
+  return false;
 }
 
 // Enquiry forms carry no payment, so there is nothing to confirm. Each one is
