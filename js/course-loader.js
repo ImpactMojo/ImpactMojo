@@ -29,7 +29,7 @@
 
   // ── Detect course ID ────────────────────────────────────────────
   // Map URL slugs to DB course_ids (handles case mismatches)
-  var COURSE_ID_MAP = { 'sel': 'SEL' };
+  var COURSE_ID_MAP = { 'sel': 'SEL', 'powerbi': 'powerBI' };
 
   function detectCourseId() {
     var match = window.location.pathname.match(/\/courses\/([^/]+)/);
