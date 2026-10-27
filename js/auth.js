@@ -667,7 +667,13 @@ const ImpactMojoAuth = {
                 }
 
                 // Update learning streak (fire-and-forget)
-                supabaseClient.rpc('update_streak', { p_user_id: data.id }).catch(function() {});
+                // A Supabase builder is a thenable with no .catch of its own, so
+                // wrap it in a promise. Chaining .catch straight onto rpc() threw
+                // a TypeError that sent every successful profile fetch into the
+                // error path below, which returned null and scheduled a retry
+                // five seconds later, forever, and the streak call never left
+                // the browser.
+                Promise.resolve(supabaseClient.rpc('update_streak', { p_user_id: data.id })).catch(function() {});
 
                 return data;
             } catch (err) {

@@ -383,7 +383,6 @@
                 course_name: COURSE_NAMES[courseId],
                 progress_percentage: percentage,
                 last_accessed_at: now,
-                started_at: now,
                 completed_at: isComplete ? now : null,
                 current_section: Array.from(completedModules).sort().pop() || null
             }, {
