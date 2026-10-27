@@ -15,9 +15,10 @@ process.env.ADMIN_KEY = 'test-admin-key';
 process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-service-key';
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 
-let mailCalls = 0, mailPlan = [];
-global.fetch = async (u) => {
+let mailCalls = 0, mailPlan = [], logRows = [];
+global.fetch = async (u, o) => {
   const url = String(u);
+  if (url.includes('/rest/v1/order_mail_log')) { logRows.push(JSON.parse(o.body)); return { ok: true, status: 201, json: async () => [], text: async () => '' }; }
   if (url.includes('/storage/v1/object/sign/')) return { ok: true, status: 200, json: async () => ({ signedURL: '/object/sign/products/f.docx?token=t' }), text: async () => '' };
   if (url.includes('/functions/v1/status-alert')) {
     mailCalls++;
@@ -65,6 +66,14 @@ ck('page says the email was not sent', /Email not sent/.test(r.text));
 console.log('Network error both times');
 r = await run([{ throw: true }, { throw: true }]);
 ck('page does NOT say Delivered', !/Delivered/.test(r.text));
+
+console.log('Every outcome leaves a row in order_mail_log');
+logRows = [];
+await run([{ status: 200, body: { sent: true } }]);
+ck('a sent mail is logged as sent', logRows.length === 1 && logRows[0].status === 'sent' && logRows[0].to_email === 'buyer@example.org');
+logRows = [];
+await run([{ status: 502, body: { error: 'x' } }, { status: 502, body: { error: 'x' } }]);
+ck('a refused mail is logged as failed with the reason', logRows.length === 1 && logRows[0].status === 'failed' && /502/.test(logRows[0].detail));
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
