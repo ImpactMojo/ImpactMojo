@@ -1,11 +1,14 @@
 /**
  * Netlify Scheduled Function — Daily Engagement Pipeline
  *
- * Runs every day at 08:00 IST (02:30 UTC) and calls three Supabase
+ * Runs every day at 08:00 IST (02:30 UTC) and calls four Supabase
  * Edge Function endpoints:
  *   1. engagement-drip   — welcome + day 3/7/14 drip emails
  *   2. streak-reminders  — nudges users with active streaks who went inactive
  *   3. cohort-deadlines  — reminds cohort members of upcoming deadlines
+ *   4. certificate-email — emails any certificate not yet announced (the
+ *                          database does this when a certificate is issued;
+ *                          this is the catch-up)
  *
  * Environment variables (set in Netlify dashboard):
  *   SUPABASE_URL            — e.g. https://ddyszmfffyedolkcugld.supabase.co
@@ -40,11 +43,12 @@ export default async () => {
 
   console.log(`[${new Date().toISOString()}] Running daily engagement pipeline`);
 
-  // Run all three in parallel
+  // Run all four in parallel
   const results = await Promise.all([
     callEdgeFunction("engagement-drip"),
     callEdgeFunction("streak-reminders"),
     callEdgeFunction("cohort-deadlines"),
+    callEdgeFunction("certificate-email"),
   ]);
 
   console.log("Results:", JSON.stringify(results, null, 2));

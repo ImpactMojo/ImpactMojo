@@ -415,6 +415,7 @@
           '</div>' +
           '<div class="imx-badge-actions">' +
             '<a href="' + verifyUrl + '" target="_blank" class="imx-badge-action-btn">Verify</a>' +
+            '<a href="/certificate.html?cert=' + encodeURIComponent(cert.certificate_number) + '" target="_blank" class="imx-badge-action-btn">Certificate</a>' +
             (linkedInUrl ? '<a href="' + linkedInUrl + '" target="_blank" class="imx-badge-action-btn imx-badge-linkedin">Add to LinkedIn</a>' : '') +
             '<button class="imx-badge-action-btn imx-badge-download" data-course="' + cert.course_id + '" data-cert="' + cert.certificate_number + '">Download Badge</button>' +
             '<button class="imx-badge-action-btn imx-badge-json" data-cert-idx="' + cert.certificate_number + '">View Credential</button>' +

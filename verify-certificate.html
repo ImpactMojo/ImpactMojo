@@ -823,6 +823,9 @@ body.dark-mode .theme-btn.active, [data-theme="dark"] .theme-btn.active, html.da
                         </div>
                     </div>
                     <!-- Open Badge Visual & Actions -->
+                    <p style="text-align:center; margin:1.25rem 0 0;">
+                        <a id="viewCertLink" href="/certificate.html" style="display:inline-block; padding:0.55rem 1.1rem; background:#075985; color:#FFFFFF; border-radius:8px; font-weight:600; font-size:0.9rem; text-decoration:none;">View and print the signed certificate</a>
+                    </p>
                     <div id="badgeSection" style="display:none; margin-top:1.5rem; padding-top:1.5rem; border-top:2px solid #f0f0f0;">
                         <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; justify-content:center;">
                             <div id="badgeSvgContainer" style="flex-shrink:0;"></div>
@@ -1052,6 +1055,7 @@ async function verifyCertificate(e) {
             document.getElementById('certCourse').textContent = cert.course_name || 'ImpactMojo Course';
             document.getElementById('certRecipient').textContent = recipientName;
             document.getElementById('certNumber').textContent = cert.certificate_number;
+            document.getElementById('viewCertLink').href = '/certificate.html?cert=' + encodeURIComponent(cert.certificate_number);
             document.getElementById('certDate').textContent = cert.issued_at ? new Date(cert.issued_at).toLocaleDateString('en-IN', {
                 year: 'numeric', month: 'long', day: 'numeric'
             }) : 'Not recorded';
