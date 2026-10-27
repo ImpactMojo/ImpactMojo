@@ -107,7 +107,7 @@ console.log('submission-created (instructor-kit receipt)');
 reset();
 process.env.ADMIN_KEY = 'admin';
 const mails = [];
-global.fetch = async (u, o) => { mails.push(JSON.parse(o.body).to); return { ok: true, status: 200, json: async () => ({ sent: true }) }; };
+global.fetch = async (u, o) => { if (String(u).includes('status-alert')) mails.push(JSON.parse(o.body).to); return { ok: true, status: 200, json: async () => ({ sent: true }) }; };
 const { handler } = await import(new URL('../netlify/functions/submission-created.mjs', import.meta.url));
 const kit = (email, ip = '192.0.2.7') => handler({ body: JSON.stringify({ payload: { form_name: 'instructor-kit', data: { email, name: 'N', course_name: 'C', ip } } }) });
 await kit('victim@example.org'); await kit('victim@example.org'); await kit('victim@example.org');

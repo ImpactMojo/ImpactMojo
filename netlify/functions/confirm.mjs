@@ -49,16 +49,25 @@ const sb = (path, opts = {}) => fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
 // {skipped:true} when no key is configured and 502 when the provider refused
 // it. A mail is treated as sent only on {sent:true}, and tried twice, because
 // a "Delivered" page for an email that never left is the failure this guards.
+// One row per mail, sent or not, so "did it go out" is a query and not a guess.
+const logMail = (to, subject, ok, attempts, detail) => fetch(`${SUPABASE_URL}/rest/v1/order_mail_log`, {
+  method: "POST",
+  headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json", Prefer: "return=minimal" },
+  body: JSON.stringify({ kind: "delivery", to_email: String(to).slice(0, 200), subject: String(subject).slice(0, 200), status: ok ? "sent" : "failed", attempts, detail: detail ? String(detail).slice(0, 400) : null }),
+}).catch((e) => console.log("[confirm] mail log failed", e.message));
 async function mail(to, subject, html) {
+  let lastDetail = "";
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
       const r = await fetch(`${SUPABASE_URL}/functions/v1/status-alert`, { method: "POST", headers: { Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ to, subject, html }) });
       const j = await r.json().catch(() => ({}));
-      if (r.ok && j && j.sent === true) return true;
+      if (r.ok && j && j.sent === true) { await logMail(to, subject, true, attempt); return true; }
+      lastDetail = r.status + " " + JSON.stringify(j).slice(0, 150);
       console.log("[confirm] mail not sent, attempt", attempt, "status", r.status, JSON.stringify(j).slice(0, 200));
-    } catch (e) { console.log("[confirm] mail failed, attempt", attempt, e.message); }
+    } catch (e) { lastDetail = e.message; console.log("[confirm] mail failed, attempt", attempt, e.message); }
     if (attempt === 1) await new Promise((res) => setTimeout(res, 1500));
   }
+  await logMail(to, subject, false, 2, lastDetail);
   return false;
 }
 const notSent = (email) => page("Email not sent", `The email to <b>${esc(email)}</b> could not be sent, so nothing was delivered. This link has not been used up: open it again in a minute, or deliver by hand.`);
