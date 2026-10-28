@@ -143,7 +143,7 @@
         class: "gn-pt" + (selected === c.id ? " is-on" : ""),
         tabindex: "0", role: "button",
         "aria-pressed": selected === c.id ? "true" : "false",
-        "aria-label": c.name + ". " + c.short
+        "aria-label": (D.cases.indexOf(c) + 1) + ". " + c.name + ". " + c.short
       });
       var q = D.quadrants.filter(function (x) { return x.id === c.quadrant; })[0];
       var r = narrow ? 13 : 16;
