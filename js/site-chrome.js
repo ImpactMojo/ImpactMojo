@@ -813,7 +813,7 @@
       '<span class="im-sc-spacer"></span>' +
       '<div class="im-sc-right">' +
         '<button class="im-sc-btn im-sc-lang im-sc-icon" type="button" aria-label="Language">' + I.globe + '</button>' +
-        '<button class="im-sc-btn im-sc-search" type="button" aria-label="Search the site">' + I.search + '<span class="im-sc-label">Search</span>' +
+        '<button class="im-sc-btn im-sc-search" type="button" aria-label="Search ' + (mac ? '&#8984;K' : 'Ctrl K') + '">' + I.search + '<span class="im-sc-label">Search</span> ' +
           '<kbd class="im-sc-kbd" aria-hidden="true">' + (mac ? '&#8984;K' : 'Ctrl K') + '</kbd></button>' +
         '<div class="im-sc-setwrap">' +
           '<button class="im-sc-btn im-sc-icon im-sc-setbtn" type="button" aria-expanded="false" aria-controls="im-sc-setpanel" aria-label="Accessibility and display" title="Accessibility"><span class="im-sc-aa" aria-hidden="true">Aa</span></button>' +
@@ -932,6 +932,25 @@
       syncAccount(e && e.detail && typeof e.detail.isLoggedIn === 'boolean' ? e.detail.isLoggedIn : undefined);
     });
     window.addEventListener('storage', function () { syncAccount(); });
+
+    // 7b. full-width bar. On a page whose <body> is a narrow centred column
+    // (the 84 handouts, 8.5in) the bar is the body's first child and ran only
+    // as wide as the column, so on a desktop its right-hand buttons met the
+    // screen edge outside it. Margins are measured and applied in pixels, not
+    // as calc(50% - 50vw), which counts the scrollbar and would scroll the page.
+    function bleedBar() {
+      if (bar.parentNode !== document.body) return;
+      bar.style.marginLeft = ''; bar.style.marginRight = '';
+      var cs = getComputedStyle(bar), vw = document.documentElement.clientWidth, r = bar.getBoundingClientRect();
+      var l = Math.round(r.left), rt = Math.round(vw - r.right);
+      if (l > 1 || rt > 1) {
+        bar.style.marginLeft = ((parseFloat(cs.marginLeft) || 0) - Math.max(0, l)) + 'px';
+        bar.style.marginRight = ((parseFloat(cs.marginRight) || 0) - Math.max(0, rt)) + 'px';
+      }
+    }
+    bleedBar();
+    window.addEventListener('load', bleedBar);
+    window.addEventListener('resize', bleedBar);
 
     // 8. search
     bar.querySelector('.im-sc-search').addEventListener('click', openSearch);
