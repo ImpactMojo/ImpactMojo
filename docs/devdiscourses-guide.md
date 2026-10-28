@@ -6,7 +6,7 @@ Development Discourses (DevDiscourses) is ImpactMojo's **curated open-access lib
 
 Unlike Google Scholar (which returns thousands of results of varying quality), DevDiscourses is a hand-curated collection where every resource has been selected for relevance, accessibility, and quality. It prioritises **open-access resources**, so you can actually read what you find.
 
-**Access:** Free, [Browse DevDiscourses](https://on-web.link/DevDiscourses)
+**Access:** Free, [Browse DevDiscourses](https://devdiscourses.impactmojo.in/)
 
 ---
 

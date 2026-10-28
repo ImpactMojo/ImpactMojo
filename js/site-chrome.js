@@ -371,13 +371,11 @@
 // --sc-ink is the accent as TEXT (hover, links); --sc-sel is the same hue as a
 // FILL under --sc-sel-ink. #0EA5E9 (--sc-acc) is a tint for washes and borders
 // only: as text on white it is 2.77:1.
-// Dark --sc-mut is #A3B1C4, not #94A3B8. The bar is translucent, and on a page
-// that stays light in the dark theme it composites to #353A47: #94A3B8 was
-// 4.43:1 there (the Search label, #1281). #A3B1C4 is 5.15:1 over white, the
-// worst case, and 8.65:1 on the solid #0B1120.
 '.im-sc{--sc-bg:rgba(255,255,255,.82);--sc-solid:#FFFFFF;--sc-fg:#0F172A;--sc-mut:#475569;--sc-bd:#E7EBF0;--sc-acc:#0EA5E9;--sc-ink:#0369A1;--sc-sel:#0369A1;--sc-sel-ink:#fff;--sc-grad:linear-gradient(135deg,#0369A1,#4F46E5)}',
-'html[data-theme="dark"] .im-sc,html.dark .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-solid:#0B1120;--sc-fg:#F1F5F9;--sc-mut:#A3B1C4;--sc-bd:#25304A;--sc-ink:#7DD3FC;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120;--sc-grad:linear-gradient(135deg,#38BDF8,#A5B4FC)}',
-'@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-solid:#0B1120;--sc-fg:#F1F5F9;--sc-mut:#A3B1C4;--sc-bd:#25304A;--sc-ink:#7DD3FC;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120;--sc-grad:linear-gradient(135deg,#38BDF8,#A5B4FC)}}',
+// Dark --sc-mut is #CBD5E1, not #94A3B8: the bar is 85% opaque, and over a
+// light page #94A3B8 fell to 4.41:1 on the Search label (#1281).
+'html[data-theme="dark"] .im-sc,html.dark .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-solid:#0B1120;--sc-fg:#F1F5F9;--sc-mut:#CBD5E1;--sc-bd:#25304A;--sc-ink:#7DD3FC;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120;--sc-grad:linear-gradient(135deg,#38BDF8,#A5B4FC)}',
+'@media(prefers-color-scheme:dark){html:not([data-theme]) .im-sc{--sc-bg:rgba(11,17,32,.85);--sc-solid:#0B1120;--sc-fg:#F1F5F9;--sc-mut:#CBD5E1;--sc-bd:#25304A;--sc-ink:#7DD3FC;--sc-sel:#38BDF8;--sc-sel-ink:#0B1120;--sc-grad:linear-gradient(135deg,#38BDF8,#A5B4FC)}}',
 '.im-sc-bar{position:sticky;top:0;z-index:9999;display:flex;align-items:center;gap:14px;height:46px;padding:0 clamp(10px,3vw,28px);',
  'background:var(--sc-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--sc-bd);',
  "font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:14px;color:var(--sc-fg)}",

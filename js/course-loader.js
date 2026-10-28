@@ -29,7 +29,7 @@
 
   // ── Detect course ID ────────────────────────────────────────────
   // Map URL slugs to DB course_ids (handles case mismatches)
-  var COURSE_ID_MAP = { 'sel': 'SEL' };
+  var COURSE_ID_MAP = { 'sel': 'SEL', 'powerbi': 'powerBI' };
 
   function detectCourseId() {
     var match = window.location.pathname.match(/\/courses\/([^/]+)/);
@@ -313,6 +313,96 @@
   var style = document.createElement('style');
   style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
   document.head.appendChild(style);
+
+  // ── Readable text on bright fills and accent-coloured labels ────
+  // Course shells and stored module text write white, or the course accent,
+  // as ink on surfaces whose colour differs per course and per theme. A
+  // stylesheet cannot know which pairing results, so the ink is checked here
+  // by comparing ratios, never against a fixed cutoff. Buttons on a bright
+  // fill take the better of dark and white; accent-coloured text keeps its
+  // hue and is mixed toward black or white until it reads. Anything on a
+  // gradient or an image is left alone, because the surface cannot be known.
+  var FILL_SELECTOR = '.coach-link:not(.secondary), .module-content-placeholder a[style*="background"], .module-content-placeholder button[style*="background"]';
+  var TEXT_SELECTOR = '.module-content-placeholder [style*="color"], main [style*="color"], .founder-card p, .key-concept-title, .coach-name, .coach-link.secondary, .content-card h5';
+  function rgbOf(str) {
+    if (!str || str.indexOf('color(') === 0) return null;
+    var m = str.match(/[\d.]+/g);
+    if (!m || m.length < 3) return null;
+    if (m.length > 3 && parseFloat(m[3]) < 0.5) return null;
+    return [+m[0], +m[1], +m[2]];
+  }
+  function lum(c) {
+    var v = c.map(function (x) { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
+    return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+  }
+  function ratio(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  // A gradient whose every stop is nearly transparent is a tint over whatever
+  // is behind it, so the surface is the next solid colour up the tree.
+  function faintGradient(img) {
+    if (img.indexOf('gradient') < 0 || img.indexOf('url(') >= 0) return false;
+    var stops = img.match(/rgba?\([^)]*\)/g);
+    if (!stops) return false;
+    return stops.every(function (c) { var m = c.match(/[\d.]+/g); return m.length > 3 && parseFloat(m[3]) <= 0.25; });
+  }
+  function solidBg(el) {
+    for (var e = el; e; e = e.parentElement) {
+      var cs = getComputedStyle(e);
+      if (cs.backgroundImage && cs.backgroundImage !== 'none' && !faintGradient(cs.backgroundImage)) return null;
+      var c = rgbOf(cs.backgroundColor);
+      if (c) return c;
+      if (cs.backgroundColor.indexOf('color(') === 0) return null;
+    }
+    return [255, 255, 255];
+  }
+  function clearFix(el) {
+    if (!el.hasAttribute('data-ink-fixed')) return;
+    el.style.removeProperty('color');
+    el.querySelectorAll('img').forEach(function (im) { im.style.removeProperty('filter'); });
+    el.removeAttribute('data-ink-fixed');
+  }
+  function fixInk() {
+    var fills = document.querySelectorAll(FILL_SELECTOR), i, el, cs, fg, bg;
+    for (i = 0; i < fills.length; i++) {
+      el = fills[i]; clearFix(el);
+      cs = getComputedStyle(el); fg = rgbOf(cs.color); bg = solidBg(el);
+      if (!fg || !bg || ratio(fg, bg) >= 4.5) continue;
+      var dark = [15, 23, 42], white = [255, 255, 255];
+      var useDark = ratio(dark, bg) >= ratio(white, bg);
+      el.style.setProperty('color', useDark ? '#0F172A' : '#FFFFFF', 'important');
+      if (useDark) el.querySelectorAll('img').forEach(function (im) { im.style.setProperty('filter', 'brightness(0)', 'important'); });
+      el.setAttribute('data-ink-fixed', '1');
+    }
+    var texts = document.querySelectorAll(TEXT_SELECTOR);
+    for (i = 0; i < texts.length; i++) {
+      el = texts[i];
+      if (el.matches(FILL_SELECTOR)) continue;
+      clearFix(el);
+      if (!el.textContent.trim()) continue;
+      cs = getComputedStyle(el); fg = rgbOf(cs.color); bg = solidBg(el);
+      if (!fg || !bg) continue;
+      var size = parseFloat(cs.fontSize), need = (size >= 24 || (size >= 18.6 && +cs.fontWeight >= 700)) ? 3 : 4.5;
+      if (ratio(fg, bg) >= need) continue;
+      var to = ratio([0, 0, 0], bg) >= ratio([255, 255, 255], bg) ? [0, 0, 0] : [255, 255, 255], out = null;
+      for (var step = 1; step <= 20; step++) {
+        var t = step / 20, c = fg.map(function (v, k) { return Math.round(v + (to[k] - v) * t); });
+        if (ratio(c, bg) >= need) { out = c; break; }
+      }
+      if (!out) out = to;
+      el.style.setProperty('color', 'rgb(' + out.join(',') + ')', 'important');
+      el.setAttribute('data-ink-fixed', '1');
+    }
+  }
+  function scheduleInk() { setTimeout(fixInk, 0); }
+  document.addEventListener('DOMContentLoaded', function () {
+    fixInk();
+    setTimeout(fixInk, 1500);
+    setTimeout(fixInk, 4000);
+    var mo = new MutationObserver(scheduleInk);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
+    mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    var t = null;
+    new MutationObserver(function () { clearTimeout(t); t = setTimeout(fixInk, 300); }).observe(document.body, { childList: true, subtree: true });
+  });
 
   // ── Run on DOM ready ────────────────────────────────────────────
   if (document.readyState === 'loading') {

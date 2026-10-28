@@ -14,7 +14,7 @@ ImpactMojo is a static website deployed on Netlify. The `main` branch always ref
 If you discover a security vulnerability, please report it responsibly:
 
 1. **Do not** open a public GitHub issue
-2. **Email** security concerns to **hello@impactmojo.in** with the subject line "Security: [brief description]"
+2. **Email** security concerns to **care@pinpointventures.in** with the subject line "Security: [brief description]"
 3. Include steps to reproduce, impact assessment, and any suggested fixes
 
 We will acknowledge your report within 48 hours and aim to resolve critical issues within 7 days.
@@ -73,7 +73,7 @@ If you find an unauthorised fork or mirror of ImpactMojo content:
    - The infringing fork URL.
    - A statement that the content is used without authorisation.
    - A statement of good faith belief and accuracy under penalty of perjury.
-4. **Notify us** at hello@impactmojo.in so we can track the takedown.
+4. **Notify us** at care@pinpointventures.in so we can track the takedown.
 
 ---
 

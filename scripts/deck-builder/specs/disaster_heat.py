@@ -868,9 +868,9 @@ SLIDES += [
                   {"label": "Released", "data": [709.54, 0, 350, 4.54, 0, 0, 0, 0, 27.73], "backgroundColor": "#10B981"}]},
              "{ indexAxis:'y', scales:{ x:{ min:0, title:{display:true,text:'₹ crore'} } } }")],
          [B("Of ₹13,693 crore allocated to the National Disaster Mitigation Fund under the "
-            "Fifteenth Commission, four earmarked allocations covered drought-prone States, "
+            "Fifteenth Commission, four original earmarked allocations covered drought-prone States, "
             "seismic and landslide risk, urban flooding in the seven most populous cities, and "
-            "erosion. By 31 July 2025, three of the nine earmarked lines in the table had "
+            "erosion. By 31 July 2025, four of the nine earmarked lines in the table had "
             "released any money at all."),
           B("Central releases to States for their mitigation funds were around 80 per cent of "
             "allocation in 2021-22 to 2024-25, against 95 to 100 per cent for response funds. "
@@ -1128,11 +1128,12 @@ SLIDES += [
             "2019-20 to 2023-24, far more than any other hazard (" + FC16 + ", Figure 11.5). "
             "They are frequent, they cover large areas, and most of their cost is in lost crops, "
             "damaged houses and broken roads. Deaths are a smaller part."),
-          B("Flood risk has four sources that call for different responses. Riverine floods "
+          B("Flood risk has five sources that call for different responses. Riverine floods "
             "build over days and can be forecast from upstream gauges. Flash floods and "
             "cloudbursts in the hills give minutes of warning. Urban floods happen when drains "
             "cannot carry heavy rain, and are made worse by building over lakes and channels. "
-            "Coastal floods come with cyclone surge.")],
+            "Coastal floods come with cyclone surge. Glacial lake outburst floods (GLOF) follow "
+            "the breach of a glacial lake and give minutes to hours of warning.")],
          [T(["Flood type", "Lead time", "What reduces risk"],
             [["Riverine", "Days", "Gauge-based forecasts, raised plinths, boats, flood shelters, "
               "embankment maintenance"],

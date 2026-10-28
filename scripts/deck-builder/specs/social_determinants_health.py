@@ -139,7 +139,7 @@ DECK = {
              {"name": "South Asia: wealth, place and schooling"},
              {"name": "Caste, tribe and gender"},
              {"name": "Living conditions: water, sanitation, housing, air"},
-             {"name": "Heat, food, roads, violence and work"},
+             {"name": "Heat, food, roads and work"},
              {"name": "Paying for health"},
              {"name": "Policy approaches"},
              {"name": "Measuring inequity"},
@@ -626,8 +626,8 @@ DECK = {
                 [("Lowest quintile", [58, 54, 53, 100]), ("Highest quintile", [22, 28, 16, 56])],
                 ytitle="Deaths per 1,000"),
             body("All four countries show the same direction, with different scales. Pakistan's "
-                 "richest quintile has higher under-five mortality (56) than India's or Nepal's "
-                 "poorest. Breakdowns by background characteristic in DHS reports use the ten "
+                 "richest quintile (56) has higher under-five mortality than Nepal's poorest "
+                 "(53) and is close to India's poorest (58). Breakdowns by background characteristic in DHS reports use the ten "
                  "years before the survey, to have enough births in each group, so these figures "
                  "differ slightly from the five-year national rates. The Pakistan survey is the "
                  "most recent DHS available for that country in the API, fielded in 2017-18, so "
@@ -691,7 +691,7 @@ DECK = {
                  "in its own right.", "amber"),
         ], compact=True),
 
-        C("States", "A child's state of birth changes the odds tenfold", [
+        C("States", "A child's state of birth changes the odds more than tenfold", [
             bar("sdhStates", "Under-five mortality by selected state, NFHS-5 (per 1,000 live "
                 "births, 5 years before the survey)", NFHS + ", Table 7.4",
                 ["Kerala", "Goa", "Tamil Nadu", "Assam", "Jharkhand", "Madhya Pradesh",
@@ -1089,7 +1089,7 @@ DECK = {
         ], compact=True),
 
         # ===================== SECTION 07 =====================
-        D("07", "Section Seven", "Heat, food, roads, violence and work"),
+        D("07", "Section Seven", "Heat, food, roads and work"),
 
         C("Heat", "Ahmedabad's heat action plan: South Asia's first, and evaluated", [
             body("After a heatwave in 2010, Ahmedabad implemented what an evaluation team called "

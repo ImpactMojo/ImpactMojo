@@ -6,7 +6,7 @@ Development Discourses (DevDiscourses) అనేది అభివృద్ధ�
 
 Google Scholar (వివిధ నాణ్యత గల వేలాది ఫలితాలను తిరిగి ఇచ్చేది) కాకుండా, DevDiscourses అనేది ప్రతి వనరు సంబంధత, ప్రాప్యత, మరియు నాణ్యత కోసం ఎంపిక చేయబడిన చేతితో-ఎంపిక చేసిన సేకరణ. ఇది **ఓపెన్-యాక్సెస్ వనరులకు** ప్రాధాన్యత ఇస్తుంది — కాబట్టి మీరు కనుగొన్నదాన్ని నిజంగా చదవవచ్చు.
 
-**యాక్సెస్:** ఉచితం — [DevDiscourses బ్రౌజ్ చేయండి](https://on-web.link/DevDiscourses)
+**యాక్సెస్:** ఉచితం — [DevDiscourses బ్రౌజ్ చేయండి](https://devdiscourses.impactmojo.in/)
 
 ---
 

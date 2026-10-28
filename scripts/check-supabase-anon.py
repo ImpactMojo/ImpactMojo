@@ -50,11 +50,11 @@ PROBES = [
     # nor its policies, so anon could read all 259 rows (217 of them the gated
     # is_preview=false module bodies) and could update and delete them too.
     ("course_content_backup_20260821",
-     "course_content_backup_20260821?select=id&limit=1", 401,
-     "locked in 20260901_lock_course_content_backup_tables.sql"),
+     "course_content_backup_20260821?select=id&limit=1", 404,
+     "locked in 20260901_lock_course_content_backup_tables.sql, then dropped outside the migrations; 404 means it is gone"),
     ("course_content_backup_20260821b",
-     "course_content_backup_20260821b?select=id&limit=1", 401,
-     "locked in 20260901_lock_course_content_backup_tables.sql"),
+     "course_content_backup_20260821b?select=id&limit=1", 404,
+     "locked in 20260901_lock_course_content_backup_tables.sql, then dropped outside the migrations; 404 means it is gone"),
 
     # Closed to anon on 2026-10-13. Certificate checks go through the
     # verify_certificate RPC, which answers for one certificate number at a

@@ -6,7 +6,7 @@ Development Discourses (DevDiscourses) হল উন্নয়ন, সাম�
 
 Google Scholar (যা বিভিন্ন মানের হাজার হাজার ফলাফল ফেরত দেয়)-এর বিপরীতে, DevDiscourses হল একটি হাতে-নির্বাচিত (hand-curated) সংগ্রহ যেখানে প্রতিটি সম্পদ প্রাসঙ্গিকতা, অ্যাক্সেসযোগ্যতা ও মানের জন্য বেছে নেওয়া হয়েছে। এটি **ওপেন-অ্যাক্সেস সম্পদকে** অগ্রাধিকার দেয় — যাতে আপনি যা খুঁজে পান তা আসলেই পড়তে পারেন।
 
-**অ্যাক্সেস:** বিনামূল্যে — [DevDiscourses ব্রাউজ করুন](https://on-web.link/DevDiscourses)
+**অ্যাক্সেস:** বিনামূল্যে — [DevDiscourses ব্রাউজ করুন](https://devdiscourses.impactmojo.in/)
 
 ---
 

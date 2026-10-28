@@ -383,7 +383,6 @@
                 course_name: COURSE_NAMES[courseId],
                 progress_percentage: percentage,
                 last_accessed_at: now,
-                started_at: now,
                 completed_at: isComplete ? now : null,
                 current_section: Array.from(completedModules).sort().pop() || null
             }, {
@@ -762,6 +761,8 @@
                 'border-bottom-color: rgba(226, 232, 240, 0.8);' +
             '}' +
             '[data-theme="light"] .cpb-label { color: #64748B; }' +
+            '[data-theme="light"] .cpb-count, [data-theme="light"] .cpb-icon { color: #075985; }' +
+            '[data-theme="light"] #course-progress-bar.cpb-complete .cpb-count { color: #047857; }' +
             '[data-theme="light"] .cpb-track { background: #E2E8F0; }' +
 
             /* Sidebar checkmarks */

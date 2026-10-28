@@ -1,0 +1,59 @@
+name: Mirror Supabase products bucket to Drive
+
+# Keeps the Drive folder "ImpactMojo Supabase Delivery Bucket Mirror" equal to the private
+# `products` bucket. Adds and replaces files; never deletes from Drive.
+# Secrets (repository settings): SUPABASE_SERVICE_KEY, GDRIVE_CLIENT_ID, GDRIVE_CLIENT_SECRET,
+# GDRIVE_REFRESH_TOKEN. Nothing here runs on pull requests.
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mirror-to-drive
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      SUPABASE_URL: https://ddyszmfffyedolkcugld.supabase.co
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      RCLONE_CONFIG_GD_TYPE: drive
+      RCLONE_CONFIG_GD_SCOPE: drive
+      RCLONE_CONFIG_GD_ROOT_FOLDER_ID: 12zzvGr-gX3SfTCZeLWFzKpzZVAKNbPg0
+      RCLONE_CONFIG_GD_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+      RCLONE_CONFIG_GD_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts/mirror
+      - name: Install rclone
+        run: curl -fsSL https://rclone.org/install.sh | sudo bash
+      - name: Build the Drive token
+        run: |
+          python3 - <<'PY' >> "$GITHUB_ENV"
+          import json, os
+          t = {"access_token": "", "token_type": "Bearer", "refresh_token": os.environ["RT"], "expiry": "2000-01-01T00:00:00Z"}
+          print("RCLONE_CONFIG_GD_TOKEN=" + json.dumps(t))
+          PY
+        env:
+          RT: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+      - name: List what Drive holds
+        run: |
+          rclone lsjson gd: -R --hash --files-only > "$RUNNER_TEMP/drive.json"
+      - name: Download what is missing or different
+        run: python3 scripts/mirror/mirror-to-drive.py "$RUNNER_TEMP/out" "$RUNNER_TEMP/drive.json"
+      - name: Upload to Drive
+        run: |
+          if [ -s "$RUNNER_TEMP/out/.changed" ]; then
+            rclone copy "$RUNNER_TEMP/out" gd: --exclude ".changed" --transfers 4 -v
+          else
+            echo "Drive already matches the bucket."
+          fi

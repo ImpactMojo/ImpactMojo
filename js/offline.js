@@ -7,10 +7,10 @@
 
   const FLAGSHIP_COURSES = [
     'gandhi', 'devecon', 'devai', 'dataviz',
-    'mel', 'poa', 'media', 'law', 'SEL',
+    'mel', 'poa', 'media', 'law', 'sel',
     'gender', 'pubchoice', 'pubpol', 'causal', 'livelihoods', 'powerBI',
     'intervention', 'nothing-about-us', 'nvc-rj', 'esg', 'gender-mel',
-    'social-protection'
+    'social-protection', 'social-movements'
   ];
 
   // ─── Toast notification helper ───
@@ -22,14 +22,16 @@
 
     const toast = document.createElement('div');
     toast.id = 'impactmojo-offline-toast';
+    if (type !== 'progress') toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
     toast.textContent = message;
 
+    // Each clears 4.5:1 under white text (#1287).
     const colors = {
-      info: '#2196F3',
-      success: '#4CAF50',
-      error: '#f44336',
-      warning: '#ff9800',
-      progress: '#673AB7'
+      info: '#0369A1',
+      success: '#047857',
+      error: '#B91C1C',
+      warning: '#92400E',
+      progress: '#4F46E5'
     };
 
     Object.assign(toast.style, {
@@ -87,14 +89,14 @@
 
     if (online) {
       indicator.textContent = 'Online';
-      indicator.style.background = '#4CAF50';
+      indicator.style.background = '#047857';
       indicator.style.color = '#fff';
       indicator.style.opacity = '1';
       // Fade out after 2 seconds when online
       setTimeout(function () { indicator.style.opacity = '0'; }, 2000);
     } else {
       indicator.textContent = 'Offline';
-      indicator.style.background = '#f44336';
+      indicator.style.background = '#B91C1C';
       indicator.style.color = '#fff';
       indicator.style.opacity = '1';
     }
@@ -120,10 +122,10 @@
 
         switch (data.type) {
           case 'COURSE_CACHE_PROGRESS':
-            showToast('Downloading course: ' + data.progress + '% (' + data.completed + '/' + data.total + ')', 'progress');
+            showToast('Saving for offline: ' + data.progress + '% (' + data.completed + ' of ' + data.total + ' files)', 'progress');
             break;
           case 'COURSE_CACHE_COMPLETE':
-            showToast('Course "' + data.courseId + '" is now available offline!', 'success');
+            showToast('Saved. This course now opens without a connection.', 'success');
             break;
           case 'COURSE_CACHE_ERROR':
             showToast('Download failed: ' + (data.error || 'Unknown error'), 'error');
@@ -144,22 +146,86 @@
   // ─── Download a course for offline use ───
   function downloadCourse(courseId) {
     if (!FLAGSHIP_COURSES.includes(courseId)) {
-      showToast('Unknown course: ' + courseId, 'error');
+      showToast('This course cannot be saved for offline yet.', 'error');
       return Promise.reject(new Error('Unknown course ID: ' + courseId));
     }
 
     if (!navigator.serviceWorker || !navigator.serviceWorker.controller) {
-      showToast('Service worker not available. Please reload the page.', 'error');
+      showToast('Offline saving is not ready yet. Reload the page and try again.', 'error');
       return Promise.reject(new Error('Service worker not active'));
     }
 
-    showToast('Starting download for "' + courseId + '"...', 'info');
+    showToast('Saving this course for offline reading...', 'info');
     navigator.serviceWorker.controller.postMessage({
       type: 'CACHE_COURSE',
-      courseId: courseId
+      courseId: courseId,
+      urls: pageAssetUrls()
     });
 
     return Promise.resolve(true);
+  }
+
+  // The same-origin files this page actually loaded, as path plus query, so the
+  // worker caches the stamped addresses the page will ask for offline (#1287).
+  function pageAssetUrls() {
+    var out = [location.pathname + location.search];
+    try {
+      performance.getEntriesByType('resource').forEach(function (e) {
+        var u = new URL(e.name);
+        if (u.origin === location.origin) out.push(u.pathname + u.search);
+      });
+    } catch (err) {}
+    return out;
+  }
+
+  // Which flagship course this page is the entry page of, if any.
+  function currentCourseId() {
+    var m = /^\/courses\/([^\/]+)\/(?:index\.html|powerbi\.html)?$/i.exec(location.pathname);
+    if (!m) return null;
+    var dir = m[1].toLowerCase();
+    for (var i = 0; i < FLAGSHIP_COURSES.length; i++) {
+      if (FLAGSHIP_COURSES[i].toLowerCase() === dir) return FLAGSHIP_COURSES[i];
+    }
+    return null;
+  }
+
+  // A save/remove control under the course's Start button.
+  function addSaveControl() {
+    var id = currentCourseId();
+    var start = document.querySelector('.ch-hero .ch-start');
+    if (!id || !start || !('serviceWorker' in navigator) || !('caches' in window)) return;
+    var css = document.createElement('style');
+    css.textContent = '.im-offline{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:12px 0 0;font:500 13.5px/1.4 Inter,Helvetica,Arial,sans-serif;color:var(--ch-muted,#4B5563)}' +
+      '.im-offline button{font:600 13.5px/1.2 Inter,Helvetica,Arial,sans-serif;color:var(--ch-link,#0369A1);background:none;border:1px solid var(--ch-line-strong,#C9CED6);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}' +
+      '.im-offline button:hover{border-color:var(--ch-link,#0369A1)}' +
+      '.im-offline button:focus-visible{outline:2px solid var(--ch-link,#0369A1);outline-offset:2px}';
+    document.head.appendChild(css);
+    var box = document.createElement('div');
+    box.className = 'im-offline';
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    var note = document.createElement('span');
+    box.appendChild(btn);
+    box.appendChild(note);
+    start.insertAdjacentElement('afterend', box);
+    function show(saved) {
+      btn.textContent = saved ? 'Remove offline copy' : 'Save for offline';
+      btn.setAttribute('aria-pressed', saved ? 'true' : 'false');
+      note.textContent = saved ? 'Saved on this device. It opens without a connection.' : 'Keep a copy on this device for areas with no signal.';
+    }
+    isCourseCached(id).then(show);
+    btn.addEventListener('click', function () {
+      isCourseCached(id).then(function (saved) {
+        if (saved) { removeCourse(id).then(function () { show(false); }); return; }
+        downloadCourse(id).catch(function () {});
+      });
+    });
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.addEventListener('message', function (event) {
+        var d = event.data || {};
+        if (d.type === 'COURSE_CACHE_COMPLETE' && d.courseId === id) show(true);
+      });
+    }
   }
 
   // ─── Check if a course is cached ───
@@ -179,7 +245,7 @@
     var cacheName = COURSE_CACHE_PREFIX + courseId;
     return caches.delete(cacheName).then(function (deleted) {
       if (deleted) {
-        showToast('Course "' + courseId + '" removed from offline storage.', 'info');
+        showToast('The offline copy of this course was removed.', 'info');
       }
       return deleted;
     });
@@ -238,9 +304,10 @@
 
   // ─── Initialize on DOM ready ───
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initStatusListeners);
+    document.addEventListener('DOMContentLoaded', function () { initStatusListeners(); addSaveControl(); });
   } else {
     initStatusListeners();
+    addSaveControl();
   }
 
   // ─── Export globally ───

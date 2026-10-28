@@ -1634,7 +1634,7 @@ SEC11 = [
           L("data-protection-dpdp.html", "Data Protection &amp; the DPDP Act 101") + "."),
     ]),
 
-    S("Summary", "Ten points to take away", [
+    S("Summary", "Eleven points to take away", [
         B("Each point connects to a decision you will make when you design, fund or run development "
           "work. Facts are stated as of October 2026; check for later amendments and new data."),
         BL(["ODA is official, developmental and concessional, measured since 2019 by grant equivalent.",

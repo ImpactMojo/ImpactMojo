@@ -28,7 +28,7 @@ This Code of Conduct applies to all ImpactMojo spaces: GitHub repository, Discor
 
 ## Enforcement
 
-Instances of unacceptable behavior may be reported to **hello@impactmojo.in**. All complaints will be reviewed and investigated. The project team reserves the right to remove, edit, or reject contributions that violate this Code of Conduct, and to temporarily or permanently ban any contributor.
+Instances of unacceptable behavior may be reported to **care@pinpointventures.in**. All complaints will be reviewed and investigated. The project team reserves the right to remove, edit, or reject contributions that violate this Code of Conduct, and to temporarily or permanently ban any contributor.
 
 ## Attribution
 

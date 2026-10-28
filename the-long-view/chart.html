@@ -117,7 +117,7 @@ h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 .6rem;}
 (function(){
   function init(){
     var id=new URLSearchParams(location.search).get('c');
-    var d=LV.DETAILS&&LV.DETAILS[id];
+    var d=LV.DETAILS&&Object.prototype.hasOwnProperty.call(LV.DETAILS,id)&&LV.ORDER.indexOf(id)>-1?LV.DETAILS[id]:null;
     if(!d){location.replace('/the-long-view.html');return;}
     document.title=d.title+' | The Long View | ImpactMojo';
     document.getElementById('d-tag').textContent=d.tag;
@@ -128,7 +128,9 @@ h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 .6rem;}
     document.getElementById('d-look').textContent=d.look;
     document.getElementById('d-source').textContent=d.source;
     var holder=document.getElementById('chart-holder');
-    holder.innerHTML='<svg id="'+id+'" role="img" aria-label="'+d.title+'"></svg>';
+    var svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('id',id);svg.setAttribute('role','img');svg.setAttribute('aria-label',d.title);
+    holder.textContent='';holder.appendChild(svg);
     LV.renderAll();
     var order=LV.ORDER,i=order.indexOf(id),n=order.length;
     var pv=order[(i-1+n)%n],nx=order[(i+1)%n];
@@ -141,6 +143,6 @@ h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 .6rem;}
 })();
 </script>
   <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
-  <script src="/js/site-chrome.js?v=a9cd2d67" defer></script>
+  <script src="/js/site-chrome.js?v=e5076886" defer></script>
 </body>
 </html>

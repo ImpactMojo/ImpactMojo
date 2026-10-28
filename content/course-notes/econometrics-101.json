@@ -1,0 +1,1151 @@
+{
+ "slug": "econometrics-101",
+ "intro": "Read the deck for the facts and these notes for the thinking. The notes under each slide explain it, tell you what to remember and warn you where people slip. Work the examples in pencil before you read the steps, and answer the recall questions from memory.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "What Econometrics Is",
+   "big_idea": "Econometrics measures what a policy changed, and its one relentless question is **compared to what?**",
+   "in_plain_words": [
+    "Econometrics joins economics, statistics and data to describe the world and, above all, to estimate causal effects. Theory says which variables matter, statistics quantify uncertainty and data supply the evidence. Missing any one gives speculation, pattern-hunting or a model nobody can test.",
+    "Questions come in three types: descriptive, predictive and causal. Prediction and causation come apart, and most confusion comes from using a predictive model to answer a causal question. Correlation has at least five explanations, and **the design is dictated by how the programme was implemented**."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Three kinds of question",
+    "children": [
+     {
+      "label": "Descriptive",
+      "items": [
+       "Needs a representative sample",
+       "How many households are poor?"
+      ]
+     },
+     {
+      "label": "Predictive",
+      "items": [
+       "Needs correlation and fit",
+       "Who will fall below the line next year?"
+      ]
+     },
+     {
+      "label": "Causal",
+      "items": [
+       "Needs a credible counterfactual",
+       "Did the transfer keep them above it?"
+      ]
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "Econometrics",
+     "meaning": "Statistical methods applied to economic data to measure the causal effect of a policy."
+    },
+    {
+     "term": "Counterfactual",
+     "meaning": "What would have happened without the treatment."
+    },
+    {
+     "term": "Confounding",
+     "meaning": "A third factor driving both X and Y."
+    },
+    {
+     "term": "Reverse causality",
+     "meaning": "Y also affects X, so the arrow runs both ways."
+    },
+    {
+     "term": "Credibility revolution",
+     "meaning": "The shift from elaborate models to designs that mimic experiments."
+    }
+   ],
+   "worked_example": {
+    "title": "Match a question to a design",
+    "setup": "A colleague lists three policy questions. Which design does each one's variation support?",
+    "steps": [
+     "Does a cash transfer raise attendance? An RCT, if the roll-out can be randomised.",
+     "Does a new road raise farm incomes? DiD across phased construction.",
+     "Does a scholarship raise completion? RD at the score cutoff."
+    ],
+    "answer": "RCT, DiD and RD. The design follows from how the programme was implemented."
+   },
+   "mistakes": [
+    "Treating a predictive model as an answer to a causal question. If the conclusion contains 'should', a design is needed.",
+    "Defending 'X causes Y' without naming the four rival explanations.",
+    "Choosing a design by preference. A phased roll-out gives DiD and a score threshold gives RD.",
+    "Involving the evaluator after the programme starts. A small change to the assignment rule can make it evaluable."
+   ],
+   "recall": [
+    {
+     "q": "What does a causal question need that a descriptive one does not?",
+     "a": "A credible counterfactual."
+    },
+    {
+     "q": "What are the five explanations for a correlation?",
+     "a": "X causes Y, Y causes X, a common cause, selection into the sample, and chance."
+    },
+    {
+     "q": "Why is theory called the most under-appreciated ingredient?",
+     "a": "It says which confounders are plausible, whether an exclusion restriction is credible and whether an estimate should transfer."
+    },
+    {
+     "q": "Which prizes did the credibility revolution win, and for what?",
+     "a": "2019 for experimental approaches to poverty and 2021 for natural experiments and causal methods."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "The Causal Question & the Counterfactual",
+   "big_idea": "We can never see both outcomes for one person, so every method is **a strategy for building a credible counterfactual**.",
+   "in_plain_words": [
+    "The potential-outcomes framework gives each person Y(1) and Y(0). The individual effect is their difference, which is never observed, so causal inference is a missing-data problem. We estimate averages instead: ATE, ATT, ATU or LATE, depending on whom you want the effect for.",
+    "A naive comparison of treated and untreated equals the true effect plus selection bias, and selection bias can be large and of either sign. Programmes tend to reach the already-advantaged, so naive evaluations mostly overstate. **Each design buys a counterfactual with one central assumption**, and reading a paper means finding it."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Observed gap",
+      "hint": "what the data show"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "ATT",
+      "hint": "true effect on the treated"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Selection bias",
+      "hint": "untreated outcomes differ"
+     }
+    ],
+    "note": "every design argues that the last term is zero"
+   },
+   "key_terms": [
+    {
+     "term": "Potential outcomes",
+     "meaning": "Y(1) if treated and Y(0) if not, for the same unit."
+    },
+    {
+     "term": "ATE",
+     "meaning": "Average treatment effect across all units."
+    },
+    {
+     "term": "ATT",
+     "meaning": "Average effect on those who were treated."
+    },
+    {
+     "term": "LATE",
+     "meaning": "Effect on those whose treatment an instrument moved."
+    },
+    {
+     "term": "SUTVA",
+     "meaning": "One unit's treatment does not affect another's outcome."
+    },
+    {
+     "term": "Selection bias",
+     "meaning": "Treated and untreated differ in Y(0) before treatment."
+    }
+   ],
+   "worked_example": {
+    "title": "Split the gap",
+    "setup": "Illustrative: treated villages average an income of 120 and untreated villages 100. Without the programme, the treated villages would have averaged 110.",
+    "steps": [
+     "Observed gap: 120 − 100 = 20.",
+     "Selection bias is the difference in untreated outcomes: 110 − 100 = 10.",
+     "True effect on the treated: 120 − 110 = 10.",
+     "Check that the pieces add up: 10 + 10 = 20."
+    ],
+    "answer": "Half of the observed gap of 20 is selection bias, and the true effect is 10."
+   },
+   "mistakes": [
+    "Using before-and-after as an effect. It credits the whole trend to the intervention.",
+    "Treating a naive comparison as approximately right. Selection bias can have the wrong sign entirely.",
+    "Asking 'what is the effect?' without saying on whom. ATE, ATT and LATE differ whenever effects vary.",
+    "Forgetting SUTVA. Spillovers in village-level programmes break it."
+   ],
+   "recall": [
+    {
+     "q": "Why is the individual causal effect never observed?",
+     "a": "We see either the treated or the untreated outcome for a person, never both."
+    },
+    {
+     "q": "What does the observed gap equal?",
+     "a": "The ATT plus selection bias."
+    },
+    {
+     "q": "Which hospital-style example shows selection bias?",
+     "a": "Hospital users report worse health because sick people go to hospital."
+    },
+    {
+     "q": "Which estimand would you want for a scale-up decision?",
+     "a": "Usually the ATE or the ATU."
+    },
+    {
+     "q": "Which designs have which central assumption?",
+     "a": "RCT: randomisation held. IV: exclusion. DiD: parallel trends. RD: no manipulation. Fixed effects: no time-varying confounders."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "OLS Regression, Properly Understood",
+   "big_idea": "OLS summarises association well, and it **becomes causal only when a design makes it so**.",
+   "in_plain_words": [
+    "OLS finds the straight line that minimises squared vertical distances. It approximates the conditional expectation function, the average Y for each value of X. A coefficient is the predicted change in Y per unit of X, holding the variables you included fixed, and nothing else.",
+    "Gauss–Markov conditions make OLS BLUE, which is a statement about efficiency among linear unbiased estimators. Only exogeneity threatens causality, while homoskedasticity affects standard errors. **Unbiased is different from causal**, and adding controls helps only when the variable sits in the right place in the causal structure."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "OLS does",
+     "items": [
+      "Minimise squared vertical distances",
+      "Give the best linear fit",
+      "Provide standard errors under assumptions"
+     ]
+    },
+    "right": {
+     "title": "OLS does not",
+     "items": [
+      "Establish which variable causes which",
+      "Detect a non-linear relationship",
+      "Validate its own assumptions"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "OLS",
+     "meaning": "Ordinary Least Squares: the line minimising squared vertical distances."
+    },
+    {
+     "term": "CEF",
+     "meaning": "Conditional expectation function: the average Y for each X."
+    },
+    {
+     "term": "Gauss–Markov",
+     "meaning": "Conditions under which OLS is the best linear unbiased estimator."
+    },
+    {
+     "term": "Exogeneity",
+     "meaning": "X is uncorrelated with the error term."
+    },
+    {
+     "term": "Dummy variable",
+     "meaning": "A 0/1 variable whose coefficient is a gap in means."
+    }
+   ],
+   "worked_example": {
+    "title": "Read a fitted line",
+    "setup": "Illustrative: a fitted line for monthly wage is 3,000 plus 800 for each year of schooling.",
+    "steps": [
+     "At 10 years of schooling: 3,000 + 800 × 10 = 11,000.",
+     "At 12 years of schooling: 3,000 + 800 × 12 = 12,600.",
+     "The difference: 12,600 − 11,000 = 1,600.",
+     "That is the slope times the two extra years: 2 × 800 = 1,600."
+    ],
+    "answer": "Among units in this sample, two more years of schooling go with wages 1,600 higher on average. It is an association."
+   },
+   "mistakes": [
+    "Reading a coefficient as caused by X. 'Associated with' is the honest phrase.",
+    "Assuming 'holding other variables fixed' covers unmeasured ones. Only the included variables are held fixed.",
+    "Adding controls without asking where they sit. A mediator removes part of the effect and a collider creates bias.",
+    "Using the log approximation for large coefficients. For 0.5 the change is about 65%, so use exp(β) − 1."
+   ],
+   "recall": [
+    {
+     "q": "What does a slope coefficient mean?",
+     "a": "The predicted change in Y associated with a one-unit increase in X, holding the included variables fixed."
+    },
+    {
+     "q": "What does BLUE stand for?",
+     "a": "Best linear unbiased estimator."
+    },
+    {
+     "q": "Which Gauss–Markov assumption threatens causality?",
+     "a": "Exogeneity."
+    },
+    {
+     "q": "What does a coefficient on a log Y mean?",
+     "a": "Approximately a percentage change in Y per unit change in X."
+    },
+    {
+     "q": "Which assumption failure do corrected standard errors fix?",
+     "a": "Heteroskedasticity, which affects inference and leaves the estimate alone."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Endogeneity & Omitted-Variable Bias",
+   "big_idea": "Endogeneity means X is correlated with the error, and **only a better design fixes bias**, however much data you add.",
+   "in_plain_words": [
+    "When X is correlated with something that also affects Y, OLS is biased and non-causal. Bias does not shrink with sample size, so a million observations give a tight interval around the wrong number. Four sources produce it: omitted variables, reverse causality, measurement error in X and selection into the sample.",
+    "You can often reason about the direction of omitted-variable bias from two signs, and a bound can settle a decision. Noise in X pulls the coefficient toward zero. More controls are no cure. **Credible work finds exogenous variation** through a design, because adjustment relies on having measured every confounder."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Endogeneity",
+    "spokes": [
+     {
+      "label": "Omitted variables",
+      "sub": "a common cause is left out"
+     },
+     {
+      "label": "Reverse causality",
+      "sub": "Y also affects X"
+     },
+     {
+      "label": "Measurement error",
+      "sub": "noise pulls it toward zero"
+     },
+     {
+      "label": "Sample selection",
+      "sub": "who is observed depends on Y"
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "Endogeneity",
+     "meaning": "X correlated with the error term, which biases OLS."
+    },
+    {
+     "term": "Omitted-variable bias",
+     "meaning": "Bias from a left-out variable that affects both X and Y."
+    },
+    {
+     "term": "Attenuation bias",
+     "meaning": "Noise in X pulls its coefficient toward zero."
+    },
+    {
+     "term": "Collider",
+     "meaning": "A variable caused by both X and Y; controlling for it creates bias."
+    },
+    {
+     "term": "Exogenous variation",
+     "meaning": "Variation in X unrelated to the unobservables."
+    }
+   ],
+   "worked_example": {
+    "title": "Sign the bias",
+    "setup": "Illustrative: a regression gives a 10% return to a year of schooling. Ability is omitted.",
+    "steps": [
+     "Ability raises schooling, so Z → X is positive.",
+     "Ability raises wages, so Z → Y is positive.",
+     "Positive and positive means the bias on β is upward, so the estimate is too big.",
+     "The true return is therefore likely below 10%, which makes 10% an upper bound."
+    ],
+    "answer": "The omitted variable biases the return upward, so 10% is a bound and the true return is probably lower."
+   },
+   "mistakes": [
+    "Expecting a larger sample to cure bias. It only fixes noise.",
+    "Reading a stable coefficient across control sets as robustness. The controls may be uninformative about the confounding that matters.",
+    "Controlling for something the treatment caused. It removes part of the effect or creates bias.",
+    "Treating a null result from noisy data as evidence of no effect."
+   ],
+   "recall": [
+    {
+     "q": "What is endogeneity?",
+     "a": "X is correlated with the error term, so OLS is biased and non-causal."
+    },
+    {
+     "q": "Name the sources of endogeneity the deck lists.",
+     "a": "Omitted variables, reverse causality, measurement error in X and selection into the sample."
+    },
+    {
+     "q": "In which direction does ability bias the return to schooling?",
+     "a": "Upward, since ability raises both schooling and wages."
+    },
+    {
+     "q": "What is the police and crime example?",
+     "a": "More crime leads cities to hire more police, so the correlation is positive even if police reduce crime."
+    },
+    {
+     "q": "What does noise in Y do?",
+     "a": "It inflates standard errors and does not bias the estimate."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Randomised Experiments / RCTs",
+   "big_idea": "Randomisation **designs selection bias away**, and the remaining work is checking balance, attrition, spillovers and ethics.",
+   "in_plain_words": [
+    "In an RCT a coin flip assigns treatment, so the groups match on average in everything observed and unobserved. Balance holds in expectation, which is a statement about the procedure and the draw can still be imbalanced by chance. A balance table is the first check.",
+    "Internal validity is strong and external validity is often weak. Attrition, spillovers, non-compliance and Hawthorne effects can still bite, and intention-to-treat protects against non-compliance. Randomise only under real uncertainty and scarcity. **A trial that worked in one district tells you little about a state-wide roll-out.**"
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Randomise assignment",
+      "sub": "coin flip or lottery"
+     },
+     {
+      "label": "Groups balanced",
+      "sub": "in expectation, all traits"
+     },
+     {
+      "label": "Treat one arm",
+      "sub": "the other arm is the control"
+     },
+     {
+      "label": "Compare means",
+      "sub": "mean treated − mean control"
+     }
+    ],
+    "caption": "why the control is a valid counterfactual"
+   },
+   "key_terms": [
+    {
+     "term": "RCT",
+     "meaning": "Units assigned to treatment or control by chance."
+    },
+    {
+     "term": "Balance table",
+     "meaning": "Baseline characteristics by arm, which should be similar."
+    },
+    {
+     "term": "Intention-to-treat",
+     "meaning": "Analyse people by the group they were assigned to."
+    },
+    {
+     "term": "Attrition",
+     "meaning": "Dropout that differs between arms."
+    },
+    {
+     "term": "Equipoise",
+     "meaning": "Real uncertainty about whether the programme works."
+    },
+    {
+     "term": "Spillover",
+     "meaning": "Control units affected by treatment."
+    }
+   ],
+   "worked_example": {
+    "title": "An effect and a balance check",
+    "setup": "Illustrative: mean attendance is 78% in the treatment arm and 70% in the control arm. The balance table tests 20 baseline variables at the 5% level.",
+    "steps": [
+     "Effect: mean Y(treated) − mean Y(control) = 78 − 70 = 8 points.",
+     "Expected chance differences: 20 × 0.05 = 1.",
+     "One variable differing at p < 0.05 is therefore expected by chance and is no alarm.",
+     "Several differences all in one direction would suggest the randomisation was compromised."
+    ],
+    "answer": "The effect is 8 points, and about one variable out of twenty will differ by chance."
+   },
+   "mistakes": [
+    "Comparing only those who took up treatment. It reintroduces selection and undoes the randomisation.",
+    "Panicking at one imbalanced variable out of twenty. That is expected by chance.",
+    "Treating a clean trial as proof it will work elsewhere.",
+    "Ignoring differential attrition, the threat that destroys a trial."
+   ],
+   "recall": [
+    {
+     "q": "Why does randomisation solve selection?",
+     "a": "Assignment is independent of potential outcomes, so the control is a credible counterfactual."
+    },
+    {
+     "q": "What does a balance table check?",
+     "a": "That baseline characteristics are similar across arms, as evidence the design worked."
+    },
+    {
+     "q": "What is intention-to-treat?",
+     "a": "Analysing people by the group they were assigned to, which preserves randomisation under imperfect compliance."
+    },
+    {
+     "q": "What is the strongest practical justification for randomising?",
+     "a": "Scarcity: a lottery can be fairer than proximity or connections."
+    },
+    {
+     "q": "What is the general-equilibrium problem?",
+     "a": "A job-training pilot may only reallocate scarce jobs, which a pilot-scale trial cannot detect."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Instrumental Variables",
+   "big_idea": "An instrument borrows randomness from the world, and **the credibility lives in the exclusion argument**.",
+   "in_plain_words": [
+    "When you cannot randomise, an instrument Z shifts treatment X and affects Y only through X. IV keeps only the clean variation in X. The IV estimate is the reduced form divided by the first stage, so a small first stage makes it unstable and magnifies any small violation of exclusion.",
+    "An instrument needs relevance, which you can test, and exclusion, which you can only argue. IV recovers the LATE for compliers and says nothing about the effect for everyone. Rainfall, distance to school, quarter of birth and sibling sex all come with known objections. **Read an IV paper by checking the exclusion argument first.**"
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "What an instrument must satisfy",
+    "children": [
+     {
+      "label": "Relevance",
+      "items": [
+       "Z shifts X",
+       "Testable: first-stage F"
+      ]
+     },
+     {
+      "label": "Exclusion restriction",
+      "items": [
+       "Z affects Y only through X",
+       "Untestable: it is argued"
+      ]
+     },
+     {
+      "label": "Independence",
+      "items": [
+       "Z is as good as random",
+       "Partly checked by balance"
+      ]
+     },
+     {
+      "label": "Monotonicity",
+      "items": [
+       "No defiers",
+       "Argued from behaviour"
+      ]
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "Instrument",
+     "meaning": "A variable that shifts the treatment and affects the outcome only through it."
+    },
+    {
+     "term": "First stage",
+     "meaning": "The effect of Z on X, summarised by the F-statistic."
+    },
+    {
+     "term": "Reduced form",
+     "meaning": "The effect of Z on Y directly."
+    },
+    {
+     "term": "Exclusion restriction",
+     "meaning": "Z affects Y only through X; untestable."
+    },
+    {
+     "term": "LATE",
+     "meaning": "The effect on compliers whose treatment the instrument moves."
+    },
+    {
+     "term": "Weak instrument",
+     "meaning": "A small first stage; F below 10 raises suspicion."
+    }
+   ],
+   "worked_example": {
+    "title": "Divide, and see the danger",
+    "setup": "Illustrative: the instrument raises the outcome by 6 points (reduced form) and raises treatment by 0.4 (first stage). Suppose Z also has a small direct effect on Y of 0.2 points.",
+    "steps": [
+     "IV estimate = reduced form ÷ first stage: 6 ÷ 0.4 = 15 points.",
+     "The direct effect breaks exclusion and leaks into the numerator.",
+     "Bias with this first stage: 0.2 ÷ 0.4 = 0.5 points.",
+     "Bias if the first stage were only 0.04: 0.2 ÷ 0.04 = 5 points."
+    ],
+    "answer": "The IV estimate is 15 points, and a tenfold weaker first stage magnifies the same exclusion violation tenfold."
+   },
+   "mistakes": [
+    "Treating a large IV estimate from a null reduced form as a finding. It is a warning sign.",
+    "Reporting an IV without the first-stage F-statistic.",
+    "Reading the IV estimate as the average effect for everyone. It is the LATE for compliers.",
+    "Accepting a one-sentence exclusion argument. A persuasive IV paper spends most of its length on it."
+   ],
+   "recall": [
+    {
+     "q": "What two conditions must an instrument satisfy?",
+     "a": "Relevance (Z shifts X) and the exclusion restriction (Z affects Y only through X)."
+    },
+    {
+     "q": "Which condition can be tested?",
+     "a": "Relevance, through the first-stage F-statistic."
+    },
+    {
+     "q": "How is the IV estimate computed?",
+     "a": "The reduced form divided by the first stage."
+    },
+    {
+     "q": "What is the traditional weak-instrument rule of thumb?",
+     "a": "Report the first-stage F; F above 10 is the old threshold, now considered too lenient."
+    },
+    {
+     "q": "Who are compliers?",
+     "a": "People whose treatment status is moved by the instrument."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Difference-in-Differences",
+   "big_idea": "DiD subtracts twice, and its one assumption is **parallel trends**.",
+   "in_plain_words": [
+    "DiD compares the change over time in a treated group with the change in a comparison group. The first difference removes fixed group traits and the second removes common time trends. It needs repeated cross-sections only, so it works with survey rounds where individuals cannot be linked.",
+    "The groups may start at different levels, but without the policy they must have moved in parallel. That is a claim about a period that did not happen, so pre-trends support it and never prove it. Anticipation, other shocks, composition change and staggered adoption all threaten it. **Check whether a modern estimator was used** when timing is staggered."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Treated change",
+      "hint": "B − A"
+     },
+     {
+      "op": "−"
+     },
+     {
+      "t": "Comparison change",
+      "hint": "D − C"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "DiD estimate",
+      "hint": "effect on the treated"
+     }
+    ],
+    "note": "the comparison group's change is the counterfactual trend"
+   },
+   "key_terms": [
+    {
+     "term": "DiD",
+     "meaning": "Treated before-after change minus comparison before-after change."
+    },
+    {
+     "term": "Parallel trends",
+     "meaning": "Absent the policy, the groups would have moved in parallel."
+    },
+    {
+     "term": "Event study",
+     "meaning": "Coefficients over time; pre-period ones near zero support parallel trends."
+    },
+    {
+     "term": "Placebo test",
+     "meaning": "Test on a fake treatment date that should find nothing."
+    },
+    {
+     "term": "Staggered adoption",
+     "meaning": "Different units treated at different times; plain two-way fixed effects can mislead."
+    }
+   ],
+   "worked_example": {
+    "title": "Compute a DiD",
+    "setup": "Illustrative levels: the treated group moves from 40 to 58 and the comparison group from 30 to 36.",
+    "steps": [
+     "Treated change: 58 − 40 = 18.",
+     "Comparison change: 36 − 30 = 6.",
+     "DiD estimate: 18 − 6 = 12.",
+     "Counterfactual for the treated: 40 + 6 = 46, so the gap is 58 − 46 = 12."
+    ],
+    "answer": "The effect is 12 points, the gap between the treated group's actual outcome of 58 and its counterfactual of 46."
+   },
+   "mistakes": [
+    "Demanding equal levels before treatment. DiD needs parallel trends, and levels can differ by any amount.",
+    "Offering one pre-period as evidence. Two points determine a line, and a single pre-period shows no trend.",
+    "Ignoring a concurrent shock that hit only one group.",
+    "Using plain two-way fixed effects on a staggered roll-out without a modern estimator."
+   ],
+   "recall": [
+    {
+     "q": "What does DiD require of the groups?",
+     "a": "Parallel trends absent the policy; the levels need not be equal."
+    },
+    {
+     "q": "What does the second difference measure?",
+     "a": "What changed for both groups, the common trend that a before-and-after study would credit to the programme."
+    },
+    {
+     "q": "Name three ways to support parallel trends.",
+     "a": "Plot several pre-periods, run event-study coefficients, and run a placebo test on a fake earlier date."
+    },
+    {
+     "q": "What is the main threat in a phased roll-out?",
+     "a": "Anticipation, if districts knew they were next."
+    },
+    {
+     "q": "Why cluster standard errors in DiD?",
+     "a": "Because observations within a group are not independent; red flags are the wrong level or none at all."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Regression Discontinuity",
+   "big_idea": "A cutoff manufactures a local experiment, and **the result is local to the cutoff**.",
+   "in_plain_words": [
+    "Many programmes use a threshold rule, such as a scholarship for scores above 60. Students scoring 59 and 61 are alike in every way that matters, so the jump in outcomes at the cutoff is the effect. This is common in South Asian programmes, from BPL lines to exam cutoffs and population thresholds.",
+    "RD fails if people can precisely manipulate the running variable, so check for bunching and smoothness in covariates. Fuzzy RD, where crossing the cutoff only raises the probability of treatment, works like IV. **Choose a bandwidth, show results across bandwidths and use local linear estimation** to avoid invented jumps."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Sharp RD",
+     "items": [
+      "The cutoff determines treatment",
+      "Everyone above is treated",
+      "Estimate: jump in the outcome"
+     ]
+    },
+    "right": {
+     "title": "Fuzzy RD",
+     "items": [
+      "The cutoff raises the probability",
+      "Take-up jumps at the threshold",
+      "Estimate: outcome jump ÷ take-up jump"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Running variable",
+     "meaning": "The score that determines eligibility at the cutoff."
+    },
+    {
+     "term": "Bandwidth",
+     "meaning": "How wide a window around the cutoff to use."
+    },
+    {
+     "term": "McCrary test",
+     "meaning": "Density test for bunching just above the cutoff."
+    },
+    {
+     "term": "Donut RD",
+     "meaning": "Excludes the immediate neighbourhood of the cutoff."
+    },
+    {
+     "term": "Fuzzy RD",
+     "meaning": "Crossing the cutoff raises treatment probability; IV at the threshold."
+    }
+   ],
+   "worked_example": {
+    "title": "Sharp and fuzzy estimates",
+    "setup": "Illustrative: the cutoff is 50. The outcome is 41 just below it and 53 just above. Take-up rises from 0.2 to 0.8 across the cutoff.",
+    "steps": [
+     "Sharp jump in the outcome: 53 − 41 = 12.",
+     "Jump in take-up: 0.8 − 0.2 = 0.6.",
+     "Fuzzy RD estimate: 12 ÷ 0.6 = 20.",
+     "The result applies to compliers near the cutoff."
+    ],
+    "answer": "The outcome jumps 12 points and the fuzzy estimate is 20, a LATE for compliers at the cutoff."
+   },
+   "mistakes": [
+    "Generalising the jump to units far from the cutoff. RD is local.",
+    "Treating a fuzzy design as sharp. It overstates take-up and understates the effect.",
+    "Assuming a cutoff is enforced. Local officials may override it.",
+    "Fitting high-order polynomials. They manufacture discontinuities that are not there."
+   ],
+   "recall": [
+    {
+     "q": "What does RD compare?",
+     "a": "Units just above and just below a cutoff on a running variable."
+    },
+    {
+     "q": "What is the main threat to RD?",
+     "a": "Manipulation of the running variable, such as an examiner nudging a 59 to a 61."
+    },
+    {
+     "q": "How does fuzzy RD relate to IV?",
+     "a": "The cutoff instruments for actual treatment, so it inherits every IV caveat."
+    },
+    {
+     "q": "What is the current standard for functional form?",
+     "a": "Local linear estimation with a data-driven bandwidth."
+    },
+    {
+     "q": "Name two South Asian eligibility rules suited to RD.",
+     "a": "Any two of: BPL and SECC deprivation scores, exam-based scholarships, population thresholds, land-holding ceilings."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Panel Data & Fixed Effects",
+   "big_idea": "Fixed effects make each unit its own control, and **they remove only what stays constant over time**.",
+   "in_plain_words": [
+    "Panel data follows the same units across periods, which lets you net out stable characteristics you never measured. The within estimator subtracts each unit's own average, so the coefficient comes only from change within a unit. Units that never change contribute nothing, so report how many switched.",
+    "Fixed effects do nothing about confounders that change over time, such as a district policy change or local growth. First differences, fixed effects and DiD are one family. Default to fixed effects over random effects in causal work, and cluster at the level of treatment assignment. **Ask what else changed in treated units during the window.**"
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Fixed effects",
+     "items": [
+      "Unit term may correlate with X",
+      "Within-unit variation only",
+      "Protected from time-invariant confounding"
+     ]
+    },
+    "right": {
+     "title": "Random effects",
+     "items": [
+      "Unit term uncorrelated with X",
+      "Within and between variation",
+      "More efficient if the assumption holds"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Panel data",
+     "meaning": "The same units observed at two or more points in time."
+    },
+    {
+     "term": "Unit fixed effect",
+     "meaning": "Absorbs everything constant about a unit."
+    },
+    {
+     "term": "Within estimator",
+     "meaning": "Subtracts each unit's own average from every observation."
+    },
+    {
+     "term": "First differences",
+     "meaning": "Regress the change in Y on the change in X."
+    },
+    {
+     "term": "Clustering",
+     "meaning": "Standard errors that allow correlation within a unit across time."
+    },
+    {
+     "term": "Hausman test",
+     "meaning": "Compares fixed and random effects; low power in typical data."
+    }
+   ],
+   "worked_example": {
+    "title": "De-mean a district",
+    "setup": "Illustrative: one district's X over three years is 2, 4 and 6, and its Y is 10, 14 and 18.",
+    "steps": [
+     "Mean of X: 2 + 4 + 6 = 12, and 12 ÷ 3 = 4.",
+     "Mean of Y: 10 + 14 + 18 = 42, and 42 ÷ 3 = 14.",
+     "Subtract each mean: X becomes −2, 0 and 2, and Y becomes −4, 0 and 4.",
+     "Slope from the de-meaned values: a change of 4 in Y for a change of 2 in X, so 4 ÷ 2 = 2.",
+     "Add a constant district trait of 100 to every Y: 110 + 114 + 118 = 342, so the mean is 342 ÷ 3 = 114 and the de-meaned values stay the same."
+    ],
+    "answer": "The within-district slope is 2, and a constant district trait drops out of the comparison."
+   },
+   "mistakes": [
+    "Believing fixed effects solve confounding in general. They solve the time-invariant part only.",
+    "Trying to estimate caste or geography with unit fixed effects. Variables constant within a unit are absorbed.",
+    "Clustering at the observation level. Cluster at the level of treatment assignment.",
+    "Running a wild-cluster-free analysis with twelve clusters and conventional errors."
+   ],
+   "recall": [
+    {
+     "q": "What does a unit fixed effect absorb?",
+     "a": "Everything constant about that unit, such as geography, culture and institutions."
+    },
+    {
+     "q": "What does the within estimator discard?",
+     "a": "Differences between units."
+    },
+    {
+     "q": "Why are fixed effects over-sold?",
+     "a": "They handle only time-invariant confounders, and time-varying ones such as other policies are not covered."
+    },
+    {
+     "q": "When are first differences and fixed effects identical?",
+     "a": "With two periods."
+    },
+    {
+     "q": "Why must you cluster?",
+     "a": "A unit's observations are correlated across time, so ordinary standard errors are far too small."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Reading & Critiquing Results",
+   "big_idea": "Precision is not validity, so read **design first, then intervals, then effect size and robustness**.",
+   "in_plain_words": [
+    "A standard error measures sampling noise and says nothing about whether the design is valid. Read the confidence interval alongside the point estimate, because stars compare only with zero. A p-value is the probability of data this extreme if the true effect were zero, and statistical significance is not size or validity.",
+    "Translate effects into rupees, percentage points or children and pair them with cost. Test robustness with alternative specifications, samples and placebos. Beware p-hacking from forking paths, and read the registered plan against the paper. **Ask whether the estimate will travel** to another state, scale or implementer."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Check the design",
+      "sub": "identification first"
+     },
+     {
+      "label": "Read the interval",
+      "sub": "alongside the point estimate"
+     },
+     {
+      "label": "Judge the p-value",
+      "sub": "significance is not size"
+     },
+     {
+      "label": "Size the effect",
+      "sub": "translate it, pair it with cost"
+     },
+     {
+      "label": "Test robustness",
+      "sub": "placebos, other samples"
+     },
+     {
+      "label": "Check transfer",
+      "sub": "sample, context, scale"
+     }
+    ],
+    "caption": "a reading order for any result"
+   },
+   "key_terms": [
+    {
+     "term": "Standard error",
+     "meaning": "How much an estimate varies across repeated samples."
+    },
+    {
+     "term": "Confidence interval",
+     "meaning": "The range of effects consistent with the data."
+    },
+    {
+     "term": "p-value",
+     "meaning": "Probability of data this extreme if the true effect were zero."
+    },
+    {
+     "term": "p-hacking",
+     "meaning": "Reporting only the specifications or subgroups that cross 0.05."
+    },
+    {
+     "term": "Pre-analysis plan",
+     "meaning": "Hypotheses, outcomes and methods fixed before seeing the data."
+    },
+    {
+     "term": "External validity",
+     "meaning": "Whether an estimate holds elsewhere."
+    }
+   ],
+   "worked_example": {
+    "title": "Cost per unit of effect",
+    "setup": "Illustrative: programme A raises an outcome by 2 percentage points at Rs 400 per household, and programme B raises it by 5 points at Rs 2,500 per household.",
+    "steps": [
+     "Cost per percentage point for A: 400 ÷ 2 = 200 rupees.",
+     "Cost per percentage point for B: 2,500 ÷ 5 = 500 rupees.",
+     "B has the larger effect, yet A buys each point more cheaply: 500 ÷ 200 = 2.5 times.",
+     "Translate a 2.3 point enrolment gain: 1,000 × 0.023 = 23 more children per 1,000."
+    ],
+    "answer": "A costs Rs 200 per point and B Rs 500, so the smaller effect is the better buy."
+   },
+   "mistakes": [
+    "Reading a small standard error as proof the estimate is right. A biased design gives precisely wrong answers.",
+    "Reading a p of 0.03 as a 3% chance the effect is zero.",
+    "Treating a wide interval as evidence of no effect. It shows the study could not tell.",
+    "Trusting one significant subgroup with no prior reason to expect it."
+   ],
+   "recall": [
+    {
+     "q": "What does a standard error not tell you?",
+     "a": "Whether the design is valid or the estimate is correct."
+    },
+    {
+     "q": "What does a 95% interval that includes zero mean?",
+     "a": "The data cannot rule out no effect."
+    },
+    {
+     "q": "Why do placebo tests matter?",
+     "a": "A design that finds effects where none should exist has failed."
+    },
+    {
+     "q": "What does pre-registration do?",
+     "a": "It fixes outcomes and methods in advance and makes deviations visible; it cannot make a bad design good."
+    },
+    {
+     "q": "What is the last row of the external validity table?",
+     "a": "What was the counterfactual: a control condition that differs across settings."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Tools & Further Reading",
+   "big_idea": "The design matters more than the software, and **each design rests on one assumption you can name**.",
+   "in_plain_words": [
+    "Start with Mastering 'Metrics if you have no econometrics background, then Mostly Harmless Econometrics for the design-based reference. The Mixtape is free online with code, and J-PAL and IPA briefs cover development applications. Stata, R and Python each fit different needs.",
+    "The cheat-sheet pairs each situation with a design and the assumption to defend. Choose software by what your collaborators use and keep the analysis as a script. The designs are not ranked: **execution decides credibility**. Econometrics is learned by taking a real dataset, posing a causal question and stress-testing the design."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Pick the design",
+    "spokes": [
+     {
+      "label": "RCT",
+      "sub": "randomise treatment"
+     },
+     {
+      "label": "IV",
+      "sub": "as-good-as-random nudge"
+     },
+     {
+      "label": "DiD",
+      "sub": "groups compared over time"
+     },
+     {
+      "label": "RD",
+      "sub": "a cutoff rule"
+     },
+     {
+      "label": "Fixed effects",
+      "sub": "units followed over time"
+     }
+    ],
+    "caption": "each spoke has one assumption to defend"
+   },
+   "key_terms": [
+    {
+     "term": "Furious Five",
+     "meaning": "Random assignment, regression, IV, RD and DiD."
+    },
+    {
+     "term": "Load-bearing assumption",
+     "meaning": "The one assumption the whole result rests on."
+    },
+    {
+     "term": "Reproducibility",
+     "meaning": "Others can rerun the analysis; a script makes this possible."
+    },
+    {
+     "term": "Mastering 'Metrics",
+     "meaning": "The gentlest credible entry point into causal methods."
+    },
+    {
+     "term": "Mixtape",
+     "meaning": "Free book with runnable R and Stata code."
+    }
+   ],
+   "worked_example": {
+    "title": "Which design, and what to defend?",
+    "setup": "Four situations. Pick the design and the assumption to defend from the cheat-sheet.",
+    "steps": [
+     "You can randomise treatment: RCT, defending balance, attrition, spillovers and compliance.",
+     "A cutoff rule decides eligibility: RD, defending no manipulation and local validity.",
+     "Groups observed before and after a policy: DiD, defending parallel trends.",
+     "Households followed over several years: fixed effects, defending no time-varying confounders."
+    ],
+    "answer": "RCT, RD, DiD and fixed effects, each with one assumption to interrogate."
+   },
+   "mistakes": [
+    "Choosing software by feature lists. Team reproducibility matters more.",
+    "Doing analysis as a sequence of clicks. A script shows your working.",
+    "Ranking designs in the abstract. A clean RD can beat a poorly executed RCT.",
+    "Starting with the design and then looking for variation. Start from the variation you have."
+   ],
+   "recall": [
+    {
+     "q": "Which book does the deck say to start with?",
+     "a": "Mastering 'Metrics by Angrist and Pischke."
+    },
+    {
+     "q": "What is free online with code?",
+     "a": "Causal Inference: The Mixtape by Scott Cunningham."
+    },
+    {
+     "q": "What assumption goes with IV?",
+     "a": "Relevance and exclusion."
+    },
+    {
+     "q": "What assumption goes with RD?",
+     "a": "No manipulation at the cutoff, with a local effect."
+    },
+    {
+     "q": "What does the deck suggest as a next step?",
+     "a": "Take a real Indian dataset, pose a causal question, choose the design its variation can support and stress-test its assumption."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "2": "The agenda lists eleven sections with slide ranges, so you can **plan the course around your own need**. Sections 2 to 4 build the problem, sections 5 to 9 give you the five designs and the panel tools, and sections 10 and 11 teach you to read results and find tools.",
+  "4": "Econometrics measures the causal effect of a policy, so keep the three question types straight: descriptive needs a representative sample, predictive needs correlation and fit, causal needs a credible counterfactual. If your conclusion contains the word 'should', you need **a design**, and a well-fitting model will not supply one.",
+  "5": "Each ingredient has a failure when it is missing: theory without data is speculation, data without theory is pattern-hunting, and without statistics you have no error bars. The slide's claim is that **theory does the most under-appreciated work**, because only theory says which confounders and exclusion restrictions are plausible.",
+  "6": "Every study answers a version of 'does X cause Y, and by how much?'. The table matches each policy question to the design its variation supports. Remember that **implementation dictates the design**: a phased roll-out gives DiD and a score threshold gives RD. Involve evaluators before the programme starts.",
+  "7": "Correlation has at least five explanations: X causes Y, Y causes X, a common cause, selection into the sample and chance. Name all five before defending the first. The fourth, collider bias, is the **least known and hardest to spot**, because your own sampling creates the correlation.",
+  "8": "Villages with a microfinance branch earning more proves little, because lenders picked promising villages. The table gives four placement rules and the direction each pushes the result. Take away the practical tip: **ask the implementer how sites were chosen**, because the answer usually decides which designs are available.",
+  "9": "Separate description from causation. Targeting, forecasting and describing need only correlation, while funding decisions and design choices need a counterfactual. Use the quick test: **does your sentence contain a hypothetical intervention?** 'If we did X, then Y' requires a counterfactual, and 'where is Y highest' does not.",
+  "10": "The credibility revolution moved the field from elaborate models toward designs that mimic experiments. Read the before-and-after table as a contrast of styles: 'control for everything' became 'find exogenous variation'. Remember the 2019 and 2021 Nobel prizes, and the slide's critique that clean variation can **favour easy questions**.",
+  "12": "Every causal effect is a comparison with a counterfactual. Work down the table: before-and-after fails because other things changed, treated against untreated works only if they were comparable, and **a randomised control is the valid one**. The slide calls before-and-after the most common and the weakest, because it credits the whole trend to the programme.",
+  "13": "Potential outcomes give each person two outcomes, Y(1) and Y(0), and the individual effect is their difference, which you can never observe. Use the table to see **which quantities are ever observed**. The slide adds SUTVA: one unit's treatment must not affect another's outcome, and spillovers break it.",
+  "14": "For any one person you observe either the treated or the untreated outcome, never both. Memorise the framing: **causal inference is a missing-data problem**. Every design in the later sections is a different strategy for filling in the blank, so return to this slide whenever a method feels abstract.",
+  "15": "We cannot know individual effects, so we estimate averages. The table lists four estimands: ATE for everyone, ATT for those treated, ATU for those not treated and LATE for those an instrument moved. Always ask **'the effect on whom?'**, because for scale-up you usually want the ATE or ATU.",
+  "16": "The naive comparison equals the true effect on the treated plus selection bias. Treat the equation as the course in one line: each design argues that **the selection bias term is zero**. The slide warns that selection bias can exceed the effect and take either sign, so a naive gap can have the wrong sign.",
+  "17": "Selection bias is the systematic difference in untreated outcomes between those who get a treatment and those who do not. Read the table for direction: three of four examples make naive comparisons overstate. The hospital row is the teaching case because **its answer is obvious**, and the same logic hides inside microcredit.",
+  "18": "Hospital users report worse health because sick people go to hospital, and the same selection logic damages naive evaluations of training and microcredit. Use the table rows as practice. Before reading any comparison, **write down how people ended up on each side**, or you cannot judge what the comparison means.",
+  "19": "Treat this table as the course on one page: each design buys a counterfactual with **one load-bearing assumption**. RCT needs randomisation to hold, IV the exclusion restriction, DiD parallel trends, RD no manipulation, fixed effects no time-varying confounders. None can be tested directly, so evidence only supports an argument.",
+  "21": "OLS fits the straight line that minimises squared vertical distances. Read the two-column table as what it does and what it does not do: it summarises association and gives standard errors under assumptions, but supplies **no counterfactual by itself**. Squared distances let outliers pull hard, so run influence diagnostics.",
+  "22": "This chart shows an illustrative line of wages against years of schooling. Read the slope as the average wage rise per extra year in this data. The slide's warning is the point: **whether the slope is causal is a separate question entirely**, and the fit alone cannot answer it.",
+  "23": "A regression approximates the conditional expectation function: the average Y for each value of X. Think of it as a machine that answers 'for units with this X, what is the average Y?' and **promises nothing beyond that**. Plot your data first, since a bend or a cluster at zero will fool a straight line.",
+  "24": "Read each phrase in a coefficient's meaning as a limit: 'associated with' stops short of caused, 'holding fixed' covers only variables you included, 'on average' hides varying effects, and 'one unit' depends on units and logs. Try the slide's reading aloud. If it sounds like a weak claim, **that is the claim**.",
+  "25": "Adding controls helps only when the variable sits in the right place in the causal structure. The table sorts five cases: a confounder reduces bias, a mediator removes part of the effect and a collider creates bias. Two of five make things worse, so **'add more controls' is no strategy**.",
+  "26": "Match the functional form to the sentence you will write. Levels give units, log Y gives approximate percentages, log-log gives elasticities and a dummy gives a difference in means. Remember the correction for large coefficients: for 0.5 the true change is about 65%, so **use exp(β) − 1** when the coefficient is large.",
+  "27": "Under the Gauss–Markov conditions OLS is BLUE: best, linear, unbiased. The table lists five assumptions and what fails. Only one threatens causality, **exogeneity**, while homoskedasticity affects standard errors and leaves the estimate alone. Standard errors corrected for heteroskedasticity fix the last, and only a better design fixes an exogeneity failure.",
+  "28": "This slide is the hinge of the course: OLS can be unbiased and efficient and still fail to be causal. The table lists what Gauss–Markov guarantees and what it does not. Memorise the last claim: **causal requires exogeneity to actually hold**. The next section shows how that assumption breaks.",
+  "30": "Endogeneity means X is correlated with the error term, so OLS is biased and non-causal. Bias does not shrink with sample size: a million observations give a tight interval around the wrong number. The slide's closing line is worth keeping: **more data fixes noise, and only a better design fixes bias**.",
+  "31": "Four sources produce a biased coefficient: omitted variables, reverse causality, measurement error and selection into the sample. The table pairs each with a typical fix. Different sources need different remedies, so **diagnose which one you face** before choosing a design, and expect several at once in a study like microcredit.",
+  "32": "The chart shows omitted-variable bias: within each ability group the schooling slope is gentle, but pooled it looks steep because higher-ability people get more schooling and earn more. **The gap between the pooled line and the within-group lines** is the bias. Ability bias in returns to schooling is the classic case.",
+  "33": "You can sign omitted-variable bias without measuring the variable. If Z moves X and Y the same way, the bias is upward, and if it moves them opposite ways, downward. Ability raises both schooling and wages, so the OLS return is biased upward. A **bound is often enough** to settle a decision.",
+  "34": "Reverse causality means the arrow runs from Y to X. The police example is the model: cities with more crime hire more police, so the correlation is positive even if police reduce crime. It also explains why **targeted programmes look ineffective** in naive comparisons. Lagging helps and rarely suffices.",
+  "35": "Noise in X pulls its coefficient toward zero, which is attenuation bias, while noise in Y mostly widens standard errors. Remember the pair: **sloppy outcome measurement costs precision, and sloppy treatment measurement costs the estimate**. A null result from noisy data is weak evidence of no effect.",
+  "36": "Controls work like a scalpel, so use them precisely. Read the table as four false beliefs: more controls always reduce bias, a stable coefficient proves robustness, a rich dataset controls everything, and adding controls is safe. The honest version of a controlled regression is **an association among units similar on measured variables**.",
+  "37": "Because you can never be sure every confounder is controlled, credible work builds a design that creates exogenous variation in X. The table contrasts adjustment, which relies on measuring every confounder, with design. This is the credibility revolution in one line: **find variation that was never confounded** in the first place.",
+  "39": "In an RCT a coin flip assigns treatment, so on average the groups match in everything observed and unobserved. The second row of the table is the whole case for RCTs: **balance on unobservables, which no regression delivers**. Randomisation is a property of the procedure, so a chance imbalance is no design failure.",
+  "40": "Randomisation does not make two people identical. It makes the groups equivalent in expectation, so the control's average Y(0) stands in for the treated group's missing counterfactual. Small samples can be imbalanced by chance and the design is still sound. **Stratified or block randomisation** forces balance on key covariates.",
+  "41": "A balance table is the first check in any RCT. Read the concern column: one difference out of twenty at p < 0.05 is expected by chance, while several in one direction suggest a compromised draw. A **baseline outcome difference is most serious**, because controls would then need to be shown.",
+  "42": "J-PAL, founded in 2003, popularised RCTs in development, and Pratham's Teaching at the Right Level shows a model refined and scaled through trials. Notice the **third row on deworming**, contested after replication. The slide's lesson is that a course showing only successes teaches the wrong lesson about evidence.",
+  "43": "This chart is stylised, and the slide says the numbers are illustrative. The shape is the message: development RCTs grew explosively after the mid-2000s. Take the trend as **context for the field's shift toward experiments**, and cite a real registry count if you need a number.",
+  "44": "Internal validity asks whether the estimate is right here, and RCTs are strong on it. External validity asks whether it holds elsewhere, and RCTs are often weak there. The sharpest version is general equilibrium: **a pilot cannot detect that job training merely reallocates scarce jobs**.",
+  "45": "Four threats survive randomisation: attrition, spillovers, non-compliance and Hawthorne effects. The table pairs each with a response, and the response to non-compliance is **intention-to-treat**, analysing people by assignment. Comparing those who took up treatment reintroduces selection. Differential attrition is the threat that destroys a trial.",
+  "46": "Randomising a benefit is ethical under conditions: real uncertainty (equipoise), scarcity, informed consent, independent ethics approval and eventual access. Never withhold a known life-saving treatment. The slide calls **scarcity the strongest practical justification**, since a lottery can be fairer than proximity or connections.",
+  "48": "When you cannot randomise, an instrument borrows randomness from the world: Z shifts treatment X and affects Y only through X. Study the table of reasons you cannot randomise. The slide's emphasis is that estimation is mechanical and **the credibility lives in the argument**, so IV papers spend their words on institutional detail.",
+  "49": "IV keeps only the clean variation in X driven by Z. Learn the three stages: first stage (Z on X), reduced form (Z on Y) and the IV estimate, which is the reduced form divided by the first stage. **Look at the reduced form first**, and be wary of dividing by a first stage near zero.",
+  "50": "An instrument needs relevance and the exclusion restriction. Relevance is testable through the first-stage F, and exclusion can only be argued. The slide stresses that **the one you cannot test is the one that matters most**, so ask what else Z could plausibly affect.",
+  "51": "Rainfall as an instrument for farm income meets relevance and independence easily and exclusion poorly. Work through the objections: rain also affects health, migration, road access and mobilisation. The lesson generalises: instruments that look wonderfully exogenous are often **exogenous and multi-channel**, and exogeneity is necessary and nowhere near sufficient.",
+  "52": "Each classic instrument comes with a standard objection. Use the table to practise stating the exclusion argument and then the objection: distance to school, quarter of birth, sibling sex. The last is specific to South Asia, where **sex-selective abortion violates the assumption** that the sex of births is random.",
+  "53": "IV recovers the LATE, the effect for compliers whose treatment status the instrument moves. Sort the four groups: compliers are included, always-takers and never-takers are excluded, and defiers are assumed absent. Compliers are defined by a counterfactual response, so **you can describe them statistically but never list them**.",
+  "54": "A weak first stage makes IV estimates imprecise and potentially more biased than OLS, because tiny exclusion violations get magnified. Report the F-statistic. The old threshold of F above 10 is now seen as too lenient, and a **weak-IV result that agrees with OLS confirms nothing**.",
+  "55": "Three questions for any IV paper: is it relevant, is exclusion plausible, and whose effect is it? The table shows where each answer lives, with the exclusion argument in the text and complier characterisation often absent. If the argument gets **one sentence, the authors have not done the work**.",
+  "57": "DiD compares the change in a treated group with the change in an untreated comparison group. The table sets out the arithmetic: (B − A) − (D − C). The first difference removes fixed group traits and the second removes common time trends. DiD needs only **repeated cross-sections**, so it works with survey rounds.",
+  "58": "Subtract twice for two reasons. Difference 1 removes what is fixed about the treated group, and difference 2 measures what changed for both groups and stands in for the counterfactual trend. What remains changed only for the treated. DiD **cannot remove changes unique to the treated group**, which is the parallel-trends assumption.",
+  "59": "The plot shows treated and comparison groups before and after the policy. The effect is the gap between the treated group's actual outcome (58) and its counterfactual (46), about 12 points. Remember that **the dashed line is an assumption** about the parallel trend that nobody measured.",
+  "60": "Parallel trends concern slopes. The groups can start at different levels as long as they would have moved together without the policy, and the table corrects the commonest misunderstanding. Parallel trends is a claim about a period that never happened, so **pre-trends support it without establishing it**.",
+  "61": "You can support parallel trends and never prove them. The table ranks evidence: one pre-period is almost none, several pre-periods are the minimum, event-study coefficients near zero are stronger, and a placebo test on a fake date is strong. **Two points determine a line**, so a single pre-period shows no trend.",
+  "62": "DiD shines with natural experiments such as phased district roll-outs, policies in some states only, and eligibility changes. The last row, an unanticipated shock, is the strongest. The main threat is **anticipation**, so ask how the roll-out order was decided, because early districts chosen for readiness break parallel trends.",
+  "63": "Five threats can break a DiD: diverging trends, other shocks, composition change, anticipation and staggered adoption. The last is a live issue, because two-way fixed effects with staggered timing can use negative weights and give the wrong sign. **Check whether a modern estimator was used** for staggered designs.",
+  "64": "These five questions form a reading checklist for any DiD paper: pre-trends shown, comparison group defensible, concurrent shocks, staggered timing and clustering. Because DiD is intuitive and heavily used, it is **heavily misused**, so give its one assumption the hardest scrutiny. Older papers can be sound by their time and still need re-examination.",
+  "66": "RD exploits a sharp eligibility cutoff on a running variable. Read the table as four requirements: an enforced cutoff, a continuous running variable, enough observations near it and no precise manipulation. Eligibility rules are everywhere in South Asian programmes, so RD is **unusually available**. Check that officials do not routinely override the rule.",
+  "67": "A student scoring 59 and one scoring 61 are alike in every way that matters, yet only one gets the programme. The cutoff manufactures a local experiment. The jump in outcomes at the threshold is the effect, with one catch: **the comparison says nothing about anyone far from the cutoff**.",
+  "68": "The chart shows a vertical jump at the cutoff of 50, from roughly 41 to 53, which is the estimated effect of about 12 points. The smooth slopes on each side show what would hold without any jump. Read RD plots by **comparing the two sides at the cutoff**.",
+  "69": "Sharp RD has the cutoff determine treatment perfectly. Fuzzy RD has it raise the probability of treatment, so the jump in take-up works like an instrument. The estimate is the jump in the outcome divided by the jump in take-up. Fuzzy RD **inherits every IV caveat**, and most real programmes are fuzzy.",
+  "70": "RD estimates the effect only at the cutoff, for marginal units, under the current rule. Use the two-column table as a boundary: it says nothing about the effect far from the cutoff or what happens if the cutoff moves. That local effect is exactly right when the question concerns **students just below the line**.",
+  "71": "Manipulation of the running variable destroys RD, as when an examiner nudges a 59 to a 61. Check for bunching with a McCrary density test and for covariates that jump at the threshold. Partial manipulation is common and less fatal, and a **donut RD excluding the immediate neighbourhood** is the standard response.",
+  "72": "Two choices matter most. Bandwidth trades cleanliness against noise, and functional form trades flexibility against invented jumps. The slide recommends local linear estimation, warns that high-order polynomials manufacture discontinuities and says to show results across bandwidths. **A result at one bandwidth is no result.**",
+  "73": "RD fits wherever eligibility hinges on a score: BPL and SECC deprivation scores, exam scholarships, population thresholds and land-holding ceilings. Use the table to spot designs in programmes you know. Before assuming a design exists, **check that the rule is actually enforced**, since local discretion makes assignment fuzzy or manipulated.",
+  "75": "Panel data follows the same units over time, which lets you net out stable unobserved differences. Use the table to compare what panels allow against cross-sections. You never learn the fixed characteristics, because **the comparison is arranged so they cancel**. The cost is attrition, which is rarely random.",
+  "76": "With fixed effects each unit becomes its own control and constant traits are swept out. The equation has a unit effect and a time effect, and the table says what each absorbs. The price is that you **cannot estimate any variable that does not change within a unit**, such as caste or geography.",
+  "77": "The within estimator subtracts each unit's own average, so β comes only from how a unit changes relative to itself. Differences between units are discarded. Units that never change contribute nothing, so **report how many units switched, when and in which direction**. An estimate driven by three districts is a different claim.",
+  "78": "Fixed effects remove only time-invariant confounders. The table shows geography and persistent institutions are handled, while a district policy change, local growth and changing leadership are not. The slide's warning is that they are **frequently over-sold**. Ask what else changed in treated units during the study window.",
+  "79": "Fixed effects allow the unit term to correlate with X and use within variation. Random effects assume no such correlation and are more efficient if it holds. The slide's rule is to **default to fixed effects** in causal work, since random effects assume exactly what you doubted. A Hausman test compares them.",
+  "80": "First differences, fixed effects and DiD are one family that subtracts away stable unit differences. With two periods, first differences and fixed effects are identical, and DiD is first differences with a comparison group. With more periods they diverge, depending on the **error structure**.",
+  "81": "In panel data a unit's observations are correlated across time, so ignoring that makes standard errors far too small. Cluster at the level of treatment assignment. With too few clusters, under about 40, clustered errors themselves fail, and a **wild cluster bootstrap** is the standard remedy.",
+  "82": "These four questions audit a fixed-effects paper: both unit and time effects, time-varying confounders, correct clustering and the source of variation. The slide says the **second question is the one most often dodged**. Absorbing time-invariant confounders is presented as if it addressed confounding in general, and programmes often arrive in bundles.",
+  "84": "A standard error measures sampling noise, so a small one says the estimate is precise and says nothing about whether it is right. Use the two-column table to separate precision from validity. Design questions come first: if identification fails, **the standard errors describe how precisely you measured the wrong quantity**.",
+  "85": "Report a confidence interval alongside the point estimate. If a 95% interval comfortably includes zero, the data cannot rule out no effect, and with a small sample that is compatible with a large true effect. The table ranks reporting styles, with stars **the least informative and the most common**.",
+  "86": "Three studies with the same +4 estimate can differ completely in certainty. Only Study A, with [+2, +6], rules out zero, B touches zero and C spans negative values. Read the intervals: **only the interval distinguishes a finding from noise**. A wide interval shows that the study could not tell.",
+  "87": "A p-value is the probability of data this extreme if the true effect were zero. People misread a p of 0.03 as a 3% chance that the effect is zero, which needs a prior to compute. **Significance says nothing about size or validity**, and a big sample makes a trivial effect significant.",
+  "88": "A real, precise, significant effect can still be too small to justify its cost. Translate each coefficient into rupees, percentage points, children or school days, as the table does. Then **pair every effect with its cost per unit**, because a small, very cheap effect can beat a large, expensive one.",
+  "89": "Robustness asks whether a result survives poking: alternative specifications, samples, outlier handling, placebo tests and multiple-hypothesis correction. The slide calls **placebo tests the most informative and the least performed**. Real robustness shows a coefficient that moves a little, and identical significance across twelve variants hints at selection.",
+  "90": "Try enough specifications, subgroups and outcomes and some will cross p < 0.05 by chance. The table lists forking paths that inflate false findings. None requires dishonesty, since good-faith choices informed by the data have the same effect. Be most suspicious of **a single significant subgroup with no prior reason**.",
+  "91": "A pre-analysis plan fixes outcomes, the main specification, subgroups and multiple-testing correction before the data are seen, and registries make it public. It cannot rescue a bad design, but it **makes deviations visible**. Read the registered plan against the published paper and look for demoted primary outcomes.",
+  "92": "A clean estimate is internally valid for its setting, and generalising is a separate question. Use the table before transferring an estimate: sample, context, implementer, scale and counterfactual. The last is the most neglected, because a programme evaluated against nothing looks better than one evaluated against an existing service. **Theory makes transfer possible.**",
+  "94": "Choose software by what your collaborators use, since reproducibility across a team matters more than any feature difference. Stata is the applied-micro standard and paid, R is free with strong causal packages, and Python suits automation. Keep the analysis as **a script that shows your working**.",
+  "95": "Use the cheat-sheet to move from situation to design to assumption: randomise and use an RCT; find a nudge and use IV; compare groups over time and use DiD; exploit a cutoff and use RD; follow units and use fixed effects. The designs are unranked, so **execution decides credibility**.",
+  "96": "This is the essential books slide. Its single recommendation is to start with Mastering 'Metrics, which teaches the Furious Five of random assignment, regression, IV, RD and DiD with humour and real studies. Mostly Harmless Econometrics is the design-based reference, and the Mixtape is **free online with code**.",
+  "97": "This slide lists development reading: Poor Economics, a practical field guide to running randomised evaluations, and the J-PAL and IPA briefs. The advice at the end is the useful part: **read the methods section of real studies critically**, since that is the fastest way to internalise the ideas in this deck.",
+  "98": "Use the five takeaways as the deck's summary: ask compared to what, suspect selection first, let design beat adjustment, find the one load-bearing assumption, and remember that precise is not the same as right. The slide calls the fourth the skill worth practising: **name the design, name its assumption, ask what would break it**.",
+  "99": "The closing task is practical. Pick a real Indian dataset, pose a causal question, decide which design its variation can support, then stress-test that design's assumption. **Econometrics is learned by doing**, and the slide points to Data Literacy, Impact Evaluation and Exploratory Data Analysis 101 as companions."
+ }
+}

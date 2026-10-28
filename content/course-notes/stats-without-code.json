@@ -1,0 +1,1145 @@
+{
+ "slug": "stats-without-code",
+ "intro": "Read the deck for the clicks and these notes for the judgement. Each note explains a slide, tells you what to remember and warns you where analysts slip. Work the examples in jamovi or JASP with the two datasets, answer the recall questions without looking, and keep your own annotations beside mine.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "Why Point-and-Click, and Its Limits",
+   "big_idea": "jamovi and JASP put **R behind a menu**, so the numbers are correct. Learn the edge before you start, because **survey weights** are where a menu fails.",
+   "in_plain_words": [
+    "jamovi is the main tool in this course and JASP takes over for Bayesian work. Both are free, run on ordinary laptops and show the R command behind every analysis if you ask. That makes the menu a gentle route into code, because each click teaches you the function it calls.",
+    "A menu has a clear edge. Complex survey design, cleaning many files the same way, advanced econometrics and letting a reviewer re-run your steps all sit outside it. The limit that produces wrong published numbers is the weights problem: an NFHS analysis run unweighted and reported as national. Know the edge and the tool is safe."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "The menu does well",
+     "items": [
+      "Standard analyses with effect sizes",
+      "Live results in one saved file",
+      "Syntax mode shows the R behind it"
+     ]
+    },
+    "right": {
+     "title": "You need R or Stata",
+     "items": [
+      "Survey weights, strata and clusters",
+      "Cleaning many files the same way",
+      "Advanced econometrics",
+      "Re-running by a reviewer"
+     ]
+    },
+    "vs": "vs",
+    "caption": "know the edge before you start"
+   },
+   "key_terms": [
+    {
+     "term": "jamovi",
+     "meaning": "Free, open menu-driven tool built on R; the main tool in this course."
+    },
+    {
+     "term": "JASP",
+     "meaning": "Free tool from Amsterdam with a strong Bayesian side and APA tables."
+    },
+    {
+     "term": "Syntax mode",
+     "meaning": "Shows the R command above each result; a record of what you ran."
+    },
+    {
+     "term": "Rj",
+     "meaning": "A jamovi module with an R editor for jobs the menus lack."
+    },
+    {
+     "term": "Measurement type",
+     "meaning": "Nominal, ordinal, continuous or ID; it decides what analyses accept."
+    }
+   ],
+   "worked_example": {
+    "title": "Which tool for which job?",
+    "setup": "Three jobs arrive on one desk. Pick the tool for each from the limits on slide 6.",
+    "steps": [
+     "A thesis t-test on a survey with equal-probability sampling: the menus are correct, so use jamovi.",
+     "An NFHS estimate: it has weights, strata and clusters, which neither jamovi nor JASP handles. Use R survey, perhaps through Rj.",
+     "Cleaning 40 monthly files the same way: a menu does it once, so write a script."
+    ],
+    "answer": "jamovi for the t-test, R survey (or Stata svy) for NFHS, and a script for the 40 files."
+   },
+   "mistakes": [
+    "Reporting an unweighted NFHS menu result as a national estimate. The intervals are also too narrow because strata and clusters are ignored.",
+    "Leaving a 1/2 gender code as continuous, so the software averages it.",
+    "Skipping a first ten-minute walk through the interface before opening real data."
+   ],
+   "recall": [
+    {
+     "q": "Why are jamovi and JASP described as a gentle route into R?",
+     "a": "Syntax mode shows the R command behind each click, so you learn the function grammar while using menus."
+    },
+    {
+     "q": "Name two things a menu cannot do well.",
+     "a": "Any two of: complex survey design, large repeated pipelines, advanced econometrics, reproducibility across people."
+    },
+    {
+     "q": "Which file type holds data, analyses and options together in jamovi?",
+     "a": "The .omv file."
+    },
+    {
+     "q": "What does the measurement type control?",
+     "a": "Which analyses will accept the variable."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Getting Data In and Clean",
+   "big_idea": "Most wrong results start before the first test. **Type, label, filter and count** what is missing, and keep the raw file untouched.",
+   "in_plain_words": [
+    "Importing a file is a short list of checks: rows match interviews, columns match the questionnaire, IDs are unique, missing codes are declared and categorical levels have no stray spellings. Then every column gets a deliberate measurement type, because the type is the analysis's first assumption.",
+    "Cleaning is done with computed variables and filters, and each is a decision to record. Filters keep rows in the file and hide them from analysis, so you can report both the raw n and the analysed n. The weights problem sits at the end of the section: a menu cannot handle survey design."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Import",
+      "sub": "run the arrival checks"
+     },
+     {
+      "label": "Set types",
+      "sub": "and label the levels"
+     },
+     {
+      "label": "Compute and filter",
+      "sub": "write each formula down"
+     },
+     {
+      "label": "Count missing",
+      "sub": "declare codes, test attrition"
+     },
+     {
+      "label": "Check weights",
+      "sub": "a menu cannot apply design"
+     }
+    ],
+    "caption": "the order of a clean start"
+   },
+   "key_terms": [
+    {
+     "term": "Arrival checklist",
+     "meaning": "Rows, columns, unique IDs, missing codes and clean levels, checked on import."
+    },
+    {
+     "term": "Computed variable",
+     "meaning": "A new column from a formula, such as MEAN(d1, d2, d3, d4, d5)."
+    },
+    {
+     "term": "Filter",
+     "meaning": "A formula that keeps rows in the file but excludes them from analysis."
+    },
+    {
+     "term": "Listwise deletion",
+     "meaning": "Dropping any case missing a variable used in the model."
+    },
+    {
+     "term": "Case weight",
+     "meaning": "A per-case correction; jamovi accepts only integer frequency weights."
+    }
+   ],
+   "worked_example": {
+    "title": "A scale score with one item missing",
+    "setup": "Illustrative. A woman answers d1 to d4 as 2, 1, 2 and 1 and leaves d5 blank.",
+    "steps": [
+     "Add the four answers given: 2 + 1 + 2 + 1 = 6.",
+     "A plain sum of d1 to d5 would give her 6 or leave her out, which treats an absent item as zero or discards her.",
+     "MEAN() uses the available items: 6 ÷ 4 = 1.5.",
+     "State the minimum number of items you required, and check how many cases used the rule."
+    ],
+    "answer": "Mean 1.5 from four of five items; write the missing rule in the methods."
+   },
+   "mistakes": [
+    "Deleting rows to exclude bad values. The raw n and the analysed n must both be reportable, so filter and note it.",
+    "Replacing missing values with the mean. It is one click in some tools and it is wrong.",
+    "Opening an Excel file with merged headers or totals rows and expecting one row per case."
+   ],
+   "recall": [
+    {
+     "q": "Why filter instead of deleting rows?",
+     "a": "Filtered rows stay in the file, so both the raw n and the analysed n can be reported."
+    },
+    {
+     "q": "How do you check that IDs are unique?",
+     "a": "Run Descriptives with a Frequency table on the ID; any count above 1 is a duplicate."
+    },
+    {
+     "q": "What is the one missing-data analysis every evaluation needs?",
+     "a": "Whether children with no endline score differ at baseline from those who have one."
+    },
+    {
+     "q": "Why is the weights problem the biggest limit?",
+     "a": "Ignoring weights, strata and clusters gives population claims with intervals that are too narrow."
+    },
+    {
+     "q": "Which file should stay untouched?",
+     "a": "The raw data file, which is the audit trail."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Describing Data",
+   "big_idea": "Describe before you test. **Pick the summary and the plot to suit the shape**, and show whole distributions for ordinal items.",
+   "in_plain_words": [
+    "The Descriptives dialog gives you statistics, frequency tables and nearly every plot. Use it for a Table 1, for a data check and for deciding which test comes next. Mean and SD describe a symmetric variable, and median and IQR describe a skewed one such as savings in rupees.",
+    "Distributions deserve a look before any test. Shapiro-Wilk is read with the plot, since it rejects normality in large samples for harmless shapes. For Likert items, tables of percentages beat means, and for change over time a paired plot shows who gained."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Which summary fits?",
+    "children": [
+     {
+      "label": "Symmetric number",
+      "items": [
+       "Mean and SD",
+       "Histogram and Q-Q plot"
+      ]
+     },
+     {
+      "label": "Skewed number",
+      "items": [
+       "Median and IQR",
+       "Consider a log or rank test"
+      ]
+     },
+     {
+      "label": "Categories or Likert",
+      "items": [
+       "Frequency tables",
+       "Bar plot or stacked Likert"
+      ]
+     }
+    ],
+    "caption": "shape decides the summary"
+   },
+   "key_terms": [
+    {
+     "term": "Table 1",
+     "meaning": "A first table describing the sample, by arm, with a Missing column."
+    },
+    {
+     "term": "IQR",
+     "meaning": "The range between the 25th and 75th percentiles, reported with the median."
+    },
+    {
+     "term": "Shapiro-Wilk",
+     "meaning": "A normality test; read it with the Q-Q plot."
+    },
+    {
+     "term": "Row percentage",
+     "meaning": "Share within each row; use when the row variable explains."
+    },
+    {
+     "term": "Paired plot",
+     "meaning": "A line per child from baseline to endline."
+    }
+   ],
+   "worked_example": {
+    "title": "Row percentages by hand",
+    "setup": "Illustrative education by own income table from the SHG survey. Check the percentages in the 'Yes' column.",
+    "steps": [
+     "None: 62 ÷ 242 = 25.6%, shown as 26%.",
+     "Secondary: 84 ÷ 164 = 51.2%, shown as 51%.",
+     "Higher: 28 ÷ 46 = 60.9%, shown as 61%.",
+     "The gradient runs from about a quarter to three-fifths."
+    ],
+    "answer": "Own income rises with education from 26% to 61%."
+   },
+   "mistakes": [
+    "Putting p-values on a balance table for a randomised design. Differences are chance by construction.",
+    "Reporting only the mean of a Likert item, which a reader cannot picture.",
+    "Using Shapiro-Wilk alone to choose a test in a sample of hundreds."
+   ],
+   "recall": [
+    {
+     "q": "Which summary suits a skewed variable?",
+     "a": "Median and IQR, with the mean only alongside."
+    },
+    {
+     "q": "What does a Missing column in Table 1 do?",
+     "a": "It shows readers how many values are absent for each variable."
+    },
+    {
+     "q": "Why use a paired plot for before and after?",
+     "a": "It draws a line per child and shows whether the gain was general or concentrated."
+    },
+    {
+     "q": "What should you check before small gains among high scorers?",
+     "a": "Ceiling: a child at 95 cannot gain 20."
+    },
+    {
+     "q": "Which test goes with a contingency table of two categorical variables?",
+     "a": "The chi-square test of association, with Fisher's exact for small cells."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Comparing Groups",
+   "big_idea": "To estimate a programme, **compare the arms**, never one arm's before and after. Welch, ANCOVA and a named effect size cover most evaluations.",
+   "in_plain_words": [
+    "Pick the comparison from your question: two independent groups, the same people twice, three or more groups, adjustment for a covariate or repeated occasions. Welch's t-test and Welch's ANOVA are safe defaults, and assumption checks sit in tick-boxes. Report the difference and its interval before the p-value.",
+    "The commonest wrong analysis in NGO reports is a paired test on the treatment arm alone. It credits the programme with growth and practice. The effect is the difference between the two arms' changes, got from a change-score t-test or from ANCOVA, which is usually more precise."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Comparing groups",
+    "spokes": [
+     {
+      "label": "Independent t",
+      "sub": "Welch's by default"
+     },
+     {
+      "label": "Paired t",
+      "sub": "same people twice"
+     },
+     {
+      "label": "One-way ANOVA",
+      "sub": "3+ groups, post hoc"
+     },
+     {
+      "label": "Factorial ANOVA",
+      "sub": "the interaction row"
+     },
+     {
+      "label": "Repeated measures",
+      "sub": "Greenhouse-Geisser"
+     }
+    ],
+    "caption": "one menu, five questions"
+   },
+   "key_terms": [
+    {
+     "term": "Welch's t-test",
+     "meaning": "A t-test that does not assume equal variances."
+    },
+    {
+     "term": "Cohen's d",
+     "meaning": "Difference in SD units, a standardised effect size."
+    },
+    {
+     "term": "ANCOVA",
+     "meaning": "Comparing groups after adjusting for a covariate such as baseline."
+    },
+    {
+     "term": "Post hoc test",
+     "meaning": "Pairwise comparisons after a significant ANOVA, such as Tukey."
+    },
+    {
+     "term": "Sphericity",
+     "meaning": "Equal variances of all pairwise differences in repeated measures."
+    }
+   ],
+   "worked_example": {
+    "title": "The programme effect from two changes",
+    "setup": "Illustrative. The remedial arm gained 9.8 reading points and the control arm 3.1. Both paired tests are significant.",
+    "steps": [
+     "Remedial change: +9.8. Control change: +3.1.",
+     "The programme effect is the difference in changes: 9.8 − 3.1 = 6.7 points.",
+     "Check against the earlier decision-making comparison: 5.8 − 4.9 = 0.9 points on a 0 to 10 scale.",
+     "Test the 6.7 with a change-score t-test by arm, or use ANCOVA."
+    ],
+    "answer": "6.7 reading points, which the paired test alone does not estimate."
+   },
+   "mistakes": [
+    "Running a paired t-test on the treatment arm and calling the result the programme effect.",
+    "Testing the effect separately for girls and boys when the interaction was not significant.",
+    "Using a repeated measures ANOVA on data with attrition, which drops any child missing an occasion."
+   ],
+   "recall": [
+    {
+     "q": "Which t-test is the default and why?",
+     "a": "Welch's, because it does not assume equal variances and costs nothing."
+    },
+    {
+     "q": "What does the omnibus F not tell you?",
+     "a": "Which groups differ; the post hoc table does."
+    },
+    {
+     "q": "What effect size does the course prefer for ANOVA?",
+     "a": "ω², which is less biased than η²."
+    },
+    {
+     "q": "What is the model for a before-after-control design?",
+     "a": "ANCOVA of endline on arm with baseline as covariate."
+    },
+    {
+     "q": "What does a Greenhouse-Geisser tick do?",
+     "a": "It corrects for violated sphericity in repeated measures."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Correlation and Regression",
+   "big_idea": "A regression table is a recipe: **intercept, plus a coefficient per predictor**. Read units, check diagnostics, and match your verbs to the design.",
+   "in_plain_words": [
+    "Correlation comes with a scatter plot and an interval, never with a column of stars. Regression then adds predictors: the Estimate column gives the change in the outcome per unit, holding the others constant. Std. β compares predictors inside one model, and R² says how much variance the model explains.",
+    "Three ticks of diagnostics catch most problems. Factors are dummy-coded against a reference level you choose and name. Curves are handled with squares or logs. Whether a coefficient is causal depends on how the data were produced: the arm was randomised, but own income was not, and the dialog cannot tell."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Endline",
+      "hint": "predicted score"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "14.6",
+      "hint": "intercept"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "0.72 × baseline",
+      "hint": "per baseline point"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "6.6 if Remedial",
+      "hint": "programme effect"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Grade term",
+      "hint": "1.9 or 3.4 vs grade 3"
+     }
+    ],
+    "note": "illustrative coefficients from the endline regression"
+   },
+   "key_terms": [
+    {
+     "term": "Estimate",
+     "meaning": "The change in outcome, in its units, per unit of the predictor."
+    },
+    {
+     "term": "Std. β",
+     "meaning": "Change in SDs of the outcome per SD of the predictor."
+    },
+    {
+     "term": "Reference level",
+     "meaning": "The factor level every other level is compared with."
+    },
+    {
+     "term": "VIF",
+     "meaning": "Collinearity statistic; below 5, ideally below 3."
+    },
+    {
+     "term": "ΔR²",
+     "meaning": "The extra variance explained when a block of predictors is added."
+    }
+   ],
+   "worked_example": {
+    "title": "Predict a score from the model",
+    "setup": "Illustrative. Use the slide's coefficients for a grade 3 child with a baseline of 40 in the remedial arm. Grade 3 is the reference.",
+    "steps": [
+     "Baseline term: 0.72 × 40 = 28.8.",
+     "Add the intercept: 14.6 + 28.8 = 43.4, the control prediction.",
+     "Add the arm effect: 43.4 + 6.6 = 50.0.",
+     "The gap between the two predictions is the arm coefficient, 6.6."
+    ],
+    "answer": "Predicted endline 50.0 for remedial and 43.4 for control."
+   },
+   "mistakes": [
+    "Quoting p-values for a correlation matrix of twenty variables, which is a fishing net.",
+    "Reading 'controlling for' as proof of causation when the predictor was not randomised.",
+    "Reading a non-significant coefficient as no effect instead of reading its interval."
+   ],
+   "recall": [
+    {
+     "q": "What does a residual plot funnel mean and what is the fix?",
+     "a": "Heteroskedasticity; use sandwich standard errors in Rj or transform the outcome."
+    },
+    {
+     "q": "What problem does no diagnostic plot show?",
+     "a": "Clustering, which you know from the design."
+    },
+    {
+     "q": "What does the Model Builder add?",
+     "a": "Predictors in blocks, with R² change and its F-test."
+    },
+    {
+     "q": "Where is the peak of a square term?",
+     "a": "At −b1/(2b2), reported in the predictor's units."
+    },
+    {
+     "q": "Why show three regression columns?",
+     "a": "The arm coefficient barely moving shows randomisation worked; in observational work a shrinking coefficient shows confounding."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Categorical Outcomes",
+   "big_idea": "For yes-or-no outcomes, lead with **percentage points and the risk ratio**. The odds ratio overstates when the outcome is common.",
+   "in_plain_words": [
+    "A proportion is reported with its n and its interval. A chi-square on a two-way table tests association, and the row percentages and risk ratio say what it is. Small cells need Fisher's exact test, paired categories need McNemar, and layers show whether an effect held in every subgroup.",
+    "Logistic regression adds predictors, and its reportable result is a predicted probability. The odds ratio is bigger than the risk ratio when reading is common, so it must not be read as 'more likely'. Counts, rates and attrition tables round out the section."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Risk ratio",
+     "items": [
+      "62% ÷ 49% gives 1.27 here",
+      "Reads as 27% more likely",
+      "Use for policy readers"
+     ]
+    },
+    "right": {
+     "title": "Odds ratio",
+     "items": [
+      "1.70 for the same data",
+      "Overstates when common",
+      "Not a change in probability"
+     ]
+    },
+    "vs": "vs",
+    "caption": "the same table, two ratios"
+   },
+   "key_terms": [
+    {
+     "term": "Risk ratio",
+     "meaning": "The proportion in one group divided by the proportion in the other."
+    },
+    {
+     "term": "Odds ratio",
+     "meaning": "Ratio of odds; larger than the risk ratio when the outcome is common."
+    },
+    {
+     "term": "Fisher's exact",
+     "meaning": "A test for small expected counts in a 2×2 table."
+    },
+    {
+     "term": "McNemar",
+     "meaning": "A test for the same units measured twice on a yes-or-no outcome."
+    },
+    {
+     "term": "AUC",
+     "meaning": "Chance that a random reader ranks above a random non-reader."
+    }
+   ],
+   "worked_example": {
+    "title": "From counts to the three numbers",
+    "setup": "Illustrative reading table: 372 of 600 remedial children read a paragraph, and 294 of 600 control children.",
+    "steps": [
+     "Remedial share: 372 ÷ 600 = 62%.",
+     "Control share: 294 ÷ 600 = 49%.",
+     "Difference: 62 − 49 = 13 percentage points.",
+     "Risk ratio: 62 ÷ 49 = 1.27."
+    ],
+    "answer": "13 points, risk ratio 1.27; the odds ratio of 1.70 overstates."
+   },
+   "mistakes": [
+    "Reporting an odds ratio as '84% more likely' when the outcome is common.",
+    "Running a chi-square with expected counts of 2.",
+    "Writing 'some children could not be followed up' with no attrition table by arm."
+   ],
+   "recall": [
+    {
+     "q": "What is the risk ratio in the worked table?",
+     "a": "1.27."
+    },
+    {
+     "q": "What does McFadden's R² of 0.2 mean?",
+     "a": "It is good for that measure; it is not variance explained and should not be compared with linear R²."
+    },
+    {
+     "q": "Which model suits an ordinal outcome?",
+     "a": "The ordinal logistic (proportional odds) model."
+    },
+    {
+     "q": "What should a counts model include for exposure?",
+     "a": "An offset for exposure, such as days at risk."
+    },
+    {
+     "q": "What does the attrition table test?",
+     "a": "Whether loss differs by arm and whether lost children were weaker at baseline."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Scales and Factor Analysis",
+   "big_idea": "Before you sum items into a score, **check they belong together**: reliability, then structure, then a stated scoring rule.",
+   "in_plain_words": [
+    "Reliability analysis gives alpha and omega and the effect of dropping each item. Exploratory factor analysis uses parallel analysis to choose the number of factors, and confirmatory factor analysis tests that structure on the rest of the data. These three dialogs sit in the jamovi core.",
+    "Then choose a score. A mean of items is transparent, factor scores suit a regression in the same study, and sub-scales should be reported separately. If the survey ran in two languages, a split-by-language check shows which items need a second look, and item response theory handles items of unequal difficulty."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Reliability",
+      "sub": "alpha and omega"
+     },
+     {
+      "label": "EFA",
+      "sub": "parallel analysis, oblimin"
+     },
+     {
+      "label": "CFA",
+      "sub": "fit on the other half"
+     },
+     {
+      "label": "Check languages",
+      "sub": "split by language"
+     },
+     {
+      "label": "Score",
+      "sub": "mean of items, rule stated"
+     }
+    ],
+    "caption": "from items to a reported scale"
+   },
+   "key_terms": [
+    {
+     "term": "Omega (ω)",
+     "meaning": "Reliability allowing unequal loadings; prefer it when it differs from alpha."
+    },
+    {
+     "term": "Parallel analysis",
+     "meaning": "Compares eigenvalues with random data to choose factor count."
+    },
+    {
+     "term": "Oblimin",
+     "meaning": "A rotation that lets factors correlate."
+    },
+    {
+     "term": "CFI and RMSEA",
+     "meaning": "Approximate fit measures for CFA."
+    },
+    {
+     "term": "Invariance",
+     "meaning": "Whether items work the same way across groups or languages."
+    }
+   ],
+   "worked_example": {
+    "title": "What to do about item d5",
+    "setup": "Illustrative reliability output: α is 0.79 for five items, and α if d5 is dropped is 0.82. Its item-rest correlation is 0.31.",
+    "steps": [
+     "Gain from dropping d5: 0.82 − 0.79 = 0.03.",
+     "The item-rest correlation of 0.31 is the lowest of the five.",
+     "In the EFA d5 also has the lowest loading, 0.45.",
+     "Look at what the item asks. Keep it unless there is a reason, and say so."
+    ],
+    "answer": "Examine d5, keep it for comparability and report the choice."
+   },
+   "mistakes": [
+    "Deleting an item because 'alpha if dropped' rises, without looking at the item.",
+    "Using principal component analysis as if it were factor analysis for scale structure.",
+    "Splitting a score at the median into 'high' and 'low' without a meaningful threshold."
+   ],
+   "recall": [
+    {
+     "q": "Which rule chooses the number of factors?",
+     "a": "Parallel analysis."
+    },
+    {
+     "q": "What do KMO and Bartlett's tell you?",
+     "a": "Whether the items correlate enough to factor; KMO below 0.6 says stop."
+    },
+    {
+     "q": "What does a loading gap of 0.2 across languages suggest?",
+     "a": "An item to take back to the translators."
+    },
+    {
+     "q": "Why report sub-scales?",
+     "a": "A programme that moves one sub-scale is hidden by the total."
+    },
+    {
+     "q": "What is the module for item response theory?",
+     "a": "snowIRT or psychoPDA, installed from the jamovi library."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "The Modules: Beyond the Basics",
+   "big_idea": "Modules extend the menu. **Install GAMLj first**, because the clustered mixed model is the honest analysis for children in schools.",
+   "in_plain_words": [
+    "jamovi's library adds mixed models, mediation, structural equation models, meta-analysis, estimation plots, power analysis, item response theory and an R editor. Each appears as a new menu. The most useful for evaluations is GAMLj, which handles clusters, interactions and counts better than the core dialogs.",
+    "Modules make hard analyses easy to run and do not make them causal. Mediation here is consistent with a story, a meta-analysis still depends on your search, and Rj remains the escape hatch for weights, cluster-adjusted errors and imputation. Record module versions in your methods."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Which module?",
+    "children": [
+     {
+      "label": "Clusters and interactions",
+      "items": [
+       "GAMLj mixed model",
+       "GAMLj GLM with plots"
+      ]
+     },
+     {
+      "label": "Mechanisms",
+      "items": [
+       "jAMM mediation",
+       "SEMLj structural models"
+      ]
+     },
+     {
+      "label": "Other jobs",
+      "items": [
+       "MAJOR meta-analysis",
+       "Rj for weights and imputation"
+      ]
+     }
+    ],
+    "caption": "match the module to the question"
+   },
+   "key_terms": [
+    {
+     "term": "GAMLj",
+     "meaning": "Linear, generalized and mixed models with better defaults."
+    },
+    {
+     "term": "ICC",
+     "meaning": "Share of variance that lies between clusters."
+    },
+    {
+     "term": "jAMM",
+     "meaning": "Mediation and moderation with bootstrapped effects."
+    },
+    {
+     "term": "MAJOR",
+     "meaning": "Meta-analysis built on the metafor package."
+    },
+    {
+     "term": "Prediction interval",
+     "meaning": "Range likely for a new study's effect; the honest meta-analytic summary."
+    }
+   ],
+   "worked_example": {
+    "title": "Splitting a mediation effect",
+    "setup": "Illustrative jAMM output: a is 142 rupees, b is 0.21 per 100 rupees, and the direct effect c′ is 0.60.",
+    "steps": [
+     "Put a in the same units as b: 142 ÷ 100 = 1.42.",
+     "Indirect effect: 1.42 × 0.21 = 0.30.",
+     "Total effect: 0.30 + 0.60 = 0.90.",
+     "Share through savings: 0.30 ÷ 0.90 = 33%."
+    ],
+    "answer": "A third of the total runs through savings; the mediator was not randomised."
+   },
+   "mistakes": [
+    "Treating a mediation estimate as causal because the module produced it.",
+    "Analysing children in 40 schools as 1,200 independent cases and reporting the narrow interval.",
+    "Skipping the record of module versions, so a later update silently changes defaults."
+   ],
+   "recall": [
+    {
+     "q": "Why does the interval double in the mixed model?",
+     "a": "With 40 schools the effective sample for a school-level treatment is 40 schools, far fewer than 1,200 children."
+    },
+    {
+     "q": "What does an ICC of 0.13 say?",
+     "a": "13% of the variance in endline scores is between schools."
+    },
+    {
+     "q": "Which module is the single most useful to install?",
+     "a": "GAMLj."
+    },
+    {
+     "q": "What does the Rj module give you?",
+     "a": "An R editor inside jamovi for jobs the menus lack."
+    },
+    {
+     "q": "What does MAJOR not decide?",
+     "a": "Which studies to include and how to extract them."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Bayesian Analysis in JASP",
+   "big_idea": "A Bayesian analysis answers 'how big, and how likely' directly. It can **support the null**, and its price is a **stated prior**.",
+   "in_plain_words": [
+    "Bayesian methods start from a prior, update it with the data and report a posterior with a credible interval and a Bayes factor. A Bayes factor says how much more the data favour one hypothesis than another. Unlike a p-value it can show evidence for no effect, and it accumulates as data arrive.",
+    "The cost is that a prior must be chosen and reported. JASP's defaults suit psychology's larger effects, field effects are often small, and the robustness plot shows whether the conclusion depends on the prior. Report the classical result alongside, and use jsq if you want the same analyses inside jamovi."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "p-value",
+     "items": [
+      "Data this extreme if no effect",
+      "Cannot support the null",
+      "Needs no prior"
+     ]
+    },
+    "right": {
+     "title": "Bayes factor",
+     "items": [
+      "Evidence for one hypothesis over another",
+      "Can support the null",
+      "Prior must be stated"
+     ]
+    },
+    "vs": "vs",
+    "caption": "two answers to two questions"
+   },
+   "key_terms": [
+    {
+     "term": "Prior",
+     "meaning": "What effects you think plausible before seeing the data."
+    },
+    {
+     "term": "Posterior",
+     "meaning": "The updated range of credible effects after the data."
+    },
+    {
+     "term": "BF10",
+     "meaning": "Evidence for H1 over H0; BF01 is its reverse."
+    },
+    {
+     "term": "Credible interval",
+     "meaning": "A range holding the effect with 95% probability, given prior and data."
+    },
+    {
+     "term": "Robustness check",
+     "meaning": "Bayes factor across a range of prior widths."
+    }
+   ],
+   "worked_example": {
+    "title": "Reading Bayes factors",
+    "setup": "Use the labels on slide 74. Classify each result.",
+    "steps": [
+     "BF10 = 8: between 3 and 10, so moderate evidence for an effect.",
+     "BF10 = 45: between 30 and 100, so very strong evidence.",
+     "BF10 = 1.4: between 1 and 3, anecdotal, so the study was too small to tell.",
+     "BF01 = 4.2 for attendance: BF10 = 1 ÷ 4.2 = 0.24, moderate evidence of no difference."
+    ],
+    "answer": "Moderate, very strong, anecdotal and moderate evidence for the null."
+   },
+   "mistakes": [
+    "Treating the labels as thresholds. A BF of 2.9 and a BF of 3.1 are the same evidence.",
+    "Reporting a Bayes factor without its prior, which makes the analysis unreviewable.",
+    "Choosing the prior after seeing which gives the wanted answer."
+   ],
+   "recall": [
+    {
+     "q": "What is the default prior for a JASP t-test?",
+     "a": "A Cauchy on the standardised effect with scale 0.707."
+    },
+    {
+     "q": "What can a Bayes factor do that a p-value cannot?",
+     "a": "Support the null."
+    },
+    {
+     "q": "Why check robustness?",
+     "a": "To see whether the conclusion depends on the prior width."
+    },
+    {
+     "q": "What does BF10 of 1.4 tell you?",
+     "a": "The study was too small to tell."
+    },
+    {
+     "q": "When might you skip Bayes factors?",
+     "a": "When the question is how big; the credible interval is the answer."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Effect Sizes, Power and Reporting",
+   "big_idea": "Report **estimate, interval and effect size in the outcome's own units**, count your tests, and share the file.",
+   "in_plain_words": [
+    "An effect size should come in two forms: the outcome's own units for the reader, and a standardised value for comparison. Judge size against comparable programmes and their cost, since Cohen's benchmarks came from psychology. Intervals lead, p-values follow, and a wide interval is a finding about the study's size.",
+    "Power is decided before data collection with the smallest effect that matters, and clustered designs need the sample multiplied by the design effect. After the study, count your tests, correct within families, label exploratory results and copy numbers out of the software. A saved, annotated file makes the analysis reproducible."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "1",
+      "hint": "the base"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "(m − 1)",
+      "hint": "m is children per school"
+     },
+     {
+      "op": "×"
+     },
+     {
+      "t": "ICC",
+      "hint": "between-school share"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "Design effect",
+      "hint": "multiply required n"
+     }
+    ],
+    "note": "with m = 30 and ICC = 0.13 the design effect is about 4.8"
+   },
+   "key_terms": [
+    {
+     "term": "Design effect",
+     "meaning": "1 + (m − 1) × ICC; the factor by which clustering inflates the needed n."
+    },
+    {
+     "term": "Holm correction",
+     "meaning": "A step-down p-value adjustment as simple as Bonferroni but better."
+    },
+    {
+     "term": "Confidence interval",
+     "meaning": "The range of effects compatible with the data; a wide one means low precision."
+    },
+    {
+     "term": "Observed power",
+     "meaning": "A function of the p-value; adds nothing."
+    },
+    {
+     "term": "Exploratory analysis",
+     "meaning": "A result not pre-specified; label it as such."
+    }
+   ],
+   "worked_example": {
+    "title": "Power with clustering",
+    "setup": "Illustrative. A trial has 40 schools of 30 children and an ICC of 0.13. A simple design needs 394 per group for d = 0.2.",
+    "steps": [
+     "Children per school beyond the first: 30 − 1 = 29.",
+     "29 × 0.13 = 3.77.",
+     "Design effect: 1 + 3.77 = 4.77, about 4.8.",
+     "Effective information from 1,200 children: 1,200 ÷ 4.8 = 250.",
+     "Required n for d = 0.2: 394 × 4.8 = 1,891."
+    ],
+    "answer": "Design effect about 4.8; 1,200 children carry the information of about 250."
+   },
+   "mistakes": [
+    "Writing 'a medium effect (d = 0.42)' with no units a programme officer can use.",
+    "Computing 'observed power' after the study instead of reporting the interval.",
+    "Retyping numbers into the report, which creates mismatches between tables and text."
+   ],
+   "recall": [
+    {
+     "q": "Why lead with the interval?",
+     "a": "The p-value can be derived from it; the reverse is not possible."
+    },
+    {
+     "q": "What is the Holm adjustment?",
+     "a": "Rank the p-values, multiply the smallest by k, the next by k − 1, and so on."
+    },
+    {
+     "q": "What should a report declare before listing outcomes?",
+     "a": "A primary outcome."
+    },
+    {
+     "q": "What does the .omv file store?",
+     "a": "Data, analyses, options and annotations in one file."
+    },
+    {
+     "q": "What is the cure for the five misreadings?",
+     "a": "Write the result in words before reading the p-value."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Choosing Tools, Teaching and Practice",
+   "big_idea": "jamovi is the **starting point** and R the destination. Know the signs that tell you to move on, and keep every analysis reproducible.",
+   "in_plain_words": [
+    "Free tools cover most of what a thesis or evaluation needs. jamovi is best at cleaning and standard analyses, JASP at Bayes, gretl at econometrics and R at everything with a learning curve. SPSS is not needed for anything in this course, and students who learn a free tool keep it after graduation.",
+    "The signs for moving on are specific: weights and clusters, many files, panels, staggered difference-in-differences, time series, imputation and custom figures. A worked study then strings the whole course into eleven steps, and the pitfalls and reading lists tell you where to go next."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Beyond the menu",
+    "spokes": [
+     {
+      "label": "R survey",
+      "sub": "weights, strata, clusters"
+     },
+     {
+      "label": "Scripts",
+      "sub": "many files, one cleaning"
+     },
+     {
+      "label": "gretl or Stata",
+      "sub": "panels, time series"
+     },
+     {
+      "label": "R ggplot2",
+      "sub": "custom figures"
+     },
+     {
+      "label": "mice in Rj",
+      "sub": "multiple imputation"
+     }
+    ],
+    "caption": "what each sign points to"
+   },
+   "key_terms": [
+    {
+     "term": "gretl",
+     "meaning": "Free econometrics tool with menus."
+    },
+    {
+     "term": "Rj",
+     "meaning": "R editor inside jamovi."
+    },
+    {
+     "term": "Syntax mode",
+     "meaning": "The bridge from menu to code."
+    },
+    {
+     "term": "jamovi Cloud",
+     "meaning": "Browser version; check privacy terms before using participant data."
+    },
+    {
+     "term": "Reproducible file",
+     "meaning": "An annotated .omv or .jasp file shared with the data."
+    }
+   ],
+   "worked_example": {
+    "title": "Choose the next tool",
+    "setup": "Three needs arise in one evaluation. Use the table on slide 93.",
+    "steps": [
+     "A weighted national survey with strata and clusters: R survey via Rj or RStudio, or Stata svy.",
+     "The same cleaning on twenty files: an R or Python script.",
+     "Staggered difference-in-differences: R did or fixest, and Impact Evaluation 101.",
+     "A reviewer asks for code: export syntax mode or redo the work in R."
+    ],
+    "answer": "R survey, a script, did or fixest, and exported syntax."
+   },
+   "mistakes": [
+    "Treating the limits as a reason not to start in jamovi. Each is a reason the next course exists.",
+    "Changing the jamovi version mid-semester, which can change defaults.",
+    "Using Excel for inference, where errors travel silently."
+   ],
+   "recall": [
+    {
+     "q": "Which tool is the best teaching tool and which the destination?",
+     "a": "jamovi to teach, R as the destination."
+    },
+    {
+     "q": "Which tool suits econometrics with menus?",
+     "a": "gretl."
+    },
+    {
+     "q": "What is the argument for the desktop version with sensitive data?",
+     "a": "Files stay on the machine and nothing is uploaded."
+    },
+    {
+     "q": "What do weeks 11 and 12 of the teaching plan cover?",
+     "a": "Bayesian inference in JASP, then reporting, reproducibility and the edge."
+    },
+    {
+     "q": "Name two items from the reading list.",
+     "a": "For example Navarro and Foxcroft, Learning Statistics with jamovi, and Lakens, Improving Your Statistical Inferences."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "2": "Treat the agenda as a map of eleven stages, from getting data in to choosing tools. Skim it now, then **work the sections in order once**. Afterwards come back only to the stage your report needs, using the slide ranges listed here to jump straight to it.",
+  "4": "jamovi is the working tool and JASP appears when Bayes does. The sentence to hold on to is that **the numbers are R's numbers**, so a free menu gives you real results. Install jamovi before section 02 and keep the Navarro and Foxcroft textbook open beside you.",
+  "5": "Find your own row before reading on. The assumption that matters is statistical, since you need to know what a mean, a p-value and a regression coefficient are, and **you need no code at all**. If those three are shaky, take the two named courses first and return.",
+  "6": "Read this slide as a list of places to stop and switch tools. Of the four limits, **survey weights are the one that ruins published numbers**. If your data come from NFHS, PLFS or DHS, plan to estimate in R from the start and use jamovi only to explore and check.",
+  "7": "Spend ten minutes clicking around before you analyse anything. The detail that bites is the measurement type, because **it decides which analyses will accept a variable**. A 1/2 gender code left as continuous gets averaged, so set the type and labels first and remember results update live.",
+  "8": "Syntax mode turns every click into a lesson in R. Tick a box, watch the argument appear, and paste the call into your methods appendix as the record of what you ran. Reach for Rj when a job, such as a weighted estimate, is **beyond what the menus offer**.",
+  "9": "Use this table as a translation sheet if you arrive from SPSS. Each row pairs a menu you know with where it now lives. Notice the last column: **effect sizes and assumption checks sit inside the dialog**, so the extra steps you used to take mostly disappear.",
+  "10": "The ten stages follow the order of a real project: data in, describe, compare, relate, categorical outcomes, scales, modules, Bayes, report, practice. Every analysis slide then follows **one fixed pattern**, from question to report sentence. Learn to read one and you can read them all.",
+  "12": "Import is where later errors begin, so treat the arrival checklist as compulsory: rows against interviews, unique IDs, declared missing codes, clean levels. **Keep the raw file untouched** and save your work as a separate .omv, so you can always show where the numbers started.",
+  "13": "Keep these two tables open while you work through the course. One is a village-randomised survey of women and the other a school-randomised trial of children. Check each variable's type here, and remember **every output that follows is illustrative**, built on these shapes.",
+  "14": "Set types before anything else, because the type is the analysis's first assumption. A t-test refuses a nominal outcome, and a regression dummy-codes or contrasts a factor depending on its type. **Put the levels of ordinal variables in order** so every table reads left to right.",
+  "15": "Each computed variable records a decision. Write the formula into your methods, since jamovi already shows it in the column header. Two habits to copy: **say what you added** (the +1 for zeros) and use MEAN() with a stated minimum when scale items can be missing.",
+  "16": "Filter, never delete. A filter keeps the row in the file and drops it from every analysis, so you can report both the raw n and the analysed n. Filters also double as **thirty-second data-quality queries**, such as score drops over 30 points or savings above 20000.",
+  "17": "Count missingness before you model. Most analyses drop cases listwise, so six predictors can quietly shrink your n. The check every evaluation needs is **whether children with no endline differ at baseline**, which takes two clicks. Never fill a gap with the mean.",
+  "18": "This is the limit that produces wrong published numbers. A menu analysis of NFHS describes the sample, and its intervals are too narrow. **Explore in jamovi, estimate in R**: four lines of survey code in Rj fix it, and your report should say which estimates were weighted.",
+  "19": "Run this checklist before any test. Each row names the dialog that does the check, so it works as a recipe as well as a list. The closing line deserves attention: **every row has been skipped in a published report**, and the skipped row produced a wrong number.",
+  "21": "Learn the Descriptives dialog first, because everything later builds on it. Choose statistics to fit the job: a Table 1, a data check and a distribution decision each want a different set. **Mean and SD suit symmetric variables; median and IQR suit skewed ones** like savings.",
+  "22": "Read Table 1 as a balance check and a preview. The pre-treatment rows should match across arms, and here they do, while the outcome rows differ in the intended direction. **Do not put p-values on a balance table** for a randomised design, because one in twenty will come up significant by chance.",
+  "23": "Choose the plot from the question you are asking. Work down the first column: shape, outliers, normality, categories, relationships, means with uncertainty. Tick Data points on a box plot to see every case, and **pick one theme and keep it across the whole report**.",
+  "24": "Look at a histogram of every outcome, split by group, before choosing a test. **Read Shapiro-Wilk together with the plot**, because with 640 women it rejects normality for harmless shapes. What counts for t-tests is the sampling distribution of the mean, which settles near normal above about 30 per group.",
+  "25": "Show the full distribution of an ordinal item as well as its mean. The slide's example makes the point: a mean of 1.38 hides **50% deciding alone against 32%**. Draw one stacked bar per item, ordered by the top level, and sum items into a scale only after section 07 supports it.",
+  "26": "Choose row percentages when the row variable is the explanatory one, and say which you used. Read the education gradient down the rows, from **26% rising to 61%**. The chi-square says the gradient is not chance and the percentages say what it is. Check expected counts before trusting the test.",
+  "27": "Describe change per arm in three numbers: baseline mean, endline mean and the change with its SD. A paired plot then shows who gained. Two warnings come with it: **a child near 95 cannot gain 20**, and children chosen for being low will rise anyway, so only the control arm protects you.",
+  "29": "Use the decision table by finding your question in the first column and reading across to outcome and groups. The closing note is the one to remember: for a before-after-control design **ANCOVA is usually the right analysis**, ahead of the paired test on change scores.",
+  "30": "Work the dialog in order: tick Welch's, ask for the mean difference with its interval, add d, and switch on the assumption checks. Then write the sentence with the difference first. **The interval carries the finding**, p confirms it is not chance, and d gives its size. Mention clustering in the limitations.",
+  "31": "Treat this table as a repair guide, with a named fix beside each failed assumption. The habit to adopt is **Welch's test every time**, since it costs nothing. Independence is a fact about the design, so you know about village or school clustering from how the data were collected.",
+  "32": "A paired test on the treatment arm alone picks up growth and practice effects as well as the programme. The programme effect is the difference between the two changes, **6.7 points here**. Get it with a change-score t-test or ANCOVA, and keep the paired test for descriptive questions.",
+  "33": "Report the omnibus F together with the post hoc table, since F only says that something differs. Read the table row by row: the primary-versus-none gap is small and the higher gaps are clear. Choose ω² as the effect size and use the **marginal means plot as your figure**.",
+  "34": "The interaction row is the question in this slide. If it is not significant, report the main effects and stop, without testing girls and boys separately, which invites a chance finding. **Pre-specify the one subgroup that matters**, because eight interactions will throw up one 'significant' result by luck.",
+  "35": "Repeated measures show the shape of change over time, which a two-wave design cannot. Keep the data wide, correct for sphericity with one tick, and read the time × arm interaction as the programme effect. **Collecting a midline** is what revealed the effect arriving in the second half of the year.",
+  "36": "Choose a non-parametric test for a reason: an ordinal outcome, a small skewed sample, or outliers that dominate. A significant Shapiro-Wilk in 600 people alone does not justify the switch. **State in words what the test asks**, give medians beside it, and consider a t-test on the log for money.",
+  "37": "Build every outcome row with the same columns: groups with n, difference with its interval, test, effect size. This sameness lets a reader scan down the table. Look at the attendance row, where the interval **crosses zero**. Add a note about school clustering if you did not run the mixed model.",
+  "39": "Plot before you read r. Report r with its interval, since with 1,200 cases everything is 'significant' and the p-value adds little. Anscombe's quartet is the warning: **four shapes can share one r**. Pick the few correlations your question needs and write 'associated with'.",
+  "40": "Read the output in three moves: the arm row is the programme effect, baseline is the strongest predictor, and R² says how much of endline the model explains. This is ANCOVA in regression form, so **adjusting for baseline sharpens the interval**. Copy the sentence structure from the slide.",
+  "41": "Run three ticks every time: residual plot, Q-Q plot and collinearity. Use the table as a lookup from symptom to fix. The slide names the two common problems in evaluation data. Floor effects show in a plot, while **clustering shows in no plot**, so you know it only from the design.",
+  "42": "Choose the reference level to match the comparison and name it in the table note. With 'None' as reference for education, each coefficient reads as a gain over no schooling. Use Model Builder to see the **R² change when the programme arm enters**, which is the hierarchical regression a thesis expects.",
+  "43": "Read Estimate in the outcome's units and treat Std. β as a comparison inside one model. The observational paragraph holds the key idea: membership was randomised and own income was not, yet **the dialog cannot tell the difference**. Choose your verbs to match the design.",
+  "44": "Look at a scatter with a smooth line before deciding the model's shape. If it bends, add a square or switch to a log outcome. Whichever you choose, **say how you handled zeros**, and compute a square term's peak in the predictor's own units. If neither fits, a threshold may be the truth.",
+  "45": "Present three models side by side. The row to watch is the arm coefficient moving only from 6.7 to 6.6, which is what randomisation predicts. In observational work, **a coefficient that shrinks when you add a control** shows confounding. Prefer intervals to stars.",
+  "47": "Report a proportion with its n and its interval. The test against an arbitrary value matters less than the interval itself. A 0/1 variable set as continuous gives the proportion and its CI by group in one step, and **goodness-of-fit against census shares** works as a representativeness check.",
+  "48": "Lead with the percentage-point difference and the risk ratio. Cramer's V of 0.13 looks small, yet a 13-point gain in reading is large for policy. **The odds ratio of 1.70 overstates** the 1.27 risk ratio because the outcome is common, so never read it as 'more likely'.",
+  "49": "Check expected counts before trusting a chi-square, and switch to Fisher's exact when cells are small. Use Layers to show a result in every grade, and watch for Simpson's paradox, where a pooled association **reverses within each layer**. McNemar handles the same child before and after.",
+  "50": "Report predicted probabilities, since nobody thinks in odds. Use the estimated marginal means: 63% against 48% at the mean baseline. **The odds ratio of 1.84 exceeds the risk ratio** because reading is common, so avoid '84% more likely'. Add AUC to show how well the model discriminates.",
+  "51": "The coefficient is a log odds, the odds ratio is a step on the way, and the reportable result is a predicted probability at set values. McFadden's R² of 0.2 is good, so **do not compare it with a linear R²**. For a Likert outcome use the ordinal model.",
+  "52": "Counts need their own models, because linear regression gives negative predictions. Install GAMLj for Poisson or negative binomial, with an offset for exposure, and expect overdispersion. Read a rate ratio as **a percentage more events** per unit of exposure. A bounded score with piles at both ends needs a plot.",
+  "53": "Build this table in every evaluation. Equal attrition by arm is the first test and the baseline gap between lost and retained children is the second. **Equal loss and weaker leavers** means the arm comparison is safe while the endline level is overstated. It costs three dialogs and most reports omit it.",
+  "54": "Use the middle column as a template for each result type and the last as the habit to drop. The pattern matches section 04: estimate and interval first, test second, effect size in usable units. **For categorical outcomes the usable unit is the percentage point.** Show counts beside percentages.",
+  "56": "Scan the table for the item whose removal raises reliability. Item d5 does, but treat that as **a reason to look at the item**, then decide. Report ω over α when they differ, since α assumes equal loadings. With three-category items, raw-score reliability understates the ordinal version.",
+  "57": "Let parallel analysis choose the number of factors, and check KMO and Bartlett's before you start. Use oblimin when factors may correlate. The illustrative result confirms the designed structure, with d5 and a1 flagged for discussion. **Split your sample**: EFA on a pilot or half, CFA on the rest.",
+  "58": "Judge CFA fit by the approximate measures. The exact-fit chi-square rejects at n = 640, as the slide expects, so read CFI, TLI, RMSEA and SRMR instead. For three-category items **move to SEMLj for the ordinal estimator**. Export the path diagram as SVG for the report.",
+  "59": "Pick the score that suits its use. A mean of items is transparent and comparable, so it is right for most reports. Factor scores fit a regression within this study only. **Report each sub-scale**, because a programme that moves mobility and not decision-making is hidden by a total.",
+  "60": "Run the split-by-language check before comparing scores across languages. It costs one tick. Compare loadings by eye: **a gap of 0.2 sends an item back** to the translators and the interview notes, as d3 does here at 0.72 against 0.51. The formal invariance sequence needs SEMLj or lavaan.",
+  "61": "Use IRT when items differ sharply in difficulty, as in a reading test that runs from letters to paragraphs. A child who reads the paragraph has answered the easier items too, so a plain sum **treats unequal items as equal**. The module also checks differential item functioning by language or sex.",
+  "62": "Copy this paragraph pattern for any scale: items, range, missing rule, reliability, structure evidence and caveats. The table adds the sub-scales. **Say what you did about the weak item** (d5 kept for comparability) and report where the languages differ. A methods reviewer will check each element.",
+  "64": "Install modules for a need. GAMLj comes first, since it covers mixed models and generalized linear models, and the rest follow the question. **Record every module version** in your methods, because updates change defaults. Each module appears as a new menu under Analyses.",
+  "65": "This slide shows why clustering matters. The estimate barely moves, from 6.6 to 6.5, yet **the interval doubles in width**, because 40 schools and not 1,200 children carry a school-level treatment. Read the ICC of 0.13 as the share of variance between schools, and report this interval.",
+  "66": "Treat mediation output as consistent with a story and never as proof. The indirect path of 0.30 is a third of the total of 0.90. Because the mediator was not randomised, **write 'consistent with partial mediation'**. For a paper, rerun it in SEMLj or lavaan with clustering handled.",
+  "67": "A meta-analysis here is a form on top of metafor. You supply one row per study, choose random effects and read the forest plot. Prefer the **prediction interval** as the honest summary. The software cannot decide which studies belong, so searching and screening remain the real work.",
+  "68": "SEMLj offers two doors into lavaan: type syntax, or draw the paths. Choose the syntax box if you have followed SEM 101, since its worked model runs as written. **Clustering is unavailable in the dialog**, so use lavaan in Rj for that. The multigroup panel handles invariance.",
+  "69": "Use GAMLj's GLM whenever the model has an interaction or a cluster. Its centred covariates and simple slopes answer 'does it work better for children who started lower?' The illustrative effect is **9.1 points at one SD below and 4.1 above**. Core dialogs are for learning, GAMLj for reports.",
+  "70": "Keep this table as your escape hatch. Each row is one job the menus cannot do, done in a few lines of R on the loaded data. The first row answers section 02's weights problem. **It is still code and it is still required**, so install packages in the R that jamovi uses.",
+  "72": "Get the idea before the software. A Bayes factor of 8 for the null is evidence for no effect, which a p-value can never give, and a credible interval says what people hoped a confidence interval said. **The price is stating a prior**, so say what it is.",
+  "73": "Read the three plots in order: prior and posterior show the shift, robustness shows whether the prior mattered, and sequential shows how evidence built up. Here BF10 is extreme and the effect is credibly 0.25 to 0.57 SD. **Quote the Bayes factor and the interval together** in one sentence.",
+  "74": "Treat the labels as descriptions, since a BF of 2.9 and a BF of 3.1 are the same evidence. Always state whether you report BF10 or BF01. The distinctive use is the null: **BF01 of 4.2 on attendance** gives moderate evidence of no difference. A BF near 1 says the study was too small.",
+  "75": "Use the Bayesian versions to ask which effects the data support. In ANOVA read the inclusion Bayes factor for each effect: **0.2 for the interaction says leave it out**, which says more than p = .44. Run classical and Bayesian versions side by side for the primary outcome.",
+  "76": "The defaults suit psychology's larger effects, and field effects are often small. State the prior every time and consider a narrower scale. **Choose the prior before you see the data**; the robustness plot shows you did not shop for an answer. If your question is how big, the credible interval alone will do.",
+  "77": "Use this table as a checklist when writing up a Bayesian result. The element that makes or breaks review is the prior: **without it the analysis cannot be reviewed**. Add the classical result beside it for readers who expect one, and describe evidence with the labels without treating them as thresholds.",
+  "78": "If your workflow already lives in jamovi, install jsq and run the same Bayesian analyses there. Choose JASP when the Bayesian result is the main event. The checklist is identical either way. With jsq, **cleaning and modules stay in one window**, which is its convenience.",
+  "80": "Use this table to choose an effect size for each analysis and to know its caveats. Ticking the box is easy; the discipline is **leading with the outcome's own units** (6.6 points, 13 percentage points, Rs 150) before standardised values. Say which d you used, since paired and independent d differ.",
+  "81": "Cohen's benchmarks came from a different setting, so compare instead with what similar programmes achieve and at what cost. Translate each effect into something concrete and use the interval's lower bound as the conservative reading. **'A medium effect' tells a programme officer nothing**; '0.9 points, a fifth of a schooling gap' does.",
+  "82": "Run power before collecting data, using the smallest effect that would matter. For clustered designs multiply by the design effect: 1 + (30 − 1) × 0.13 gives 4.8, so **1,200 children carry the information of about 250**. Skip 'observed power' after the study and report the interval.",
+  "83": "Lead with the interval, because the p-value can be derived from it and the reverse is impossible. Read width as precision and position as the estimate. A wide interval is a finding about the study's size. To compare two groups, **test the difference**, since overlapping intervals can still differ significantly.",
+  "84": "Count your tests before you report them. An honest report declares one primary outcome, corrects the rest within a family and uses Holm, which is as simple as Bonferroni and better. **Label unplanned subgroup findings as exploratory**, and test the interaction before claiming a subgroup differs.",
+  "85": "Match each misreading to its cause in the middle column. The pattern is that the dialog shows p first and largest, which tempts people to read it as effect. **Write the result in words before you look at the p-value.** That is the slide's cure, and it costs one sentence.",
+  "86": "Make the .omv file your audit trail. Annotate each analysis with its purpose and conclusion, record jamovi and module versions in the first annotation, and export the syntax. Share the file with the data. **A reviewer who can reopen your analysis** has reason to trust the table.",
+  "87": "Copy numbers out of the software and never retype them, because retyping causes the mismatches between tables and text that referees find. Choose SVG or PDF for print and PNG at 300 dpi for Word. **JASP's LaTeX export is the cleaner one**, according to the table.",
+  "88": "Use the seven steps as your results outline. Lead with the primary estimate and interval in units, then group the secondary outcomes into one table with a count or adjustment. **Label exploratory work as exploratory.** Allow two days for an evaluation this size, the first spent on data checking.",
+  "89": "Read this paragraph once for the order of its information and once against the misreadings slide. It gives the estimate before the test, the unit before the SD, the cluster-adjusted interval, a pre-specified interaction and **a null result stated as a finding**. Swap in your numbers and keep the sequence.",
+  "90": "Print the checklist and use it as your last pass. The first group applies to every result and the second to the whole report. The lines most often missing are the **n after filters** and the count of secondary outcomes. Tick a line only when you can point to where it appears in the text.",
+  "92": "Treat this as a map of tools by purpose. jamovi is the teaching tool and R the destination, JASP leads on Bayes and gretl suits econometrics. **Excel errors travel silently**, as the table warns, so keep it for quick descriptives. SPSS is not needed for anything in this course.",
+  "93": "Learn the signs that tell you to move on: weights, repeated cleaning, panels, staggered difference-in-differences, time series, imputation, publication figures. **None is a reason to avoid starting in jamovi.** Each points to the next course. If a reviewer asks for code, export the syntax first.",
+  "94": "Take this as a template for a twelve-week course, with one piece of the final report assessed each week. Note the order: data first, then single comparisons, then regression, categorical outcomes, scales, clustering and Bayes. **Week 12's assessment is the whole report**, so every earlier week builds toward it.",
+  "95": "Use this slide to make the case for adoption. Install is one download, offline, with no licence. Fix the version for a course. For sensitive survey data **prefer the desktop version**, since files stay on the machine. The strongest argument comes last: students keep the tool after they graduate.",
+  "96": "Follow the eleven steps as a model project. Look at the primary estimate: the cluster-adjusted effect of 0.85 is smaller and less precise than the naive 0.90, and **it is the one to report**. The last column tells you which section to revisit for each step.",
+  "97": "Use this as a final checklist of habits. Each row names the section that taught the fix. The first three concern data, and the two to underline for evaluations are **ignored clustering and a paired test on one arm**. Read it once more before you submit anything.",
+  "98": "Choose one or two sources and match them to the notes column. Start with Navarro and Foxcroft for the dialogs and Lakens for the logic of p-values, power and equivalence. Add Van Doorn when you reach Bayes. **Match the resource to the section** you are working in.",
+  "99": "Use the summary as a one-page revision. Two lines carry the most weight: compare arms, and write the sentence before reading the p-value. **Set types, filter, plot, then lead with the interval.** Reread the slides for any line that surprises you."
+ }
+}

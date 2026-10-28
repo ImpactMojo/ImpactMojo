@@ -2845,10 +2845,11 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 
     window.removeMember = async function(memberId) {
         if (!confirm('Remove this member from your organization?')) return;
-        await supabaseClient
+        var removal = await supabaseClient
             .from('organization_members')
             .update({ status: 'removed' })
             .eq('id', memberId);
+        if (removal.error) { alert('Could not remove this member: ' + removal.error.message); return; }
         await loadMembers();
         updateStats();
     };
@@ -3911,6 +3912,6 @@ body.dark-mode .v3-paper-plane { opacity: 0.10; }
 <script src="/js/search.js?v=a8b15de1" defer></script>
 <script defer src="js/auto-refresh.js"></script>
 <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
-  <script src="/js/site-chrome.js?v=a9cd2d67" defer></script>
+  <script src="/js/site-chrome.js?v=e5076886" defer></script>
 </body>
 </html>
