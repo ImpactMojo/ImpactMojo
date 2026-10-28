@@ -25,7 +25,7 @@ python3 scripts/notebooklm-manage.py add-source media https://www.bond.org.uk/re
 python3 scripts/notebooklm-manage.py add-source media https://www.videovolunteers.org
 python3 scripts/notebooklm-manage.py add-source media https://this.org/2011/12/01/admitting-failure/
 python3 scripts/notebooklm-manage.py add-source media https://global.oup.com/academic/product/the-goldilocks-challenge-9780199366088
-python3 scripts/notebooklm-manage.py add-source media https://issuu.com/ewb-isf/docs/ewb_failure_report_english
+python3 scripts/notebooklm-manage.py add-source media https://web.archive.org/web/20230306014527/https://issuu.com/ewb-isf/docs/ewb_failure_report_english
 python3 scripts/notebooklm-manage.py add-source media https://www.admittingfailure.org/
 python3 scripts/notebooklm-manage.py add-source media https://www.wiley.com/en-us/The+Fearless+Organization%3A+Creating+Psychological+Safety+in+the+Workplace+for+Learning%2C+Innovation%2C+and+Growth-p-9781119477266
 python3 scripts/notebooklm-manage.py add-source media https://ruralindiaonline.org/en/
@@ -79,7 +79,7 @@ python3 scripts/notebooklm-manage.py add-source media https://www.comminit.com
 - https://www.videovolunteers.org
 - https://this.org/2011/12/01/admitting-failure/
 - https://global.oup.com/academic/product/the-goldilocks-challenge-9780199366088
-- https://issuu.com/ewb-isf/docs/ewb_failure_report_english
+- https://web.archive.org/web/20230306014527/https://issuu.com/ewb-isf/docs/ewb_failure_report_english
 - https://www.admittingfailure.org/
 - https://www.wiley.com/en-us/The+Fearless+Organization%3A+Creating+Psychological+Safety+in+the+Workplace+for+Learning%2C+Innovation%2C+and+Growth-p-9781119477266
 - https://ruralindiaonline.org/en/

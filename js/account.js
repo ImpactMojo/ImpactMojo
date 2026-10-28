@@ -328,14 +328,19 @@
       linkEl.textContent = 'LinkedIn Profile';
     }
 
-    if (profile.interests) {
-      var tags = profile.interests.split(',').map(function(s) { return s.trim(); }).filter(Boolean);
-      if (tags.length > 0) {
-        document.getElementById('detailInterests').style.display = '';
-        document.getElementById('detailInterestsTags').innerHTML = tags.map(function(t) {
-          return '<span class="interest-tag">' + t + '</span>';
-        }).join('');
-      }
+    // profiles.interests is a text[] column. Older code stored a comma string,
+    // so read either shape.
+    var tags = interestsToList(profile.interests);
+    if (tags.length > 0) {
+      document.getElementById('detailInterests').style.display = '';
+      var tagBox = document.getElementById('detailInterestsTags');
+      tagBox.textContent = '';
+      tags.forEach(function (t) {
+        var span = document.createElement('span');
+        span.className = 'interest-tag';
+        span.textContent = t;
+        tagBox.appendChild(span);
+      });
     }
 
     // Form fields
@@ -348,7 +353,7 @@
     document.getElementById('editBio').value          = profile.bio || '';
     document.getElementById('editPhone').value        = profile.phone || '';
     document.getElementById('editAddress').value      = profile.address || '';
-    document.getElementById('editInterests').value    = profile.interests || '';
+    document.getElementById('editInterests').value    = interestsToList(profile.interests).join(', ');
 
     // Subscription display
     var tier      = profile.subscription_tier || 'explorer';
@@ -438,6 +443,7 @@
             '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' +
             '<div style="flex:1;"><div style="font-weight:500;font-size:0.9rem;">' + (cert.course_name || cert.course_id) + '</div>' +
             '<div style="font-size:0.75rem;color:var(--text-muted);">Issued ' + date + ' &middot; #' + cert.certificate_number + '</div></div>' +
+            '<a href="/certificate.html?cert=' + encodeURIComponent(cert.certificate_number) + '" target="_blank" style="font-size:0.75rem;color:var(--accent-color);white-space:nowrap;">Certificate</a>' +
             '<a href="' + linkedInUrl + '" target="_blank" rel="noopener" style="font-size:0.75rem;color:var(--accent-color);white-space:nowrap;">Add to LinkedIn</a>' +
             (cert.verification_url ? '<a href="' + cert.verification_url + '" target="_blank" style="font-size:0.75rem;color:var(--accent-color);">Verify</a>' : '') +
             '</div>';
@@ -594,7 +600,7 @@
           bio: document.getElementById('editBio').value.trim(),
           phone: document.getElementById('editPhone').value.trim(),
           address: document.getElementById('editAddress').value.trim(),
-          interests: document.getElementById('editInterests').value.trim()
+          interests: interestsToList(document.getElementById('editInterests').value)
         };
         var result = await ImpactMojoAuth.updateProfile(updates);
         if (result.success) { showAlert('Profile updated successfully!', 'success'); updatePageData(); }
@@ -638,6 +644,14 @@
   // =========================================================================
   // PROFILE HELPERS
   // =========================================================================
+
+  // The interests column is text[]. Sending the comma-separated string the form
+  // holds fails in Postgres with "malformed array literal", which made every
+  // profile save fail, so convert to a list before writing and after reading.
+  function interestsToList(value) {
+    var parts = Array.isArray(value) ? value : String(value || '').split(',');
+    return parts.map(function (s) { return String(s).trim(); }).filter(Boolean);
+  }
 
   function _showDetailIf(wrapperId, textId, value) {
     var wrapper = document.getElementById(wrapperId);

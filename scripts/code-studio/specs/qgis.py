@@ -446,7 +446,7 @@ PAGE = {
          "blocks": [
              {"t": "p", "html": "Maps of India that show the national or state boundaries carry an extra "
                                 "requirement. The Department of Science and Technology's " +
-                                link("https://dst.gov.in/sites/default/files/Final%20Approved%20Guidelines%20on%20Geospatial%20Data.pdf",
+                                link("https://geospatial.dst.gov.in/Guidelines.aspx",
                                      "Guidelines for acquiring and producing Geospatial Data and Geospatial Data "
                                      "Services including Maps") + " (F.No.SM/25/02/2020 (Part-I), dated 15 February "
                                 "2021) say in paragraph xiii:"},

@@ -12,25 +12,14 @@
  *   node scripts/impactlex-ai-rewrite.mjs --limit 5          # rewrite first 5 seed terms
  *   node scripts/impactlex-ai-rewrite.mjs --only attribution,theory-of-change
  *   node scripts/impactlex-ai-rewrite.mjs --provider grok
- *   node scripts/impactlex-ai-rewrite.mjs --push             # also push drafts to InstantDB
  *
  * Env (one of these must be set):
  *   GEMINI_API_KEY, GROK_API_KEY, DEEPSEEK_API_KEY
- * For --push:
- *   INSTANTDB_APP_ID, INSTANTDB_ADMIN_TOKEN
  */
 
 import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createHash } from 'node:crypto';
-
-/** Same deterministic UUID derivation used by the migration script. */
-function slugToUuid(slug, namespace = 'impactlex') {
-  const h = createHash('sha256').update(`${namespace}:${slug}`).digest('hex');
-  const variant = (parseInt(h.slice(16, 17), 16) & 0x3 | 0x8).toString(16);
-  return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-${variant}${h.slice(17, 20)}-${h.slice(20, 32)}`;
-}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -193,31 +182,6 @@ function parseJsonResponse(raw) {
   }
 }
 
-// ─── InstantDB push ────────────────────────────────────────────────────────
-
-async function pushDrafts(terms) {
-  const appId = process.env.INSTANTDB_APP_ID;
-  const token = process.env.INSTANTDB_ADMIN_TOKEN;
-  if (!appId || !token) throw new Error('--push requires INSTANTDB_APP_ID and INSTANTDB_ADMIN_TOKEN');
-  const endpoint = 'https://api.instantdb.com/admin/transact';
-  for (let i = 0; i < terms.length; i += 50) {
-    const chunk = terms.slice(i, i + 50);
-    const steps = chunk.map((t) => {
-      const slug = t.id;
-      const uuid = slugToUuid(`terms:${slug}`);
-      const { id, ...rest } = t;
-      return ['update', 'terms', uuid, { ...rest, slug }];
-    });
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}`, 'App-Id': appId, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ steps }),
-    });
-    if (!res.ok) throw new Error(`push ${res.status}: ${await res.text()}`);
-    console.log(`[push] ${i + chunk.length}/${terms.length}`);
-  }
-}
-
 // ─── Main ──────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -273,11 +237,6 @@ async function main() {
 
   writeFileSync(SNAPSHOT, JSON.stringify(snapshot, null, 2));
   console.log(`[ok] rewrote ${drafts.length} terms → ${SNAPSHOT}`);
-
-  if (hasFlag('--push') && drafts.length) {
-    await pushDrafts(drafts);
-    console.log(`[ok] pushed ${drafts.length} drafts to InstantDB`);
-  }
 }
 
 main().catch((err) => { console.error(err); process.exit(1); });

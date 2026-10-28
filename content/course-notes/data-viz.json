@@ -1,0 +1,1206 @@
+{
+ "slug": "data-viz",
+ "intro": "Read the deck for the rules and these notes for the reasons behind them. Each note explains why a slide matters, gives you a way to remember it and warns where charts go wrong. Work the examples in pencil, answer the recall questions cold, and test the rules on a chart you made last month.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "What a Chart Is For",
+   "big_idea": "A chart is an argument before it is decoration. **Say its claim in one sentence**, and know who has to read it.",
+   "in_plain_words": [
+    "Every chart makes a point, such as this went up, this group is worse off, or these two move together. A good chart lets the reader see that point faster than a paragraph. A bad one hides it or makes a point the data does not support. Writing the claim first usually gives you the title, and the claim tells you which design choices to make.",
+    "Pictures work because the eye finds patterns a table hides. Anscombe's quartet shows four datasets with the same summary statistics and very different shapes. Yet not every number needs a chart. **Reach for a chart when shape or comparison is the message**, and for a sentence when one value matters. The reader decides the form: you exploring, a team explaining, the public persuading."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Reach for a chart when",
+     "items": [
+      "You compare many values at once",
+      "The shape or trend is the message",
+      "You want the reader to explore",
+      "Gaps and outliers carry meaning"
+     ]
+    },
+    "right": {
+     "title": "Reach for a number when",
+     "items": [
+      "Only one value matters",
+      "The precise figure is the message",
+      "You want one fact remembered",
+      "The audience will quote the exact value"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Anscombe's quartet",
+     "meaning": "Four datasets with near-identical statistics and different shapes."
+    },
+    {
+     "term": "Datasaurus Dozen",
+     "meaning": "Very different pictures sharing means, variances and correlation."
+    },
+    {
+     "term": "Claim",
+     "meaning": "The one-sentence point a chart exists to make."
+    },
+    {
+     "term": "Honest",
+     "meaning": "Visual proportions match the numbers."
+    },
+    {
+     "term": "Focused",
+     "meaning": "One chart makes one point."
+    },
+    {
+     "term": "Exploration chart",
+     "meaning": "A rough, fast chart made for the analyst's own use."
+    }
+   ],
+   "worked_example": {
+    "title": "Chart, number or table?",
+    "setup": "Use the deck's situation table to decide the form for four situations.",
+    "steps": [
+     "One value carries the message, such as 63% of rural households with piped water: use a number in a sentence.",
+     "Twelve values compared, or the shape is the finding: use a chart.",
+     "The precise figure will be quoted onward: use a number.",
+     "Readers will look up their own row: use a table."
+    ],
+    "answer": "Number, chart, number, table."
+   },
+   "mistakes": [
+    "Showing an exploration chart to the public. It was never redrawn for readers who lack the analyst's knowledge.",
+    "Charting three numbers. It takes a quarter page and is slower than the sentence it replaces.",
+    "Trusting a summary statistic without plotting the data. Different shapes can share the same mean and correlation.",
+    "Putting two findings in one frame. If a chart makes three points, split it."
+   ],
+   "recall": [
+    {
+     "q": "What are the four tests of a good chart?",
+     "a": "Honest, clear, sourced and focused."
+    },
+    {
+     "q": "Which of the four cannot be traded off?",
+     "a": "Honesty: the visual proportions must match the numbers."
+    },
+    {
+     "q": "What does Anscombe's quartet show?",
+     "a": "Four datasets with nearly identical means, variances and correlation that look completely different when plotted."
+    },
+    {
+     "q": "When should you not make a chart?",
+     "a": "With two or three numbers, no real variation, too little data, no question behind it, or differences within the margin."
+    },
+    {
+     "q": "What does each of the three readers need?",
+     "a": "You exploring: rough and fast. A team: one labelled point. The public: a self-contained chart whose title states the finding."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Marks & Channels",
+   "big_idea": "Every chart maps data onto marks through channels. **Give your key variable the most accurate channel** you can.",
+   "in_plain_words": [
+    "A mark is what you draw: a dot, line, bar or area. A channel is the property of the mark that carries data: position, length, angle, area, colour or shape. Cleveland and McGill ranked channels by how accurately people read them. Position on a common scale is best, then unaligned position, length, angle, area and colour intensity.",
+    "The ranking explains the classic rules. Bars carry value through length, so they must start at zero. Area is weak, and a circle sized by radius exaggerates the value. Colour suits categories more than quantities. When you encode one important variable, give it position or length, and sort by value. **Diagnose any chart** by naming its mark and channel."
+   ],
+   "diagram": {
+    "type": "stack",
+    "levels": [
+     {
+      "label": "Position, common scale",
+      "sub": "scatter, dot plot"
+     },
+     {
+      "label": "Position, unaligned",
+      "sub": "small multiples"
+     },
+     {
+      "label": "Length",
+      "sub": "bar chart"
+     },
+     {
+      "label": "Angle and slope",
+      "sub": "pie, slope chart"
+     },
+     {
+      "label": "Area",
+      "sub": "bubble, treemap"
+     },
+     {
+      "label": "Colour intensity",
+      "sub": "heatmap, choropleth"
+     }
+    ],
+    "caption": "most accurate at the top"
+   },
+   "key_terms": [
+    {
+     "term": "Mark",
+     "meaning": "The thing you draw: dot, line, bar or area."
+    },
+    {
+     "term": "Channel",
+     "meaning": "The property of a mark that carries data."
+    },
+    {
+     "term": "Cleveland and McGill",
+     "meaning": "Their 1984 experiments ranked channels by accuracy."
+    },
+    {
+     "term": "Zero baseline",
+     "meaning": "The start of a bar's axis, needed because length carries value."
+    },
+    {
+     "term": "Dot plot",
+     "meaning": "Position on a shared scale; less ink than a bar."
+    },
+    {
+     "term": "Area scaling",
+     "meaning": "Making area proportional to value."
+    }
+   ],
+   "worked_example": {
+    "title": "Radius against area",
+    "setup": "A bubble chart shows two values, one twice the other.",
+    "steps": [
+     "If radius is set proportional to value, the larger bubble has twice the radius.",
+     "Its area is then 2 × 2 = 4 times the smaller bubble's area.",
+     "A reader sees four times the quantity, though the data is only double.",
+     "The fix is to make area proportional to value, so a doubled value draws a radius √2 times larger."
+    ],
+    "answer": "Radius sizing shows 4 times the area for a doubled value; scale by area instead."
+   },
+   "mistakes": [
+    "Using a pie or bubble chart where readers must rank close values. Area and angle are weak channels.",
+    "Spending the strongest channel on alphabetical order. Sort by the value instead.",
+    "Using colour shade for the finding. Nobody can read 47 off a shade of blue.",
+    "Stacking six shares in one bar. Only the segment on the baseline compares reliably."
+   ],
+   "recall": [
+    {
+     "q": "What are the six channels, from most to least accurate?",
+     "a": "Position on a common scale, position on unaligned scales, length, angle or slope, area and colour intensity."
+    },
+    {
+     "q": "Why must bars start at zero?",
+     "a": "A reader judges a bar twice as long as carrying twice the value."
+    },
+    {
+     "q": "What rule governs bubble size?",
+     "a": "Scale by area, never by radius."
+    },
+    {
+     "q": "What is colour good for?",
+     "a": "Naming categories and rough intensity. It is poor for precise quantities."
+    },
+    {
+     "q": "Why is a dot plot under-used?",
+     "a": "It carries the same information as a bar with less ink and handles long labels and wide ranges better."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Choosing a Chart",
+   "big_idea": "Chart choice follows the reader's question. **Decide the family before you open any tool.**",
+   "in_plain_words": [
+    "Almost every question is one of five kinds: comparison, trend, composition, distribution or relationship. Each has a natural family: sorted bars or dot plots, lines, a sorted bar of shares, histogram or box or strip, and scatter. Ranking and flow add two more, served by ordered bars, slope charts, Sankeys and chord diagrams.",
+    "Details matter inside each family. Lines need direct labels and, past about four series, small multiples. Pies work only for two or three very different slices. Distributions reveal what a mean hides. Scatter plots should be titled as association. Linear scales suit most data, and log scales need clear labels. **A map is warranted only when location is the finding.**"
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "What is the reader's question?",
+    "children": [
+     {
+      "label": "Comparison",
+      "items": [
+       "Sorted bar",
+       "Dot plot",
+       "Dumbbell"
+      ]
+     },
+     {
+      "label": "Trend",
+      "items": [
+       "Line",
+       "Small multiples"
+      ]
+     },
+     {
+      "label": "Part of a whole",
+      "items": [
+       "Sorted bar of shares",
+       "100% stacked bar",
+       "Treemap"
+      ]
+     },
+     {
+      "label": "Spread or link",
+      "items": [
+       "Histogram, box, strip",
+       "Scatter"
+      ]
+     }
+    ],
+    "caption": "question first, chart family second"
+   },
+   "key_terms": [
+    {
+     "term": "Small multiples",
+     "meaning": "The same small chart repeated per category on a shared scale."
+    },
+    {
+     "term": "Dumbbell chart",
+     "meaning": "Two dots joined by a line, showing a gap per category."
+    },
+    {
+     "term": "Histogram",
+     "meaning": "Bins values to show shape, skew and modes."
+    },
+    {
+     "term": "Log scale",
+     "meaning": "Equal distances mean equal multiples."
+    },
+    {
+     "term": "Sankey",
+     "meaning": "Ribbons showing volume moving between categories."
+    },
+    {
+     "term": "Slope chart",
+     "meaning": "Shows rank changes between two points in time."
+    }
+   ],
+   "worked_example": {
+    "title": "From question to chart",
+    "setup": "Use the cheat sheet to choose a first-choice chart for five questions.",
+    "steps": [
+     "Which country has the highest under-five mortality? Comparison: a sorted bar from zero.",
+     "Is coverage rising or falling? Trend: a line.",
+     "What share does each source of income contribute? Part of a whole: a sorted bar of shares.",
+     "How unequal are household incomes? Distribution: a histogram.",
+     "Do literacy and income move together? Relationship: a scatter."
+    ],
+    "answer": "Sorted bar, line, sorted bar of shares, histogram and scatter."
+   },
+   "mistakes": [
+    "Starting from 'I want a chart'. The software then chooses the first option in its menu.",
+    "Using a pie for twelve near-equal slices. A sorted bar of the percentages is clearer.",
+    "Connecting points across a gap without marking it. A line implies measurement continued.",
+    "Using a trend line as proof of cause. A scatter shows association."
+   ],
+   "recall": [
+    {
+     "q": "What are the five question types?",
+     "a": "Comparison, trend, composition, distribution and relationship."
+    },
+    {
+     "q": "When may a pie chart be used?",
+     "a": "For two or three very different slices."
+    },
+    {
+     "q": "Why use small multiples?",
+     "a": "Beyond about four lines a chart becomes a legend-matching exercise, and small multiples keep position as the channel."
+    },
+    {
+     "q": "When is a log scale useful?",
+     "a": "When values span many orders of magnitude or the rate of growth is the story."
+    },
+    {
+     "q": "When is a map the first choice?",
+     "a": "When geography is the story, mapping a rate and not a count."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Honest Charts",
+   "big_idea": "A chart can lie while every number is true. **Test whether a careful reader would believe something the data does not support.**",
+   "in_plain_words": [
+    "Misleading charts exploit how readers see. A truncated axis makes length look proportional to value. A dual axis makes any two lines appear to track. A cherry-picked window turns a trend into a boom or a collapse. 3D tilts geometry, radius sizing inflates area, and trend lines suggest cause. None of these needs a false number, which is why they survive fact-checking.",
+    "Two exceptions and one trap round out the section. Lines may omit zero because they encode change, and the range should be made obvious. Simpson's paradox shows that a pooled trend can reverse when split by group. **Run the checklist before publishing**, and on other people's charts first: it is easier to see there."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "A true chart that misleads",
+    "spokes": [
+     {
+      "label": "Truncated axis",
+      "sub": "length read as value"
+     },
+     {
+      "label": "Dual axis",
+      "sub": "scales chosen to align"
+     },
+     {
+      "label": "Cherry-picked window",
+      "sub": "boom or collapse"
+     },
+     {
+      "label": "3D and radius",
+      "sub": "geometry distorts"
+     },
+     {
+      "label": "Cause from correlation",
+      "sub": "title claims too much"
+     },
+     {
+      "label": "Hidden subgroups",
+      "sub": "Simpson's paradox"
+     }
+    ],
+    "caption": "devices that need no false number"
+   },
+   "key_terms": [
+    {
+     "term": "Truncated axis",
+     "meaning": "A bar axis that does not start at zero."
+    },
+    {
+     "term": "Dual axis",
+     "meaning": "Two y-axes scaled so lines appear to track."
+    },
+    {
+     "term": "Cherry-picked window",
+     "meaning": "A time range chosen to flatter the point."
+    },
+    {
+     "term": "Confounder",
+     "meaning": "A hidden third variable driving both series."
+    },
+    {
+     "term": "Simpson's paradox",
+     "meaning": "A pooled trend that reverses within groups."
+    },
+    {
+     "term": "Indexing",
+     "meaning": "Setting each series to 100 at a base year."
+    }
+   ],
+   "worked_example": {
+    "title": "How a baseline changes a bar",
+    "setup": "Three values: 92, 94 and 96%. Compare bar lengths for two baselines.",
+    "steps": [
+     "Baseline 90: the bars are 92 − 90 = 2, 94 − 90 = 4 and 96 − 90 = 6 units long.",
+     "The ratio of tallest to shortest bar is 6 ÷ 2 = 3, so a reader sees a tripling.",
+     "Baseline 0: the bars are 92, 94 and 96 long, almost equal.",
+     "The true ratio is 96 ÷ 92 = 1.04."
+    ],
+    "answer": "A baseline of 90 shows a tripling; the data differ by about 4%."
+   },
+   "mistakes": [
+    "Forcing zero on a line series where it flattens real change. The exception covers lines only.",
+    "Using the line exception to justify a cut bar baseline. It does not follow.",
+    "Using a second y-axis to make series look related. Index to 100 or use two panels.",
+    "Titling a scatter with 'drives'. Say 'moves with' unless you have evidence of cause."
+   ],
+   "recall": [
+    {
+     "q": "Why is a misleading chart worse than a wrong one?",
+     "a": "Every figure is correct, so it survives fact-checking."
+    },
+    {
+     "q": "When is zero not required?",
+     "a": "On a line or scatter, or a dot plot with a clearly labelled axis."
+    },
+    {
+     "q": "What is the fix for the dual-axis trap?",
+     "a": "Two small charts, or both series indexed to 100 at a common start year on one axis."
+    },
+    {
+     "q": "What does Simpson's paradox warn about?",
+     "a": "A trend in the overall data can reverse when split by group."
+    },
+    {
+     "q": "What goes on the integrity checklist?",
+     "a": "Bars from zero, areas by area, a fair window, a title that claims only what the data supports, a subgroup check, and source, date and units."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Colour",
+   "big_idea": "Colour does three jobs, and **the wrong family is the commonest error.** Match the palette to the data type.",
+   "in_plain_words": [
+    "Qualitative palettes name unordered categories, sequential palettes run light to dark for ordered values, and diverging palettes spread from a meaningful middle. Use tested ramps such as Viridis, cividis and ColorBrewer, and keep steps even in perceived lightness. Past about seven colours, readers lose track, so group the small ones or use grey.",
+    "Colour also has to work for everyone. Roughly 8% of men and 0.5% of women have some colour-vision deficiency, so red against green fails. The jet rainbow invents bands and fails in greyscale. Meaning is cultural: red reads as bad in charts and as auspicious in much of South Asia. **Use grey for context** and one bold colour for the thing you discuss."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Colour's three jobs",
+    "children": [
+     {
+      "label": "Qualitative",
+      "items": [
+       "Unordered categories",
+       "Regions, parties, crops"
+      ]
+     },
+     {
+      "label": "Sequential",
+      "items": [
+       "Ordered, one direction",
+       "Poverty rate, density"
+      ]
+     },
+     {
+      "label": "Diverging",
+      "items": [
+       "Ordered around a middle",
+       "Gain or loss, above or below"
+      ]
+     }
+    ],
+    "caption": "pick the family from the data type"
+   },
+   "key_terms": [
+    {
+     "term": "Qualitative",
+     "meaning": "Distinct hues for unordered categories."
+    },
+    {
+     "term": "Sequential",
+     "meaning": "One hue from pale to deep for low to high."
+    },
+    {
+     "term": "Diverging",
+     "meaning": "Two hues from a meaningful midpoint."
+    },
+    {
+     "term": "Viridis",
+     "meaning": "A perceptually even, colour-blind-safe ramp."
+    },
+    {
+     "term": "Okabe-Ito",
+     "meaning": "A colour-blind-safe qualitative palette."
+    },
+    {
+     "term": "Rainbow ramp",
+     "meaning": "The jet scale that invents boundaries in smooth data."
+    }
+   ],
+   "worked_example": {
+    "title": "Pick the palette",
+    "setup": "Choose the colour family for four variables.",
+    "steps": [
+     "Poverty rate by district, ordered low to high: sequential, one hue, five to seven bins.",
+     "Budget surplus or deficit around zero: diverging, with zero as the midpoint.",
+     "Political parties with no order: qualitative, distinct hues with equal weight.",
+     "Twelve crops with one that matters: colour that one, and grey the rest."
+    ],
+    "answer": "Sequential, diverging, qualitative, and one colour plus grey."
+   },
+   "mistakes": [
+    "Using a diverging scale on data with no natural centre. It invents a midpoint.",
+    "Centring a diverging map on the median. A struggling region can look average.",
+    "Relying on red against green. About 8% of men cannot separate them.",
+    "Using a rainbow heatmap. Replace it with Viridis and the pattern may change."
+   ],
+   "recall": [
+    {
+     "q": "What are colour's three jobs?",
+     "a": "Qualitative, sequential and diverging."
+    },
+    {
+     "q": "How many bins suit a sequential map?",
+     "a": "Five to seven, stated."
+    },
+    {
+     "q": "How many colours can readers hold?",
+     "a": "About seven, and usually fewer."
+    },
+    {
+     "q": "What is the safe two-colour default pair?",
+     "a": "Blue and orange."
+    },
+    {
+     "q": "What is the usual shape of a colour fix?",
+     "a": "A removal or a substitution, such as grey for most bars and one colour for the point."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Words on Charts",
+   "big_idea": "A chart without words is half a chart. **State the finding in the title**, label directly and source every time.",
+   "in_plain_words": [
+    "Marks show the pattern, and words say what it means and what to trust. Titles state the finding, axes carry units, direct labels remove the legend lookup, annotations point at the one thing that matters, and source and date make the chart checkable. Budget about half your effort on the picture and half on the words.",
+    "Each element has a rule. A finding title is a commitment that can be checked. Label lines at their ends. Annotate one or two moments, always including definition changes. Put units, source, date and notes on every chart, and round to the precision the data supports. **A chart that travels** carries only what is inside its own frame."
+   ],
+   "diagram": {
+    "type": "stack",
+    "levels": [
+     {
+      "label": "Title",
+      "sub": "states the finding"
+     },
+     {
+      "label": "Annotation",
+      "sub": "points at the one thing"
+     },
+     {
+      "label": "Direct labels",
+      "sub": "replace the legend"
+     },
+     {
+      "label": "Axis labels and units",
+      "sub": "prevent guessing"
+     },
+     {
+      "label": "Source and date",
+      "sub": "make it checkable"
+     }
+    ],
+    "caption": "five jobs words do"
+   },
+   "key_terms": [
+    {
+     "term": "Finding title",
+     "meaning": "A title that states the conclusion."
+    },
+    {
+     "term": "Topic title",
+     "meaning": "A title that only names the subject."
+    },
+    {
+     "term": "Direct label",
+     "meaning": "A label written next to the thing it names."
+    },
+    {
+     "term": "Annotation",
+     "meaning": "A short note or arrow on the chart."
+    },
+    {
+     "term": "Series break",
+     "meaning": "A change in definition that splits a series."
+    },
+    {
+     "term": "Precision",
+     "meaning": "How many digits you claim to know."
+    }
+   ],
+   "worked_example": {
+    "title": "Rewrite and annotate",
+    "setup": "Use the deck's two titles and its immunisation line.",
+    "steps": [
+     "Topic title: 'Under-five mortality by country, 2000-2022'.",
+     "Finding title: 'Child deaths have more than halved since 2000'.",
+     "Immunisation line: add the title 'Coverage rose after the 2014 mission'.",
+     "Mark the 2014 inflection with a note, and add the source with 'latest data 2021'."
+    ],
+    "answer": "The finding title, a 2014 marker and a source line turn the plot into an argument."
+   },
+   "mistakes": [
+    "Quoting 63.7% when the survey cannot support decimals. Match digits to uncertainty.",
+    "Leaving a definition change unmarked. It will be read as real change.",
+    "Writing 'Government data' as the source. A reader cannot check it.",
+    "Mixing lakh and crore with millions on one chart. Pick one system and stay consistent."
+   ],
+   "recall": [
+    {
+     "q": "What does a finding title do that a topic title does not?",
+     "a": "It hands the reader the point and commits you to a claim that can be checked."
+    },
+    {
+     "q": "When is a legend unavoidable?",
+     "a": "With many series, a dense map or many small multiples sharing a key."
+    },
+    {
+     "q": "Which annotation is an integrity matter?",
+     "a": "Marking a definition change."
+    },
+    {
+     "q": "What four things belong in the fine print?",
+     "a": "Units, source, date and notes."
+    },
+    {
+     "q": "How should you round for a public audience?",
+     "a": "Usually to whole numbers, matching the precision of your data."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Tables & Numbers",
+   "big_idea": "For exact figures, lookup and screen readers, a table is the better tool. **Design it as carefully as a chart.**",
+   "in_plain_words": [
+    "A table beats a chart when readers need exact figures, will look up their own row, have fewer than about 20 numbers, or read with a screen reader. Design matters: order rows by value, use light rules, indent for hierarchy and put units in the header. Add a change column so the reader does no arithmetic.",
+    "Alignment turns numbers into a picture. Right-align numbers, fix decimal places and use tabular figures, and a longer number becomes visibly bigger. Sparklines add trend beside the exact value, and KPI cards give a headline with a comparison. **A big number needs a comparison** such as last year or the target."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Use a table when",
+     "items": [
+      "Readers need exact figures",
+      "They look up their own row",
+      "Fewer than about 20 numbers",
+      "Several units sit side by side"
+     ]
+    },
+    "right": {
+     "title": "Use a chart when",
+     "items": [
+      "The pattern is the message",
+      "Many values are compared at once",
+      "The shape or trend matters",
+      "One unit runs across all values"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Tabular figures",
+     "meaning": "Digits of equal width so columns line up."
+    },
+    {
+     "term": "Change column",
+     "meaning": "A column giving the difference, so readers skip arithmetic."
+    },
+    {
+     "term": "Sparkline",
+     "meaning": "A small axis-free line shown inline."
+    },
+    {
+     "term": "KPI card",
+     "meaning": "A large figure with label, comparison and source."
+    },
+    {
+     "term": "Right-alignment",
+     "meaning": "Aligning numbers so magnitudes line up."
+    },
+    {
+     "term": "Accessible form",
+     "meaning": "A table a screen reader can read cell by cell."
+    }
+   ],
+   "worked_example": {
+    "title": "Fill the change column",
+    "setup": "Use the deck's NFHS selection for 2015 and 2021 (illustrative).",
+    "steps": [
+     "Full immunisation went from 62 to 76: 76 − 62 = 14.",
+     "Institutional births went from 79 to 89: 89 − 79 = 10.",
+     "Stunting went from 38 to 36: 38 − 36 = 2 points lower.",
+     "Order the rows by change: +14, +10, then −2."
+    ],
+    "answer": "The changes are +14, +10 and −2 points, ordered by change."
+   },
+   "mistakes": [
+    "Centring numbers or mixing 1,234 with 1234.0. The digits stop lining up.",
+    "Using full grid lines. A rule under the header and at the foot is usually enough.",
+    "Forcing a chart onto data that wants a table. The reader needs exact rows.",
+    "Showing a big number with no comparison. It tells the reader little."
+   ],
+   "recall": [
+    {
+     "q": "When does a table beat a chart?",
+     "a": "When readers need exact figures, look up rows, have fewer than about 20 numbers, or use a screen reader."
+    },
+    {
+     "q": "What is the single highest-value addition to a comparison table?",
+     "a": "A change or difference column."
+    },
+    {
+     "q": "How should numbers and text be aligned?",
+     "a": "Right-align numbers and left-align text."
+    },
+    {
+     "q": "What does a sparkline cost?",
+     "a": "No axis, so no absolute reading, and small differences are invisible."
+    },
+    {
+     "q": "What four elements make a KPI card?",
+     "a": "The large number, a labelled unit, a comparison and a source line."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Spread & Uncertainty",
+   "big_idea": "Almost every figure is an estimate. **Show the spread and the uncertainty**, or you claim precision the data never had.",
+   "in_plain_words": [
+    "The average hides spread. Two districts can share a mean income with very different distributions, so report the median too and show the histogram. A histogram's bin width changes the story, a box plot hides shape and sample size, and strip, jitter and beeswarm plots show every point and the sample size.",
+    "Uncertainty needs its own marks. Error bars and confidence bands tell readers how far to trust a dot, and the label should say whether it is a standard error or a 95% confidence interval. Overlapping intervals mean no order. Sample size drives the margin, with diminishing returns. **Project forecasts as fans**, and mark where measurement ends."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "1.96",
+      "hint": "for 95% confidence"
+     },
+     {
+      "op": "×"
+     },
+     {
+      "t": "√(p(1−p)/n)",
+      "hint": "p = 0.5 in the deck"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "Margin of error",
+      "hint": "in proportion points"
+     }
+    ],
+    "note": "four times the sample halves the error"
+   },
+   "key_terms": [
+    {
+     "term": "Skew",
+     "meaning": "A lopsided distribution where the mean is pulled by a tail."
+    },
+    {
+     "term": "Bin width",
+     "meaning": "The size of each histogram bucket."
+    },
+    {
+     "term": "Beeswarm",
+     "meaning": "A strip plot packed into a shape that shows density."
+    },
+    {
+     "term": "Confidence interval",
+     "meaning": "A range showing the uncertainty of an estimate."
+    },
+    {
+     "term": "Margin of error",
+     "meaning": "Half-width of the interval at a stated confidence."
+    },
+    {
+     "term": "Fan chart",
+     "meaning": "A forecast drawn as a widening band."
+    }
+   ],
+   "worked_example": {
+    "title": "Margin of error at two sample sizes",
+    "setup": "Use the deck's formula with p = 0.5. The second sample size is illustrative.",
+    "steps": [
+     "For n = 400: 0.25 ÷ 400 = 0.000625, whose square root is 0.025.",
+     "The margin is 1.96 × 0.025 = 0.049, about 4.9 points.",
+     "For n = 1,600: 0.25 ÷ 1,600 = 0.00015625, whose square root is 0.0125.",
+     "The margin is 1.96 × 0.0125 = 0.0245, about 2.5 points."
+    ],
+    "answer": "Four times the sample halves the margin, from about 4.9 to about 2.5 points."
+   },
+   "mistakes": [
+    "Reporting a mean for skewed data without the median. The mean can mislead.",
+    "Accepting a default bin width. Try three or four and say which you used.",
+    "Ranking estimates whose intervals overlap across the whole list.",
+    "Drawing a forecast as a single solid line. Use a fan and mark the boundary."
+   ],
+   "recall": [
+    {
+     "q": "What does a box plot hide?",
+     "a": "Shape, bimodality and the sample size per group."
+    },
+    {
+     "q": "What should an error bar's label say?",
+     "a": "Whether it is a standard error, a 95% CI or a min-max range."
+    },
+    {
+     "q": "What does the deck say about 400 and 1,500 respondents?",
+     "a": "Going from 400 to 1,500 roughly halves the error, from 4.9 to 2.5 points."
+    },
+    {
+     "q": "Why show every point?",
+     "a": "It shows the sample size, which a summary chart conceals."
+    },
+    {
+     "q": "How should a forecast be drawn?",
+     "a": "As a widening fan, with measured and projected data clearly marked."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "Maps",
+   "big_idea": "Maps look authoritative and are often the wrong choice. **Map a rate** and never a raw count, and choose geography and bins deliberately.",
+   "in_plain_words": [
+    "Ask first whether location is the finding. If you could say 'Kerala is highest, Bihar lowest', a sorted bar communicates it faster. A choropleth shaded by counts mostly shows where people live, so use rates, and state the denominator, because it is an argument. Area also biases the eye towards big empty states and away from dense small ones.",
+    "Cartograms resize regions to a value or give each an equal tile. They are less recognisable, so add a locator map. The bins of a choropleth change the picture too: equal-interval, quantile, natural breaks and fixed policy bins each have a risk. **State the scheme and cut-points**, and keep them fixed across related maps."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Pick a rate",
+      "sub": "female literacy %"
+     },
+     {
+      "label": "State the denominator",
+      "sub": "per 100,000, per person"
+     },
+     {
+      "label": "Equal hex tiles",
+      "sub": "small states read equally"
+     },
+     {
+      "label": "Sequential ramp",
+      "sub": "bins stated in the legend"
+     }
+    ],
+    "caption": "four choices for a fair map of Indian states"
+   },
+   "key_terms": [
+    {
+     "term": "Choropleth",
+     "meaning": "A map shading regions by a value."
+    },
+    {
+     "term": "Normalising",
+     "meaning": "Dividing by a denominator such as population."
+    },
+    {
+     "term": "Cartogram",
+     "meaning": "A map where region size reflects a value."
+    },
+    {
+     "term": "Dorling cartogram",
+     "meaning": "Circles sized by a value at approximate positions."
+    },
+    {
+     "term": "Quantile bins",
+     "meaning": "Equal numbers of regions in each colour."
+    },
+    {
+     "term": "Natural breaks",
+     "meaning": "Bins placed at gaps in the data."
+    }
+   ],
+   "worked_example": {
+    "title": "Count against rate",
+    "setup": "Two states with invented figures. State A has 5,000 cases among 50,000,000 people. State B has 1,000 cases among 2,000,000.",
+    "steps": [
+     "A count map shades A darker, since 5,000 is more than 1,000.",
+     "State A's rate is 5,000 ÷ 50,000,000 × 100,000 = 10 per 100,000.",
+     "State B's rate is 1,000 ÷ 2,000,000 × 100,000 = 50 per 100,000.",
+     "The rate map reverses the picture: B is the higher risk."
+    ],
+    "answer": "A has more cases but B has five times the rate: 50 against 10 per 100,000."
+   },
+   "mistakes": [
+    "Shading total cases or total spending. It maps population size.",
+    "Using a land-area map for a people-based story. Big empty regions dominate.",
+    "Tuning the bins until the map says what you want. Pick a scheme and state it.",
+    "Leaving the denominator off. Per 100,000 and per 100,000 women aged 15 to 49 tell different stories."
+   ],
+   "recall": [
+    {
+     "q": "When is a map the wrong choice?",
+     "a": "When you compare values by name, regions differ hugely in size, or a sorted bar would rank them instantly."
+    },
+    {
+     "q": "What is the commonest map error in development reporting?",
+     "a": "A choropleth shaded by a count instead of a rate."
+    },
+    {
+     "q": "Which regions does an area map over-weight?",
+     "a": "Large, sparsely populated areas such as Rajasthan and Ladakh."
+    },
+    {
+     "q": "What is the cost of a hex cartogram?",
+     "a": "It loses real geography."
+    },
+    {
+     "q": "Which binning is best for comparability over time?",
+     "a": "Fixed, policy-based bins at meaningful thresholds."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Audience & Access",
+   "big_idea": "Design for the actual reader and medium. **Accessibility is a thread through the whole process**, and it makes charts clearer for everyone.",
+   "in_plain_words": [
+    "Readers give a chart very different amounts of time: minutes for a statistics-literate panel, a minute for a report reader, three seconds for a slide audience and one second on a phone. The medium matters too. Print must work in greyscale, mobile needs one idea and few categories, and projectors need high contrast. Test where the chart will appear.",
+    "Accessibility means contrast to WCAG 4.5:1, readable type, alt text that states the finding, and the underlying data. Redundant coding pairs colour with shape, dash pattern, position or a direct label. Cut data-ink waste and chartjunk by subtraction. **Make the static default complete**, then add interaction only where it helps."
+   ],
+   "diagram": {
+    "type": "hub",
+    "center": "Accessible chart",
+    "spokes": [
+     {
+      "label": "Contrast",
+      "sub": "WCAG 4.5:1 for text"
+     },
+     {
+      "label": "Type size",
+      "sub": "legible in the medium"
+     },
+     {
+      "label": "Alt text",
+      "sub": "states the finding"
+     },
+     {
+      "label": "Data table",
+      "sub": "underlying numbers"
+     },
+     {
+      "label": "Redundant coding",
+      "sub": "shape, dash, label"
+     }
+    ],
+    "caption": "five requirements"
+   },
+   "key_terms": [
+    {
+     "term": "WCAG",
+     "meaning": "Web accessibility guidelines, setting a 4.5:1 text contrast."
+    },
+    {
+     "term": "Alt text",
+     "meaning": "A written description of the chart's point."
+    },
+    {
+     "term": "Redundant coding",
+     "meaning": "Pairing colour with a second cue."
+    },
+    {
+     "term": "Data-ink ratio",
+     "meaning": "The share of ink that encodes data."
+    },
+    {
+     "term": "Chartjunk",
+     "meaning": "Decoration that adds no information."
+    },
+    {
+     "term": "Static-first",
+     "meaning": "Making the still image complete before interaction."
+    }
+   ],
+   "worked_example": {
+    "title": "Make a colour-only chart readable",
+    "setup": "A line chart uses three coloured lines and a legend.",
+    "steps": [
+     "Write each line's name at its right-hand end as a direct label.",
+     "Give the lines solid, dashed and dotted styles as well as colour.",
+     "Add distinct markers so the points differ in greyscale.",
+     "Write alt text that states the finding in a sentence."
+    ],
+    "answer": "Direct labels, line styles, markers and finding-based alt text keep it working without colour."
+   },
+   "mistakes": [
+    "Showing an analyst's dense chart to a public audience. They needed one clear line.",
+    "Writing alt text that describes the geometry. Say what the chart found.",
+    "Stripping labels in the name of minimalism. Words are data-ink too.",
+    "Hiding the main finding behind a click. Print readers and screenshots never see it."
+   ],
+   "recall": [
+    {
+     "q": "How long does a slide audience give a chart?",
+     "a": "About three seconds."
+    },
+    {
+     "q": "What WCAG contrast ratio applies to body text?",
+     "a": "4.5:1."
+    },
+    {
+     "q": "Name three second cues to pair with colour.",
+     "a": "Position or order, shape or marker, line style or a direct label."
+    },
+    {
+     "q": "What is the test for chartjunk?",
+     "a": "Remove it and ask whether anything was lost."
+    },
+    {
+     "q": "When is animation useful?",
+     "a": "When a transition shows the same objects moving between states."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Workflow & Tools",
+   "big_idea": "Most of the work is cleaning and looking at data. **Sketch first, choose the tool for your workflow**, and practise by redrawing.",
+   "in_plain_words": [
+    "The process runs from question to getting and cleaning data, exploring with rough charts, choosing and refining, then annotating and sourcing. Most effort sits in cleaning and exploring, and the polished chart is the last 10%. The step that ships broken is the final one, so protect time for source and annotation.",
+    "Sketching on paper before opening a tool makes you decide axes, sort, claim and highlights before software decides for you. Tools fit different needs: spreadsheets for exploration, Datawrapper as the pragmatic default, Flourish for stories, RAWGraphs for unusual types, and code for reproducibility. **Record sources when you take a figure**, learn from the best, and redraw one chart a week."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Question",
+      "sub": "what is the one point?"
+     },
+     {
+      "label": "Get and clean data",
+      "sub": "large share of effort"
+     },
+     {
+      "label": "Explore",
+      "sub": "rough charts, many"
+     },
+     {
+      "label": "Choose and refine",
+      "sub": "channel, sort, colour"
+     },
+     {
+      "label": "Annotate and source",
+      "sub": "small and always skipped"
+     }
+    ],
+    "caption": "the usual process"
+   },
+   "key_terms": [
+    {
+     "term": "Datawrapper",
+     "meaning": "Free tool for clean, responsive, sourced charts and maps."
+    },
+    {
+     "term": "Flourish",
+     "meaning": "Tool for animated, story-driven charts."
+    },
+    {
+     "term": "RAWGraphs",
+     "meaning": "Free tool for unusual chart types."
+    },
+    {
+     "term": "ggplot2",
+     "meaning": "R's grammar-of-graphics chart library."
+    },
+    {
+     "term": "Reproducibility",
+     "meaning": "The chart regenerates when the data updates."
+    },
+    {
+     "term": "Redraw practice",
+     "meaning": "Take one chart a week and rebuild it better."
+    }
+   ],
+   "worked_example": {
+    "title": "Plan a redraw",
+    "setup": "Apply the deck's five-step redraw to a chart you admire or distrust.",
+    "steps": [
+     "Identify: what is this chart for?",
+     "Re-encode: does the key variable have the best channel?",
+     "Declutter: what can be removed with nothing lost?",
+     "Retitle: what does it actually find?",
+     "Source: could a reader check it? Keep the before and after side by side."
+    ],
+    "answer": "Identify, re-encode, declutter, retitle, source, and keep the pair."
+   },
+   "mistakes": [
+    "Letting the software choose sort order, axes and title. Its defaults are one designer's choice.",
+    "Leaving annotation and source to the end. The last ten minutes disappear first.",
+    "Reconstructing a source line later. Record the exact table and round when you take the figure.",
+    "Copying a famous team's fonts. Copy how they frame a question and annotate an answer."
+   ],
+   "recall": [
+    {
+     "q": "Which steps take the most effort?",
+     "a": "Getting and cleaning the data, and exploring with rough charts."
+    },
+    {
+     "q": "Why sketch first?",
+     "a": "It forces you to decide axes, sort, title and highlights before the software decides."
+    },
+    {
+     "q": "Which tool does the deck call the pragmatic default?",
+     "a": "Datawrapper."
+    },
+    {
+     "q": "When does code win?",
+     "a": "When you need reproducibility, automation or a chart no tool offers."
+    },
+    {
+     "q": "Which book does the deck recommend if you read only one?",
+     "a": "Cairo's How Charts Lie."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "2": "Eleven sections run from what a chart is for to workflow and tools. The slide gives three entry points: **sections 4 and 5 if you already draw charts**, sections 2 and 3 if you are choosing a chart type, and sections 6 and 10 if you publish for the public. Start where your next chart needs help.",
+  "4": "Every chart makes an argument, even by accident. Write the claim in one sentence first, because it usually becomes the title. The table links each claim to a design duty: show the full period, put groups on one aligned scale, say association, show the distribution. **No claim means nothing to judge the encoding against.**",
+  "5": "Anscombe's quartet is four datasets with nearly identical means, variances and correlation that look completely different once plotted. The Datasaurus Dozen makes the same point with a dinosaur. Summary statistics are a compression, and compression discards. **Always plot the shape before you trust the number.**",
+  "6": "Choose chart or number by the job. One value to remember or quote belongs in a sentence, twelve values compared belong in a chart, and a row readers look up belongs in a table. The commonest waste in reports is **a chart of three numbers**, which is slower to read than the sentence it replaces.",
+  "7": "A chart costs the reader effort to learn its axes and colours, so spend that only when the payoff is real. Skip it for two or three numbers, no variation, three data points or differences within the margin. **The last row is the one people skip**: with overlapping intervals, a sorted bar invents an order.",
+  "8": "The same data needs three charts for three readers: many quick ugly charts when you explore, one labelled chart for a team, and one self-contained chart whose title states the finding for the public. **Most bad published charts are exploration charts that were never redrawn.** Ask who the reader is before you format.",
+  "9": "A good chart is honest, clear, sourced and focused. Honesty cannot be traded off, because proportions on screen must match the numbers. Beauty is missing from the list: it helps a chart get read but never rescues a dishonest one. **If a chart makes three points, split it into three.**",
+  "11": "A mark is what you draw, and a channel is the property carrying data: position, length, angle, area, colour or shape. Every chart maps data onto marks through channels. When a chart feels wrong, **name the mark and the channel**. The fault is usually that the important variable got a weak channel.",
+  "12": "Cleveland and McGill ranked channels by how accurately people read quantities: position on a common scale first, then unaligned position, length, angle, area and colour intensity. They found this by experiment. **Put your most important variable on the most accurate channel you can afford.** Colour is weak for magnitude and excellent for telling lines apart.",
+  "13": "Position wins because two marks on one axis are compared directly, with no mental arithmetic. A dot plot lets readers read values to within a few percent, while a pie leaves them guessing. **The dot plot is the most under-used chart in development reporting**: the same information as a bar, with less ink.",
+  "14": "A reader takes a bar twice as long to carry twice the value, so bars must start at zero. Cut the baseline and a 2% difference can look like a doubling. If zero is irrelevant to your story, use a line. **Read the first axis tick before anything else**, since this is the easiest distortion to check.",
+  "15": "Readers underestimate area, and a bubble sized by radius makes a value twice as large look four times as big. Set area proportional to value: doubling the value then draws a radius √2 times larger. Use area only for rough magnitude, such as a treemap. **Never use it when readers must rank close values.**",
+  "16": "Colour is excellent for naming categories, adequate for rough intensity and poor for precise quantities: nobody can read 47 off a shade of blue. Two rules hold: use colour to group or highlight, and keep to about seven colours or fewer. **Never carry the whole message in hue alone.**",
+  "17": "Spend the strongest channel on the variable that matters. For female literacy across 12 states, put literacy on position or length, label states on the axis and use one highlight colour. **Sort by the value.** Alphabetical order destroys the ranking the chart exists to show.",
+  "18": "Three encodings of the same six numbers. A pie uses angle and cannot rank similar slices, a stacked bar lets you compare only the bottom segment well, and a sorted bar or dot plot lets you compare every value. **The data did not change, only how accurately the reader recovers it.**",
+  "20": "Start from the reader's question, because almost every question is one of five: comparison, trend, composition, distribution or relationship. Each has a natural chart family. Starting from 'I want a chart' lets the software choose, and it picks whatever is first in its menu. **Decide the family before you open any tool.**",
+  "21": "For comparison use a bar chart sorted by value, horizontal if labels are long, and always from zero. With 40 or more bars, switch to a dot plot or a sorted table. **A dumbbell chart suits the gap between two values per category**, such as male and female literacy by state.",
+  "22": "Lines show trend, with time on the horizontal axis. Use bars only for a few discrete periods. Beyond about four lines the chart becomes a legend-matching exercise, so switch to small multiples. **Never connect points across a gap in the data without marking it**, since a line implies measurement continued.",
+  "23": "Part-of-whole is the family to handle with care. A pie works only for two or three very different slices. A sorted bar of the shares is usually clearest because readers can rank every part. **If the point is that parts sum to a whole, say so in the title** and still use the sorted bar.",
+  "24": "When the range and shape matter more than one average, show the distribution. Histograms show shape, boxes show quartiles and strip plots show every point. 'Average income ₹15,000' can hide a few rich and many poor households. **Reporting a mean without the distribution** is the most frequent way a true number misleads.",
+  "25": "A scatter plot shows relationship: one variable per axis and one dot per observation. Add a trend line only if it helps reading, and never as proof. Label the outliers, since they are often the interesting part. **Title the chart as association** and it stays honest.",
+  "26": "Linear scales make equal distances mean equal amounts. Log scales make equal distances mean equal multiples, which suits values spanning orders of magnitude, such as incomes or exponential growth. Linear is the safe default. **Label a log axis at its actual values and say it is logarithmic**, because many readers misread it as linear.",
+  "27": "Two more families. For ranking, use an ordered bar or dot plot, and a slope chart for rank changes between two dates. For flow, a Sankey shows volume as ribbon width and a chord diagram shows two-way flows. **Sankeys are widely admired and rarely read accurately**, so put the numbers in a table beside them.",
+  "28": "The cheat sheet pairs each question with a first choice: sorted bar to compare categories, line for trend, sorted bar of shares for part of a whole, histogram for distribution, scatter for relationship. **The map row is the one to be strict about.** Use a map only when location itself is the finding.",
+  "29": "Walk the decision chain: the question is a comparison, so use a sorted bar; length carries the value, so start at zero; the ranking is the finding, so order worst to best. **Each decision traces back to the question.** Practise this chain on your next chart before you open any software.",
+  "31": "A chart can lie while every number is true, through the axis, scale, time window or framing. Because charts are read fast and trusted, a misleading one does more damage than a misleading sentence. **The test is whether a careful reader would believe something the data does not support.** None of these devices needs a false number.",
+  "32": "The same three numbers, 92, 94 and 96%, look enormous on an axis starting at 90 and modest on an axis starting at 0. The modest version is the truth. **Bars must start at zero.** Check the first tick of any bar chart you see before you read anything else.",
+  "33": "The zero rule applies to bars, where length carries the value. Lines encode change, so they may start where the data lives, and forcing zero on a stock index or temperature series can flatten real change. **When you omit zero on a line, make the range obvious.** The exception gives no licence to cut a bar baseline.",
+  "34": "Two lines on two y-axes can be scaled to look as if they track each other, so the analyst manufactures the relationship. Prefer two small charts, or index both series to 100 at a base year and plot them on one axis. **Avoid the second y-axis unless the two units are really linked.**",
+  "35": "Start the time axis at an unusually low year and the trend looks like a boom; start at a peak and the same series looks like a collapse. **Show the longest honest period you have.** If you zoom in, say so and show the full series nearby. Beware a single unusual base year, such as a pandemic.",
+  "36": "3D bars tilt the length channel, and 3D pies inflate the front slices. Drop shadows and gloss add ink that competes with the data. There is no honest reason to make a statistical chart 3D. **Flat, plain and accurate beats impressive.** If a third variable matters, a small-multiple grid usually reads better.",
+  "37": "If radius is proportional to value, a figure twice as large draws a circle four times the area. Pictographs that stretch a single icon make the same error. Set area to the value, or repeat a fixed-size icon in a waffle or isotype grid. **Repeated icons are read as counting, which is accurate.**",
+  "38": "A scatter with a trend line suggests causation, but the chart shows only association. Ice-cream sales and drownings both rise in summer, with heat driving both. Word the title as 'moves with' unless you have evidence for cause. **Readers take the title as the claim**, whatever the caption says afterwards.",
+  "39": "Simpson's paradox: a trend in pooled data can reverse when split by group. Treatment A looks worse overall yet is better in every severity group, because it was given to the more severe cases. **Disaggregate before publishing**, by sex, wealth quintile, urban or rural and caste, and show the split when it changes the story.",
+  "40": "Run this checklist before publishing: bars from zero and areas by area, a fair time window, a title that claims only what the data supports, a subgroup check, and source, date and units. **Run it on someone else's chart first.** It is easier to see there, and the habit transfers to your own work.",
+  "42": "Colour does three jobs: qualitative for unordered categories, sequential for ordered values from low to high, and diverging for values spreading both ways from a meaningful middle. **Most colour mistakes use the wrong family.** A diverging scale on data with no natural centre invents a midpoint, and a qualitative palette on ordered data destroys the order.",
+  "43": "For a quantity running low to high, use one hue from pale to deep, with steps even in perceived lightness. Borrow tested ramps such as ColorBrewer's Blues or Viridis, which are perceptually even and colour-blind safe. **Use five to seven bins and state them**, so the legend anchors the reader.",
+  "44": "A diverging scale puts a neutral colour at a real midpoint, such as zero, the mean or the national figure, with two clearly distinct hues at the ends. Centring on the median can paint a struggling region as average. **Say in the legend where the midpoint sits**, or comparability breaks between rounds.",
+  "45": "For unordered categories pick hues that are easy to tell apart and roughly equal in weight. Past about seven colours, readers lose track, so group small categories into 'other' or use small multiples. **Grey is the most under-used colour** in development charts: grey the context and colour only what you discuss.",
+  "46": "About 8% of men and 0.5% of women have some colour-vision deficiency, mostly red-green, so red against green fails millions of readers. Use Viridis, Okabe-Ito or ColorBrewer colour-blind-safe sets, and test in a simulator and in greyscale. **Blue and orange is the safe default pair.**",
+  "47": "The jet rainbow looks lively but lies: its bright bands invent boundaries in smooth data, its dark ends hide real differences, and it fails in greyscale and for colour-blind readers. Replace it with Viridis, cividis or a single-hue ColorBrewer ramp. **The pattern in your data may change**, because the rainbow was distorting it.",
+  "48": "Red reads as bad, hot, loss or stop, and green as good, go or growth. Do not colour a good outcome red by accident, and do not recolour a party or flag against convention. Meaning is cultural: red is auspicious in much of South Asia. **Reserve a bold colour for the one thing you want noticed.**",
+  "49": "Compare before and after: twelve bright bars become eleven grey bars and one coloured, a rainbow choropleth becomes a single-hue ramp, red for the good series becomes blue and orange, a twelve-swatch legend becomes direct labels. **Every improvement was a removal or a substitution**, so colour fixes cost nothing to try.",
+  "51": "Marks show the pattern, and words tell the reader what it means and what to trust. Titles, labels, annotations, units and sources do as much work as the geometry. Budget roughly half your effort on the picture and half on the words. **A chart that travels carries only what is inside its own frame.**",
+  "52": "A topic title makes the reader do the work: 'Under-five mortality by country, 2000-2022'. A finding title hands them the point: 'Child deaths have more than halved since 2000'. Keep the descriptive version as a subtitle. **A finding title is a commitment**, so check it against the chart.",
+  "53": "Direct labels beat legends because the eye no longer bounces between key and chart. Label each line at its right-hand end and write categories on the axis. With one to four series, direct labels almost always win. **Keep a legend only where direct labels will not fit**: a dense map or many small multiples.",
+  "54": "One or two annotations turn a chart from 'here is some data' into 'here is what happened'. Mark the spike, the policy start, the outlier and the definition change. **An unmarked definition change is read as real change**, and it is the most common way official series mislead.",
+  "55": "Every chart needs units, source, date and notes. Write the source line as something a reader can act on: 'NFHS-5 (2019-21), Table 4.3' can be checked, while 'Government data' cannot. **A sourced chart can travel on its own**; an unsourced one is just a claim. Flag estimates, projections and provisional figures.",
+  "56": "Quoting 63.7% implies you know the figure to a tenth of a point. Round to what your data and your reader need, usually whole numbers for the public. **Match the digits to the uncertainty**: a survey with a margin of 3 points should not quote decimals. Pick lakh and crore or millions and billions, and stay consistent.",
+  "57": "This worked example shows three small additions. A flat line of full-immunisation coverage climbs after 2014. Add a finding title, a marker and note at the 2014 inflection, and a source with 'latest data 2021'. **The same line now argues a point** instead of just plotting one.",
+  "59": "Use a table when readers need exact figures, will look up their own row, or have fewer than about 20 numbers. Use a chart when the pattern is the message. Do not bury 200 rows in a table that wants to be a chart. **Tables are also the accessible form**, since a screen reader can read them.",
+  "60": "A table is a designed object. Order rows by value, use light rules with a line under the header and at the foot, indent to show hierarchy, and put units in the header. **Add a change column** so the reader does no arithmetic. The slide calls it the highest-value addition to a comparison table.",
+  "61": "Right-align numbers, fix the decimal places and use tabular figures so digits line up. A longer number is then visibly a bigger one, so **a column of aligned numbers works as a crude bar chart**. Centring numbers or mixing 1,234 with 1234.0 destroys that. Left-align text and right-align numbers.",
+  "62": "A sparkline is a small axis-free line placed beside the number it describes, giving exact value and shape of history together. Its costs are no absolute reading and invisible small differences. It works best when rows share a scale. **Mark the last point and state the range** in the column header.",
+  "63": "A KPI card is one large figure with a label, a comparison and a source. The comparison is what makes it information: 76% means nothing until you know it was 62% in 2015 or that the target is 90%. **A big number without a comparison tells the reader very little.**",
+  "64": "Read this table the way you would build it: numbers right-aligned, units in the header, a change column and rows ordered by change. Immunisation rose 14 points, institutional births rose 10 and stunting fell 2. **The table answers both the lookup question and the pattern question.** The selection is illustrative.",
+  "66": "Two districts can share a mean income while one is comfortable and the other has a few rich households among many poor. Development data is often skewed, so the mean can mislead. **Report the median alongside the mean** for any skewed variable, and show the distribution where it drives the conclusion.",
+  "67": "A histogram's bin width changes the story: too wide hides structure, too narrow turns noise into pattern, and the software picks a default for you. **Try three or four bin widths and say which you used.** If the shape changes wildly with small changes, your data may be thinner than it looks.",
+  "68": "A box plot compresses a distribution into median, quartiles and whiskers, which is good for comparing many groups. It hides shape and sample size, so two very different distributions can give identical boxes. **Overlay the points when n is small** or when shape matters.",
+  "69": "Strip, jittered strip and beeswarm plots show every observation, so you see spread, clusters, outliers and the sample size. A group of four looks as authoritative as a group of four hundred in a box plot. **Use hex bins when n is large** and points would merge.",
+  "70": "Estimates drawn without uncertainty look more certain than they are. Add 95% confidence intervals to survey estimates, and say what the interval is, because standard error, 95% CI and min-max mean different things. **If intervals overlap across the whole ranking, do not present it as an order.**",
+  "71": "The margin of error is 1.96 times the square root of p(1-p) over n, evaluated at p = 0.5. Going from 400 to 1,500 respondents roughly halves the error, from 4.9 to 2.5 points, while going from 2,400 to 4,000 barely moves it. **That is why national surveys cluster around a few thousand.**",
+  "72": "Draw projections as a widening fan so uncertainty grows visibly with time. Mark where measured data ends and projection begins, with a solid then dashed line, and state the model or scenario. A single confident line invites the reader to believe a precision that does not exist. **An unmarked projection is read as data.**",
+  "73": "Three steps show an income distribution accurately: report the median as well as the mean, plot the histogram so the skew shows, and mark both on the chart. **When mean and median sit visibly apart on one axis, the reader sees the inequality** directly, with no statistics lecture.",
+  "75": "Ask whether the spatial pattern matters or whether you are mapping because maps look impressive. A map is right when location is the finding. The test: can you state the finding as 'Kerala is highest, Bihar lowest'? If so, **a sorted bar communicates it faster and more accurately** than any map.",
+  "76": "A choropleth shaded by counts mostly shows where the people are, so populous states light up whatever the real risk. Map rates, shares and per-capita figures. Total cases show population, while cases per 100,000 show risk. **The count choropleth is the commonest map error** in development reporting.",
+  "77": "Normalising turns a map of population into a map of the thing you care about: deaths per 100,000, spending per person, schools per 1,000 children. **The denominator is an argument**, so state it on the chart. Per 100,000 and per 100,000 women aged 15 to 49 can tell very different stories.",
+  "78": "On an area map, large sparsely populated places such as Rajasthan and Ladakh dominate the eye, while Delhi and urban Kerala nearly vanish even where far more people live. The map over-weights land and under-weights people. **A hex or tile cartogram gives every unit equal weight.**",
+  "79": "A cartogram resizes regions to a value such as population, or gives each region an equal tile. Contiguous cartograms are hard to recognise, tile maps lose real geography, and Dorling circles place regions only approximately. **Add a small conventional locator map** so readers can orient themselves, and label generously.",
+  "80": "How you cut the colour scale changes the map. Equal-interval bins crowd skewed data into one bin, quantile bins may imply tiny differences, natural breaks move between rounds, and fixed policy-based bins suit comparison over time. **State the scheme and cut-points in the legend**, and never tune bins until the map says what you want.",
+  "81": "Three decisions make a fair map of Indian states: use a rate such as female literacy percent, use hex tiles so small states read equally, and use a sequential ramp with stated bins. **Each choice removes a specific distortion** named earlier in the section. The Long View shows this chart built from Census data.",
+  "83": "A panel gives a chart minutes, a report reader a minute, a slide audience three seconds and a social media reader one second on a phone. **Design for the actual reader and the actual medium.** The commonest failure is showing an analyst's working chart to the public. A screenshotted chart carries only its own frame.",
+  "84": "Print, web, mobile and projector need different designs. Print can carry detail but must work in greyscale. Mobile needs one idea, large text and few categories. Projectors need high contrast, since thin lines and pale colours vanish. **Test on the medium** where the chart will appear before you ship.",
+  "85": "Accessibility covers contrast, type size, alt text and an underlying data table. Body text needs WCAG 4.5:1. Write alt text as the sentence you would say aloud, such as female literacy ranging from 53% in Bihar to 92% in Kerala. **Describe the finding and leave out the geometry.**",
+  "86": "Pair every colour with a second cue: dash patterns on lines, marker shapes on points, direct labels, or sorted position. Then the chart survives greyscale printing, a bad projector, a photographed screen and colour-vision deficiency. **Colour should be a bonus and never the only key.**",
+  "87": "Data-ink ratio asks what share of the ink encodes data, and says to maximise it. Drop heavy gridlines, borders and backgrounds. Keep axis ticks and labels, because words are data-ink too. **Treat data-ink as a direction to follow.** Gridlines that help trace a value across a wide chart earn their ink.",
+  "88": "Chartjunk is decoration that adds no information and often removes clarity: 3D effects, clip-art, busy backgrounds, redundant legends. The test is subtraction. **Remove an element and ask whether anything was lost.** If nothing was, it was junk, and the chart is now better.",
+  "89": "Interaction and animation help exploration, but a print reader, a screenshot or a slide shows none of it. **Design the static default first and make it complete.** Animate only when a transition shows the same objects moving between states, and offer filters so people can find their own region.",
+  "91": "Most of the effort goes into cleaning the data and exploring it with rough charts, and the pretty final chart is the last 10%. The step that ships broken is annotation and sourcing, because it arrives when time has run out. **Protect the final ten minutes** for source and annotation.",
+  "92": "Sketch on paper before you open a tool. It takes seconds and forces you to decide the axes, the sort, the title claim and what is greyed out, before the software decides for you: it picks the first column, sorts alphabetically and titles the chart 'Chart 1'. **The tool should execute your decision.**",
+  "93": "No-code options: spreadsheets for quick exploration, Datawrapper for clean, responsive, sourced charts and maps, Flourish for animated stories, RAWGraphs for unusual chart types. The slide says Datawrapper covers 80% of needs and is hard to make ugly. **Start there**, and check free-plan conditions such as attribution.",
+  "94": "Code wins when you need reproducibility, automation or a chart no tool offers. Python, R's ggplot2, D3 or Observable, and Vega-Lite each have a niche, and QGIS is the right tool for real cartography. **When the data updates, the chart regenerates**, and anyone can see what was done.",
+  "95": "Use the table to find data by purpose: NFHS for health at district level, Census, PLFS and NSS for population, work and consumption, data.gov.in, RBI and budget documents for administrative and fiscal data, global agencies for comparison. **Record the exact table and round at the moment you take a figure.**",
+  "96": "Four places to learn from: Our World in Data, the FT Visual Vocabulary, the FT and Economist graphics teams, and VizChitra. The fastest way to improve is to pick a chart you admire and work out element by element why it works. **Copy their structure**, such as framing and annotation, and leave the fonts.",
+  "97": "Five books: Tufte for data-ink, Cairo for chart integrity, Knaflic for decluttering and narrative, Munzner for marks-and-channels theory, and D'Ignazio and Klein for power and data. **If you read one, read Cairo**, which is the most directly useful for charts about public policy.",
+  "98": "Practise by redrawing: pick one chart a week, decide what it is for, re-encode it, declutter it, retitle it and source it. Keep the before and after side by side. **The pair teaches more than either alone.** Then explore The Long View, where every chart is built from a named, cited dataset.",
+  "99": "This is the whole course as a checklist: a short list of questions before you draw and five checks before you publish. Print it. The closing order is **honest first, clear second, beautiful third**. Every item on the right can be checked in under a minute."
+ }
+}

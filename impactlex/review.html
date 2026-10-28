@@ -85,10 +85,10 @@
     <div class="form-group" style="margin-top: 1.25rem;">
       <label for="reviewer-email">Your email</label>
       <input type="email" id="reviewer-email" required>
-      <div class="form-hint">Used only to check you're on the reviewer allow-list.</div>
+      <div class="form-hint">We email you a sign-in link. Only ImpactMojo admin accounts can open the queue.</div>
     </div>
-    <button class="btn btn-primary" id="reviewer-continue" type="button" style="margin-top: 0.5rem;">Continue</button>
-    <div id="auth-error" style="color: var(--danger-color); margin-top: 1rem; font-size: 0.9rem;"></div>
+    <button class="btn btn-primary" id="reviewer-continue" type="button" style="margin-top: 0.5rem;">Email me a link</button>
+    <div id="auth-error" role="status" style="color: var(--danger-color); margin-top: 1rem; font-size: 0.9rem;"></div>
   </div>
 
   <div class="review-page" id="review-page" hidden>
@@ -101,7 +101,7 @@
     </div>
 
     <div class="review-panel active" id="panel-contributions" role="tabpanel">
-      <div class="empty-panel">Contributions will appear here once the InstantDB backend is wired up. Meanwhile, locally queued submissions are in browser storage.</div>
+      <div class="empty-panel">No suggestions waiting.</div>
     </div>
     <div class="review-panel" id="panel-drafts" role="tabpanel">
       <div class="empty-panel">Run <code>node scripts/impactlex-ai-rewrite.mjs</code> to generate AI drafts from seed terms.</div>
@@ -112,6 +112,7 @@
   </div>
 </main>
 
+<script src="/js/vendor/supabase-js-2.114.0.js"></script>
 <script>
 (function() {
   const THEME_KEY = 'im-theme';
@@ -125,78 +126,89 @@
     localStorage.setItem(THEME_KEY, next);
   });
 
-  // Simple allow-list check. Not real auth — just a barrier against casual access.
-  // Real auth happens via InstantDB magic-link when wired up.
-  const ADMIN_ALLOWLIST = (window.IMPACTLEX_CONFIG && window.IMPACTLEX_CONFIG.adminEmails) || [];
-  const storedEmail = localStorage.getItem('impactlex:user-email');
+  // Real sign-in: a Supabase magic link. What a signed-in person can read is
+  // decided in the database (row-level security on impactlex_contributions
+  // calls public.is_admin()), not by anything in this page.
+  const CFG = window.IMPACTLEX_CONFIG || {};
+  const db = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey);
+  const $ = (id) => document.getElementById(id);
 
-  function renderQueues() {
-    // Load local contributions queue (offline submissions)
-    const local = JSON.parse(localStorage.getItem('impactlex:contributions-queue') || '[]');
-    const panel = document.getElementById('panel-contributions');
-    document.getElementById('count-contributions').textContent = local.length;
-    if (!local.length) return;
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
 
-    panel.innerHTML = local.map((c) => `
-      <div class="review-item" data-id="${c.id}">
+  async function renderQueues() {
+    const panel = $('panel-contributions');
+    const { data, error } = await db.from('impactlex_contributions')
+      .select('id, term, category, definition, example, email, created_at')
+      .eq('status', 'pending').order('created_at', { ascending: true });
+    if (error) { panel.innerHTML = '<div class="empty-panel">Could not load the queue.</div>'; return; }
+    $('count-contributions').textContent = data.length;
+    if (!data.length) { panel.innerHTML = '<div class="empty-panel">No suggestions waiting.</div>'; return; }
+    panel.innerHTML = data.map((c) => `
+      <div class="review-item" data-id="${escapeHtml(c.id)}">
         <h3>${escapeHtml(c.term)}</h3>
-        <div class="meta">${c.category} · ${new Date(c.createdAt).toLocaleString()} ${c.email ? '· ' + escapeHtml(c.email) : ''}</div>
+        <div class="meta">${escapeHtml(c.category || '')} · ${new Date(c.created_at).toLocaleString()} ${c.email ? '· ' + escapeHtml(c.email) : ''}</div>
         <div class="diff-grid">
-          <div class="diff-col"><h4>Definition</h4><textarea readonly>${escapeHtml(c.definition || '')}</textarea></div>
-          <div class="diff-col"><h4>Example</h4><textarea readonly>${escapeHtml(c.example || '')}</textarea></div>
+          <div class="diff-col"><h4>Definition</h4><textarea readonly aria-label="Definition for ${escapeHtml(c.term)}">${escapeHtml(c.definition || '')}</textarea></div>
+          <div class="diff-col"><h4>Example</h4><textarea readonly aria-label="Example for ${escapeHtml(c.term)}">${escapeHtml(c.example || '')}</textarea></div>
         </div>
         <div class="review-actions">
-          <button class="btn btn-primary" data-action="approve" data-id="${c.id}" type="button">Approve</button>
-          <button class="btn" data-action="reject" data-id="${c.id}" type="button">Reject</button>
+          <button class="btn btn-primary" data-action="approved" data-id="${escapeHtml(c.id)}" type="button">Approve</button>
+          <button class="btn" data-action="rejected" data-id="${escapeHtml(c.id)}" type="button">Reject</button>
         </div>
       </div>
     `).join('');
-
-    panel.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-action]');
-      if (!btn) return;
-      const queue = JSON.parse(localStorage.getItem('impactlex:contributions-queue') || '[]');
-      const next = queue.filter((c) => c.id !== btn.dataset.id);
-      localStorage.setItem('impactlex:contributions-queue', JSON.stringify(next));
-      renderQueues();
-    });
   }
 
-  function escapeHtml(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-  }
+  // Approving marks the row; adding the term to the glossary is a pull request
+  // against impactlex/data/seed-snapshot.json.
+  $('panel-contributions').addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    btn.disabled = true;
+    const { error } = await db.from('impactlex_contributions')
+      .update({ status: btn.dataset.action, reviewed_at: new Date().toISOString() })
+      .eq('id', btn.dataset.id);
+    if (error) { btn.disabled = false; $('auth-error').textContent = 'Could not save that decision.'; return; }
+    renderQueues();
+  });
 
-  function enterReview(email) {
-    // Dev mode: if ADMIN_ALLOWLIST is empty, allow any email to view (snapshot mode).
-    if (ADMIN_ALLOWLIST.length && !ADMIN_ALLOWLIST.includes(email)) {
-      document.getElementById('auth-error').textContent = 'That email is not on the reviewer allow-list.';
+  async function enterIfAdmin() {
+    const { data: sess } = await db.auth.getSession();
+    if (!sess.session) return;
+    const { data: isAdmin } = await db.rpc('is_admin');
+    if (!isAdmin) {
+      $('auth-error').textContent = 'This account is not an ImpactMojo admin.';
       return;
     }
-    localStorage.setItem('impactlex:user-email', email);
-    document.getElementById('auth-gate').hidden = true;
-    document.getElementById('review-page').hidden = false;
+    $('auth-gate').hidden = true;
+    $('review-page').hidden = false;
     renderQueues();
   }
+  enterIfAdmin();
 
-  if (storedEmail && (!ADMIN_ALLOWLIST.length || ADMIN_ALLOWLIST.includes(storedEmail))) {
-    enterReview(storedEmail);
-  }
-
-  document.getElementById('reviewer-continue').addEventListener('click', () => {
-    const email = document.getElementById('reviewer-email').value.trim().toLowerCase();
+  $('reviewer-continue').addEventListener('click', async () => {
+    const email = $('reviewer-email').value.trim().toLowerCase();
     if (!email || !email.includes('@')) {
-      document.getElementById('auth-error').textContent = 'Please enter a valid email.';
+      $('auth-error').textContent = 'Please enter a valid email.';
       return;
     }
-    enterReview(email);
+    const { error } = await db.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: false, emailRedirectTo: location.origin + '/impactlex/review.html' },
+    });
+    $('auth-error').textContent = error
+      ? 'Could not send the link to that address.'
+      : 'Check your email for the sign-in link.';
   });
 
   document.querySelectorAll('.review-tab').forEach((tab) => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.review-tab').forEach((t) => t.classList.remove('active'));
-      document.querySelectorAll('.review-panel').forEach((p) => p.classList.remove('active'));
+      document.querySelectorAll('.review-panel').forEach((x) => x.classList.remove('active'));
       tab.classList.add('active');
-      document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
+      $(`panel-${tab.dataset.tab}`).classList.add('active');
     });
   });
 })();

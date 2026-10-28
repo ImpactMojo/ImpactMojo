@@ -647,17 +647,17 @@ SEC4 = [
             "Late Sep 2020: presidential assent",
             "12 Jan 2021: Supreme Court stays implementation",
             "19 Nov 2021: Prime Minister announces repeal",
-            "1 Dec 2021: laws formally repealed"]),
+            "30 Nov 2021: laws formally repealed"]),
         TC([B("The Supreme Court stayed implementation of all three laws on 12 January 2021 and "
               "appointed a committee to hear the parties. The laws therefore never operated in full. "
               "On 19 November 2021 the Prime Minister announced in a televised address that the "
               "government would repeal them in the coming session of Parliament."),
             B("The Farm Laws Repeal Bill 2021 was introduced and passed by both Houses on 29 November "
-              "2021, without debate in either House, and the laws were formally repealed on 1 December "
-              "2021.", sm=True)],
+              "2021, without debate in either House, and the laws were formally repealed on 30 November "
+              "2021, when the Farm Laws Repeal Act received the President's assent.", sm=True)],
            [P("cyan", "Why the timeline matters",
-              "The Acts were passed in a single session as government bills and repealed in a single "
-              "day. The Rajya Sabha vote was by voice, which meant no recorded division. Most of the "
+              "The Acts were passed in a single session as government bills and repealed within two days of "
+              "the repeal bill being introduced. The Rajya Sabha vote was by voice, which meant no recorded division. Most of the "
               "argument took place outside Parliament, at the protest sites on Delhi's borders at "
               "Singhu, Tikri and Ghazipur, which farmers left in December 2021, and in the "
               "Supreme Court."),

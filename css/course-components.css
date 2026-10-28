@@ -285,3 +285,394 @@ body.dark-mode .worked-example-header { color: #6EE7B7; }
   font-style: italic;
   color: var(--ccx-text-2, #475569);
 }
+
+/* ============================================================================
+   Layout components that stored course text uses and no shell styled.
+
+   Found 27 October 2026. The module text in Supabase writes `grid-2`,
+   `feature-card`, `comparison-item`, `exercise-box` and `data-source-*`, and
+   none of the shells had a rule for them. `.grid-2` was the worst: without it
+   the four "thinkers" cards stacked full width, each with a 40px gradient icon
+   tile above the name, which read as huge icons and a broken page.
+
+   Same two rules as above: this sheet loads before each shell's inline
+   <style>, so a shell that styles one of these still wins, and every colour is
+   read through a token with a literal fallback.
+   ============================================================================ */
+
+/* --- two-up grid and its cards ------------------------------------------ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ccx-sp-md);
+  margin: var(--ccx-sp-lg) 0;
+}
+.grid-2 > * { margin: 0; min-width: 0; }
+@media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.feature-card {
+  background: var(--ccx-bg-2);
+  border: 1px solid var(--ccx-border);
+  border-radius: 10px;
+  padding: var(--ccx-sp-md) 1.1rem;
+}
+.feature-card h4 { margin: 0 0 0.35rem; font-size: 1rem; color: var(--color-text-primary); }
+.feature-card p { margin: 0; font-size: 0.92rem; line-height: 1.6; color: var(--ccx-text-2); }
+.feature-card-icon { margin-bottom: 0.6rem; }
+
+/* --- side-by-side comparison -------------------------------------------- */
+.comparison-item {
+  background: var(--ccx-bg-2);
+  border: 1px solid var(--ccx-border);
+  border-radius: 10px;
+  padding: var(--ccx-sp-md) 1.1rem;
+}
+.comparison-item h4 { margin: 0 0 0.5rem; font-size: 1rem; color: var(--color-text-primary); }
+.comparison-item ul { margin: 0; padding-left: 1.2rem; }
+.comparison-item li { margin: 0.35rem 0; line-height: 1.55; color: var(--ccx-text-2); }
+.comparison-item.highlight { border-color: var(--ccx-cyan); box-shadow: inset 4px 0 0 var(--ccx-cyan); }
+
+/* --- exercise box ------------------------------------------------------- */
+.exercise-box {
+  background: var(--ccx-c-orange, rgba(180, 83, 9, 0.10));
+  border: 1px solid var(--ccx-border);
+  border-left: 4px solid var(--ccx-gold);
+  border-radius: 8px;
+  padding: var(--ccx-sp-md) 1.25rem;
+  margin: var(--ccx-sp-lg) 0;
+}
+.exercise-box h4 {
+  display: flex;
+  align-items: center;
+  gap: var(--ccx-sp-sm);
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+}
+.exercise-box h4 svg { width: 18px; height: 18px; flex-shrink: 0; stroke: currentColor; fill: none; }
+.exercise-box p { margin: 0; line-height: 1.7; color: var(--ccx-text-2); }
+
+/* --- data source links -------------------------------------------------- */
+.data-source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--ccx-sp-md);
+  margin: var(--ccx-sp-lg) 0;
+}
+.data-source-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--ccx-bg-2);
+  border: 1px solid var(--ccx-border);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+.data-source-card:hover { border-color: var(--ccx-cyan); }
+.data-source-card:focus-visible { outline: 3px solid var(--ccx-cyan); outline-offset: 2px; }
+.data-source-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  background: var(--gradient-primary, linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%));
+}
+.data-source-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; }
+.data-source-info { min-width: 0; }
+.data-source-title { font-weight: 600; font-size: 0.95rem; color: var(--color-text-primary); }
+.data-source-meta { margin-top: 0.15rem; font-size: 0.8rem; line-height: 1.4; color: var(--ccx-text-2); }
+
+/* --- first heading in a card or callout sits at the top ----------------- */
+.content-card > h3:first-child,
+.callout-content > h4:first-child { margin-top: 0; }
+.callout-icon { line-height: 1; padding-top: 0.15rem; }
+
+/* ============================================================================
+   Second batch: components found by scanning all 21 courses (27 Oct 2026).
+   Each class below is written by the stored module text and styled by no
+   shell. Same rules as above: loaded first, so a shell's own rule still wins;
+   tokens read with literal fallbacks; light and dark through the --ccx-*
+   tokens. Components that already carry inline styles (`term-card`,
+   `key-terms-grid`, `reflection-box`) are left alone.
+   ============================================================================ */
+
+/* --- lists and small text ----------------------------------------------- */
+.body-list { margin: 0.75rem 0 1.1rem; padding-left: 1.3rem; }
+.body-list li { margin: 0.5rem 0; line-height: 1.7; }
+.body-list li::marker { color: var(--ccx-cyan); }
+.text-muted { color: var(--ccx-text-2); }
+.term { font-weight: 600; color: var(--color-text-primary); }
+
+/* --- section icons ------------------------------------------------------ */
+.section-header-icon { width: 20px; height: 20px; vertical-align: -3px; margin-right: 0.35rem; }
+
+/* --- quiz question and boxed readings (public choice) ------------------- */
+.quiz-question-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--color-text-primary);
+}
+.reading-box-header {
+  display: flex;
+  align-items: center;
+  gap: var(--ccx-sp-sm);
+  margin-bottom: 0.5rem;
+}
+.reading-box-header h4 { margin: 0; }
+.reading-box-header img { width: 20px; height: 20px; flex-shrink: 0; }
+.concept-box-body { line-height: 1.7; color: var(--ccx-text-2); }
+.concept-box-body p { margin: 0; }
+
+/* --- stat boxes (media) ------------------------------------------------- */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--ccx-sp-md);
+  margin: var(--ccx-sp-lg) 0;
+}
+.stat-box {
+  background: var(--ccx-bg-2);
+  border: 1px solid var(--ccx-border);
+  border-radius: 8px;
+  padding: var(--ccx-sp-md);
+  text-align: center;
+}
+
+/* --- three-up grid and comparison grid ---------------------------------- */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ccx-sp-md);
+  margin: var(--ccx-sp-lg) 0;
+}
+.grid-3 > * { margin: 0; min-width: 0; }
+@media (max-width: 800px) { .grid-3 { grid-template-columns: 1fr; } }
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ccx-sp-md);
+  margin: var(--ccx-sp-lg) 0;
+}
+.comparison-grid > * { margin: 0; min-width: 0; }
+@media (max-width: 700px) { .comparison-grid { grid-template-columns: 1fr; } }
+
+/* --- alerts and teal callout -------------------------------------------- */
+.alert {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: var(--ccx-sp-md) 1.1rem;
+  border-radius: 8px;
+  margin: var(--ccx-sp-lg) 0;
+  background: var(--ccx-c-gray, rgba(100, 116, 139, 0.08));
+}
+.alert img, .alert svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 0.1rem; }
+.alert > div { flex: 1; min-width: 0; line-height: 1.65; }
+.alert-info { background: var(--ccx-c-blue); }
+.alert-warning { background: var(--ccx-c-yellow); }
+.callout-teal { background: var(--ccx-c-green); }
+
+/* --- numbered steps and capstone phases --------------------------------- */
+.framework-step, .capstone-phase {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: var(--ccx-sp-md) 1.1rem;
+  margin: var(--ccx-sp-md) 0;
+  background: var(--ccx-bg-2);
+  border: 1px solid var(--ccx-border);
+  border-radius: 10px;
+}
+.framework-step { display: block; }
+.step-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+.step-header h4 { margin: 0; }
+.step-number, .phase-number {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  background: #4F46E5; /* a fill that carries white in both themes, so it does not follow --indigo */
+}
+.step-content p:last-child, .phase-content p:last-child { margin-bottom: 0; }
+.phase-content { flex: 1; min-width: 0; }
+.phase-content h4 { margin: 0 0 0.35rem; }
+
+/* --- lab callout, exercise header and downloads (MEL) ------------------- */
+.lab-callout {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: var(--ccx-sp-md) 1.25rem;
+  margin: var(--ccx-sp-lg) 0;
+  background: var(--ccx-c-green);
+  border: 1px solid var(--ccx-border);
+  border-radius: 10px;
+}
+.lab-callout-icon img { width: 28px; height: 28px; display: block; }
+.lab-callout-content { flex: 1; min-width: 0; }
+.lab-callout-title { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; margin-bottom: 0.35rem; color: var(--color-text-primary); }
+.lab-callout-title img { width: 16px; height: 16px; }
+.lab-callout-description { line-height: 1.65; color: var(--ccx-text-2); margin-bottom: 0.75rem; }
+.lab-callout-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-weight: 600; text-decoration: underline;
+  color: var(--color-text-primary);
+}
+.lab-callout-link img { width: 16px; height: 16px; }
+.data-exercise-header { display: flex; align-items: center; gap: var(--ccx-sp-sm); font-weight: 700; margin-bottom: 0.5rem; }
+.data-exercise-header svg { width: 20px; height: 20px; flex-shrink: 0; }
+.excel-download {
+  display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--ccx-border);
+  border-radius: 8px;
+  background: var(--ccx-bg-2);
+  font-weight: 600; text-decoration: none;
+  color: var(--color-text-primary);
+}
+.excel-download:hover { border-color: var(--ccx-cyan); }
+.excel-download svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+/* --- coaching links ----------------------------------------------------- */
+.coach-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.75rem; }
+.coach-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.9rem; font-weight: 600; text-decoration: none;
+  border: 1px solid var(--ccx-cyan);
+  color: var(--color-text-primary);
+}
+.coach-link img { width: 14px; height: 14px; }
+.coach-link.secondary { border-color: var(--ccx-border); }
+
+/* --- data visualisation course ------------------------------------------ */
+.encoding-level { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 0.75rem; row-gap: 0.2rem; align-items: center; margin: 0.75rem 0; }
+.encoding-rank { grid-row: 1 / 3; align-self: start; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 700; font-size: 0.85rem; background: var(--ccx-bg-2); border: 1px solid var(--ccx-border); color: var(--color-text-primary); }
+.encoding-bar { grid-column: 2; padding: 0.35rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; color: #fff; background: #4F46E5; box-sizing: border-box; max-width: 100%; }
+.encoding-desc { grid-column: 2; font-size: 0.85rem; color: var(--ccx-text-2); }
+.key-concept-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; }
+.key-concept-title { font-weight: 700; font-size: 1.05rem; color: var(--color-text-primary); }
+.notebook-card {
+  display: flex; align-items: center; gap: 0.85rem;
+  padding: 0.8rem 1rem; margin: 0.6rem 0;
+  background: var(--ccx-bg-2); border: 1px solid var(--ccx-border); border-radius: 10px;
+  text-decoration: none; color: inherit;
+}
+.notebook-card:hover { border-color: var(--ccx-cyan); }
+.notebook-icon { width: 36px; height: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 8px; background-color: #047857; background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)) !important; }
+.notebook-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; }
+.notebook-info { flex: 1; min-width: 0; }
+.notebook-title { font-weight: 600; color: var(--color-text-primary); }
+.notebook-desc { font-size: 0.85rem; color: var(--ccx-text-2); }
+.notebook-badge { flex-shrink: 0; padding: 0.15rem 0.55rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; color: #fff; background-color: #047857; /* default when the inline colour variable is undefined */ /* the colour is set inline per language, and an inline `background` resets background-image, so the dark film that keeps white readable needs !important */ background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)) !important; }
+.visual-example { margin: var(--ccx-sp-lg) 0; border: 1px solid var(--ccx-border); border-radius: 10px; overflow: hidden; background: var(--ccx-bg-2); }
+.visual-example-header { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.7rem 1rem; border-bottom: 1px solid var(--ccx-border); }
+.visual-example-title { font-weight: 600; color: var(--color-text-primary); }
+.visual-example-badge { flex-shrink: 0; padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; color: var(--color-text-primary); border: 1px solid var(--ccx-cyan); }
+.visual-example-content { display: flex; padding: 1rem; }
+.visual-example-caption { padding: 0.6rem 1rem; font-size: 0.85rem; font-style: italic; color: var(--ccx-text-2); border-top: 1px solid var(--ccx-border); }
+.quote-box { margin: var(--ccx-sp-lg) 0; padding: var(--ccx-sp-md) 1.25rem; border-left: 4px solid var(--ccx-cyan); background: var(--ccx-bg-2); border-radius: 0 8px 8px 0; }
+.quote-box blockquote { margin: 0 0 0.4rem; font-style: italic; line-height: 1.65; color: var(--color-text-primary); }
+.quote-box cite { font-size: 0.85rem; color: var(--ccx-text-2); }
+
+/* --- dark theme: line icons loaded as <img> are black ------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .lab-callout-icon img,
+  :root:not([data-theme="light"]) .lab-callout-link img,
+  :root:not([data-theme="light"]) .coach-link img,
+  :root:not([data-theme="light"]) .reading-box-header img { filter: invert(1); }
+}
+:root[data-theme="dark"] .lab-callout-icon img,
+:root[data-theme="dark"] .lab-callout-link img,
+:root[data-theme="dark"] .coach-link img,
+:root[data-theme="dark"] .reading-box-header img,
+html.dark .lab-callout-icon img,
+html.dark .lab-callout-link img,
+html.dark .coach-link img,
+html.dark .reading-box-header img,
+body.dark-mode .lab-callout-icon img,
+body.dark-mode .lab-callout-link img,
+body.dark-mode .coach-link img,
+body.dark-mode .reading-box-header img { filter: invert(1); }
+
+/* ============================================================================
+   Third batch: icons with no size, and the last unstyled boxes (27 Oct 2026).
+
+   An inline <svg> with a viewBox and no width or height fills its container.
+   On Seeing Data the reading-list icons rendered 962px square, the icon on
+   every reference link 940px, and the chart-chooser tile 1020px, each as a
+   black block. Scoped to the module text so a shell's own `.icon` is not
+   touched.
+   ============================================================================ */
+.module-content-placeholder .icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; flex-shrink: 0; color: var(--ccx-cyan); }
+.module-content-placeholder .icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+.module-content-placeholder li:has(> .icon) { display: flex; gap: 0.75rem; align-items: flex-start; }
+.module-content-placeholder li > .icon { margin-top: 0.2rem; }
+.module-content-placeholder .external-icon { width: 14px; height: 14px; margin-left: 0.35rem; vertical-align: -2px; flex-shrink: 0; fill: none; stroke: currentColor; }
+.interactive-demo { margin: var(--ccx-sp-lg) 0; padding: var(--ccx-sp-lg); background: var(--ccx-bg-2); border: 1px dashed var(--ccx-border); border-radius: 12px; }
+.interactive-demo-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.6rem; border-radius: 8px; background: #4F46E5; }
+.interactive-demo-icon svg { width: 22px; height: 22px; stroke: #fff; fill: none; }
+
+/* --- coloured callout variants ------------------------------------------ */
+.callout-box {
+  display: flex; gap: var(--ccx-sp-md); padding: var(--ccx-sp-lg);
+  border-radius: 6px; margin: var(--ccx-sp-xl) 0;
+  background: var(--ccx-c-gray, rgba(100, 116, 139, 0.08));
+}
+.callout-box .callout-icon img { width: 20px; height: 20px; display: block; }
+.callout.tip, .callout-box.tip, .callout.success, .callout-box.success { background: var(--ccx-c-green); }
+.callout.warning, .callout-box.warning { background: var(--ccx-c-yellow); }
+.callout-box.tip .callout-icon img, .callout-box.warning .callout-icon img, .callout-box.success .callout-icon img { filter: none; }
+
+/* --- section labels, captions, tables, code, case studies --------------- */
+.section-number { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ccx-text-2); margin-bottom: 0.25rem; }
+.subtitle { font-weight: 400; font-size: 0.7em; color: var(--ccx-text-2); margin-left: 0.4rem; }
+.table-note { margin: 0.4rem 0 0; font-size: 0.82rem; font-style: italic; color: var(--ccx-text-2); }
+.data-table-wrapper, .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: var(--ccx-sp-md) 0; }
+.code-block { margin: var(--ccx-sp-lg) 0; padding: 1rem 1.1rem; overflow-x: auto; background: var(--ccx-bg-2); border: 1px solid var(--ccx-border); border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; color: var(--color-text-primary); }
+.code-block code { font: inherit; white-space: inherit; }
+.code-block .comment { color: var(--ccx-text-2); font-style: italic; }
+.code-block .string { color: #047857; }
+:root[data-theme="dark"] .code-block .string, html.dark .code-block .string, body.dark-mode .code-block .string { color: #6EE7B7; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .code-block .string { color: #6EE7B7; } }
+.case-study-box { margin: var(--ccx-sp-lg) 0; padding: var(--ccx-sp-md) 1.25rem; background: var(--ccx-bg-2); border: 1px solid var(--ccx-border); border-left: 4px solid var(--ccx-cyan); border-radius: 8px; }
+.case-study-box h4 { display: flex; align-items: center; gap: 0.5rem; margin: 0 0 0.5rem; }
+
+/* --- Media: the large module number ------------------------------------- */
+.module-header:has(> .module-number-large:only-child) { margin: 0.5rem 0 1rem; }
+.module-number-large { font-size: 3rem; font-weight: 800; line-height: 1; color: var(--ccx-text-2); letter-spacing: -0.02em; }
+
+/* ============================================================================
+   Contrast corrections found by a phone and dark-mode pass over all 21 courses.
+   Course shells write their own accent as text; several of those colours are
+   too dark for the dark surface or too light for the cream one. These are
+   inks only: fills keep their colour and the buttons that sit on them are
+   handled in js/course-loader.js, which picks the ink by comparing ratios.
+   ============================================================================ */
+body .resources-eyebrow, body .excerpt-btn { color:#075985; }
+body .stat-change.positive { color:#15803D; }
+body .stat-change.negative { color:#B91C1C; }
+body .module-tag { color:#6D28D9; }
+:root[data-theme="dark"] body .resources-eyebrow, html.dark body .resources-eyebrow, body.dark-mode .resources-eyebrow { color:#38BDF8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body .resources-eyebrow { color:#38BDF8; } }
+:root[data-theme="dark"] body .excerpt-btn, html.dark body .excerpt-btn, body.dark-mode .excerpt-btn { color:#E0F2FE; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body .excerpt-btn { color:#E0F2FE; } }
+:root[data-theme="dark"] body .problem-set-header, :root[data-theme="dark"] body .problem-set summary, :root[data-theme="dark"] body .module-content-placeholder summary, :root[data-theme="dark"] body .stat-value, :root[data-theme="dark"] body .stat-number, :root[data-theme="dark"] body .role, :root[data-theme="dark"] body .coach-name, :root[data-theme="dark"] body .concept-box-title, :root[data-theme="dark"] body .concept-box-header, :root[data-theme="dark"] body .mcq-section-title, :root[data-theme="dark"] body .timeline-year, :root[data-theme="dark"] body .bar-value, :root[data-theme="dark"] body .resource-link, :root[data-theme="dark"] body .resource-author, :root[data-theme="dark"] body .resource-quick-link, :root[data-theme="dark"] body .coach-link.secondary, :root[data-theme="dark"] body .content-card h5, :root[data-theme="dark"] body .resource-card .title, :root[data-theme="dark"] body .module-content-placeholder a:not([class]):not([style*="background"]), html.dark body .problem-set-header, html.dark body .problem-set summary, html.dark body .module-content-placeholder summary, html.dark body .stat-value, html.dark body .stat-number, html.dark body .role, html.dark body .coach-name, html.dark body .concept-box-title, html.dark body .concept-box-header, html.dark body .mcq-section-title, html.dark body .timeline-year, html.dark body .bar-value, html.dark body .resource-link, html.dark body .resource-author, html.dark body .resource-quick-link, html.dark body .coach-link.secondary, html.dark body .content-card h5, html.dark body .resource-card .title, html.dark body .module-content-placeholder a:not([class]):not([style*="background"]), body.dark-mode .problem-set-header, body.dark-mode .problem-set summary, body.dark-mode .module-content-placeholder summary, body.dark-mode .stat-value, body.dark-mode .stat-number, body.dark-mode .role, body.dark-mode .coach-name, body.dark-mode .concept-box-title, body.dark-mode .concept-box-header, body.dark-mode .mcq-section-title, body.dark-mode .timeline-year, body.dark-mode .bar-value, body.dark-mode .resource-link, body.dark-mode .resource-author, body.dark-mode .resource-quick-link, body.dark-mode .coach-link.secondary, body.dark-mode .content-card h5, body.dark-mode .resource-card .title, body.dark-mode .module-content-placeholder a:not([class]) { color:#7DD3FC; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body .problem-set-header, :root:not([data-theme="light"]) body .problem-set summary, :root:not([data-theme="light"]) body .module-content-placeholder summary, :root:not([data-theme="light"]) body .stat-value, :root:not([data-theme="light"]) body .stat-number, :root:not([data-theme="light"]) body .role, :root:not([data-theme="light"]) body .coach-name, :root:not([data-theme="light"]) body .concept-box-title, :root:not([data-theme="light"]) body .concept-box-header, :root:not([data-theme="light"]) body .mcq-section-title, :root:not([data-theme="light"]) body .timeline-year, :root:not([data-theme="light"]) body .bar-value, :root:not([data-theme="light"]) body .resource-link, :root:not([data-theme="light"]) body .resource-author, :root:not([data-theme="light"]) body .resource-quick-link, :root:not([data-theme="light"]) body .coach-link.secondary, :root:not([data-theme="light"]) body .content-card h5, :root:not([data-theme="light"]) body .resource-card .title, :root:not([data-theme="light"]) body .module-content-placeholder a:not([class]):not([style*="background"]) { color:#7DD3FC; } }
+:root[data-theme="dark"] body .stat-change.positive, html.dark body .stat-change.positive, body.dark-mode .stat-change.positive { color:#4ADE80; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body .stat-change.positive { color:#4ADE80; } }
+:root[data-theme="dark"] body .stat-change.negative, html.dark body .stat-change.negative, body.dark-mode .stat-change.negative { color:#FCA5A5; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body .stat-change.negative { color:#FCA5A5; } }
+:root[data-theme="dark"] body .module-tag, html.dark body .module-tag, body.dark-mode .module-tag { color:#C4B5FD; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body .module-tag { color:#C4B5FD; } }
+:root[data-theme="dark"] body .content-card p, html.dark body .content-card p, body.dark-mode .content-card p { color:#CBD5E1; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body .content-card p { color:#CBD5E1; } }

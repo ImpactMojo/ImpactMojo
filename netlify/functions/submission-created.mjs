@@ -50,6 +50,24 @@ const FILES = {
   "Evaluation & Research Costing Calculator": "ImpactMojo-Calculator-Evaluation-Costing.zip",
   "Programme Unit Economics & Pricing Calculator": "ImpactMojo-Calculator-Unit-Economics-Pricing.zip",
   "Evaluation Essentials Kit": "ImpactMojo-Evaluation-Essentials-Kit.zip",
+  "ToR Clarification Letter Builder": "ImpactMojo-ToR-Clarification-Letter-Template.docx",
+  "Three-Option Offer Template": "ImpactMojo-Three-Option-Offer-Template.docx",
+  "Engagement Charter & Independence Declaration": "ImpactMojo-Engagement-Charter-Template.docx",
+  "Weekly Status Note & Escalation Template": "ImpactMojo-Weekly-Status-Note-Template.docx",
+  "Evidence Strength Rating Guide": "ImpactMojo-Evidence-Strength-Rating-Guide.docx",
+  "Findings Storyline Template": "ImpactMojo-Findings-Storyline-Template.docx",
+  "Validation Workshop Plan": "ImpactMojo-Validation-Workshop-Plan-Template.docx",
+  "After-Action Review Template": "ImpactMojo-After-Action-Review-Template.docx",
+  "Client Feedback Survey & Debrief": "ImpactMojo-Client-Feedback-Template.docx",
+  "Case Study Template with Consent": "ImpactMojo-Case-Study-Consent-Template.docx",
+  "Invoice Pack: GST and TDS": "ImpactMojo-Invoice-GST-TDS-Pack.zip",
+  "Kick-off Checklist and Workplan": "ImpactMojo-Kickoff-Workplan.zip",
+  "RAID Log": "ImpactMojo-RAID-Log.zip",
+  "Impact and Ease Prioritisation": "ImpactMojo-Impact-Ease-Prioritisation.zip",
+  "Management Response Tracker": "ImpactMojo-Management-Response-Tracker.zip",
+  "Bid or No-Bid Scorecard": "ImpactMojo-Bid-No-Bid-Scorecard.zip",
+  "Statement of Work & Change Request Template": "ImpactMojo-SOW-Change-Request-Template.docx",
+  "Inception Report & Evaluation Matrix Template": "ImpactMojo-Inception-Report-Template.docx",
   // Flagship Course Notes (PDF) — ₹350 each
   "Gandhi's Political Thought: Philosophy for Praxis, Course Notes": "ImpactMojo-Notes-gandhi.pdf",
   "Understanding Development: An Economics Perspective, Course Notes": "ImpactMojo-Notes-devecon.pdf",
@@ -234,15 +252,41 @@ const esc = (v) => String(v == null ? "" : v)
 
 const sign = (parts) => crypto.createHmac("sha256", ADMIN_KEY).update(parts.join("|")).digest("hex").slice(0, 32);
 
-async function sendMail(to, subject, html) {
-  if (!SERVICE_KEY) return;
+// One row per mail, sent or not, so "did it go out" is a query and not a guess.
+// Best effort: a failure to log never changes what the buyer or owner sees.
+async function logMail(to, subject, ok, attempts, detail) {
   try {
-    await fetch(`${SUPABASE_URL}/functions/v1/status-alert`, {
+    await fetch(`${SUPABASE_URL}/rest/v1/order_mail_log`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ to, subject, html }),
+      headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json", Prefer: "return=minimal" },
+      body: JSON.stringify({ kind: "order", to_email: String(to).slice(0, 200), subject: String(subject).slice(0, 200), status: ok ? "sent" : "failed", attempts, detail: detail ? String(detail).slice(0, 400) : null }),
     });
-  } catch (e) { console.log("[submission] mail failed:", e.message); }
+  } catch (e) { console.log("[submission] mail log failed", e.message); }
+}
+
+// True only when the provider accepted the message ({sent:true} from
+// status-alert). Tried twice and every failure is logged with its status, so a
+// refused "Confirm payment" mail leaves a trace instead of looking like an
+// order that never happened.
+async function sendMail(to, subject, html) {
+  if (!SERVICE_KEY) { console.log("[submission] mail skipped: no service key"); return false; }
+  let lastDetail = "";
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const r = await fetch(`${SUPABASE_URL}/functions/v1/status-alert`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ to, subject, html }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j && j.sent === true) { await logMail(to, subject, true, attempt); return true; }
+      lastDetail = r.status + " " + JSON.stringify(j).slice(0, 150);
+      console.log("[submission] mail not sent, attempt", attempt, "status", r.status, JSON.stringify(j).slice(0, 200), "subject:", subject);
+    } catch (e) { lastDetail = e.message; console.log("[submission] mail failed, attempt", attempt, e.message, "subject:", subject); }
+    if (attempt === 1) await new Promise((res) => setTimeout(res, 1500));
+  }
+  await logMail(to, subject, false, 2, lastDetail);
+  return false;
 }
 
 // Enquiry forms carry no payment, so there is nothing to confirm. Each one is

@@ -456,8 +456,11 @@
     /* The story intro (.story-screen > .story-card, in five games) is a dark
        storybook scene in both themes: keep its card out of the card rules
        above and below, and make the backdrop opaque so the page and its
-       footer do not show through it. */
-    '.story-screen { background: #0B1120 !important; }' +
+       footer do not show through it. Only an overlay gets that backdrop
+       (.imx-story-overlay, set below): Counterfactual's .story-screen is a
+       section of the page, and painting it dark put light-theme text on a
+       near-black band (#1281). */
+    '.imx-story-overlay { background: #0B1120 !important; }' +
     'body :is(.story-screen, .story-modal) .story-card, body :is(.story-screen, .story-modal) .story-card :is(p, span, li, label, small, h1, h2, h3, button) { color: #E2E8F0 !important; }' +
     'body :is(.story-screen, .story-modal) .story-card .story-title { color: #FBBF24 !important; }' +
     /* counterfactual-game has no .story-card: its scene text sits in
@@ -652,6 +655,9 @@
       '.imx-gh-logo span { font-size: 0.8rem; }' +
     '}';
   document.head.appendChild(css);
+  [].forEach.call(document.querySelectorAll('.story-screen'), function (el) {
+    if (getComputedStyle(el).position === 'fixed') el.classList.add('imx-story-overlay');
+  });
 
   // ── JS-based contrast fixer ──────────────────────────────
   // Runs after page load to catch inline styles the CSS can't override

@@ -1,0 +1,1168 @@
+{
+ "slug": "sem",
+ "intro": "Read the deck for the facts and these notes for the thinking. The notes under each slide explain it, tell you what to remember and warn you where people slip. Work the illustrative examples in pencil, check yourself against the questions at each section, and write your own notes in the space around mine.",
+ "sections": [
+  {
+   "n": 1,
+   "title": "What SEM Is, and Is Not",
+   "big_idea": "SEM measures **hidden constructs through several questions** and relates them in one model, so measurement error does not leak into the results.",
+   "in_plain_words": [
+    "Women's empowerment, trust and food insecurity are not columns in a dataset. Each is inferred from several imperfect questions. Summing the answers and running a regression treats the sum as exact, which weakens every coefficient. SEM joins a measurement model and a structural model in one estimate, so error is separated from the relationships you care about.",
+    "A path diagram is a set of equations. Every arrow is a parameter to estimate and **every missing arrow is a restriction**, which is what makes the model testable. Covariance-based SEM and PLS-SEM share a name and answer different questions. If a summed scale and OLS would answer yours, use them."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "The SEM family",
+    "children": [
+     {
+      "label": "Measurement only",
+      "items": [
+       "Confirmatory factor analysis"
+      ]
+     },
+     {
+      "label": "Structure only",
+      "items": [
+       "Path analysis, observed variables"
+      ]
+     },
+     {
+      "label": "Both together",
+      "items": [
+       "The full latent variable model"
+      ]
+     },
+     {
+      "label": "Extensions and cousins",
+      "items": [
+       "Growth curves, multilevel models",
+       "PLS-SEM"
+      ]
+     }
+    ],
+    "caption": "one family, several ways to combine the two models"
+   },
+   "key_terms": [
+    {
+     "term": "Latent variable",
+     "meaning": "A construct inferred from several indicators, never observed directly."
+    },
+    {
+     "term": "Indicator",
+     "meaning": "An observed item, such as a survey question, that measures a construct."
+    },
+    {
+     "term": "Measurement model",
+     "meaning": "How indicators relate to the latent variables they measure."
+    },
+    {
+     "term": "Structural model",
+     "meaning": "How the latent variables relate to each other."
+    },
+    {
+     "term": "Path diagram",
+     "meaning": "A picture of the equations: ovals, rectangles and arrows."
+    }
+   ],
+   "worked_example": {
+    "title": "Count the pieces of a model",
+    "setup": "Illustrative reading of the self-help group example on slide 5: membership is observed, savings has three items and decision-making has five.",
+    "steps": [
+     "Items across the two latent variables: 3 + 5 = 8.",
+     "Observed variables in the diagram: 1 + 8 = 9, counting membership and the eight items.",
+     "Structural paths: membership to savings, savings to decision-making, and membership to decision-making directly. That makes 3 paths.",
+     "Each of the 3 paths is a parameter to estimate, and any arrow you leave out is a restriction."
+    ],
+    "answer": "Two latent variables, eight items and three structural paths."
+   },
+   "mistakes": [
+    "Summing items and treating the total as free of error. Every coefficient weakens and nobody learns how well the questions measured anything.",
+    "Drawing an arrow between every pair of variables. Such a model fits any data and says nothing.",
+    "Choosing between covariance-based SEM and PLS-SEM by the software the department owns.",
+    "Using SEM when a summed scale and OLS would answer the question."
+   ],
+   "recall": [
+    {
+     "q": "What two models does SEM combine?",
+     "a": "A measurement model and a structural model, estimated together."
+    },
+    {
+     "q": "What does a missing arrow mean?",
+     "a": "A coefficient fixed at zero, a restriction that makes the model testable."
+    },
+    {
+     "q": "When does SEM earn its place?",
+     "a": "When measurement is in doubt, when mediation is the question, or when groups must be compared on a latent construct."
+    },
+    {
+     "q": "Name two text sources the course leans on.",
+     "a": "Bollen's Structural Equations with Latent Variables and Kline's Principles and Practice."
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Latent Variables and CFA",
+   "big_idea": "A latent variable is **the variance items share**. CFA tests whether the structure you specified fits that shared variance.",
+   "in_plain_words": [
+    "Each indicator is an intercept, plus a loading times the factor, plus an error unique to the item. Standardised, the squared loading is the share of the item explained by the factor. A loading of 0.7 means about half the item is signal. Whether the factor deserves the name empowerment is a validity argument that the fit cannot make.",
+    "Decide from theory whether arrows run from construct to items (reflective) or from items to construct (formative). Then match the estimator to the items: Likert items with few categories and binary items need WLSMV, because ML on them is wrong. On a new or translated scale, **explore on one sample and confirm on another**."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Indicator",
+      "hint": "the observed item"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "Intercept τ"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Loading λ"
+     },
+     {
+      "op": "×"
+     },
+     {
+      "t": "Factor η",
+      "hint": "what items share"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Error ε",
+      "hint": "unique to the item"
+     }
+    ],
+    "note": "standardised, λ² is signal and 1 − λ² is error"
+   },
+   "key_terms": [
+    {
+     "term": "Loading",
+     "meaning": "The regression of an item on its factor; standardised, its correlation with it."
+    },
+    {
+     "term": "Marker indicator",
+     "meaning": "The loading fixed to 1 to give the factor a scale."
+    },
+    {
+     "term": "Reflective",
+     "meaning": "The construct causes its indicators, so they should correlate."
+    },
+    {
+     "term": "Formative",
+     "meaning": "The indicators define the construct, so they need not correlate."
+    },
+    {
+     "term": "WLSMV",
+     "meaning": "Estimator for ordinal items, working on polychoric correlations."
+    },
+    {
+     "term": "EFA",
+     "meaning": "Exploratory factor analysis: every item may load on every factor."
+    }
+   ],
+   "worked_example": {
+    "title": "Reading a weak item",
+    "setup": "Illustrative loadings from slide 15: d2 loads 0.79 and d5 loads 0.41 on decision-making.",
+    "steps": [
+     "Share of d2 explained by the factor: 0.79 × 0.79 = 0.62.",
+     "Share of d5 explained by the factor: 0.41 × 0.41 = 0.17.",
+     "Error share of d5: 1 − 0.17 = 0.83.",
+     "The conventional floor for R² is 0.25, and 0.17 is below it. Before deleting d5, check its distribution, the translation and the interview notes."
+    ],
+    "answer": "d5 is 17% signal and 83% error, below the floor, so investigate it first."
+   },
+   "mistakes": [
+    "Forcing a formative construct into a reflective model. Low loadings then look like measurement defects when the model is wrong.",
+    "Using maximum likelihood on binary items or on Likert items with four or fewer categories.",
+    "Running CFA on the same sample the EFA was tuned to, which confirms only what you just fitted.",
+    "Presenting a wording factor from reversed items as a substantive finding."
+   ],
+   "recall": [
+    {
+     "q": "What does a standardised loading of 0.7 tell you?",
+     "a": "About half the item's variance is signal."
+    },
+    {
+     "q": "What is the test to separate reflective from formative?",
+     "a": "If the construct rose, would every indicator rise? Then it is reflective."
+    },
+    {
+     "q": "Which factor-count rule survives scrutiny?",
+     "a": "Parallel analysis."
+    },
+    {
+     "q": "Why avoid reversed items?",
+     "a": "They often form their own method factor, especially in translation."
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Reliability and Validity",
+   "big_idea": "Reliability says how repeatable a score is. Validity is **an argument about what it means**, and the CFA is only one sentence of it.",
+   "in_plain_words": [
+    "Report omega beside alpha, since alpha assumes equal loadings. Check that items agree through loadings and AVE (convergent validity), then that constructs differ through HTMT or a confidence interval on their correlation (discriminant validity). Two factors correlated at 0.92 are one factor with two names.",
+    "A scale can pass every one of those and still not measure what it claims. Content, response process, relations to other variables and consequences come from outside the model. **Plan the criterion into the survey**, such as a partner's report, because that gives the strongest evidence you can buy."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "Is the scale good enough?",
+    "children": [
+     {
+      "label": "Reliability",
+      "items": [
+       "Omega from the fitted CFA",
+       "Alpha, with its assumptions"
+      ]
+     },
+     {
+      "label": "Convergent validity",
+      "items": [
+       "Loadings substantial",
+       "AVE of 0.5 or more"
+      ]
+     },
+     {
+      "label": "Discriminant validity",
+      "items": [
+       "HTMT below 0.85 or 0.90",
+       "Factor correlation CI excludes 1"
+      ]
+     },
+     {
+      "label": "Beyond the CFA",
+      "items": [
+       "Content and response process",
+       "Known groups and criterion"
+      ]
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "Omega (ω)",
+     "meaning": "Composite reliability from the CFA loadings and error variances."
+    },
+    {
+     "term": "AVE",
+     "meaning": "Average variance extracted: the mean squared standardised loading."
+    },
+    {
+     "term": "HTMT",
+     "meaning": "Ratio of between-construct to within-construct correlations."
+    },
+    {
+     "term": "Known groups",
+     "meaning": "Groups theory says must differ on the score."
+    },
+    {
+     "term": "Criterion validity",
+     "meaning": "The score predicts an outcome measured differently."
+    }
+   ],
+   "worked_example": {
+    "title": "AVE with and without a weak item",
+    "setup": "Illustrative R² values for the five decision-making items from slide 22.",
+    "steps": [
+     "Add the first three squared loadings: 0.50 + 0.62 + 0.55 = 1.67.",
+     "Add the fourth: 1.67 + 0.46 = 2.13, and the fifth: 2.13 + 0.17 = 2.30.",
+     "Divide by five items: 2.30 ÷ 5 = 0.46, below the 0.5 floor.",
+     "Drop d5 and the four remaining total 2.13, as above.",
+     "Divide by four: 2.13 ÷ 4 = 0.53, now above the floor.",
+     "One deletion crossed the line, so state and justify it."
+    ],
+    "answer": "AVE is 0.46 with d5 and 0.53 without, and the deletion needs a written reason."
+   },
+   "mistakes": [
+    "Reporting alpha of 0.95 on twelve items as excellence. It often signals redundancy.",
+    "Checking discriminant validity with the Fornell-Larcker table alone.",
+    "Treating a table of AVEs as the validity argument.",
+    "Choosing the known groups after seeing the data, which turns them into noise."
+   ],
+   "recall": [
+    {
+     "q": "What does reliability measure?",
+     "a": "It shows how repeatable the measurement is and says nothing about whether it measures the right thing."
+    },
+    {
+     "q": "What is the AVE floor?",
+     "a": "0.5, proposed by Fornell and Larcker."
+    },
+    {
+     "q": "What does a factor correlation of 0.92 imply?",
+     "a": "The two factors are really one."
+    },
+    {
+     "q": "Which kinds of validity evidence come from outside the CFA?",
+     "a": "Content, response process, relations to other variables and consequences."
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Specification and Identification",
+   "big_idea": "The model is **your theory written as arrows**. Before estimating, count whether the data can pin its parameters down.",
+   "in_plain_words": [
+    "Every arrow is a hypothesis with a direction and every absent arrow says two things are unrelated once the rest is accounted for. Write both down before analysing the data, and keep the list of omitted paths, since it is the model's content.",
+    "The data supply p(p + 1) ÷ 2 variances and covariances. If the model asks for more parameters than that, it is under-identified. If exactly as many, it is just-identified and tests nothing. **Fewer parameters than moments** leaves degrees of freedom for the fit test to use."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Known moments",
+      "hint": "p(p + 1) ÷ 2"
+     },
+     {
+      "op": "−"
+     },
+     {
+      "t": "Free parameters",
+      "hint": "loadings, errors, paths"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "Degrees of freedom",
+      "hint": "must be zero or more"
+     }
+    ],
+    "note": "a necessary condition only; each latent needs a scale"
+   },
+   "key_terms": [
+    {
+     "term": "Identified",
+     "meaning": "Every parameter has a unique solution."
+    },
+    {
+     "term": "Recursive model",
+     "meaning": "No feedback loops; always identified if the measurement model is."
+    },
+    {
+     "term": "Equivalent model",
+     "meaning": "A different model implying the same covariances and the same fit."
+    },
+    {
+     "term": "Mean structure",
+     "meaning": "Item intercepts and latent means, added for group or growth work."
+    },
+    {
+     "term": "Exogenous",
+     "meaning": "A variable with no arrows pointing into it."
+    }
+   ],
+   "worked_example": {
+    "title": "Degrees of freedom for a three-factor CFA",
+    "setup": "Twelve indicators, three factors, errors uncorrelated, one loading per factor fixed to 1 (slide 30).",
+    "steps": [
+     "Moments: 12 × 13 = 156 and 156 ÷ 2 = 78.",
+     "Free loadings: 12 − 3 = 9, since three markers are fixed.",
+     "Free parameters: 9 + 12 = 21 with 12 error variances, then 21 + 3 = 24 with 3 factor variances, then 24 + 3 = 27 with 3 factor covariances.",
+     "Degrees of freedom: 78 − 27 = 51."
+    ],
+    "answer": "51 degrees of freedom: over-identified and testable."
+   },
+   "mistakes": [
+    "Choosing arrows to fit the sample, so the model tests nothing and describes one sample.",
+    "Building a latent variable from one item with a free error variance. It is not identified.",
+    "Reading a fit statistic as support for one causal story when reversed arrows fit identically.",
+    "Putting covariates into some equations and leaving them out of others without a stated reason."
+   ],
+   "recall": [
+    {
+     "q": "What is the three-indicator rule?",
+     "a": "A single factor with three or more indicators and uncorrelated errors is identified."
+    },
+    {
+     "q": "What does a just-identified model tell you?",
+     "a": "Nothing: it fits perfectly."
+    },
+    {
+     "q": "What breaks the equivalence between rival models?",
+     "a": "Design, such as randomisation or time order, and strong theory."
+    },
+    {
+     "q": "When are means and intercepts needed?",
+     "a": "For latent mean comparisons, invariance beyond metric, and growth models."
+    },
+    {
+     "q": "What do clustered data need?",
+     "a": "Clustered standard errors, a multilevel model or design-based estimation."
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Estimation, Data and Sample Size",
+   "big_idea": "The estimator follows from **the data and the question**. The software default is no reason. Report your choice and why.",
+   "in_plain_words": [
+    "Ordinal items with few categories call for WLSMV. Skewed continuous items call for MLR. Missing data under ML calls for FIML, and under WLSMV for multiple imputation. Screen first for straight-lining, speeding and multivariate outliers, and decide the rule in advance.",
+    "Skew shrinks standard errors, so paths look more significant than they are. Bootstrap resampling gives intervals without assuming normality, which indirect effects need. For sample size no rule of thumb survives, so **simulate your planned model** and expect 500 or more for three binary latent outcomes."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Screen the data",
+      "sub": "straight-lining, speed"
+     },
+     {
+      "label": "Pick the estimator",
+      "sub": "ML, MLR or WLSMV"
+     },
+     {
+      "label": "Handle missing data",
+      "sub": "FIML or imputation"
+     },
+     {
+      "label": "Check convergence",
+      "sub": "read every warning"
+     },
+     {
+      "label": "Bootstrap",
+      "sub": "at the end, once"
+     }
+    ],
+    "caption": "the order the decisions arise"
+   },
+   "key_terms": [
+    {
+     "term": "MLR",
+     "meaning": "Maximum likelihood with corrections for non-normality."
+    },
+    {
+     "term": "FIML",
+     "meaning": "Uses every case's available data, assuming missing at random."
+    },
+    {
+     "term": "Heywood case",
+     "meaning": "A negative error variance, a sign of a model or data problem."
+    },
+    {
+     "term": "Bootstrap",
+     "meaning": "Resample cases to get standard errors and intervals."
+    },
+    {
+     "term": "Monte Carlo",
+     "meaning": "Simulate the planned model to find the needed sample."
+    }
+   ],
+   "worked_example": {
+    "title": "Sample size from the n:q rule",
+    "setup": "Jackson's rule on slide 40 asks for ten cases per free parameter, with twenty preferred. The three-factor CFA has 27 free parameters.",
+    "steps": [
+     "Minimum at ten per parameter: 27 × 10 = 270.",
+     "Preferred at twenty per parameter: 27 × 20 = 540.",
+     "Compare with the folk rule of 200, which falls below both.",
+     "Then run a Monte Carlo simulation with the planned loadings and effects."
+    ],
+    "answer": "270 to 540 cases, and a simulation gives the real answer."
+   },
+   "mistakes": [
+    "Dropping any case with a missing item. With twenty items at 5% missing each it can discard nearly two-thirds of the sample.",
+    "Replacing missing values with the scale mean, which shrinks variances and inflates correlations.",
+    "Fixing a negative variance at zero and carrying on instead of finding its cause.",
+    "Trying estimators until one converges and reporting only that one."
+   ],
+   "recall": [
+    {
+     "q": "Which estimator suits binary items?",
+     "a": "WLSMV."
+    },
+    {
+     "q": "Why is skew a problem under ordinary ML?",
+     "a": "It inflates chi-square and deflates standard errors."
+    },
+    {
+     "q": "What should a bootstrap report include?",
+     "a": "Resamples, interval type, seed and the interval itself."
+    },
+    {
+     "q": "What does a standardised loading above 1 suggest?",
+     "a": "Over-fitting, or two factors that are really one."
+    },
+    {
+     "q": "What does the worked estimation table list?",
+     "a": "Sample, items, estimator, missing data, clustering, scaling, software and convergence."
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Model Fit and Modification",
+   "big_idea": "Chi-square, residuals and indices **locate misfit together**. Modify only for reasons you could state before seeing the data.",
+   "in_plain_words": [
+    "A significant chi-square says the model does not reproduce the data exactly, which at a few hundred cases happens to almost every model. Report it anyway, with the standardised residuals, because residuals show where the misfit sits. Read RMSEA with its interval, CFI, TLI and SRMR together.",
+    "Modification indices describe misfit and should not decide the model. Freeing the largest repeatedly makes any model fit and **the changes rarely replicate**. The evidence that matters is a comparison: your theory against at least one rival, using the scaled chi-square difference."
+   ],
+   "diagram": {
+    "type": "cycle",
+    "nodes": [
+     {
+      "label": "Fit the model",
+      "sub": "report this first"
+     },
+     {
+      "label": "Read the index",
+      "sub": "largest expected drop"
+     },
+     {
+      "label": "Free a parameter",
+      "sub": "no reason stated"
+     },
+     {
+      "label": "Refit",
+      "sub": "fit improves by chance"
+     }
+    ],
+    "center": "Specification search",
+    "caption": "the loop that makes any model fit"
+   },
+   "key_terms": [
+    {
+     "term": "RMSEA",
+     "meaning": "Misfit per degree of freedom, reported with a 90% interval."
+    },
+    {
+     "term": "CFI",
+     "meaning": "Improvement over a null model of no correlations."
+    },
+    {
+     "term": "SRMR",
+     "meaning": "Average standardised residual correlation."
+    },
+    {
+     "term": "Modification index",
+     "meaning": "Expected chi-square drop if one parameter is freed."
+    },
+    {
+     "term": "Nested models",
+     "meaning": "Two models where one is the other with parameters fixed."
+    }
+   ],
+   "worked_example": {
+    "title": "Does the three-factor structure beat one factor?",
+    "setup": "Illustrative values from slide 49: the one-factor model has chi-square 510.3 on 54 df and CFI 0.79. The three-factor model has 139.1 on 51 df and CFI 0.96.",
+    "steps": [
+     "Difference in chi-square: 510.3 − 139.1 = 371.2.",
+     "Difference in degrees of freedom: 54 − 51 = 3.",
+     "Difference in CFI: 0.96 − 0.79 = 0.17, far above the 0.01 practical criterion.",
+     "The restriction that merges the factors is clearly rejected."
+    ],
+    "answer": "The three-factor structure is supported by a difference of about 371 on 3 df."
+   },
+   "mistakes": [
+    "Reporting chi-square over df ratios or GFI as fit evidence.",
+    "Freeing correlated errors with no substantive reason, which describes noise.",
+    "Deleting items until AVE and fit pass, so the construct becomes whatever survived.",
+    "Presenting a modified model as if it were the pre-specified one."
+   ],
+   "recall": [
+    {
+     "q": "Why is a significant chi-square rarely decisive?",
+     "a": "With large n almost every model is rejected, and with small n almost none is."
+    },
+    {
+     "q": "What should you look at before the fit indices?",
+     "a": "The standardised residuals."
+    },
+    {
+     "q": "What is the practical criterion for a change in CFI between nested models?",
+     "a": "A drop of more than 0.01."
+    },
+    {
+     "q": "How can you test whether modifications were noise?",
+     "a": "Modify on one half of the sample and test on the other."
+    },
+    {
+     "q": "Why does the second-order model equal the correlated model with three factors?",
+     "a": "It is just-identified, so it fits exactly as well."
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Structural Models: Mediation and Moderation",
+   "big_idea": "Fit the measurement first, then the paths. Test the indirect effect **directly with a bootstrap** and state what it assumes.",
+   "in_plain_words": [
+    "The two-step approach fits a CFA with every construct correlated, then replaces correlations with your paths. The chi-square difference between the two tests the omitted paths. A structural part with every path included fits as well as the CFA and tests nothing.",
+    "Mediation is three numbers estimated together: the indirect path ab, the direct path c-prime and their sum. Drop the Baron and Kenny steps and the labels full or partial. For moderation, use multigroup for a categorical moderator and **plot simple slopes**, since the product term alone cannot be read."
+   ],
+   "diagram": {
+    "type": "formula",
+    "parts": [
+     {
+      "t": "Path a",
+      "hint": "X to mediator"
+     },
+     {
+      "op": "×"
+     },
+     {
+      "t": "Path b",
+      "hint": "mediator to Y"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "Indirect ab"
+     },
+     {
+      "op": "+"
+     },
+     {
+      "t": "Direct c′"
+     },
+     {
+      "op": "="
+     },
+     {
+      "t": "Total effect"
+     }
+    ],
+    "note": "test ab with a bootstrap interval"
+   },
+   "key_terms": [
+    {
+     "term": "Indirect effect",
+     "meaning": "The product of the paths running through a mediator."
+    },
+    {
+     "term": "Direct effect",
+     "meaning": "The path from X to Y with the mediator held constant."
+    },
+    {
+     "term": "Simple slope",
+     "meaning": "The effect of X at a chosen value of the moderator."
+    },
+    {
+     "term": "Conditional process",
+     "meaning": "A mediation whose strength depends on a moderator."
+    },
+    {
+     "term": "RI-CLPM",
+     "meaning": "Cross-lagged model that separates stable trait differences from change."
+    }
+   ],
+   "worked_example": {
+    "title": "Splitting the total effect",
+    "setup": "Illustrative estimates from slide 55: a = 0.38, b = 0.31 and a direct effect c′ = 0.09.",
+    "steps": [
+     "Indirect effect: 0.38 × 0.31 = 0.12 after rounding.",
+     "Total effect: 0.09 + 0.12 = 0.21.",
+     "Share running through savings: 0.12 ÷ 0.21 = 0.57.",
+     "Membership was randomised, but the savings mediator was not, so word it as consistent with mediation."
+    ],
+    "answer": "Indirect 0.12 of a total 0.21, about 57%, stated in the conditional mood."
+   },
+   "mistakes": [
+    "Using the Baron and Kenny steps as the mediation test.",
+    "Claiming full mediation because the direct path is not significant, which depends on sample size.",
+    "Reporting an interaction coefficient without simple slopes.",
+    "Testing many mediators and moderators on a small sample and reporting the one that was significant."
+   ],
+   "recall": [
+    {
+     "q": "What is the two-step approach?",
+     "a": "Fit the CFA first, then impose the structural paths."
+    },
+    {
+     "q": "How do you test the indirect effect?",
+     "a": "With a bootstrap interval on ab."
+    },
+    {
+     "q": "What does mediation assume about the mediator?",
+     "a": "No unmeasured confounding of the mediator and outcome."
+    },
+    {
+     "q": "How much sample do interactions need compared with main effects?",
+     "a": "Roughly four times as much."
+    },
+    {
+     "q": "What is the danger of the standard cross-lagged model?",
+     "a": "It can find effects that are entirely stable trait differences."
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "title": "Measurement Invariance",
+   "big_idea": "Before you compare groups, languages or waves, check that **the instrument works the same way** in each.",
+   "in_plain_words": [
+    "Invariance is tested as a ladder of nested multigroup models. Configural means the same structure. Metric adds equal loadings, which licenses comparing paths. Scalar adds equal intercepts or thresholds, which licenses comparing latent means. Judge each step with ΔCFI and ΔRMSEA together, because chi-square rejects trivial differences at large n.",
+    "Scalar invariance often fails on one or two items. Freeing those leaves partial invariance, which is enough if you report the freed items and keep **at least two invariant items per factor**. If more than a third of a factor is freed, the groups have different scales."
+   ],
+   "diagram": {
+    "type": "stack",
+    "levels": [
+     {
+      "label": "Strict",
+      "sub": "adds error variances"
+     },
+     {
+      "label": "Scalar",
+      "sub": "adds intercepts or thresholds"
+     },
+     {
+      "label": "Metric",
+      "sub": "adds equal loadings"
+     },
+     {
+      "label": "Configural",
+      "sub": "same pattern, nothing constrained"
+     }
+    ],
+    "caption": "each level is nested in the one below it"
+   },
+   "key_terms": [
+    {
+     "term": "Configural",
+     "meaning": "The same pattern of loadings in every group."
+    },
+    {
+     "term": "Metric",
+     "meaning": "Loadings equal across groups."
+    },
+    {
+     "term": "Scalar",
+     "meaning": "Loadings and intercepts or thresholds equal."
+    },
+    {
+     "term": "Partial invariance",
+     "meaning": "Most items invariant, a few freed and reported."
+    },
+    {
+     "term": "Response shift",
+     "meaning": "The programme changes how respondents read the items."
+    }
+   ],
+   "worked_example": {
+    "title": "Reading an invariance table",
+    "setup": "Illustrative fit values from slide 65 for Hindi and Bangla versions of a scale.",
+    "steps": [
+     "Metric against configural leaves loadings equal and ΔCFI at −0.006, so it holds.",
+     "Scalar chi-square against metric: 151.3 − 108.9 = 42.4.",
+     "Scalar degrees of freedom against metric: 98 − 90 = 8.",
+     "Scalar ΔCFI: 0.930 − 0.975 = −0.045, past the 0.01 tolerance, so scalar fails.",
+     "Freeing two thresholds gives chi-square 117.6, and 117.6 − 108.9 = 8.7 on 4 df, which holds."
+    ],
+    "answer": "Scalar fails, partial scalar holds with d3 and m2 freed, and means compare under it."
+   },
+   "mistakes": [
+    "Pooling languages in one model without testing that items work alike.",
+    "Comparing summed scores after scalar invariance has failed.",
+    "Hiding the freed items in a footnote when they are findings about the instrument.",
+    "Comparing a treatment group across waves without first testing invariance in the control group."
+   ],
+   "recall": [
+    {
+     "q": "What does metric invariance license?",
+     "a": "Comparing relationships such as paths and correlations across groups."
+    },
+    {
+     "q": "What does scalar invariance license?",
+     "a": "Comparing latent means and pooling groups."
+    },
+    {
+     "q": "What cut-offs does the course give for practical change?",
+     "a": "ΔCFI of 0.01 or less and ΔRMSEA of 0.015 or less."
+    },
+    {
+     "q": "What does a scalar failure at endline in the treatment group suggest?",
+     "a": "Response shift."
+    },
+    {
+     "q": "Which method suits many groups such as states?",
+     "a": "The alignment method, or collapsing to a few theory-based groups."
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "title": "PLS-SEM",
+   "big_idea": "PLS-SEM is a **prediction method on composites**. It suits some questions well and it is never a cheaper route to CB-SEM.",
+   "in_plain_words": [
+    "PLS builds each construct as a weighted sum of its indicators and regresses the sums on each other. There is no common factor, no separation of measurement error and no overall fit test. That suits formative constructs and out-of-sample prediction.",
+    "Small samples, non-normal data and no fit test are the convenient reasons, and none holds up. Check the outer model with loadings, reliability, AVE and HTMT, then the inner model with VIF, intervals, R² and **PLSpredict**. Say whether your constructs are composites or factors, and use PLSc for factors."
+   ],
+   "diagram": {
+    "type": "compare",
+    "left": {
+     "title": "Defensible reasons",
+     "items": [
+      "Formative composites",
+      "Out-of-sample prediction",
+      "Complex model, CB-SEM will not converge",
+      "Exploratory theory building"
+     ]
+    },
+    "right": {
+     "title": "Convenient reasons",
+     "items": [
+      "The sample is small",
+      "The data are non-normal",
+      "No fit test is needed",
+      "Everyone in my field uses it"
+     ]
+    },
+    "vs": "vs"
+   },
+   "key_terms": [
+    {
+     "term": "Composite",
+     "meaning": "A weighted sum of indicators treated as the construct."
+    },
+    {
+     "term": "PLSc",
+     "meaning": "Consistent PLS, correcting bias for common-factor constructs."
+    },
+    {
+     "term": "PLSpredict",
+     "meaning": "Out-of-sample prediction against a linear-model benchmark."
+    },
+    {
+     "term": "VIF",
+     "meaning": "Variance inflation factor, a collinearity check."
+    },
+    {
+     "term": "MICOM",
+     "meaning": "Invariance test for composites before multigroup work."
+    }
+   ],
+   "worked_example": {
+    "title": "Defensible or convenient?",
+    "setup": "A student writes three reasons for choosing PLS-SEM. Sort them using the slide 72 test.",
+    "steps": [
+     "Reason 1: our adoption-barriers index is a formative composite. This is defensible.",
+     "Reason 2: our sample is only 120. This is convenient, because PLS has no more power than regression at small n.",
+     "Reason 3: PLS needs no fit test. This is convenient, since lacking a test is a cost.",
+     "State the defensible reason in the methods and cite both advocates and critics."
+    ],
+    "answer": "Reason 1 stands, reasons 2 and 3 do not, and the paper should say why PLS was chosen."
+   },
+   "mistakes": [
+    "Choosing PLS because CB-SEM would not fit, and not saying so.",
+    "Using ordinary PLS on reflective constructs with no PLSc and no argument that they are composites.",
+    "Interpreting R² with marketing benchmarks that suit field data poorly.",
+    "Comparing groups without testing invariance of the composites first."
+   ],
+   "recall": [
+    {
+     "q": "What does PLS maximise?",
+     "a": "The explained variance of the endogenous composites."
+    },
+    {
+     "q": "Which test replaced blindfolding for predictive relevance?",
+     "a": "PLSpredict."
+    },
+    {
+     "q": "What HTMT threshold does the course give?",
+     "a": "Below 0.85 or 0.90, with a bootstrap interval excluding 1."
+    },
+    {
+     "q": "What sample size does the inverse-square-root method give for a path of 0.2?",
+     "a": "About 155."
+    },
+    {
+     "q": "Why run both CB-SEM and PLSc on the same data?",
+     "a": "To show the result does not depend on the estimator."
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Causality and Common Method Bias",
+   "big_idea": "A path diagram **states causal assumptions** and does not test them. The verbs you use must match the design.",
+   "in_plain_words": [
+    "Every path assumes no unmeasured common cause, no reverse effect and no selection on the outcome. Randomising X secures X's own paths and nothing downstream. Mediation needs a second ignorability for the mediator, which nothing delivers, so run the sensitivity analysis and report the ρ at which the indirect effect vanishes.",
+    "Single-source surveys also share method variance: mood, acquiescence and the enumerator's manner. Fix it at design with different sources and behavioural outcomes. **Harman's single-factor test detects nothing**. Draw a DAG with the unmeasured variables before the path diagram, and never condition on a collider."
+   ],
+   "diagram": {
+    "type": "flow",
+    "nodes": [
+     {
+      "label": "Randomise X",
+      "sub": "its own paths are causal"
+     },
+     {
+      "label": "Mediator unassigned",
+      "sub": "assumption needed"
+     },
+     {
+      "label": "Sensitivity ρ",
+      "sub": "how strong a confounder?"
+     },
+     {
+      "label": "Method check",
+      "sub": "procedural first"
+     },
+     {
+      "label": "Scale the verbs",
+      "sub": "to the design"
+     }
+    ],
+    "caption": "from design to the words you may use"
+   },
+   "key_terms": [
+    {
+     "term": "Sequential ignorability",
+     "meaning": "Treatment and mediator are as good as random given covariates."
+    },
+    {
+     "term": "Common method variance",
+     "meaning": "Variance due to the instrument and not to the constructs."
+    },
+    {
+     "term": "DAG",
+     "meaning": "A causal diagram that includes unmeasured variables."
+    },
+    {
+     "term": "Collider",
+     "meaning": "A variable caused by both X and Y; do not condition on it."
+    },
+    {
+     "term": "ULMC",
+     "meaning": "Unmeasured latent method factor with equal loadings."
+    }
+   ],
+   "worked_example": {
+    "title": "How far does method variance move a path?",
+    "setup": "Illustrative path estimates for savings to decision-making from slide 85, starting from 0.31.",
+    "steps": [
+     "With a latent method factor the path is 0.27: 0.31 − 0.27 = 0.04.",
+     "With a marker variable it is 0.28: 0.31 − 0.28 = 0.03.",
+     "With the outcome from a different source it is 0.19: 0.31 − 0.19 = 0.12.",
+     "The procedural remedy moves the estimate most, which is why it beats statistical checks."
+    ],
+    "answer": "The path shrinks by 0.03 to 0.12 and survives under every check."
+   },
+   "mistakes": [
+    "Reading a good fit as proof of the causal story, when reversed arrows fit identically.",
+    "Treating a randomised treatment as if it made the mediator random too.",
+    "Relying on Harman's single-factor test as the method bias check.",
+    "Using causal verbs for cross-sectional self-report data."
+   ],
+   "recall": [
+    {
+     "q": "What does Imai, Keele and Tingley's sensitivity analysis report?",
+     "a": "The correlation between error terms that would reduce the indirect effect to zero."
+    },
+    {
+     "q": "Which verbs suit a randomised path?",
+     "a": "Raises, reduces and has an effect of."
+    },
+    {
+     "q": "What does a DAG add to a path diagram?",
+     "a": "The unmeasured variables, showing which paths are identified."
+    },
+    {
+     "q": "Name two procedural remedies for method bias.",
+     "a": "Different sources for predictor and outcome, and temporal separation."
+    },
+    {
+     "q": "What does good fit allow you to say?",
+     "a": "That the data are consistent with the model, never that it is proven."
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Software, Reporting and Practice",
+   "big_idea": "Choose software that fits your items, report the decisions in order, and **leave the matrix and syntax** where a reader can refit the model.",
+   "in_plain_words": [
+    "lavaan is the free reference and handles ordinal items, FIML, bootstrap and multigroup work. Mplus is the most complete, Stata fits survey data well, and AMOS offers neither MLR nor an ordinal estimator, which is a real limit for Likert data.",
+    "A good paper reports measurement results before structural ones, with two figures and two tables in the body. **File the plan first**, covering constructs, paths, estimator, fit criteria, modification policy and invariance plan. Then run the fifteen-line checklist before submitting."
+   ],
+   "diagram": {
+    "type": "tree",
+    "root": "A reviewable SEM paper",
+    "children": [
+     {
+      "label": "Before the data",
+      "items": [
+       "File the diagram",
+       "Fix fit criteria and policy"
+      ]
+     },
+     {
+      "label": "In the paper",
+      "items": [
+       "Measurement results first",
+       "Structural results second",
+       "Verbs scaled to design"
+      ]
+     },
+     {
+      "label": "For the reader",
+      "items": [
+       "Correlation matrix, SDs and n",
+       "Syntax in an appendix"
+      ]
+     }
+    ]
+   },
+   "key_terms": [
+    {
+     "term": "Pre-registration",
+     "meaning": "A dated plan filed before the data are cleaned."
+    },
+    {
+     "term": "lavaan",
+     "meaning": "Free R package, the reference implementation."
+    },
+    {
+     "term": "JARS-Quant",
+     "meaning": "APA reporting standards for quantitative research."
+    },
+    {
+     "term": "Equivalent model",
+     "meaning": "A rival with the same fit, named in the discussion."
+    },
+    {
+     "term": "Appendix matrix",
+     "meaning": "Correlations, SDs and n, enough to refit any CB-SEM."
+    }
+   ],
+   "worked_example": {
+    "title": "Choose the verb",
+    "setup": "Three results from different designs. Pick the verb with the slide 88 table.",
+    "steps": [
+     "Membership was randomised and moves the latent score: write raises.",
+     "Savings behaviour from a cross-sectional self-report survey: write is associated with.",
+     "Within-person trust increases followed by participation in a panel with RI-CLPM: write is followed by.",
+     "Never write that good fit confirmed or proved the model."
+    ],
+    "answer": "Raises, is associated with, and is followed by, and never proven."
+   },
+   "mistakes": [
+    "Reporting loadings, AVEs and starred paths and nothing else.",
+    "Leaving out the correlation matrix with SDs and n, which costs nothing and makes the model checkable.",
+    "Requiring AMOS for Likert data and accepting a weaker analysis.",
+    "Skipping the invariance test and the named equivalent model, the two most often missing items."
+   ],
+   "recall": [
+    {
+     "q": "Which results come first in the paper?",
+     "a": "Measurement results, before structural ones."
+    },
+    {
+     "q": "What does the last row of the reporting table ask for?",
+     "a": "Data or a correlation matrix with SDs and n, and the syntax."
+    },
+    {
+     "q": "What should a pre-registration fix about modifications?",
+     "a": "Whether none are allowed or the specific class that is, with the reporting rule."
+    },
+    {
+     "q": "Which book does the reading list say to buy first?",
+     "a": "Kline's Principles and Practice of Structural Equation Modeling."
+    },
+    {
+     "q": "Which two checklist items are most often missing?",
+     "a": "Invariance testing and the equivalent model."
+    }
+   ]
+  }
+ ],
+ "notes": {
+  "2": "The course follows the order in which decisions arise: measure, specify, fit, relate, compare, then report. **Measure before you relate.** With an hour to spare, read sections 02 and 03 first, because every later result is read against them.",
+  "4": "Think of SEM as two models run together. One says how questions reflect a hidden trait and the other says how traits affect each other. The point is to stop treating a **summed score as error-free**. Remember the last line: SEM tests a theory you bring.",
+  "5": "Read a diagram as a list of equations. Every arrow costs one parameter, and **every missing arrow claims a zero coefficient**. Draw yours before collecting data and count items per construct, because the diagram tells the survey what to ask.",
+  "6": "Use this slide as a decision test. If a summed scale with regression answers your question, stop there. Reach for SEM when measurement is doubtful, when **mediation is the question**, or when groups must be compared on a latent construct.",
+  "7": "Two methods share a name and answer different questions. CB-SEM asks whether the model reproduces the covariances, and PLS-SEM asks how well composites predict. Choose by **your question and your constructs**, and ignore which software your department owns.",
+  "8": "Scan the table for your own field and notice the common shape: a construct that a single question cannot capture. The slide says the most valuable use in development work is **validating a translated scale** before an evaluation relies on it.",
+  "9": "Treat this as a glossary to return to. Two distinctions carry the most weight. Exogenous means no arrows in and endogenous means at least one. **Reflective versus formative** sets the direction of the measurement arrows, so learn it before section 02.",
+  "10": "The course runs as seven jobs: measure, specify, fit, relate, compare, try the alternative, report. Check the prerequisites on this slide, regression and survey design. Expect **lavaan code**, which is free and readable, and treat figures marked illustrative as practice for reading output.",
+  "12": "Read the equation as three parts: an intercept, a loading times the factor, and an error unique to the item. A loading of 0.7 squares to about 0.5, so half the item is signal. Remember the warning that **latent does not mean real**.",
+  "13": "Apply the two-way test. If the construct rose, would every indicator rise? Then it is reflective. If one indicator rose, would the construct rise? Then it is formative. **A wrong choice is invisible in fit statistics**, so decide from theory before modelling.",
+  "14": "Learn the syntax: =~ reads 'is measured by'. Twelve lines of output give you loadings, factor covariances, error variances and fit. Name factors for what the items ask, so 'decide' is honest and **'empowerment' is a claim** you have not yet earned.",
+  "15": "Read the table by its columns: standardised loading, then R², then the comment. Item d5 loads 0.41 with R² of 0.17, below the usual floor. Yet the slide says **do not delete it on sight**. Ask why first, using its distribution and the interview notes.",
+  "16": "Decide whether your construct is one thing or three. A second-order model says three dimensions share a general factor, and a bifactor model asks how much variance is general. **Report the correlated-factors model first**, and add structure only if the argument needs one score.",
+  "17": "Check your items' categories before choosing an estimator. Binary or three-category items, common in South Asian surveys, need WLSMV with thresholds and polychoric correlations. Plot the distributions first, because an item with **92% yes** carries little information.",
+  "18": "Run EFA before CFA on a new or translated scale. Use principal axis or ML factor analysis, count factors by parallel analysis, and rotate obliquely. Most important, **explore on one sample and confirm on another**, never on the same respondents.",
+  "19": "These are questionnaire decisions that determine whether CFA can succeed. Write four to six items per construct, one idea each, and pilot for ceiling effects. Use reversed items sparingly, since **wording can create a second factor** that is not content.",
+  "21": "Pick the coefficient to match your model. Alpha assumes equal loadings, and omega uses the loadings from your fitted CFA. An alpha of 0.95 on twelve items often signals redundancy. Report **omega and the number of items**.",
+  "22": "Convergent validity asks whether the items of one construct agree. Check the loadings and the AVE, with 0.5 as the floor. In the worked case **AVE moves from 0.46 to 0.53 by dropping d5**, so state and justify that choice.",
+  "23": "Discriminant validity asks whether two constructs are really two. HTMT below 0.85 or 0.90 is the modern default, and the Fornell-Larcker table alone is weak. Two factors at **0.92 are one factor with two names**, so any effect between them means nothing.",
+  "24": "A well-fitting CFA is one piece of validity evidence, the internal structure. Content, response process, relations to other variables and consequences come from fieldwork. Write validity as a paragraph in which the **CFA is a single sentence**.",
+  "25": "This is the table every SEM paper should show before any path. Read across: reliability, AVE, root AVE against correlations, then HTMT. The weak point is **assets, with AVE 0.48**, and the paper reports it and keeps all four items.",
+  "26": "Choose known groups from theory before the analysis. Here the latent score is 0.34 SD higher with own income, and enumerators show no difference. A husband's independent report correlating 0.38 is criterion evidence. **Plan a partner report into the survey.**",
+  "27": "Follow the six steps in order: forward translation, blind back-translation, expert panel, cognitive interviews, pilot, and the main survey with CFA per language. The step most often skipped is **invariance across languages**. Budget the interviews, since they find what no statistic can.",
+  "29": "Write the model down before you see data. Every arrow is a hypothesis and every absent arrow another. Keep the **list of omitted paths with reasons**. A feedback loop needs an instrument as well as an arrow, and registering the diagram protects you from suspicion.",
+  "30": "Count before you estimate. Twelve indicators give 78 moments and the model's 27 free parameters leave **51 degrees of freedom**. More parameters than moments means under-identified. Equal means just-identified and untestable. Zero or more degrees of freedom is necessary and still insufficient.",
+  "31": "Variables measured once, such as age or treatment, enter as observed rectangles. A noisy single-item construct needs its **error variance fixed from a known reliability**. Treatment as an observed exogenous variable is the one arrow reviewers accept as causal without argument.",
+  "32": "Give a covariate an arrow into every endogenous variable it might affect, because a path left out is a restriction. Twelve covariates and three outcomes make 36 paths, so include only what design or theory names. **Cluster your standard errors** when respondents share villages.",
+  "33": "Equivalent models fit identically and tell different stories. Reversing a path leaves chi-square unchanged, so fit cannot choose among them. Only **design and strong theory** can. Name at least one rival in your discussion and say why you prefer your own.",
+  "34": "Add a mean structure when you compare latent means, test invariance beyond metric, or fit growth models. The latent mean weights items by loadings and removes error. **Report both** differences: the summed score for the programme officer, the latent one for the methodologist.",
+  "35": "Use this as a pre-flight list. Twelve questions, answered in writing before the software opens, become your methods section. Answered afterwards, they become **what a referee asks**, and the answers drift toward whatever made the model fit.",
+  "37": "Match the estimator to the data. Ordinal items with few categories need WLSMV, skewed continuous items need MLR, and missing data under ML needs FIML. The software default is a poor reason. **Report the estimator, the missing-data method and why.**",
+  "38": "Skewed items inflate chi-square and shrink standard errors, so paths look more significant than they are. The remedy is a corrected estimator, which costs nothing. **Do not transform items to reduce skew**, and screen for straight-lining and speeders before estimating.",
+  "39": "Dropping every case with any missing item can discard nearly two-thirds of a sample with twenty items at 5% missing each. Use FIML with MLR, or multiple imputation under WLSMV. **Never fill gaps with the mean**, which shrinks variances and inflates correlations.",
+  "40": "No single rule gives a sample size. A floor of 200 is folk wisdom, ten cases per parameter is better, and a Monte Carlo simulation of your planned model is the right answer. For three latent outcomes with binary items, **expect 500 or more** and say why.",
+  "41": "Use this as a troubleshooting table. A negative error variance or a loading above 1 carries information about your model. **Never fix the variance at zero and move on.** Find the cause, then report any improper solution and explain it.",
+  "42": "This is the estimation paragraph of a methods section laid out as a table. Each row is a decision a reader might have made differently. Notice the rule that removed **14 straight-liners** and the imputation check that reproduced the loadings. Copy the format.",
+  "43": "Bootstrap by resampling cases 1,000 to 5,000 times. The intervals can be asymmetric, which matters for indirect effects, and clustered data need resampling within clusters. Report the resamples, interval type, seed and interval, as in **0.11, CI 0.04 to 0.19**.",
+  "45": "A significant chi-square says the model does not reproduce the data exactly, and with a few hundred cases nearly every model fails that test. Report it anyway, then read the **standardised residuals** to find where the misfit sits. Retire the chi-square over df ratio.",
+  "46": "Report RMSEA with its interval, CFI, TLI and SRMR beside chi-square, and read them together. The cutoffs come from simulations of particular models, and their authors warned against universal use. **Do not report GFI.** Residuals matter more than any single index.",
+  "47": "Read each case for what the indices disagree about. In B the sample is 140, so chi-square passes yet the RMSEA interval runs to 0.069. In C, a large model, CFI sits at the lenient threshold. **Disagreement between indices is itself information.**",
+  "48": "Modification indices show where the model misfits, and they are poor instructions. Freeing the largest one repeatedly makes any model fit, and the changes rarely replicate. Free a parameter only for a reason you would have accepted earlier, and **report the original and final fit**.",
+  "49": "Use the chi-square difference test for nested questions, such as whether a path is zero or two factors are one. Under MLR or WLSMV use the scaled version. Fit your theory against **at least one rival**, as the one-factor model's 510 on 54 df against 139 on 51 shows.",
+  "50": "Study the sentence and the table together. The sentence carries every number, locates the misfit, rejects the alternative and states that no modifications were made. Notice that M3 equals M1, because a second-order factor over exactly **three factors is just-identified**.",
+  "51": "Treat each row as a question to put to a paper you read. The tell-tale sign is listed beside each practice. The remedy is the same throughout: **file the plan in advance**, report the first fit and the final fit, and list what changed between them.",
+  "53": "Fit the CFA with every construct correlated first, then replace correlations with your paths. The chi-square difference between the two tests the omitted paths. A **saturated structural part tests nothing**. Report each endogenous R², since a significant path into an R² of 0.04 explains little.",
+  "54": "Estimate a, b and c-prime together, then test the indirect effect ab with a bootstrap. Drop the Baron and Kenny steps and the full or partial labels. Keep the hidden assumption in view: **randomising X does not secure the mediator to outcome link**.",
+  "55": "Read the rows in order: a, b, direct, indirect, total. The indirect effect of 0.12 has an interval from 0.07 to 0.18, so it is clear, and it is **a little over half of the 0.21 total**. The sentence to write is 'consistent with mediation through savings'.",
+  "56": "Pick the moderation method by the type of moderator. A categorical moderator suits multigroup comparison, and a latent interaction needs product indicators or LMS. Never report the product coefficient alone: **plot simple slopes** at low, mean and high values, and plan about four times the sample.",
+  "57": "Moderated mediation lets the indirect effect vary with context. Decide which path is moderated before estimating, then report conditional indirect effects and the index of moderated mediation. **Pre-specify one conditional hypothesis**, power the study for it, and call the rest exploratory.",
+  "58": "Cross-lagged models can mistake stable trait differences for effects. With three or more waves, use the random-intercept version and read the within-person paths. With two waves call the result association. Test **invariance across waves** before reading any change.",
+  "59": "Choose the unit to suit the reader. A programme reader wants the unstandardised treatment effect or the latent d. Standardised paths compare only within a model. Small R² values are common and honest, and **Cohen's f² benchmarks are too demanding** for field data.",
+  "60": "Read the syntax in two blocks: measurement with =~ and structure with ~. The labels a* and b* name parameters, and := defines the indirect and total effects with their own standard errors. **Check how the bootstrap and ordinal estimator combine** in your version.",
+  "61": "Use this table as a final review of your structural section. The row to remember is the last: reversed arrows fit identically, so the direction is **asserted unless design supplies it**. Fix each applicable row before you write the discussion.",
+  "63": "Invariance testing asks whether the instrument works the same way in each group. Without it, a group difference mixes real difference with measurement difference. The slide says it is almost never tested in South Asian multi-language surveys, and **partial invariance is the usual result**.",
+  "64": "Climb the ladder in order: configural, metric, scalar, strict. Metric lets you compare paths and scalar lets you compare latent means. Judge each step with ΔCFI of 0.01 or less and ΔRMSEA of 0.015 or less together. **Strict is rarely needed** for latent comparisons.",
+  "65": "Read down the Δχ² and ΔCFI columns. Metric holds, scalar fails with ΔCFI of −0.045, and freeing two thresholds restores it. The latent mean then differs by −0.18 SD with an interval touching zero. **Return to the cognitive interviews** for d3 and m2.",
+  "66": "When scalar fails, free the responsible items one at a time using modification indices, largest first. Keep at least two invariant items per factor. If **more than a third of a factor is freed**, each group has a different scale. Report which items and why.",
+  "67": "Treat waves as groups and let each item's error correlate with itself across waves. A scalar failure at endline in the treatment group is evidence of **response shift**, because the programme changed how respondents read the items. Test the control group first.",
+  "68": "Once metric invariance holds, compare paths across groups by constraining one path equal and testing it. This shows **for whom a mechanism works**. With many states, collapse to a few groups stated before seeing the data, and keep about 150 per group.",
+  "69": "Match the code to the ladder: configural, then equal loadings, then equal loadings and thresholds, compared with compareFit. Use measEq.syntax for the correct ordinal sequence. Report the table, the freed items, the final latent difference and **which comparisons your level licenses**.",
+  "71": "PLS-SEM builds composites from weighted indicators and regresses them, so it neither separates measurement error nor offers a global fit test. Its honest purpose is prediction on composites. Treat it as a different method and **never a cheaper CB-SEM**. Critics and advocates are each right about something.",
+  "72": "Use the two halves as a test of your own reasons. Formative constructs and out-of-sample prediction are defensible. 'Small sample', 'non-normal data' and 'no fit test needed' are convenient. Pick the method for your question, state the reason and **cite both camps**.",
+  "73": "Walk the table by construct type. For reflective constructs look for loadings of 0.708 or more, ρA between 0.70 and 0.95, AVE of 0.50 and HTMT below 0.85. For formative ones check redundancy and VIF. **Report the initial and final item sets** when you delete items.",
+  "74": "Assess the inner model in order: collinearity, path intervals, R², f², then predictive power. The important addition is **PLSpredict**, which tests out of sample against a linear-model benchmark. A PLS paper without it has not shown what the method is for.",
+  "75": "Read the table by construct type. Every reflective construct passes, the formative barriers composite passes with VIF below 2.4, and intention has R² of 0.42. The reading box lists what the study **cannot** show. Say which R² yardstick you use.",
+  "76": "PLSc corrects the bias toward zero for common-factor constructs, and ordinary PLS suits composites. Say which your constructs are, because that question is the real disagreement. Size the sample with the **inverse-square-root method**: about 155 for a path of 0.2.",
+  "77": "Match the tool to your situation. SmartPLS is menu-driven and licensed, so work is hard to reproduce unless you share the project file. SEMinR and cSEM are free in R. If you learn SmartPLS, **reproduce one analysis in SEMinR** so you can share it as code.",
+  "78": "Treat this table as a reporting contract. The justification, the settings and the outer-model table with initial and final item sets are the rows most often missing. Include the seed, 10,000 bootstrap subsamples and the **MICOM test** for multigroup work.",
+  "79": "Read the pitfalls in thesis order and check yourself against each. The first is the most telling: choosing PLS because CB-SEM would not fit. If that happened, **say so and present the CB-SEM misfit as a finding** about the model.",
+  "80": "Run both estimators when constructs are reflective. Agreement shows the result does not depend on the method. If CB-SEM rejects the model while PLS reports strong paths, the PLS paths sit on a structure the data contradict. **Put both in one table.**",
+  "82": "Arrows state causal assumptions, and estimating them does not test them. Randomisation secures only X's own paths. Scale your language to the design: 'effect' for randomised paths and **'is associated with'** for the rest. Draw the DAG with unmeasured variables in it.",
+  "83": "Mediation needs two ignorabilities. Randomisation delivers the first and nothing delivers the second, because the mediator was not assigned. Report the ρ at which the indirect effect vanishes: **0.1 is fragile, 0.4 is not easily explained away.**",
+  "84": "Method bias arises when one respondent reports everything in one sitting. Fix it at design with different sources, time gaps and behavioural outcomes. After the fact, use a marker variable or a latent method factor. **Harman's single-factor test detects nothing**, so do not rely on it.",
+  "85": "Compare the four rows. The statistical methods find method variance of 5% to 8% and a path that survives. The different-source estimate is smallest at 0.19 and most convincing. Plan **three marker items** into the questionnaire on the same response scale.",
+  "86": "Self-selection makes membership endogenous, so an observational path is biased by whatever drives both membership and outcome. An instrument inside the SEM is 2SLS and carries 2SLS's assumptions. **Write the limitations paragraph before the results**, because it disciplines the verbs.",
+  "87": "Draw the DAG before the path diagram, including what you cannot measure. By the back-door rule, a path is identified when measured covariates block every back-door route. **Never condition on a collider**, and watch for controls that sit downstream of treatment.",
+  "88": "Pick the verb from the design column. Randomised paths allow 'raises' and cross-sectional self-report allows 'is associated with'. Good fit means the model was not rejected, and it never means confirmed. A ministry **reads the verb as the policy claim**.",
+  "89": "Treat this as a menu of nine checks. Pick those your design makes relevant and put them in the appendix. The equivalent model and the mediation sensitivity analysis deserve early attention, since both **test your story against its rivals**.",
+  "91": "Choose software by your data. Likert data with few categories calls for WLSMV, which AMOS lacks. lavaan is the free reference, Mplus is the most complete, and Stata handles survey data well. The slide warns that **requiring AMOS requires a weaker analysis**.",
+  "92": "Use the table as an inventory of what to report, from theory to reproducibility. The last row costs nothing: **a correlation matrix with SDs and n** lets any reader refit a CB-SEM. Its absence is why most published SEMs cannot be checked.",
+  "93": "Order matters. Measurement results come before structural results, since a reader who distrusts the constructs has no reason to read the paths. Aim for two figures and two tables in the body and **send everything else to the appendix**.",
+  "94": "Fill in this template before the data are cleaned and file it as a PDF. The rows to settle early are the modification policy and the fit criteria chosen now. Registration turns each decision from a **suspicion into something a referee can check**.",
+  "95": "Follow the example from end to end. Each row names the section that governs it. The headline is the randomised latent effect, 0.21 SD. The mediation of 0.12 comes second, **in the conditional mood**. Use the structure as an outline for your own study.",
+  "96": "Run down this table before submitting. There are twelve errors, each with its section and a one-line fix. Pick out the ones that apply to your design, and check especially for **formative constructs modelled as reflective** and causal verbs on cross-sectional data.",
+  "97": "Tick every line before you submit. The fifteen lines split into measurement and structure. The slide says **invariance and the equivalent model** are the two most often missing, so check those first.",
+  "98": "Buy Kline first. Then use the lavaan tutorial for software, Hayes for mediation with observed variables, and Enders for missing data. For PLS-SEM read both Hair and its critics. The section column tells you **what to read before each stage**.",
+  "99": "Use this as a closing self-test: read each line and recall the section behind it. Two lines carry the most weight. **Fit does not choose between equivalent models**, and design and theory do. The last line asks you to use the method soundly."
+ }
+}

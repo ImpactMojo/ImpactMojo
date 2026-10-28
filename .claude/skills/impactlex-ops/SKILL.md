@@ -1,11 +1,11 @@
 ---
 name: impactlex-ops
-description: ImpactLex operations — regenerate seed snapshot, run AI rewrites, push to InstantDB, review contributions. Use when the user wants to update ImpactLex data, add terms, run content rewrites, or manage the glossary.
+description: ImpactLex operations — regenerate seed snapshot, run AI rewrites, review contributions. Use when the user wants to update ImpactLex data, add terms, run content rewrites, or manage the glossary.
 ---
 
 # ImpactLex Operations
 
-ImpactLex is ImpactMojo's unified glossary at `/impactlex/`. It's backed by a seed JSON snapshot (offline-first) and optionally InstantDB (real-time + contributions). This skill covers the common operations.
+ImpactLex is ImpactMojo's unified glossary at `/impactlex/`. It's backed by a seed JSON snapshot (offline-first) and Supabase (reader suggestions). This skill covers the common operations.
 
 ## Architecture recap
 
@@ -14,7 +14,7 @@ ImpactLex is ImpactMojo's unified glossary at `/impactlex/`. It's backed by a se
 - **Migration**: `scripts/impactlex-migrate.mjs`
 - **AI rewrite**: `scripts/impactlex-ai-rewrite.mjs` + `scripts/prompts/impactlex-rewrite.md`
 - **Lexicon embed** (for course pages): `/impactlex/lexicon-embed.js`
-- **Backend**: InstantDB (keys `$INSTANTDB_APP_ID`, `$INSTANTDB_ADMIN_TOKEN`)
+- **Backend**: none for the glossary (the snapshot is the source). Reader suggestions go to the Supabase table `impactlex_contributions`; `review.html` signs an admin in with a Supabase magic link.
 
 ## Common operations
 
@@ -26,12 +26,9 @@ node scripts/impactlex-migrate.mjs
 
 # With external Varnasr/ImpactLex pull (fetches from GitHub raw)
 node scripts/impactlex-migrate.mjs --with-external
-
-# And push to InstantDB
-INSTANTDB_APP_ID=... INSTANTDB_ADMIN_TOKEN=... node scripts/impactlex-migrate.mjs --with-external --push
 ```
 
-Writes `/impactlex/data/seed-snapshot.json`. Commit after regenerating.
+The script refuses to write `/impactlex/data/seed-snapshot.json`, which has been edited since it last built it. Use `--out <file>` to write a rebuild elsewhere and compare, and `--overwrite-curated` only to discard the edits on purpose.
 
 ### Run an AI rewrite pass
 
@@ -45,8 +42,6 @@ node scripts/impactlex-ai-rewrite.mjs --only attribution,theory-of-change,rct
 # Force a specific provider (default: gemini → grok → deepseek)
 node scripts/impactlex-ai-rewrite.mjs --provider grok
 
-# Full pass + push drafts to InstantDB
-node scripts/impactlex-ai-rewrite.mjs --push
 ```
 
 Drafts go into `seed-snapshot.json` with `status: "ai-draft"`, preserving the original in `seedDefinition`. Logs land in `scripts/logs/impactlex-rewrite-{date}.jsonl`.
@@ -54,7 +49,7 @@ Drafts go into `seed-snapshot.json` with `status: "ai-draft"`, preserving the or
 ### Review and publish drafts
 
 1. Open `/impactlex/review.html` in the browser.
-2. Enter a reviewer email (must be on `IMPACTLEX_CONFIG.adminEmails` in `/impactlex/index.html`).
+2. Sign in with an ImpactMojo admin email (a Supabase magic link; `public.is_admin()` decides).
 3. Side-by-side diff: seed vs. AI draft. Edit inline. Approve → status becomes `published`.
 4. To publish programmatically, flip `status` from `ai-draft` to `published` in the snapshot and push:
 
@@ -66,25 +61,6 @@ s.terms=s.terms.map(t=>t.status==='ai-draft'?{...t,status:'published'}:t);
 fs.writeFileSync(p,JSON.stringify(s,null,2));
 "
 ```
-
-### Add an InstantDB app ID
-
-1. Create app at InstantDB dashboard (name: `impactlex`).
-2. Capture app ID and admin token.
-3. Add to `.claude/.env.keys`:
-   ```
-   INSTANTDB_APP_ID=...
-   INSTANTDB_ADMIN_TOKEN=...
-   ```
-4. Update `/impactlex/index.html`:
-   ```js
-   window.IMPACTLEX_CONFIG = {
-     instantDbAppId: 'your-app-id',
-     snapshotUrl: '/impactlex/data/seed-snapshot.json',
-     adminEmails: ['you@impactmojo.in'],
-   };
-   ```
-5. Run the migrate script with `--push` to seed it.
 
 ### Full course-lexicon data swap (advanced, not yet executed)
 
@@ -112,7 +88,6 @@ This is deferred until ImpactLex content is fully rewritten so course pages don'
 
 ## Related
 
-- `rules/api-conventions.md` for InstantDB credentials
 - `rules/content-management.md` for the full cross-reference update checklist when the term count changes
 - `skills/add-files` for adding new content types
 - Backend decision doc: `/impactlex/BACKEND-DECISION.md`

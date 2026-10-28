@@ -32,12 +32,14 @@ const CORS_HEADERS = {
 };
 
 const FROM_EMAIL = "ImpactMojo <notifications@impactmojo.in>";
+const TEAM_FROM_EMAIL = "Team ImpactMojo <notifications@impactmojo.in>";
 
 // ── Email via Resend (free 3K emails/month) ──────────────────────────
 async function sendEmail(
   to: string,
   subject: string,
-  html: string
+  html: string,
+  from: string = FROM_EMAIL
 ): Promise<boolean> {
   const resendKey = Deno.env.get("RESEND_API_KEY");
   if (!resendKey) {
@@ -52,7 +54,7 @@ async function sendEmail(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: FROM_EMAIL,
+        from,
         to: [to],
         subject,
         html,
@@ -373,11 +375,20 @@ serve(async (req: Request) => {
         return json({ message: "No users for drip", count: 0 });
       }
 
+      // The drip is "course updates" mail. Anyone who switched that off in
+      // account settings gets none of it (no email and no in-app notice).
+      const { data: optedOut } = await admin
+        .from("notification_preferences")
+        .select("user_id")
+        .eq("email_course_updates", false);
+      const dripOptOut = new Set((optedOut || []).map((r: { user_id: string }) => r.user_id));
+
       const now = new Date();
       let sent = 0;
       const actions: string[] = [];
 
       for (const user of users) {
+        if (dripOptOut.has(user.id)) continue;
         const daysSinceSignup = Math.floor(
           (now.getTime() - new Date(user.created_at).getTime()) / (24 * 60 * 60 * 1000)
         );
@@ -570,6 +581,122 @@ serve(async (req: Request) => {
         emails_sent: sent,
         actions,
       });
+    }
+
+    // ── Certificate email ────────────────────────────────────────────
+    // Called by the database the moment a certificate is issued, with
+    // { certificate_id }, and with no body by the daily job (service role) to
+    // catch any certificate that has not been announced. Safe for the public
+    // anon key to call: the recipient is always the certificate's own holder,
+    // the text is fixed, and a certificate is emailed once (the notification
+    // of type "certificate" carrying its id records it).
+    if (path === "certificate-email") {
+      const bearer = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
+      const isService = !!bearer && bearer === serviceRoleKey;
+      let reqBody: { certificate_id?: string } = {};
+      try { reqBody = await req.json(); } catch (_) { /* no body */ }
+
+      let certs: Array<Record<string, string>> = [];
+      if (reqBody.certificate_id) {
+        const { data } = await admin
+          .from("certificates")
+          .select("id, user_id, course_name, certificate_number, issued_at")
+          .eq("id", reqBody.certificate_id)
+          .limit(1);
+        certs = data || [];
+      } else if (isService) {
+        const { data } = await admin
+          .from("certificates")
+          .select("id, user_id, course_name, certificate_number, issued_at")
+          .order("issued_at", { ascending: true })
+          .limit(200);
+        certs = data || [];
+      } else {
+        return json({ error: "certificate_id required" }, 400);
+      }
+
+      const results: Array<Record<string, unknown>> = [];
+      for (const cert of certs) {
+        // A certificate counts as announced once its email has gone out. A
+        // notification row with no email_sent is a send that failed, so it is
+        // retried (without a second in-app notification).
+        const { data: existing } = await admin
+          .from("notifications")
+          .select("id, email_sent")
+          .eq("user_id", cert.user_id)
+          .eq("type", "certificate")
+          .contains("metadata", { certificate_id: cert.id })
+          .limit(1);
+        if (existing?.[0]?.email_sent) {
+          results.push({ certificate: cert.certificate_number, skipped: "already emailed" });
+          continue;
+        }
+
+        const { data: profile } = await admin
+          .from("profiles")
+          .select("email, full_name, display_name")
+          .eq("id", cert.user_id)
+          .single();
+        const { data: prefs } = await admin
+          .from("notification_preferences")
+          .select("email_certificates, in_app_enabled")
+          .eq("user_id", cert.user_id)
+          .single();
+
+        const name = esc(profile?.full_name || profile?.display_name || "there");
+        const course = esc(cert.course_name);
+        const issued = new Date(cert.issued_at);
+        const issuedText = issued.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
+        const late = Date.now() - issued.getTime() > 24 * 60 * 60 * 1000;
+        const link = `/certificate.html?cert=${encodeURIComponent(cert.certificate_number)}`;
+
+        let notifId: string | null = existing?.[0]?.id ?? null;
+        if (!notifId) {
+          const { data: created } = await admin.rpc("notify_user", {
+            p_user_id: cert.user_id,
+            p_type: "certificate",
+            p_title: "Your ImpactMojo certificate is ready",
+            p_body: `You completed ${cert.course_name}. Your certificate number is ${cert.certificate_number}.`,
+            p_link: link,
+            p_metadata: { certificate_id: cert.id },
+          });
+          notifId = created ?? null;
+        }
+
+        let emailed = false;
+        let reason = "";
+        if (!profile?.email) {
+          reason = "no email address";
+        } else if (prefs && prefs.email_certificates === false) {
+          reason = "email_certificates turned off";
+        } else {
+          const html = wrapEmail(
+            "Your ImpactMojo certificate",
+            `<p>Hi ${name},</p>
+<p>Congratulations on completing <strong>${course}</strong>. Your certificate, number <strong>${esc(cert.certificate_number)}</strong>, was issued on ${issuedText}.</p>
+${late ? "<p>We should have emailed you when it was issued, and we are sorry that we did not.</p>" : ""}
+<p>You can view it, print it or save it as a PDF from the button below. It carries a verification link, so anyone you share it with can check that it is genuine.</p>
+<p>Team ImpactMojo</p>`,
+            link
+          );
+          emailed = await sendEmail(
+            profile.email,
+            "Your ImpactMojo certificate is ready",
+            html,
+            TEAM_FROM_EMAIL
+          );
+          if (!emailed) reason = "email provider refused or is not configured";
+        }
+
+        if (emailed && notifId) {
+          await admin
+            .from("notifications")
+            .update({ email_sent: true, email_sent_at: new Date().toISOString() })
+            .eq("id", notifId);
+        }
+        results.push({ certificate: cert.certificate_number, notified: true, emailed, reason });
+      }
+      return json({ message: "Certificate emails processed", results });
     }
 
     // ── Monthly content email ─────────────────────────────────────────

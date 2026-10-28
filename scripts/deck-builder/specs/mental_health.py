@@ -269,8 +269,9 @@ S02 = [
            pp("amber", "Depression", "Even in high-income countries only one third of people with "
               "depression receive formal care. Minimally adequate treatment ranges from 23% in "
               "high-income countries to 3% in low- and lower-middle-income countries.")),
-        body("WHO's 2026 fact sheet repeats the pattern: only 40% of people with "
-             "psychosis and about one third of people with depression receive formal mental health "
+        body("WHO's 2026 fact sheet, drawing on the Mental Health Atlas 2024 for psychosis, "
+             "gives a newer reading of the same gap: only 40% of people with "
+             "psychosis (slide 12 quotes the 2022 report's 71% with no service) and about one third of people with depression receive formal mental health "
              "care. Stigma, too few trained staff and too little public money explain much of it.",
              sm=True),
         hbox("Source: " + WMHR + "; " + WHO_MD + ".", "cyan"),
@@ -1805,7 +1806,7 @@ S12 = [
            [panel("green", "On the response", [bullets([
                 "MHCA 2017 makes care a right (s18) and attempted suicide a matter for care (s115)",
                 "Tele-MANAS 14416, DMHP and the NSPS are the public routes",
-                "Trained lay workers with supervision can halve depression",
+                "Trained, supervised lay workers have more than halved depression in trials",
                 "Every programme can notice, respond, refer and avoid harm"], sm=True)])]),
         body("The common thread across the deck is the gap between effective care and the people "
              "who need it. Most of that gap sits outside hospitals, in villages, schools, "

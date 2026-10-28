@@ -973,6 +973,7 @@ DECK = {
             TC([P("amber", "The four opinions",
                   "Gavai J: the State must evolve a policy for identifying the creamy layer even "
                   "from SCs and STs. Nath J: the criteria could differ from those used for OBCs. "
+                  "Mithal J: the existing system of reservation must prevail until a new approach is evolved. "
                   "Sharma J: identification should become a constitutional imperative.")],
                [P("indigo", "The Union government's position",
                   "On 9 August 2024 the Union Cabinet said SC and ST reservation would continue as "
@@ -1623,7 +1624,7 @@ DECK = {
               + " for turning these questions into evidence-based campaigns."),
         ]),
 
-        S("Summary", "Ten points to take away", [
+        S("Summary", "Eleven points to take away", [
             B("If you remember nothing else from this course, remember these. Each one connects "
               "to a design decision, a data choice or a legal duty in programme work."),
             BL(["Caste is a structure that allocates land, work, marriage and respect; treat it as such.",

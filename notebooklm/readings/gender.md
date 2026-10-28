@@ -17,7 +17,7 @@ python3 scripts/notebooklm-manage.py add-source gender https://www.ilo.org/publi
 python3 scripts/notebooklm-manage.py add-source gender https://www.gutenberg.org/ebooks/27083
 python3 scripts/notebooklm-manage.py add-source gender https://www.who.int/news-room/fact-sheets/detail/violence-against-women
 python3 scripts/notebooklm-manage.py add-source gender https://indiankanoon.org/doc/1031794/
-python3 scripts/notebooklm-manage.py add-source gender https://economics.mit.edu/files/792
+python3 scripts/notebooklm-manage.py add-source gender https://web.archive.org/web/20220822052505/https://economics.mit.edu/files/792
 python3 scripts/notebooklm-manage.py add-source gender https://en.wikisource.org/wiki/Castes_in_India:_Their_Mechanism,_Genesis_and_Development
 python3 scripts/notebooklm-manage.py add-source gender https://www.jstor.org/stable/4399556
 python3 scripts/notebooklm-manage.py add-source gender https://www.columbia.edu/itc/mealac/pritchett/00ambedkar/txt_ambedkar_castes.html
@@ -41,7 +41,7 @@ python3 scripts/notebooklm-manage.py add-source gender https://hdr.undp.org/data
 - https://www.gutenberg.org/ebooks/27083
 - https://www.who.int/news-room/fact-sheets/detail/violence-against-women
 - https://indiankanoon.org/doc/1031794/
-- https://economics.mit.edu/files/792
+- https://web.archive.org/web/20220822052505/https://economics.mit.edu/files/792
 - https://en.wikisource.org/wiki/Castes_in_India:_Their_Mechanism,_Genesis_and_Development
 - https://www.jstor.org/stable/4399556
 - https://www.columbia.edu/itc/mealac/pritchett/00ambedkar/txt_ambedkar_castes.html

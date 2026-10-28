@@ -90,28 +90,28 @@ def page(d, n):
     desc = html.unescape(d.get("desc", ""))
     secs = [html.unescape(s) for s in d.get("sections", [])]
     product = f"{t}, Course Notes (₹{PRICE})"
-    meta = f"{t} as printable course notes: all {d['slides']} slides, two to an A4 page with space for notes, {n} pages. ₹{PRICE} via UPI."
+    meta = f"{t} course notes: all {d['slides']} slides, two to an A4 page, with a note written for every slide and two pages of notes and diagrams for each of the {len(secs)} sections. {n} pages. ₹{PRICE} via UPI."
     items = "\n".join(f"      <li>{E(s)}</li>" for s in secs)
     return f'''<main class="wrap" id="main">
   <div class="crumb"><a href="/products.html">Products</a> › <a href="/products/notes-101/">101 Course Notes</a> › {E(t)}</div>
   <span class="eyebrow">Course Notes · PDF · {d['slides']} slides</span>
   <h1 class="title">{E(t)}: course notes</h1>
-  <p class="lede">{E(desc)} This is the whole <a href="{E(d['url'])}">{E(t)}</a> deck as an A4 document: every slide, two to a page, with ruled space under each pair to write your own notes.</p>
+  <p class="lede">{E(desc)} These are the notes for the whole <a href="{E(d['url'])}">{E(t)}</a> deck. Every slide is here, two to an A4 page, with a note written under it that explains it and tells you what to remember. Each section opens with two pages of its own: the main idea in plain words, a sketch-style diagram, the words to know, a worked example, the mistakes people make, and questions to check yourself.</p>
   <div class="buybar">
     <span class="price">₹{PRICE}</span>
     <a class="btn buy" href="#buy">Buy now →</a>
     <a class="btn ghost" href="#inside">See what's inside</a>
   </div>
 <p class="note im-prod-sep" style="margin:.3rem 0 .8rem">Products are sold separately and are not included in Membership. <a href="/premium.html">See what Membership covers</a>.</p>
-  <p class="note">PDF · {d['slides']} slides · {n} pages · delivered to your inbox within 24 hours of payment. The deck stays <a href="{E(d['url'])}">free to study online</a>; this is the copy to print and keep.</p>
-  <div class="statgrid"><div class="s"><b>{d['slides']}</b> slides</div><div class="s"><b>{len(secs)}</b> sections</div><div class="s"><b>2</b> slides a page</div><div class="s">ruled <b>notes</b> space</div><div class="s"><b>Print-ready</b> A4</div></div>
+  <p class="note">PDF · {d['slides']} slides · {n} pages · delivered to your inbox within 24 hours of payment. The slides stay <a href="{E(d['url'])}">free to study online</a>. The notes are the paid part.</p>
+  <div class="statgrid"><div class="s"><b>{len(secs)}</b> sections</div><div class="s"><b>{d['slides']}</b> slides, each with a note</div><div class="s"><b>{len(secs)}</b> diagrams and worked examples</div><div class="s"><b>Print-ready</b> A4 with room to write</div></div>
 
   <section class="blk" id="inside">
     <h2>What's inside: {len(secs)} sections</h2>
     <ul class="checklist">
 {items}
     </ul>
-    <p style="margin-top:1rem">Diagrams and charts print as they appear in the deck, in colour, with text you can search and copy.</p>
+    <p style="margin-top:1rem">The slides print as they appear in the deck, in colour, with text you can search and copy. The notes and section pages are set in a handwriting typeface, and the diagrams are drawn in a sketch style for these notes.</p>
   </section>
 
   <section class="blk" id="buy">
@@ -144,8 +144,8 @@ def page(d, n):
 
   <section class="blk faq">
     <h2>FAQ</h2>
-    <details><summary>What exactly do I get?</summary><p>One A4 PDF of {n} pages: a cover with the course outline, then all {d['slides']} slides of the deck, two to a page, with ruled space under each pair for your notes.</p></details>
-    <details><summary>Isn't the deck free?</summary><p>Yes. <a href="{E(d['url'])}">Every slide is free online</a> and will stay free. The PDF is the version to print, annotate and keep offline.</p></details>
+    <details><summary>What exactly do I get?</summary><p>One A4 PDF of {n} pages: a cover with the course outline, then for each of the {len(secs)} sections two pages of notes (the main idea, a diagram, words to know, a worked example, common mistakes and check questions with answers), followed by that section's slides two to a page with a note written under each. There is room in the margins and in a "my notes" area on every section page.</p></details>
+    <details><summary>Are the slides free?</summary><p>Yes. <a href="{E(d['url'])}">Every slide is free online</a> and stays free. You pay for the notes: an explanation written for each slide, the section pages, the worked examples and the check questions, laid out to print and write on.</p></details>
     <details><summary>How fast is delivery?</summary><p>Within 24 hours of confirming payment, usually sooner. We check the UPI reference, then email you a private download link.</p></details>
     <details><summary>Can I share it?</summary><p>It is for your own and your organisation's learning: print it and use it in training. The slides carry a CC BY-NC-ND 4.0 licence, so please don't resell or repost the file.</p></details>
   </section>
@@ -172,7 +172,7 @@ def index_page(rows, pages):
   <div class="crumb"><a href="/products.html">Products</a> › 101 Course Notes</div>
   <span class="eyebrow">Course Notes · PDF · {len(rows)} courses</span>
   <h1 class="title">101 Course Notes</h1>
-  <p class="lede">Every course in the ImpactMojo 101 series as a printable A4 document: all the slides, two to a page, with ruled space under each pair for your own notes. ₹{PRICE} each. The decks themselves stay <a href="/101-courses/">free online</a>.</p>
+  <p class="lede">Every course in the ImpactMojo 101 series as printable A4 notes: all the slides, two to a page, with a note written under each, and two pages of diagram, worked example and check questions for every section. ₹{PRICE} each. The decks themselves stay <a href="/101-courses/">free online</a>.</p>
   <div class="field" style="max-width:420px"><label for="q">Find a course</label><input id="q" type="search" placeholder="e.g. regression, nutrition, caste" oninput="filt(this.value)"></div>
   <div class="tblwrap" tabindex="0" role="region" aria-label="101 Course Notes"><table class="n101">
     <thead><tr><th scope="col">Course</th><th scope="col">Slides</th><th scope="col">Pages</th><th scope="col"><span class="sr-only">Buy</span></th></tr></thead>
@@ -229,7 +229,7 @@ def main():
         search.append({"id": f"N101-{d['slug']}", "title": f"{t}: Course Notes (PDF)", "description": meta, "type": "product",
                        "category": "101 Course Notes", "url": url, "tags": ["notes", "paid", f"₹{PRICE}", "101"]})
         urls.append(url)
-    idx_meta = f"All {len(rows)} ImpactMojo 101 courses as printable A4 course notes, every slide two to a page with space for notes. ₹{PRICE} each."
+    idx_meta = f"All {len(rows)} ImpactMojo 101 courses as printable A4 course notes: every slide with a note written under it, and a diagram, worked example and check questions for every section. ₹{PRICE} each."
     want[ROOT / "products/notes-101/index.html"] = wrap(tpl, "101 Course Notes (PDF)", idx_meta, "/products/notes-101/", index_page(rows, {k: v["pages"] for k, v in pages.items()}), "Hi ImpactMojo, I'd like to buy 101 Course Notes. I've paid by UPI; here is my reference: ")
     search.insert(0, {"id": "N101-index", "title": "101 Course Notes (PDF)", "description": idx_meta, "type": "product",
                       "category": "101 Course Notes", "url": "/products/notes-101/", "tags": ["notes", "paid", f"₹{PRICE}", "101"]})
