@@ -22,7 +22,6 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://data.humdata.org
 python3 scripts/notebooklm-manage.py add-source dataviz https://unstats.un.org/sdgs/dataportal
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/eda-hhs
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/code-convert-pro
-python3 scripts/notebooklm-manage.py add-source dataviz https://www.wired.com/2012/07/how-to-lie-with-data-visualization/
 python3 scripts/notebooklm-manage.py add-source dataviz https://www.interagencystandingcommittee.org/operational-response/iasc-information-management-guidelines
 python3 scripts/notebooklm-manage.py add-source dataviz https://dhsprogram.com/data/Guide-to-DHS-Statistics/index.cfm
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/econometrics-101
@@ -53,7 +52,6 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://policyviz.com/20
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/obs2insight
 python3 scripts/notebooklm-manage.py add-source dataviz https://www.storytellingwithdata.com/books
 python3 scripts/notebooklm-manage.py add-source dataviz https://policyviz.com/better-data-visualizations/
-python3 scripts/notebooklm-manage.py add-source dataviz https://www.perceptualedge.com/articles/b-eye/choosing_a_chart.pdf
 python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/watch?v=AdSZJzb-aX8
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/mel-basics
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/storytelling-lab
@@ -62,7 +60,6 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://urbaninstitute.g
 python3 scripts/notebooklm-manage.py add-source dataviz https://wbg-vis-design.vercel.app/
 python3 scripts/notebooklm-manage.py add-source dataviz https://github.com/PovertyAction/ipaplots
 python3 scripts/notebooklm-manage.py add-source dataviz https://clauswilke.com/dataviz/telling-a-story.html
-python3 scripts/notebooklm-manage.py add-source dataviz https://www.storytellingwithdata.com/lets-practice
 python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/watch?v=8EMW7io4rSI
 python3 scripts/notebooklm-manage.py add-source dataviz https://www.thefunctionalart.com/p/the-functional-art-an-introduction.html
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/bcc-comms
@@ -80,7 +77,6 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://r4ds.hadley.nz/d
 python3 scripts/notebooklm-manage.py add-source dataviz https://matplotlib.org/stable/tutorials/index.html
 python3 scripts/notebooklm-manage.py add-source dataviz https://www.gapminder.org/about/
 python3 scripts/notebooklm-manage.py add-source dataviz https://www.cs.umd.edu/~ben/papers/Shneiderman1996eyes.pdf
-python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/watch?v=ySO9bLiDrLY
 python3 scripts/notebooklm-manage.py add-source dataviz https://alignedleft.com/work/d3-book-2e
 python3 scripts/notebooklm-manage.py add-source dataviz https://ourworldindata.org/sdgs
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/toc-workbench
@@ -89,14 +85,11 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.i
 python3 scripts/notebooklm-manage.py add-source dataviz https://dhis2.org/
 python3 scripts/notebooklm-manage.py add-source dataviz https://docs.dhis2.org/en/use/user-guides/dhis-core-version-master/analysing-data/dashboards.html
 python3 scripts/notebooklm-manage.py add-source dataviz https://stephanieevergreen.com/data-visualization/
-python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/watch?v=MWBBtQMNLZc
 python3 scripts/notebooklm-manage.py add-source dataviz https://clauswilke.com/dataviz/visualizing-uncertainty.html
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/gender-studies
 python3 scripts/notebooklm-manage.py add-source dataviz https://101.impactmojo.in/decolonize-dev
 python3 scripts/notebooklm-manage.py add-source dataviz https://showyourstripes.info/
 python3 scripts/notebooklm-manage.py add-source dataviz https://makingmaps.net/
-python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/watch?v=DsMuzGLf_FA
-python3 scripts/notebooklm-manage.py add-source dataviz https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/30daymapchallengeday-1-points-map/
 python3 scripts/notebooklm-manage.py add-source dataviz https://ourworldindata.org/about
 python3 scripts/notebooklm-manage.py add-source dataviz https://flowingdata.com/
 python3 scripts/notebooklm-manage.py add-source dataviz https://pudding.cool/
@@ -123,7 +116,6 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/
 - https://unstats.un.org/sdgs/dataportal
 - https://101.impactmojo.in/eda-hhs
 - https://101.impactmojo.in/code-convert-pro
-- https://www.wired.com/2012/07/how-to-lie-with-data-visualization/
 - https://www.interagencystandingcommittee.org/operational-response/iasc-information-management-guidelines
 - https://dhsprogram.com/data/Guide-to-DHS-Statistics/index.cfm
 - https://101.impactmojo.in/econometrics-101
@@ -154,7 +146,6 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/
 - https://101.impactmojo.in/obs2insight
 - https://www.storytellingwithdata.com/books
 - https://policyviz.com/better-data-visualizations/
-- https://www.perceptualedge.com/articles/b-eye/choosing_a_chart.pdf
 - https://www.youtube.com/watch?v=AdSZJzb-aX8
 - https://101.impactmojo.in/mel-basics
 - https://101.impactmojo.in/storytelling-lab
@@ -163,7 +154,6 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/
 - https://wbg-vis-design.vercel.app/
 - https://github.com/PovertyAction/ipaplots
 - https://clauswilke.com/dataviz/telling-a-story.html
-- https://www.storytellingwithdata.com/lets-practice
 - https://www.youtube.com/watch?v=8EMW7io4rSI
 - https://www.thefunctionalart.com/p/the-functional-art-an-introduction.html
 - https://101.impactmojo.in/bcc-comms
@@ -181,7 +171,6 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/
 - https://matplotlib.org/stable/tutorials/index.html
 - https://www.gapminder.org/about/
 - https://www.cs.umd.edu/~ben/papers/Shneiderman1996eyes.pdf
-- https://www.youtube.com/watch?v=ySO9bLiDrLY
 - https://alignedleft.com/work/d3-book-2e
 - https://ourworldindata.org/sdgs
 - https://101.impactmojo.in/toc-workbench
@@ -190,14 +179,11 @@ python3 scripts/notebooklm-manage.py add-source dataviz https://www.youtube.com/
 - https://dhis2.org/
 - https://docs.dhis2.org/en/use/user-guides/dhis-core-version-master/analysing-data/dashboards.html
 - https://stephanieevergreen.com/data-visualization/
-- https://www.youtube.com/watch?v=MWBBtQMNLZc
 - https://clauswilke.com/dataviz/visualizing-uncertainty.html
 - https://101.impactmojo.in/gender-studies
 - https://101.impactmojo.in/decolonize-dev
 - https://showyourstripes.info/
 - https://makingmaps.net/
-- https://www.youtube.com/watch?v=DsMuzGLf_FA
-- https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/30daymapchallengeday-1-points-map/
 - https://ourworldindata.org/about
 - https://flowingdata.com/
 - https://pudding.cool/

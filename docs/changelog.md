@@ -6,6 +6,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Added
 
+- **Free Datasets for Social Science Research, in the Dataverse.** Todd Jones's CC0 list of about 125 free datasets (censuses, household surveys, crime, health, education and some global sources) is now an entry under Research & Evidence, searchable from the site. The Dataverse holds 323 entries. Most of the list is US data, and the entry says so.
 - **Three templates for the evaluator's side of an assignment**: a Bid or No-Bid Scorecard (Excel and a Word guide), a Statement of Work & Change Request Template, and an Inception Report & Evaluation Matrix Template, ₹199 each. They sit beside the commissioner's ToR Template and Proposal Scoring Rubric. The pages, order handler entries, search rows and sitemap URLs are in the branch. The paid files are not in the private `products` bucket yet, because they are uploaded by hand from the Drive masters. The legal notes were researched and written into the files on 21 October 2026 (sources named in each blue box). Do not merge to `main` until the three files are uploaded, or a paying buyer gets nothing.
 - **The Evaluation Essentials Kit goes from 27 to 30 products.** Its page, the seven pages that offer it, the products listing, search and the runbook now say 30, and the struck-through list price is ₹6,970. The price stays ₹2,499. The kit zip in the bucket still holds the 27-product build until the new files are cleared and uploaded.
 
@@ -41,6 +42,43 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **Fifteen pages failed the daily accessibility check from 15 October** (#1281). The Search label in the top bar was 4.43:1 in the dark theme on pages that stay light underneath it, because the bar is see-through; it is now 5.15:1 at worst. Nine handouts scrolled sideways on a phone by 6 to 20px after the body type changed to Inter, which is wider than Amaranth: their two-column card grids now take one column on a phone, as they already did in print. The opening story of the counterfactual game showed brown text on its dark scene in the light theme, at 1.44:1, and is now light text. The ImpactLex banner on the course glossaries could not wrap, and now lets its link drop under the text on a narrow screen.
 - **The daily link check reported 40,086 errors, almost none of them real** (#1281). The checker had changed how it reads two settings, so it skipped none of the backup copies and could not follow links that start with a slash. It now reads them correctly, and its report fits on the run page. Dead links it did find are replaced where the source has moved: three sanitation papers, two Fairwork pages, two chapters of The Mixtape, and a learning-science paper.
+## v10.392.0 — October 19, 2026 (a Survey Instrument Library)
+
+### For Learners
+
+- **Survey Instrument Library** — 26 validated scales and modules for mental health, food security, nutrition, empowerment, disability, learning and social capital, each with the source to cite, its length and recall period, and the thing that most often goes wrong in the field. Every instrument is in site search.
+- **Save a course for offline reading** — every flagship course page has a Save for offline button under Start module 1. The course then opens on that device with no connection, which helps in the field, and the same button removes the copy.
+- **Excel lexicons for Gender Studies and Public Policy** — the download buttons on both lexicon pages now give you the workbook.
+
+### Fixed
+
+- **The Dataverse listed seven tools twice** under two names each, among them J-PAL, 3ie, KoboToolbox and the World Inequality Database, and it listed 16 Claude slash commands as live that are not published anywhere. Each tool is listed once now, the 16 commands and their category are gone, and the Dataverse holds 322 resources in 23 categories (#1283).
+- **The Gender and Public Policy lexicon downloads said Coming Soon** although both workbooks were on the site (#1284).
+- **Some translated pages showed blank text**, where a translation had been saved empty, and Telugu pages showed a stray "&amp;amp;". Brand names written in Indian scripts are back in their English form, and the menus and footer have translations in all five languages for the first time (#1285). The new menu translations are machine-written and await a native reader.
+- **Offline course saving could not be reached and would have failed for two courses**: nothing on the site called it, SEL was listed under a name the worker did not know, Social Movements was missing, a course saved before a deploy would have opened without its styles, and the status messages were too faint to read (#1287).
+- **65 source links led nowhere**, across reading lists, Deep Dives, two Specials, a Code School page and a 101 deck. Moved works now open at their current address, removed pages open from a dated Internet Archive copy, and links that never pointed at a real page (among them an invented Cambridge University Press address) are gone, with the citation kept (#1288).
+- **Code School's R runtime was following a development build**, because the page asked for the latest release. It is fixed to version 0.6.0 (#1286).
+
+### Changed
+
+- Formula pages on five flagship courses load KaTeX 0.16.21, and the Development Finance deck loads the same Chart.js version as every other deck.
+- The roadmap's count of reading companions said 185. It is 192.
+- The subscription payment page draws its UPI QR code from a copy of the QR library kept on the site, so it no longer depends on a file a CDN generates on request.
+
+## v10.391.1 — October 19, 2026 (Measure of India and This Indian Life join the Dataverse)
+
+### For Learners
+
+- **Measure of India** — plain-language guides to India's official economic statistics (prices, growth, jobs, credit, trade), a profile of every state and series you can download, now listed in the Dataverse.
+- **This Indian Life** — sourced charts and plain answers to questions about how India lives, now listed in the Dataverse.
+
+### Fixed
+
+- **The daily accessibility check of every page had failed since 15 October**: eight handouts and the Gandhi lexicon ran wider than a phone, the header's Search label was too faint in dark mode on pages with a light top, and the story section of the Counterfactual game turned into a dark band with dark text in the light theme (#1281).
+
+### Changed
+
+- The Dataverse guide now describes all 24 categories and all nine resource types (it said 16 categories and described 14). The README said 22 categories.
 
 ## v10.390.0 — October 18, 2026 (Campbell paper opens from the archive)
 
