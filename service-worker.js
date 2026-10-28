@@ -51,6 +51,7 @@ const COURSE_URLS = {
   pubchoice: ['/courses/pubchoice/', '/courses/pubchoice/lexicon.html'],
   pubpol: ['/courses/pubpol/', '/courses/pubpol/lexicon.html'],
   sel: ['/courses/sel/', '/courses/sel/lexicon.html'],
+  'social-movements': ['/courses/social-movements/', '/courses/social-movements/lexicon.html'],
 };
 
 const STATIC_RE = /\.(?:css|js|mjs|png|jpe?g|gif|svg|webp|ico|woff2?|ttf|eot|json)$/i;
@@ -148,7 +149,7 @@ self.addEventListener('message', (event) => {
   if (data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   } else if (data.type === 'CACHE_COURSE' && data.courseId) {
-    event.waitUntil(cacheCourse(data.courseId));
+    event.waitUntil(cacheCourse(data.courseId, data.urls));
   }
 });
 
@@ -163,14 +164,32 @@ function postAll(message) {
 // in networkFirst searches every cache (including this one) when offline.
 const COURSE_SHARED_ASSETS = ["/js/course-loader.js", "/js/course-progress.js", "/js/site-chrome.js", "/js/theme.js", "/js/config.js", "/js/offline.js", "/css/fonts.css"];
 
-function cacheCourse(courseId) {
+// The page also sends the same-origin files it actually loaded (pageUrls), so
+// the course cache holds the stamped addresses (/js/x.js?v=hash) the page will
+// ask for offline. The runtime cache is purged on every deploy, so relying on
+// it would leave a course saved before a deploy with no styles or scripts (#1287).
+function pageAssetUrls(list) {
+  if (!Array.isArray(list)) return [];
+  const out = [];
+  for (const u of list) {
+    if (typeof u !== 'string' || u.charAt(0) !== '/' || u.charAt(1) === '/') continue;
+    if (u.indexOf('/.netlify/') === 0 || u.indexOf('/api/') === 0) continue;
+    if (out.indexOf(u) < 0) out.push(u);
+    if (out.length >= 150) break;
+  }
+  return out;
+}
+
+function cacheCourse(courseId, pageUrls) {
   const base = COURSE_URLS[courseId];
   if (!base) {
     return postAll({ type: 'COURSE_CACHE_ERROR', courseId: courseId, error: 'Unknown course' });
   }
   return caches.open(COURSE_PREFIX + courseId).then((cache) => {
     const courseUrls = Array.isArray(base) ? base : [base];
-    const urls = courseUrls.concat(COURSE_SHARED_ASSETS, [OFFLINE_URL]);
+    const urls = courseUrls.concat(COURSE_SHARED_ASSETS, [OFFLINE_URL])
+      .concat(pageAssetUrls(pageUrls))
+      .filter((u, i, a) => a.indexOf(u) === i);
     let completed = 0;
     return urls.reduce((chain, u) => chain.then(() =>
       fetch(u, { cache: 'reload' })

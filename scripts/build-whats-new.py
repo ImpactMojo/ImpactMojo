@@ -53,6 +53,7 @@ KINDS = [
     ("/datanotes/", "Data Note", "t-law"),
     ("/theories/", "Theory", "t-101"),
     ("/blog/", "Blog post", "t-course"),
+    ("/survey-instruments.html", "Library", "t-law"),
 ]
 MONTHS = {m: i for i, m in enumerate(
     ["January", "February", "March", "April", "May", "June", "July", "August",

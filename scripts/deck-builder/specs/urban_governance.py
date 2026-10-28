@@ -2040,7 +2040,7 @@ DECK = {
          "blocks": [
              {"t": "twocol", "ratio": "half",
               "left": [{"t": "bullets", "sm": True, "items": [
-                  "<a href='https://www.mha.gov.in/MHA1/Par2017/pdfs/par2013-pdfs/ls-070513/6458.pdf'>MHA, Lok Sabha Unstarred Question 6458, 7 May 2013: Census 2011 population by residence and urban definitions</a>",
+                  "<a href='https://web.archive.org/web/20240414063418/https://www.mha.gov.in/MHA1/Par2017/pdfs/par2013-pdfs/ls-070513/6458.pdf'>MHA, Lok Sabha Unstarred Question 6458, 7 May 2013: Census 2011 population by residence and urban definitions</a>",
                   "<a href='https://cprindia.org/wp-content/uploads/2022/02/Census0Town0Final0Report.pdf'>Mukhopadhyay and Zérah, Understanding India's Urban Frontier, World Bank Report AUS7449, 2015</a>",
                   "<a href='https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/may/doc202651861301.pdf'>Directorate of Census Operations, Maharashtra, Census 2027 press conference, 30 April 2026 (PIB)</a>",
                   "<a href='https://dhulecorporation.org/wp-content/uploads/2026/03/Census%202027%20Circular%20No%201%20English.pdf'>Registrar General of India, Census 2027 Circular No. 1, 13 August 2025</a>",

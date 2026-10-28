@@ -4,9 +4,8 @@ Open-access sources cited across the course. Add to the notebook with:
 
 ```bash
 # after `notebooklm login` and creating the notebook:
-python3 scripts/notebooklm-manage.py add-source poa https://www.worldbank.org/en/news/feature/2015/06/15/wdr2015-mind-society-and-behavior
+python3 scripts/notebooklm-manage.py add-source poa https://web.archive.org/web/20260413080410/https://www.worldbank.org/en/news/feature/2015/06/15/wdr2015-mind-society-and-behavior
 python3 scripts/notebooklm-manage.py add-source poa https://www.impactmojo.in/courses/poa/readings.html
-python3 scripts/notebooklm-manage.py add-source poa https://mru.org/courses/development-economics/what-is-economic-growth
 python3 scripts/notebooklm-manage.py add-source poa https://www.ilo.org/topics/social-protection
 python3 scripts/notebooklm-manage.py add-source poa https://www.impactmojo.in/courses/poa/readings.html
 python3 scripts/notebooklm-manage.py add-source poa https://ourworldindata.org/economic-growth
@@ -30,9 +29,8 @@ python3 scripts/notebooklm-manage.py add-source poa https://www.linkedin.com/in/
 ```
 
 ## URLs
-- https://www.worldbank.org/en/news/feature/2015/06/15/wdr2015-mind-society-and-behavior
+- https://web.archive.org/web/20260413080410/https://www.worldbank.org/en/news/feature/2015/06/15/wdr2015-mind-society-and-behavior
 - https://www.impactmojo.in/courses/poa/readings.html
-- https://mru.org/courses/development-economics/what-is-economic-growth
 - https://www.ilo.org/topics/social-protection
 - https://www.impactmojo.in/courses/poa/readings.html
 - https://ourworldindata.org/economic-growth

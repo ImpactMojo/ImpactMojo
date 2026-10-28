@@ -56,7 +56,7 @@ const READINGS = {
     { author: 'Patel, Vibhuti', year: 2013, title: 'Campaign Against Sexual Harassment at the Workplace', pub: 'Economic and Political Weekly, 48(10)' },
   ],
   9: [
-    { author: 'Chattopadhyay, Raghabendra & Duflo, Esther', year: 2004, title: 'Women as Policy Makers: Evidence from a Randomized Policy Experiment in India', pub: 'Econometrica, 72(5), 1409\u20131443', access: 'https://economics.mit.edu/files/792', note: 'Open Access via MIT' },
+    { author: 'Chattopadhyay, Raghabendra & Duflo, Esther', year: 2004, title: 'Women as Policy Makers: Evidence from a Randomized Policy Experiment in India', pub: 'Econometrica, 72(5), 1409\u20131443', access: 'https://web.archive.org/web/20220822052505/https://economics.mit.edu/files/792', note: 'Open Access via MIT' },
     { author: 'Rai, Shirin M.', year: 2002, title: 'Class, Caste and Gender \u2014 Women in Parliament in India', pub: 'International IDEA', note: 'Open Access' },
     { author: 'Kudva, Neema', year: 2003, title: 'Engineering Elections: The Experiences of Women in Panchayati Raj in Karnataka', pub: 'International Journal of Politics, Culture, and Society, 16(3), 445\u2013463' },
   ],
