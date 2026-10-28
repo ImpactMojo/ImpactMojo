@@ -113,7 +113,7 @@
         class: "sm-band" + (openBarrier === b.kind ? " is-on" : ""),
         tabindex: "0", role: "button",
         "aria-pressed": openBarrier === b.kind ? "true" : "false",
-        "aria-label": k.name + " barrier, blocking " + b.weight + " per cent. " + b.text
+        "aria-label": k.name + " " + b.weight + "% of the way, blocked by this barrier. " + b.text
       });
 
       /* the whole width, faint: the path if nothing blocked it */
@@ -128,7 +128,7 @@
       var ink = readableOn(k.color);
       g.appendChild(el("text", {
         class: "sm-band-name", x: padX + 14, y: y + (narrow ? 22 : 24), fill: ink
-      }, k.name));
+      }, k.name + " "));   /* the space keeps the name and the figure apart for speech control */
       g.appendChild(el("text", {
         class: "sm-band-pct", x: padX + 14, y: y + (narrow ? 40 : 43), fill: ink
       }, b.weight + "% of the way"));

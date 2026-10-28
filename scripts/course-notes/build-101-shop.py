@@ -62,17 +62,20 @@ def deck_with_link(text, slug, title):
     nav = text.find('<div id="nav"')
     if tags not in text or nav < 0 or "</head>" not in text:
         return None
-    label = E(f"Buy the {title} course notes, a printable PDF, for ₹{PRICE}")
-    text = text.replace(tags, tags + f'<!--notes-101--><a class="title-tag notes-buy" href="{url}" aria-label="{label}">Course Notes PDF &middot; ₹{PRICE}</a><!--/notes-101-->', 1)
+    # The accessible name must contain the visible text (WCAG 2.5.3), so each
+    # label starts with exactly what its link shows.
+    label_tag = E(f"Course Notes PDF · ₹{PRICE}: buy the {title} course notes, a printable PDF")
+    label_nav = E(f"Notes ₹{PRICE}: buy the {title} course notes, a printable PDF")
+    text = text.replace(tags, tags + f'<!--notes-101--><a class="title-tag notes-buy" href="{url}" aria-label="{label_tag}">Course Notes PDF &middot; ₹{PRICE}</a><!--/notes-101-->', 1)
     nav = text.find('<div id="nav"')
     close = text.find("</div>", nav)
-    text = text[:close] + f'<!--notes-101--> <a class="nav-notes notes-buy" href="{url}" aria-label="{label}">Notes ₹{PRICE}</a>\n<!--/notes-101-->' + text[close:]
+    text = text[:close] + f'<!--notes-101--> <a class="nav-notes notes-buy" href="{url}" aria-label="{label_nav}">Notes ₹{PRICE}</a>\n<!--/notes-101-->' + text[close:]
     # The closing slide: the reader who reached it is the likeliest buyer.
     cta = text.find('<div class="end-cta">')
     if cta < 0:
         return None
     close = text.find("</div>", cta)
-    text = text[:close] + f'<!--notes-101--><a class="end-btn end-btn-secondary notes-buy" href="{url}" aria-label="{label}">Course Notes PDF &middot; ₹{PRICE}</a><!--/notes-101-->' + text[close:]
+    text = text[:close] + f'<!--notes-101--><a class="end-btn end-btn-secondary notes-buy" href="{url}" aria-label="{label_tag}">Course Notes PDF &middot; ₹{PRICE}</a><!--/notes-101-->' + text[close:]
     # A paid tag beside one reading "Free Forever" looks like a contradiction;
     # say which thing is free.
     for old, new in FREE_TAGS:
