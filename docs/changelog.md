@@ -6,6 +6,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Added
 
+- **Free Datasets for Social Science Research, in the Dataverse.** Todd Jones's CC0 list of about 125 free datasets (censuses, household surveys, crime, health, education and some global sources) is now an entry under Research & Evidence, searchable from the site. The Dataverse holds 323 entries. Most of the list is US data, and the entry says so.
 - **Three templates for the evaluator's side of an assignment**: a Bid or No-Bid Scorecard (Excel and a Word guide), a Statement of Work & Change Request Template, and an Inception Report & Evaluation Matrix Template, ₹199 each. They sit beside the commissioner's ToR Template and Proposal Scoring Rubric. The pages, order handler entries, search rows and sitemap URLs are in the branch. The paid files are not in the private `products` bucket yet, because they are uploaded by hand from the Drive masters. The legal notes were researched and written into the files on 21 October 2026 (sources named in each blue box). Do not merge to `main` until the three files are uploaded, or a paying buyer gets nothing.
 - **The Evaluation Essentials Kit goes from 27 to 30 products.** Its page, the seven pages that offer it, the products listing, search and the runbook now say 30, and the struck-through list price is ₹6,970. The price stays ₹2,499. The kit zip in the bucket still holds the 27-product build until the new files are cleared and uploaded.
 
