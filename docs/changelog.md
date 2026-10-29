@@ -42,11 +42,13 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### For Learners
 
+- **Full catalogue** — now lists every Practice Pack, case challenge, Data Note, theory, Fundamentals page, Code School course and Special, and all 192 reading companions, with a filter for each.
 - **ImpactMojo walkthrough** — a slide deck that takes you through the whole site: what is on it, the five menus, the features on every page, the tools for teachers, the Membership plans, the paid products and what is new.
 
 ### Added
 
-- `walkthrough.html` is written by `scripts/build-walkthrough.py` from the site's own sources: the numbers from `data/counts.json`, the menus from `js/site-chrome.js`, the languages from `js/translate-sarvam.js`, the plans and prices from `premium.html`, the products from `products.html` and the partners from `partnerships.html`. The What's new slide reads `data/whats-new.json` in the browser. The `walkthrough` CI job fails when any of those sources changes and the deck is not rebuilt, or when the deck links to a page that does not exist. Linked from About and Teach with ImpactMojo.
+- `walkthrough.html` is written by `scripts/build-walkthrough.py` from the site's own sources: the numbers from `data/counts.json`, the menus from `js/site-chrome.js`, the languages from `js/translate-sarvam.js`, the plans and prices from `premium.html`, the products from `products.html` and the partners from `partnerships.html`. The What's new slide reads `data/whats-new.json` in the browser. The `walkthrough` CI job fails when any of those sources changes and the deck is not rebuilt, or when the deck links to a page that does not exist. Linked from About, Teach with ImpactMojo, the header's Membership menu, the footer, the phone menu and the catalogue.
+- `scripts/build-catalog-extras.py` writes the kinds the catalogue was missing (101 entries on 29 October 2026) into `catalog.html` from `data/search-index.json`, with six new filters. The `catalog-generated` CI job keeps it current.
 
 ## v10.391.0 — October 19, 2026 (pages that fit a phone, a readable search label, a working link check)
 

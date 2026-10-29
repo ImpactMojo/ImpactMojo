@@ -209,6 +209,7 @@
       ['/blog.html', 'Blog', 'Essays and updates']]],
     ['Membership', [
       ['/premium.html', 'Plans', 'What Membership adds'],
+      ['/walkthrough.html', 'Site walkthrough', 'A slide tour of the whole site'],
       ['/catalog.html', 'Catalogue', 'Everything on the site, filterable'],
       ['/updates#whats-new', 'What&rsquo;s new', 'Recent additions and changes']]]
   ];
@@ -228,7 +229,7 @@
       ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/handouts.html', 'Handouts'],
       ['/blog.html', 'Blog'], ['/dojos.html', 'Dojos &amp; Practice']]],
     ['ImpactMojo', [
-      ['/about.html', 'About'], ['/premium.html', 'Membership'], ['/catalog.html', 'Full catalogue'],
+      ['/about.html', 'About'], ['/walkthrough.html', 'Site walkthrough'], ['/premium.html', 'Membership'], ['/catalog.html', 'Full catalogue'],
       ['/updates#whats-new', 'What&rsquo;s new'], ['/impact-dashboard.html', 'Impact'], ['/testimonials.html', 'Testimonials'],
       ['/updates#roadmap', 'Roadmap'], ['/community/', 'Community'], ['/partnerships.html', 'Partnerships'],
       ['/contribute.html', 'Contribute'], ['/support.html', 'Support us'], ['/transparency.html', 'Transparency'], ['/known-issues.html', 'Known issues'],
@@ -274,7 +275,7 @@
       ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/handouts.html', 'Handouts'],
       ['/blog.html', 'Blog'], ['/dojos.html', 'Dojos &amp; Practice', '90-minute skill sessions, in person and online']]],
     ['ImpactMojo', [
-      ['About us', [['/about.html', 'About', 'Who we are and why ImpactMojo exists'], ['/impact-dashboard.html', 'Impact', 'What learners have done with what they learned'], ['/testimonials.html', 'Testimonials', 'What learners say about ImpactMojo'], ['/transparency.html', 'Transparency', 'Our numbers, methods and revenue'], ['/known-issues.html', 'Known issues', 'Every bug we know about, open and fixed']]],
+      ['About us', [['/about.html', 'About', 'Who we are and why ImpactMojo exists'], ['/walkthrough.html', 'Site walkthrough', 'A slide tour of the whole site'], ['/impact-dashboard.html', 'Impact', 'What learners have done with what they learned'], ['/testimonials.html', 'Testimonials', 'What learners say about ImpactMojo'], ['/transparency.html', 'Transparency', 'Our numbers, methods and revenue'], ['/known-issues.html', 'Known issues', 'Every bug we know about, open and fixed']]],
       ['Membership and updates', [['/premium.html', 'Membership', 'What Membership adds'], ['/catalog.html', 'Full catalogue'], ['/updates#whats-new', 'What&rsquo;s new'], ['/updates#roadmap', 'Roadmap', 'What we are building next']]],
       ['Get involved', [['/community/', 'Community', 'Practitioners on WhatsApp and Discord'], ['/partnerships.html', 'Partnerships', 'Who we work with, and how to partner'], ['/contribute.html', 'Contribute', 'Propose a free course of your own'], ['/support.html', 'Support us', 'Pay what you can to keep the site free'], ['https://github.com/ImpactMojo/ImpactMojo', 'GitHub', 'The open-source code behind the site']]]]],
     ['Help &amp; legal', [

@@ -468,6 +468,19 @@ jobs:
       - name: Check the walkthrough deck matches its sources
         run: python3 scripts/build-walkthrough.py --check
 
+  catalog-generated:
+    name: Catalogue lists what site search lists
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # catalog.html had no Practice Packs, challenges, Data Notes, theories,
+      # Fundamentals or Code School courses until 2026-10-29. Those kinds are
+      # now written into it from data/search-index.json.
+      - name: Check the generated catalogue block is current
+        run: python3 scripts/build-catalog-extras.py --check
+
   mobile-search:
     name: Site search is reachable on a phone
     runs-on: ubuntu-latest
