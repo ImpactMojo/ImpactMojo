@@ -486,6 +486,19 @@ jobs:
       - name: Check the generated catalogue block is current
         run: python3 scripts/build-catalog-extras.py --check
 
+  by-the-numbers:
+    name: By the numbers cards match their data
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # Every figure on a card is computed from data in the repository. This
+      # fails if a source file changed and the page, the manifest or a card
+      # image was not rebuilt to match.
+      - name: Check the cards, the page and the images are current
+        run: python3 scripts/by-the-numbers/build.py --check
+
   mobile-search:
     name: Site search is reachable on a phone
     runs-on: ubuntu-latest

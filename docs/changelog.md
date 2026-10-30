@@ -40,6 +40,16 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **The header tabs (Learn, Tools, Data, Read, Membership) were about 13px** (#1300). Their font rule was written in a form browsers reject, so they fell back to the default button size. They are 16px now, and the dropdown links are 16px and 14px.
 - **Two pages let a quote or a link parameter break out of the page** (#1302). The chart page of The Long View wrote its chart id from the address into the page as HTML, and the UDISE explorer did not escape quotes in text it puts inside attributes. The chart id is now checked against the list of charts, and both pages escape and build their markup safely.
 
+## v10.394.0 — October 30, 2026 (By the numbers)
+
+### For Learners
+
+- **By the numbers** — One figure at a time from India's public data, as a card you can download and share, with the working, every state's figures and the sources on the same page. The first sets CSR spending against NITI Aayog's poverty index: in 2022-23 Bihar received about ₹19 of CSR per resident and Maharashtra ₹436.
+
+### Added
+
+- `scripts/by-the-numbers/build.py` computes each card from data in the repository (the CSR series, NITI Aayog's MPI 2023 state table and the MoHFW population projections for 1 October 2022) and writes `/by-the-numbers/` and `data/by-the-numbers/cards.json`. `render.mjs` draws the 1080x1350 cards, named by a hash of what they show. CI fails if any of the three is stale.
+
 ## v10.393.0 — October 29, 2026 (a walkthrough of the whole site)
 
 ### For Learners
