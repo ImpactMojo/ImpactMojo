@@ -50,6 +50,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Changed
 
+- **Catalogue ratings and user counts are back.** v10.394.0 removed the 386 ratings and 409 user counts from the catalogue cards on the mistaken view that they had no measurement behind them. They come from the platform's social proof, and they were restored before that release was published, so no visitor saw them missing.
 - `scripts/by-the-numbers/render.mjs` now takes each card's value format and axis labels from the card, and names every bar when a chart has eight or fewer. Each card's sources can carry a short name for the card's footer. The CSR card was redrawn under a new name for the spacing change; its figures did not move.
 
 ## v10.394.0 — October 30, 2026 (By the numbers)
@@ -60,7 +61,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Changed
 
-- The catalogue no longer shows star ratings or user counts. Every flagship read "4.9" and the counts ("3.5K users") had no measurement behind them. The five annotated acts keep their ₹350 price, which had been drawn in the rating's place.
+- The five annotated acts show their ₹350 price in a price field of its own, where it had been written into the rating field.
 
 ### Added
 
