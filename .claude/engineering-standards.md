@@ -345,6 +345,16 @@ has none, the OpenStacks house style (`assets/css/stack.css`) and
 kombai.com/gallery/web are the owner's references. Fix specific defects, and
 avoid generic restyling.
 
+When the owner asks to refine the look of impactmojo.in or of any of the
+microsites, use the scroll-craft skill (github.com/nateherkai/scroll-craft,
+MIT): install it as a plugin or read its `SKILL.md` and references, and follow
+its workflow. It works inside the rules above, not over them. The site keeps
+its own name, content and brand assets, nothing is invented to fill a design,
+text clears contrast in both themes, the page works on a phone and with
+reduced motion, and the result is measured in a browser the way this section
+describes. A defect fix or a small change that is not a request to refine the
+look does not call for the skill.
+
 ## 11. Performance and cost
 
 Measure before changing: bundle size, unused dependencies, image weight,
