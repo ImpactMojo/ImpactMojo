@@ -170,7 +170,8 @@ COUNT_FOR = {
     "/courses/": "flagship-courses", "/101-courses/": "foundational-courses",
     "/practice-packs/": "practice-packs", "/Games/": "game-simulations", "/game-library.html": "games",
     "/Labs/": "labs", "/premium-tools/": "premium-tools", "/law-guides/": "law-guides",
-    "/libraries.html": "libraries", "/explorers.html": "data-explorers", "/dataverse.html": "dataverse",
+    "/libraries.html": "libraries", "/explorers.html": "data-explorers", "/by-the-numbers/": "by-the-numbers",
+    "/dataverse.html": "dataverse",
     "/BookSummaries/": "reading-companions", "/DeepDives/": "deep-dives", "/handouts.html": "handouts",
 }
 COLORS = ["cyan", "green", "amber", "indigo", "red"]

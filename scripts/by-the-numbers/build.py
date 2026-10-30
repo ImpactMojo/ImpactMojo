@@ -11,7 +11,10 @@ page that shows its working.
     node scripts/by-the-numbers/render.mjs           # draw the card images
 
 The script writes by-the-numbers/index.html (the page, with every card's
-working) and data/by-the-numbers/cards.json (what render.mjs draws). Each
+working), data/by-the-numbers/cards.json (what render.mjs draws), the By the
+numbers group on explorers.html, and one site-search row per card in
+data/search-index.json, which build-catalog-extras.py then carries into the
+catalogue. The number of cards must equal "by-the-numbers" in data/counts.json. Each
 image is named by a hash of what it shows, so a changed figure gets a new
 file and --check fails until it is drawn.
 
@@ -31,6 +34,10 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data" / "by-the-numbers"
 PAGE = ROOT / "by-the-numbers" / "index.html"
 MANIFEST = DATA / "cards.json"
+EXPLORERS = ROOT / "explorers.html"
+SEARCH = ROOT / "data" / "search-index.json"
+COUNTS = ROOT / "data" / "counts.json"
+EX_START, EX_END = "<!-- by-the-numbers:start -->", "<!-- by-the-numbers:end -->"
 IMG_DIR = "assets/by-the-numbers"
 SERIES = "By the numbers"
 E = html.escape
@@ -112,6 +119,8 @@ def csr_need():
 
     return dict(
         id="csr-need",
+        title="CSR spending per resident against multidimensional poverty, by state",
+        tags=["CSR", "corporate social responsibility", "multidimensional poverty", "MPI", "NITI Aayog", "state inequality"],
         topic=f"CSR, {year}",
         headline=(f"Bihar received {rupees(top['per_head'])} of company CSR spending per resident "
                   f"in {year}. Maharashtra received {rupees(low['per_head'])}."),
@@ -197,6 +206,8 @@ def undertrials_caste():
 
     return dict(
         id="undertrials-caste",
+        title="Undertrial prisoners by caste, against the population",
+        tags=["undertrial prisoners", "NCRB", "prison statistics", "Scheduled Castes", "Scheduled Tribes", "criminal justice"],
         topic="Undertrial prisoners, 31 December 2023",
         headline=(f"Scheduled Castes and Tribes are {pct(sc_p + st_p)} of the population "
                   f"and {pct(sc_u + st_u)} of undertrial prisoners."),
@@ -255,6 +266,8 @@ def travel_by_sex():
     src = d["_source"]
     return dict(
         id="travel-by-sex",
+        title="How men and women get to work, from the National Household Travel Survey",
+        tags=["travel survey", "NHTS", "commuting", "women's work", "female labour force", "transport"],
         topic="Getting to work, 2025-26",
         headline=(f"{pct(men)} of working men made a trip of a kilometre or more to work on the survey's travel day. "
                   f"For working women it was {pct(women)}."),
@@ -309,6 +322,8 @@ def obc_dates():
     f98, d98 = year(1998, "file_year"), year(1998, "dated_year")
     return dict(
         id="obc-dates",
+        title="Dates on the Central OBC list, file year against resolution date",
+        tags=["OBC list", "Other Backward Classes", "NCBC", "caste", "gazette", "reservations"],
         topic="Central OBC list, 1993-2016",
         headline=(f"{len(moved)} of the {len(later):,} entries added to the Central OBC list after 1993 "
                   f"are filed under a different year from the date on their resolution."),
@@ -463,6 +478,45 @@ def page(cards):
 """
 
 
+def data_room(cards, text):
+    """The By the numbers group on the Data Room page, one card per figure."""
+    if EX_START not in text or EX_END not in text:
+        fail("explorers.html has no by-the-numbers markers")
+    items = "".join(f"""
+      <a class="card" href="/by-the-numbers/#{c['id']}" style="--sc:#B45309">
+        <span class="csrc">{E(c['topic'])} · {E('; '.join(s.get('short') or s['name'].split(',')[0] for s in c['sources']))}</span>
+        <span class="cn">{E(c['title'])}</span>
+        <span class="cd">{keep(c['headline'])}</span>
+        <span class="cgo">See the working →</span>
+      </a>""" for c in cards)
+    block = f"""{EX_START}
+  <section class="group" id="by-the-numbers">
+    <div class="group-head">
+      <span class="gk">Cards</span><h2><a href="/by-the-numbers/">By the numbers: one figure at a time</a></h2><span class="gn">{len(cards)} cards</span>
+    </div>
+    <div class="grid">{items}
+    </div>
+  </section>
+  {EX_END}"""
+    head, rest = text.split(EX_START, 1)
+    return head + block + rest.split(EX_END, 1)[1]
+
+
+def search_rows(cards, raw):
+    """One site-search row per card, after the page's own row. Rows are rewritten each build."""
+    rows = json.loads(raw)
+    rows = [r for r in rows if not str(r.get("id", "")).startswith("by-the-numbers-")]
+    at = next((i for i, r in enumerate(rows) if r.get("id") == "by-the-numbers"), None)
+    if at is None:
+        fail("data/search-index.json has no by-the-numbers row")
+    new = [dict(id=f"by-the-numbers-{c['id']}", title=f"{c['title']} (By the numbers)",
+                description=f"{c['headline']} {c['sub']}", type="explorer", category="Data Room",
+                url=f"/by-the-numbers/#{c['id']}", tags=c["tags"] + ["by the numbers", "data cards", "India"])
+           for c in cards]
+    rows[at + 1:at + 1] = new
+    return json.dumps(rows, indent=2, ensure_ascii=False) + ("\n" if raw.endswith("\n") else "")
+
+
 def share():
     spec = importlib.util.spec_from_file_location("build_social_tags", ROOT / "scripts" / "build-social-tags.py")
     m = importlib.util.module_from_spec(spec)
@@ -478,15 +532,21 @@ def build():
         c["image"] = f"{IMG_DIR}/{c['id']}-{c['hash']}.png"
         c["series"] = SERIES
         cards.append(c)
+    want = json.loads(COUNTS.read_text(encoding="utf-8")).get("by-the-numbers")
+    if want != len(cards):
+        fail(f"data/counts.json says {want} By the numbers cards and there are {len(cards)}; "
+             "change the count there, then run python3 scripts/check-counts.py")
     manifest = json.dumps(cards, indent=1, ensure_ascii=False) + "\n"
     out = share().apply("by-the-numbers/index.html", page(cards))
-    return cards, manifest, out
+    ex = data_room(cards, EXPLORERS.read_text(encoding="utf-8"))
+    search = search_rows(cards, SEARCH.read_text(encoding="utf-8"))
+    return cards, manifest, out, ex, search
 
 
 def main():
-    cards, manifest, out = build()
+    cards, manifest, out, ex, search = build()
     if "--check" in sys.argv:
-        stale = [p for p, new in ((MANIFEST, manifest), (PAGE, out))
+        stale = [p for p, new in ((MANIFEST, manifest), (PAGE, out), (EXPLORERS, ex), (SEARCH, search))
                  if not p.exists() or p.read_text(encoding="utf-8") != new]
         if stale:
             fail("stale: " + ", ".join(str(p.relative_to(ROOT)) for p in stale)
@@ -500,6 +560,8 @@ def main():
     PAGE.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST.write_text(manifest, encoding="utf-8")
     PAGE.write_text(out, encoding="utf-8")
+    EXPLORERS.write_text(ex, encoding="utf-8")
+    SEARCH.write_text(search, encoding="utf-8")
     for c in cards:
         print(f"{c['id']}: {c['headline']}")
     print(f"wrote {PAGE.relative_to(ROOT)} and {MANIFEST.relative_to(ROOT)}")

@@ -176,6 +176,7 @@ def scanned_files(wiki_dir=None):
 # phrase ("324 datasets").
 TERMS = [
     (r"data\s+explorers?", "data-explorers"),
+    (r"by\s+the\s+numbers\s+cards?", "by-the-numbers"),
     # Every page under premium-tools/ has a paid tier, and the rule is that
     # anything paid is premium -- so the count is simply how many of those
     # pages ship. It had drifted to 9, 10, 11 and 13 on four surfaces
@@ -268,6 +269,8 @@ SPECIAL = [
 # never matches (bare "tools" is intentionally not a key).
 LABEL_KEYS = [
     ("data explorers", "data-explorers"),
+    # The home page's Data column lists "By the numbers" with its card count.
+    ("by the numbers", "by-the-numbers"),
     # The Libraries card is labelled just "Dataverse"; every other surface
     # spells it "N datasets" or "N curated data tools", which the prose
     # patterns already cover.
