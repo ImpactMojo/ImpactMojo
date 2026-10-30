@@ -73,7 +73,16 @@ def first_sentence(text, limit=150):
     m = re.match(r"(.+?[.!?])(\s|$)", text)
     s = m.group(1) if m else text
     if len(s) > limit:
-        s = s[:limit].rsplit(" ", 1)[0].rstrip(",;") + "."
+        # Too long for the card. Cut at the last clause that ends inside the
+        # limit, and mark the cut with an ellipsis: a full stop after a broken
+        # phrase ("each with the.") reads as a finished sentence that is wrong.
+        head = s[:limit]
+        cut = max(head.rfind(", "), head.rfind("; "))
+        if cut < limit // 2:
+            cut = max(head.rfind(" and "), head.rfind(" with "))
+        if cut < limit // 2:
+            cut = head.rfind(" ")
+        s = head[:cut].rstrip(",; ") + "\u2026"
     return s[:1].upper() + s[1:]
 
 

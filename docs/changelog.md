@@ -46,6 +46,10 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **By the numbers** — One figure at a time from India's public data, as a card you can download and share, with the working, every state's figures and the sources on the same page. The first sets CSR spending against NITI Aayog's poverty index: in 2022-23 Bihar received about ₹19 of CSR per resident and Maharashtra ₹436.
 
+### Changed
+
+- The catalogue no longer shows star ratings or user counts. Every flagship read "4.9" and the counts ("3.5K users") had no measurement behind them. The five annotated acts keep their ₹350 price, which had been drawn in the rating's place.
+
 ### Added
 
 - `scripts/by-the-numbers/build.py` computes each card from data in the repository (the CSR series, NITI Aayog's MPI 2023 state table and the MoHFW population projections for 1 October 2022) and writes `/by-the-numbers/` and `data/by-the-numbers/cards.json`. `render.mjs` draws the 1080x1350 cards, named by a hash of what they show. CI fails if any of the three is stale.
