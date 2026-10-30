@@ -234,6 +234,8 @@ Before considering any change complete:
 
 42. **By the numbers cards are computed, never typed**: after changing a card in `scripts/by-the-numbers/build.py`, or any data file it reads (`data/csr-india.json`, `data/by-the-numbers/*.csv`), run `python3 scripts/by-the-numbers/build.py`, then `node scripts/by-the-numbers/render.mjs` (needs `playwright-core`; in the sandbox `npm i --no-save playwright-core@1.56.1`). Then `--check` must print `PASS`, and it is enforced in CI by the `by-the-numbers` job. A card's image is named by a hash of what it shows, so a changed figure fails the check until it is redrawn.
 
+    The build also writes the By the numbers group on `explorers.html` (between `by-the-numbers` markers) and one `data/search-index.json` row per card, which `build-catalog-extras.py` carries into the catalogue as uncounted Data Room entries. The number of cards must equal `by-the-numbers` in `data/counts.json`. To add a card: write its function with `title` and `tags`, raise that count, run the build, then render.
+
     **Two traps the first card hit.** NITI Aayog prints the MPI to three decimals, so states tie (Punjab and Himachal Pradesh are both 0.020), and "the five least poor" depended on list order. The build ranks by MPI then headcount ratio, says on the page which ties that decided, and fails if a group boundary is still a tie. And the CSR Explorer divides by the 2011 census while the cards use the 2022 projection, so the two pages give different per-resident figures for the same state; both say which population they use. The `PAN India` and `NEC/Not Mentioned` rows (23% of 2022-23 spending) are kept out of every state figure, and every card that uses the CSR series must say so.
 
 ### A note on the retired maintenance Routines

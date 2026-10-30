@@ -201,6 +201,7 @@
       ['/libraries.html', 'Libraries', 'Every collection in one place']]],
     ['Data', [
       ['/explorers.html', 'Data Room', 'Explorers built on official data'],
+      ['/by-the-numbers/', 'By the numbers', 'One figure at a time, with the working'],
       ['/dataverse.html', 'Dataverse', 'Data sources, listed and described']]],
     ['Read', [
       ['/BookSummaries/', 'Reading Companions', 'Companions to key books'],
@@ -223,7 +224,7 @@
       ['/Labs/', 'Free Studio'], ['/premium-tools/', 'Pro Studio'], ['/law-guides/', 'Law guides'],
       ['/law-guides/development-law-docket.html', 'Law Docket'], ['/libraries.html', 'Libraries'], ['/products.html', 'Products']]],
     ['Data', [
-      ['/explorers.html', 'Data Room'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals'],
+      ['/explorers.html', 'Data Room'], ['/by-the-numbers/', 'By the numbers'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals'],
       ['/field-radio.html', 'Field Radio']]],
     ['Read', [
       ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/handouts.html', 'Handouts'],
@@ -270,7 +271,7 @@
       ['Law', [['/law-guides/', 'Law guides'], ['/law-guides/development-law-docket.html', 'Law Docket', 'Court judgments that changed development work']]],
       ['/libraries.html', 'Libraries']]],
     ['Data', [
-      ['/explorers.html', 'Data Room'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals', 'Development frameworks, made interactive'], ['/field-radio.html', 'Field Radio', 'Voice notes and videos from practitioners']]],
+      ['/explorers.html', 'Data Room'], ['/by-the-numbers/', 'By the numbers'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals', 'Development frameworks, made interactive'], ['/field-radio.html', 'Field Radio', 'Voice notes and videos from practitioners']]],
     ['Read', [
       ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/handouts.html', 'Handouts'],
       ['/blog.html', 'Blog'], ['/dojos.html', 'Dojos &amp; Practice', '90-minute skill sessions, in person and online']]],

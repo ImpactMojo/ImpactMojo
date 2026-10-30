@@ -37,10 +37,17 @@ KINDS = [
     ("showcase", "fundamental", lambda u: u.startswith("/fundamentals/")),
     ("tool", "code", lambda u: u.startswith("/code/") and u != "/code/"),
     ("special", "special", lambda u: u.startswith(("/specials/", "/the-long-view"))),
+    # By the numbers: the page and one row per card, in the Data Room filter but
+    # outside its count of explorers (see NO_COUNT).
+    ("explorer", "explorer", lambda u: u.startswith("/by-the-numbers/")),
     # A reading companion counts when the Reading Companions page lists it;
     # the older *-interactive pages are kept for old links and are not listed.
     ("book-summary", "book-summary", lambda u: u.startswith("/BookSummaries/") and _listed(u)),
 ]
+# Kinds the catalogue lists without counting them, because their type already
+# has a count of its own (the Data Room's explorers).
+NO_COUNT = {"explorer"}
+
 # Single pages the catalogue should carry, by address, with the catalogue type.
 PAGES = {"/survey-instruments.html": "reference", "/field-radio.html": "tool"}
 
@@ -114,8 +121,9 @@ def build(text):
     lines = []
     for i, (ctype, r) in enumerate(out, start=1):
         title = re.sub(r"\s*[:|-]\s*Reading Companion\s*$", "", r["title"]).strip()
-        lines.append("    { id: %s, type: %s, title: %s, description: %s, track: %s, url: %s },\n" % (
-            js(f"gen-{ctype}-{i}"), js(ctype), js(title), js(r.get("description", "")), js(track(r, ctype)), js(r["url"])))
+        lines.append("    { id: %s, type: %s,%s title: %s, description: %s, track: %s, url: %s },\n" % (
+            js(f"gen-{ctype}-{i}"), js(ctype), " noCount: true," if ctype in NO_COUNT else "",
+            js(title), js(r.get("description", "")), js(track(r, ctype)), js(r["url"])))
     return head + START + "".join(lines) + END + tail, len(out)
 
 
