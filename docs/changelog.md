@@ -46,6 +46,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **By the numbers is in the menu**, under Data beside the Data Room, in the header, the footer and the phone menu. The home page lists it in its Data column, the Data Room page opens with a By the numbers group of all four cards, the site walkthrough's Data slide counts it, and the sitemap page links it.
 - **Every card is findable on its own.** Site search and the catalogue carry one entry per card, each opening the card's working, filed under the Data Room without changing its count of 21 explorers.
+- **Data/Sources Repo, in the Dataverse.** A public Notion list of more than a thousand links to datasets, under 21 headings from policing and migration to mapping and GIS, filed under Research & Evidence beside Todd Jones's list. Most of it is international, the compiler is not named and no licence is stated, and the entry says so. The Dataverse holds 324 entries.
 - `data/counts.json` holds the number of cards. `scripts/by-the-numbers/build.py` fails if it differs from the cards it builds, and now also writes the Data Room group and the search rows, so a new card reaches all of them in one build. `check-counts.py` checks the count on the home page.
 
 ## v10.395.0 - October 30, 2026 (three more By the numbers cards)
