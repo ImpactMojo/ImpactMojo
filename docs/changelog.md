@@ -40,6 +40,18 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **The header tabs (Learn, Tools, Data, Read, Membership) were about 13px** (#1300). Their font rule was written in a form browsers reject, so they fell back to the default button size. They are 16px now, and the dropdown links are 16px and 14px.
 - **Two pages let a quote or a link parameter break out of the page** (#1302). The chart page of The Long View wrote its chart id from the address into the page as HTML, and the UDISE explorer did not escape quotes in text it puts inside attributes. The chart id is now checked against the list of charts, and both pages escape and build their markup safely.
 
+## v10.395.0 - October 30, 2026 (three more By the numbers cards)
+
+### For Learners
+
+- **By the numbers: undertrial prisoners by caste** - Scheduled Castes and Tribes are 25.9% of the population and 33.1% of undertrial prisoners, from NCRB's prison census of 31 December 2023 and the 2011 census, with every state's ratio on the page.
+- **By the numbers: getting to work** - In the first National Household Travel Survey, 61.9% of working men made a trip of a kilometre or more to work on the travel day, against 41.9% of working women, and women with a fixed workplace spend ₹533 a month on the trip against ₹835 for men.
+- **By the numbers: the Central OBC list's dates** - 654 of the 1,070 entries added after 1993 are filed under a different year from the date on their resolution, so a count of additions read off the file numbers lands in the wrong years.
+
+### Changed
+
+- `scripts/by-the-numbers/render.mjs` now takes each card's value format and axis labels from the card, and names every bar when a chart has eight or fewer. Each card's sources can carry a short name for the card's footer. The CSR card was redrawn under a new name for the spacing change; its figures did not move.
+
 ## v10.394.0 — October 30, 2026 (By the numbers)
 
 ### For Learners

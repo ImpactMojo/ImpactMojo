@@ -125,7 +125,8 @@ def csr_need():
                    names=[r["state"] for r in least])],
         chart=dict(title="CSR per resident, states ordered from most to least multidimensional poverty",
                    bars=[[r["state"], round(r["per_head"], 1)] for r in table],
-                   highlight=["Bihar", "Maharashtra"]),
+                   highlight=["Bihar", "Maharashtra"],
+                   axis=["Most poverty", "Least poverty"], prefix="₹", suffix="", decimals=0),
         note=(f"{crore(unassigned)} ({100 * unassigned / total:.0f}% of the {crore(total)} total) was spent "
               f"\"PAN India\" or with no state named, and is outside every figure here. A project is "
               f"counted in the state the company reported for it."),
@@ -141,6 +142,7 @@ def csr_need():
                  url="https://nhm.gov.in/New_Updates_2018/Report_Population_Projection_2019.pdf")],
         page="/csr.html",
         page_label="CSR Explorer",
+        table_title="Every state",
         method=[
             "CSR per resident is a state's 2022-23 CSR spending divided by its projected population on 1 October 2022, the middle of the financial year.",
             "States are ranked by NITI Aayog's multidimensional poverty index (MPI) for 2019-21, and where two share an MPI at the three decimals NITI prints, by the share of people who are poor (the headcount ratio)."
@@ -155,13 +157,198 @@ def csr_need():
     )
 
 
-CARDS = [csr_need]
+def pct(x, d=1):
+    return f"{x:.{d}f}%"
+
+
+def undertrials_caste():
+    d = json.loads((ROOT / "data" / "justice-explorer.json").read_text(encoding="utf-8"))
+    # A state is used only where the prison table records caste for its undertrials
+    # and the census population shares passed the explorer's cross-check. Both
+    # sides of the national figure are pooled over the same states.
+    used, left = [], []
+    for s in d["states"]:
+        c = s["caste"]
+        if not c or any(v is None for v in c.values()) or s["sc_pct"] is None or s["st_pct"] is None:
+            left.append(s["name"])
+            continue
+        used.append(s)
+    pop = sum(s["population_2011"] for s in used)
+    ut = sum(sum(s["caste"].values()) for s in used)
+    sc_u = 100 * sum(s["caste"]["sc"] for s in used) / ut
+    st_u = 100 * sum(s["caste"]["st"] for s in used) / ut
+    sc_p = sum(s["population_2011"] * s["sc_pct"] for s in used) / pop
+    st_p = sum(s["population_2011"] * s["st_pct"] for s in used) / pop
+    want = ["Maharashtra", "Andhra Pradesh", "Telangana", "Ladakh"]
+    if sorted(left) != sorted(want):
+        fail(f"undertrials card: the states left out changed to {sorted(left)}; check why before publishing")
+
+    MIN = 1000
+    table = []
+    for s in used:
+        c = s["caste"]
+        t = sum(c.values())
+        u = 100 * (c["sc"] + c["st"]) / t
+        p = s["sc_pct"] + s["st_pct"]
+        table.append(dict(state=s["name"], ut=t, u=u, p=p, ratio=u / p))
+    table.sort(key=lambda r: -r["ratio"])
+    big = [r for r in table if r["ut"] >= MIN]
+    hi, lo = big[0], big[-1]
+
+    return dict(
+        id="undertrials-caste",
+        topic="Undertrial prisoners, 31 December 2023",
+        headline=(f"Scheduled Castes and Tribes are {pct(sc_p + st_p)} of the population "
+                  f"and {pct(sc_u + st_u)} of undertrial prisoners."),
+        sub=(f"Scheduled Castes are {pct(sc_p)} of the population and {pct(sc_u)} of undertrials. "
+             f"Scheduled Tribes are {pct(st_p)} and {pct(st_u)}."),
+        pair=[dict(label="Share of undertrial prisoners", value=pct(sc_u + st_u, 0),
+                   unit="Scheduled Castes and Tribes"),
+              dict(label="Share of the population", value=pct(sc_p + st_p, 0),
+                   unit="Scheduled Castes and Tribes")],
+        chart=dict(title=f"SC and ST share of undertrials over their share of the population, states with {MIN:,}+ undertrials (1 means in proportion)",
+                   bars=[[r["state"], round(r["ratio"], 2)] for r in big],
+                   highlight=[hi["state"], lo["state"]],
+                   axis=["Most over-represented", "Least"], prefix="", suffix="×", decimals=1),
+        note=(f"An undertrial has not been convicted of the offence they are held for. Prisoners are counted "
+              f"on 31 December 2023 and people in the 2011 census. {', '.join(sorted(left)[:-1])} and {sorted(left)[-1]} are left out "
+              f"(see the working)."),
+        sources=[
+            dict(name="National Crime Records Bureau, Prison Statistics India 2023",
+                 detail="State/UT-wise caste of undertrial prisoners as on 31-12-2023, Open Government Data Platform resource 6e069039-64bd-43da-8f5a-15cb697caf1b",
+                 url="https://www.data.gov.in/"),
+            dict(name="Census of India 2011, Scheduled Caste population by state",
+                 detail="Open Government Data Platform resource c1c221ef-324a-4715-bc02-58172107c162",
+                 url="https://www.data.gov.in/"),
+            dict(name="Ministry of Tribal Affairs, State/UT-wise Scheduled Tribe population as per Census 2011",
+                 detail="Open Government Data Platform resource a5cd7e55-2e13-4017-9f8c-410dad9cc518",
+                 url="https://www.data.gov.in/")],
+        page="/justice.html",
+        page_label="Justice Explorer",
+        table_title="Every state",
+        method=[
+            "A state's share is its Scheduled Caste and Scheduled Tribe undertrials divided by all its undertrials whose caste the prison recorded.",
+            "The population share is the state's Scheduled Caste and Scheduled Tribe population in the 2011 census over its total population. The 2021 census was not held, so 2011 is the latest count.",
+            "The national figures pool prisoners and people across the same states, so both sides cover the same places.",
+            "Maharashtra reported no caste breakdown for its undertrials. Andhra Pradesh and Telangana are left out because the 2011 count covers the undivided state, and Ladakh because it was not a separate unit in 2011.",
+            "Scheduled Tribe population is taken from the Ministry of Tribal Affairs table. The ST column of the combined census table on the same platform is scrambled across rows; the Justice Explorer explains how that was found.",
+            f"The chart leaves out states with fewer than {MIN:,} undertrials whose caste was recorded, where a few dozen people move the ratio a long way. The table shows every state.",
+            "Over-representation among undertrials can come from arrest, from charge, or from who can raise bail. These figures do not say which."],
+        columns=["State", "Undertrials, caste recorded", "SC and ST share of undertrials", "SC and ST share of population, 2011", "Ratio"],
+        rows=[[r["state"], f"{r['ut']:,.0f}", pct(r["u"]), pct(r["p"]), f"{r['ratio']:.2f}"] for r in table],
+    )
+
+
+def travel_by_sex():
+    d = json.loads((ROOT / "data" / "nhts-india.json").read_text(encoding="utf-8"))
+    w = d["workers_travelling"]
+    i = w["ages"].index("15+")
+    get = lambda sector, sex: w["rows"][sector][sex][i]
+    cost = d["monthly_cost"]["workers"]
+    men, women = get("Rural+Urban", "Male"), get("Rural+Urban", "Female")
+    groups = [("Rural men", "Rural", "Male"), ("Rural women", "Rural", "Female"),
+              ("Urban men", "Urban", "Male"), ("Urban women", "Urban", "Female")]
+    for sector in ("Rural", "Urban", "Rural+Urban"):
+        lo, hi = sorted((get(sector, "Male"), get(sector, "Female")))
+        if not lo <= get(sector, "Person") <= hi:
+            fail(f"travel card: the {sector} person figure is not between the male and female figures")
+    src = d["_source"]
+    return dict(
+        id="travel-by-sex",
+        topic="Getting to work, 2025-26",
+        headline=(f"{pct(men)} of working men made a trip of a kilometre or more to work on the survey's travel day. "
+                  f"For working women it was {pct(women)}."),
+        sub=(f"Among workers with a fixed workplace, women spend {rupees(cost['Rural+Urban']['Female'])} a month "
+             f"on the trip there and back. Men spend {rupees(cost['Rural+Urban']['Male'])}."),
+        pair=[dict(label="Working men who travel to work", value=pct(men, 0), unit="aged 15 and over"),
+              dict(label="Working women who travel to work", value=pct(women, 0), unit="aged 15 and over")],
+        chart=dict(title="Workers aged 15+ who travel 1 km or more to work, %",
+                   bars=[[name, get(sec, sex)] for name, sec, sex in groups],
+                   highlight=["Rural women", "Urban women"],
+                   axis=None, prefix="", suffix="%", decimals=1),
+        note=("A worker who works at home or within a kilometre of it makes no trip the survey counts, "
+              "so part of the gap is where women's work is."),
+        sources=[dict(name=f"{src['publisher']}, {src['title']}",
+                      detail="Table 3 (workers who travel, by sector, sex and age) and Figure 5 (monthly cost), released 5 October 2026",
+                      url=src["url"])],
+        page="/nhts.html",
+        page_label="Travel Survey Explorer",
+        table_title="By sector and sex",
+        method=[
+            "Workers are people aged 15 and over working in the week before the survey (current weekly status).",
+            "A worker travels if they make a trip of 1 km or more to a fixed or non-fixed workplace on the travel day. Shorter trips were not recorded.",
+            "The monthly cost covers trips to and from a fixed workplace only, so it leaves out workers whose place of work changes.",
+            "The figures are the survey's own estimates for persons, transcribed from the press note's tables. The survey publishes no breakdown by sex for each state."],
+        columns=["Sector", "Men who travel to work", "Women who travel to work", "Men, monthly cost", "Women, monthly cost"],
+        rows=[[sec, pct(get(sec, "Male")), pct(get(sec, "Female")),
+               rupees(cost[sec]["Male"]), rupees(cost[sec]["Female"])] for sec in ("Rural", "Urban", "Rural+Urban")],
+    )
+
+
+def obc_dates():
+    d = json.loads((ROOT / "data" / "castes-india.json").read_text(encoding="utf-8"))
+    obc = [r for r in d["obc"] if r["status"] == "Active"]
+    dated = [r for r in obc if r["dated_year"] and r["file_year"]]
+    first = [r for r in dated if r["dated_year"] == 1993]
+    later = [r for r in dated if r["dated_year"] > 1993]
+    moved = [r for r in later if r["file_year"] != r["dated_year"]]
+    if any(r["file_year"] != 1993 for r in first):
+        fail("OBC card: some 1993 entries carry another file year; the card's first sentence no longer holds")
+    if len(first) + len(later) != len(dated):
+        fail("OBC card: an entry is dated before 1993")
+    gaps = sorted({abs(r["file_year"] - r["dated_year"]) for r in moved})
+    per = {}
+    for r in later:
+        n, m = per.get(r["state"], (0, 0))
+        per[r["state"]] = (n + 1, m + (r["file_year"] != r["dated_year"]))
+    table = sorted(([s, n, m, 100 * m / n] for s, (n, m) in per.items()), key=lambda r: (-r[3], -r[1], r[0]))
+    MIN = 20
+    chart = [r for r in table if r[1] >= MIN]
+    full = sorted(r[0] for r in chart if r[3] == 100)
+    year = lambda y, kind: sum(1 for r in later if r[kind] == y)
+    f98, d98 = year(1998, "file_year"), year(1998, "dated_year")
+    return dict(
+        id="obc-dates",
+        topic="Central OBC list, 1993-2016",
+        headline=(f"{len(moved)} of the {len(later):,} entries added to the Central OBC list after 1993 "
+                  f"are filed under a different year from the date on their resolution."),
+        sub=(f"The gazette file numbers put {f98} additions in 1998. "
+             f"No entry's resolution is dated 1998."),
+        pair=[dict(label="Added after 1993, with a printed date", value=f"{len(later):,}", unit="entries"),
+              dict(label="Filed under another year", value=f"{len(moved)}", unit=f"{100 * len(moved) / len(later):.0f}% of them")],
+        chart=dict(title=f"Share of post-1993 entries filed under another year, states with {MIN}+ such entries",
+                   bars=[[r[0], round(r[3], 1)] for r in chart],
+                   highlight=[chart[0][0], chart[-1][0]],
+                   axis=["Most misdated", "Least"], prefix="", suffix="%", decimals=0),
+        note=(f"The difference is {gaps[0]} to {gaps[-1]} years. All {len(first):,} entries in the first list "
+              f"of 1993 carry 1993 in both places."),
+        sources=[dict(name="Jolad, S. and Kalyani, G. (2026), Database of castes: SC, ST, OBC and 1931 Caste Census, Harvard Dataverse, V1.1",
+                      short="Jolad and Kalyani, Database of castes (2026)",
+                      detail="OBC list, with the gazette file number and the printed resolution date of every entry",
+                      url=d["_source"]["doi"])],
+        page="/castes.html",
+        page_label="Caste Lists Explorer",
+        table_title="Every state",
+        method=[
+            "The database records, for each entry, the year in its gazette file number (12011/14/2004-BCC is 2004) and the date printed on the resolution that added it.",
+            f"An entry counts as filed under another year when the two years differ. {len([r for r in obc if not r['dated_year']])} active entries print no date and are left out.",
+            "File 12011/14/2004-BCC, for example, carries a resolution dated 12 March 2007.",
+            f"The chart leaves out states with fewer than {MIN} entries added after 1993. The table shows every state."
+            + (f" Every later entry is filed under another year in {', '.join(full[:-1])} and {full[-1]}." if len(full) > 1 else ""),
+            "A count of castes added each year is right only if it uses the resolution date. Analysis that reads the year off the file number moves the additions back by one to five years."],
+        columns=["State", "Entries added after 1993", "Filed under another year", "Share"],
+        rows=[[r[0], f"{r[1]:,}", f"{r[2]:,}", pct(r[3])] for r in table],
+    )
+
+
+CARDS = [csr_need, undertrials_caste, travel_by_sex, obc_dates]
 
 
 # ---------------------------------------------------------------- output
 
 def card_hash(c):
     shown = {k: c[k] for k in ("topic", "headline", "sub", "pair", "chart", "note", "sources")}
+    shown["layout"] = 2  # bump when render.mjs changes how a card is drawn
     return hashlib.sha256(json.dumps(shown, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:8]
 
 
@@ -236,8 +423,8 @@ def page(cards):
     <p>{keep(c['sub'])}</p>
     <h3>How it is worked out</h3>
     <ul>{meth}</ul>
-    <h3>Every state</h3>
-    <div class="scroll" tabindex="0" role="region" aria-label="{E(c['topic'])}, every state"><table><thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table></div>
+    <h3>{E(c['table_title'])}</h3>
+    <div class="scroll" tabindex="0" role="region" aria-label="{E(c['topic'])}, {E(c['table_title'].lower())}"><table><thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table></div>
     <h3>Sources</h3>
     <ul class="src">{srcs}</ul>
     <p>More in the <a href="{E(c['page'])}">{E(c['page_label'])}</a>.</p>
