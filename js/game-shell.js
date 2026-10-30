@@ -463,11 +463,12 @@
     '.imx-story-overlay { background: #0B1120 !important; }' +
     'body :is(.story-screen, .story-modal) .story-card, body :is(.story-screen, .story-modal) .story-card :is(p, span, li, label, small, h1, h2, h3, button) { color: #E2E8F0 !important; }' +
     'body :is(.story-screen, .story-modal) .story-card .story-title { color: #FBBF24 !important; }' +
-    /* counterfactual-game has no .story-card: its scene text sits in
-       .story-inner, so on the dark backdrop above it kept the light theme's
-       brown ink, 1.44:1 (#1281). Text only: its Begin button carries white on
-       its own fill and keeps it. */
-    'body :is(.story-screen, .story-modal) .story-inner :is(p, span, li, label, small, strong, em, h1, h2, h3) { color: #E2E8F0 !important; }' +
+    /* A .story-inner scene has no .story-card, so it takes the light ink only
+       when it sits on the dark overlay. counterfactual-game's .story-inner is
+       a section of the page with the page's own ground, and the light ink
+       there read 1.1:1 in the light theme. Text only: the Begin button keeps
+       its own fill. */
+    'body .imx-story-overlay .story-inner :is(p, span, li, label, small, strong, em, h1, h2, h3) { color: #E2E8F0 !important; }' +
     /* Form controls do not inherit a font by default, so buttons drew in the
        browser's Arial. :where() keeps this below any game's own rule. */
     ':where(button, input, select, textarea) { font-family: inherit; }' +
