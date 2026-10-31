@@ -40,6 +40,12 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **The header tabs (Learn, Tools, Data, Read, Membership) were about 13px** (#1300). Their font rule was written in a form browsers reject, so they fell back to the default button size. They are 16px now, and the dropdown links are 16px and 14px.
 - **Two pages let a quote or a link parameter break out of the page** (#1302). The chart page of The Long View wrote its chart id from the address into the page as HTML, and the UDISE explorer did not escape quotes in text it puts inside attributes. The chart id is now checked against the list of charts, and both pages escape and build their markup safely.
 
+## v10.398.0 - October 31, 2026 (pages talk about their subject)
+
+### Changed
+
+- **Twenty-two pages stop describing how they were made.** The Data Room explorers, the about and FAQ pages, four 101 decks, a Deep Dive and two flagship pages no longer say how their figures were checked, transcribed or tested. Each figure still names its source.
+
 ## v10.397.0 - October 30, 2026 (sitemap page catches up)
 
 ### Fixed
