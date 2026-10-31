@@ -361,7 +361,7 @@ def slides():
                   byline="This walkthrough is rebuilt from the site's own data, so it changes when the site does.",
                   ctas=[dict(label="Go to the homepage", href="/"), dict(label="Full catalogue", href="/catalog.html"),
                         dict(label="Membership", href="/premium.html")],
-                  meta=["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo"]))
+                  meta=["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo"]))
     for s in S:
         for c in s.get("ctas", []):
             LINKS.append(c["href"])
@@ -378,7 +378,7 @@ def build():
     total = len(sl)
     out_slides = "\n\n".join(B.render_slide(s, i, total, TITLE) for i, s in enumerate(sl, start=1))
     out_slides = (out_slides
-                  .replace("ImpactMojo 101 Series &middot; Free Forever", "ImpactMojo &middot; Site walkthrough")
+                  .replace("ImpactMojo 101 Series &middot; Free forever", "ImpactMojo &middot; Site walkthrough")
                   .replace("ImpactMojo 101 Series", "ImpactMojo walkthrough")
                   .replace('href="https://www.impactmojo.in/101-courses/" class="logo-mark" target="_blank"',
                            'href="https://www.impactmojo.in/" class="logo-mark"'))

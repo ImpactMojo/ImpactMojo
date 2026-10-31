@@ -105,7 +105,7 @@ SLIDES += [
      "sub": "What inclusion means in law and in the classroom: the CRPD and General Comment 4, the "
             "RTE Act 2009, the RPwD Act 2016, NEP 2020 and Samagra Shiksha, the data, neighbours' "
             "laws, teaching practice and how to measure it, for practitioners in South Asia",
-     "tags": ["100 Slides", "South Asia Focus", "Free Forever", "RTE, RPwD and NEP 2020"]},
+     "tags": ["100 Slides", "South Asia Focus", "Free forever", "RTE, RPwD and NEP 2020"]},
 
     {"type": "toc", "label": "Agenda", "title": "What we cover",
      "items": [
@@ -1752,7 +1752,7 @@ SLIDES += [
      "ctas": [
          {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
          {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"}],
-     "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+     "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
 ]
 
 DECK = {

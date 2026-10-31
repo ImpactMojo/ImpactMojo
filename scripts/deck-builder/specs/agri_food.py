@@ -1836,7 +1836,7 @@ DECK = {
          "main": "Agriculture<br>and Food<br>Systems 101",
          "sub": "A foundational course on Indian farming for development practitioners, from land "
                 "and incomes to prices, food, water, risk and the evidence",
-         "tags": ["100 Slides", "India Focus", "Free Forever", "MSP to Nutrition"]},
+         "tags": ["100 Slides", "India Focus", "Free forever", "MSP to Nutrition"]},
 
         {"type": "toc", "label": "Agenda", "title": "What we cover",
          "items": [
@@ -1863,6 +1863,6 @@ DECK = {
              {"label": "The 101 Series", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
              {"label": "Dataverse", "href": "https://www.impactmojo.in/dataverse.html"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }
