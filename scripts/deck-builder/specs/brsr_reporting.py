@@ -132,7 +132,7 @@ DECK = {
          "main": "BRSR &amp;<br>Sustainability<br>Reporting 101",
          "sub": "How India's listed companies report on environment, people and governance, how to calculate "
                 "the numbers, and how to read them critically",
-         "tags": ["100 Slides", "Calculation Exercises", "SEBI Rules to October 2026", "Free Forever"]},
+         "tags": ["100 Slides", "Calculation Exercises", "SEBI Rules to October 2026", "Free forever"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",
@@ -1315,6 +1315,6 @@ DECK = {
              {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "ESG Flagship", "href": "https://www.impactmojo.in/courses/esg/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }

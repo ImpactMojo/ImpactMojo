@@ -1849,7 +1849,7 @@ TITLE = {"type": "title",
          "sub": "What mental health and mental disorders are, how large the burden is, what the "
                 "law says and what works: the Mental Healthcare Act, Tele-MANAS, task sharing, "
                 "suicide prevention and practical tools for practitioners in South Asia",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Care in Community"]}
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "Care in Community"]}
 
 TOC = {"type": "toc", "label": "Agenda", "title": "What we cover",
        "items": [

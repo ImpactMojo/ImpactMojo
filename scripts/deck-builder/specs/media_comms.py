@@ -1720,7 +1720,7 @@ TITLE = {"type": "title",
          "sub": "How media works in South Asia and how to communicate research and programmes "
                 "through it: ownership, radio and platforms, press freedom and the law, writing, "
                 "journalists, images and consent, crises and measurement",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Media and the Law"]}
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "Media and the Law"]}
 
 TOC = {"type": "toc", "label": "Agenda", "title": "What we cover",
        "items": [

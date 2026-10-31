@@ -111,7 +111,7 @@ SLIDES_A = [
      "sub": "The JMP service ladders, India's numbers and how they disagree, Swachh "
             "Bharat, Jal Jeevan, groundwater, sanitation work and the law, hygiene, "
             "and how to monitor a WASH programme",
-     "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Public Health"]},
+     "tags": ["100 Slides", "South Asia Focus", "Free forever", "Public Health"]},
 
     # ===================== TOC =====================
     {"type": "toc", "label": "Agenda", "title": "What we cover",

@@ -107,7 +107,7 @@ SLIDES = [
      "sub": "From question to write-up: how development practitioners in South Asia frame "
             "answerable questions, choose designs, sample, measure, handle data ethically "
             "and report what they found",
-     "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Question to Write-up"]},
+     "tags": ["100 Slides", "South Asia Focus", "Free forever", "Question to Write-up"]},
 
     {"type": "toc", "label": "Agenda", "title": "What we cover",
      "items": [
@@ -1784,7 +1784,7 @@ SLIDES = [
          {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
          {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
          {"label": "Handouts", "href": "https://www.impactmojo.in"}],
-     "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+     "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
 ]
 
 DECK = {

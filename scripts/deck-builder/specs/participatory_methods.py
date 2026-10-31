@@ -85,7 +85,7 @@ SLIDES += [
      "sub": "Research and practice done with the people they concern: origins, ladders of "
             "participation, PRA tools, social audits, scorecards, Photovoice, participatory "
             "MEL, power and ethics, for practitioners in South Asia",
-     "tags": ["100 Slides", "South Asia Focus", "Free Forever", "PRA and Social Audit"]},
+     "tags": ["100 Slides", "South Asia Focus", "Free forever", "PRA and Social Audit"]},
 
     {"type": "toc", "label": "Agenda", "title": "What we cover",
      "items": [
@@ -1689,7 +1689,7 @@ SLIDES += [
          {"label": "Participatory Methods Lab",
           "href": "https://www.impactmojo.in/Labs/participatory-methods-lab.html"},
          {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"}],
-     "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+     "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
 ]
 
 DECK = {

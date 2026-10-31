@@ -1747,7 +1747,7 @@ TITLE = {"type": "title",
          "sub": "Rights online, internet shutdowns, platform rules, surveillance, digital public "
                 "infrastructure, and what AI means for welfare, work and elections: law, evidence and a "
                 "risk assessment for development practitioners in South Asia",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Rights and AI"]}
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "Rights and AI"]}
 
 TOC = {"type": "toc", "label": "Agenda", "title": "What we cover",
        "items": [

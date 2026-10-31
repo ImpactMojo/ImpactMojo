@@ -70,7 +70,7 @@ def build(course, out_name, meta_desc, title_main_html, title_sub_html, title_ta
         if kind == 'title':
             tags = ''.join('<span class="title-tag">%s</span>' % t for t in title_tags)
             body = ('<div class="title-screen"><div class="title-bg"></div><div class="title-bar"></div>'
-                    '<div class="title-content"><div class="title-series">ImpactMojo 101 Series &middot; Free Forever</div>'
+                    '<div class="title-content"><div class="title-series">ImpactMojo 101 Series &middot; Free forever</div>'
                     '<h1 class="title-main">' + title_main_html + '</h1>'
                     '<div class="title-sub">' + title_sub_html + '</div>'
                     '<div class="title-tags">' + tags + '</div></div>' + TITLE_GEO + '</div>')
@@ -98,7 +98,7 @@ def build(course, out_name, meta_desc, title_main_html, title_sub_html, title_ta
                     '<a class="end-btn end-btn-secondary" href="/" target="_blank">ImpactMojo Home</a>'
                     '<a class="end-btn end-btn-tertiary" href="/catalog.html" target="_blank">Full Catalog</a>'
                     '</div>'
-                    '<div class="end-meta"><span>Free Forever</span><span class="end-meta-divider">&middot;</span>'
+                    '<div class="end-meta"><span>Free forever</span><span class="end-meta-divider">&middot;</span>'
                     '<span>CC BY-NC-ND 4.0</span><span class="end-meta-divider">&middot;</span>'
                     '<span>www.impactmojo.in</span></div></div></div>')
         else:

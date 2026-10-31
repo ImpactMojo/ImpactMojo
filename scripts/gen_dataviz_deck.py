@@ -1011,7 +1011,7 @@ for i, (kind, payload) in enumerate(slides):
     active = ' active' if n == 1 else ''
     if kind == 'title':
         body = ('<div class="title-screen"><div class="title-bg"></div><div class="title-bar"></div>'
-                '<div class="title-content"><div class="title-series">ImpactMojo 101 Series &middot; Free Forever</div>'
+                '<div class="title-content"><div class="title-series">ImpactMojo 101 Series &middot; Free forever</div>'
                 '<h1 class="title-main">Data<br>Visualization<br>101</h1>'
                 '<div class="title-sub">How to turn numbers into honest, clear pictures &mdash; a foundational course '
                 'for development practitioners in South Asia, and the companion to ImpactMojo&rsquo;s '
@@ -1044,7 +1044,7 @@ for i, (kind, payload) in enumerate(slides):
                 '<a class="end-btn end-btn-secondary" href="https://www.impactmojo.in/101-courses/" target="_blank">More 101 Courses</a>'
                 '<a class="end-btn end-btn-tertiary" href="https://www.impactmojo.in/101-courses/data-lit.html" target="_blank">Data Literacy 101</a>'
                 '</div>'
-                '<div class="end-meta"><span>Free Forever</span><span class="end-meta-divider">&middot;</span>'
+                '<div class="end-meta"><span>Free forever</span><span class="end-meta-divider">&middot;</span>'
                 '<span>CC BY-NC-ND 4.0</span><span class="end-meta-divider">&middot;</span>'
                 '<span>www.impactmojo.in</span></div></div></div>')
     else:  # content

@@ -102,7 +102,7 @@ DECK = {
          "main": "Gender &amp;<br>Development<br>101",
          "sub": "How gender shapes who gets what in development, and how a practitioner in "
                 "South Asia can see it, measure it and design around it",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Gender Analysis"]},
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "Gender Analysis"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",
