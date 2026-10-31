@@ -1815,7 +1815,7 @@ SEC12 = [
                 A("https://www.nfhsiips.in/nfhsuser/assets/National%20Family%20Health%20Survey%20(NFHS-6)%202023-24%20Fact%20Sheets.pdf", "IIPS (2026), NFHS-6 India and State/UT Fact Sheets"),
                 A("https://www.downtoearth.org.in/environment/reduce-food-security-benefits-from-67-to-40-population-says-panel-on-restructuring-fci--48344", "Down To Earth (2015) on the Shanta Kumar committee report"),
                 A("https://prsindia.org/billtrack/the-farmers-produce-trade-and-commerce-promotion-and-facilitation-bill-2020", "PRS, Farmers' Produce Trade and Commerce Bill 2020")], sm=True),
-            H("cyan", "Figures were checked against these sources in October 2026. Where two official "
+            H("cyan", "Where two official "
               "sources disagree, as on the PM-KISAN allocation, the course says so.")]),
     ], compact=True),
 ]

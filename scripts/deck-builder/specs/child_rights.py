@@ -655,7 +655,7 @@ SLIDES += [
       H("cyan", "The Juvenile Justice (Care and Protection of Children) Act 2015 replaced the 2000 "
         "Act. It passed the Lok Sabha on 7 May 2015 and the Rajya Sabha on 22 December 2015 "
         "(PRS Legislative Research) and received assent on 31 December 2015 as Act No. 2 of 2016. "
-        "Section numbers here are checked against that Act as published in the Gazette of India.")),
+        "Section numbers follow that Act as published in the Gazette of India.")),
 
     C("Principles", "Sixteen principles in section 3 govern every decision",
       TW([BL(["Presumption of innocence up to eighteen",

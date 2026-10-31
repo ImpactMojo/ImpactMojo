@@ -31,7 +31,7 @@ EXCLUDE_FILES = {
     "work-samples/03_mel_architecture_diagram.html",
     "work-samples/04_thinking_note.html",
     "work-samples/05_wage_gap_visualisation.html",
-    "content-marketing-kit.html", "linkedin-claude-code-visual.html",
+    "content-marketing-kit.html",
     "SupportGifts/thankyou.html", "101-courses/native/dev-economics.html",
 }
 EXCLUDE_SUBSTRINGS = ("_template", "template.html", "-TEMPLATE")

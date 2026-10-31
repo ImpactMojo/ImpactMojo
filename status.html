@@ -29,11 +29,11 @@
 <title>System Status | ImpactMojo</title>
 <!-- share:start -->
 <link rel="canonical" href="https://www.impactmojo.in/status.html">
-<meta name="description" content="Live system status for ImpactMojo: real-time health checks of the website, course catalog, resource library, search, backend, and APIs, probed live from your browser.">
+<meta name="description" content="Whether each part of ImpactMojo is working right now: the website, course catalogue, resource library, site search, sign-in and translation, checked from your browser.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ImpactMojo">
 <meta property="og:title" content="System Status | ImpactMojo">
-<meta property="og:description" content="Live health checks for every part of ImpactMojo: pages, search, backend, and APIs.">
+<meta property="og:description" content="Whether each part of ImpactMojo is working right now: pages, site search, sign-in and translation.">
 <meta property="og:url" content="https://www.impactmojo.in/status.html">
 <meta property="og:image" content="https://www.impactmojo.in/assets/og/status-82667e06.jpg">
 <meta property="og:image:width" content="1200">
@@ -41,7 +41,7 @@
 <meta property="og:image:alt" content="System Status, ImpactMojo, ImpactMojo">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="System Status | ImpactMojo">
-<meta name="twitter:description" content="Live health checks for every part of ImpactMojo: pages, search, backend, and APIs.">
+<meta name="twitter:description" content="Whether each part of ImpactMojo is working right now: pages, site search, sign-in and translation.">
 <meta name="twitter:image" content="https://www.impactmojo.in/assets/og/status-82667e06.jpg">
 <!-- share:end -->
 <!-- Favicons -->
@@ -436,7 +436,7 @@ body.dark-mode .skip-link, [data-theme="dark"] .skip-link, html.dark .skip-link 
 <main class="page-content" id="main-content">
     <section class="page-hero">
         <h1>System status</h1>
-        <p>Live health checks for every part of ImpactMojo: pages, search, backend, and APIs. Probed live from your browser, refreshed automatically.</p>
+        <p>Whether each part of ImpactMojo is working right now: the pages, site search, sign-in and translation. Your browser checks each one when this page opens and again every minute.</p>
     </section>
 
     <div class="container">
@@ -445,8 +445,8 @@ body.dark-mode .skip-link, [data-theme="dark"] .skip-link, html.dark .skip-link 
         <div class="status-banner" id="statusBanner" aria-live="polite">
             <span class="banner-dot"></span>
             <div class="banner-text">
-                <h2 id="bannerTitle">Checking systems…</h2>
-                <p id="bannerSub">Running live health checks across all ImpactMojo components.</p>
+                <h2 id="bannerTitle">Checking the site…</h2>
+                <p id="bannerSub">Checking each part of ImpactMojo from your browser.</p>
             </div>
             <div class="banner-actions">
                 <button class="refresh-btn" id="refreshBtn" onclick="runAllChecks()" aria-label="Refresh now: check every service">
@@ -484,7 +484,7 @@ body.dark-mode .skip-link, [data-theme="dark"] .skip-link, html.dark .skip-link 
                 <span><span class="dot" style="background:var(--danger-color)"></span> Down</span>
                 <span><span class="dot" style="background:var(--track-empty)"></span> No data</span>
             </div>
-            <p>Every component is probed <strong>live from your browser</strong> the moment this page loads, and again automatically every 60 seconds. A check is marked <em>degraded</em> when it responds slower than 2&nbsp;seconds, and <em>down</em> when it errors or times out (10&nbsp;seconds). The 90-day uptime strip is built from check history stored locally in <em>this</em> browser, so it fills in over time as you revisit. Seeing a problem that isn't shown here? Email <a href="mailto:hello@impactmojo.in">hello@impactmojo.in</a>.</p>
+            <p>Your browser checks every part of the site the moment this page opens, and again every 60 seconds. A part is marked slow when it takes longer than 2&nbsp;seconds to answer, and down when it fails or gives no answer within 10&nbsp;seconds. The 90-day uptime strip comes from checks we also run every 15 minutes. If those cannot be reached, it shows the checks made in this browser instead, and its heading says which. Seeing a problem that isn't shown here? Email <a href="mailto:hello@impactmojo.in">hello@impactmojo.in</a>.</p>
         </div>
 
     </div>
@@ -560,24 +560,24 @@ const SLOW_MS = 2000;       // slower than this -> degraded
 
 const GROUPS = [
     {
-        title: 'Website & Pages',
+        title: 'Website and pages',
         checks: [
             { id: 'home',    name: 'Website',          desc: 'impactmojo.in homepage',        url: '/',                  type: 'origin' },
             { id: 'catalog', name: 'Course Catalog',   desc: '22 flagship and 84 foundational courses', url: '/catalog.html',      type: 'origin' },
             { id: 'games',   name: 'Game Library',     desc: 'Interactive learning games',    url: '/game-library.html', type: 'origin' },
             { id: 'handouts',name: 'Resource Library', desc: '84 handouts and other resources', url: '/handouts.html', type: 'origin' },
             { id: 'blog',    name: 'Blog',             desc: 'Articles & deep dives',         url: '/blog.html',         type: 'origin' },
-            { id: 'docs',    name: 'Documentation',    desc: 'Self-hosted docs',              url: '/docs/',             type: 'origin' }
+            { id: 'docs',    name: 'Documentation',    desc: 'Guides to using the site',              url: '/docs/',             type: 'origin' }
         ]
     },
     {
-        title: 'Data & APIs',
+        title: 'Services behind the site',
         checks: [
-            { id: 'search',    name: 'Search Index',        desc: 'Site-wide search data',         url: '/data/search-index.json', type: 'json' },
-            { id: 'deploy',    name: 'Hosting & CDN',       desc: 'Netlify edge delivery',         url: '/version.json',           type: 'json' },
-            { id: 'translate', name: 'Translation Service', desc: 'Hindi · Tamil · Bengali · Marathi', url: '/.netlify/functions/translate', type: 'fn' },
-            { id: 'supabase',  name: 'Accounts & Backend',  desc: 'Supabase auth & database',      url: STATUS_SB_URL + '/auth/v1/health', type: 'fn', headers: { apikey: STATUS_SB_ANON } },
-            { id: 'github',    name: 'Source & Content',    desc: 'GitHub repository',             url: 'https://api.github.com/repos/ImpactMojo/ImpactMojo', type: 'fn' }
+            { id: 'search',    name: 'Site search',         desc: 'Finding courses, games and pages',         url: '/data/search-index.json', type: 'json' },
+            { id: 'deploy',    name: 'Hosting',             desc: 'Delivering pages to your browser',         url: '/version.json',           type: 'json' },
+            { id: 'translate', name: 'Translation',         desc: 'Hindi · Tamil · Bengali · Marathi', url: '/.netlify/functions/translate', type: 'fn' },
+            { id: 'supabase',  name: 'Accounts and sign-in', desc: 'Signing in and your saved account',      url: STATUS_SB_URL + '/auth/v1/health', type: 'fn', headers: { apikey: STATUS_SB_ANON } },
+            { id: 'github',    name: 'Public issue tracker', desc: 'Where reported problems are listed',             url: 'https://api.github.com/repos/ImpactMojo/ImpactMojo', type: 'fn' }
         ]
     }
 ];
@@ -663,16 +663,16 @@ function paintBanner(results) {
     banner.classList.remove('op', 'deg', 'down');
     if (downs > 0) {
         banner.classList.add('down');
-        title.textContent = downs >= results.length ? 'Major Outage' : 'Partial Outage';
-        sub.textContent = downs + ' of ' + results.length + ' components are not responding.';
+        title.textContent = downs >= results.length ? 'Major outage' : 'Partial outage';
+        sub.textContent = downs + ' of ' + results.length + ' parts of the site are not responding.';
     } else if (degs > 0) {
         banner.classList.add('deg');
-        title.textContent = 'Degraded Performance';
-        sub.textContent = degs + ' of ' + results.length + ' components are responding slowly.';
+        title.textContent = 'Slow responses';
+        sub.textContent = degs + ' of ' + results.length + ' parts of the site are responding slowly.';
     } else {
         banner.classList.add('op');
-        title.textContent = 'All Systems Operational';
-        sub.textContent = 'All ' + results.length + ' components are responding normally.';
+        title.textContent = 'Everything is working';
+        sub.textContent = 'All ' + results.length + ' parts of the site are responding normally.';
     }
 }
 

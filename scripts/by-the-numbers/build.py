@@ -291,7 +291,7 @@ def travel_by_sex():
             "Workers are people aged 15 and over working in the week before the survey (current weekly status).",
             "A worker travels if they make a trip of 1 km or more to a fixed or non-fixed workplace on the travel day. Shorter trips were not recorded.",
             "The monthly cost covers trips to and from a fixed workplace only, so it leaves out workers whose place of work changes.",
-            "The figures are the survey's own estimates for persons, transcribed from the press note's tables. The survey publishes no breakdown by sex for each state."],
+            "The figures are the survey's own estimates for persons, from the press note's tables. The survey publishes no breakdown by sex for each state."],
         columns=["Sector", "Men who travel to work", "Women who travel to work", "Men, monthly cost", "Women, monthly cost"],
         rows=[[sec, pct(get(sec, "Male")), pct(get(sec, "Female")),
                rupees(cost[sec]["Male"]), rupees(cost[sec]["Female"])] for sec in ("Rural", "Urban", "Rural+Urban")],

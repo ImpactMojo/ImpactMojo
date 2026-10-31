@@ -55,6 +55,16 @@ KINDS = [
     ("/blog/", "Blog post", "t-course"),
     ("/survey-instruments.html", "Library", "t-law"),
 ]
+# Pages about the site itself (release round-ups, the colophon posts) belong
+# on the updates page and the blog, never in the home page's headline list.
+SITE_PAGES = {
+    "/blog/whats-new-early-october-2026.html",
+    "/blog/making-accessible-websites.html",
+    "/blog/notes-and-new-courses.html",
+    "/blog/whats-coming-in-2026.html",
+    "/blog/a-workshop-should-be-a-text-file.html",
+    "/blog/tools-we-use.html",
+}
 MONTHS = {m: i for i, m in enumerate(
     ["January", "February", "March", "April", "May", "June", "July", "August",
      "September", "October", "November", "December"], 1)}
@@ -116,7 +126,7 @@ def build():
             continue
         for title, desc in re.findall(r"^- \*\*(.+?)\*\*\s*[—:-]\s*(.+)$", block.group(1), re.M):
             e = resolve(title, entries)
-            if not e or e["url"] in seen:
+            if not e or e["url"] in seen or e["url"] in SITE_PAGES:
                 continue
             label, cls = kind(e["url"])
             # Only things to open: a known kind of page, not a section's own
