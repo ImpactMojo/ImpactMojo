@@ -518,6 +518,9 @@
 '.im-sc-foot-col h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--sc-mut);margin:0 0 10px;font-weight:700}',
 '.im-sc-foot-col a{display:block;color:var(--sc-fg);text-decoration:none;font-size:13.5px;font-weight:500;padding:4px 0}',
 '.im-sc-foot-col a:hover{color:var(--sc-ink);text-decoration:underline}',
+'.im-sc-foot-contact{max-width:1200px;margin:26px auto 0;color:var(--sc-mut);font-size:13px;line-height:1.6}',
+'.im-sc-foot-contact a{color:var(--sc-ink);text-decoration:underline}',
+'.im-sc-foot-contact a:hover{text-decoration-thickness:2px}',
 '.im-sc-foot-meta{max-width:1200px;margin:26px auto 0;padding-top:18px;border-top:1px solid var(--sc-bd);color:var(--sc-mut);',
  'font-size:12px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;align-items:center}',
 // Consent notice: one slim strip along the bottom edge, text and buttons on a
@@ -874,6 +877,9 @@
           '<p>Free, open-source development education for South Asia: flagship courses, the 101 Series, Free Studio, games, data and research tools.</p></div>' +
         navCols('im-sc-foot-col') +
       '</div>' +
+      '<p class="im-sc-foot-contact">Need help setting out your story, what sets your work apart, the context, the return on investment and the projections? Pinpoint Ventures can help. Write to ' +
+        '<a href="mailto:hello@pinpointventures.in?subject=Enquiry%20from%20impactmojo.in">hello@pinpointventures.in</a> or message on ' +
+        '<a href="https://wa.me/919871777110?text=Hi%20Pinpoint%20Ventures%2C%20I%20found%20you%20through%20impactmojo.in.%20I%27d%20like%20to%20discuss%20a%20research%20or%20advisory%20engagement." target="_blank" rel="noopener">WhatsApp</a>.</p>' +
       '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free Forever &middot; &copy; ImpactMojo</span>' +
         '<button type="button" class="im-sc-cookie-set" data-im-cookies>Cookie settings</button>' +
         '<span>Made for South Asian development practitioners</span></div>';
