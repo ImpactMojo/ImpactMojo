@@ -66,7 +66,7 @@ DECK = {
          "sub": "What would have happened otherwise: the logic of causal claims for development "
                 "practitioners, from the counterfactual to randomisation, difference-in-differences, "
                 "regression discontinuity and instrumental variables",
-         "tags": ["Evaluation Methods", "South Asia Focus", "100 Slides", "Free Forever"]},
+         "tags": ["Evaluation Methods", "South Asia Focus", "100 Slides", "Free forever"]},
 
         # ===================== S2 TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",
@@ -1877,7 +1877,7 @@ DECK = {
              {"label": "Causal Inference Course", "href": "https://www.impactmojo.in/courses/causal/"},
              {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }
 
