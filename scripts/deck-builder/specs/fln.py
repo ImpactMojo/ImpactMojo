@@ -337,8 +337,7 @@ DECK = {
                 "WHAT IS PROMISED: NEP 2020, NIPUN Bharat, RTE Act",
                 "WHAT WORKS: TaRL, structured pedagogy, adaptive software",
                 "WHAT YOU DO: diagnostic, decision table, worked example"]),
-            TC([B("Statistics carry their source and year on the slide. Where a figure could not "
-                  "be checked against a source that was opened, it has been left out.", sm=True)],
+            TC([B("Statistics carry their source and year on the slide.", sm=True)],
                [B("Teaching examples that are invented to illustrate a method are labelled "
                   "Illustrative. Everything else is drawn from a named document.", sm=True)]),
         ]),

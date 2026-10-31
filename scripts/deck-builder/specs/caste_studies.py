@@ -611,7 +611,6 @@ DECK = {
                ["1932", "Poona Pact, 24 September", "Origins of reserved seats in legislatures"],
                ["1936", "Annihilation of Caste", "Caste as division of labourers; scriptural authority as the root"],
                ["1956", "Conversion to Buddhism, Nagpur, 14 October", "Exit from caste through religion"]]),
-            H("cyan", "Each date on this table is checked against sources listed in the spec notes."),
         ]),
 
         S("Annihilation of Caste", "The speech that was never delivered", [
@@ -865,7 +864,7 @@ DECK = {
                ["Article 16(4)", "Reservation in posts for any backward class not adequately represented"],
                ["Article 16(4A)", "Reservation in promotion, with consequential seniority, for SCs and STs"],
                ["Article 16(6)", "EWS reservation in posts, up to a maximum of 10%"]]),
-            H("cyan", "Text checked against the current Constitution as reproduced by "
+            H("cyan", "Text from the current Constitution as reproduced by "
               "constitutionofindia.net. For the wider framework see " + L("ind-constitution.html", "Indian Constitution 101") + "."),
         ]),
 
