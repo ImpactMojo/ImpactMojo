@@ -103,13 +103,9 @@
   // with or without .html (Netlify serves both); never the series index.
   var isDeck = /^\/101-courses\/(native\/)?(?!index(\.html)?$)[^/]+$/i.test(location.pathname);
 
-  // The Pinpoint Ventures contact line is a sales line, so it is left off pages
-  // where the reader is using a tool or is already in a purchase flow: games,
-  // labs, premium tools, the flagship courses, handouts, the 101 course pages,
-  // the book companion tools, the buy pages under /products/ and the admin
-  // pages. Content and landing pages keep it. Add a directory here to hide it.
-  var NO_CONTACT = /^\/(games|labs|premium-tools|courses|handouts|101-courses|bookcompaniontools|products|admin)\//i;
-  var showContact = !NO_CONTACT.test(location.pathname);
+  // The Pinpoint Ventures contact line shows wherever this footer shows. Only
+  // /admin (the CMS, not a reader page) is left without it.
+  var showContact = !/^\/admin\//i.test(location.pathname);
 
   // ── Page name for the breadcrumb ───────────────────────────────────
   function pageName() {
