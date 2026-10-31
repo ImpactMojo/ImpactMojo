@@ -225,7 +225,6 @@ grep -rL "G-JRCMEB9TBW" *.html courses/*/*.html 101-courses/*.html Games/*.html 
 - `offline.html` — service worker offline fallback
 - `ImpactMojo_PressKit.html` — press kit / static marketing
 - `content-marketing-kit.html` — internal marketing tool
-- `linkedin-claude-code-visual.html` — one-off visual asset
 - `PAGE-TEMPLATE.html` — skeleton
 - `404.html` — debatable, currently exempt
 
@@ -250,7 +249,7 @@ ROOT = '.'
 SKIP = {'Backups','node_modules','.git','mcp-server','scripts','supabase',
         'netlify-env-files','docs','tests','assets','Handouts','templates',
         'admin','SupportGifts','BookCompanionTools','community','.github'}
-EXEMPT = {'offline.html','PAGE-TEMPLATE.html','linkedin-claude-code-visual.html','404.html'}
+EXEMPT = {'offline.html','PAGE-TEMPLATE.html','404.html'}
 
 checks = {
     'description':  re.compile(r'<meta\s+name="description"', re.I),
