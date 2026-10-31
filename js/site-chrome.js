@@ -874,7 +874,7 @@
           '<p>Free, open-source development education for South Asia: flagship courses, the 101 Series, Free Studio, games, data and research tools.</p></div>' +
         navCols('im-sc-foot-col') +
       '</div>' +
-      '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free Forever &middot; &copy; ImpactMojo</span>' +
+      '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free forever &middot; &copy; ImpactMojo</span>' +
         '<button type="button" class="im-sc-cookie-set" data-im-cookies>Cookie settings</button>' +
         '<span>Made for South Asian development practitioners</span></div>';
     document.body.appendChild(foot);
