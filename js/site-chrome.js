@@ -103,6 +103,14 @@
   // with or without .html (Netlify serves both); never the series index.
   var isDeck = /^\/101-courses\/(native\/)?(?!index(\.html)?$)[^/]+$/i.test(location.pathname);
 
+  // The Pinpoint Ventures contact line is a sales line, so it is left off pages
+  // where the reader is using a tool or is already in a purchase flow: games,
+  // labs, premium tools, the flagship courses, handouts, the 101 course pages,
+  // the book companion tools, the buy pages under /products/ and the admin
+  // pages. Content and landing pages keep it. Add a directory here to hide it.
+  var NO_CONTACT = /^\/(games|labs|premium-tools|courses|handouts|101-courses|bookcompaniontools|products|admin)\//i;
+  var showContact = !NO_CONTACT.test(location.pathname);
+
   // ── Page name for the breadcrumb ───────────────────────────────────
   function pageName() {
     var m = meta('im-page'); if (m) return m;
@@ -877,9 +885,9 @@
           '<p>Free, open-source development education for South Asia: flagship courses, the 101 Series, Free Studio, games, data and research tools.</p></div>' +
         navCols('im-sc-foot-col') +
       '</div>' +
-      '<p class="im-sc-foot-contact">Need help setting out your story, what sets your work apart, the context, the return on investment and the projections? Pinpoint Ventures can help. Write to ' +
+      (showContact ? '<p class="im-sc-foot-contact">Need help setting out your story, what sets your work apart, the context, the return on investment and the projections? Pinpoint Ventures can help. Write to ' +
         '<a href="mailto:hello@pinpointventures.in?subject=Enquiry%20from%20impactmojo.in">hello@pinpointventures.in</a> or message on ' +
-        '<a href="https://wa.me/919871777110?text=Hi%20Pinpoint%20Ventures%2C%20I%20found%20you%20through%20impactmojo.in.%20I%27d%20like%20to%20discuss%20a%20research%20or%20advisory%20engagement." target="_blank" rel="noopener">WhatsApp</a>.</p>' +
+        '<a href="https://wa.me/919871777110?text=Hi%20Pinpoint%20Ventures%2C%20I%20found%20you%20through%20impactmojo.in.%20I%27d%20like%20to%20discuss%20a%20research%20or%20advisory%20engagement." target="_blank" rel="noopener">WhatsApp</a>.</p>' : '') +
       '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free Forever &middot; &copy; ImpactMojo</span>' +
         '<button type="button" class="im-sc-cookie-set" data-im-cookies>Cookie settings</button>' +
         '<span>Made for South Asian development practitioners</span></div>';
