@@ -12,6 +12,7 @@
    never both. */
 
 :root {
+  --h-lh: 1.55;
   --h-bg: #FFFFFF;
   --h-soft: #F8FAFC;
   --h-ink: #0F172A;
@@ -54,6 +55,7 @@
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-theme="light"]) {
+    --h-lh: 1.6;
     --h-bg: #0B1120;
     --h-soft: #111A2E;
     --h-ink: #F1F5F9;
@@ -93,6 +95,7 @@
   }
 }
 html[data-theme="dark"], html.dark {
+  --h-lh: 1.6;
   --h-bg: #0B1120;
   --h-soft: #111A2E;
   --h-ink: #F1F5F9;
@@ -138,7 +141,7 @@ body {
   color: var(--h-ink);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 16px;
-  line-height: 1.55;
+  line-height: var(--h-lh);
   -webkit-font-smoothing: antialiased;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -179,7 +182,7 @@ html.im-dyslexic .h-display, html.im-dyslexic .h-h2, html.im-dyslexic .h-col h2 
   margin: 0;
   font-size: clamp(40px, 6vw, 68px);
   line-height: 1.04;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 .h-lede { margin: 0; font-size: clamp(17px, 2vw, 20px); color: var(--h-mut); max-width: 600px; }
@@ -359,4 +362,17 @@ html.im-dyslexic .h-display, html.im-dyslexic .h-h2, html.im-dyslexic .h-col h2 
   .h-hero .h-wrap { padding-top: 40px; padding-bottom: 48px; }
   .h-search-box { height: 54px; padding-left: 14px; }
   .h-search-go { padding: 0 12px; }
+}
+
+/* Typography and spacing, from the Scroll Craft taste rules (MIT):
+   headings balance and tighten as they grow, paragraphs avoid orphans
+   and stop near 62 characters, and sections lose some air on a phone. */
+.h-col h2, .h-h2, .h-band h2 { text-wrap: balance; }
+.h-h2, .h-band h2 { letter-spacing: -0.015em; }
+.h-lede, .h-col p, .h-desc, .h-why p, .h-band p { text-wrap: pretty; }
+.h-why p, .h-band p { max-width: 62ch; }
+@media (max-width: 600px) {
+  .h-sec { padding-top: 44px; }
+  .h-why { padding-top: 40px; }
+  .h-band-wrap { padding-top: 40px; padding-bottom: 56px; }
 }
