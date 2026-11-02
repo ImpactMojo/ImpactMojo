@@ -306,11 +306,15 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     var ttl=svg.querySelector('title');
     svg.innerHTML=(ttl?ttl.outerHTML:'')+g.join('');
   }
+  // Tooltip markup is kept here and the element carries only its index, so
+  // no text is read back out of the DOM and written as HTML.
+  var TIPS=[];
+  function tipIndex(h){ var i=TIPS.indexOf(h); if(i<0){ i=TIPS.length; TIPS.push(h); } return i; }
   function tips(svg,tip,W,H,left){
     svg.querySelectorAll('[data-tip]').forEach(function(b){
       function show(){
         var r=svg.getBoundingClientRect(), p=svg.parentNode.getBoundingClientRect();
-        tip.innerHTML=b.getAttribute('data-tip');
+        tip.innerHTML=TIPS[+b.getAttribute('data-tip')]||'';
         tip.style.opacity=1;
         var x = left!=null ? left : (+b.getAttribute('x'));
         tip.style.left=Math.max(0,Math.min(p.width-230,x*(r.width/W)))+'px';
@@ -343,12 +347,12 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
         var w=Math.max(s.v>0?1.5:0,s.v/max*span);
         if(w<=0) return;
         g.push('<rect class="'+s.cls+'" x="'+x+'" y="'+(y+(BH-BT)/2)+'" width="'+w+'" height="'+BT+'"'+
-          (k===0&&!narrow?' tabindex="0" role="img" aria-label="'+esc(r.label)+'" data-tip="'+esc(r.tip)+'"':'')+'/>');
+          (k===0&&!narrow?' tabindex="0" role="img" aria-label="'+esc(r.label)+'" data-tip="'+tipIndex(r.tip)+'"':'')+'/>');
         x+=w;
       });
       g.push('<text class="glab" x="'+(M.l-8)+'" y="'+(y+BH/2+4)+'" text-anchor="end">'+esc(clip(r.n,M.l-10,mName))+'</text>');
       g.push('<text class="dlab" x="'+(x+7)+'" y="'+(y+BH/2+4)+'">'+esc(valueText(r))+'</text>');
-      if(narrow) g.push('<rect class="hit" x="0" y="'+y+'" width="'+W+'" height="'+BH+'" fill="transparent" tabindex="0" role="img" aria-label="'+esc(r.label)+'" data-tip="'+esc(r.tip)+'"/>');
+      if(narrow) g.push('<rect class="hit" x="0" y="'+y+'" width="'+W+'" height="'+BH+'" fill="transparent" tabindex="0" role="img" aria-label="'+esc(r.label)+'" data-tip="'+tipIndex(r.tip)+'"/>');
     });
     mName.done(); mVal.done();
     finish(svg,W,H,g);
@@ -436,11 +440,12 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     });
     hbars('tmChart','tmTip',rows,function(r){ return fmt(r.head,1)+'%'; });
     var A=T.average_minutes, P=D.departure;
+    var ef=function(n,d){ return esc(fmt(n,d)); };
     document.getElementById('tmNote').innerHTML=
-      'The average trip takes '+A.students['Rural+Urban']+' minutes for students and '+A.workers['Rural+Urban']+' minutes for workers going to a fixed workplace. '+
-      'Urban workers travel longest: '+fmt(T.workers.Urban[1]+T.workers.Urban[2],1)+'% take between half an hour and an hour and a half, against '+fmt(T.workers.Rural[1]+T.workers.Rural[2],1)+'% in rural India. '+
-      'Most of these trips start in the morning. '+fmt(P.students_7_to_10,1)+'% of students leave between 7 and 10 AM, most of them ('+fmt(P.students[1][1],1)+'%) between 8 and 9, and '+
-      fmt(P.workers_before_10,1)+'% of workers leave before 10 AM, '+fmt(P.workers[0][1],1)+'% of them before 6.';
+      'The average trip takes '+esc(A.students['Rural+Urban'])+' minutes for students and '+esc(A.workers['Rural+Urban'])+' minutes for workers going to a fixed workplace. '+
+      'Urban workers travel longest: '+ef(T.workers.Urban[1]+T.workers.Urban[2],1)+'% take between half an hour and an hour and a half, against '+ef(T.workers.Rural[1]+T.workers.Rural[2],1)+'% in rural India. '+
+      'Most of these trips start in the morning. '+ef(P.students_7_to_10,1)+'% of students leave between 7 and 10 AM, most of them ('+ef(P.students[1][1],1)+'%) between 8 and 9, and '+
+      ef(P.workers_before_10,1)+'% of workers leave before 10 AM, '+ef(P.workers[0][1],1)+'% of them before 6.';
   }
 
   function cost(){

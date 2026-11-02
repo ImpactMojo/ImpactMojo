@@ -328,7 +328,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
       return '<div class="tile"><div class="v">'+esc(x[0])+'</div><div class="l">'+esc(x[1])+'</div></div>';
     }).join('') + (m<12
       ? '<div class="tile" style="grid-column:1/-1"><div class="l"><b>'+esc(yl(year))+
-        ' is still running.</b> Only '+m+' month'+(m===1?'':'s')+' have been reported, so '+
+        ' is still running.</b> Only '+esc(Number(m))+' month'+(Number(m)===1?'':'s')+' have been reported, so '+
         'these figures are a part-year and not comparable with the completed years above.'+
         '</div></div>'
       : '');
@@ -421,8 +421,8 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
 
   document.getElementById('years').innerHTML = D.years.map(function(y){
     var m=(D.months_reported||{})[y]||0, part=m<12;
-    return '<button class="chip" data-y="'+y+'" aria-pressed="'+(y===year)+'">'+
-           esc(yl(y))+(part?' <span style="opacity:.75">· '+m+' mo</span>':'')+
+    return '<button class="chip" data-y="'+esc(y)+'" aria-pressed="'+(y===year)+'">'+
+           esc(yl(y))+(part?' <span style="opacity:.75">· '+esc(Number(m))+' mo</span>':'')+
            '</button>'; }).join('');
   document.getElementById('years').addEventListener('click',function(e){
     var b=e.target.closest('button[data-y]'); if(!b) return;

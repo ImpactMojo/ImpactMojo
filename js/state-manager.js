@@ -347,12 +347,12 @@
       get: function () { return safeGet(KEYS.CACHED_PROFILE, null); },
       set: function (profile) {
         if (!profile) return;
-        // Only cache fields needed for instant UI (not sensitive data)
+        // Only cache fields needed for instant UI. The email address is not
+        // cached: nothing reads it back, and it is personal data.
         return safeSet(KEYS.CACHED_PROFILE, {
           id: profile.id,
           display_name: profile.display_name || null,
           full_name: profile.full_name || null,
-          email: profile.email || null,
           avatar_url: profile.avatar_url || null,
           subscription_tier: profile.subscription_tier || 'explorer',
           subscription_status: profile.subscription_status || null,

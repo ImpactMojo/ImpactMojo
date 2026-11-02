@@ -1375,7 +1375,10 @@ function escapeHtml(str) {
 
 function escapeAttr(str) {
     if (!str) return '';
-    return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    // The value lands in a JS string inside an HTML attribute: escape for JS
+    // first (backslash before quote), then for HTML.
+    return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\r?\n/g, '\\n')
+        .replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 // Close modal on Escape
