@@ -171,7 +171,7 @@ DECK = {
          "main": "Foundational<br>Literacy &amp;<br>Numeracy 101",
          "sub": "How children learn to read and calculate in the early grades, how South Asia "
                 "measures it, and what policy and evidence say about helping every child get there",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "NIPUN Bharat to TaRL"]},
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "NIPUN Bharat to TaRL"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",
@@ -1859,6 +1859,6 @@ DECK = {
              {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
              {"label": "Dataverse", "href": "https://www.impactmojo.in/dataverse.html"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }

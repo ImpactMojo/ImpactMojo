@@ -128,7 +128,7 @@ DECK = {
          "main": "Social<br>Determinants<br>of Health 101",
          "sub": "Why health follows the social ladder in South Asia, how to measure the gap, "
                 "and what programmes and policies can do about it",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Health Equity"]},
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "Health Equity"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",

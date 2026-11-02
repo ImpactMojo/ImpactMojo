@@ -181,7 +181,7 @@ DECK = {
          "sub": "How governments decide what to do, choose their tools, carry decisions out and "
                 "learn whether they worked: a foundational course for development practitioners "
                 "in South Asia",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Cabinet to Panchayat"]},
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "Cabinet to Panchayat"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",
@@ -1792,6 +1792,6 @@ DECK = {
              {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
              {"label": "Dataverse", "href": "https://www.impactmojo.in/dataverse.html"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }

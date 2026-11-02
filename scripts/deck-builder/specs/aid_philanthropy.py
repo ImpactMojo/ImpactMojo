@@ -1686,7 +1686,7 @@ DECK = {
          "sub": "Who pays for development, on what terms, and what changed in 2025: a foundational "
                 "course on official aid, Indian philanthropy and funding law for practitioners in "
                 "South Asia",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "ODA to CSR"]},
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "ODA to CSR"]},
 
         {"type": "toc", "label": "Agenda", "title": "What we cover",
          "items": [
@@ -1713,6 +1713,6 @@ DECK = {
              {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
              {"label": "Dataverse", "href": "https://www.impactmojo.in/dataverse.html"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }

@@ -884,7 +884,7 @@
       (showContact ? '<p class="im-sc-foot-contact">Need help setting out your story, what sets your work apart, the context, the return on investment and the projections? Pinpoint Ventures can help. Write to ' +
         '<a href="mailto:hello@pinpointventures.in?subject=Enquiry%20from%20impactmojo.in">hello@pinpointventures.in</a> or message on ' +
         '<a href="https://wa.me/919871777110?text=Hi%20Pinpoint%20Ventures%2C%20I%20found%20you%20through%20impactmojo.in.%20I%27d%20like%20to%20discuss%20a%20research%20or%20advisory%20engagement." target="_blank" rel="noopener">WhatsApp</a>.</p>' : '') +
-      '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free Forever &middot; &copy; ImpactMojo</span>' +
+      '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free forever &middot; &copy; ImpactMojo</span>' +
         '<button type="button" class="im-sc-cookie-set" data-im-cookies>Cookie settings</button>' +
         '<span>Made for South Asian development practitioners</span></div>';
     document.body.appendChild(foot);

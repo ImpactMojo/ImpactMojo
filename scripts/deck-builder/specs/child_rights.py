@@ -92,7 +92,7 @@ SLIDES += [
      "sub": "The UN Convention on the Rights of the Child, India's Constitution and child laws, "
             "the institutions that enforce them, neighbours' frameworks, participation, and "
             "children in data and research, for development practitioners in South Asia",
-     "tags": ["100 Slides", "South Asia Focus", "Free Forever", "CRC, JJ Act and POCSO"]},
+     "tags": ["100 Slides", "South Asia Focus", "Free forever", "CRC, JJ Act and POCSO"]},
 
     {"type": "toc", "label": "Agenda", "title": "What we cover",
      "items": [
@@ -1860,7 +1860,7 @@ SLIDES += [
      "ctas": [
          {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
          {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"}],
-     "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+     "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
 ]
 
 DECK = {

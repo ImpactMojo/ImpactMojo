@@ -1589,7 +1589,7 @@ TITLE = {"type": "title",
          "sub": "What rights are, where they come from and how a development programme can use them: "
                 "treaties, the UN system, the Indian Constitution, courts, commissions and civic space, "
                 "for practitioners in South Asia",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Rights in Practice"]}
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "Rights in Practice"]}
 
 TOC = {"type": "toc", "label": "Agenda", "title": "What we cover",
        "items": [

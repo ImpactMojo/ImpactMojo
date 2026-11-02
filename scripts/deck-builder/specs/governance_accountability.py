@@ -193,7 +193,7 @@ DECK = {
          "sub": "Who answers to whom, and how citizens can make them answer: a foundational "
                 "course on governance, transparency and service delivery for development "
                 "practitioners in South Asia",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "RTI to Lokpal"]},
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "RTI to Lokpal"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",
@@ -1774,6 +1774,6 @@ DECK = {
              {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
              {"label": "Dataverse", "href": "https://www.impactmojo.in/dataverse.html"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }

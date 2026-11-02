@@ -87,7 +87,7 @@ DECK = {
          "main": "Programme<br>Design<br>101",
          "sub": "From a problem worth solving to a plan that can run at scale: a foundational "
                 "course for practitioners designing development programmes in South Asia",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Problem to Plan"]},
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "Problem to Plan"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",

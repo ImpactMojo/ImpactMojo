@@ -173,7 +173,7 @@ DECK = {
          "main": "Caste<br>Studies<br>101",
          "sub": "Caste as a structure of inequality: history, law, economics and data, a "
                 "foundational course for development practitioners and researchers in South Asia",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Law &amp; Evidence"]},
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "Law &amp; Evidence"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",
@@ -1669,6 +1669,6 @@ DECK = {
              {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
              {"label": "Dataverse", "href": "https://www.impactmojo.in/dataverse.html"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }

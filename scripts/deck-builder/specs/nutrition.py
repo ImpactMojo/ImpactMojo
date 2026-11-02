@@ -97,7 +97,7 @@ SLIDES_A = [
      "sub": "Malnutrition in all its forms, how South Asia measures it, why India's "
             "numbers are argued over, and what the law and the evidence say a "
             "practitioner should do",
-     "tags": ["100 Slides", "South Asia Focus", "Free Forever", "Food &amp; Nutrition"]},
+     "tags": ["100 Slides", "South Asia Focus", "Free forever", "Food &amp; Nutrition"]},
 
     # ===================== TOC =====================
     {"type": "toc", "label": "Agenda", "title": "What we cover",

@@ -1419,7 +1419,7 @@ db.build(
     title_main_html="Development<br>Finance<br><span class='title-accent'>101</span>",
     title_sub_html=("The money that arrives from outside the budget &mdash; who lends, on what terms, "
                     "and who can complain"),
-    title_tags=["Free Forever", "100 Slides", "11 Modules", "India-first"],
+    title_tags=["Free forever", "100 Slides", "11 Modules", "India-first"],
     toc=ranges,
     slides=slides,
     end_headline_html="Ask who carries the downside.<br>Keep asking until someone shows you the clause.",

@@ -229,7 +229,7 @@ main{max-width:1180px;margin:0 auto;padding:44px 24px 20px}
 </header>
 <section class="hero">
   <div class="hero-in">
-    <div class="hero-eyebrow">ImpactMojo 101 Series &middot; Free Forever</div>
+    <div class="hero-eyebrow">ImpactMojo 101 Series &middot; Free forever</div>
     <h1 class="hero-title">The 101 Series</h1>
     <p class="hero-sub">{{TOTAL}} native, interactive, ~100-slide course decks on development methods, theory and practice &mdash; built for South Asia, with charts, diagrams and cited sources throughout. No embeds, no logins, free forever.</p>
     <div class="hero-stats">
@@ -249,7 +249,7 @@ main{max-width:1180px;margin:0 auto;padding:44px 24px 20px}
     <a href="https://www.impactmojo.in/catalog.html">Full Catalog</a>
     <a href="https://www.impactmojo.in/about.html">About</a>
   </div>
-  <div class="foot-meta">CC BY-NC-ND 4.0 &middot; Free Forever &middot; ImpactMojo</div>
+  <div class="foot-meta">CC BY-NC-ND 4.0 &middot; Free forever &middot; ImpactMojo</div>
 </footer>
 </body>
 </html>

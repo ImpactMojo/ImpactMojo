@@ -51,7 +51,7 @@ DECK = {
          "sub": "Reading and commissioning numbers in development work: measurement, sampling, "
                 "survey weights, intervals, tests, regression and power, worked through with "
                 "NFHS, PLFS and HCES data",
-         "tags": ["Quantitative Methods", "South Asia Focus", "100 Slides", "Free Forever"]},
+         "tags": ["Quantitative Methods", "South Asia Focus", "100 Slides", "Free forever"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",
@@ -2116,6 +2116,6 @@ DECK = {
              {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
              {"label": "Dataverse", "href": "https://www.impactmojo.in/dataverse.html"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }

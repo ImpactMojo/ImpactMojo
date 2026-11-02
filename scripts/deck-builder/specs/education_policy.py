@@ -189,7 +189,7 @@ DECK = {
          "main": "Education<br>Policy<br>101",
          "sub": "From enrolment to learning: how South Asian states decide who learns what, who "
                 "teaches, who pays and how anyone knows whether it worked",
-         "tags": ["100 Slides", "South Asia Focus", "Free Forever", "RTE to NEP 2020"]},
+         "tags": ["100 Slides", "South Asia Focus", "Free forever", "RTE to NEP 2020"]},
 
         # ===================== TOC =====================
         {"type": "toc", "label": "Agenda", "title": "What we cover",
@@ -1801,6 +1801,6 @@ DECK = {
              {"label": "More 101 Courses", "href": "https://www.impactmojo.in/101-courses/"},
              {"label": "Explore ImpactMojo", "href": "https://www.impactmojo.in"},
              {"label": "Dataverse", "href": "https://www.impactmojo.in/dataverse.html"}],
-         "meta": ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]},
+         "meta": ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]},
     ],
 }

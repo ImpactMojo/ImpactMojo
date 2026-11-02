@@ -49,6 +49,7 @@ DECK_CSS = ('<style id="notes-101">'
             '</style>\n')
 MARK = re.compile(r"<!--notes-101-->.*?<!--/notes-101-->", re.S)
 FREE_TAGS = [('<span class="title-tag">Free Forever</span>', '<span class="title-tag">Course free forever</span>'),
+             ('<span class="title-tag">Free forever</span>', '<span class="title-tag">Course free forever</span>'),
              ('<span class="title-tag">Free Access</span>', '<span class="title-tag">Course free to access</span>'),
              ('<span class="title-tag">Free access</span>', '<span class="title-tag">Course free to access</span>')]
 CSS_MARK = re.compile(r'<style id="notes-101">.*?</style>\n')

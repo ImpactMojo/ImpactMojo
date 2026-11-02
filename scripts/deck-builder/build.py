@@ -161,7 +161,7 @@ def render_slide(s, num, total, deck_title):
         body = (
             '<div class="title-screen"><div class="title-bg"></div><div class="title-bar"></div>'
             '<div class="title-content">'
-            '<div class="title-series">ImpactMojo 101 Series &middot; Free Forever</div>'
+            '<div class="title-series">ImpactMojo 101 Series &middot; Free forever</div>'
             # The deck's title is its one page heading: an <h1>, styled by .title-main.
             f'<h1 class="title-main">{s["main"]}</h1>'
             f'<div class="title-sub">{s["sub"]}</div>'
@@ -196,7 +196,7 @@ def render_slide(s, num, total, deck_title):
             kind = ["end-btn-primary", "end-btn-secondary", "end-btn-tertiary"][min(i, 2)]
             ctas += f'<a class="end-btn {kind}" href="{c["href"]}">{c["label"]}</a>'
         meta = '<span class="end-meta-divider">&middot;</span>'.join(
-            f'<span>{m}</span>' for m in s.get("meta", ["CC BY-NC-ND 4.0", "Free Forever", "ImpactMojo 101 Series"]))
+            f'<span>{m}</span>' for m in s.get("meta", ["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo 101 Series"]))
         body = ('<div class="end-screen"><div class="end-bar"></div><div class="end-pattern"></div>'
                 '<div class="end-glow"></div><div class="end-content">'
                 f'<div class="end-eyebrow">{s.get("eyebrow", "Thank You")}</div>'
