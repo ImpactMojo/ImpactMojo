@@ -379,6 +379,13 @@ jobs:
       - name: Rebuild the energy explorer data and compare
         run: python3 scripts/build-energy-explorer-data.py --check
 
+      # Write udise.html's and nas.html's inline data from data/udise-*.json
+      # and data/parakh-2024-states.json, and fail if a page's copy is stale.
+      - name: Rebuild the UDISE+ and PARAKH explorer data and compare
+        run: |
+          python3 scripts/build-udise-explorer-data.py --check
+          python3 scripts/build-nas-explorer-data.py --check
+
   origin-relative-links:
     name: In-site links work on any origin
     runs-on: ubuntu-latest
