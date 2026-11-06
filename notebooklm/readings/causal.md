@@ -15,7 +15,7 @@ python3 scripts/notebooklm-manage.py add-source causal https://journals.sagepub.
 python3 scripts/notebooklm-manage.py add-source causal https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/
 python3 scripts/notebooklm-manage.py add-source causal https://www.povertyactionlab.org/resource/introduction-randomized-evaluations
 python3 scripts/notebooklm-manage.py add-source causal https://www.bmj.com/content/340/bmj.c2220
-python3 scripts/notebooklm-manage.py add-source causal https://www.povertyactionlab.org/resource/quick-guide-randomization-practice
+python3 scripts/notebooklm-manage.py add-source causal https://www.povertyactionlab.org/resource/randomization
 python3 scripts/notebooklm-manage.py add-source causal https://www.jstor.org/stable/2335942
 python3 scripts/notebooklm-manage.py add-source causal https://projecteuclid.org/journals/statistical-science/volume-25/issue-1/Matching-Methods-for-Causal-Inference-A-Review-and-a-Look/10.1214/09-STS313.full
 python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/07-instrumental_variables
@@ -23,13 +23,13 @@ python3 scripts/notebooklm-manage.py add-source causal https://www.jstor.org/sta
 python3 scripts/notebooklm-manage.py add-source causal https://academic.oup.com/qje/article/122/2/601/1942113
 python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/06-regression_discontinuity
 python3 scripts/notebooklm-manage.py add-source causal https://www.aeaweb.org/articles?id=10.1257/jel.48.2.281
-python3 scripts/notebooklm-manage.py add-source causal https://rdpackages.github.io/references/Cattaneo-Idrobo-Titiunik_2020_CUP-Vol1.pdf
+python3 scripts/notebooklm-manage.py add-source causal https://rdpackages.github.io/references/Cattaneo-Idrobo-Titiunik_2020_CUP.pdf
 python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/09-difference_in_differences
 python3 scripts/notebooklm-manage.py add-source causal https://www.sciencedirect.com/science/article/pii/S0304407621001445
 python3 scripts/notebooklm-manage.py add-source causal https://bcallaway11.github.io/did/
 python3 scripts/notebooklm-manage.py add-source causal https://mixtape.scunning.com/11-synthetic_control
 python3 scripts/notebooklm-manage.py add-source causal https://www.aeaweb.org/articles?id=10.1257/jel.20191450
-python3 scripts/notebooklm-manage.py add-source causal https://web.stanford.edu/~jhain/Paper/JASA2010.pdf
+python3 scripts/notebooklm-manage.py add-source causal https://www.nber.org/system/files/working_papers/w12831/w12831.pdf
 python3 scripts/notebooklm-manage.py add-source causal https://arxiv.org/abs/1608.00060
 python3 scripts/notebooklm-manage.py add-source causal https://academic.oup.com/ectj/article/21/1/C1/5056401
 python3 scripts/notebooklm-manage.py add-source causal https://grf-labs.github.io/grf/
@@ -56,7 +56,7 @@ python3 scripts/notebooklm-manage.py add-source causal https://www.3ieimpact.org
 - https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/
 - https://www.povertyactionlab.org/resource/introduction-randomized-evaluations
 - https://www.bmj.com/content/340/bmj.c2220
-- https://www.povertyactionlab.org/resource/quick-guide-randomization-practice
+- https://www.povertyactionlab.org/resource/randomization
 - https://www.jstor.org/stable/2335942
 - https://projecteuclid.org/journals/statistical-science/volume-25/issue-1/Matching-Methods-for-Causal-Inference-A-Review-and-a-Look/10.1214/09-STS313.full
 - https://mixtape.scunning.com/07-instrumental_variables
@@ -64,13 +64,13 @@ python3 scripts/notebooklm-manage.py add-source causal https://www.3ieimpact.org
 - https://academic.oup.com/qje/article/122/2/601/1942113
 - https://mixtape.scunning.com/06-regression_discontinuity
 - https://www.aeaweb.org/articles?id=10.1257/jel.48.2.281
-- https://rdpackages.github.io/references/Cattaneo-Idrobo-Titiunik_2020_CUP-Vol1.pdf
+- https://rdpackages.github.io/references/Cattaneo-Idrobo-Titiunik_2020_CUP.pdf
 - https://mixtape.scunning.com/09-difference_in_differences
 - https://www.sciencedirect.com/science/article/pii/S0304407621001445
 - https://bcallaway11.github.io/did/
 - https://mixtape.scunning.com/11-synthetic_control
 - https://www.aeaweb.org/articles?id=10.1257/jel.20191450
-- https://web.stanford.edu/~jhain/Paper/JASA2010.pdf
+- https://www.nber.org/system/files/working_papers/w12831/w12831.pdf
 - https://arxiv.org/abs/1608.00060
 - https://academic.oup.com/ectj/article/21/1/C1/5056401
 - https://grf-labs.github.io/grf/
