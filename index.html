@@ -561,7 +561,7 @@ window.addEventListener('click', function(e) {
         <p>Official Indian figures you can explore, each linked to its source.</p>
         <a href="/explorers.html"><span class="h-name">Data Room</span><span class="h-num">21</span></a>
         <a href="/by-the-numbers/"><span class="h-name">By the numbers</span><span class="h-num">4</span></a>
-        <a href="/dataverse.html"><span class="h-name">Dataverse</span><span class="h-num">324</span></a>
+        <a href="/dataverse.html"><span class="h-name">Dataverse</span><span class="h-num">325</span></a>
         <a href="/BookSummaries/"><span class="h-name">Reading companions</span><span class="h-num">192</span></a>
         <a href="/DeepDives/"><span class="h-name">Deep Dives</span><span class="h-num">27</span></a>
       </div>
@@ -1012,19 +1012,29 @@ document.addEventListener('click', function(e) {
             strip.innerHTML =
                 '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>' +
                 '<span class="im-cs-text">Continue where you left off: <strong></strong></span>' +
-                '<span class="im-cs-meta">' + done + '/' + total + ' modules · ' + pct + '%</span>' +
+                '<span class="im-cs-meta"></span>' +
                 '<span class="im-cs-arrow" aria-hidden="true">→</span>';
             strip.querySelector('strong').textContent = course[0];
+            strip.querySelector('.im-cs-meta').textContent = done + '/' + total + ' modules \u00b7 ' + pct + '%';
         } else {
             var title = String(quizPath.primary[0]).replace(' (flagship)', '');
-            strip.href = quizPath.primary[1];
+            // Link only to a path the quiz itself offers, never to a stored string.
+            var saved = String(quizPath.primary[1]), dest = null;
+            if (typeof TRACK_QUIZ_MAP === 'object') {
+                Object.keys(TRACK_QUIZ_MAP).forEach(function (t) {
+                    (TRACK_QUIZ_MAP[t].picks || []).forEach(function (pk) { if (pk[1] === saved) dest = pk[1]; });
+                });
+            }
+            if (!dest) return;
+            strip.href = dest;
             strip.setAttribute('aria-label', 'Your path: start ' + title);
             strip.innerHTML =
                 '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>' +
-                '<span class="im-cs-text">Your path (' + (quizPath.label || 'your track') + '): <strong></strong></span>' +
+                '<span class="im-cs-text">Your path (<span class="im-cs-label"></span>): <strong></strong></span>' +
                 '<span class="im-cs-meta">from your quiz</span>' +
                 '<span class="im-cs-arrow" aria-hidden="true">→</span>';
             strip.querySelector('strong').textContent = title;
+            strip.querySelector('.im-cs-label').textContent = quizPath.label || 'your track';
         }
 
         hero.insertAdjacentElement('beforeend', strip);

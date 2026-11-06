@@ -79,7 +79,7 @@ done
 ## Common ImpactMojo-Specific Issues
 
 ### The "620KB index.html" Problem
-- Always backup first: `cp index.html Backups/index-backup-$(date +%Y%m%d-%H%M).html`
+- Git history is the backup: commit first, then `git diff` shows exactly what changed. Never copy pages into `Backups/`.
 - Use targeted edits, never rewrite the whole file
 - Search for exact strings rather than line numbers (they shift frequently)
 

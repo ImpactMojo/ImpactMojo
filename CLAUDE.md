@@ -31,7 +31,7 @@ Free development education platform for South Asia. Static HTML/CSS/JS, Supabase
 ## Watch out for
 
 - **A merge builds but goes live only at 20:00 IST, once a day.** Auto-publishing is locked to save Netlify credits; see `.claude/rules/testing.md`, "Ship checklist".
-- `index.html` is ~620KB — backup to `Backups/` before major changes
+- `index.html` is ~620KB. Git history is its backup: do not copy pages into the repository. `Backups/` (118 dated copies) was deleted on 6 November 2026 because CodeQL kept raising alerts on their old scripts, and it is now in `.gitignore`
 - Content counts in nav, hero, cards, sidebar — update ALL occurrences
 - Stale `101.impactmojo.in` links — should point to self-hosted files
 - `data/search-index.json` must stay valid JSON

@@ -487,7 +487,7 @@ const DATA = {
  ],
  "argument": [
   "The book's organising claim is Sen's: health equity 'cannot be concerned only with health, seen in isolation'. It is 'most certainly not just about the distribution of health, not to mention the even narrower focus on the distribution of health care'. Once you accept that, health equity stops being a sector question and becomes a question about the justice of social arrangements generally.",
-  "The empirical spine is the social gradient. Marmot's Whitehall studies of British civil servants found health tracking rank continuously, not a cliff between poor and rich, but a slope running the whole length of the hierarchy, and one that survives controlling for individual behaviours like smoking. If the gradient persists after you adjust for choices, 'they chose it' cannot carry the weight placed on it.",
+  "The empirical spine is the social gradient. Marmot's Whitehall studies of British civil servants found health tracking rank continuously: a slope running the whole length of the hierarchy, with no single cliff between poor and rich, and one that survives controlling for individual behaviours like smoking. If the gradient persists after you adjust for choices, 'they chose it' cannot carry the weight placed on it.",
   "The measurement chapters are the ones practitioners will find most immediately usable, because they are an attack on the metrics that route money. Anand and Hanson show that the DALY formula, as constructed, weights a year lived at 70 at less than half a year lived at 25, discounts future life at 3% a year, and carries a systematic bias against people with existing disabilities.",
   "The volume closes by turning the question on the analyst. Sen sets the 'external' view of mortality and morbidity statistics against the 'internal' view of how illness is actually experienced, and shows that neither is sufficient alone: Kerala reports the highest self-perceived morbidity of any Indian state while also having the highest life expectancy."
  ],
@@ -957,13 +957,14 @@ function switchTab(id) {
     `;
   }
   
+  function __esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
   function renderChat() {
     el.innerHTML = `
       <div class="ask-ui">
         <div class="ask-hdr"><span class="ask-hdr-title">Ask the Book</span><button class="ask-reset" onclick="__resetKey()">Change key</button></div>
         <div class="msgs" id="msgs-box">
-          ${msgs.length===0?`<div><div class="suggested-label">Suggested questions</div>${DATA.suggested.map(q=>`<button class="sug-btn" onclick="__ask('${q.replace(/'/g,"\'")}')">${q}</button>`).join("")}</div>`:""}
-          ${msgs.map(m=>`<div class="msg ${m.role}"><div class="msg-text">${m.content}</div></div>`).join("")}
+          ${msgs.length===0?`<div><div class="suggested-label">Suggested questions</div>${DATA.suggested.map((q,i)=>`<button class="sug-btn" onclick="__ask(DATA.suggested[${i}])">${__esc(q)}</button>`).join("")}</div>`:""}
+          ${msgs.map(m=>`<div class="msg ${m.role}"><div class="msg-text">${__esc(m.content)}</div></div>`).join("")}
           ${loading?`<div class="msg assistant"><div class="typing"><span></span><span></span><span></span></div></div>`:""}
         </div>
         <div class="ask-input-row">
