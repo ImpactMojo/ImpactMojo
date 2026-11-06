@@ -367,6 +367,12 @@ jobs:
       - name: Rebuild the travel survey data and compare
         run: python3 scripts/build-nhts-explorer-data.py --check
 
+      # Adds NFHS-6 to data/nfhs-state.json from data/nfhs6/states.json,
+      # joining an indicator only where the NFHS-5 figure each fact sheet
+      # reprints agrees with MoSPI's, and fails if the committed file is stale.
+      - name: Rebuild the NFHS state data and compare
+        run: python3 scripts/build-nfhs-state-data.py --check
+
   origin-relative-links:
     name: In-site links work on any origin
     runs-on: ubuntu-latest
