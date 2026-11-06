@@ -1018,7 +1018,9 @@ document.addEventListener('click', function(e) {
             strip.querySelector('.im-cs-meta').textContent = done + '/' + total + ' modules \u00b7 ' + pct + '%';
         } else {
             var title = String(quizPath.primary[0]).replace(' (flagship)', '');
-            strip.href = quizPath.primary[1];
+            var dest = String(quizPath.primary[1]);
+            if (!/^\/(?!\/)/.test(dest)) return; // same-site paths only
+            strip.href = dest;
             strip.setAttribute('aria-label', 'Your path: start ' + title);
             strip.innerHTML =
                 '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>' +
