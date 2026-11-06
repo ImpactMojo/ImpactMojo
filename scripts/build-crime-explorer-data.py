@@ -7,10 +7,8 @@ returns exactly three times the real figure. Totals are read from the total
 row, the parts are summed separately, and the build refuses to write if the
 two disagree.
 
-The column names are long and positional -- 'chargesheeting_rate__col_18_19__
-100______col__23_' -- so they are mapped by prefix rather than by exact name.
-The mapping is asserted: a source that renames or reorders a column fails here
-instead of producing a page of blanks.
+The input is data/crime-india.json, written by scripts/fetch-crime-data.py from
+the Crime in India PDFs. Fields are mapped by NCRB's printed column number.
 """
 import json
 import re
@@ -25,36 +23,28 @@ PAGE = ROOT / "crime.html"
 SLOT = re.compile(
     r'(<script id="crime-data" type="application/json">)(.*?)(</script>)', re.S)
 
-# Column names are matched on their letters alone. The same column is named
-# 'charge_sheets_submitted___cases_charge_sheeted__col_16_col_17______col__18_'
-# in one table and 'chargesheets_submitted___cases_chargesheeted__col_16_col_17
-# ___col_18_' in the next: the underscore runs and the word split differ per
-# table, and an exact-name mapping quietly matched nothing for IPC while
-# working for crime against women. Stripping to letters makes the two
-# identical, and the count assert below still catches a real rename.
+# Columns by the number NCRB prints over them ([3], [4] ...). The layout is
+# the same in all twelve state-wise disposal tables of Crime in India 2024, and
+# scripts/fetch-crime-data.py has already checked every table's printed
+# arithmetic, so a column read against the wrong number would have failed
+# there. The build re-checks the totals below anyway.
 POLICE_FIELDS = {
-    "casesreportedduringtheyear": "reported",
-    "totalcasesforinvestigation": "for_investigation",
-    # 'col' after 'chargesheeted' distinguishes the total from the two
-    # sub-rows, which continue 'outofcases...'.
-    "chargesheetssubmittedcaseschargesheetedcol": "chargesheeted",
-    "casespendinginvsgnatendoftheyear": "pending_police",
-    "chargesheetingrate": "chargesheeting_rate",
-    "pendencypercentage": "police_pendency",
+    "reported": 4,               # cases reported during the year
+    "for_investigation": 6,      # total cases for investigation
+    "chargesheeted": 18,         # cases charge-sheeted (col 16 + col 17)
+    "pending_police": 22,        # pending investigation at the end of the year
+    "chargesheeting_rate": 23,   # col 18 / col 19 * 100
+    "police_pendency": 24,       # col 22 / col 6 * 100
 }
 COURT_FIELDS = {
-    "totalcasesfortrial": "for_trial",
-    "casesconvictedcol": "convicted",
-    "casesacquitted": "acquitted",
-    "casesinwhichtrialswerecompleted": "trials_completed",
-    "casespendingtrialatendoftheyear": "pending_court",
-    "convictionrate": "conviction_rate",
-    "pendencypercentage": "court_pendency",
+    "for_trial": 5,              # total cases for trial
+    "convicted": 15,             # cases convicted (col 13 + col 14)
+    "acquitted": 17,
+    "trials_completed": 18,      # col 15 + col 16 + col 17
+    "pending_court": 20,         # pending trial at the end of the year
+    "conviction_rate": 21,       # col 15 / col 18 * 100
+    "court_pendency": 22,        # col 20 / col 5 * 100
 }
-
-
-def letters(s):
-    return re.sub(r"[^a-z]+", "", str(s).lower())
 
 ALIAS = {"nct of delhi": "delhi", "orissa": "odisha", "pondicherry": "puducherry",
          "uttaranchal": "uttarakhand", "a n island": "andaman nicobar island",
@@ -91,51 +81,16 @@ def num(x):
         return None
 
 
-def is_total(name):
-    return "total" in str(name).lower()
-
-
-def resolve(fields, mapping, label):
-    """prefix -> real column name, asserting each one is found exactly once."""
-    out = {}
-    for prefix, short in mapping.items():
-        hits = [f for f in fields if letters(f).startswith(prefix)]
-        if len(hits) != 1:
-            print(f"FAIL - {label}: expected exactly one column starting "
-                  f"'{prefix}', found {len(hits)}: {hits[:3]}. The source has "
-                  "changed shape; the mapping has to be updated rather than "
-                  "silently producing blanks.")
-            return None
-        out[short] = hits[0]
-    return out
-
-
-def read_stage(block, mapping, label):
+def read_stage(block, mapping):
+    """({state key: {field: value, name}}, {field: all-India value})."""
     if not block:
         return None, None
-    rows = block["rows"]
-    fields = list(rows[0].keys())
-    cols = resolve(fields, mapping, label)
-    if cols is None:
-        return False, None
-    # Even the state column is named differently per table -- 'state_ut',
-    # 'state_ut__col_2_', 'state_ut___col__2__'. A hardcoded 'state_ut' read
-    # None for five of the eight tables, which looked exactly like a source
-    # with no total row.
-    namecol = [f for f in fields if letters(f).startswith("stateut")]
-    if len(namecol) != 1:
-        print(f"FAIL - {label}: expected one state column, found {namecol}")
-        return False, None
-    namecol = namecol[0]
-    real, total = {}, None
-    for r in rows:
-        name = r.get(namecol)
-        vals = {short: num(r.get(col)) for short, col in cols.items()}
-        if is_total(name):
-            if "all india" in str(name).lower():
-                total = vals
-            continue
-        real[key(name)] = dict(vals, name=(name or "").strip())
+    real = {}
+    for r in block["rows"]:
+        vals = {short: num(r["cols"].get(str(col))) for short, col in mapping.items()}
+        real[key(r["name"])] = dict(vals, name=r["name"])
+    total = {short: num(block["totals"]["india"].get(str(col)))
+             for short, col in mapping.items()}
     return real, total
 
 
@@ -179,15 +134,16 @@ def main():
 
     tracks = {}
     for name, t in raw["tracks"].items():
-        pol, pol_tot = read_stage(t["police"], POLICE_FIELDS, f"{name}/police")
-        crt, crt_tot = read_stage(t["court"], COURT_FIELDS, f"{name}/court")
-        if pol is False or crt is False:
-            return 1
+        pol, pol_tot = read_stage(t.get("police"), POLICE_FIELDS)
+        crt, crt_tot = read_stage(t.get("court"), COURT_FIELDS)
 
         # The double-count guard, per stage. Summing a column that contains
         # Total (States), Total (UTs) and Total (All India) returns 3x.
-        for stage, real, total, field in (("police", pol, pol_tot, "reported"),
-                                          ("court", crt, crt_tot, "for_trial")):
+        counts = [("police", pol, pol_tot, f) for f in POLICE_FIELDS
+                  if not f.endswith(("_rate", "_pendency"))]
+        counts += [("court", crt, crt_tot, f) for f in COURT_FIELDS
+                   if not f.endswith(("_rate", "_pendency"))]
+        for stage, real, total, field in counts:
             if real is None:
                 continue
             if total is None:
@@ -196,7 +152,7 @@ def main():
                 return 1
             parts = sum(v.get(field) or 0 for v in real.values())
             whole = total.get(field)
-            if whole is None or abs(parts - whole) > max(1.0, whole * 0.005):
+            if whole is None or parts != whole:
                 print(f"FAIL - {name}/{stage}: states sum to {parts:,.0f} on "
                       f"'{field}' but the source's own total says "
                       f"{(whole or 0):,.0f}.")
@@ -208,16 +164,16 @@ def main():
             c = (crt or {}).get(k, {})
             row = {"name": p.get("name") or c.get("name"),
                    "population_2011": pop.get(k)}
-            for f in POLICE_FIELDS.values():
+            for f in POLICE_FIELDS:
                 row[f] = p.get(f)
-            for f in COURT_FIELDS.values():
+            for f in COURT_FIELDS:
                 row[f] = c.get(f)
             states.append(row)
 
         national = {}
-        for f in POLICE_FIELDS.values():
+        for f in POLICE_FIELDS:
             national[f] = (pol_tot or {}).get(f)
-        for f in COURT_FIELDS.values():
+        for f in COURT_FIELDS:
             national[f] = (crt_tot or {}).get(f)
 
         tracks[name] = {
@@ -231,6 +187,8 @@ def main():
         "_source": raw["_source"],
         "_licence": raw["_licence"],
         "_fetched": raw["_fetched"],
+        "_year": raw["_year"],
+        "_documents": raw["_documents"],
         "_built_by": "scripts/build-crime-explorer-data.py",
         "_caveats": [
             "Registered crime measures reporting as much as it measures crime. "
@@ -248,9 +206,14 @@ def main():
             "Cases pending at the end of the year include cases carried over "
             "from previous years, so a state can charge-sheet everything it "
             "received and still show high pendency from an older backlog.",
-            "NCRB publishes state-wise court disposal for some categories and "
-            "not others. Where it does not, the court panels say so rather than "
-            "showing an empty chart.",
+            "The Bharatiya Nyaya Sanhita replaced the Indian Penal Code on 1 July "
+            "2024. NCRB reports cases under the two codes together as IPC/BNS, so "
+            "the general category here covers both.",
+            "In NCRB's table of police disposal of crime against senior citizens "
+            "(Table 6A.4), the total of cases for investigation is smaller than the "
+            "sum of its own parts in 13 states and union territories, by 140 cases "
+            "nationally. The rest of that table, including pendency, is built on the "
+            "printed total, so the printed total is used here.",
         ],
         "tracks": tracks,
     }

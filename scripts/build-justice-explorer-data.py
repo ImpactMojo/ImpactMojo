@@ -12,8 +12,10 @@ read from the Total row, the parts are summed separately, and the two are
 required to agree before anything is written.
 
 Population and SC/ST shares are Census 2011, the most recent enumerated count
-India has. Prison figures are a single-day census as on 31-12-2023, so a
-per-100,000 rate is 2023 prisoners over 2011 people, and the page says so.
+India has. Prison figures are a single-day census as on 31-12-2024, so a
+per-100,000 rate is 2024 prisoners over 2011 people, and the page says so.
+Court pendency is from the National Judicial Data Grid as on 9 March 2026, as
+given to the Lok Sabha; scripts/fetch-justice-data.py records every source.
 """
 import json
 import re
@@ -280,6 +282,10 @@ def main():
                 "number_of_inmates_eligible_for_pre__mature_release_under_section_436a___total"]),
             "s436a_released": a and num(a[
                 "number_of_inmates_released_under_section_436a_of_cr_p_c____total"]),
+            # Section 479 BNSS replaced 436A CrPC on 1 July 2024, so the 2024
+            # table counts the two together as well as 436A on its own.
+            "release_eligible": a and num(a.get("eligible_under_479_bnss_or_436a___total")),
+            "release_released": a and num(a.get("released_under_479_bnss_or_436a___total")),
             "district_court_pending": dc and num(dc["_total"]),
             "population_2011": pop.get(k),
             "sc_pct": (scst.get(k) or {}).get("sc_pct"),
@@ -312,6 +318,14 @@ def main():
             "number_of_inmates_eligible_for_pre__mature_release_under_section_436a___total"]),
         "s436a_released": num(s436_tot[
             "number_of_inmates_released_under_section_436a_of_cr_p_c____total"]),
+        "release_eligible": num(s436_tot.get("eligible_under_479_bnss_or_436a___total")),
+        "release_released": num(s436_tot.get("released_under_479_bnss_or_436a___total")),
+        # Undertrials in the states that gave a caste breakdown. A state that
+        # did not is in the national undertrial count and in no caste column,
+        # so shares are taken over this, the undertrials actually classified.
+        "caste_reported_undertrials": sum(
+            num(r["_total"]) or 0 for r in cst_rows
+            if num(r["scheduled_castes__sc_"]) is not None),
         "district_court_pending": num(dc_tot["_total"]),
         "high_court_pending": num(hc_tot["_total"]),
         "sc_pct": india_scst.get("sc_pct"),
@@ -331,20 +345,29 @@ def main():
         "_source": raw["_source"],
         "_licence": raw["_licence"],
         "_fetched": raw["_fetched"],
+        "_year": raw["_year"],
+        "_documents": raw["_documents"],
         "_built_by": "scripts/build-justice-explorer-data.py",
         "_caveats": [
-            "Prison figures are a single-day census as on 31 December 2023, not a "
-            "count of everyone held during the year. A person released in November "
-            "does not appear.",
+            "Prison figures are a single-day census as on 31 December 2024. They "
+            "do not count everyone held during the year: a person released in "
+            "November does not appear.",
+            "West Bengal sent NCRB no prison data for 2024, so NCRB reprinted its "
+            "2023 figures in every 2024 table, and they are in the national totals "
+            "here. West Bengal's own bars describe 31 December 2023.",
             "Population and SC/ST shares are Census 2011, the most recent enumerated "
             "count India has, since the 2021 census was not held. A rate per 100,000 "
-            "is therefore 2023 prisoners over people counted in 2011.",
+            "is therefore 2024 prisoners over people counted in 2011.",
             "'Undertrial' means a person in custody whose trial has not concluded. "
             "They have not been convicted of the offence they are held for.",
-            "Court pendency counts cases, not people, and one person can be party to "
-            "several. District and high court figures are as reported to Parliament "
-            "on the dates given in the source titles, not the same day as the prison "
-            "census.",
+            "Court pendency counts cases, and one person can be party to several. "
+            "District and high court figures are from the National Judicial Data "
+            "Grid as on 9 March 2026, as given to the Lok Sabha on 13 March 2026, "
+            "which is fourteen months after the prison census.",
+            "In that Lok Sabha table Meghalaya's civil and criminal district-court "
+            "figures (4,917 each) do not add to its printed total of 16,671. The "
+            "national columns add up only with the printed figures, so the total "
+            "is used.",
         ],
         "bands": [{"key": b, "label": lab} for b, lab in BANDS],
         "caste_excluded": sorted(rejected),

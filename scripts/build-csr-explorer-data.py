@@ -18,6 +18,19 @@ figure on the page:
 
 Output keeps them as a separate `unattributed` block so the page can show
 them rather than pretend they do not exist.
+
+Since November 2026 the CSR figures come from the ministry's reply to Lok
+Sabha Unstarred Question 161 (20 July 2026), which covers 2020-21 to 2024-25
+on data updated to 31 March 2026. It revises the data.gov.in release for the
+years both cover (2022-23 rises from 29,988 to 31,183 crore as late filings
+arrive), so the page shows the five years of the newer table and does not
+splice the two releases together. The data.gov.in series stay in the raw
+file, because the By the numbers card cites the 2022-23 column of that
+release.
+
+The income axis is per capita NSDP at current prices: the data.gov.in table
+for 2020-21 to 2022-23 and MoSPI's National Accounts API for 2023-24 and
+2024-25, which data.gov.in does not carry.
 """
 import json
 import re
@@ -36,7 +49,8 @@ PAGE = ROOT / "csr.html"
 SLOT = re.compile(
     r'(<script id="csr-data" type="application/json">)(.*?)(</script>)', re.S)
 
-YEARS = ["2018_19", "2019_20", "2020_21", "2021_22", "2022_23"]
+YEARS = ["2020_21", "2021_22", "2022_23", "2023_24", "2024_25"]
+NSDP_MOSPI_YEARS = {"2023-24": "2023_24", "2024-25": "2024_25"}
 
 # Rows in the CSR state table that are not places.
 NON_GEO = {
@@ -44,9 +58,11 @@ NON_GEO = {
     "pan india",
     "pan india other centralized funds",
     "nec not mentioned",
+    "other centralized funds",
 }
 
 ALIAS = {
+    "a n island": "andaman nicobar island",   # the census table's abbreviation
     "leh ladakh": "ladakh",
     "nct of delhi": "delhi",
     "orissa": "odisha",
@@ -134,10 +150,19 @@ def main():
         nsdp[key(r["state_ut"])] = {
             y: num(r.get("_" + y)) for y in YEARS if ("_" + y) in r
         }
+    # MoSPI adds the two years data.gov.in does not have. It never overwrites
+    # a year the data.gov.in table already gives.
+    for r in S["nsdp_mospi"]["rows"]:
+        y = NSDP_MOSPI_YEARS.get(r["year"])
+        if y is None:
+            continue
+        d = nsdp.setdefault(key(r["state"]), {})
+        if d.get(y) is None:
+            d[y] = num(r.get("per_capita_nsdp_current"))
 
     states, unattributed, total_row = [], [], None
-    for r in S["state"]["rows"]:
-        name = (r["state_ut"] or "").strip()
+    for r in S["ls_state"]["rows"]:
+        name = (r["state_ut"] or "").strip().rstrip("*").strip()
         vals = {y: num(r.get(f"csr_expenditure_{y}")) for y in YEARS}
         n = norm(name)
         if n == "total":
@@ -156,8 +181,8 @@ def main():
 
     sectors = []
     sector_total = None
-    for r in S["sector"]["rows"]:
-        name = (r["development_sector"] or "").strip()
+    for r in S["ls_sector"]["rows"]:
+        name = (r["development_sector"] or "").strip().rstrip("*").strip()
         vals = {y: num(r.get(f"csr_expenditure_{y}")) for y in YEARS}
         if norm(name) == "total":
             sector_total = vals
@@ -185,18 +210,37 @@ def main():
 
     joined = sum(1 for s in states if s["population_2011"])
     out = {
-        "_source": raw["_source"],
+        "_source": ("Ministry of Corporate Affairs, Corporate Data Management Cell, "
+                    "as printed in its reply to Lok Sabha Unstarred Question No. 161 "
+                    "(20 July 2026), data updated to 31 March 2026. Census 2011 "
+                    "population and 2020-21 to 2022-23 per capita NSDP from data.gov.in; "
+                    "2023-24 and 2024-25 per capita NSDP from MoSPI National Accounts"),
+        "_source_url": S["ls_state"]["url"],
         "_licence": raw["_licence"],
-        "_fetched": raw["_fetched"],
+        "_fetched": S["ls_state"]["retrieved"],
         "_built_by": "scripts/build-csr-explorer-data.py",
         "_caveats": [
             "CSR expenditure in rupees crore, financial years.",
-            "Population is Census 2011 -- the most recent enumerated count "
-            "India has, since the 2021 census was not held. Per-person figures "
+            "Population is Census 2011, the most recent enumerated count "
+            "India has, because the 2021 census was not held. Per-person figures "
             "are therefore CSR now over people counted then.",
-            "'PAN India', 'PAN India (Other Centralized Funds)' and 'NEC/Not "
-            "Mentioned' are CSR not attributable to any state. They are kept "
-            "separate, not distributed across states.",
+            "Jammu and Kashmir's 2011 population includes Ladakh, which became "
+            "a separate union territory in 2019 and has its own CSR row, so "
+            "Jammu and Kashmir's per-person figure is somewhat understated.",
+            "'PAN India', 'Other Centralized Funds' and 'NEC/Not Mentioned' "
+            "are CSR the companies did not assign to one state. They are kept "
+            "separate and are not spread across states.",
+            "In 2024-25 the unassigned share falls to about 4 per cent, from "
+            "between 23 and 44 per cent in each earlier year, and most states' "
+            "totals rise sharply. The ministry's table does not say why. Treat "
+            "a state's rise between 2023-24 and 2024-25 as partly a change in "
+            "how spending was reported.",
+            "The ministry revises earlier years as late filings arrive. These "
+            "are its figures as of 31 March 2026, so 2022-23 here is higher than "
+            "the 29,988 crore the data.gov.in release of the same year shows.",
+            "Per capita income for 2023-24 and 2024-25 is from MoSPI and covers "
+            "30 states and union territories. Assam, Haryana and Nagaland have "
+            "no figure there for those years, so they drop out of the scatter.",
         ],
         "years": [y.replace("_", "-") for y in YEARS],
         "year_keys": YEARS,
@@ -219,13 +263,13 @@ def main():
     if rc:
         return rc
 
-    t = total_row["2022_23"]
-    una = sum(u["csr"]["2022_23"] or 0 for u in unattributed)
+    t = total_row[YEARS[-1]]
+    una = sum(u["csr"][YEARS[-1]] or 0 for u in unattributed)
     print("PASS" if check else f"wrote {OUT.relative_to(ROOT)}")
     print(f"  {len(states)} states, {len(sectors)} sectors, "
           f"{len(unattributed)} unattributed rows")
     print(f"  {joined}/{len(states)} states have a population figure")
-    print(f"  2022-23 total {t:,.0f} Cr, of which unattributed "
+    print(f"  {YEARS[-1]} total {t:,.0f} Cr, of which unattributed "
           f"{una:,.0f} Cr ({100*una/t:.1f}%)")
     return 0
 
