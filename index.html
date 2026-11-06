@@ -1018,8 +1018,14 @@ document.addEventListener('click', function(e) {
             strip.querySelector('.im-cs-meta').textContent = done + '/' + total + ' modules \u00b7 ' + pct + '%';
         } else {
             var title = String(quizPath.primary[0]).replace(' (flagship)', '');
-            var dest = String(quizPath.primary[1]);
-            if (!/^\/(?!\/)/.test(dest)) return; // same-site paths only
+            // Link only to a path the quiz itself offers, never to a stored string.
+            var saved = String(quizPath.primary[1]), dest = null;
+            if (typeof TRACK_QUIZ_MAP === 'object') {
+                Object.keys(TRACK_QUIZ_MAP).forEach(function (t) {
+                    (TRACK_QUIZ_MAP[t].picks || []).forEach(function (pk) { if (pk[1] === saved) dest = pk[1]; });
+                });
+            }
+            if (!dest) return;
             strip.href = dest;
             strip.setAttribute('aria-label', 'Your path: start ' + title);
             strip.innerHTML =
