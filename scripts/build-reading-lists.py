@@ -280,7 +280,9 @@ def page(cid, c):
             body = f'<ol>{items}</ol>'
         else:
             body = '<p class="rl-none">This module assigns no readings.</p>'
-        mods.append(f'<section class="rl-mod" aria-labelledby="m{m["n"]}"><h2 id="m{m["n"]}">Module {m["n"]}. {esc(m["title"])}</h2>{body}</section>')
+        # Some titles in the data already start "Module 3: ..."; drop that so the heading does not say it twice
+        mtitle = re.sub(r'^Module\s+\d+\s*[:.]\s*', '', m['title'])
+        mods.append(f'<section class="rl-mod" aria-labelledby="m{m["n"]}"><h2 id="m{m["n"]}">Module {m["n"]}. {esc(mtitle)}</h2>{body}</section>')
     desc = (f'Every reading assigned in {title}, module by module, with a free legal copy '
             f'where one exists. {n_open} of {len(rs)} readings can be read free.')
     form = '' if not n_req else f'''
