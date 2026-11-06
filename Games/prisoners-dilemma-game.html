@@ -812,7 +812,7 @@ body.light-mode #storyIntro .back-link,body.light-mode #storyModal .back-link{co
   <div class="story-box">
     <p style="padding-left:24px"><strong>The classic scenario:</strong> Two suspects are arrested and held in separate cells. Each can either <strong style="color:var(--emerald)">stay silent (cooperate)</strong> with the other, or <strong style="color:var(--red)">betray (defect)</strong> and testify against them.</p>
     <p>If both stay silent, they each get a light sentence. If both betray, they each get a heavy sentence. But if one betrays while the other stays silent, the betrayer goes free and the silent one gets the harshest sentence of all.</p>
-    <p>The dilemma: <strong>betrayal is individually rational, but mutual cooperation makes everyone better off.</strong> In a one-shot game, rational players always defect. But when the game is repeated, something remarkable happens -- cooperation can emerge from pure self-interest.</p>
+    <p>The dilemma: <strong>betrayal is individually rational, but mutual cooperation makes everyone better off.</strong> In a one-shot game, rational players always defect. But when the game is repeated, cooperation can emerge from pure self-interest.</p>
     <p style="font-size:.85rem;color:var(--text-muted)">You will play <strong style="color:var(--text-dim)">10 rounds</strong> against AI opponents, each with a distinct strategy. Can you figure out who to trust?</p>
   </div>
 
@@ -974,8 +974,8 @@ body.light-mode #storyIntro .back-link,body.light-mode #storyModal .back-link{co
   <div class="insights-box">
     <h3>What Did We Learn?</h3>
     <p><strong>The Prisoners' Dilemma</strong> shows why cooperation is hard. Defection is always individually tempting, yet mutual cooperation yields better outcomes for everyone.</p>
-    <p>In 1984, political scientist <strong>Robert Axelrod</strong> ran a famous computer tournament where strategies competed in a repeated Prisoners' Dilemma. The winner? <strong>Tit-for-Tat</strong> -- a simple strategy that cooperates first and then mirrors the opponent's last move. It succeeded because it is <em>nice</em> (never defects first), <em>retaliatory</em> (punishes defection immediately), <em>forgiving</em> (returns to cooperation), and <em>clear</em> (easy for opponents to understand).</p>
-    <p>The deeper lesson: in repeated interactions -- which is how most real-world relationships work -- <strong>"nice" strategies tend to win</strong>. Building a reputation for cooperation, while being willing to punish betrayal, creates the conditions for trust to emerge. This is why institutions, contracts, and social norms exist. They transform one-shot dilemmas into repeated games where cooperation becomes the rational choice.</p>
+    <p>In 1980, political scientist <strong>Robert Axelrod</strong> ran two computer tournaments in which strategies competed in a repeated Prisoners' Dilemma, and reported them in <em>The Evolution of Cooperation</em> (1984). Both were won by <strong>Tit-for-Tat</strong>, a simple strategy that cooperates first and then mirrors the opponent's last move. It succeeded because it is <em>nice</em> (never defects first), <em>retaliatory</em> (punishes defection immediately), <em>forgiving</em> (returns to cooperation), and <em>clear</em> (easy for opponents to understand).</p>
+    <p>The deeper lesson: in repeated interactions, which is how most real-world relationships work, <strong>"nice" strategies tend to win</strong>. Building a reputation for cooperation, while being willing to punish betrayal, creates the conditions for trust to emerge. This is why institutions, contracts, and social norms exist. They transform one-shot dilemmas into repeated games where cooperation becomes the rational choice.</p>
     <p id="personalInsight"></p>
   </div>
 
@@ -993,7 +993,7 @@ body.light-mode #storyIntro .back-link,body.light-mode #storyModal .back-link{co
 
 // ── Agent data (embedded from game-agents.json for resilience) ──
 var AGENTS = [
-  {id:'pd-tit-for-tat',name:'Sunita',role:'Microfinance Group Leader',location:'Jaipur, Rajasthan',archetype:'tit-for-tat',description:'Cooperates first, then mirrors your last move. Forgiving -- returns to cooperation after one round of mutual cooperation.'},
+  {id:'pd-tit-for-tat',name:'Sunita',role:'Microfinance Group Leader',location:'Jaipur, Rajasthan',archetype:'tit-for-tat',description:'Cooperates first, then mirrors your last move. Forgiving: returns to cooperation after one round of mutual cooperation.'},
   {id:'pd-grudger',name:'Vikram',role:'Government Auditor',location:'New Delhi',archetype:'grudger',description:'Cooperates until betrayed once, then defects permanently. Long memory, zero tolerance.'},
   {id:'pd-pavlov',name:'Lakshmi',role:'Agricultural Cooperative Manager',location:'Thanjavur, Tamil Nadu',archetype:'pavlov',description:'Win-stay, lose-shift. Repeats last action if payoff was good, switches if it was bad.'},
   {id:'pd-random',name:'Deepak',role:'Journalist covering Development',location:'Mumbai, Maharashtra',archetype:'unpredictable',description:'Makes seemingly random choices with a slight bias toward defection. Hard to read, hard to exploit.'}
@@ -1716,7 +1716,7 @@ function checkInsight(){
   tip.classList.remove('visible');
   var a = AGENTS[currentOpponentIdx];
   if(a.id === 'pd-tit-for-tat' && roundHistory.length >= 3 && roundHistory.length < 6){
-    tip.textContent = 'Notice: Sunita copies your last move. What strategy would maximize your score against her? (Hint: if you always cooperate, she always cooperates back -- giving you both 3 points per round.)';
+    tip.textContent = 'Notice: Sunita copies your last move. What strategy would maximize your score against her? (Hint: if you always cooperate, she always cooperates back, giving you both 3 points per round.)';
     tip.classList.add('visible');
   } else if(a.id === 'pd-grudger' && roundHistory.length >= 2){
     var betrayed = roundHistory.some(function(r){ return r.playerAction === 'defect'; });
@@ -1726,7 +1726,7 @@ function checkInsight(){
       tip.classList.add('visible');
     }
   } else if(a.id === 'pd-pavlov' && roundHistory.length >= 3){
-    tip.textContent = 'Lakshmi uses a "win-stay, lose-shift" strategy. She repeats whatever worked and changes what did not. Mutual cooperation is a stable outcome with her -- both players "win" and stay.';
+    tip.textContent = 'Lakshmi uses a "win-stay, lose-shift" strategy. She repeats whatever worked and changes what did not. Mutual cooperation is a stable outcome with her: both players "win" and stay.';
     tip.classList.add('visible');
   } else if(a.id === 'pd-random' && roundHistory.length >= 4){
     tip.textContent = 'Deepak is hard to predict. Against a random opponent, defecting more often is safer since you cannot rely on reciprocity. But notice the cost: mutual defection yields only 1 point each.';
@@ -2013,7 +2013,7 @@ function showEndScreen(){
     var style = pct >= 70 ? 'cooperative' : (pct >= 40 ? 'balanced' : 'competitive');
     insight.innerHTML = '<strong>Your cooperation rate: ' + pct + '%.</strong> ' +
       (style === 'cooperative'
-        ? 'You played a cooperative strategy overall. In Axelrod\'s tournament, this approach -- when paired with retaliation against defectors -- consistently outperforms aggressive strategies in the long run.'
+        ? 'You played a cooperative strategy overall. In Axelrod\'s tournament, this approach, when paired with retaliation against defectors, consistently outperforms aggressive strategies in the long run.'
         : style === 'balanced'
           ? 'You played a balanced strategy, mixing cooperation and defection. This can work well against unpredictable opponents, but against tit-for-tat players, consistent cooperation yields higher total payoffs.'
           : 'You leaned toward defection. While this can exploit cooperative opponents in the short term, it tends to trigger retaliation and leads to lower scores in repeated games. Axelrod\'s key finding: "nice" strategies that never defect first outperform aggressive ones.')

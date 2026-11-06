@@ -1554,7 +1554,7 @@ body { padding-top: 56px; }
   </div>
 
   <div class="story-narrative">
-    In the villages of Maharashtra, a single telephone connects one family. But when every family has one, the value multiplies. <strong>Networks grow not by addition -- but by multiplication.</strong> The first user is lonely. The millionth is powerful.
+    In the villages of Maharashtra, a single telephone connects one family. But when every family has one, the value multiplies. <strong>Networks grow by multiplication.</strong> The first user is lonely. The millionth is powerful.
     <div class="story-source">Inspired by Warli art of the Adivasi communities of Western India</div>
   </div>
 
@@ -2205,7 +2205,7 @@ body { padding-top: 56px; }
         // Override with personality rules as backup
         if (a.id === 'ne-early-adopter' && state.round <= 2) {
           action = 'join';
-          if (!reasoning) reasoning = 'Tanvi always joins early -- she loves being first!';
+          if (!reasoning) reasoning = 'Tanvi always joins early. She loves being first!';
         }
         if (a.id === 'ne-skeptic' && networkSize < 0.4) {
           action = 'wait';
@@ -2298,7 +2298,7 @@ body { padding-top: 56px; }
     // Tanvi: joins rounds 1-2
     if (!state.agentJoined['ne-early-adopter']) {
       if (state.round <= 2) {
-        decisions['ne-early-adopter'] = { action: 'join', reasoning: 'Tanvi always joins early -- she loves being first!' };
+        decisions['ne-early-adopter'] = { action: 'join', reasoning: 'Tanvi always joins early. She loves being first!' };
       } else {
         decisions['ne-early-adopter'] = { action: Math.random() < 0.7 ? 'join' : 'wait', reasoning: 'Tanvi considers the momentum.' };
       }
@@ -2378,7 +2378,7 @@ body { padding-top: 56px; }
     } else if (joined && netProfit <= 0) {
       outcomeMsg = 'The network did not grow enough to cover your joining cost. The chicken-and-egg problem is real!';
     } else {
-      outcomeMsg = 'You never joined the platform. ' + (state.memberCount >= CRITICAL_MASS ? 'It reached critical mass without you -- you missed out on network value!' : 'It never reached critical mass, so waiting was actually the safe choice.');
+      outcomeMsg = 'You never joined the platform. ' + (state.memberCount >= CRITICAL_MASS ? 'It reached critical mass without you, and you missed out on network value!' : 'It never reached critical mass, so waiting was actually the safe choice.');
     }
 
     // Build end screen
@@ -2505,7 +2505,7 @@ body { padding-top: 56px; }
         + '<rect x="688" y="180" width="24" height="16" fill="none" stroke="#F8FAFC" stroke-width="0.8" opacity="0.4"/>'
         // Ground
         + '<line x1="30" y1="360" x2="770" y2="360" stroke="#F8FAFC" stroke-width="0.5" stroke-dasharray="6,4" opacity="0.2"/>'
-        + '<text x="400" y="385" text-anchor="middle" fill="#F8FAFC" font-size="11" font-family="sans-serif" opacity="0.5">The network thrives -- every connection multiplies value</text>'
+        + '<text x="400" y="385" text-anchor="middle" fill="#F8FAFC" font-size="11" font-family="sans-serif" opacity="0.5">The network thrives: every connection multiplies value</text>'
         + '</svg></div>';
     } else if (state.memberCount < CRITICAL_MASS) {
       // FAILURE: Network never reached critical mass - scattered, disconnected figures
@@ -2564,7 +2564,7 @@ body { padding-top: 56px; }
         + '<rect x="380" y="280" width="40" height="25" fill="none" stroke="#F8FAFC" stroke-width="0.8" opacity="0.25"/>'
         // Ground
         + '<line x1="30" y1="340" x2="770" y2="340" stroke="#F8FAFC" stroke-width="0.5" stroke-dasharray="6,4" opacity="0.2"/>'
-        + '<text x="400" y="375" text-anchor="middle" fill="#F8FAFC" font-size="11" font-family="sans-serif" opacity="0.5">The network never reached critical mass -- connections faded</text>'
+        + '<text x="400" y="375" text-anchor="middle" fill="#F8FAFC" font-size="11" font-family="sans-serif" opacity="0.5">The network never reached critical mass, and connections faded</text>'
         + '</svg></div>';
     } else {
       // MIXED: Network grew but player missed out or had marginal returns
@@ -2660,20 +2660,20 @@ body { padding-top: 56px; }
     // Agent summary
     html += '<div class="end-section fade-up"><h3>Who Joined When?</h3><ul>';
     if (state.playerJoined) {
-      html += '<li><strong>You</strong> -- Joined in Round ' + state.playerJoinedRound + '</li>';
+      html += '<li><strong>You</strong>: joined in Round ' + state.playerJoinedRound + '</li>';
     } else {
-      html += '<li><strong>You</strong> -- Never joined</li>';
+      html += '<li><strong>You</strong>: never joined</li>';
     }
     AI_AGENTS.forEach(function(a) {
       if (state.agentJoined[a.id]) {
-        html += '<li><strong>' + a.name + '</strong> (' + a.role + ') -- Joined in Round ' + state.agentJoinedRound[a.id] + '</li>';
+        html += '<li><strong>' + a.name + '</strong> (' + a.role + '): joined in Round ' + state.agentJoinedRound[a.id] + '</li>';
       } else {
-        html += '<li><strong>' + a.name + '</strong> (' + a.role + ') -- Never joined</li>';
+        html += '<li><strong>' + a.name + '</strong> (' + a.role + '): never joined</li>';
       }
     });
     NPCS.forEach(function(n) {
       if (n.joined) {
-        html += '<li>' + n.name + ' -- Joined in Round ' + n.joinedRound + ' (threshold: ' + Math.round(n.threshold * 100) + '%)</li>';
+        html += '<li>' + n.name + ': joined in Round ' + n.joinedRound + ' (threshold: ' + Math.round(n.threshold * 100) + '%)</li>';
       }
     });
     html += '</ul></div>';
@@ -2682,11 +2682,11 @@ body { padding-top: 56px; }
     html += '<div class="end-section fade-up">'
       + '<h3>Understanding Network Effects</h3>'
       + '<p><strong>Metcalfe\'s Law:</strong> The value of a network is proportional to the square of its users (V ~ n<sup>2</sup>). '
-      + 'This means going from 5 to 10 users doesn\'t just double the value -- it quadruples it!</p>'
+      + 'This means going from 5 to 10 users quadruples the value, because the number of possible connections grows with the square of the users.</p>'
       + '<p style="margin-top:0.75rem"><strong>Critical Mass:</strong> Below ' + CRITICAL_MASS + ' members, each person\'s share of the value was less than the 50-token cost. '
-      + 'Once the network hit critical mass, value exceeded cost, triggering a cascade of adoption -- the famous S-curve.</p>'
+      + 'Once the network hit critical mass, value exceeded cost, triggering a cascade of adoption: the familiar S-curve.</p>'
       + '<p style="margin-top:0.75rem"><strong>The Chicken-and-Egg Problem:</strong> Nobody wants to join an empty platform, but the platform needs users to become valuable. '
-      + 'This is why early adopters like Tanvi and influencers like Divya matter so much -- they take the risk that creates value for everyone.</p>'
+      + 'This is why early adopters like Tanvi and influencers like Divya matter so much: they take the risk that creates value for everyone.</p>'
       + '</div>';
 
     html += '<div class="end-section fade-up">'
@@ -2695,9 +2695,9 @@ body { padding-top: 56px; }
       + '<li><strong>UPI (Unified Payments Interface):</strong> Launched in 2016 with few users. Once banks, apps (PhonePe, Google Pay), and merchants adopted it, the network exploded to 300M+ users. Every new user made UPI more valuable for everyone.</li>'
       + '<li><strong>Aadhaar:</strong> India\'s biometric ID reached critical mass when government services and banks began requiring it. Now 1.3B enrollments create a platform for direct benefit transfers, eKYC, and digital identity.</li>'
       + '<li><strong>WhatsApp in India:</strong> Early adopters convinced friends to switch from SMS. Once a contact group reached critical mass, holdouts had to join or be left out of conversations.</li>'
-      + '<li><strong>JioPhone / Reliance Jio:</strong> Cheap data created a network effect -- more users meant more content, more apps, and more reasons for others to get online.</li>'
+      + '<li><strong>JioPhone / Reliance Jio:</strong> Cheap data created a network effect: more users meant more content, more apps, and more reasons for others to get online.</li>'
       + '</ul>'
-      + '<p style="margin-top:0.75rem">The pattern is the same: <strong>slow start &rarr; critical mass &rarr; explosive growth</strong>. Platforms that cross the tipping point win; those that don\'t, fail. This is why platforms often subsidize early users (free data, cashbacks) -- they are buying their way to critical mass.</p>'
+      + '<p style="margin-top:0.75rem">The pattern is the same: <strong>slow start &rarr; critical mass &rarr; explosive growth</strong>. Platforms that cross the tipping point win; those that don\'t, fail. This is why platforms often subsidize early users (free data, cashbacks): they are buying their way to critical mass.</p>'
       + '</div>';
 
     html += '<div class="play-again-wrap fade-up">'
