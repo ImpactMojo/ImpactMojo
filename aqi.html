@@ -7,7 +7,7 @@
 <title>What the air monitors measure: India's CPCB station network | ImpactMojo</title>
 <!-- share:start -->
 <link rel="canonical" href="https://www.impactmojo.in/aqi.html">
-<meta name="description" content="Station-by-station air quality readings from India's Central Pollution Control Board network, and what the network itself covers: 502 stations across 265 cities, and the states with almost none.">
+<meta name="description" content="Where India measures its air and where it does not: the Central Pollution Control Board's 502 continuous monitors across 265 cities, stations per 10 million people by state, and the states with none, with one hour of readings as an example.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ImpactMojo">
 <meta property="og:title" content="What the air monitors measure">
@@ -113,16 +113,38 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
   <div class="eyebrow">Data explorer</div>
   <h1>What the air monitors measure</h1>
   <p class="lede">India's Central Pollution Control Board runs a network of continuous monitoring
-  stations that publish a reading every hour. This shows what they were reading at one particular
-  hour, and, just as telling, where there is nobody reading anything at all.</p>
+  stations that publish a reading every hour. Some states have many, some have a handful and some
+  have none, and a place with no station never appears in a list of the worst air. This page maps
+  where the network measures and where it does not, and shows one hour of its readings as an
+  example of what it reports.</p>
   <div class="stamp" id="stamp"></div>
 </header>
 
 <div class="tiles" id="tiles"></div>
 
 <section class="panel">
-  <h2>What the stations were reading</h2>
-  <p class="sub">Concentration averaged across a city's stations, for the hour in the badge above.
+  <h2>Where nobody is measuring</h2>
+  <p class="sub">A state with no station has no measurement of its air, so it will never appear in
+  a ranking of the worst places to breathe, however bad its air is.</p>
+  <div class="ctrls">
+    <div class="cgrp">
+      <span class="clab" id="cl">Measure</span>
+      <div class="chips" role="group" aria-labelledby="cl" id="coverage">
+        <button class="chip" data-m="per" aria-pressed="true">Stations per 10 million people</button>
+        <button class="chip" data-m="abs" aria-pressed="false">Stations in total</button>
+      </div>
+    </div>
+  </div>
+  <div class="chartbox"><svg id="cov" role="img" aria-labelledby="covTitle"><title id="covTitle">Monitoring stations by state</title></svg><div class="tip" id="covTip"></div></div>
+  <p class="notes" id="covNote"></p>
+  <details class="tbl"><summary>Show as a table</summary><div class="scroll" tabindex="0" role="region" aria-label="Where nobody is measuring, scrollable table"><table id="covTable"></table></div></details>
+</section>
+
+<section class="panel">
+  <h2>One hour of readings, as an example</h2>
+  <p class="sub">These are the readings for a single hour, the one in the badge above, kept to show
+  what the network reports. They describe that hour only and say nothing about the air today.
+  Each figure is the concentration averaged across a city's stations.
   These figures are concentrations and not the composite AQI number. The AQI is derived from the worst
   pollutant at a station over a longer window, so it is not something this snapshot can give you.</p>
   <div class="ctrls">
@@ -143,26 +165,8 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
   <details class="tbl"><summary>Show every station as a table</summary>
     <label class="clab" for="stSearch" style="display:block;margin-top:10px">Filter by station, city or state</label>
     <input class="search" id="stSearch" type="search" placeholder="e.g. Patna, Rajasthan, Anand Vihar" autocomplete="off">
-    <div class="scroll" tabindex="0" role="region" aria-label="What the stations were reading, scrollable table"><table id="stTable"></table></div>
+    <div class="scroll" tabindex="0" role="region" aria-label="One hour of readings, scrollable table"><table id="stTable"></table></div>
   </details>
-</section>
-
-<section class="panel">
-  <h2>Where nobody is measuring</h2>
-  <p class="sub">A state with no station is not a state with clean air. It is a state with no
-  measurement, and it will never appear in a ranking of the worst places to breathe.</p>
-  <div class="ctrls">
-    <div class="cgrp">
-      <span class="clab" id="cl">Measure</span>
-      <div class="chips" role="group" aria-labelledby="cl" id="coverage">
-        <button class="chip" data-m="per" aria-pressed="true">Stations per 10 million people</button>
-        <button class="chip" data-m="abs" aria-pressed="false">Stations in total</button>
-      </div>
-    </div>
-  </div>
-  <div class="chartbox"><svg id="cov" role="img" aria-labelledby="covTitle"><title id="covTitle">Monitoring stations by state</title></svg><div class="tip" id="covTip"></div></div>
-  <p class="notes" id="covNote"></p>
-  <details class="tbl"><summary>Show as a table</summary><div class="scroll" tabindex="0" role="region" aria-label="Where nobody is measuring, scrollable table"><table id="covTable"></table></div></details>
 </section>
 
 <section class="panel">
@@ -284,7 +288,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
       return '<div class="tile"><div class="v">'+esc(x[0])+'</div><div class="l">'+esc(x[1])+'</div></div>';
     }).join('');
     document.getElementById('stamp').textContent =
-      'Reading taken ' + D.reading_time + ' IST · snapshot refreshed ' + D._fetched;
+      'Example hour: readings taken ' + D.reading_time + ' IST';
   }
 
   function cityChart(){
@@ -348,9 +352,9 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
   function notes(){
     var li=D._caveats.map(function(c){ return '<li>'+esc(c)+'</li>'; });
     li.push('<li>The readings on this page were taken at '+esc(D.reading_time)+
-      '. They do not update on their own; the snapshot is refreshed by re-running '+
-      '<code>scripts/fetch-aqi-data.py</code>. For a live reading, go to the CPCB'+
-      ' bulletin itself.</li>');
+      ' IST and do not update. They are here as an example of what the network reports. '+
+      'For current air quality, use the CPCB\u2019s own daily AQI bulletin. The station counts '+
+      'change only when the CPCB adds or closes a station.</li>');
     document.getElementById('caveats').innerHTML=li.join('');
     document.getElementById('src').innerHTML =
       'Source: '+esc(D._source)+'. '+esc(D._licence)+'. Snapshot taken '+esc(D._fetched)+'.';
