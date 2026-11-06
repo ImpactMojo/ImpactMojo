@@ -84,10 +84,7 @@ After creating the content file, update these locations:
 
 ## Step 4 — Backup
 
-- Copy current `index.html` to `Backups/` before making changes:
-  ```bash
-  cp index.html Backups/index-backup-$(date +%Y%m%d-%H%M).html
-  ```
+- Git history is the backup. Commit before a large edit; never copy pages into `Backups/` (deleted 6 November 2026, now gitignored).
 
 ## Step 5 — Verify
 

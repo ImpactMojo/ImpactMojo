@@ -160,16 +160,11 @@ Structure of a `CHANGELOG.md` entry:
 
 ## 4. Backup `index.html`
 
-```bash
-cp index.html "Backups/index-backup-$(date +%Y%m%d-%H%M)-<short-reason>.html"
-```
-
-`index.html` is ~620KB — a careless edit can silently break hundreds of
-hand-written links. Always backup before major edits.
-
-Clean up superseded backups in `Backups/` periodically (keep last ~10 named
-backups). Never delete without reading at least one line to confirm the
-file you're deleting is really an older copy of the current `index.html`.
+`index.html` is ~620KB, so a careless edit can silently break hundreds of
+hand-written links. Git history is the backup: commit before a major edit and
+read `git diff` after it. Do not copy pages into `Backups/`. That folder held
+118 dated copies until 6 November 2026; it was deleted because CodeQL kept
+raising alerts on their old scripts, and it is now in `.gitignore`.
 
 ---
 

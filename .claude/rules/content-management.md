@@ -2,7 +2,7 @@
 
 When adding or modifying content:
 
-1. **Backup first**: `cp index.html Backups/index-backup-$(date +%Y%m%d-%H%M).html`
+1. **Backup**: git history is the backup. Commit before a large edit; do not copy pages into `Backups/` (deleted 6 November 2026, now gitignored)
 2. **Update content counts** in ALL locations — grep to find them:
    ```bash
    grep -rn "16 Games\|16 games" index.html catalog.html docs/
