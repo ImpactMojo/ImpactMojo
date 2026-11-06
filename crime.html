@@ -208,6 +208,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
 (function(){
   'use strict';
   var D = JSON.parse(document.getElementById('crime-data').textContent);
+var YEAR = parseInt(D._year, 10);  /* a number, so it is safe to put into markup */
   if(!D || !D.tracks){ return; }
 
   var ORDER=['ipc','women','sc','st','cyber','senior'];
@@ -327,7 +328,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
   function tiles(){
     var n=T().national;
     var t=[
-      [fmt(n.reported), 'cases registered in '+D._year],
+      [fmt(n.reported), 'cases registered in '+YEAR],
       [fmt(n.chargesheeting_rate,1)+'%', 'reached a chargesheet'],
       [T().has_court ? fmt(n.conviction_rate,1)+'%' : '—',
        T().has_court ? 'of completed trials ended in conviction' : 'no state-wise court data published'],

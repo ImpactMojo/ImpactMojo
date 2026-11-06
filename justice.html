@@ -209,6 +209,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
 (function(){
   'use strict';
   var D = JSON.parse(document.getElementById('justice-data').textContent);
+var YEAR = parseInt(D._year, 10);  /* a number, so it is safe to put into markup */
   if(!D || !D.states){ return; }
   var N = D.national, S = D.states;
 
@@ -472,7 +473,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
 
   function tiles(){
     var t=[
-      [fmt(N.inmates)+'', 'people in prison, 31 December '+D._year],
+      [fmt(N.inmates)+'', 'people in prison, 31 December '+YEAR],
       [fmt(pct(N.undertrials,N.inmates),1)+'%', 'of them have not been convicted'],
       [fmt(N.occupancy,1)+'%', 'of the space the prisons were built for'],
       [fmt(N.district_court_pending/1e6,1)+'M', 'cases pending in the district courts']
@@ -501,8 +502,8 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
       ? 'The dashed line is 100%, the number of places the prisons were built for. '+
         '<b>'+over+' of '+rows.length+'</b> states and union territories are above it. '+
         'Nationally, prisons hold <b>'+fmt(N.occupancy,1)+'%</b> of their sanctioned capacity.'
-      : 'Prisoners per 100,000 residents. The prison count is from 31 December '+D._year+' and the '+
-        'population is Census 2011, so this is a '+D._year+' numerator over a 2011 denominator.';
+      : 'Prisoners per 100,000 residents. The prison count is from 31 December '+YEAR+' and the '+
+        'population is Census 2011, so this is a '+YEAR+' numerator over a 2011 denominator.';
   }
 
   function utChart(){
@@ -613,7 +614,7 @@ details.tbl summary{cursor:pointer;font-size:.85rem;color:var(--acc);font-weight
     bars2({ svg:'s436', tip:'s436Tip', rows:rows, legend:'s436Legend', table:'s436Table',
             aLabel:'Found eligible', bLabel:'Actually released', cols:['State / UT'] });
     document.getElementById('s436Note').innerHTML =
-      'Across all of India in '+D._year+', <b>'+fmt(N.release_eligible)+'</b> undertrials were '+
+      'Across all of India in '+YEAR+', <b>'+fmt(N.release_eligible)+'</b> undertrials were '+
       'recorded as eligible under either section and <b>'+fmt(N.release_released)+'</b> were '+
       'released, against '+fmt(N.undertrials)+' undertrials held on 31 December. Under Section 436A '+
       'alone the figures are '+fmt(N.s436a_eligible)+' and '+fmt(N.s436a_released)+'. '+
