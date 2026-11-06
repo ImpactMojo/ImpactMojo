@@ -188,7 +188,8 @@ def undertrials_caste():
     st_u = 100 * sum(s["caste"]["st"] for s in used) / ut
     sc_p = sum(s["population_2011"] * s["sc_pct"] for s in used) / pop
     st_p = sum(s["population_2011"] * s["st_pct"] for s in used) / pop
-    want = ["Maharashtra", "Andhra Pradesh", "Telangana", "Ladakh"]
+    want = ["Andhra Pradesh", "Arunachal Pradesh", "Delhi", "Himachal Pradesh", "Karnataka",
+            "Ladakh", "Maharashtra", "Telangana", "Uttarakhand"]
     if sorted(left) != sorted(want):
         fail(f"undertrials card: the states left out changed to {sorted(left)}; check why before publishing")
 
@@ -208,7 +209,7 @@ def undertrials_caste():
         id="undertrials-caste",
         title="Undertrial prisoners by caste, against the population",
         tags=["undertrial prisoners", "NCRB", "prison statistics", "Scheduled Castes", "Scheduled Tribes", "criminal justice"],
-        topic="Undertrial prisoners, 31 December 2023",
+        topic="Undertrial prisoners, 31 December 2024",
         headline=(f"Scheduled Castes and Tribes are {pct(sc_p + st_p)} of the population "
                   f"and {pct(sc_u + st_u)} of undertrial prisoners."),
         sub=(f"Scheduled Castes are {pct(sc_p)} of the population and {pct(sc_u)} of undertrials. "
@@ -222,12 +223,12 @@ def undertrials_caste():
                    highlight=[hi["state"], lo["state"]],
                    axis=["Most over-represented", "Least"], prefix="", suffix="×", decimals=1),
         note=(f"An undertrial has not been convicted of the offence they are held for. Prisoners are counted "
-              f"on 31 December 2023 and people in the 2011 census. {', '.join(sorted(left)[:-1])} and {sorted(left)[-1]} are left out "
+              f"on 31 December 2024 and people in the 2011 census. {', '.join(sorted(left)[:-1])} and {sorted(left)[-1]} are left out "
               f"(see the working)."),
         sources=[
-            dict(name="National Crime Records Bureau, Prison Statistics India 2023",
-                 detail="State/UT-wise caste of undertrial prisoners as on 31-12-2023, Open Government Data Platform resource 6e069039-64bd-43da-8f5a-15cb697caf1b",
-                 url="https://www.data.gov.in/"),
+            dict(name="National Crime Records Bureau, Prison Statistics India 2024",
+                 detail="Table 2.11D, Caste of Undertrial Prisoners as on 31st December, 2024",
+                 url="https://www.ncrb.gov.in/uploads/files/PSI-2024ason26022026.pdf"),
             dict(name="Census of India 2011, Scheduled Caste population by state",
                  detail="Open Government Data Platform resource c1c221ef-324a-4715-bc02-58172107c162",
                  url="https://www.data.gov.in/"),
@@ -241,7 +242,7 @@ def undertrials_caste():
             "A state's share is its Scheduled Caste and Scheduled Tribe undertrials divided by all its undertrials whose caste the prison recorded.",
             "The population share is the state's Scheduled Caste and Scheduled Tribe population in the 2011 census over its total population. The 2021 census was not held, so 2011 is the latest count.",
             "The national figures pool prisoners and people across the same states, so both sides cover the same places.",
-            "Maharashtra reported no caste breakdown for its undertrials. Andhra Pradesh and Telangana are left out because the 2011 count covers the undivided state, and Ladakh because it was not a separate unit in 2011.",
+            "Arunachal Pradesh, Delhi, Himachal Pradesh, Karnataka, Maharashtra and Uttarakhand reported no caste breakdown for their undertrials in 2024. West Bengal sent no 2024 data, so NCRB reprinted its 2023 figures, which are used here. Andhra Pradesh and Telangana are left out because the 2011 count covers the undivided state, and Ladakh because it was not a separate unit in 2011.",
             "Scheduled Tribe population is taken from the Ministry of Tribal Affairs table. The ST column of the combined census table on the same platform is scrambled across rows; the Justice Explorer explains how that was found.",
             f"The chart leaves out states with fewer than {MIN:,} undertrials whose caste was recorded, where a few dozen people move the ratio a long way. The table shows every state.",
             "Over-representation among undertrials can come from arrest, from charge, or from who can raise bail. These figures do not say which."],
