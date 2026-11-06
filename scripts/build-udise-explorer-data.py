@@ -80,7 +80,7 @@ def rows_of(text, title, ncols, names):
         i += 1
         if re.match(r"\s*\(1\)", l) or not l.strip():
             continue
-        m = re.match(r"\s*([A-Za-z&.,' ()-]*?)\s*((?:-?\d[\d.]*\s*)+)$", l)
+        m = re.match(r"\s*([A-Za-z&.,' ()-]*?)\s*(-?\d[\d.]*(?:\s+-?\d[\d.]*)*)\s*$", l)
         if not m:
             pending = (pending + " " + l.strip()).strip()
             continue
