@@ -224,7 +224,11 @@ def esc(s):
 def process(path, text):
     head_end = text.lower().find("</head>")
     if head_end < 0:
-        return None, None
+        # Compiled bundles (the older BookSummaries *-interactive pages and two
+        # companions) have no </head>, so there is no head to rebuild. Their
+        # canonical and og:url were written by hand with the repository's
+        # capitals, which Netlify answers with a 301. Only the case is fixed.
+        return fix_headless(text), None
     head, rest = text[:head_end], text[head_end:]
     found = {}
     def strip(m):
@@ -338,6 +342,17 @@ def fix_ld(text):
         return m.group(1) + SITE_URL.sub(url, m.group(2)) + m.group(3)
 
     return LDJSON.sub(block, text)
+
+
+def fix_headless(text):
+    """Lowercase the canonical and og:url of a page that has no </head>."""
+    def tag(m):
+        a = attrs(m.group(0))
+        if managed(a) not in ("canonical", "og:url"):
+            return m.group(0)
+        return SITE_URL.sub(lambda u: u.group(0) if not u.group(1).endswith(".html") or not (ROOT / u.group(1).lstrip("/")).exists()
+                            else canonical(u.group(1).lstrip("/")) + (u.group(2) or ""), m.group(0))
+    return fix_ld(TAG.sub(tag, text))
 
 
 def apply(path, text):

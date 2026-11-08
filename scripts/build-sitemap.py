@@ -76,6 +76,24 @@ def include(path):
     return True
 
 
+def canonical_elsewhere(path):
+    """True when the page declares another page as its canonical.
+
+    The older BookSummaries *-interactive pages do, deliberately: they point at
+    the *-companion page that replaced them. A sitemap lists canonical
+    addresses only, so listing the alias is a conflicting signal (16 of 1,044
+    rows on 2026-11-06 declared a canonical that was not themselves)."""
+    import re
+    try:
+        head = (ROOT / path).read_text(encoding="utf-8", errors="ignore")[:6000]
+    except OSError:
+        return False
+    m = re.search(r'<link[^>]*rel=["\']canonical["\'][^>]*href=["\']([^"\']+)', head)
+    if not m or not m.group(1).startswith(SITE):
+        return False
+    return m.group(1).rstrip("/").lower() != to_url(path).rstrip("/").lower()
+
+
 def to_url(path):
     """The address the live site answers 200 for. Netlify lowercases every
     path, so /Labs/x.html is a 301 to /labs/x.html; a sitemap row that
@@ -94,7 +112,7 @@ def main():
     dates = last_commit_dates()
     urls = []
     for p in tracked_html():
-        if include(p):
+        if include(p) and not canonical_elsewhere(p):
             urls.append((to_url(p), dates.get(p, "")))
     urls.sort()
 
