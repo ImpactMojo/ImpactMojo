@@ -492,6 +492,18 @@ jobs:
       - name: Check the walkthrough deck matches its sources
         run: python3 scripts/build-walkthrough.py --check
 
+  working-hours:
+    name: Working hours Deep Dive matches its data
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # Every figure in the text and every chart on the page is written from
+      # data/deep-dives/working-hours.json. Editing either by hand fails here.
+      - name: Check the page matches its aggregates
+        run: python3 scripts/working-hours/build_page.py --check
+
   catalog-generated:
     name: Catalogue lists what site search lists
     runs-on: ubuntu-latest
