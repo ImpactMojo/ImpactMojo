@@ -6,6 +6,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Added
 
+- **A Deep Dive on Indian working hours, computed from the Time Use Survey 2024 microdata.** Piyush Goyal told Dutch investors on 27 October 2026 that no Indian will tell them it is five o'clock or remind them it is the weekend. The page tests both claims on 198,969 worker diaries, weighted as MoSPI weights them; the code reproduces all twelve of MoSPI's published time-use averages before any chart is drawn. Five charts (who is at work in each half hour, paid work by day of the week, weekly hours against the 48-hour limit, hours against output per hour for 18 countries from ILOSTAT, and paid plus unpaid hours on a working day) are drawn by `scripts/working-hours/build_page.py` from `data/deep-dives/working-hours.json`, so the figures in the text cannot drift from the charts. CI runs it with `--check`. The microdata are not in the repository.
 - **India Policy Insights village estimates, in the Dataverse.** Ko, Subramanian and colleagues' estimates of 35 SDG indicators for 597,603 rural villages, with cluster and district estimates, for 2021 (Harvard Dataverse, CC0). The entry under India Data says what the village figures are: model predictions built from NFHS-5 and the 2011 Census, with no uncertainty interval at village level. The Dataverse holds 325 entries.
 - **Free Datasets for Social Science Research, in the Dataverse.** Todd Jones's CC0 list of about 125 free datasets (censuses, household surveys, crime, health, education and some global sources) is now an entry under Research & Evidence, searchable from the site. The Dataverse holds 323 entries. Most of the list is US data, and the entry says so.
 - **Three templates for the evaluator's side of an assignment**: a Bid or No-Bid Scorecard (Excel and a Word guide), a Statement of Work & Change Request Template, and an Inception Report & Evaluation Matrix Template, ₹199 each. They sit beside the commissioner's ToR Template and Proposal Scoring Rubric. The pages, order handler entries, search rows and sitemap URLs are in the branch. The paid files are not in the private `products` bucket yet, because they are uploaded by hand from the Drive masters. The legal notes were researched and written into the files on 21 October 2026 (sources named in each blue box). Do not merge to `main` until the three files are uploaded, or a paying buyer gets nothing.
@@ -13,6 +14,10 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **Fifteen more templates for the evaluator's side of an assignment**, each ₹199: ToR Clarification Letter Builder, Three-Option Offer, Engagement Charter & Independence Declaration, Invoice Pack: GST and TDS (Excel), Kick-off Checklist and Workplan (Excel), RAID Log (Excel), Weekly Status Note & Escalation, Evidence Strength Rating Guide, Findings Storyline, Validation Workshop Plan, Impact and Ease Prioritisation (Excel), Management Response Tracker (Excel), After-Action Review, Client Feedback Survey & Debrief, and Case Study with Consent. The legal boxes carry the sources read on 21 October 2026 and say to have a lawyer or accountant confirm them.
 - **The Evaluation Essentials Kit goes from 30 to 45 products.** The Kit stays at ₹2,499. The struck-through list price becomes ₹9,955, which is the sum of the 45 one-time prices.
+
+### For Learners
+
+- **Who is still at work at five o'clock**: a data Deep Dive on how long Indians work, who works on Sunday, what an hour of that work produces, and the unpaid shift women do on top, from India's Time Use Survey 2024.
 
 ### Changed
 
