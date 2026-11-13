@@ -109,6 +109,8 @@ window.FTransfer = (function () {
       var t = el("text", { "class": "lt-label", "aria-hidden": "true" });
       var tp = el("textPath", { href: "#" + id, startOffset: "50%", "text-anchor": "middle" }, f.name);
       t.appendChild(tp); svg.appendChild(t);
+      var np = pt(350, (a0 + a1) / 2);
+      svg.appendChild(el("text", { x: np[0].toFixed(1), y: np[1].toFixed(1), "class": "lt-num", "aria-hidden": "true" }, String(i + 1)));
     });
 
     svg.appendChild(el("circle", { cx: CX, cy: CY, r: R.hub, "class": "hub" }));
@@ -152,6 +154,7 @@ window.FTransfer = (function () {
       var p = d.getAttribute("data-mark").split(":");
       d.classList.toggle("on", state.rating && state.marks[p[0]] === p[1]);
     });
+    document.querySelectorAll("#factorLegend .fl-btn").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-factor") === state.factor)); });
     document.getElementById("wheelFrame").classList.toggle("is-rating", state.rating);
     setCaption();
   }
@@ -265,6 +268,20 @@ window.FTransfer = (function () {
     }).join("");
   }
 
+  function buildLegend() {
+    var ol = document.getElementById("factorLegend"); if (!ol) return;
+    ol.innerHTML = D.factors.map(function (f, i) {
+      return '<li><button type="button" class="fl-btn" data-factor="' + esc(f.id) + '" aria-pressed="false">' +
+        '<span class="fl-num" style="background:' + esc(f.color) + ';color:' + ink(f.color) + '">' + (i + 1) + '</span>' + esc(f.name) + '</button></li>';
+    }).join("");
+    ol.querySelectorAll(".fl-btn").forEach(function (b) {
+      b.addEventListener("click", function () {
+        select(b.getAttribute("data-factor"), state.marks[b.getAttribute("data-factor")] || "stick");
+        var p = document.getElementById("panel"); if (p && p.scrollIntoView) p.scrollIntoView({ block: "start", behavior: "smooth" });
+      });
+    });
+  }
+
   function buildSources() {
     var ul = document.getElementById("sourceList"); if (!ul) return;
     ul.innerHTML = D.SOURCES.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("");
@@ -279,15 +296,12 @@ window.FTransfer = (function () {
 
   function init() {
     if (!D || !D.factors) return;
-    load(); buildWheel(); buildList(); buildSources();
+    load(); buildWheel(); buildLegend(); buildList(); buildSources();
     var tog = document.getElementById("rateToggle");
     if (tog) tog.addEventListener("change", function () {
       state.rating = tog.checked; paint(); renderSummary();
       if (state.factor) renderPanel(fac(state.factor));
     });
-    /* on a phone the wheel is wider than the screen: start with it centred */
-    var fr = document.getElementById("wheelFrame");
-    if (fr && fr.scrollWidth > fr.clientWidth) fr.scrollLeft = (fr.scrollWidth - fr.clientWidth) / 2;
     if (!fromHash()) { renderEmpty(); paint(); }
     renderSummary();
     window.addEventListener("hashchange", fromHash);
