@@ -286,6 +286,14 @@ window.FTransfer = (function () {
   function init() {
     if (!D || !D.factors) return;
     load(); buildWheel(); buildList(); buildSources();
+    var zb = document.getElementById("zoomToggle"), fr = document.getElementById("wheelFrame");
+    if (zb && fr) zb.addEventListener("click", function () {
+      var on = !fr.classList.contains("is-zoom");
+      fr.classList.toggle("is-zoom", on);
+      zb.setAttribute("aria-pressed", on ? "true" : "false");
+      zb.textContent = on ? "Fit the wheel to the screen" : "Zoom in to read every ring";
+      if (on) { fr.tabIndex = 0; fr.scrollLeft = (fr.scrollWidth - fr.clientWidth) / 2; fr.scrollTop = 0; } else { fr.removeAttribute("tabindex"); }
+    });
     var tog = document.getElementById("rateToggle");
     if (tog) tog.addEventListener("change", function () {
       state.rating = tog.checked; paint(); renderSummary();
