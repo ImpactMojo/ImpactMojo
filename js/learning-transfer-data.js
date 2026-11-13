@@ -39,6 +39,7 @@ window.LTRANSFER = (function () {
     {
       id: "motivation", name: "Motivation", band: "learner", color: "#e03131",
       asks: "Did the trainee want to be there, and want to use what they learned?",
+      tags: { stick: "Chose it|wants it", risk: "Willing, but|sent by|someone else", drop: "Attends to|be counted" },
       levels: {
         stick: "The trainee chose the training, or accepted it after seeing a use for it. They arrive wanting a specific skill.",
         risk:  "The trainee was willing but was sent by someone else. Their interest is real and has not been tested against their daily work.",
@@ -54,6 +55,7 @@ window.LTRANSFER = (function () {
     {
       id: "confidence", name: "Confidence", band: "learner", color: "#e8590c",
       asks: "Does the trainee believe they can actually do the new thing?",
+      tags: { stick: "Sure of the|first step", risk: "Believes it|works in|theory", drop: "Unsure|where to|start" },
       levels: {
         stick: "The trainee has done the task during training, with feedback, and leaves sure of the first step they will take on Monday.",
         risk:  "The trainee follows the method in theory and has not tried it with real material. They think it should work.",
@@ -70,6 +72,7 @@ window.LTRANSFER = (function () {
     {
       id: "practice", name: "Practice", band: "design", color: "#2f9e44",
       asks: "Did the trainee rehearse the skill, and did anyone tell them how it went?",
+      tags: { stick: "Rehearsed|with feedback", risk: "Tried it|once", drop: "Heard it,|never did it" },
       levels: {
         stick: "The training includes rehearsal on tasks like the real ones, with feedback from a coach or peer, and a second attempt.",
         risk:  "The training shows examples and lets each person try the method once, with no feedback or second attempt.",
@@ -85,6 +88,7 @@ window.LTRANSFER = (function () {
     {
       id: "relevance", name: "Relevance", band: "design", color: "#099268",
       asks: "Does the training look like the job the trainee goes back to?",
+      tags: { stick: "Same tasks|as the job", risk: "Generic|examples", drop: "Abstract,|no use seen" },
       levels: {
         stick: "The tasks, tools, forms and constraints used in training match the trainee's actual work.",
         risk:  "The examples are plausible for the field but generic. The trainee has to work out the translation to their own setting.",
@@ -99,8 +103,9 @@ window.LTRANSFER = (function () {
       limits: "Close matching can teach a procedure that is wrong or outdated for the job. Relevance does not replace checking that the method is sound."
     },
     {
-      id: "workload", name: "Workload", band: "workplace", color: "#0c8599",
+      id: "workload", name: "Workload", band: "workplace", color: "#0b7285",
       asks: "Will the trainee have time and a real occasion to use the skill?",
+      tags: { stick: "Time set|aside", risk: "Busy, could|squeeze it in", drop: "No time|to apply" },
       levels: {
         stick: "Time is protected for the new practice, and the trainee's work in the next weeks includes tasks that call for it.",
         risk:  "The trainee is busy but could fit the skill in if they chose to, and no task obliges them to.",
@@ -116,6 +121,7 @@ window.LTRANSFER = (function () {
     {
       id: "manager", name: "Manager support", band: "workplace", color: "#1971c2",
       asks: "Did the trainee's manager prepare them, and do they follow up?",
+      tags: { stick: "Briefs and|follows up", risk: "Approves,|never asks", drop: "Unaware or|opposed" },
       levels: {
         stick: "The manager discussed the goals beforehand, agrees an application task afterward, and asks how it is going.",
         risk:  "The manager approves of the training and does not mention it again. Use of the skill depends on the trainee's own drive.",
@@ -132,6 +138,7 @@ window.LTRANSFER = (function () {
     {
       id: "social", name: "Social reinforcement", band: "workplace", color: "#3b5bdb",
       asks: "Do colleagues treat the new way of working as normal?",
+      tags: { stick: "Peers do it|together", risk: "Colleagues|neutral", drop: "Group pulls|against it" },
       levels: {
         stick: "Peers who were also trained work together on the skill, share what is working, and others in the team expect it.",
         risk:  "Colleagues are neutral. Nobody objects and nobody joins in, so the trainee is on their own.",
@@ -147,6 +154,7 @@ window.LTRANSFER = (function () {
     {
       id: "accountability", name: "Accountability", band: "workplace", color: "#6741d9",
       asks: "Will anyone ask whether the trainee used what they learned?",
+      tags: { stick: "Reports to|someone who|reads it", risk: "Plan made,|nobody checks", drop: "No follow-up" },
       levels: {
         stick: "The trainee reports on use of the skill to someone who reads the report and responds, at a date set before the training ended.",
         risk:  "A plan was written at the end of training and nobody has been named to look at it again.",
@@ -162,6 +170,7 @@ window.LTRANSFER = (function () {
     {
       id: "leadership", name: "Leadership modelling", band: "workplace", color: "#9c36b5",
       asks: "Do the people at the top do what the training teaches?",
+      tags: { stick: "Leaders use it|visibly", risk: "Leaders|praise it,|don't use it", drop: "Leaders|exempt|themselves" },
       levels: {
         stick: "Senior people use the method themselves, in public, and are known to have gone through the same training.",
         risk:  "Senior people endorse the method and praise it, and do not change how they work.",
@@ -178,6 +187,7 @@ window.LTRANSFER = (function () {
     {
       id: "systems", name: "Systems fit", band: "workplace", color: "#c2255c",
       asks: "Do the forms, targets, tools and rules make the new behaviour easy or costly?",
+      tags: { stick: "Easy way is|the new way", risk: "Needs|workarounds", drop: "Targets|punish the|new way" },
       levels: {
         stick: "Processes, reports and targets are built so that doing the new thing is the easy way to meet them.",
         risk:  "The systems are indifferent. The trainee can use the skill only by working around forms and routines built for the old way.",

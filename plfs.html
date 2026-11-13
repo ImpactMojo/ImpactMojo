@@ -98,6 +98,9 @@ table.data th,table.data td{padding:9px 10px;text-align:right;border-bottom:1px 
 table.data th{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--faint);font-weight:700;cursor:pointer;user-select:none}
 table.data td:first-child,table.data th:first-child{text-align:left}
 table.data tbody tr:hover{background:var(--chip)}
+.gap-toggle{display:inline-flex;align-items:center;gap:8px;font-family:'Inter';font-size:13.5px;font-weight:600;margin:0 0 10px;cursor:pointer;min-height:32px}
+.gap-toggle input{width:18px;height:18px}
+.gap-note{font-family:'Inter';font-size:12.5px;margin:0 0 8px}
 table.data tr.ai td{font-weight:800;color:var(--acc);border-top:2px solid var(--acc)}
 .method{margin:26px 0 60px;color:var(--mut);font-size:13px;line-height:1.6}
 .method h2{font-family:'Amaranth',sans-serif;font-size:1rem;color:var(--ink);margin:0 0 8px}
@@ -513,18 +516,22 @@ window.PLFS_JOB={"status":[{"k":"self","L":"Self-employed","m":53.6,"f":67.4,"p"
       '<span>The two runs are separate surveys. The dashed rule marks the break; do not read across it.</span></div>';
   }
 
-  var sortKey="lfpr_f",sortDir=-1;
+  var sortKey="lfpr_f",sortDir=-1,showGap=false;
+  function gapFmt(v,n){if(v==null||n==null)return fmt(null);var d=Math.round((v-n)*10)/10;return (d>0?"+":d<0?"\u2212":"")+Math.abs(d).toFixed(1)+" pp";}
   function renderTable(){
     var cols=[["lfpr_f","LFPR women"],["lfpr_m","LFPR men"],["wpr_p","WPR all"],["ur_p","Unempl."]];
     function cv(c,key){var p=key.split("_");return val(stateData(c),p[0],p[1]);}
     var rows=CODES.slice().sort(function(a,b){ if(sortKey==="n")return sortDir*NAMES[a].n.localeCompare(NAMES[b].n);
       var va=cv(a,sortKey),vb=cv(b,sortKey);va=va==null?-1:va;vb=vb==null?-1:vb;return sortDir*(va-vb);});
-    var h='<div style="overflow-x:auto"><table class="data"><thead><tr><th data-k="n">State / UT</th>'+
+    var h='<label class="gap-toggle"><input type="checkbox" id="gapToggle"'+(showGap?' checked':'')+'> Show each state\'s gap to All India, in percentage points</label>'+
+      (showGap?'<p class="gap-note">Difference from the All-India figure in the last row. Rows stay sorted by the underlying value.</p>':'')+
+      '<div style="overflow-x:auto" tabindex="0" role="region" aria-label="State table, scrolls sideways"><table class="data"><thead><tr><th data-k="n">State / UT</th>'+
       cols.map(function(c){return '<th data-k="'+c[0]+'">'+c[1]+'</th>';}).join('')+'</tr></thead><tbody>';
-    rows.forEach(function(c){h+='<tr><td>'+esc(NAMES[c].n)+'</td>'+cols.map(function(col){return '<td>'+fmt(cv(c,col[0]))+'</td>';}).join('')+'</tr>';});
+    rows.forEach(function(c){h+='<tr><td>'+esc(NAMES[c].n)+'</td>'+cols.map(function(col){return '<td>'+(showGap?gapFmt(cv(c,col[0]),natData()[col[0].split('_')[0]][col[0].split('_')[1]]):fmt(cv(c,col[0])))+'</td>';}).join('')+'</tr>';});
     h+='<tr class="ai"><td>All India</td>'+cols.map(function(col){var p=col[0].split("_");return '<td>'+fmt(natData()[p[0]][p[1]])+'</td>';}).join('')+'</tr>';
     h+='</tbody></table></div>';
     document.getElementById("panel").innerHTML=h;
+    document.getElementById("gapToggle").addEventListener("change",function(){showGap=this.checked;renderTable();document.getElementById("gapToggle").focus();});
     [].forEach.call(document.querySelectorAll("th[data-k]"),function(th){th.addEventListener("click",function(){var k=th.dataset.k;if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=k==="n"?1:-1;}renderTable();});});
   }
 

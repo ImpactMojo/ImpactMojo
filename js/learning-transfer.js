@@ -78,8 +78,9 @@ window.FTransfer = (function () {
       var a0 = i * SPAN, a1 = a0 + SPAN, g = el("g", { "data-factor": f.id });
       D.RING_ORDER.forEach(function (ring) {
         var rr = RING_R[ring];
+        var fill_ = ringFill(f.color, ring);
         var path = el("path", {
-          d: annulus(a0 + 0.35, a1 - 0.35, rr[0], rr[1]), fill: ringFill(f.color, ring), "class": "seg",
+          d: annulus(a0 + 0.35, a1 - 0.35, rr[0], rr[1]), fill: fill_, "class": "seg",
           role: "button", tabindex: "0", "data-factor": f.id, "data-ring": ring, "aria-pressed": "false",
           "aria-label": f.name + ", " + D.RINGS[ring].label
         });
@@ -90,6 +91,13 @@ window.FTransfer = (function () {
           else if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); stepRing(e.key === "ArrowUp" ? -1 : 1, f.id); }
         });
         g.appendChild(path);
+        /* short label inside the ring, set along the spoke */
+        var th = (a0 + a1) / 2, c0 = pt((rr[0] + rr[1]) / 2, th);
+        var ang = th - 90 + (th > 180 ? 180 : 0);
+        var tg = el("text", { "class": "seg-tag", "aria-hidden": "true", transform: "translate(" + c0[0].toFixed(1) + " " + c0[1].toFixed(1) + ") rotate(" + ang.toFixed(1) + ")", fill: ink(fill_) });
+        var lines = f.tags[ring].split("|");
+        lines.forEach(function (ln, k) { tg.appendChild(el("tspan", { x: 0, y: ((k - (lines.length - 1) / 2) * 12.5 + 4).toFixed(1), "text-anchor": "middle" }, ln)); });
+        g.appendChild(tg);
         /* a dot marks the ring chosen in rating mode */
         var mid = pt((rr[0] + rr[1]) / 2, (a0 + a1) / 2);
         g.appendChild(el("circle", { cx: mid[0].toFixed(1), cy: mid[1].toFixed(1), r: 9, "class": "mark-dot", "data-mark": f.id + ":" + ring, "aria-hidden": "true" }));
@@ -139,7 +147,6 @@ window.FTransfer = (function () {
     document.querySelectorAll("#wheel .seg").forEach(function (s) {
       var on = s.getAttribute("data-factor") === state.factor;
       s.setAttribute("aria-pressed", String(on && s.getAttribute("data-ring") === state.ring));
-      s.classList.toggle("is-dim", !!state.factor && !on);
     });
     document.querySelectorAll("#wheel .mark-dot").forEach(function (d) {
       var p = d.getAttribute("data-mark").split(":");
