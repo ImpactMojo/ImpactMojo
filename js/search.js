@@ -122,7 +122,7 @@
     tool: 'Tool', 'data-dive': 'Data note', 'data-note': 'Data note',
     timeline: 'Timeline', poster: 'Poster', reference: 'Reference',
     handout: 'Handout', challenge: 'Challenge', showcase: 'Work sample',
-    special: 'Special', 'field-radio': 'Field Radio', explorer: 'Data explorer',
+    special: 'Special', 'field-radio': 'Field Radio', 'field-talkies': 'Field Talkies', explorer: 'Data explorer',
     'law-guide': 'Law guide', 'reading-list': 'Reading list', theory: 'Theory',
     fundamental: 'Fundamentals', 'landing-page': 'Page', dataset: 'Dataset'
   };
@@ -319,12 +319,19 @@
   function loadTranscripts() {
     if (trTried) return;
     trTried = true;
-    fetch('/data/field-radio.json')
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    // Audio is on Field Radio and video on Field Talkies; both carry transcripts.
+    var get = function (url) {
+      return fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+    };
+    Promise.all([get('/data/field-radio.json'), get('/data/field-talkies.json')])
       .then(function (d) {
-        trClips = (d && Array.isArray(d.clips) ? d.clips : []).filter(function (c) {
-          return c && c.id && c.transcript;
+        var radio = (d[0] && Array.isArray(d[0].clips) ? d[0].clips : []).map(function (c) {
+          return { id: c.id, transcript: c.transcript, row: 'FIELD-RADIO-' + c.id };
         });
+        var films = (d[1] && Array.isArray(d[1].films) ? d[1].films : []).map(function (c) {
+          return { id: c.id, transcript: c.transcript, row: 'FIELD-TALKIES-' + c.id };
+        });
+        trClips = radio.concat(films).filter(function (c) { return c && c.id && c.transcript; });
       })
       .catch(function (e) { console.warn('ImpactMojo Search: transcripts unavailable', e); });
   }
@@ -350,7 +357,7 @@
     trFuse.search(query).forEach(function (r) {
       var entry = null;
       for (var i = 0; i < searchData.length; i++) {
-        if (searchData[i].id === 'FIELD-RADIO-' + r.item.id) { entry = searchData[i]; break; }
+        if (searchData[i].id === r.item.row) { entry = searchData[i]; break; }
       }
       if (entry && !seen[entry.id]) { seen[entry.id] = true; out.push({ item: entry }); }
     });
@@ -607,7 +614,7 @@
         results.map(function (r) { return resultHTML(r.item, query); }).join('') + '</ul>';
     }
     if (radio.length) {
-      html += '<h3 class="ims-group">Heard in Field Radio</h3><ul class="ims-list">' +
+      html += '<h3 class="ims-group">Said on Field Radio and Field Talkies</h3><ul class="ims-list">' +
         radio.map(function (r) { return resultHTML(r.item, query); }).join('') + '</ul>';
     }
 

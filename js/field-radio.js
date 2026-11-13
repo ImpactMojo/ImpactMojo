@@ -248,6 +248,9 @@
     // all voices rather than dropping the visitor somewhere they didn't ask for.
     if (indexOfId(id) < 0) {
       var known = allClips.some(function (c) { return c.id === id; });
+      // Video moved to Field Talkies on 2026-11-13. A link or bookmark to one
+      // of those clips (#vs-05) still has to land on it.
+      if (!known && /^(vs|ft)-/.test(id)) { location.replace("/field-talkies.html#" + id); return; }
       if (!known) return;
       applyFilter("all");
     }

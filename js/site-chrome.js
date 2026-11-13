@@ -229,7 +229,7 @@
       ['/law-guides/development-law-docket.html', 'Law Docket'], ['/libraries.html', 'Libraries'], ['/products.html', 'Products']]],
     ['Data', [
       ['/explorers.html', 'Data Room'], ['/by-the-numbers/', 'By the numbers'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals'],
-      ['/field-radio.html', 'Field Radio']]],
+      ['/field-radio.html', 'Field Radio'], ['/field-talkies.html', 'Field Talkies']]],
     ['Read', [
       ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/handouts.html', 'Handouts'],
       ['/blog.html', 'Blog'], ['/dojos.html', 'Dojos &amp; Practice']]],
@@ -275,7 +275,7 @@
       ['Law', [['/law-guides/', 'Law guides'], ['/law-guides/development-law-docket.html', 'Law Docket', 'Court judgments that changed development work']]],
       ['/libraries.html', 'Libraries']]],
     ['Data', [
-      ['/explorers.html', 'Data Room'], ['/by-the-numbers/', 'By the numbers'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals', 'Development frameworks, made interactive'], ['/field-radio.html', 'Field Radio', 'Voice notes and videos from practitioners']]],
+      ['/explorers.html', 'Data Room'], ['/by-the-numbers/', 'By the numbers'], ['/dataverse.html', 'Dataverse'], ['/fundamentals/', 'Fundamentals', 'Development frameworks, made interactive'], ['/field-radio.html', 'Field Radio', 'Short audio notes on development practice'], ['/field-talkies.html', 'Field Talkies', 'Video explainers on the hard parts of practice']]],
     ['Read', [
       ['/BookSummaries/', 'Reading Companions'], ['/DeepDives/', 'Deep Dives'], ['/handouts.html', 'Handouts'],
       ['/blog.html', 'Blog'], ['/dojos.html', 'Dojos &amp; Practice', '90-minute skill sessions, in person and online']]],
