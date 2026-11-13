@@ -543,6 +543,7 @@
 // The share button waits until the reader has scrolled past the first screen,
 // so nothing but the consent strip covers the opening of a page.
 '#im-wa-fab.im-wa-wait{display:none!important}',
+'#im-wa-fab.im-wa-yield{opacity:0!important;pointer-events:none!important}',
 // On a 101 deck the slide controls sit along the bottom edge, so the card goes
 // under the top bar instead of covering them.
 '.im-sc-consent.is-deck{top:56px;bottom:auto!important;border-top:0;border-bottom:1px solid var(--sc-bd)}',
@@ -1154,6 +1155,30 @@
     }
     window.addEventListener('scroll', reveal, { passive: true });
     reveal();
+    // Step aside while something the reader could tap (a Visit button, a link, a
+    // field) sits under the button, so it never covers a control. It comes back
+    // as soon as the page has scrolled on. Five points across the button are
+    // sampled with its own pointer events off, so it does not find itself.
+    var yieldQueued = false;
+    function yieldCheck() {
+      yieldQueued = false;
+      if (a.classList.contains('im-wa-wait')) return;
+      var r = a.getBoundingClientRect(); if (!r.width) return;
+      var pts = [[.5, .5], [.15, .15], [.85, .15], [.15, .85], [.85, .85]], hit = false;
+      a.style.pointerEvents = 'none';
+      for (var i = 0; i < pts.length && !hit; i++) {
+        var el = document.elementFromPoint(r.left + r.width * pts[i][0], r.top + r.height * pts[i][1]);
+        var c = el && el.closest && el.closest('a,button,input,select,textarea,summary,[role="button"],[role="link"],[tabindex="0"]');
+        if (c && c !== a && !c.closest('aside[aria-label="Share this page"]') && !c.closest('#im-consent,.im-sc-sheet-wrap')) hit = true;
+      }
+      a.style.pointerEvents = '';
+      a.classList.toggle('im-wa-yield', hit);
+    }
+    function queueYield() { if (!yieldQueued) { yieldQueued = true; (window.requestAnimationFrame || setTimeout)(yieldCheck); } }
+    window.addEventListener('scroll', queueYield, { passive: true });
+    window.addEventListener('resize', queueYield);
+    a.style.transition += ',opacity .18s ease';
+    setTimeout(queueYield, 600);
   }
 
   // ── Floating-button slots (R4) ─────────────────────────────────────
