@@ -206,7 +206,9 @@
     ['Data', [
       ['/explorers.html', 'Data Room', 'Explorers built on official data'],
       ['/by-the-numbers/', 'By the numbers', 'One figure at a time, with the working'],
-      ['/dataverse.html', 'Dataverse', 'Data sources, listed and described']]],
+      ['/dataverse.html', 'Dataverse', 'Data sources, listed and described'],
+      ['/field-radio.html', 'Field Radio', 'Short audio notes on development practice'],
+      ['/field-talkies.html', 'Field Talkies', 'Video explainers on the hard parts of practice']]],
     ['Read', [
       ['/BookSummaries/', 'Reading Companions', 'Companions to key books'],
       ['/DeepDives/', 'Deep Dives', 'Curated readings on one question'],
