@@ -1226,7 +1226,14 @@ details.ax[open] > summary { border-bottom: 1px solid var(--color-border); }
 .lt-label { font-family: var(--font-heading); font-weight: 700; font-size: 14.5px; fill: var(--color-text); pointer-events: none; }
 .hub-text { font-family: var(--font-heading); font-weight: 800; fill: #fff; font-size: 12.5px; pointer-events: none; }
 .seg-tag { font-family: var(--font-heading); font-weight: 700; font-size: 11px; pointer-events: none; }
-@media (max-width: 640px) { .seg-tag { display: none; } }
+/* Phones: keep the wheel at a size where the ring labels are readable and let the frame scroll sideways. */
+@media (max-width: 760px) {
+  .wheel-layout > * { min-width: 0; }
+  #wheelFrame { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+  #wheelFrame #wheel { width: 680px; max-width: none; }
+}
+.wheel-swipe { display: none; font-size: 0.82rem; color: var(--color-text-muted); margin: 0.5rem 0 0; }
+@media (max-width: 760px) { .wheel-swipe { display: block; } }
 #wheel .seg[aria-pressed="true"] { stroke: var(--color-text); stroke-width: 3.5; }
 #wheel .seg:focus-visible { stroke: var(--color-accent-blue); stroke-width: 4; }
 .mark-dot { fill: #fff; stroke: #1a1420; stroke-width: 3; display: none; pointer-events: none; }

@@ -285,6 +285,9 @@ window.FTransfer = (function () {
       state.rating = tog.checked; paint(); renderSummary();
       if (state.factor) renderPanel(fac(state.factor));
     });
+    /* on a phone the wheel is wider than the screen: start with it centred */
+    var fr = document.getElementById("wheelFrame");
+    if (fr && fr.scrollWidth > fr.clientWidth) fr.scrollLeft = (fr.scrollWidth - fr.clientWidth) / 2;
     if (!fromHash()) { renderEmpty(); paint(); }
     renderSummary();
     window.addEventListener("hashchange", fromHash);
