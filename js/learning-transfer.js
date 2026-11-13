@@ -110,10 +110,11 @@ window.FTransfer = (function () {
       var t = el("text", { "class": "lt-label", "aria-hidden": "true" });
       var tp = el("textPath", { href: "#" + id, startOffset: "50%", "text-anchor": "middle" }, f.name);
       t.appendChild(tp); svg.appendChild(t);
-      /* short name beside the sector, shown on phones only (see css) */
-      var ang = (a0 + a1) / 2, np = pt(R.r3 + 14, ang), sn = Math.sin(ang * Math.PI / 180);
-      svg.appendChild(el("text", { x: np[0].toFixed(1), y: np[1].toFixed(1), "class": "lt-pname", "aria-hidden": "true",
-        "text-anchor": sn > 0.2 ? "start" : sn < -0.2 ? "end" : "middle", "dominant-baseline": "central" }, SHORT[f.id] || f.name));
+      /* factor name set across the outer ring, shown on phones only (see css) */
+      var th2 = (a0 + a1) / 2, np = pt((R.r2 + R.r3) / 2, th2), rot = th2 > 90 && th2 < 270 ? th2 + 180 : th2;
+      svg.appendChild(el("text", { "class": "lt-pname", "aria-hidden": "true", "text-anchor": "middle", "dominant-baseline": "central",
+        transform: "translate(" + np[0].toFixed(1) + " " + np[1].toFixed(1) + ") rotate(" + rot.toFixed(1) + ")",
+        fill: ink(ringFill(f.color, "drop")) }, SHORT[f.id] || f.name));
     });
 
     svg.appendChild(el("circle", { cx: CX, cy: CY, r: R.hub, "class": "hub" }));
@@ -282,32 +283,9 @@ window.FTransfer = (function () {
     return false;
   }
 
-  /* On a phone, size the viewBox to the wheel plus its names so the names render at about 11px. */
-  var PHONE = window.matchMedia ? window.matchMedia("(max-width: 760px)") : null;
-  function fitWheel() {
-    var svg = document.getElementById("wheel"); if (!svg) return;
-    if (!PHONE || !PHONE.matches) { svg.setAttribute("viewBox", "0 0 760 760"); return; }
-    var names = svg.querySelectorAll(".lt-pname"), avail = (svg.parentNode.clientWidth || 360) - 16, pad = 12, u = 30, box;
-    for (var k = 0; k < 5; k++) {
-      var minX = CX - R.r3, maxX = CX + R.r3, minY = CY - R.r3, maxY = CY + R.r3;
-      names.forEach(function (n) {
-        n.setAttribute("font-size", u);
-        var b = n.getBBox();
-        minX = Math.min(minX, b.x); maxX = Math.max(maxX, b.x + b.width);
-        minY = Math.min(minY, b.y); maxY = Math.max(maxY, b.y + b.height);
-      });
-      box = [minX - pad, minY - pad, maxX - minX + 2 * pad, maxY - minY + 2 * pad];
-      var rendered = u * avail / box[2];
-      u = Math.max(16, Math.min(64, u * 11 / rendered));
-    }
-    svg.setAttribute("viewBox", box.map(function (v) { return v.toFixed(1); }).join(" "));
-  }
-
   function init() {
     if (!D || !D.factors) return;
-    load(); buildWheel(); fitWheel(); buildList(); buildSources();
-    if (PHONE && PHONE.addEventListener) PHONE.addEventListener("change", fitWheel);
-    window.addEventListener("resize", fitWheel);
+    load(); buildWheel(); buildList(); buildSources();
     var tog = document.getElementById("rateToggle");
     if (tog) tog.addEventListener("change", function () {
       state.rating = tog.checked; paint(); renderSummary();
