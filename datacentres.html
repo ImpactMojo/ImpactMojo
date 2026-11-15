@@ -225,6 +225,9 @@ td .sub{display:block;color:var(--faint);font-size:12px}
   var M1 = merc(LAT1);
   function xy(lon, lat){ return [(lon-LON0)*KX, (M1-merc(lat))*KX*180/Math.PI]; }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function num(n){ return String(Number(n) || 0); }
+  /* A source link is followed only if it is a web address. */
+  function url(u){ return /^https?:\/\//i.test(u) ? esc(u) : '#'; }
   function fmt(n){ return n.toLocaleString('en-IN', {maximumFractionDigits:1}); }
   function mwText(f){
     if (f.mw === null) return 'not published';
@@ -266,11 +269,11 @@ td .sub{display:block;color:var(--faint);font-size:12px}
     } else { vb = [0, 0, M.w, M.h]; scale = 1; }
     var s = (z ? 6 : 4.2)*scale, out = [];
     out.push('<title id="map-title">Map of India showing data centres by status and coal and gas power plants</title>');
-    out.push('<g>' + M.paths.map(function(d){ return '<path class="st" d="' + d + '"/>'; }).join('') + '</g>');
+    out.push('<g>' + M.paths.map(function(d){ return '<path class="st" d="' + esc(d) + '"/>'; }).join('') + '</g>');
     if (mapState.show.p){
       out.push('<g>' + PL.map(function(p){
         var q = xy(p.lon, p.lat), r = (2.2 + Math.sqrt(p.mw)/22) * Math.max(scale, .08);
-        return '<rect class="pl' + (p.fuel === 'Gas' ? ' g' : '') + '" x="' + (q[0]-r).toFixed(1) + '" y="' + (q[1]-r).toFixed(1) + '" width="' + (2*r).toFixed(1) + '" height="' + (2*r).toFixed(1) + '"><title>' + esc(p.name) + ', ' + p.fuel.toLowerCase() + ', ' + fmt(p.mw) + ' MW, ' + esc(p.state) + '</title></rect>';
+        return '<rect class="pl' + (p.fuel === 'Gas' ? ' g' : '') + '" x="' + (q[0]-r).toFixed(1) + '" y="' + (q[1]-r).toFixed(1) + '" width="' + (2*r).toFixed(1) + '" height="' + (2*r).toFixed(1) + '"><title>' + esc(p.name) + ', ' + esc(p.fuel.toLowerCase()) + ', ' + fmt(p.mw) + ' MW, ' + esc(p.state) + '</title></rect>';
       }).join('') + '</g>');
     }
     ['a','u','o'].forEach(function(k){
@@ -296,7 +299,7 @@ td .sub{display:block;color:var(--faint);font-size:12px}
       '<dt>IT load</dt><dd>' + mwText(f) + (f.mw_buildout ? ' · planned build-out ' + fmt(f.mw_buildout) + ' MW' : '') + '</dd>' +
       '<dt>Located to</dt><dd>the ' + esc(f.precision) + '</dd>' +
       '<dt>Confidence</dt><dd>' + esc(f.confidence) + '</dd>' +
-      '<dt>Source</dt><dd><a href="' + esc(f.source) + '" target="_blank" rel="noopener nofollow">the authors\' primary source</a></dd></dl>';
+      '<dt>Source</dt><dd><a href="' + url(f.source) + '" target="_blank" rel="noopener nofollow">the authors\' primary source</a></dd></dl>';
   }
   function viewMap(){
     var n = count(F, function(f){ return SK[f.status]; });
@@ -351,10 +354,10 @@ td .sub{display:block;color:var(--faint);font-size:12px}
   function viewPolicy(){
     var rows = P.slice().sort(function(a, b){ return (b.has_policy - a.has_policy) || b.all - a.all; });
     var eia = rows.filter(function(p){ return p.eia_required === 'yes'; }).length;
-    cap.innerHTML = 'The authors reviewed <b>' + HD.policy_states_reviewed + ' states</b> and found a dedicated data-centre policy in <b>' + HD.policy_states_dedicated + '</b>. Those states hold <b>' + HD.facilities_in_policy_states + ' of the ' + HD.n_operating + ' operating facilities</b>. ' + (eia === 0 ? 'The table records no environmental impact assessment requirement for a data centre in any of the 18.' : eia + ' of the 18 require an environmental impact assessment.');
+    cap.innerHTML = 'The authors reviewed <b>' + num(HD.policy_states_reviewed) + ' states</b> and found a dedicated data-centre policy in <b>' + num(HD.policy_states_dedicated) + '</b>. Those states hold <b>' + num(HD.facilities_in_policy_states) + ' of the ' + num(HD.n_operating) + ' operating facilities</b>. ' + (eia === 0 ? 'The table records no environmental impact assessment requirement for a data centre in any of the 18.' : eia + ' of the 18 require an environmental impact assessment.');
     view.innerHTML = '<div class="tablewrap"><table><thead><tr><th>State and policy</th><th>Capital subsidy</th><th>Stamp duty waiver</th><th>Electricity duty waiver</th><th>Land</th><th>Single window</th><th>EIA required</th><th class="num">Operating</th><th class="num">All</th></tr></thead><tbody>' +
       rows.map(function(p){
-        return '<tr><td><b>' + esc(p.state) + '</b><span class="sub">' + (p.has_policy ? esc(p.policy) + (p.year ? ', ' + esc(p.year) : '') : 'No dedicated policy') + '</span></td><td>' + yn(p.capital_subsidy) + '</td><td>' + yn(p.stamp_duty) + '</td><td>' + yn(p.electricity_duty) + '</td><td>' + yn(p.land) + '</td><td>' + yn(p.single_window) + '</td><td>' + yn(p.eia_required) + '</td><td class="num">' + p.operating + '</td><td class="num">' + p.all + '</td></tr>';
+        return '<tr><td><b>' + esc(p.state) + '</b><span class="sub">' + (p.has_policy ? esc(p.policy) + (p.year ? ', ' + esc(p.year) : '') : 'No dedicated policy') + '</span></td><td>' + yn(p.capital_subsidy) + '</td><td>' + yn(p.stamp_duty) + '</td><td>' + yn(p.electricity_duty) + '</td><td>' + yn(p.land) + '</td><td>' + yn(p.single_window) + '</td><td>' + yn(p.eia_required) + '</td><td class="num">' + num(p.operating) + '</td><td class="num">' + num(p.all) + '</td></tr>';
       }).join('') + '</tbody></table></div>';
   }
 
@@ -383,7 +386,7 @@ td .sub{display:block;color:var(--faint);font-size:12px}
     var rows = listRows(), shown = rows.slice(0, listState.n);
     document.getElementById('lcnt').textContent = rows.length + ' of ' + F.length;
     document.getElementById('lbody').innerHTML = shown.map(function(f){
-      return '<tr><td><b>' + esc(f.name) + '</b><span class="sub">' + esc(f.operator) + ' · ' + esc(f.type) + '</span></td><td>' + esc(f.city) + '<span class="sub">' + esc(f.state) + '</span></td><td class="st-' + SK[f.status] + '">' + SL[f.status] + '</td><td class="num">' + (f.mw === null ? '<span class="n0">not published</span>' : fmt(f.mw) + (f.mw_uncertain ? '*' : '')) + '</td><td>' + esc(f.confidence) + '</td><td><a href="' + esc(f.source) + '" target="_blank" rel="noopener nofollow" aria-label="Source for ' + esc(f.name) + '">source</a></td></tr>';
+      return '<tr><td><b>' + esc(f.name) + '</b><span class="sub">' + esc(f.operator) + ' · ' + esc(f.type) + '</span></td><td>' + esc(f.city) + '<span class="sub">' + esc(f.state) + '</span></td><td class="st-' + SK[f.status] + '">' + SL[f.status] + '</td><td class="num">' + (f.mw === null ? '<span class="n0">not published</span>' : fmt(f.mw) + (f.mw_uncertain ? '*' : '')) + '</td><td>' + esc(f.confidence) + '</td><td><a href="' + url(f.source) + '" target="_blank" rel="noopener nofollow" aria-label="Source for ' + esc(f.name) + '">source</a></td></tr>';
     }).join('') || '<tr><td colspan="6">No facility matches that search.</td></tr>';
     document.getElementById('lmore').hidden = rows.length <= listState.n;
   }
@@ -402,7 +405,7 @@ td .sub{display:block;color:var(--faint);font-size:12px}
   var VIEWS = {map:viewMap, states:viewStates, policy:viewPolicy, ops:viewOps, list:viewList};
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tabs [role="tab"]'));
   function show(name, focus){
-    if (!VIEWS[name]) name = 'map';
+    if (!Object.prototype.hasOwnProperty.call(VIEWS, name)) name = 'map';
     tabs.forEach(function(t){ var on = t.id === 't-' + name; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
     view.setAttribute('aria-labelledby', 't-' + name);
     VIEWS[name]();
