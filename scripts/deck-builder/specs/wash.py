@@ -1987,7 +1987,7 @@ SLIDES_D = [
      "byline": "ImpactMojo 101 Series &middot; Free foundational learning for development "
                "practitioners in South Asia",
      "ctas": [{"label": "Water, Sanitation and the Behaviour Gap",
-               "href": "/deepdives/water-sanitation-behaviour-gap.html"},
+               "href": "/DeepDives/water-sanitation-behaviour-gap.html"},
               {"label": "Nutrition 101", "href": "/101-courses/nutrition.html"},
               {"label": "All 101 courses", "href": "/101-courses/"}],
      "meta": ["100 slides", "12 sections", "CC BY-NC-ND"]},
