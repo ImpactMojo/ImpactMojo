@@ -33,6 +33,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Changed
 
+- **Seven Data Room explorers have titles and descriptions that say what people search for.** Search Console showed the PLFS, NAS, UDISE+, AISHE, Happy Planet Index, LEAP Cities and NFHS explorers already appearing on the first page of results and being passed over. Each title now starts with the name of the dataset and each description states what the page holds in under 160 characters.
 - **Single files you buy arrive at once.** A template, set of course notes, poster or question bank is emailed the moment you enter your UPI payment reference, where before it waited for us to confirm the payment by hand. Bundles, the Evaluation Essentials Kit and memberships are still confirmed by hand first.
 - **The two October backups of the course text are out of the public database schema.** Every row in them is still in the live table. They were moved to an archive schema the site's API does not serve, where an administrator can still read them.
 - **The home page's Recently added list shows films, audio and Fundamentals pages.** Field Talkies was live and missing from the list, because the list only knew courses, companions, guides and tools. Plays and finishes of each film and audio note are now counted, where the visitor has allowed analytics.
