@@ -49,7 +49,7 @@ KINDS = [
 NO_COUNT = {"explorer"}
 
 # Single pages the catalogue should carry, by address, with the catalogue type.
-PAGES = {"/survey-instruments.html": "reference", "/field-radio.html": "tool"}
+PAGES = {"/survey-instruments.html": "reference", "/field-radio.html": "tool", "/field-talkies.html": "tool"}
 
 _BS_INDEX = (ROOT / "BookSummaries/index.html").read_text(encoding="utf-8").lower()
 
