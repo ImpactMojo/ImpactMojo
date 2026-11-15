@@ -112,7 +112,7 @@ ImpactMojo యొక్క **80 పునాది కోర్సులు** �
 | Cost-Effectiveness Analysis | అందుబాటులో | [డెక్ చూడండి](/101-courses/cost-effectiveness.html) |
 | English for Development | అందుబాటులో | [డెక్ చూడండి](/101-courses/eng-dev.html) |
 | Advocacy Fundamentals | అందుబాటులో | [డెక్ చూడండి](/101-courses/advocacy-basics.html) |
-| Livelihoods Fundamentals | అందుబాటులో | [డెక్ చూడండి](/101-courses/livelihood-basics.html) |
+| Livelihoods Fundamentals | అందుబాటులో | [డెక్ చూడండి](/101-courses/work-labour-livelihoods.html) |
 | Climate Essentials | అందుబాటులో | [డెక్ చూడండి](/101-courses/climate-essentials.html) |
 | Post-Truth Politics | డెక్ సిద్ధం (PDF పెండింగ్) | [Gamma లో చూడండి](https://gamma.app/docs/07twqrzjtsnf49j) |
 | Fundraising Fundamentals | డెక్ సిద్ధం (PDF పెండింగ్) | [Gamma లో చూడండి](https://gamma.app/docs/0j6oy9d9f60xevo) |

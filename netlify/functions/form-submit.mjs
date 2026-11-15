@@ -17,7 +17,7 @@
  *
  * Env (Netlify): SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  */
-import { originAllowed, clientIp, rateLimit } from "../lib/guard.mjs";
+import { originAllowed, clientIp, rateLimit, looksLikeJunk } from "../lib/guard.mjs";
 
 const SUPABASE_URL = (process.env.SUPABASE_URL || "https://ddyszmfffyedolkcugld.supabase.co").replace(/\/$/, "");
 // Only pages on this site may post here, and each caller may store a bounded
@@ -110,6 +110,12 @@ export default async function handler(req, context) {
 
   const email = looksLikeEmail(data.email) ? data.email.trim() : null;
 
+  // "new" means somebody is waiting on the owner. Two kinds of row are not
+  // that: junk, and a product order saved before the buyer has paid (no
+  // payment reference yet), which is a lead and not an order.
+  const status = looksLikeJunk(data) ? "spam"
+    : (formName === "product-order" && !String(data.upi_ref || "").trim()) ? "lead" : "new";
+
   const limit = await rateLimit({ bucket: "form-submit-ip", id: clientIp(req, context), limit: PER_IP_HOUR, windowSec: 3600 });
   if (!limit.ok) {
     return new Response(JSON.stringify({ error: "rate_limited" }), {
@@ -127,7 +133,7 @@ export default async function handler(req, context) {
         "Content-Type": "application/json",
         Prefer: "return=representation",
       },
-      body: JSON.stringify({ form_name: formName, data, email, source: "web" }),
+      body: JSON.stringify({ form_name: formName, data, email, source: "web", status }),
       signal: AbortSignal.timeout(10000),
     });
 

@@ -1916,9 +1916,9 @@ SLIDES_D = [
               "Is it access, use, safety or function? Who collected it and do they run "
               "the programme? Person or household? Which season? What happens after the "
               "pit fills? For further reading on use and behaviour, see the ImpactMojo "
-              "Deep Dive <a href=\"/deepdives/water-sanitation-behaviour-gap.html\">Water, "
+              "Deep Dive <a href=\"/DeepDives/water-sanitation-behaviour-gap.html\">Water, "
               "Sanitation, and the Behaviour Gap</a>, and for the survey gap, <a "
-              "href=\"/deepdives/nfhs6-stopped-counting.html\">What NFHS-6 stopped "
+              "href=\"/DeepDives/nfhs6-stopped-counting.html\">What NFHS-6 stopped "
               "counting</a>.")),
     ], compact=True),
 
@@ -1987,7 +1987,7 @@ SLIDES_D = [
      "byline": "ImpactMojo 101 Series &middot; Free foundational learning for development "
                "practitioners in South Asia",
      "ctas": [{"label": "Water, Sanitation and the Behaviour Gap",
-               "href": "/deepdives/water-sanitation-behaviour-gap.html"},
+               "href": "/DeepDives/water-sanitation-behaviour-gap.html"},
               {"label": "Nutrition 101", "href": "/101-courses/nutrition.html"},
               {"label": "All 101 courses", "href": "/101-courses/"}],
      "meta": ["100 slides", "12 sections", "CC BY-NC-ND"]},

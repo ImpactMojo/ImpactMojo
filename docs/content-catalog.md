@@ -390,7 +390,7 @@ Shareable poster series that turn research and evaluation concepts into visual e
 
 ## Handouts (90 HTML pages)
 
-Downloadable reference sheets organized by learning track. Browse all at [Handouts Index](/Handouts/index.html).
+Downloadable reference sheets organized by learning track. Browse all at [Handouts Index](/handouts.html).
 
 ### Data & Technology Track
 

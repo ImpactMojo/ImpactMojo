@@ -112,7 +112,7 @@ ImpactMojo-வின் **80 அடிப்படை பாடநெறிக�
 | Cost-Effectiveness Analysis | கிடைக்கிறது | [டெக்கைப் பார்க்க](/101-courses/cost-effectiveness.html) |
 | English for Development | கிடைக்கிறது | [டெக்கைப் பார்க்க](/101-courses/eng-dev.html) |
 | Advocacy Fundamentals | கிடைக்கிறது | [டெக்கைப் பார்க்க](/101-courses/advocacy-basics.html) |
-| Livelihoods Fundamentals | கிடைக்கிறது | [டெக்கைப் பார்க்க](/101-courses/livelihood-basics.html) |
+| Livelihoods Fundamentals | கிடைக்கிறது | [டெக்கைப் பார்க்க](/101-courses/work-labour-livelihoods.html) |
 | Climate Essentials | கிடைக்கிறது | [டெக்கைப் பார்க்க](/101-courses/climate-essentials.html) |
 | Post-Truth Politics | டெக் தயார் (PDF நிலுவையில்) | [Gamma-வில் பார்க்க](https://gamma.app/docs/07twqrzjtsnf49j) |
 | Fundraising Fundamentals | டெக் தயார் (PDF நிலுவையில்) | [Gamma-வில் பார்க்க](https://gamma.app/docs/0j6oy9d9f60xevo) |
