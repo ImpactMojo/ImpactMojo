@@ -402,13 +402,18 @@ td .sub{display:block;color:var(--faint);font-size:12px}
   }
 
   /* ---------- Tabs ---------- */
-  var VIEWS = {map:viewMap, states:viewStates, policy:viewPolicy, ops:viewOps, list:viewList};
+  /* The view is chosen by position in a fixed list, so a name taken from the
+     address can only ever select one of these five functions. */
+  var NAMES = ['map', 'states', 'policy', 'ops', 'list'];
+  var DRAW = [viewMap, viewStates, viewPolicy, viewOps, viewList];
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tabs [role="tab"]'));
   function show(name, focus){
-    if (!Object.prototype.hasOwnProperty.call(VIEWS, name)) name = 'map';
+    var at = NAMES.indexOf(name);
+    if (at < 0) at = 0;
+    name = NAMES[at];
     tabs.forEach(function(t){ var on = t.id === 't-' + name; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
     view.setAttribute('aria-labelledby', 't-' + name);
-    VIEWS[name]();
+    DRAW[at]();
     try { history.replaceState(null, '', name === 'map' ? location.pathname : '#' + name); } catch (e) {}
   }
   tabs.forEach(function(t, i){
