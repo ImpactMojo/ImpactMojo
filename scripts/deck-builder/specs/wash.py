@@ -1916,9 +1916,9 @@ SLIDES_D = [
               "Is it access, use, safety or function? Who collected it and do they run "
               "the programme? Person or household? Which season? What happens after the "
               "pit fills? For further reading on use and behaviour, see the ImpactMojo "
-              "Deep Dive <a href=\"/deepdives/water-sanitation-behaviour-gap.html\">Water, "
+              "Deep Dive <a href=\"/DeepDives/water-sanitation-behaviour-gap.html\">Water, "
               "Sanitation, and the Behaviour Gap</a>, and for the survey gap, <a "
-              "href=\"/deepdives/nfhs6-stopped-counting.html\">What NFHS-6 stopped "
+              "href=\"/DeepDives/nfhs6-stopped-counting.html\">What NFHS-6 stopped "
               "counting</a>.")),
     ], compact=True),
 

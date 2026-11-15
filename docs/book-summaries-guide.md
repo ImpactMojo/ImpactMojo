@@ -105,4 +105,4 @@ Have a development text that would benefit from an interactive companion? We wel
 - **[Courses](/courses/)**: structured learning paths across 22 flagship and 84 foundational development topics
 - **[Games](/Games/)**: interactive simulations that teach development concepts through play
 - **[Labs](/courses/)**: browser-based coding and data labs for hands-on practice
-- **[Handouts](/Handouts/)**: 84 quick-reference handouts across all development tracks
+- **[Handouts](/handouts.html)**: 84 quick-reference handouts across all development tracks

@@ -127,3 +127,16 @@ export const jsonResponse = (obj, status = 200, extra = {}) => new Response(JSON
 /** The 429 a limited caller receives, with Retry-After set. */
 export const tooMany = (message, retryAfter) =>
   jsonResponse({ error: message }, 429, retryAfter ? { "Retry-After": String(retryAfter) } : {});
+
+/**
+ * The two shapes of junk that reach the site's forms: a "Test User" probe, and
+ * a message that is nothing but a phone-length number. A match is stored with
+ * status "spam" and kept out of the weekly open-items email. Nothing is
+ * dropped, because a person, not a pattern, decides what is spam.
+ */
+export function looksLikeJunk(data) {
+  const d = data || {};
+  const msg = String(d.message == null ? (d.description == null ? "" : d.description) : d.message).trim();
+  const name = String(d.name || "").trim();
+  return /^test user$/i.test(name) || /^\d{8,12}$/.test(msg);
+}

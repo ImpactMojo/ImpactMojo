@@ -112,7 +112,7 @@ ImpactMojo-র **80টি ভিত্তিমূলক কোর্স** ভ�
 | Cost-Effectiveness Analysis | উপলব্ধ | [ডেক দেখুন](/101-courses/cost-effectiveness.html) |
 | English for Development | উপলব্ধ | [ডেক দেখুন](/101-courses/eng-dev.html) |
 | Advocacy Fundamentals | উপলব্ধ | [ডেক দেখুন](/101-courses/advocacy-basics.html) |
-| Livelihoods Fundamentals | উপলব্ধ | [ডেক দেখুন](/101-courses/livelihood-basics.html) |
+| Livelihoods Fundamentals | উপলব্ধ | [ডেক দেখুন](/101-courses/work-labour-livelihoods.html) |
 | Climate Essentials | উপলব্ধ | [ডেক দেখুন](/101-courses/climate-essentials.html) |
 | Post-Truth Politics | ডেক প্রস্তুত (PDF মুলতুবি) | [Gamma-তে দেখুন](https://gamma.app/docs/07twqrzjtsnf49j) |
 | Fundraising Fundamentals | ডেক প্রস্তুত (PDF মুলতুবি) | [Gamma-তে দেখুন](https://gamma.app/docs/0j6oy9d9f60xevo) |

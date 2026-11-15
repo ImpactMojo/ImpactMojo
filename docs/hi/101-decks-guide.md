@@ -112,7 +112,7 @@ ImpactMojo के **80 बुनियादी कोर्स** विज़�
 | Cost-Effectiveness Analysis | उपलब्ध | [डेक देखें](/101-courses/cost-effectiveness.html) |
 | English for Development | उपलब्ध | [डेक देखें](/101-courses/eng-dev.html) |
 | Advocacy Fundamentals | उपलब्ध | [डेक देखें](/101-courses/advocacy-basics.html) |
-| Livelihoods Fundamentals | उपलब्ध | [डेक देखें](/101-courses/livelihood-basics.html) |
+| Livelihoods Fundamentals | उपलब्ध | [डेक देखें](/101-courses/work-labour-livelihoods.html) |
 | Climate Essentials | उपलब्ध | [डेक देखें](/101-courses/climate-essentials.html) |
 | Post-Truth Politics | डेक तैयार (PDF लंबित) | [Gamma पर देखें](https://gamma.app/docs/07twqrzjtsnf49j) |
 | Fundraising Fundamentals | डेक तैयार (PDF लंबित) | [Gamma पर देखें](https://gamma.app/docs/0j6oy9d9f60xevo) |

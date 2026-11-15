@@ -1,7 +1,9 @@
 /**
  * Netlify event function — fires automatically on every Netlify Form submission.
  *
- * Turns each "I've paid" submission into a one-click action email to the admin:
+ * A single file is emailed to the buyer at once and the admin is told to check
+ * the payment (see "Instant delivery" below). Everything else turns each
+ * "I've paid" submission into a one-click action email to the admin:
  * you glance at your UPI app, click "Confirm & deliver", and /api/confirm does
  * the rest (emails the file / activates the subscription). UPI itself can't be
  * auto-verified, so this keeps the human "did the money arrive?" check while
@@ -10,7 +12,7 @@
  * Env: ADMIN_KEY, STATUS_ALERT_EMAIL, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, URL
  */
 import crypto from "node:crypto";
-import { rateLimit } from "../lib/guard.mjs";
+import { rateLimit, looksLikeJunk } from "../lib/guard.mjs";
 
 const SITE = (process.env.URL || "https://www.impactmojo.in").replace(/\/$/, "");
 const SUPABASE_URL = (process.env.SUPABASE_URL || "https://ddyszmfffyedolkcugld.supabase.co").replace(/\/$/, "");
@@ -246,6 +248,41 @@ const fileFor = (title) => {
 
 const looksLikeEmail = (v) => typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 
+// ---- Instant delivery ----------------------------------------------------
+// UPI cannot be verified from here, so until 2026-11-15 every order waited for
+// the owner to open an email and click "Confirm & deliver". A buyer who paid
+// at night waited until morning, and one whose order hit a bug got nothing.
+// A single file is now sent the moment the buyer gives a payment reference,
+// and the owner checks the reference against the bank statement afterwards.
+// What stays behind the owner's click: bundles, the Kit, subscriptions, and
+// anything this function cannot resolve to one file. Eligibility is decided
+// from the title this function resolves, never from the price the page sent,
+// because a caller can write any price it likes into the form.
+const HELD_FOR_OWNER = new Set(["evaluationessentialskit"]);
+const instantEligible = (title) =>
+  !(BUNDLES[title] || BUNDLES_NORM[norm(title)]) && !HELD_FOR_OWNER.has(norm(title)) && Boolean(single(title));
+// PhonePe, Google Pay and bank UTRs all differ; every one seen so far is 10
+// to 35 letters and digits. A sentence or a blank is not a reference.
+const looksLikeUpiRef = (v) => /^[A-Za-z0-9]{10,35}$/.test(v);
+// A reference pays for one order. Three orders a day to one address, four an
+// hour from one connection and 25 a day in all are far above real demand and
+// stop a script from walking the catalogue with invented references. If the
+// counter store is down nothing is sent automatically and the owner's
+// one-click email goes out as before.
+async function instantAllowed(upiRef, email, ip) {
+  const gates = [
+    { bucket: "instant-ref", id: upiRef.toLowerCase(), limit: 1, windowSec: 90 * 86400 },
+    { bucket: "instant-to", id: email.toLowerCase(), limit: 3, windowSec: 86400 },
+    ip ? { bucket: "instant-ip", id: ip, limit: 4, windowSec: 3600 } : null,
+    { bucket: "instant-all", id: "all", limit: 25, windowSec: 86400 },
+  ].filter(Boolean);
+  for (const g of gates) {
+    const r = await rateLimit({ ...g, failClosed: true });
+    if (!r.ok) return { ok: false, why: `${g.bucket}: ${r.reason}` };
+  }
+  return { ok: true };
+}
+
 const esc = (v) => String(v == null ? "" : v)
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -318,10 +355,41 @@ function enquiryHtml(spec, data) {
     <p style="font-size:12px;color:#94A3B8">Reply to the address above. No acknowledgement has been sent to the requester.</p>`;
 }
 
+// Most pages save a copy of a submission to form_submissions from the browser
+// (js imxSubmitBoth). Seven do not, the grievance form among them, so a
+// grievance filed on 2026-10-26 existed only in Netlify and appeared in no
+// list the owner reads. Every submission Netlify accepts is now copied here
+// unless the browser already stored it. Best effort: it never changes what
+// the rest of this function does.
+const NOT_FORM_FIELDS = new Set(["ip", "user_agent", "referrer", "bot-field", "form-name", "g-recaptcha-response"]);
+async function storeCopy(form, raw) {
+  if (!SERVICE_KEY || !form) return;
+  try {
+    const data = {};
+    for (const [k, v] of Object.entries(raw || {})) {
+      if (NOT_FORM_FIELDS.has(k) || v == null || typeof v === "object") continue;
+      data[String(k).slice(0, 120)] = String(v).slice(0, 20000);
+    }
+    if (!Object.keys(data).length) return;
+    const email = looksLikeEmail(data.email) ? data.email.trim() : null;
+    const head = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json" };
+    const since = new Date(Date.now() - 20 * 60 * 1000).toISOString();
+    const q = `form_name=eq.${encodeURIComponent(form)}&submitted_at=gte.${since}&select=id&limit=1` + (email ? `&email=eq.${encodeURIComponent(email)}` : "&email=is.null");
+    const seen = await fetch(`${SUPABASE_URL}/rest/v1/form_submissions?${q}`, { headers: head });
+    if (seen.ok && (await seen.json()).length) return;
+    const status = looksLikeJunk(data) ? "spam" : (form === "product-order" && !String(data.upi_ref || "").trim()) ? "lead" : "new";
+    await fetch(`${SUPABASE_URL}/rest/v1/form_submissions`, {
+      method: "POST", headers: { ...head, Prefer: "return=minimal" },
+      body: JSON.stringify({ form_name: String(form).slice(0, 80), data, email, source: "netlify", status }),
+    });
+  } catch (e) { console.log("[submission] stored copy failed", e.message); }
+}
+
 export const handler = async (event) => {
   let data, form, ip;
   try { const b = JSON.parse(event.body); data = b.payload.data || {}; form = b.payload.form_name; ip = String(data.ip || b.payload.ip || ""); }
   catch { return { statusCode: 200 }; }
+  await storeCopy(form, data);
 
   if (Object.prototype.hasOwnProperty.call(ENQUIRIES, form)) {
     const spec = ENQUIRIES[form];
@@ -394,9 +462,10 @@ export const handler = async (event) => {
     return { statusCode: 200 };
   }
 
-  let type, key, label;
+  let type, key, label, instant = false;
   if (form === "product-order") {
     const title = (data.product || "").replace(/\s*\(₹.*$/, "").trim();
+    instant = instantEligible(title);
     const file = fileFor(title);
     if (!file) { await sendMail(ADMIN_EMAIL, `Order needs manual handling: ${data.product}`, `<p>Unknown product "${esc(data.product)}" from ${esc(email)} (UPI ref ${esc(upiRef)}). Deliver manually.</p>`); return { statusCode: 200 }; }
     type = "product"; key = file; label = data.product;
@@ -420,6 +489,35 @@ export const handler = async (event) => {
     <p style="margin:22px 0"><a href="${esc(url)}" style="display:inline-block;background:#16A34A;color:#fff;text-decoration:none;padding:14px 26px;border-radius:8px;font-weight:700;font-family:Inter,Arial;font-size:15px">✓ Confirm &amp; deliver</a></p>
     <p style="font-size:12px;color:#94A3B8">Clicking ${type === "product" ? "emails the file to the buyer" : "activates the subscription"}. Ignore if the payment didn't arrive.</p>
     <p style="font-size:12px;color:#94A3B8">Button not showing? Copy this link into your browser:<br><span style="word-break:break-all;color:#64748B">${esc(url)}</span></p>`;
-  await sendMail(ADMIN_EMAIL, `Confirm payment: ${label}`, html);
+  // Instant delivery: open our own signed link, which signs the file, emails
+  // the buyer and marks the link used. The owner is told what went out and to
+  // whom. Anything short of a "Delivered" page falls through to the one-click
+  // email below, so a failure here never loses an order.
+  let heldWhy = "";
+  if (type === "product" && instant) {
+    if (!looksLikeUpiRef(upiRef)) heldWhy = "the payment reference does not look like one";
+    else {
+      const gate = await instantAllowed(upiRef, email, ip);
+      if (!gate.ok) heldWhy = `a delivery limit was reached (${gate.why})`;
+      else {
+        let delivered = false;
+        try {
+          const r = await fetch(url, { headers: { Accept: "text/html" } });
+          delivered = r.ok && /Delivered/.test(await r.text());
+        } catch (e) { console.log("[submission] instant delivery failed", e.message); }
+        if (delivered) {
+          await sendMail(ADMIN_EMAIL, `Delivered, please check payment: ${label}`,
+            `<p><strong>${esc(label)}</strong> was emailed to ${esc(email)} as soon as the order came in.</p>
+             <p>UPI reference quoted: <strong>${esc(upiRef)}</strong></p>
+             <p>Check that this payment is in your bank statement. If it is not there, write to the buyer; nothing else needs doing.</p>
+             <p style="font-size:12px;color:#94A3B8">Single files are sent at once. Bundles, the Kit and subscriptions still wait for your click.</p>`);
+          return { statusCode: 200 };
+        }
+        heldWhy = "the automatic delivery did not complete";
+      }
+    }
+  }
+  const note = heldWhy ? `<p style="font-size:12px;color:#94A3B8">Not sent automatically because ${esc(heldWhy)}.</p>` : "";
+  await sendMail(ADMIN_EMAIL, `Confirm payment: ${label}`, html + note);
   return { statusCode: 200 };
 };

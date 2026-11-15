@@ -33,6 +33,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Changed
 
+- **Single files you buy arrive at once.** A template, set of course notes, poster or question bank is emailed the moment you enter your UPI payment reference, where before it waited for us to confirm the payment by hand. Bundles, the Evaluation Essentials Kit and memberships are still confirmed by hand first.
+- **The two October backups of the course text are out of the public database schema.** Every row in them is still in the live table. They were moved to an archive schema the site's API does not serve, where an administrator can still read them.
 - **The home page's Recently added list shows films, audio and Fundamentals pages.** Field Talkies was live and missing from the list, because the list only knew courses, companions, guides and tools. Plays and finishes of each film and audio note are now counted, where the visitor has allowed analytics.
 - **Field Radio is audio only, and says who is speaking.** The station keeps its twelve audio notes; its eleven videos moved to Field Talkies, and an old link to one of them opens it there. The page used to describe itself as voices from practitioners across South Asia. Every clip on it comes from the ImpactMojo team, so the page, its search entry and its guide now say that.
 - **Field Radio and Field Talkies are in the top menu on a computer.** Both were in the phone menu and the footer only. They now sit under Data in the header menu as well.
@@ -46,6 +48,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Fixed
 
+- **A grievance, and submissions to six other forms, were kept only in Netlify and appeared in no list** (#1389). Every submission the site accepts is now copied to one table, junk and unpaid leads are labelled, a delivered order closes itself, and each Monday we get one email listing what is still open, with a link per entry to mark it as handled.
+- **The daily link check failed every day from 7 November, and about 110 links to our own pages went through a redirect** (#1388). Links to the blog, the challenges page, the WASH deck's Deep Dives and several pages in the translated guides now point at the page itself. The check reports links to other sites and fails only on links to our own.
 - **The Wheel of Learning Transfer showed no ring labels on a phone** (#1372). Below 640px the labels were hidden because they would have been about 5px tall. On a narrow screen the wheel now keeps a readable size inside a frame that scrolls sideways, starts centred, and can be reached from the keyboard, with a one-line hint to swipe.
 - **The Wheel of Learning Transfer did not fit a phone screen** (#1374). The first phone fix kept the wheel at a readable size and made it scroll sideways, so a reader saw half of it. On screens 760px and under the whole wheel now fits, the ten sectors are numbered, and a numbered list of the factors sits under it. Tapping a list item or a sector opens the factor. Desktop is unchanged.
 - **The Wheel of Learning Transfer's sectors were still empty on a phone** (#1378). On screens 760px and under each factor's name is now written across its own outer-ring sector, and the wheel fills the screen width again. Desktop is unchanged.
@@ -3280,7 +3284,7 @@ Fourteen new interactive Reading Companions, each grounded in the full text of t
 
 ### For Learners
 
-- **Indian Data Navigator** now lives in the **Dataverse** at [`/dataverse-india.html`](/dataverse-india.html) instead of Labs. It's a guide to India's data *sources* — which is exactly what the Dataverse is for — rather than a build-something workbench, so it's a better fit there. Same tool, same features (search, filter, shortlist, export a data-sourcing plan); the old link redirects automatically. It's now featured at the top of the Dataverse.
+- **Indian Data Navigator** now lives in the **Dataverse** at [`/dataverse-india.html`](/dataverse.html) instead of Labs. It's a guide to India's data *sources* — which is exactly what the Dataverse is for — rather than a build-something workbench, so it's a better fit there. Same tool, same features (search, filter, shortlist, export a data-sourcing plan); the old link redirects automatically. It's now featured at the top of the Dataverse.
 
 ## v10.125.0 — July 15, 2026 (Two data-literacy labs — Indian Data Navigator & Why City Boundaries Lie)
 

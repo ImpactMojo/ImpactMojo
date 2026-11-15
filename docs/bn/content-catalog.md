@@ -75,7 +75,7 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 | Development Economics 101 | [Open](/101-courses/dev-economics.html) |
 | Global Development Governance 101 | [Open](/101-courses/dev-architecture.html) |
 | Fundraising Basics 101 | [Open](/101-courses/fundraising-basics.html) |
-| Decent Work For All 101 | [Open](/101-courses/decent-work.html) |
+| Decent Work For All 101 | [Open](/101-courses/work-labour-livelihoods.html) |
 | Cost Effectiveness 101 | [Open](/101-courses/cost-effectiveness.html) |
 | Economics for Policy Practitioners 101 | [Open](/101-courses/pol-economy.html) |
 | Decolonial Development 101 | [Open](/101-courses/decolonize-dev.html) |
@@ -99,7 +99,7 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 | Care Economy 101 | [Open](/101-courses/care-economy-101.html) |
 | SEL Basics 101 | [Open](/101-courses/sel-basics.html) |
 | Education and Pedagogy 101 | [Open](/101-courses/edu-pedagogy.html) |
-| Livelihoods 101 | [Open](/101-courses/livelihood-basics.html) |
+| Livelihoods 101 | [Open](/101-courses/work-labour-livelihoods.html) |
 | BCC Programming 101 | [Open](/101-courses/bcc-comms.html) |
 
 ### Philosophy & Governance
@@ -163,7 +163,7 @@ Specials-এর অধীনে ইন্টারঅ্যাক্টিভ �
 
 ## Handouts (84 HTML pages)
 
-শিক্ষণ ট্র্যাক অনুযায়ী সংগঠিত ডাউনলোডযোগ্য রেফারেন্স শিট। সবগুলো দেখুন [Handouts Index](/Handouts/index.html)-এ।
+শিক্ষণ ট্র্যাক অনুযায়ী সংগঠিত ডাউনলোডযোগ্য রেফারেন্স শিট। সবগুলো দেখুন [Handouts Index](/handouts.html)-এ।
 
 ### Data & Technology Track
 

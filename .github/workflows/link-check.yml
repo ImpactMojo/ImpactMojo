@@ -74,11 +74,34 @@ jobs:
           # above: 109 dated copies of the site carrying 11,668 URL references,
           # 322 of them URLs that appear in no page anyone can reach. Checking
           # links in a file nobody serves is 10.3% of the crawl for no signal.
-          fail: true
+          # The crawl itself never fails the run. From 7 to 14 November 2026 it
+          # was red every day on about 175 errors, nearly all of them government
+          # sites timing out and certificates the runner does not trust. A check
+          # that is always red is read by nobody, so a dead link on our own
+          # pages would have gone unseen. The step below fails the run only for
+          # links to this site's own files, which is the part we can fix.
+          fail: false
           # The full report goes up as an artifact below. As a job summary it
           # was 6.7 MB against GitHub's 1 MB limit, so the upload aborted and
           # the run page showed nothing at all.
           jobSummary: false
+
+      - name: Fail on broken links to our own pages
+        if: always()
+        run: |
+          if [ ! -f lychee/out.md ]; then echo "No report was written, so nothing was checked."; exit 1; fi
+          own=$(grep -E '^\* \[[A-Z0-9]+\] <file://' lychee/out.md | sort -u || true)
+          if [ -n "$own" ]; then
+            echo "Broken links to this site's own pages:"; echo "$own"
+            {
+              echo "## Broken links to our own pages"
+              echo
+              echo "$own"
+              echo
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "PASS: no broken link to this site's own pages. Links to other sites are listed in the report and do not fail the run."
 
       - name: Short summary
         if: always()
