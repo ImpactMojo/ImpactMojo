@@ -348,6 +348,25 @@ jobs:
       - name: Rebuild the caste lists data and compare
         run: python3 scripts/build-castes-explorer-data.py --check
 
+  datacentres-data:
+    name: Data centres explorer data is current
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Rebuilds datacentres.html's inline data from data/datacentres-india.json
+      # and fails if the page's copy is stale. It also checks the snapshot
+      # against the figures the authors publish beside it: facilities by
+      # status, facilities per state against their policy table, and the
+      # count in states with a dedicated policy.
+      - name: Rebuild the data centres data and compare
+        run: python3 scripts/build-datacentres-explorer-data.py --check
+
   nhts-data:
     name: Travel survey explorer data is current
     runs-on: ubuntu-latest

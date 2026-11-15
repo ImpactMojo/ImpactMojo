@@ -27,6 +27,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### For Learners
 
+- **Data Centres Explorer**: a map of India's 329 data centres, who runs them, what 18 states offer to attract them, and where the coal plants that power them sit, from a 2026 study of who bears the environmental cost.
 - **Field Talkies**: short films that explain the hard parts of development practice, starting with the logframe and how to present evidence to people who decide.
 - **The Wheel of Learning Transfer**: ten conditions that decide whether a training changes how people work, with the research behind each and a way to rate your own programme.
 - **Who is still at work at five o'clock**: a data Deep Dive on how long Indians work, who works on Sunday, what an hour of that work produces, and the unpaid shift women do on top, from India's Time Use Survey 2024.
