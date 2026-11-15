@@ -259,6 +259,56 @@ def build(clips: list[dict], films: bool = False) -> list[dict]:
     return rows
 
 
+# ---- Video markup ---------------------------------------------------------
+# Until 2026-11-15 the films page told a search engine nothing about its films:
+# the list is drawn by script from the manifest, so the page a crawler read
+# held a player and no video. Each film that has a poster now gets a
+# schema.org VideoObject in the page head, written here from the same manifest
+# so the markup cannot drift from what plays. A film without a poster is left
+# out, because a VideoObject with no thumbnail is not eligible for video
+# results and would only be reported as an error.
+SITE = "https://www.impactmojo.in"
+FILMS_PAGE = ROOT / "field-talkies.html"
+V_START, V_END = "<!-- videos:start -->", "<!-- videos:end -->"
+
+
+def iso_duration(mmss: str) -> str:
+    m, sec = (int(x) for x in mmss.split(":"))
+    return f"PT{m}M{sec}S"
+
+
+def video_markup(films: list[dict]) -> str:
+    items = []
+    for f in films:
+        if not f.get("poster"):
+            continue
+        items.append({
+            "@type": "VideoObject",
+            "@id": f"{SITE}{CINEMA}#{f['id']}",
+            "name": f["title"],
+            "description": COPY[f["id"]][0],
+            "thumbnailUrl": SITE + f["poster"],
+            "uploadDate": f["date"] + "T00:00:00+05:30",
+            "duration": iso_duration(f["duration"]),
+            "contentUrl": f["src"],
+            "url": f"{SITE}{CINEMA}#{f['id']}",
+            "inLanguage": "en-IN",
+            "transcript": f.get("transcript", ""),
+            "publisher": {"@type": "Organization", "name": "ImpactMojo", "url": SITE + "/"},
+        })
+    doc = {"@context": "https://schema.org", "@graph": items}
+    body = json.dumps(doc, ensure_ascii=False, indent=1).replace("</", "<\\/")
+    return f'{V_START}\n<script type="application/ld+json">\n{body}\n</script>\n{V_END}'
+
+
+def with_videos(page: str, films: list[dict]) -> str:
+    block = video_markup(films)
+    if V_START in page and V_END in page:
+        i, j = page.index(V_START), page.index(V_END) + len(V_END)
+        return page[:i] + block + page[j:]
+    return page.replace("</head>", block + "\n</head>", 1)
+
+
 def main() -> int:
     check = "--check" in sys.argv
 
@@ -299,7 +349,14 @@ def main() -> int:
     out = kept[:at] + build(clips) + build(films, films=True) + kept[at:]
     text = json.dumps(out, ensure_ascii=False, indent=2) + "\n"
 
+    page = FILMS_PAGE.read_text(encoding="utf-8")
+    page_new = with_videos(page, films)
+
     if check:
+        if page_new != page:
+            print("FAIL - the video markup in field-talkies.html is stale.")
+            print("Run: python3 scripts/build-field-radio-index.py")
+            return 1
         if text != INDEX.read_text(encoding="utf-8"):
             print("FAIL - data/search-index.json is stale for Field Radio or Field Talkies.")
             print("Run: python3 scripts/build-field-radio-index.py")
@@ -309,6 +366,7 @@ def main() -> int:
         return 0
 
     INDEX.write_text(text, encoding="utf-8")
+    FILMS_PAGE.write_text(page_new, encoding="utf-8")
     print(f"wrote {len(clips)} Field Radio and {len(films)} Field Talkies rows into data/search-index.json. "
           f"Now run build-theories.py.")
     return 0

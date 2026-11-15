@@ -857,14 +857,26 @@
   /* ---- Init ---- */
   injectStyles();
 
+  /* The index is about 190 KB compressed and the search library comes with it.
+     Until 2026-11-15 both were fetched on every page load, for a search few
+     visitors run. They now load when someone shows they are about to search:
+     a touch, a pointer or keyboard focus on a search button or box. Opening
+     search loads them too (openSearch), and results appear as soon as the
+     index arrives, so nothing changes for a person who searches. */
+  var SEARCH_UI = '.im-sc-search, .ims-nav-btn, [data-im-search], input[type="search"]';
+  function warm(e) {
+    if (fuse || loading) return;
+    var t = e && e.target;
+    if (t && t.closest && t.closest(SEARCH_UI)) initFuse();
+  }
+  ['pointerenter', 'pointerdown', 'touchstart', 'focusin'].forEach(function (n) {
+    document.addEventListener(n, warm, { capture: true, passive: true });
+  });
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      injectNavButton();
-      initFuse();
-    });
+    document.addEventListener('DOMContentLoaded', injectNavButton);
   } else {
     injectNavButton();
-    initFuse();
   }
 
   window.ImpactMojoSearch = {

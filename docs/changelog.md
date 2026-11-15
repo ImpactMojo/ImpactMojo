@@ -33,6 +33,9 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Changed
 
+- **Search engines can now see the two Field Talkies explainers as videos.** The films page describes each film that has a poster in the standard video format (title, description, thumbnail, length, transcript), written from the same file the player reads.
+- **Pages load a little lighter.** Site search used to fetch its index, about 190 KB, on every page. It now fetches it when you go to search, and results appear as before.
+- **Two explorers answer the question people arrive with.** The NAS explorer says which classes the survey tests, and the LEAP Cities explorer says how to tell whether a city is Tier 2 or Tier 3. The Livelihoods course links to the PLFS explorer.
 - **Seven Data Room explorers have titles and descriptions that say what people search for.** Search Console showed the PLFS, NAS, UDISE+, AISHE, Happy Planet Index, LEAP Cities and NFHS explorers already appearing on the first page of results and being passed over. Each title now starts with the name of the dataset and each description states what the page holds in under 160 characters.
 - **Single files you buy arrive at once.** A template, set of course notes, poster or question bank is emailed the moment you enter your UPI payment reference, where before it waited for us to confirm the payment by hand. Bundles, the Evaluation Essentials Kit and memberships are still confirmed by hand first.
 - **The two October backups of the course text are out of the public database schema.** Every row in them is still in the live table. They were moved to an archive schema the site's API does not serve, where an administrator can still read them.
