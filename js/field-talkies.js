@@ -97,6 +97,11 @@
     }
   }
 
+  function track(name, f) {
+    if (typeof window.gtag !== "function" || !f) return;
+    try { window.gtag("event", name, { media_type: "video", media_id: f.id || "", media_title: f.title || "" }); } catch (e) {}
+  }
+
   function load(i, autoplay) {
     if (!films.length) return;
     stop();
@@ -127,6 +132,13 @@
     video.addEventListener("loadedmetadata", function () {
       if (video && video.videoHeight > video.videoWidth) els.screen.classList.add("is-tall");
     });
+    // Count a play and a finish, once each per film per visit, so the next
+    // film can be chosen on what people watch. Nothing is sent without gtag.
+    (function (v, film) {
+      var played = false, done = false;
+      v.addEventListener("play", function () { if (!played) { played = true; track("media_play", film); } });
+      v.addEventListener("ended", function () { if (!done) { done = true; track("media_complete", film); } });
+    })(video, f);
     video.addEventListener("ended", function () { load(idx + 1, true); });
     video.addEventListener("error", onError);
 

@@ -39,6 +39,7 @@ START, END = "<!-- whats-new:start -->", "<!-- whats-new:end -->"
 
 # Label and colour family by address. The families are the home page's three
 # tints: blue (t-course), violet (t-101), slate (t-law).
+MIN_ITEMS = 14
 KINDS = [
     ("/courses/", "Flagship course", "t-course"),
     ("/101-courses/", "101 course", "t-101"),
@@ -54,6 +55,9 @@ KINDS = [
     ("/theories/", "Theory", "t-101"),
     ("/blog/", "Blog post", "t-course"),
     ("/survey-instruments.html", "Library", "t-law"),
+    ("/field-talkies.html", "Films", "t-course"),
+    ("/fundamentals/", "Fundamentals", "t-101"),
+    ("/field-radio.html", "Audio", "t-law"),
 ]
 # Pages about the site itself (release round-ups, the colophon posts) belong
 # on the updates page and the blog, never in the home page's headline list.
@@ -119,7 +123,9 @@ def build():
             continue
         date = datetime.date(int(m.group(3)), MONTHS[m.group(1)], int(m.group(2)))
         newest = newest or date
-        if (newest - date).days > WINDOW_DAYS:
+        # Past the window, keep going only until the list has enough to draw
+        # from: a quiet month should not leave the home page with three items.
+        if (newest - date).days > WINDOW_DAYS and len(items) >= MIN_ITEMS:
             break
         block = re.search(r"### For Learners\n(.*?)(?=\n### |\Z)", rel, re.S)
         if not block:
