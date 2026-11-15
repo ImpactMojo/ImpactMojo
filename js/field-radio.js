@@ -141,6 +141,11 @@
     els.playBtn.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
   }
 
+  function track(name, c) {
+    if (typeof window.gtag !== "function" || !c) return;
+    try { window.gtag("event", name, { media_type: "audio", media_id: c.id || "", media_title: c.title || "" }); } catch (e) {}
+  }
+
   function load(i, autoplay) {
     idx = ((i % clips.length) + clips.length) % clips.length;
     var c = clips[idx];
@@ -176,6 +181,12 @@
     }
 
     media = $("fr-media");
+    // Count a play and a finish, once each per clip per visit.
+    (function (m, clip) {
+      var played = false, done = false;
+      m.addEventListener("play", function () { if (!played) { played = true; track("media_play", clip); } });
+      m.addEventListener("ended", function () { if (!done) { done = true; track("media_complete", clip); } });
+    })(media, c);
     media.addEventListener("ended", function () { jump(idx + 1); });
     media.addEventListener("error", onMediaError);
     media.addEventListener("play", function () { onPlayState(true); });
