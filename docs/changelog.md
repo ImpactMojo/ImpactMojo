@@ -14,6 +14,12 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **The Evaluation Essentials Kit goes from 30 to 45 products.** The Kit stays at ₹2,499. The struck-through list price becomes ₹9,955, which is the sum of the 45 one-time prices.
 
+## v10.400.0 - November 16, 2026 (a third Field Talkies film)
+
+### For Learners
+
+- **Data analysis: five problems that reports seldom mention**: a three-minute film on what goes wrong after survey data is collected, from forms that decide what can be recorded to analysis nobody wrote down, with three habits for analysts and three questions for readers.
+
 ## v10.399.0 - November 15, 2026 (Field Talkies and the Wheel of Learning Transfer)
 
 ### Added

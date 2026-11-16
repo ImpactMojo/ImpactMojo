@@ -87,6 +87,13 @@ COPY: dict[str, tuple[str, list[str]]] = {
         ["presenting evidence", "communication", "mel", "evaluation use", "uncertainty", "findings",
          "decision makers", "reporting"],
     ),
+    "ft-03": (
+        "Five problems that arise after survey data is collected: forms that decide what can be recorded, "
+        "missing data that is not random, analyst choices, false certainty on dashboards, and analysis "
+        "nobody wrote down. Ends with three habits for analysts and three questions for readers.",
+        ["data analysis", "survey data", "missing data", "nonresponse", "forking paths", "reproducibility",
+         "confidence interval", "mel", "evaluation", "research methods"],
+    ),
     "vs-05": (
         "What monitoring, evaluation and learning each actually do, and why so much of the data "
         "collected across South Asia serves compliance rather than decisions. Worked through a "
