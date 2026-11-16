@@ -18,6 +18,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### For Learners
 
+- **District Lineage Explorer**: type an Indian district and see what it was part of at each census since 1951, when it was carved out, and which districts to add together before comparing two rounds of data. Built on the India State Stories tables.
 - **Data analysis: five problems that reports seldom mention**: a three-minute film on what goes wrong after survey data is collected, from forms that decide what can be recorded to analysis nobody wrote down, with three habits for analysts and three questions for readers.
 
 ## v10.399.0 - November 15, 2026 (Field Talkies and the Wheel of Learning Transfer)

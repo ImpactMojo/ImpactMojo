@@ -256,6 +256,12 @@ The lesson is in the design, not the tooling: **an automated check is only worth
 
     **A capacity that was not published is null.** Only 123 of the 233 operating facilities publish an IT load. The authors model one for the rest to run their pollution estimates and call it an allocation; the page shows "not published" there, and operator totals say how many sites they cover. The check fails on a zero. The six headline findings on the page are quoted from the paper's abstract and are model results; nothing recomputes them.
 
+45. **District lineage explorer data**: after any change to `data/districts-india.json`, `scripts/build-districts-explorer-data.py` or the inline data block in `districts.html`, run `python3 scripts/build-districts-explorer-data.py`, then `--check` must print `PASS`. Enforced in CI via the `districts-data` job. The snapshot is extracted with `--extract <folder of the four India State Stories CSV files>`.
+
+    **The 2024 column of the crosswalk is behind the split records.** It lists 33 districts for Rajasthan, the position before 2023, while the split records carry the 2023 divisions. The page would otherwise call Jaipur "comparable as it stands" directly above a record of its 2023 split, so a verdict is downgraded to "check before comparing" whenever a dated split record names the district and its child is missing from the later year's list. Keep that guard if you change the verdict logic.
+
+    **The grouping is ours, and it is whole-district only.** For two years the page takes the connected groups of districts that share a line of descent. That is exact for whole splits and mergers and blind to transfers of tehsils or villages, and the page says so beside every result. Three fixes are applied to the source (three duplicate rows, one wrong 2024 state, five rows that say Delhi for NCT of Delhi) and listed on the page; spellings and the nine records whose year lies outside their decade are kept as printed and flagged.
+
 ## Manual browser QA — push & offline (PWA)
 
 These need a real browser (no headless Chromium in the agent sandbox). Run after any service-worker / push change, on the deployed site or a local `npx http-server`:
