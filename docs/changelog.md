@@ -14,6 +14,12 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **The Evaluation Essentials Kit goes from 30 to 45 products.** The Kit stays at ₹2,499. The struck-through list price becomes ₹9,955, which is the sum of the 45 one-time prices.
 
+## v10.401.0 - November 16, 2026 (the District Lineage Explorer reaches today)
+
+### Changed
+
+- **The District Lineage Explorer now ends at the government's current district list.** A ninth column, 2026, holds the 790 districts in the Local Government Directory on 16 November 2026, each with its directory code. The earlier last column was a 2024 list of 760 that left out Rajasthan's 2023 districts. The 2026 column has the 41 districts Rajasthan kept, the three Madhya Pradesh formed in 2023, Ladakh's six new districts, Delhi's 13 after the December 2025 redrawing, and the rest. The page lists the 32 districts ImpactMojo added to join the two lists and the source read for each one's parent districts.
+
 ## v10.400.0 - November 16, 2026 (a third Field Talkies film)
 
 ### For Learners
