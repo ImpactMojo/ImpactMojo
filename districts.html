@@ -379,7 +379,7 @@ table.lin th{width:70px;font-family:'JetBrains Mono',monospace;font-size:13px;co
     order.sort();
     var made = order.map(function(d){ return [d, Object.keys(per[d]).length]; });
     var total = made.reduce(function(s, r){ return s + r[1]; }, 0), top = made.slice().sort(function(x, y){ return y[1] - x[1]; });
-    cap.innerHTML = 'The source records <b>' + total + ' new districts</b> between 1951 and 2024. The busiest decade was <b>' + top[0][0] + ', with ' + top[0][1] + '</b>, followed by ' + top[1][0] + ' with ' + top[1][1] + '. A district that kept its name after losing territory is not counted as new.';
+    cap.innerHTML = 'The source records <b>' + num(total) + ' new districts</b> between 1951 and 2024. The busiest decade was <b>' + esc(top[0][0]) + ', with ' + num(top[0][1]) + '</b>, followed by ' + esc(top[1][0]) + ' with ' + num(top[1][1]) + '. A district that kept its name after losing territory is not counted as new.';
     var counts = Y.map(function(y, i){ return [String(y), U[i].length]; });
     view.innerHTML = '<h4 style="margin-top:0">Districts at each census, and in the 2024 list</h4>' + bars(counts, U[7].length, 'o') +
       '<h4>New districts created, by decade</h4>' + bars(made, top[0][1], 'u') +
