@@ -348,6 +348,24 @@ jobs:
       - name: Rebuild the caste lists data and compare
         run: python3 scripts/build-castes-explorer-data.py --check
 
+  districts-data:
+    name: District lineage explorer data is current
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Rebuilds districts.html's inline data from data/districts-india.json and
+      # fails if the page's copy is stale. It also checks the crosswalk's
+      # district counts against the Census of India (640 in 2011, 466 in 1991,
+      # 412 in 1981, 356 in 1971) and pins the known gaps.
+      - name: Rebuild the district data and compare
+        run: python3 scripts/build-districts-explorer-data.py --check
+
   datacentres-data:
     name: Data centres explorer data is current
     runs-on: ubuntu-latest
