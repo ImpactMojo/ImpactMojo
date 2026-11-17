@@ -75,7 +75,7 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 | Development Economics 101 | [खोलें](/101-courses/dev-economics.html) |
 | Global Development Governance 101 | [खोलें](/101-courses/dev-architecture.html) |
 | Fundraising Basics 101 | [खोलें](/101-courses/fundraising-basics.html) |
-| Decent Work For All 101 | [खोलें](/101-courses/decent-work.html) |
+| Decent Work For All 101 | [खोलें](/101-courses/work-labour-livelihoods.html) |
 | Cost Effectiveness 101 | [खोलें](/101-courses/cost-effectiveness.html) |
 | Economics for Policy Practitioners 101 | [खोलें](/101-courses/pol-economy.html) |
 | Decolonial Development 101 | [खोलें](/101-courses/decolonize-dev.html) |
@@ -99,7 +99,7 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 | Care Economy 101 | [खोलें](/101-courses/care-economy-101.html) |
 | SEL Basics 101 | [खोलें](/101-courses/sel-basics.html) |
 | Education and Pedagogy 101 | [खोलें](/101-courses/edu-pedagogy.html) |
-| Livelihoods 101 | [खोलें](/101-courses/livelihood-basics.html) |
+| Livelihoods 101 | [खोलें](/101-courses/work-labour-livelihoods.html) |
 | BCC Programming 101 | [खोलें](/101-courses/bcc-comms.html) |
 
 ### Philosophy & Governance
@@ -163,7 +163,7 @@ Specials के अंतर्गत इंटरैक्टिव बुक �
 
 ## Handouts (84 HTML पृष्ठ)
 
-शिक्षण ट्रैक के अनुसार व्यवस्थित डाउनलोड करने योग्य संदर्भ पत्रक। सभी को [Handouts Index](/Handouts/index.html) पर देखें।
+शिक्षण ट्रैक के अनुसार व्यवस्थित डाउनलोड करने योग्य संदर्भ पत्रक। सभी को [Handouts Index](/handouts.html) पर देखें।
 
 ### Data & Technology Track
 

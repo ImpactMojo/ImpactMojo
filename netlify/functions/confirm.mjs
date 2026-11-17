@@ -7,6 +7,7 @@
  *
  *   product : mints a 7-day Supabase signed link for the file + emails the buyer
  *   sub     : marks the invoice paid + activates the subscription + emails buyer
+ *   handled : marks one stored form entry as dealt with (weekly open-items email)
  *
  * Env: ADMIN_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  */
@@ -117,6 +118,9 @@ export default async (req) => {
           links.map((l) => btn(l.url, esc(l.file.replace(/^.*\//, "").replace(/^ImpactMojo-/, "").replace(/\.[a-z]+$/i, "").replace(/-/g, " ")))).join("");
       if (!(await mail(email, "Your ImpactMojo download", `<p>Thank you for your purchase!</p>${body}<p>${links.length === 1 ? "This link works" : "These links work"} for 7 days. Reply to this email if you have any trouble.</p>`))) return notSent(email);
       await markUsed();
+      // The stored copy of this order is now dealt with. Best effort: the
+      // buyer already has the file whatever happens here.
+      await sb(`form_submissions?form_name=eq.product-order&status=eq.new&email=eq.${encodeURIComponent(email)}`, { method: "PATCH", body: JSON.stringify({ status: "handled" }) }).catch(() => {});
       return page("Delivered ✓", `${links.length === 1 ? "The file was" : links.length + " files were"} emailed to <b>${esc(email)}</b>.`);
     }
     if (type === "sub") {
@@ -128,6 +132,16 @@ export default async (req) => {
       if (!(await mail(email, "Your ImpactMojo subscription is active", `<p>Payment received — your subscription is active. Thank you!</p><p>We'll email your next UPI QR when it's time to renew.</p>`))) return notSent(email);
       await markUsed();
       return page("Activated ✓", `Subscription for <b>${esc(email)}</b> marked paid and active.`);
+    }
+    if (type === "handled") {
+      // The weekly open-items email carries one of these per form entry. It
+      // marks that entry as dealt with, so next week's email leaves it out.
+      if (!/^[0-9a-f-]{36}$/i.test(key)) return page("Invalid entry", "This link names no form entry.");
+      const r = await sb(`form_submissions?id=eq.${key}`, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ status: "handled" }) });
+      const rows = r.ok ? await r.json() : [];
+      if (!rows.length) return page("Entry not found", "That form entry no longer exists, so nothing was changed.");
+      await markUsed();
+      return page("Marked as handled ✓", `The ${esc(rows[0].form_name || "form")} entry will not appear in next week's list.`);
     }
     return page("Unknown action", "Nothing to do.");
   } catch (e) {

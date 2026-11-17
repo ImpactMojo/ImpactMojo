@@ -23,7 +23,7 @@
 | 11 | Public Choice: Decisions, Incentives & Institutions | Policy & Economics | 13 | — | [తెరవండి](/courses/pubchoice/) |
 | 12 | Gender Studies: Feminisms, Power & Social Change | Health & Communication | 16 | — | [తెరవండి](/courses/gender/) |
 | 13 | Livelihoods in India: Rural, Urban & Skills | Policy & Economics | 3 | — | [తెరవండి](/courses/livelihoods/) |
-| 14 | Power BI for Practitioners | Data & Technology | 8 | 93 పదాలు | [తెరవండి](/courses/powerbi/) |
+| 14 | Power BI for Practitioners | Data & Technology | 8 | 93 పదాలు | [తెరవండి](/courses/powerBI/powerbi.html) |
 
 ---
 
@@ -80,7 +80,7 @@ Specials కింద ఇంటరాక్టివ్ పుస్తక స�
 | Development Economics 101 | [తెరవండి](/101-courses/dev-economics.html) |
 | Global Development Governance 101 | [తెరవండి](/101-courses/dev-architecture.html) |
 | Fundraising Basics 101 | [తెరవండి](/101-courses/fundraising-basics.html) |
-| Decent Work For All 101 | [తెరవండి](/101-courses/decent-work.html) |
+| Decent Work For All 101 | [తెరవండి](/101-courses/work-labour-livelihoods.html) |
 | Cost Effectiveness 101 | [తెరవండి](/101-courses/cost-effectiveness.html) |
 | Economics for Policy Practitioners 101 | [తెరవండి](/101-courses/pol-economy.html) |
 | Decolonial Development 101 | [తెరవండి](/101-courses/decolonize-dev.html) |
@@ -104,7 +104,7 @@ Specials కింద ఇంటరాక్టివ్ పుస్తక స�
 | Care Economy 101 | [తెరవండి](/101-courses/care-economy-101.html) |
 | SEL Basics 101 | [తెరవండి](/101-courses/sel-basics.html) |
 | Education and Pedagogy 101 | [తెరవండి](/101-courses/edu-pedagogy.html) |
-| Livelihoods 101 | [తెరవండి](/101-courses/livelihood-basics.html) |
+| Livelihoods 101 | [తెరవండి](/101-courses/work-labour-livelihoods.html) |
 | BCC Programming 101 | [తెరవండి](/101-courses/bcc-comms.html) |
 
 ### Philosophy & Governance
@@ -127,8 +127,8 @@ Specials కింద ఇంటరాక్టివ్ పుస్తక స�
 | # | ల్యాబ్ | ట్రాక్ | లింక్ |
 |---|-----|-------|------|
 | 1 | Theory of Change Lab | MEL | [తెరవండి](/Labs/toc-lab.html) |
-| 2 | MLE Design Lab | MEL | [తెరవండి](/Labs/mel-design-lab.html) |
-| 3 | MEL Plan Lab | MEL | [తెరవండి](/Labs/mel-plan-lab.html) |
+| 2 | MLE Design Lab | MEL | [తెరవండి](/Labs/mel-lab.html) |
+| 3 | MEL Plan Lab | MEL | [తెరవండి](/Labs/mel-lab.html) |
 | 4 | Storytelling Lab | Health & Communication | [తెరవండి](/Labs/storytelling-lab.html) |
 | 5 | Design Thinking Lab | MEL | [తెరవండి](/Labs/design-thinking-lab.html) |
 | 6 | Community Development Lab | MEL | [తెరవండి](/Labs/community-lab.html) |
@@ -169,7 +169,7 @@ Specials కింద ఇంటరాక్టివ్ పుస్తక స�
 
 ## హ్యాండ్‌అవుట్‌లు (84 HTML పేజీలు)
 
-అభ్యాస ట్రాక్ వారీగా వ్యవస్థీకరించిన డౌన్‌లోడ్ చేయదగిన సూచన షీట్‌లు. అన్నింటినీ [హ్యాండ్‌అవుట్‌ల సూచిక](/Handouts/index.html) వద్ద బ్రౌజ్ చేయండి.
+అభ్యాస ట్రాక్ వారీగా వ్యవస్థీకరించిన డౌన్‌లోడ్ చేయదగిన సూచన షీట్‌లు. అన్నింటినీ [హ్యాండ్‌అవుట్‌ల సూచిక](/handouts.html) వద్ద బ్రౌజ్ చేయండి.
 
 ### Data & Technology Track
 

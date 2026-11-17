@@ -75,7 +75,7 @@ Specials अंतर्गत परस्परसंवादी पुस्
 | Development Economics 101 | [Open](/101-courses/dev-economics.html) |
 | Global Development Governance 101 | [Open](/101-courses/dev-architecture.html) |
 | Fundraising Basics 101 | [Open](/101-courses/fundraising-basics.html) |
-| Decent Work For All 101 | [Open](/101-courses/decent-work.html) |
+| Decent Work For All 101 | [Open](/101-courses/work-labour-livelihoods.html) |
 | Cost Effectiveness 101 | [Open](/101-courses/cost-effectiveness.html) |
 | Economics for Policy Practitioners 101 | [Open](/101-courses/pol-economy.html) |
 | Decolonial Development 101 | [Open](/101-courses/decolonize-dev.html) |
@@ -99,7 +99,7 @@ Specials अंतर्गत परस्परसंवादी पुस्
 | Care Economy 101 | [Open](/101-courses/care-economy-101.html) |
 | SEL Basics 101 | [Open](/101-courses/sel-basics.html) |
 | Education and Pedagogy 101 | [Open](/101-courses/edu-pedagogy.html) |
-| Livelihoods 101 | [Open](/101-courses/livelihood-basics.html) |
+| Livelihoods 101 | [Open](/101-courses/work-labour-livelihoods.html) |
 | BCC Programming 101 | [Open](/101-courses/bcc-comms.html) |
 
 ### Philosophy & Governance
@@ -163,7 +163,7 @@ Specials अंतर्गत परस्परसंवादी पुस्
 
 ## Handouts (84 HTML pages)
 
-शिक्षण ट्रॅकनुसार आयोजित डाउनलोड करण्यायोग्य संदर्भ पत्रके. सर्व पहा [Handouts Index](/Handouts/index.html) येथे.
+शिक्षण ट्रॅकनुसार आयोजित डाउनलोड करण्यायोग्य संदर्भ पत्रके. सर्व पहा [Handouts Index](/handouts.html) येथे.
 
 ### Data & Technology Track
 

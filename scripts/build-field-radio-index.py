@@ -44,6 +44,13 @@ re-appends them at the end of the file on every run. So these rows are inserted
 *before* that block, which keeps both scripts' ``--check`` green whichever runs
 first. Run this one, then that one.
 
+Field Talkies
+-------------
+On 2026-11-13 the station split in two: Field Radio keeps the audio and the
+video moved to Field Talkies (``data/field-talkies.json``, ``/field-talkies.html``).
+This script indexes both manifests the same way, and ``COPY`` holds the
+descriptions for both, keyed by id, so an id may not be used twice across them.
+
     python3 scripts/build-field-radio-index.py          # write
     python3 scripts/build-field-radio-index.py --check  # verify, for CI
 
@@ -56,8 +63,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CLIPS = ROOT / "data" / "field-radio.json"
 INDEX = ROOT / "data" / "search-index.json"
+FILMS = ROOT / "data" / "field-talkies.json"
 STATION = "/field-radio.html"
 PREFIX = "FIELD-RADIO-"
+CINEMA = "/field-talkies.html"
+FILM_PREFIX = "FIELD-TALKIES-"
 
 # clip id -> (description shown in the search result, extra tags)
 #
@@ -65,6 +75,25 @@ PREFIX = "FIELD-RADIO-"
 # what the clip argues rather than what it is about. Both are drawn from the
 # transcript; neither invents a claim the speaker did not make.
 COPY: dict[str, tuple[str, list[str]]] = {
+    "ft-01": (
+        "Where the logical framework came from, why its single column of arrows flattens causality, "
+        "what it is still good for, and when to use a different format.",
+        ["logframe", "logical framework", "mel", "theory of change", "assumptions", "usaid", "evaluation",
+         "outcome mapping", "programme design"],
+    ),
+    "ft-02": (
+        "How to present evaluation evidence to people who decide: find the decision first, lead with "
+        "the finding, and state the uncertainty in the same sentence.",
+        ["presenting evidence", "communication", "mel", "evaluation use", "uncertainty", "findings",
+         "decision makers", "reporting"],
+    ),
+    "ft-03": (
+        "Five problems that arise after survey data is collected: forms that decide what can be recorded, "
+        "missing data that is not random, analyst choices, false certainty on dashboards, and analysis "
+        "nobody wrote down. Ends with three habits for analysts and three questions for readers.",
+        ["data analysis", "survey data", "missing data", "nonresponse", "forking paths", "reproducibility",
+         "confidence interval", "mel", "evaluation", "research methods"],
+    ),
     "vs-05": (
         "What monitoring, evaluation and learning each actually do, and why so much of the data "
         "collected across South Asia serves compliance rather than decisions. Worked through a "
@@ -209,20 +238,21 @@ COPY: dict[str, tuple[str, list[str]]] = {
 }
 
 
-def build(clips: list[dict]) -> list[dict]:
+def build(clips: list[dict], films: bool = False) -> list[dict]:
     rows = []
     for c in clips:
         desc, tags = COPY[c["id"]]
         kind = "Short video" if c.get("type") == "video" else "Voice note"
         rows.append({
-            "id": PREFIX + c["id"],
+            "id": (FILM_PREFIX if films else PREFIX) + c["id"],
             "title": c.get("title") or "Untitled",
             "description": desc,
-            "type": "field-radio",
-            "category": "Field Radio",
-            "url": f"{STATION}#{c['id']}",
+            "type": "field-talkies" if films else "field-radio",
+            "category": "Field Talkies" if films else "Field Radio",
+            "url": f"{CINEMA if films else STATION}#{c['id']}",
             "tags": sorted({t.lower() for t in tags} | {
-                "field radio", "voice note" if kind == "Voice note" else "short video",
+                "field talkies" if films else "field radio",
+                "voice note" if kind == "Voice note" else "short video",
                 (c.get("speaker") or "").lower(), (c.get("track") or "").lower(),
             } - {""}),
         })
@@ -236,16 +266,75 @@ def build(clips: list[dict]) -> list[dict]:
     return rows
 
 
+# ---- Video markup ---------------------------------------------------------
+# Until 2026-11-15 the films page told a search engine nothing about its films:
+# the list is drawn by script from the manifest, so the page a crawler read
+# held a player and no video. Each film that has a poster now gets a
+# schema.org VideoObject in the page head, written here from the same manifest
+# so the markup cannot drift from what plays. A film without a poster is left
+# out, because a VideoObject with no thumbnail is not eligible for video
+# results and would only be reported as an error.
+SITE = "https://www.impactmojo.in"
+FILMS_PAGE = ROOT / "field-talkies.html"
+V_START, V_END = "<!-- videos:start -->", "<!-- videos:end -->"
+
+
+def iso_duration(mmss: str) -> str:
+    m, sec = (int(x) for x in mmss.split(":"))
+    return f"PT{m}M{sec}S"
+
+
+def video_markup(films: list[dict]) -> str:
+    items = []
+    for f in films:
+        if not f.get("poster"):
+            continue
+        items.append({
+            "@type": "VideoObject",
+            "@id": f"{SITE}{CINEMA}#{f['id']}",
+            "name": f["title"],
+            "description": COPY[f["id"]][0],
+            "thumbnailUrl": SITE + f["poster"],
+            "uploadDate": f["date"] + "T00:00:00+05:30",
+            "duration": iso_duration(f["duration"]),
+            "contentUrl": f["src"],
+            "url": f"{SITE}{CINEMA}#{f['id']}",
+            "inLanguage": "en-IN",
+            "transcript": f.get("transcript", ""),
+            "publisher": {"@type": "Organization", "name": "ImpactMojo", "url": SITE + "/"},
+        })
+    doc = {"@context": "https://schema.org", "@graph": items}
+    body = json.dumps(doc, ensure_ascii=False, indent=1).replace("</", "<\\/")
+    return f'{V_START}\n<script type="application/ld+json">\n{body}\n</script>\n{V_END}'
+
+
+def with_videos(page: str, films: list[dict]) -> str:
+    block = video_markup(films)
+    if V_START in page and V_END in page:
+        i, j = page.index(V_START), page.index(V_END) + len(V_END)
+        return page[:i] + block + page[j:]
+    return page.replace("</head>", block + "\n</head>", 1)
+
+
 def main() -> int:
     check = "--check" in sys.argv
 
     clips = json.loads(CLIPS.read_text(encoding="utf-8"))["clips"]
-    ids = [c["id"] for c in clips]
+    films = json.loads(FILMS.read_text(encoding="utf-8"))["films"]
+    ids = [c["id"] for c in clips] + [c["id"] for c in films]
+
+    wrong = [c["id"] for c in clips if c.get("type") != "audio"] + \
+            [c["id"] for c in films if c.get("type") != "video"]
+    if wrong:
+        print("FAIL - Field Radio carries audio and Field Talkies carries video. "
+              f"In the wrong manifest: {', '.join(wrong)}")
+        return 1
 
     missing = [i for i in ids if i not in COPY]
     stale = [k for k in COPY if k not in ids]
     if missing or stale:
-        print("FAIL - the COPY table in this script disagrees with data/field-radio.json:\n")
+        print("FAIL - the COPY table in this script disagrees with data/field-radio.json "
+              "and data/field-talkies.json:\n")
         for i in missing:
             print(f"  {i} is a clip with no description — add one to COPY")
         for k in stale:
@@ -254,30 +343,38 @@ def main() -> int:
 
     dup = sorted({i for i in ids if ids.count(i) > 1})
     if dup:
-        print(f"FAIL - data/field-radio.json repeats clip id(s): {', '.join(dup)}")
+        print(f"FAIL - an id is used more than once across the two manifests: {', '.join(dup)}")
         return 1
 
     entries = json.loads(INDEX.read_text(encoding="utf-8"))
-    kept = [e for e in entries if not str(e.get("id", "")).startswith(PREFIX)]
+    kept = [e for e in entries if not str(e.get("id", "")).startswith((PREFIX, FILM_PREFIX))]
 
     # Insert before the theories block, which build-theories.py re-appends last
     # on every run. Appending after it would make that script's --check fail.
     at = next((n for n, e in enumerate(kept)
                if str(e.get("url", "")).startswith("/theories/")), len(kept))
-    out = kept[:at] + build(clips) + kept[at:]
+    out = kept[:at] + build(clips) + build(films, films=True) + kept[at:]
     text = json.dumps(out, ensure_ascii=False, indent=2) + "\n"
 
+    page = FILMS_PAGE.read_text(encoding="utf-8")
+    page_new = with_videos(page, films)
+
     if check:
+        if page_new != page:
+            print("FAIL - the video markup in field-talkies.html is stale.")
+            print("Run: python3 scripts/build-field-radio-index.py")
+            return 1
         if text != INDEX.read_text(encoding="utf-8"):
-            print("FAIL - data/search-index.json is stale for Field Radio.")
+            print("FAIL - data/search-index.json is stale for Field Radio or Field Talkies.")
             print("Run: python3 scripts/build-field-radio-index.py")
             print("     python3 scripts/build-theories.py")
             return 1
-        print(f"PASS - all {len(ids)} Field Radio clips are in site search.")
+        print(f"PASS - all {len(clips)} Field Radio clips and {len(films)} Field Talkies films are in site search.")
         return 0
 
     INDEX.write_text(text, encoding="utf-8")
-    print(f"wrote {len(ids)} Field Radio rows into data/search-index.json. "
+    FILMS_PAGE.write_text(page_new, encoding="utf-8")
+    print(f"wrote {len(clips)} Field Radio and {len(films)} Field Talkies rows into data/search-index.json. "
           f"Now run build-theories.py.")
     return 0
 
