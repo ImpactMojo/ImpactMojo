@@ -14,6 +14,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **The Evaluation Essentials Kit goes from 30 to 45 products.** The Kit stays at ₹2,499. The struck-through list price becomes ₹9,955, which is the sum of the 45 one-time prices.
 
+- **Chart Doctor, in the Dataverse.** Karthik Shashidhar's tool redraws a badly drawn chart, or charts an uploaded table, and says what it changed and why. It takes PNG, JPEG, CSV, TSV or XLSX, has a Chrome extension and an API that uses your own OpenRouter key, and is free in beta until 31 December 2026 with daily limits. The entry warns that uploads are stored in the author's Google Drive and may be reviewed, so confidential data should stay out. The Dataverse count goes from 327 to 328.
+
 ## v10.400.0 - November 16, 2026 (a third Field Talkies film)
 
 ### For Learners
