@@ -358,7 +358,7 @@ def slides():
     S.append(dict(label="What's new", title="Recently added", blocks=[dict(t="raw", html=WHATS_NEW)]))
 
     S.append(dict(type="end", eyebrow="Start anywhere", headline="Everything above is one click from the header",
-                  byline="This walkthrough is rebuilt from the site's own data, so it changes when the site does.",
+                  byline="A tour of everything on ImpactMojo.",
                   ctas=[dict(label="Go to the homepage", href="/"), dict(label="Full catalogue", href="/catalog.html"),
                         dict(label="Membership", href="/premium.html")],
                   meta=["CC BY-NC-ND 4.0", "Free forever", "ImpactMojo"]))
