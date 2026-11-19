@@ -20,6 +20,9 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **One page header across the site's main pages.** Seventy-two pages that opened with a dark purple banner or their own header now open with the same header as the Data Room and the Dataverse: About, FAQ, Dojos, Handouts, Updates, Testimonials, Portfolio, Accessibility, Verify certificate, Coaching, the privacy, terms, refund, disclaimer, data protection, AI policy and grievance pages, and Fundamentals, Pro Studio, Contribute, Partnerships, Contact, Events, API docs, Known issues, the Development Law Docket, the Theories index and its twelve theory pages, Teach, Membership, the Timelines index and its six timelines, the Practice Packs index and its eighteen packs, and four more.
 
+- **India Persecution Tracker Explorer.** A new Data Room page built on the South Asia Justice Campaign's tracker. It holds 1,472 source-linked records from the four editions (2025, July to September 2025, January to April 2026, May to July 2026), each linked to the report SAJC cites and to the edition it comes from. Filter by edition, section, state and who is named, search the wording and download what you have filtered; see the killings and demolitions SAJC mapped in its 2026 editions; see where the reporting concentrates; and read the state anti-conversion laws. Wording about sexual violence or anyone under 18 is withheld. The Data Room now has 24 explorers.
+- **Thirteen more pages move to the shared page header.** The Game Library, The Long View and its three companion pages, Challenges, Blog, Workshops, Transparency, the Starter Kit, Field Radio, Field Talkies and ImpactLex now open on the same plain header as the rest of the site, in place of the dark gradient banner and gradient headings.
+
 ## v10.400.0 - November 16, 2026 (a third Field Talkies film)
 
 ### For Learners

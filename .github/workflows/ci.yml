@@ -389,6 +389,23 @@ jobs:
       - name: Rebuild the data centres data and compare
         run: python3 scripts/build-datacentres-explorer-data.py --check
 
+  ipt-data:
+    name: Persecution tracker explorer data is valid
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Validates data/ipt-india.json (every record has an edition, a section,
+      # a source link and a dated or undated flag, no withheld wording leaks
+      # into an excerpt) and fails if ipt.html's static counts are stale.
+      - name: Validate the tracker data and the page counts
+        run: python3 scripts/build-ipt-explorer-data.py
+
   nhts-data:
     name: Travel survey explorer data is current
     runs-on: ubuntu-latest
