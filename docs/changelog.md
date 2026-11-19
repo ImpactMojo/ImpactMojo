@@ -25,6 +25,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ## v10.400.0 - November 16, 2026 (a third Field Talkies film)
 
+- **Data explorers now say when their figures were retrieved.** Each explorer shows the date its data was last pulled from the source, and a source's own release or cut-off date where it gives one. Explorers with no date on record show nothing rather than a guess. Behind it, a weekly check lists any explorer past its review interval.
+
 ### For Learners
 
 - **District Lineage Explorer**: type an Indian district and see what it was part of at each census since 1951, when it was carved out, and which districts to add together before comparing two rounds of data. Built on the India State Stories tables.

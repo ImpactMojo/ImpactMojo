@@ -406,6 +406,26 @@ jobs:
       - name: Validate the tracker data and the page counts
         run: python3 scripts/build-ipt-explorer-data.py
 
+  explorer-freshness:
+    name: Explorer freshness manifest and page lines are current
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # data/explorer-freshness.json must name real pages and data files, and
+      # its retrieved dates must equal the dates the data files record for
+      # themselves. Being overdue is not a failure here: the weekly
+      # data-freshness workflow turns that into an issue.
+      - name: Validate the manifest
+        run: python3 scripts/check-explorer-freshness.py
+      - name: Check the Data retrieved line on each page
+        run: python3 scripts/build-explorer-freshness.py --check
+
   nhts-data:
     name: Travel survey explorer data is current
     runs-on: ubuntu-latest
