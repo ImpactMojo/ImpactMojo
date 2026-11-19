@@ -16,6 +16,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **Chart Doctor, in the Dataverse.** Karthik Shashidhar's tool redraws a badly drawn chart, or charts an uploaded table, and says what it changed and why. It takes PNG, JPEG, CSV, TSV or XLSX, has a Chrome extension and an API that uses your own OpenRouter key, and is free in beta until 31 December 2026 with daily limits. The entry warns that uploads are stored in the author's Google Drive and may be reviewed, so confidential data should stay out. The Dataverse count goes from 327 to 328.
 
+- **A cleaner Dataverse.** One header and one width from top to bottom, the catalogue on the first screen, and the filters as a strip along the top: search, a category dropdown, a type dropdown, a Free only switch and a sort. The Portal and Research types, which had no filter, now do. The six how-to cards for each type sit in a closed section under the catalogue.
+
 ## v10.400.0 - November 16, 2026 (a third Field Talkies film)
 
 ### For Learners

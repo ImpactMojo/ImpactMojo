@@ -23,6 +23,7 @@
 <!-- share:end -->
 <link rel="icon" href="assets/images/favicon.png" type="image/png">
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
+<link rel="stylesheet" href="/css/plain-hero.css?v=e1dc5645">
 <link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 <link rel="stylesheet" href="/css/impact-bold.css?v=0c411841">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/8.3.2/introjs.min.css">
@@ -742,40 +743,51 @@ img { max-width: 100%; display: block; }
 .results-count strong { color: var(--text-primary); }
 
 /* ============================================================
-   CARD GRID
+   PAGE LAYOUT: one width for everything, a calm header, a filter strip
    ============================================================ */
-.card-grid {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 24px 48px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 24px;
-}
-
-@media (max-width: 400px) {
-    .card-grid {
-        grid-template-columns: 1fr;
-        padding: 0 16px 32px;
-    }
-}
-
-/* ============================================================
-   SPOTLIGHT: three resources, the same three all day for everyone
-   ============================================================ */
-.spotlight { max-width: 1280px; margin: 24px auto 0; padding: 0 24px; }
-.spotlight-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
-.spotlight-title { font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin: 0; }
-.spotlight-note { font-size: 0.82rem; color: var(--text-muted); margin: 0; }
-.spotlight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-.sp-card { background: var(--card-bg); border: 1px solid var(--border-color); border-left: 4px solid var(--cat-color, #64748B); border-radius: var(--radius-md); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.dv-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+.dv-bar { position: sticky; top: 46px; z-index: 20; background: color-mix(in srgb, var(--primary-bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-color); padding: 12px 0 0; }
+.dv-bar-in { display: grid; grid-template-columns: minmax(220px, 1fr) repeat(3, minmax(150px, 190px)) auto auto; gap: 10px; align-items: center; }
+.dv-search { display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 14px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; }
+.dv-search:focus-within { border-color: var(--accent-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 22%, transparent); }
+.dv-search input { all: unset; flex: 1; min-width: 0; font: inherit; font-size: 0.95rem; color: var(--text-primary); }
+.dv-search input::placeholder { color: var(--text-muted); }
+.dv-sel { height: 44px; padding: 0 12px; font: inherit; font-size: 0.92rem; color: var(--text-primary); background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; cursor: pointer; min-width: 0; }
+.dv-sel:focus-visible, .dv-toggle:focus-within, .dv-clear:focus-visible { outline: 3px solid var(--accent-color); outline-offset: 2px; }
+.dv-toggle { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; font-size: 0.92rem; font-weight: 600; color: var(--text-primary); background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; cursor: pointer; white-space: nowrap; }
+.dv-toggle input { width: 16px; height: 16px; accent-color: var(--accent-color); }
+.dv-clear { height: 44px; padding: 0 14px; font: inherit; font-size: 0.92rem; font-weight: 700; color: var(--accent-color); background: transparent; border: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.dv-count { margin: 0; padding: 8px 0 10px; font-size: 0.85rem; color: var(--text-muted); }
+.dv-count strong { color: var(--text-primary); }
+.dv-focus { padding: 22px 0 6px; }
+.dv-focus[hidden], .dv-focus-row[hidden], .dv-clear[hidden] { display: none; }
+.dv-focus-row { display: grid; grid-template-columns: minmax(240px, 1fr) 3fr; gap: 14px; }
+.dv-focus-picks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.dv-featured { text-decoration: none; background: color-mix(in srgb, var(--secondary-accent) 8%, var(--card-bg)); }
+.sp-card { background: var(--card-bg); border: 1px solid var(--border-color); border-left: 4px solid var(--cat-color, #64748B); border-radius: var(--radius-lg); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .sp-kicker { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); }
 .sp-new { background: var(--text-primary); color: var(--card-bg); border-radius: 4px; padding: 1px 7px; font-weight: 700; }
 .sp-open { all: unset; cursor: pointer; font-weight: 800; font-size: 1rem; line-height: 1.3; color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px; }
-.sp-open:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 2px; }
+button.sp-open:focus-visible, a.sp-visit:focus-visible, a.dv-featured:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 2px; }
 .sp-desc { font-size: 0.88rem; color: var(--text-secondary); margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .sp-visit { margin-top: auto; font-size: 0.85rem; font-weight: 700; color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px; }
-@media (max-width: 400px) { .spotlight { padding: 0 16px; } }
+.card-grid { max-width: 1180px; margin: 0 auto; padding: 22px 20px 40px; display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+.dv-guides { max-width: 1180px; margin: 0 auto 56px; padding: 0 20px; }
+.dv-guides > summary { cursor: pointer; font-weight: 700; color: var(--text-primary); padding: 14px 0; border-top: 1px solid var(--border-color); }
+.dv-guides > summary:focus-visible { outline: 3px solid var(--accent-color); outline-offset: 2px; }
+@media (max-width: 1000px) {
+    .dv-bar-in { grid-template-columns: 1fr 1fr; }
+    .dv-search { grid-column: 1 / -1; }
+    .dv-focus-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+    .dv-bar { position: static; }
+    .dv-wrap { padding: 0 16px; }
+    .dv-focus-row { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: min(82%, 300px); overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 6px; }
+    .dv-focus-picks { display: contents; }
+    .dv-focus-row > *, .dv-focus-picks > * { scroll-snap-align: start; }
+    .card-grid { grid-template-columns: 1fr; padding: 18px 16px 32px; }
+}
 
 /* ============================================================
    CARD
@@ -1406,6 +1418,8 @@ body.dark-mode .guide-tag[style*="245, 158, 11"], [data-theme="dark"] .guide-tag
 body.dark-mode .guide-tag[style*="139, 92, 246"], [data-theme="dark"] .guide-tag[style*="139, 92, 246"] { color: #C4B5FD !important; }
 body.dark-mode .guide-tag[style*="236, 72, 153"], [data-theme="dark"] .guide-tag[style*="236, 72, 153"] { color: #F9A8D4 !important; }
 body.dark-mode .guide-tag[style*="20, 184, 166"], [data-theme="dark"] .guide-tag[style*="20, 184, 166"] { color: #5EEAD4 !important; }
+.card { border-radius: var(--radius-lg); box-shadow: none; }
+.card:hover { border-color: color-mix(in srgb, var(--cat-color, var(--accent-color)) 55%, var(--border-color)); box-shadow: var(--shadow-md); }
 </style>
 <style>
 /* ===== ImpactMojo Design System ===== */
@@ -1685,60 +1699,58 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
 <main id="main-content">
 
     <!-- Hero -->
-    <section class="hero ib-hero">
-        <h1 class="hero-title">ImpactMojo Dataverse</h1>
-        <p class="hero-subtitle">Curated tools & data for social impact</p>
-        <p class="hero-desc">Discover 335 datasets, APIs, tools, platforms, and MCP servers for development economics, policy research, and social impact work.</p>
-    </section>
+    <div class="dv-wrap">
+        <section class="ph ph--teal">
+            <span class="ph-bar" aria-hidden="true"></span>
+            <p class="ph-eyebrow">ImpactMojo Data</p>
+            <h1 class="ph-title">Dataverse</h1>
+            <p class="ph-lede">Datasets, tools, APIs and platforms for development research, each linked to its source.</p>
+            <p class="ph-meta"><span><b id="statTotal">335</b> resources</span><span><b id="statFree">314</b> free</span></p>
+        </section>
+    </div>
 
-    <!-- Featured: Competency & Learning Rubrics -->
-    <section aria-label="Featured resource" style="max-width:1100px;margin:24px auto 0;padding:0 20px;">
-        <a href="/dataverse-rubrics.html" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:space-between;text-decoration:none;background:linear-gradient(135deg,#6366F1 0%,#10B981 100%);color:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 6px 20px rgba(15,23,42,0.12);">
-            <div style="flex:1 1 320px;">
-                <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:0.85;margin-bottom:6px;">Featured · Assessment</div>
-                <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:4px;">Competency &amp; Learning Rubrics</div>
-                <div style="font-family:'Inter',sans-serif;font-size:0.95rem;opacity:0.92;max-width:640px;">16 development-sector competencies (critical thinking, ethical reasoning, quantitative &amp; information literacy, communication, teamwork, intercultural &amp; global learning) each with criteria across four performance levels. Explore, self-assess a person / proposal / programme, and export. Adapted from the AAC&amp;U VALUE Rubrics.</div>
+    <section class="dv-bar" id="dvBar" aria-label="Search and filters">
+        <div class="dv-wrap dv-bar-in">
+            <div class="dv-search">
+                <img width="20" height="20" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Search.svg" alt="" class="sargam-icon">
+                <input type="search" id="searchInput" placeholder="Search by name, description, tag or source" aria-label="Search resources">
             </div>
-            <span style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.9rem;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);padding:0.6rem 1.1rem;border-radius:8px;white-space:nowrap;">Open Rubrics →</span>
-        </a>
+            <select id="categorySelect" class="dv-sel" aria-label="Category"></select>
+            <select id="typeSelect" class="dv-sel" aria-label="Type"></select>
+            <select id="sortSelect" class="dv-sel" aria-label="Sort">
+                <option value="default">Sort: suggested</option>
+                <option value="newest">Sort: newest first</option>
+                <option value="az">Sort: A to Z</option>
+            </select>
+            <label class="dv-toggle"><input type="checkbox" id="freeOnly"><span>Free only</span></label>
+            <button type="button" class="dv-clear" id="dvClear" hidden>Clear</button>
+        </div>
+        <div class="dv-wrap"><p class="dv-count" id="resultsCount" aria-live="polite"></p></div>
     </section>
 
-    <!-- Spotlight: new and rotating resources -->
-    <section class="spotlight" id="spotlight" aria-labelledby="spotlightTitle" hidden>
-        <div class="spotlight-head">
-            <h2 class="spotlight-title" id="spotlightTitle">In the spotlight</h2>
-            <p class="spotlight-note">Recent additions first, then a rotation through the rest. It changes each day.</p>
-        </div>
-        <div class="spotlight-grid" id="spotlightGrid"></div>
-    </section>
-
-    <!-- Stats Bar -->
-    <section class="stats-bar" aria-label="Statistics">
-        <div class="stat-item">
-            <div class="stat-value" id="statTotal">--</div>
-            <div class="stat-label">Resources</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value" id="statFree">--</div>
-            <div class="stat-label">Free</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value" id="statCategories">--</div>
-            <div class="stat-label">Categories</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value" id="statTypes">--</div>
-            <div class="stat-label">Types</div>
+    <section class="dv-focus" id="dvFocus" aria-label="In focus">
+        <div class="dv-wrap">
+            <div class="dv-focus-row" id="spotlight" hidden>
+                <a class="sp-card dv-featured" href="/dataverse-rubrics.html" style="--cat-color:#6366F1;">
+                    <div class="sp-kicker"><span class="sp-new">Featured</span><span>Assessment</span></div>
+                    <span class="sp-open">Competency &amp; Learning Rubrics</span>
+                    <p class="sp-desc">16 development-sector competencies, each with criteria across four performance levels. Explore, self-assess and export.</p>
+                    <span class="sp-visit">Open Rubrics &#8594;</span>
+                </a>
+                <div class="dv-focus-picks" id="spotlightGrid"></div>
+            </div>
         </div>
     </section>
 
-    <!-- Usage Guides -->
-    <section class="guides-section" aria-label="How to use Dataverse resources">
-        <div class="guides-header">
-            <h2>How to use these resources</h2>
-            <p>Dataverse includes datasets, tools, platforms, APIs, MCP servers, reference resources, and AI skills. This section explains how each type works and when to use it.</p>
-        </div>
-        <div class="guides-grid">
+    <!-- Card Grid -->
+    <div class="card-grid" id="cardGrid">
+        <div class="loading-spinner"><div class="spinner"></div></div>
+    </div>
+
+    <details class="dv-guides">
+        <summary>How each type of resource works</summary>
+    <div class="guides-section">
+                <div class="guides-grid">
             <!-- API Guide -->
             <div class="guide-card">
                 <div class="guide-card-icon" style="background: rgba(14, 165, 233, 0.1); color: #0EA5E9;">
@@ -1830,34 +1842,8 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
                 <span class="guide-tag" style="background: rgba(236, 72, 153, 0.1); color: #9D174D;">Reference Material</span>
             </div>
         </div>
-    </section>
-
-    <!-- Search & Filters -->
-    <section class="controls-section" aria-label="Search and filters">
-        <div class="search-container">
-            <img width="24" height="24" src="https://cdn.jsdelivr.net/npm/sargam-icons@1.6.7/Icons/Line/si_Search.svg" alt="" class="search-icon sargam-icon">
-            <input type="search" id="searchInput" class="search-input" placeholder="Search resources by name, description, tag, or source..." aria-label="Search resources">
-        </div>
-
-        <div class="filter-group">
-            <span class="filter-label">Type</span>
-            <div class="filter-pills" id="typeFilters" role="group" aria-label="Filter by type"></div>
-        </div>
-
-        <div class="filter-group">
-            <span class="filter-label">Category</span>
-            <div class="filter-pills" id="categoryFilters" role="group" aria-label="Filter by category"></div>
-        </div>
-
-        <div class="results-info">
-            <span class="results-count" id="resultsCount"></span>
-        </div>
-    </section>
-
-    <!-- Card Grid -->
-    <div class="card-grid" id="cardGrid">
-        <div class="loading-spinner"><div class="spinner"></div></div>
     </div>
+    </details>
 
 </main>
 
@@ -2003,6 +1989,8 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
     var activeType = 'all';
     var activeCategory = 'all';
     var searchQuery = '';
+    var freeOnly = false;
+    var sortMode = 'default';
 
     /* Type config: maps type string to icon and display label */
     var typeConfig = {
@@ -2012,7 +2000,9 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
         'api':        { icon: 'si_Lightning',            label: 'API' },
         'mcp-server': { icon: 'si_Crosshair_detailed',   label: 'MCP Server' },
         'resource':   { icon: 'si_Article',              label: 'Resource' },
-        'skill':      { icon: 'si_Lightning',            label: 'Skill' }
+        'skill':      { icon: 'si_Lightning',            label: 'Skill' },
+        'portal':     { icon: 'si_Globe_detailed',       label: 'Portal' },
+        'research':   { icon: 'si_Article',              label: 'Research' }
     };
 
     var statusConfig = {
@@ -2108,7 +2098,7 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
             html += '<div class="sp-kicker">' + (p.fresh ? '<span class="sp-new">New</span>' : '') + '<span>' + escapeHtml(tc.label) + ' · ' + escapeHtml(it._categoryName || '') + '</span></div>';
             html += '<button type="button" class="sp-open" data-sp-id="' + escapeHtml(it.id) + '">' + escapeHtml(it.name) + '</button>';
             html += '<p class="sp-desc">' + escapeHtml(it.description) + '</p>';
-            html += '<a class="sp-visit" href="' + escapeHtml(it.url) + '" target="_blank" rel="noopener noreferrer">Visit ' + escapeHtml(it.name) + ' (opens in a new tab)</a>';
+            html += '<a class="sp-visit" href="' + escapeHtml(it.url) + '" target="_blank" rel="noopener noreferrer" aria-label="Visit ' + escapeHtml(it.name) + ' (opens in a new tab)">Visit &#8599;</a>';
             html += '</article>';
         });
         grid.innerHTML = html;
@@ -2125,8 +2115,7 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
     function init() {
         updateStats();
         renderSpotlight();
-        buildTypeFilters();
-        buildCategoryFilters();
+        buildSelects();
         bindSearch();
         renderCards();
         openFromHash();
@@ -2143,67 +2132,44 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
 
     /* ---- Stats ---- */
     function updateStats() {
-        document.getElementById('statTotal').textContent = items.length;
         var freeCount = 0;
-        var typeSet = {};
-        items.forEach(function(item) {
-            if (item.free) freeCount++;
-            typeSet[item.type] = true;
-        });
-        document.getElementById('statFree').textContent = freeCount;
-        document.getElementById('statCategories').textContent = categories.length;
-        document.getElementById('statTypes').textContent = Object.keys(typeSet).length;
+        items.forEach(function(item) { if (item.free) freeCount++; });
+        var a = document.getElementById('statTotal'), b = document.getElementById('statFree');
+        if (a) a.textContent = items.length;
+        if (b) b.textContent = freeCount;
     }
 
-    /* ---- Type Filters ---- */
-    function buildTypeFilters() {
-        var container = document.getElementById('typeFilters');
-        var typeCounts = {};
-        items.forEach(function(item) {
-            typeCounts[item.type] = (typeCounts[item.type] || 0) + 1;
+    /* ---- Category and type dropdowns ---- */
+    function buildSelects() {
+        var cs = document.getElementById('categorySelect');
+        var cats = categories.slice().sort(function(x, y) { return x.name < y.name ? -1 : 1; });
+        var html = '<option value="all">All categories</option>';
+        cats.forEach(function(cat) {
+            html += '<option value="' + escapeHtml(cat.id) + '">' + escapeHtml(cat.name) + ' (' + (cat.items || []).length + ')</option>';
         });
+        cs.innerHTML = html;
+        cs.addEventListener('change', function() { activeCategory = cs.value; renderCards(); });
 
-        var html = '<button class="filter-pill active" data-type="all">All</button>';
-        var typeOrder = ['dataset', 'tool', 'platform', 'api', 'mcp-server', 'resource', 'skill'];
-        typeOrder.forEach(function(t) {
-            if (!typeCounts[t]) return;
-            var cfg = typeConfig[t] || { icon: 'si_File_download', label: t };
-            html += '<button class="filter-pill" data-type="' + t + '">' +
-                '<img loading="lazy" src="' + sargamUrl(cfg.icon) + '" alt="" class="pill-icon sargam-icon">' +
-                cfg.label + ' (' + typeCounts[t] + ')' +
-                '</button>';
+        var ts = document.getElementById('typeSelect');
+        var counts = {};
+        items.forEach(function(item) { counts[item.type] = (counts[item.type] || 0) + 1; });
+        var types = Object.keys(counts).sort(function(x, y) { return counts[y] - counts[x] || (x < y ? -1 : 1); });
+        var th = '<option value="all">All types</option>';
+        types.forEach(function(t) {
+            var label = (typeConfig[t] && typeConfig[t].label) || t;
+            th += '<option value="' + escapeHtml(t) + '">' + escapeHtml(label) + ' (' + counts[t] + ')</option>';
         });
-        container.innerHTML = html;
+        ts.innerHTML = th;
+        ts.addEventListener('change', function() { activeType = ts.value; renderCards(); });
 
-        container.addEventListener('click', function(e) {
-            var pill = e.target.closest('.filter-pill');
-            if (!pill) return;
-            container.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
-            pill.classList.add('active');
-            activeType = pill.getAttribute('data-type');
-            renderCards();
-        });
-    }
-
-    /* ---- Category Filters ---- */
-    function buildCategoryFilters() {
-        var container = document.getElementById('categoryFilters');
-        var html = '<button class="filter-pill active" data-cat="all">All Categories</button>';
-        categories.forEach(function(cat) {
-            var count = (cat.items || []).length;
-            html += '<button class="filter-pill" data-cat="' + cat.id + '">' +
-                '<span class="cat-dot" style="background:' + cat.color + ';"></span>' +
-                escapeHtml(cat.name) + ' (' + count + ')' +
-                '</button>';
-        });
-        container.innerHTML = html;
-
-        container.addEventListener('click', function(e) {
-            var pill = e.target.closest('.filter-pill');
-            if (!pill) return;
-            container.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
-            pill.classList.add('active');
-            activeCategory = pill.getAttribute('data-cat');
+        document.getElementById('sortSelect').addEventListener('change', function(e) { sortMode = e.target.value; renderCards(); });
+        document.getElementById('freeOnly').addEventListener('change', function(e) { freeOnly = e.target.checked; renderCards(); });
+        document.getElementById('dvClear').addEventListener('click', function() {
+            activeType = 'all'; activeCategory = 'all'; searchQuery = ''; freeOnly = false; sortMode = 'default';
+            cs.value = 'all'; ts.value = 'all';
+            document.getElementById('searchInput').value = '';
+            document.getElementById('freeOnly').checked = false;
+            document.getElementById('sortSelect').value = 'default';
             renderCards();
         });
     }
@@ -2223,9 +2189,10 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
 
     /* ---- Filtering ---- */
     function getFilteredItems() {
-        return items.filter(function(item) {
+        var out = items.filter(function(item) {
             if (activeType !== 'all' && item.type !== activeType) return false;
             if (activeCategory !== 'all' && item._categoryId !== activeCategory) return false;
+            if (freeOnly && !item.free) return false;
             if (searchQuery) {
                 var haystack = (
                     item.name + ' ' +
@@ -2237,6 +2204,15 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
             }
             return true;
         });
+        if (sortMode === 'az') {
+            out = out.slice().sort(function(a, b) { return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1; });
+        } else if (sortMode === 'newest') {
+            out = out.slice().sort(function(a, b) {
+                var da = a.added || '', db = b.added || '';
+                return da < db ? 1 : da > db ? -1 : 0;
+            });
+        }
+        return out;
     }
 
     /* ---- Render Cards ---- */
@@ -2245,6 +2221,9 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
         var grid = document.getElementById('cardGrid');
         var countEl = document.getElementById('resultsCount');
         countEl.innerHTML = 'Showing <strong>' + filtered.length + '</strong> of <strong>' + items.length + '</strong> resources';
+        var filtering = activeType !== 'all' || activeCategory !== 'all' || searchQuery || freeOnly;
+        var clr = document.getElementById('dvClear'); if (clr) clr.hidden = !(filtering || sortMode !== 'default');
+        var foc = document.getElementById('dvFocus'); if (foc) foc.hidden = !!filtering;
 
         if (filtered.length === 0) {
             grid.innerHTML =
