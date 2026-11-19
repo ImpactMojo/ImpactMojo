@@ -103,7 +103,7 @@ body { padding-top: 56px; background: var(--dv-bg); color: var(--dv-text); font-
 .dv-intro strong { color: var(--dv-text-soft); }
 .dv-intro a { color: var(--dv-accent); text-decoration: none; border-bottom: 1px dotted var(--dv-accent); }
 
-.dv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; }
+.dv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 1.25rem; }
 .dv-card { background: var(--dv-surface); border: 1px solid var(--dv-border); border-radius: 14px; padding: 1.6rem; display: flex; flex-direction: column; transition: transform .2s, border-color .2s, box-shadow .2s; text-decoration: none; color: inherit; }
 .dv-card:hover { transform: translateY(-3px); border-color: var(--dv-accent); box-shadow: 0 10px 28px rgba(37,99,235,.10); }
 .dv-card-top { display: flex; align-items: center; gap: .5rem; margin-bottom: .85rem; }
@@ -138,6 +138,16 @@ body { padding-top: 56px; background: var(--dv-bg); color: var(--dv-text); font-
 @media (max-width: 640px) {
     .dv-wrap { padding: 2rem 1rem 3rem; }
     .dv-grid { grid-template-columns: 1fr; }
+}
+/* Phone: the bar carries six controls and ran 100px past the screen, cutting off Premium and the theme buttons. Browse is hidden (the logo goes home), Premium becomes an icon, and the system-theme button goes (light and dark stay), so the bar stays on one row. */
+@media (max-width: 640px) {
+    .im-topbar { flex-wrap: nowrap; }
+    .im-topbar-right { flex: 1 1 0; min-width: 0; flex-wrap: nowrap; justify-content: flex-end; gap: 0.3rem; }
+    .im-browse-btn { display: none !important; }
+    .im-premium-btn { font-size: 0 !important; gap: 0 !important; padding: 0.45rem !important; min-width: 36px; min-height: 36px; justify-content: center; }
+    .im-premium-btn svg { width: 18px; height: 18px; }
+    .im-theme-btn[data-imtheme="system"] { display: none; }
+    .im-theme-btn { width: 34px; height: 34px; }
 }
 </style>
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
