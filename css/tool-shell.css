@@ -1,0 +1,142 @@
+/* ImpactMojo tool shell: the shared look for the Studios (Labs/*.html).
+
+   Ideas taken from the design galleries Godly and Land-book, applied to
+   ImpactMojo's own palette and type, not copied from either:
+     1. The tool is on the first screen. The title is left-aligned and short,
+        and the explanation sits under it, not in front of it.
+     2. One quiet surface. A near-white page, white cards with a hairline
+        border and almost no shadow. No gradient text, no tinted stripes.
+     3. Navigation is a clear rail on a desktop (a row that scrolls on a
+        phone) with one selected state.
+     4. One field height (44px), one radius, one focus ring, one solid button.
+
+   It reads each page's own tokens (--card-bg, --border-color, --text-primary
+   and the rest), so light, dark and system themes carry over without a second
+   palette. A page opts in with <body class="ts"> and loads this file after its
+   own <style>. Screen only: the pages' print rules are untouched. */
+
+@media screen {
+
+body.ts {
+  /* Explicit values, not the page's own tokens: the Studios name their tokens
+     differently, and one of them kept a light secondary ink in dark mode. */
+  --ts-page: #F6F8FB;
+  --ts-card: #FFFFFF;
+  --ts-line: #E2E8F0;
+  --ts-ink: #0F172A;
+  --ts-mut: #475569;
+  --ts-acc: #0369A1;
+  --ts-r: 14px;
+  background: var(--ts-page);
+}
+html[data-theme="dark"] body.ts, html.dark body.ts, body.ts.dark-mode {
+  --ts-page: #0F172A; --ts-card: #1E293B; --ts-line: #334155; --ts-ink: #F1F5F9; --ts-mut: #CBD5E1; --ts-acc: #7DD3FC;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) body.ts:not(.light-mode) {
+    --ts-page: #0F172A; --ts-card: #1E293B; --ts-line: #334155; --ts-ink: #F1F5F9; --ts-mut: #CBD5E1; --ts-acc: #7DD3FC;
+  }
+}
+
+/* Decoration that competed with the tool. */
+body.ts .v3-decoration-container, body.ts .v3-organic-bg, body.ts .v3-paper-plane,
+body.ts .floating-planes, body.ts .organic-bg, body.ts .im-paper-plane,
+body.ts svg[class*="paper-plane"] { display: none !important; }
+
+body.ts .container { max-width: 1200px; padding-left: clamp(16px, 3vw, 32px); padding-right: clamp(16px, 3vw, 32px); }
+
+/* ---- Header: left-aligned, compact ---- */
+body.ts .back-link { font-size: 14px; color: var(--ts-mut); margin-bottom: 4px; }
+body.ts .back-link:hover { color: var(--ts-acc); }
+body.ts .header { text-align: left; padding: 20px 0 6px; margin: 0; border: 0; background: none; }
+body.ts .header-badge {
+  display: inline-flex; align-items: center; gap: 6px; margin: 0 0 12px; padding: 4px 12px 4px 8px;
+  font: 700 12px/1.3 'Inter', system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ts-acc); background: var(--ts-card); border: 1px solid var(--ts-line); border-radius: 999px;
+}
+body.ts .header h1 {
+  font-family: 'Inter', system-ui, sans-serif; font-size: clamp(30px, 4vw, 40px); font-weight: 800;
+  line-height: 1.12; letter-spacing: -.01em; text-align: left; margin: 0 0 10px;
+  background: none; -webkit-background-clip: border-box; background-clip: border-box;
+  -webkit-text-fill-color: currentColor; color: var(--ts-ink);
+}
+body.ts .header p { font-size: 17px; line-height: 1.55; color: var(--ts-mut); max-width: 64ch; margin: 0; text-align: left; }
+body.ts .im-related {
+  background: none; border: 0; padding: 12px 0 0; margin: 0; max-width: 64ch;
+  font-size: 14px; line-height: 1.5; color: var(--ts-mut);
+}
+
+/* ---- Controls row and progress ---- */
+body.ts .top-controls { justify-content: flex-end; margin: 0; padding: 0; background: none; border: 0; }
+body.ts .top-controls .theme-selector { display: none; } /* the site's own Aa panel carries the theme */
+body.ts .ctrl-btn, body.ts .btn:not(.btn-primary) {
+  min-height: 40px; padding: 0 16px; border-radius: 10px; font-weight: 600;
+  color: var(--ts-ink); background: var(--ts-card); border: 1px solid var(--ts-line);
+}
+body.ts .ctrl-btn:hover, body.ts .btn:not(.btn-primary):hover { border-color: var(--ts-acc); }
+body.ts .progress-bar { height: 4px; border-radius: 2px; margin: 12px 0 22px; background: var(--ts-line); overflow: hidden; }
+body.ts .progress-bar-fill { background: var(--ts-acc); border-radius: 2px; }
+
+/* ---- Steps: a rail on a desktop ---- */
+@media (min-width: 901px) {
+  body.ts .container:has(> .tabs) { display: grid; grid-template-columns: 236px minmax(0, 1fr); column-gap: 36px; align-items: start; }
+  body.ts .container:has(> .tabs) > * { grid-column: 1 / -1; }
+  body.ts .container:has(> .tabs) > .tabs {
+    grid-column: 1; grid-row: span 60; position: sticky; top: 76px;
+    flex-direction: column; align-items: stretch; gap: 2px; padding: 0; margin: 0; border: 0; background: none; overflow: visible;
+  }
+  body.ts .container:has(> .tabs) > .tab-panel { grid-column: 2; }
+}
+body.ts .tab-btn {
+  display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 8px 12px; margin: 0;
+  font: 600 14px/1.3 'Inter', system-ui, sans-serif; text-align: left; white-space: normal;
+  color: var(--ts-mut); background: none; border: 0; border-radius: 10px; box-shadow: none; cursor: pointer;
+}
+body.ts .tab-btn:hover { color: var(--ts-ink); background: color-mix(in srgb, var(--ts-card) 70%, transparent); }
+body.ts .tab-btn.active, body.ts .tab-btn[aria-selected="true"] {
+  color: var(--ts-ink); background: var(--ts-card); box-shadow: 0 0 0 1px var(--ts-line), 0 1px 2px rgba(15, 23, 42, .05);
+}
+body.ts .tab-num {
+  flex: 0 0 auto; min-width: 24px; height: 24px; display: inline-grid; place-items: center; border-radius: 999px;
+  font: 700 12px/1 'Inter', system-ui, sans-serif; color: var(--ts-mut); background: color-mix(in srgb, var(--ts-mut) 14%, var(--ts-card));
+}
+body.ts .tab-btn.active .tab-num, body.ts .tab-btn[aria-selected="true"] .tab-num { color: #fff; background: #0369A1; }
+@media (max-width: 900px) {
+  body.ts .tabs {
+    display: flex; flex-direction: row; flex-wrap: nowrap; gap: 6px; overflow-x: auto; padding: 4px 2px 10px; margin: 0 0 14px;
+    border: 0; scrollbar-width: thin; -webkit-overflow-scrolling: touch;
+  }
+  body.ts .tab-btn { flex: 0 0 auto; white-space: nowrap; border: 1px solid var(--ts-line); background: var(--ts-card); }
+  body.ts .tab-btn.active, body.ts .tab-btn[aria-selected="true"] { border-color: #0369A1; box-shadow: none; }
+}
+
+/* ---- Panels and cards ---- */
+body.ts .section-title { font-size: 22px; line-height: 1.25; margin: 0 0 4px; color: var(--ts-ink); }
+body.ts .section-desc { color: var(--ts-mut); margin: 0 0 18px; max-width: 70ch; }
+body.ts .card, body.ts .exercise, body.ts .next-steps {
+  background: var(--ts-card); border: 1px solid var(--ts-line); border-radius: var(--ts-r);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+}
+body.ts .card { padding: clamp(16px, 2.4vw, 24px); }
+body.ts .info-box {
+  border: 1px solid var(--ts-line); border-left-width: 1px; border-radius: 12px;
+  background: color-mix(in srgb, var(--ts-acc) 5%, var(--ts-card)); box-shadow: none;
+}
+body.ts .block-title { color: var(--ts-ink); }
+
+/* ---- Fields and buttons ---- */
+body.ts .field label, body.ts label { color: var(--ts-ink); }
+body.ts input[type="text"], body.ts input[type="number"], body.ts input[type="email"], body.ts input[type="search"],
+body.ts input[type="date"], body.ts select, body.ts textarea {
+  min-height: 44px; padding: 0 12px; border: 1px solid var(--ts-line); border-radius: 10px;
+  color: var(--ts-ink); background: color-mix(in srgb, var(--ts-card) 70%, var(--ts-page)); font: inherit;
+}
+body.ts textarea { padding: 10px 12px; min-height: 96px; }
+body.ts input:focus-visible, body.ts select:focus-visible, body.ts textarea:focus-visible,
+body.ts .tab-btn:focus-visible, body.ts .ctrl-btn:focus-visible, body.ts .btn:focus-visible {
+  outline: 2px solid var(--ts-acc); outline-offset: 2px;
+}
+body.ts .btn-primary { min-height: 44px; padding: 0 20px; border-radius: 10px; font-weight: 700; color: #fff; background: #0369A1; border: 1px solid #0369A1; }
+body.ts .btn-primary:hover { background: #075985; }
+
+} /* end screen */
