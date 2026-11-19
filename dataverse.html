@@ -6,7 +6,7 @@
 <title>ImpactMojo Dataverse | Curated Tools & Data for Social Impact</title>
 <!-- share:start -->
 <link rel="canonical" href="https://www.impactmojo.in/dataverse.html">
-<meta name="description" content="ImpactMojo Dataverse: A curated catalog of 327 tools, datasets, APIs, and platforms for social impact, development economics, and policy research.">
+<meta name="description" content="ImpactMojo Dataverse: A curated catalog of 335 tools, datasets, APIs, and platforms for social impact, development economics, and policy research.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ImpactMojo">
 <meta property="og:title" content="ImpactMojo Dataverse | Curated Tools &amp; Data for Social Impact">
@@ -759,6 +759,23 @@ img { max-width: 100%; display: block; }
         padding: 0 16px 32px;
     }
 }
+
+/* ============================================================
+   SPOTLIGHT: three resources, the same three all day for everyone
+   ============================================================ */
+.spotlight { max-width: 1280px; margin: 24px auto 0; padding: 0 24px; }
+.spotlight-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.spotlight-title { font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin: 0; }
+.spotlight-note { font-size: 0.82rem; color: var(--text-muted); margin: 0; }
+.spotlight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.sp-card { background: var(--card-bg); border: 1px solid var(--border-color); border-left: 4px solid var(--cat-color, #64748B); border-radius: var(--radius-md); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sp-kicker { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); }
+.sp-new { background: var(--text-primary); color: var(--card-bg); border-radius: 4px; padding: 1px 7px; font-weight: 700; }
+.sp-open { all: unset; cursor: pointer; font-weight: 800; font-size: 1rem; line-height: 1.3; color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px; }
+.sp-open:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 2px; }
+.sp-desc { font-size: 0.88rem; color: var(--text-secondary); margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.sp-visit { margin-top: auto; font-size: 0.85rem; font-weight: 700; color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 400px) { .spotlight { padding: 0 16px; } }
 
 /* ============================================================
    CARD
@@ -1671,7 +1688,7 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
     <section class="hero ib-hero">
         <h1 class="hero-title">ImpactMojo Dataverse</h1>
         <p class="hero-subtitle">Curated tools & data for social impact</p>
-        <p class="hero-desc">Discover 327 datasets, APIs, tools, platforms, and MCP servers for development economics, policy research, and social impact work.</p>
+        <p class="hero-desc">Discover 335 datasets, APIs, tools, platforms, and MCP servers for development economics, policy research, and social impact work.</p>
     </section>
 
     <!-- Featured: Competency & Learning Rubrics -->
@@ -1684,6 +1701,15 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
             </div>
             <span style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.9rem;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);padding:0.6rem 1.1rem;border-radius:8px;white-space:nowrap;">Open Rubrics →</span>
         </a>
+    </section>
+
+    <!-- Spotlight: new and rotating resources -->
+    <section class="spotlight" id="spotlight" aria-labelledby="spotlightTitle" hidden>
+        <div class="spotlight-head">
+            <h2 class="spotlight-title" id="spotlightTitle">In the spotlight</h2>
+            <p class="spotlight-note">Recent additions first, then a rotation through the rest. It changes each day.</p>
+        </div>
+        <div class="spotlight-grid" id="spotlightGrid"></div>
     </section>
 
     <!-- Stats Bar -->
@@ -2031,8 +2057,74 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
                 '</div>';
         });
 
+    /* spotlight:begin */
+    /* Three live entries. Up to two come from the entries added in the last
+       RECENT_DAYS, newest first, rotating when there are more than two; the
+       rest from everything older, rotating one step a day. The day is the
+       Indian calendar day, so every visitor sees the same three. An entry with
+       no `added` date is older by definition: dates are recorded only from the
+       point they could be proven. */
+    var RECENT_DAYS = 45;
+    function istDay(ms) { return Math.floor((ms + 19800000) / 86400000); }
+    function pickSpotlight(all, nowMs) {
+        var today = istDay(nowMs);
+        var live = all.filter(function(i) { return i.status === 'live' && i.url; });
+        var fresh = live.filter(function(i) {
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(i.added || '')) return false;
+            var age = today - istDay(Date.parse(i.added + 'T00:00:00Z'));
+            return age >= 0 && age <= RECENT_DAYS;
+        }).sort(function(a, b) { return a.added < b.added ? 1 : a.added > b.added ? -1 : (a.id < b.id ? -1 : 1); });
+        var rest = live.filter(function(i) { return fresh.indexOf(i) < 0; })
+            .sort(function(a, b) { return a.id < b.id ? -1 : 1; });
+        var out = [];
+        var nFresh = Math.min(2, fresh.length);
+        for (var k = 0; k < nFresh; k++) {
+            out.push({ item: fresh[(today * 2 + k) % fresh.length], fresh: true });
+        }
+        var seen = {};
+        out.forEach(function(o) { seen[o.item.id] = true; });
+        var step = 0;
+        while (out.length < 3 && step < live.length) {
+            var pool = rest.length ? rest : fresh;
+            var cand = pool[(today * 3 + step) % pool.length];
+            step++;
+            if (!seen[cand.id]) { seen[cand.id] = true; out.push({ item: cand, fresh: false }); }
+        }
+        return out;
+    }
+    /* spotlight:end */
+
+    function renderSpotlight() {
+        var box = document.getElementById('spotlight');
+        var grid = document.getElementById('spotlightGrid');
+        if (!box || !grid) return;
+        var picks = pickSpotlight(items, Date.now());
+        if (!picks.length) return;
+        var html = '';
+        picks.forEach(function(p) {
+            var it = p.item;
+            var tc = typeConfig[it.type] || { label: it.type };
+            html += '<article class="sp-card" style="--cat-color:' + escapeHtml(it._categoryColor || '#64748B') + ';">';
+            html += '<div class="sp-kicker">' + (p.fresh ? '<span class="sp-new">New</span>' : '') + '<span>' + escapeHtml(tc.label) + ' · ' + escapeHtml(it._categoryName || '') + '</span></div>';
+            html += '<button type="button" class="sp-open" data-sp-id="' + escapeHtml(it.id) + '">' + escapeHtml(it.name) + '</button>';
+            html += '<p class="sp-desc">' + escapeHtml(it.description) + '</p>';
+            html += '<a class="sp-visit" href="' + escapeHtml(it.url) + '" target="_blank" rel="noopener noreferrer">Visit ' + escapeHtml(it.name) + ' (opens in a new tab)</a>';
+            html += '</article>';
+        });
+        grid.innerHTML = html;
+        grid.addEventListener('click', function(e) {
+            var b = e.target.closest ? e.target.closest('.sp-open') : null;
+            if (!b) return;
+            var id = b.getAttribute('data-sp-id');
+            var item = items.find(function(i) { return i.id === id; });
+            if (item) openDetailModal(item);
+        });
+        box.hidden = false;
+    }
+
     function init() {
         updateStats();
+        renderSpotlight();
         buildTypeFilters();
         buildCategoryFilters();
         bindSearch();
@@ -2353,6 +2445,6 @@ body.dark-mode .tag, [data-theme="dark"] .tag, html.dark .tag { background: #2B3
 <script src="/js/config.js?v=7c56119b"></script>
 <script src="/js/auth.js?v=2ce55597"></script>
 <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
-  <script src="/js/site-chrome.js?v=7f878bc5" defer></script>
+  <script src="/js/site-chrome.js?v=6428a6f7" defer></script>
 </body>
 </html>

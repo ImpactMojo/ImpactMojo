@@ -1,0 +1,73 @@
+# Are the Dataverse's resources still there? Weekly, and on demand.
+#
+# data/dataverse.json lists the 335 resources and the page fetches it in the
+# browser, so the addresses never appear in an .html or .md file. link-check.yml
+# reads only those, which left every Dataverse link unchecked. This workflow
+# runs scripts/check-dataverse-links.py, which separates dead links (404, 410,
+# no such host) from sites that merely refuse automated clients (403 and the
+# like), and keeps ONE issue, labelled dataverse-links, listing what is dead.
+#
+# It writes nothing to the repository: a commit to main is a paid production
+# deploy, and a status field refreshed every week would make 52 of them a year.
+# The issue is the notification, and it closes itself when the list is empty.
+#
+# Never runs on pull requests: it talks to over 300 third-party hosts, and a
+# job cancelled by its own timeout cancels the whole workflow run it shares.
+name: Dataverse links
+
+on:
+  schedule:
+    - cron: '41 2 * * 1'   # Monday 08:11 IST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  dataverse-links:
+    name: Check Dataverse resource links
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            data/dataverse.json
+            scripts/check-dataverse-links.py
+          sparse-checkout-cone-mode: false
+
+      - name: Check every external resource
+        run: python3 scripts/check-dataverse-links.py --report dataverse-links
+
+      - name: Add the result to the run summary
+        if: always()
+        run: |
+          if [ -f dataverse-links.md ]; then cat dataverse-links.md >> "$GITHUB_STEP_SUMMARY"; else echo "No report was written, so nothing was checked." >> "$GITHUB_STEP_SUMMARY"; exit 1; fi
+
+      - name: Open, update or close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          broken=$(python3 -c "import json;print(json.load(open('dataverse-links.json'))['tally']['broken'])")
+          gh label create dataverse-links --color D93F0B --description "Dataverse resource links that no longer answer" 2>/dev/null || true
+          existing=$(gh issue list --label dataverse-links --state open --json number --jq '.[0].number // empty')
+          if [ "$broken" -gt 0 ]; then
+            title="Dataverse: $broken resource link(s) no longer answer"
+            if [ -n "$existing" ]; then
+              gh issue edit "$existing" --title "$title" --body-file dataverse-links.md
+            else
+              gh issue create --title "$title" --label dataverse-links --body-file dataverse-links.md
+            fi
+          elif [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Every Dataverse link answers again as of this run."
+          fi
+
+      - name: Upload the full report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: dataverse-links-report
+          path: |
+            dataverse-links.json
+            dataverse-links.md

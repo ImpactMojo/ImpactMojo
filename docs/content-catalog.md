@@ -320,21 +320,21 @@ Real-world case challenges with 2-document case packets and assessment rubrics: 
 
 | # | Challenge | Flagship Course | Link |
 |---|-----------|-----------------|------|
-| 1 | Redesign a Flawed Logframe | MEL for Development | [Open](/challenges/mel-logframe-redesign/) |
-| 2 | Critique and Redesign a Program Dashboard | Seeing Data | [Open](/challenges/dataviz-dashboard-critique/) |
-| 3 | Audit an AI Model for Bias in Beneficiary Targeting | AI for Impact | [Open](/challenges/devai-bias-audit/) |
-| 4 | Cost-Effectiveness Analysis of Two Nutrition Interventions | Understanding Development | [Open](/challenges/devecon-cost-effectiveness/) |
-| 5 | Conduct a GESI Audit of a Livelihood Program | Gender Studies | [Open](/challenges/gender-gesi-audit/) |
-| 6 | Apply Gandhian Strategy to a Contemporary Social Movement | Gandhi's Political Thought | [Open](/challenges/gandhi-nonviolence-contemporary/) |
-| 7 | Draft an RTI Strategy for an Accountability Campaign | Constitution & Law | [Open](/challenges/law-rti-strategy/) |
-| 8 | Design a BCC Campaign for Adolescent Nutrition | Media for Development | [Open](/challenges/media-bcc-campaign/) |
-| 9 | Design a Conflict Resolution Workshop for Field Teams | Social-Emotional Learning | [Open](/challenges/sel-conflict-resolution/) |
-| 10 | Stress-Test an Impact Claim | Causal Inference | [Open](/challenges/causal-attribution-audit/) |
-| 11 | Spec an Honest Power BI Dashboard from Messy Survey Data | Power BI for Practitioners | [Open](/challenges/powerbi-education-dashboard/) |
-| 12 | Design a Graduation Pathway for Ultra-Poor Households | Livelihoods in India | [Open](/challenges/livelihoods-graduation-design/) |
-| 13 | Diagnose the Incentives Behind a Failing Procurement System | Public Choice | [Open](/challenges/pubchoice-textbook-procurement/) |
-| 14 | Manage a Donor Exit Without Wrecking the Programme | Politics of Aspiration | [Open](/challenges/poa-donor-exit-transition/) |
-| 15 | Draft a Policy Memo Before the Window Closes | Public Policy | [Open](/challenges/pubpol-policy-window-memo/) |
+| 1 | Redesign a Flawed Logframe | MEL for Development | [Open](/challenges.html#mel-logframe-redesign) |
+| 2 | Critique and Redesign a Program Dashboard | Seeing Data | [Open](/challenges.html#dataviz-dashboard-critique) |
+| 3 | Audit an AI Model for Bias in Beneficiary Targeting | AI for Impact | [Open](/challenges.html#devai-bias-audit) |
+| 4 | Cost-Effectiveness Analysis of Two Nutrition Interventions | Understanding Development | [Open](/challenges.html#devecon-cost-effectiveness) |
+| 5 | Conduct a GESI Audit of a Livelihood Program | Gender Studies | [Open](/challenges.html#gender-gesi-audit) |
+| 6 | Apply Gandhian Strategy to a Contemporary Social Movement | Gandhi's Political Thought | [Open](/challenges.html#gandhi-nonviolence-contemporary) |
+| 7 | Draft an RTI Strategy for an Accountability Campaign | Constitution & Law | [Open](/challenges.html#law-rti-strategy) |
+| 8 | Design a BCC Campaign for Adolescent Nutrition | Media for Development | [Open](/challenges.html#media-bcc-campaign) |
+| 9 | Design a Conflict Resolution Workshop for Field Teams | Social-Emotional Learning | [Open](/challenges.html#sel-conflict-resolution) |
+| 10 | Stress-Test an Impact Claim | Causal Inference | [Open](/challenges.html#causal-attribution-audit) |
+| 11 | Spec an Honest Power BI Dashboard from Messy Survey Data | Power BI for Practitioners | [Open](/challenges.html#powerbi-education-dashboard) |
+| 12 | Design a Graduation Pathway for Ultra-Poor Households | Livelihoods in India | [Open](/challenges.html#livelihoods-graduation-design) |
+| 13 | Diagnose the Incentives Behind a Failing Procurement System | Public Choice | [Open](/challenges.html#pubchoice-textbook-procurement) |
+| 14 | Manage a Donor Exit Without Wrecking the Programme | Politics of Aspiration | [Open](/challenges.html#poa-donor-exit-transition) |
+| 15 | Draft a Policy Memo Before the Window Closes | Public Policy | [Open](/challenges.html#pubpol-policy-window-memo) |
 
 ---
 
@@ -496,7 +496,7 @@ Thirteen browser tools for research and evaluation work. Seven builders are free
 | **ImpactLex** | 494 development terms dictionary (PWA, hosted on ImpactMojo) | Free: [Browse](/impactlex/) |
 | **FieldCases** | 208 curated development cases from 117 countries | Free |
 | **NudgeKit** | 203 behaviour change techniques (BCTs) with South Asian context | Free: [Browse](/bct-repository) |
-| **Dataverse** | 327 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
+| **Dataverse** | 335 data tools, APIs, and datasets | Free: [Browse](/dataverse.html) |
 | **DevDiscourses** | 500+ curated research papers and books | Free |
 | **PolicyDhara** | Indian policy tracking and analysis | Free: [Browse](https://policydhara.impactmojo.in/) |
 | **NotebookLM Study Companions** | 12 AI study companion notebooks | Free |

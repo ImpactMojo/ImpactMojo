@@ -1230,11 +1230,19 @@ details.ax[open] > summary { border-bottom: 1px solid var(--color-border); }
    across its own outer-ring sector instead (ink is set per sector in js/learning-transfer.js). */
 .lt-pname { display: none; font-family: var(--font-heading); font-weight: 800; font-size: 21px; pointer-events: none; }
 .wheel-swipe { display: none; font-size: 0.86rem; color: var(--color-text-muted); margin: 0.6rem 0 0; }
+.zoom-toggle { display: none; margin: 0.5rem 0 0; padding: 0.55rem 0.95rem; min-height: 44px; font: 600 0.92rem var(--font-heading); color: var(--color-text); background: var(--color-bg-card); border: 2px solid var(--color-border); border-radius: 10px; cursor: pointer; }
+.zoom-toggle[aria-pressed="true"] { background: var(--color-text); color: var(--color-bg-card); border-color: var(--color-text); }
 @media (max-width: 760px) {
   .seg-tag, .lt-label, .hub-text { display: none; }
   .lt-pname { display: block; }
   .mark-dot { r: 17px; }
   .wheel-swipe { display: block; }
+  .zoom-toggle { display: inline-block; }
+  /* Zoomed: the wheel is drawn at about 2.4 times the screen width inside a frame you can pan, so every ring's text reads at about 11px. */
+  .wheel-frame.is-zoom { overflow: auto; max-height: 78vh; -webkit-overflow-scrolling: touch; }
+  .wheel-frame.is-zoom #wheel { width: 240%; max-width: none; }
+  .wheel-frame.is-zoom .seg-tag, .wheel-frame.is-zoom .lt-label, .wheel-frame.is-zoom .hub-text { display: block; }
+  .wheel-frame.is-zoom .lt-pname { display: none; }
 }
 }
 #wheel .seg[aria-pressed="true"] { stroke: var(--color-text); stroke-width: 3.5; }
