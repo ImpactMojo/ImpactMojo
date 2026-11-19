@@ -2,8 +2,7 @@
 """India Persecution Tracker explorer: the data file and its checks.
 
     python3 scripts/build-ipt-explorer-data.py --extract DIR   # rewrite data/ipt-india.json
-    python3 scripts/build-ipt-explorer-data.py                 # write ipt.html's inline block
-    python3 scripts/build-ipt-explorer-data.py --check         # CI: fail if stale or inconsistent
+    python3 scripts/build-ipt-explorer-data.py                 # CI: validate the data and the page that loads it
 
 data/ipt-india.json is a navigation and analysis layer over the South Asia
 Justice Campaign's India Persecution Tracker (southasiajusticecampaign.org),
@@ -340,17 +339,24 @@ def main():
     if not PAGE.exists():
         print("PASS - IPT data valid (%d records); ipt.html not written yet" % len(data["records"])); return
     page = PAGE.read_text(encoding="utf-8")
-    m = SLOT.search(page)
-    if not m:
-        print("FAIL - ipt.html has no inline data block"); sys.exit(1)
-    want = render_block(data)
-    if "--check" in args:
-        if m.group(2) != want:
-            print("FAIL - ipt.html's inline data is stale; run python3 scripts/build-ipt-explorer-data.py"); sys.exit(1)
-        print("PASS - IPT explorer data is current (%d records, %d killings, %d demolitions)" % (len(data["records"]), len(data["killings"]), len(data["demolitions"])))
-        return
-    PAGE.write_text(page[:m.start(2)] + want + page[m.end(2):], encoding="utf-8")
-    print("wrote the inline data block in ipt.html")
+    problems = []
+    if "fetch('/data/ipt-india.json')" not in page:
+        problems.append("ipt.html does not load data/ipt-india.json")
+    title = re.search(r"<title>(.*?)</title>", page, re.S).group(1)
+    n = "{:,}".format(len(data["records"]))
+    if n not in title:
+        problems.append("the page title says a record count other than %s" % n)
+    hk, hd = str(len(data["killings"])), str(len(data["demolitions"]))
+    if 'id="hK">%s<' % hk not in page or 'id="hD">%s<' % hd not in page:
+        problems.append("the static map counts in the header differ from the data (%s killings, %s demolitions)" % (hk, hd))
+    if 'id="hN">%s<' % n not in page:
+        problems.append("the static record count in the header differs from the data")
+    if problems:
+        print("FAIL - ipt.html")
+        for p_ in problems:
+            print("  " + p_)
+        sys.exit(1)
+    print("PASS - IPT explorer data is current (%d records, %d killings, %d demolitions)" % (len(data["records"]), len(data["killings"]), len(data["demolitions"])))
 
 
 if __name__ == "__main__":
