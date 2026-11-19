@@ -18,7 +18,7 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **A cleaner Dataverse.** One header and one width from top to bottom, the catalogue on the first screen, and the filters as a strip along the top: search, a category dropdown, a type dropdown, a Free only switch and a sort. The Portal and Research types, which had no filter, now do. The six how-to cards for each type sit in a closed section under the catalogue.
 
-- **One page header across the site's main pages.** Eighteen pages that opened with a dark purple banner now open with the same header as the Data Room and the Dataverse: About, FAQ, Dojos, Handouts, Updates, Testimonials, Portfolio, Accessibility, Verify certificate, Coaching, and the privacy, terms, refund, disclaimer, data protection, AI policy and grievance pages.
+- **One page header across the site's main pages.** Thirty-one pages that opened with a dark purple banner or their own header now open with the same header as the Data Room and the Dataverse: About, FAQ, Dojos, Handouts, Updates, Testimonials, Portfolio, Accessibility, Verify certificate, Coaching, the privacy, terms, refund, disclaimer, data protection, AI policy and grievance pages, and Fundamentals, Pro Studio, Contribute, Partnerships, Contact, Events, API docs, Known issues, the Development Law Docket and four more.
 
 ## v10.400.0 - November 16, 2026 (a third Field Talkies film)
 
