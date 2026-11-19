@@ -56,8 +56,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-u
 .hero h1{font-family:'Amaranth','Inter',sans-serif;font-weight:700;letter-spacing:-.5px;font-size:clamp(1.6rem,4.4vw,2.5rem);margin:.35rem 0 .5rem;line-height:1.12}
 .lede{color:var(--mut);max-width:72ch;margin:0;font-size:1.02rem}
 .lede b{color:var(--ink)}
-.hstats{display:flex;flex-wrap:wrap;gap:10px 22px;margin:16px 0 0;padding:0;list-style:none;font-size:.9rem;color:var(--mut)}
-.hstats b{font-family:'JetBrains Mono',monospace;color:var(--ink);font-size:1.05rem}
+.hstats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:20px 0 0;padding:0;list-style:none;font-size:.82rem;line-height:1.35;color:var(--mut);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
+.hstats li{display:flex;flex-direction:column;gap:3px;padding:14px 16px;border-left:1px solid var(--bd)}
+.hstats li:first-child{border-left:0;padding-left:0}
+.hstats b{font-family:'JetBrains Mono',monospace;color:var(--ink);font-size:1.8rem;font-weight:600;line-height:1.1}
+@media(max-width:700px){.hstats{grid-template-columns:repeat(2,minmax(0,1fr))}.hstats li{border-left:0;padding:12px 0;border-bottom:1px solid var(--bd)}.hstats li:nth-child(odd){padding-right:12px}.hstats li:last-child{grid-column:1 / -1;border-bottom:0}.hstats b{font-size:1.5rem}}
 .srcbadge{display:inline-block;margin-top:14px;font-size:12px;font-weight:600;color:var(--mut);background:var(--chip);border:1px solid var(--bd);padding:6px 12px;border-radius:14px;line-height:1.5}
 .srcbadge b{color:var(--ink)}
 .srcbadge a,.about a,.method a,.cap a,td a,.detail a{color:var(--acc)}
@@ -66,8 +69,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-u
 .about p{color:var(--mut);margin:0 0 10px}
 .about b,.method b{color:var(--ink)}
 .find{margin:22px 0}
-.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:0;padding:0;list-style:none}
-.fgrid li{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:14px 16px}
+.fgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 28px;margin:0;padding:0;list-style:none}
+@media(max-width:900px){.fgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.fgrid{grid-template-columns:1fr}}
+.fgrid li{border-top:1px solid var(--bd);padding:14px 0 0}
 .fgrid .n{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:1.45rem;color:var(--acc);display:block;line-height:1.2}
 .fgrid .t{font-size:.86rem;color:var(--mut);display:block;margin-top:4px}
 .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 12px}
@@ -171,6 +176,16 @@ td .sub{display:block;color:var(--faint);font-size:12px}
     <div class="srcbadge">Source: <b>deSouza, Paul, Mathew, Lippert, Ratti and Duarte (2026)</b>, <i>The Environmental Geography of Data Centers in India</i>, SSRN preprint · <a href="https://github.com/pdez90/india-datacentre-ej" target="_blank" rel="noopener">public data on GitHub</a> · CC BY-NC 4.0 · inventory as of 30 September 2026</div>
   </section>
 
+  <div class="tabs" role="tablist" aria-label="Views">
+    <button role="tab" id="t-map" aria-selected="true" aria-controls="view">Map</button>
+    <button role="tab" id="t-states" aria-selected="false" aria-controls="view">States</button>
+    <button role="tab" id="t-policy" aria-selected="false" aria-controls="view">Incentives</button>
+    <button role="tab" id="t-ops" aria-selected="false" aria-controls="view">Operators</button>
+    <button role="tab" id="t-list" aria-selected="false" aria-controls="view">All facilities</button>
+  </div>
+  <p class="cap" id="cap" aria-live="polite"></p>
+  <section class="panel" id="view" role="tabpanel"></section>
+
   <section class="about">
     <h2>What the study asks</h2>
     <p>A data centre draws industrial amounts of electricity and cooling water around the clock and employs few people. In several countries that has produced local opposition and moratoria. Indian states are moving the other way and competing for the investment. The study asks a question nobody had answered for India: <b>when a data centre is built, who breathes the pollution and whose water is drawn?</b></p>
@@ -189,16 +204,6 @@ td .sub{display:block;color:var(--faint);font-size:12px}
     </ul>
     <p class="cap" style="margin-top:12px">These six figures are the authors' results as stated in the paper's abstract. The pollution, health and cost figures are model estimates that rest on assumed loads for facilities that publish none. Nothing on this page recomputes them.</p>
   </section>
-
-  <div class="tabs" role="tablist" aria-label="Views">
-    <button role="tab" id="t-map" aria-selected="true" aria-controls="view">Map</button>
-    <button role="tab" id="t-states" aria-selected="false" aria-controls="view">States</button>
-    <button role="tab" id="t-policy" aria-selected="false" aria-controls="view">Incentives</button>
-    <button role="tab" id="t-ops" aria-selected="false" aria-controls="view">Operators</button>
-    <button role="tab" id="t-list" aria-selected="false" aria-controls="view">All facilities</button>
-  </div>
-  <p class="cap" id="cap" aria-live="polite"></p>
-  <section class="panel" id="view" role="tabpanel"></section>
 
   <div class="method">
     <h2>Reading this page with care</h2>
