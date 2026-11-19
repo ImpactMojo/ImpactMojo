@@ -32,8 +32,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 ## v10.400.0 - November 16, 2026 (a third Field Talkies film)
 
 - **Data explorers now say when their figures were retrieved.** Each explorer shows the date its data was last pulled from the source, and a source's own release or cut-off date where it gives one. Explorers with no date on record show nothing rather than a guess. Behind it, a weekly check lists any explorer past its review interval.
-- **The Studios get a calmer, clearer layout.** All 36 Studios share one look: a left-aligned title, the steps down the left side on a desktop (a scrolling row on a phone), white cards with a thin border, one field height and one button style, and line icons in place of emoji. Light, dark and phone views were checked on every Studio.
-- **Eight Pro tools lose their folk-art rules and second logo.** The AI Strategy Canvas, Chart Selector, Research Question Builder, ToR Builder, Advisory Board, Statistical Code Converter, Qualitative Insights Lab and Visualization Cookbook now open with a plain left-aligned title and no decorative stripes or paper planes. Field Notes, VaniScribe and the practice datasets keep their own looks.
+- **The Studios get a calmer, clearer layout.** All 36 Studios share one look: a left-aligned title, the steps down the left side on a desktop (a scrolling row on a phone), white cards with a thin border, one field height and one button style, the paper planes kept, and line icons in place of emoji. Light, dark and phone views were checked on every Studio.
+- **Eight Pro tools get plain left-aligned titles.** The AI Strategy Canvas, Chart Selector, Research Question Builder, ToR Builder, Advisory Board, Statistical Code Converter, Qualitative Insights Lab and Visualization Cookbook now open with a left-aligned title, and the second logo under the site header is gone. The paper planes and folk-art borders stay. Field Notes, VaniScribe and the practice datasets keep their own looks.
 
 ### For Learners
 
