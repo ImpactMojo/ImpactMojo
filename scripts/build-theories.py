@@ -236,6 +236,7 @@ def page_shell(title, description, keywords, og_title, og_desc, path, body, scri
 <link rel="stylesheet" href="{stamp('/css/site-chrome.css')}">
 <link rel="stylesheet" href="{stamp('/css/fundamentals.css')}">
 <link rel="stylesheet" href="{stamp('/css/theories.css')}">
+<link rel="stylesheet" href="{stamp('/css/plain-hero.css')}">
 </head>
 <body>
 <div class="skip-nav" role="navigation" aria-label="Skip links"><a href="#main-content" class="skip-link">Skip to content</a></div>
@@ -402,12 +403,13 @@ def theory_body(meta, t, by_id, dd_base, dd_entries):
     del names
 
     return f"""
-<section class="hero">
-  <div class="hero-inner">
-    <span class="eyebrow"><a href="/theories/">Theories of Development</a> &middot; {esc(t['tradition'])} &middot; {esc(t['years_label'])}</span>
-    <h1>{esc(t['name'])}</h1>
-    <p class="claim">{esc(t['claim'])}</p>
-    <p class="hero-credit">{esc(', '.join(th['name'] for th in t['thinkers']))} &middot; <a href="#credits">Credits and sources &darr;</a></p>
+<section class="ph ph--violet">
+  <div class="ph-in" style="--ph-max:1236px">
+    <span class="ph-bar" aria-hidden="true"></span>
+    <p class="ph-eyebrow"><a href="/theories/">Theories of Development</a> &middot; {esc(t['tradition'])} &middot; {esc(t['years_label'])}</p>
+    <h1 class="ph-title">{esc(t['name'])}</h1>
+    <p class="ph-lede">{esc(t['claim'])}</p>
+    <p class="ph-meta"><span>{esc(', '.join(th['name'] for th in t['thinkers']))}</span><span><a href="#credits">Credits and sources &darr;</a></span></p>
   </div>
 </section>
 
@@ -566,17 +568,14 @@ def index_body(meta, theories):
       </div>""" for a in meta["axes"])
 
     return f"""
-<section class="hero">
-  <div class="hero-inner">
-    <span class="eyebrow">Theories of Development</span>
-    <h1>How development is supposed to work.<br><span class="accent">{len(theories)} answers, drawn as causal chains.</span></h1>
-    <p>Development policy runs on theories about why some places are poor, and most of them are argued about without anybody drawing what they actually claim. Each entry here is one theory turned into a diagram you can step through, placed on four axes with the reason for each placement, and then set against the record: what it predicted, what happened, and what is still open.</p>
-    <p>Global canon and South Asian traditions in one catalogue, so that Rostow and Nehru, or Ambedkar and Gandhi, can be read side by side rather than in separate literatures.</p>
-    <p class="hero-credit">Theories sets out the big arguments about how development happens. <a href="/fundamentals/">Fundamentals</a> takes the working frameworks practitioners draw, such as the results chain and the power cube, and checks each one against Indian evidence.</p>
-    <nav class="series-nav" aria-label="Related libraries">
-      <a href="/fundamentals/">Fundamentals: the diagrams</a>
-      <a href="/bct-repository.html">Behaviour change techniques</a>
-    </nav>
+<section class="ph ph--violet">
+  <div class="ph-in" style="--ph-max:1236px">
+    <span class="ph-bar" aria-hidden="true"></span>
+    <p class="ph-eyebrow">Theories of Development</p>
+    <h1 class="ph-title">How development is supposed to work. {len(theories)} answers, drawn as causal chains.</h1>
+    <p class="ph-lede">Development policy runs on theories about why some places are poor, and most of them are argued about without anybody drawing what they actually claim. Each entry here is one theory turned into a diagram you can step through, placed on four axes with the reason for each placement, and then set against the record: what it predicted, what happened, and what is still open.</p>
+    <p class="ph-lede">Global canon and South Asian traditions in one catalogue, so that Rostow and Nehru, or Ambedkar and Gandhi, can be read side by side rather than in separate literatures.</p>
+    <p class="ph-meta"><span><a href="/fundamentals/">Fundamentals: the diagrams</a></span><span><a href="/bct-repository.html">Behaviour change techniques</a></span></p>
   </div>
 </section>
 
