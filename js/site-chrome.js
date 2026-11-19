@@ -542,6 +542,11 @@
 'html body .im-sc-consent button.is-yes{background:var(--sc-sel)!important;color:var(--sc-sel-ink)!important}',
 'html body .im-sc-consent button.is-no{background:transparent!important;color:var(--sc-fg)!important}',
 '@media(max-width:600px){.im-sc-consent{padding:8px 12px}.im-sc-consent div{flex:1 1 100%}.im-sc-consent button{flex:1;min-height:40px}}',
+// Touch targets and form fields on a phone. Footer links were 29px tall and the
+// contact and cookie links 16 to 20px, under the 24px minimum and well under the
+// 44px that thumbs need; a form field under 16px makes iOS zoom the page on focus.
+'@media(max-width:768px){.im-sc-foot-col a{display:flex;align-items:center;min-height:40px}.im-sc-foot-contact a,.im-sc-cookie-set{display:inline-flex;align-items:center;min-height:40px;padding:0 6px}}',
+'@media(max-width:768px) and (pointer:coarse){input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]):not([type=color]):not([type=hidden]),select,textarea{font-size:16px!important}}',
 // The share button waits until the reader has scrolled past the first screen,
 // so nothing but the consent strip covers the opening of a page.
 '#im-wa-fab.im-wa-wait{display:none!important}',

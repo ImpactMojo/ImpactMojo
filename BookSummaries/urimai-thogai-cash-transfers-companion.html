@@ -293,6 +293,19 @@ html.dark #root svg:not([class*="im-"]),
 html.dark main img,
 html.dark main svg:not([class*="im-"]) { filter: invert(1) hue-rotate(180deg); }
 html.dark .im-topbar, html.dark .im-footer { filter: none; }
+/* Phone: the bar carries six controls and ran 100px past the screen, cutting off Premium and the theme buttons. Browse is hidden (the logo goes home), Premium becomes an icon, and the system-theme button goes (light and dark stay), so the bar stays on one row. */
+@media (max-width: 640px) {
+    .im-topbar { flex-wrap: nowrap; }
+    .im-topbar-right { flex: 1 1 0; min-width: 0; flex-wrap: nowrap; justify-content: flex-end; gap: 0.3rem; }
+    .im-browse-btn { display: none !important; }
+    .im-premium-btn { font-size: 0 !important; gap: 0 !important; padding: 0.45rem !important; min-width: 36px; min-height: 36px; justify-content: center; }
+    .im-premium-btn svg { width: 18px; height: 18px; }
+    .im-theme-btn[data-imtheme="system"] { display: none; }
+    .im-theme-btn { width: 34px; height: 34px; }
+    .im-topbar-home, .im-topbar-right .auth-logged-out, .im-topbar-right .auth-logged-in { display: inline-flex; align-items: center; min-height: 36px; }
+    .tab-btn { min-height: 40px; }
+}
+p, li { overflow-wrap: anywhere; } /* a long web address in a paragraph pushed the page wider than a phone */
 </style>
 <!-- Google Analytics -->
 <script async src="/js/ga-load.js"></script>

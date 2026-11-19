@@ -225,7 +225,7 @@ body {
     .cfi-closing { padding: 1.75rem; }
 }
 
-.mg-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; }
+.mg-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(320px, 100%),1fr)); gap:1.5rem; }
 .mg-card { display:flex; flex-direction:column; background:var(--cfi-surface); border:1px solid var(--cfi-border); border-radius:14px; overflow:hidden; text-decoration:none; color:inherit; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
 .mg-card:hover { transform:translateY(-3px); border-color:var(--cfi-ink); box-shadow:0 14px 34px rgba(29,78,216,.14); }
 .mg-card-cover { background:#fff; border-bottom:1px solid var(--cfi-border); aspect-ratio:4/3; overflow:hidden; }
@@ -245,6 +245,18 @@ body {
    choice. Enforced by scripts/check-theme-contrast.py. */
 @media (prefers-color-scheme: dark) { body:not(.light-mode):not([data-theme="light"]) .cfi-num { background: #2D67FF; } }
 body.dark-mode .cfi-num, [data-theme="dark"] .cfi-num, html.dark .cfi-num { background: #2D67FF; }
+/* Phone: the bar carries six controls and ran 100px past the screen, cutting off Premium and the theme buttons. Browse is hidden (the logo goes home), Premium becomes an icon, and the system-theme button goes (light and dark stay), so the bar stays on one row. */
+@media (max-width: 640px) {
+    .im-topbar { flex-wrap: nowrap; }
+    .im-topbar-right { flex: 1 1 0; min-width: 0; flex-wrap: nowrap; justify-content: flex-end; gap: 0.3rem; }
+    .im-browse-btn { display: none !important; }
+    .im-premium-btn { font-size: 0 !important; gap: 0 !important; padding: 0.45rem !important; min-width: 36px; min-height: 36px; justify-content: center; }
+    .im-premium-btn svg { width: 18px; height: 18px; }
+    .im-theme-btn[data-imtheme="system"] { display: none; }
+    .im-theme-btn { width: 34px; height: 34px; }
+    .im-topbar-home, .im-topbar-right .auth-logged-out, .im-topbar-right .auth-logged-in { display: inline-flex; align-items: center; min-height: 36px; }
+    .tab-btn { min-height: 40px; }
+}
 </style>
 </head>
 <body>
