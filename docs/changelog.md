@@ -23,6 +23,12 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **India Persecution Tracker Explorer.** A new Data Room page built on the South Asia Justice Campaign's tracker. It holds 1,472 source-linked records from the four editions (2025, July to September 2025, January to April 2026, May to July 2026), each linked to the report SAJC cites and to the edition it comes from. Filter by edition, section, state and who is named, search the wording and download what you have filtered; see the killings and demolitions SAJC mapped in its 2026 editions; see where the reporting concentrates; and read the state anti-conversion laws. Wording about sexual violence or anyone under 18 is withheld. The Data Room now has 24 explorers.
 - **Thirteen more pages move to the shared page header.** The Game Library, The Long View and its three companion pages, Challenges, Blog, Workshops, Transparency, the Starter Kit, Field Radio, Field Talkies and ImpactLex now open on the same plain header as the rest of the site, in place of the dark gradient banner and gradient headings.
 
+## v10.401.0 - November 16, 2026 (the District Lineage Explorer reaches today)
+
+### Changed
+
+- **The District Lineage Explorer now ends at the government's current district list.** A ninth column, 2026, holds the 790 districts in the Local Government Directory on 16 November 2026, each with its directory code. The earlier last column was a 2024 list of 760 that left out Rajasthan's 2023 districts. The 2026 column has the 41 districts Rajasthan kept, the three Madhya Pradesh formed in 2023, Ladakh's six new districts, Delhi's 13 after the December 2025 redrawing, and the rest. The page lists the 32 districts ImpactMojo added to join the two lists and the source read for each one's parent districts.
+
 ## v10.400.0 - November 16, 2026 (a third Field Talkies film)
 
 - **Data explorers now say when their figures were retrieved.** Each explorer shows the date its data was last pulled from the source, and a source's own release or cut-off date where it gives one. Explorers with no date on record show nothing rather than a guess. Behind it, a weekly check lists any explorer past its review interval.
