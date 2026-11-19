@@ -34,6 +34,8 @@ def line(e):
         parts.append("Data retrieved %s." % human(e["retrieved"]))
     if e.get("as_of_date"):
         parts.append("%s %s." % (e["as_of_label"], human(e["as_of_date"])))
+    if e.get("as_of_text"):
+        parts.append("Source: %s." % e["as_of_text"])
     if not parts:
         return BEGIN + END
     return '%s\n<p class="data-retrieved" style="font-size:.9rem;margin:.6rem 0 0">%s</p>\n%s' % (
