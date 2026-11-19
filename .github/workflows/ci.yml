@@ -175,6 +175,10 @@ jobs:
       # three catalogue ids were shared by two entries each.
       - name: Dataverse totals, ids and search rows
         run: python3 scripts/check-dataverse.py
+      - name: Dataverse spotlight picks three live entries a day, recent ones first
+        run: node scripts/test-dataverse-spotlight.mjs
+      - name: Dataverse link checker sorts dead links from blocked ones
+        run: python3 scripts/test-dataverse-links.py
       - name: Every deck listed with its real slide count
         run: python3 scripts/check-deck-listings.py
 
@@ -384,6 +388,43 @@ jobs:
       # count in states with a dedicated policy.
       - name: Rebuild the data centres data and compare
         run: python3 scripts/build-datacentres-explorer-data.py --check
+
+  ipt-data:
+    name: Persecution tracker explorer data is valid
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Validates data/ipt-india.json (every record has an edition, a section,
+      # a source link and a dated or undated flag, no withheld wording leaks
+      # into an excerpt) and fails if ipt.html's static counts are stale.
+      - name: Validate the tracker data and the page counts
+        run: python3 scripts/build-ipt-explorer-data.py
+
+  explorer-freshness:
+    name: Explorer freshness manifest and page lines are current
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # data/explorer-freshness.json must name real pages and data files, and
+      # its retrieved dates must equal the dates the data files record for
+      # themselves. Being overdue is not a failure here: the weekly
+      # data-freshness workflow turns that into an issue.
+      - name: Validate the manifest
+        run: python3 scripts/check-explorer-freshness.py
+      - name: Check the Data retrieved line on each page
+        run: python3 scripts/build-explorer-freshness.py --check
 
   nhts-data:
     name: Travel survey explorer data is current

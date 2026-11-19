@@ -14,6 +14,15 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **The Evaluation Essentials Kit goes from 30 to 45 products.** The Kit stays at ₹2,499. The struck-through list price becomes ₹9,955, which is the sum of the 45 one-time prices.
 
+- **Chart Doctor, in the Dataverse.** Karthik Shashidhar's tool redraws a badly drawn chart, or charts an uploaded table, and says what it changed and why. It takes PNG, JPEG, CSV, TSV or XLSX, has a Chrome extension and an API that uses your own OpenRouter key, and is free in beta until 31 December 2026 with daily limits. The entry warns that uploads are stored in the author's Google Drive and may be reviewed, so confidential data should stay out. The Dataverse count goes from 327 to 328.
+
+- **A cleaner Dataverse.** One header and one width from top to bottom, the catalogue on the first screen, and the filters as a strip along the top: search, a category dropdown, a type dropdown, a Free only switch and a sort. The Portal and Research types, which had no filter, now do. The six how-to cards for each type sit in a closed section under the catalogue.
+
+- **One page header across the site's main pages.** Seventy-two pages that opened with a dark purple banner or their own header now open with the same header as the Data Room and the Dataverse: About, FAQ, Dojos, Handouts, Updates, Testimonials, Portfolio, Accessibility, Verify certificate, Coaching, the privacy, terms, refund, disclaimer, data protection, AI policy and grievance pages, and Fundamentals, Pro Studio, Contribute, Partnerships, Contact, Events, API docs, Known issues, the Development Law Docket, the Theories index and its twelve theory pages, Teach, Membership, the Timelines index and its six timelines, the Practice Packs index and its eighteen packs, and four more.
+
+- **India Persecution Tracker Explorer.** A new Data Room page built on the South Asia Justice Campaign's tracker. It holds 1,472 source-linked records from the four editions (2025, July to September 2025, January to April 2026, May to July 2026), each linked to the report SAJC cites and to the edition it comes from. Filter by edition, section, state and who is named, search the wording and download what you have filtered; see the killings and demolitions SAJC mapped in its 2026 editions; see where the reporting concentrates; and read the state anti-conversion laws. Wording about sexual violence or anyone under 18 is withheld. The Data Room now has 24 explorers.
+- **Thirteen more pages move to the shared page header.** The Game Library, The Long View and its three companion pages, Challenges, Blog, Workshops, Transparency, the Starter Kit, Field Radio, Field Talkies and ImpactLex now open on the same plain header as the rest of the site, in place of the dark gradient banner and gradient headings.
+
 ## v10.401.0 - November 16, 2026 (the District Lineage Explorer reaches today)
 
 ### Changed
@@ -22,10 +31,22 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ## v10.400.0 - November 16, 2026 (a third Field Talkies film)
 
+- **Data explorers now say when their figures were retrieved.** Each explorer shows the date its data was last pulled from the source, and a source's own release or cut-off date where it gives one. Explorers with no date on record show nothing rather than a guess. Behind it, a weekly check lists any explorer past its review interval.
+
 ### For Learners
 
 - **District Lineage Explorer**: type an Indian district and see what it was part of at each census since 1951, when it was carved out, and which districts to add together before comparing two rounds of data. Built on the India State Stories tables.
 - **Data analysis: five problems that reports seldom mention**: a three-minute film on what goes wrong after survey data is collected, from forms that decide what can be recorded to analysis nobody wrote down, with three habits for analysts and three questions for readers.
+
+- **Seven more resources in the Dataverse, from the "beyond the PDF" thread.** The Pantheon (twenty browser games, each built from one classic paper), the digital edition of the Nobel laureates paper, OpenVersions, Can AI Replace the Peer Reviewer? (a living research site), Corporate Ownership Data, Claude Blattman, and the AI Research Feedback skills for building explorable papers. The Dataverse count goes from 328 to 335.
+
+- **A daily spotlight on the Dataverse.** Three entries sit above the filters: up to two recent additions first, then a rotation through the rest, the same three for everyone all day. Entries now carry an `added` date where git history proves one; older entries have none and count as older.
+
+- **The Dataverse's links are checked weekly.** Nothing checked them before. `dataverse-links.yml` tests every external address each Monday, treats only 404, 410 and a missing host as dead (a 403 usually means the site refuses automated clients), and keeps one issue open while anything is dead.
+
+### Fixed
+
+- **Two Dataverse entries pointed at Census India pages that answer 404.** The Sample Registration System entry has its current address, and the Census of India API entry, whose documentation page is gone, now points at the data catalogue and says so (#1397)
 
 ## v10.399.0 - November 15, 2026 (Field Talkies and the Wheel of Learning Transfer)
 
@@ -71,6 +92,9 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **The daily link check failed every day from 7 November, and about 110 links to our own pages went through a redirect** (#1388). Links to the blog, the challenges page, the WASH deck's Deep Dives and several pages in the translated guides now point at the page itself. The check reports links to other sites and fails only on links to our own.
 - **The Wheel of Learning Transfer showed no ring labels on a phone** (#1372). Below 640px the labels were hidden because they would have been about 5px tall. On a narrow screen the wheel now keeps a readable size inside a frame that scrolls sideways, starts centred, and can be reached from the keyboard, with a one-line hint to swipe.
 - **The Wheel of Learning Transfer did not fit a phone screen** (#1374). The first phone fix kept the wheel at a readable size and made it scroll sideways, so a reader saw half of it. On screens 760px and under the whole wheel now fits, the ten sectors are numbered, and a numbered list of the factors sits under it. Tapping a list item or a sector opens the factor. Desktop is unchanged.
+- **The WhatsApp share button covered buttons and links on phones** (#1385). It sat over cards' Visit buttons on the Dataverse page and on any page with a control at the bottom right. It now fades out while something tappable is under it and comes back once the page has scrolled on.
+- **The Wheel of Learning Transfer's ring text could not be read on a phone** (#1380). A phone now has a "Zoom in to read every ring" button. It draws the wheel at about 2.4 times the screen width inside a frame you pan with a finger, so all 30 ring descriptions show at about 11px. The fitted wheel with factor names stays the default.
+- **Fifteen challenge links in the content catalogue guide led nowhere** (#1386). Each pointed at a folder with no page in it. They now open the challenge on the Challenges page.
 - **The Wheel of Learning Transfer's sectors were still empty on a phone** (#1378). On screens 760px and under each factor's name is now written across its own outer-ring sector, and the wheel fills the screen width again. Desktop is unchanged.
 - **The Wheel of Learning Transfer's sectors showed numbers, not names, on a phone** (#1376). On screens 760px and under the wheel is smaller and each sector has its factor name beside it, fitted to render at about 11px at any phone width. The numbers and the list under the wheel are gone. Desktop is unchanged.
 - **The sitemap listed 16 pages whose canonical address was another page or a redirect** (#1367). Fourteen old reading-companion pages (`*-interactive`) point at the `*-companion` page that replaced them, so they are no longer listed. Those fourteen and two companions (Basic Econometrics, Econometrics by Example) wrote their canonical address with capitals, which Netlify redirects. The share-tag script skipped them because they have no `</head>`; it now lowercases their canonical and `og:url`.

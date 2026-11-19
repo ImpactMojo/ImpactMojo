@@ -1,0 +1,72 @@
+# Which data explorers are due for a refresh? Weekly, and on demand.
+#
+# Every explorer is a hand-built snapshot of a published source, so nothing
+# refreshes it and nothing tells anyone a newer edition exists. This runs
+# scripts/check-explorer-freshness.py over data/explorer-freshness.json and
+# keeps ONE issue, labelled data-freshness, listing the explorers past their
+# review interval and the ones with no retrieval date recorded.
+#
+# It writes nothing to the repository: a commit to main is a paid production
+# deploy. The issue is the notification, and it closes itself when nothing is
+# due. It never refreshes the figures: an unattended script would publish
+# unchecked data.
+name: Data freshness
+
+on:
+  schedule:
+    - cron: '11 3 * * 1'   # Monday 08:41 IST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  data-freshness:
+    name: Which explorers are due for a check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            data
+            scripts/check-explorer-freshness.py
+            explorers.html
+          sparse-checkout-cone-mode: true
+
+      - name: Age every explorer
+        run: python3 scripts/check-explorer-freshness.py --report explorer-freshness
+
+      - name: Add the result to the run summary
+        if: always()
+        run: |
+          if [ -f explorer-freshness.md ]; then cat explorer-freshness.md >> "$GITHUB_STEP_SUMMARY"; else echo "No report was written, so nothing was checked." >> "$GITHUB_STEP_SUMMARY"; exit 1; fi
+
+      - name: Open, update or close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          overdue=$(python3 -c "import json;print(json.load(open('explorer-freshness.json'))['tally']['overdue'])")
+          nodate=$(python3 -c "import json;print(json.load(open('explorer-freshness.json'))['tally']['no_date'])")
+          gh label create data-freshness --color FBCA04 --description "Data explorers due for a refresh" 2>/dev/null || true
+          existing=$(gh issue list --label data-freshness --state open --json number --jq '.[0].number // empty')
+          if [ "$overdue" -gt 0 ] || [ "$nodate" -gt 0 ]; then
+            title="Data explorers: $overdue past their review interval, $nodate with no retrieval date"
+            if [ -n "$existing" ]; then
+              gh issue edit "$existing" --title "$title" --body-file explorer-freshness.md
+            else
+              gh issue create --title "$title" --label data-freshness --body-file explorer-freshness.md
+            fi
+          elif [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Every explorer is inside its review interval as of this run."
+          fi
+
+      - name: Upload the full report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: explorer-freshness-report
+          path: |
+            explorer-freshness.json
+            explorer-freshness.md

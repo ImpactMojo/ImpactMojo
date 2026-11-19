@@ -39,6 +39,7 @@
 <link rel="stylesheet" href="/css/fonts.css?v=1a66a15d">
 <link rel="stylesheet" href="/css/site-chrome.css?v=42fa798a">
 <link rel="stylesheet" href="/css/impact-bold.css?v=0c411841">
+<link rel="stylesheet" href="/css/plain-hero.css?v=e1dc5645">
 
 <style>
 :root {
@@ -121,30 +122,13 @@ a { color: var(--color-primary); }
 /* ---------- Layout ---------- */
 .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.25rem; }
 
-.hero {
-  background: var(--color-primary-gradient); color: #fff;
-  padding: 3.5rem 1.25rem 3rem; text-align: center; position: relative; overflow: hidden;
-}
-.hero-inner { position: relative; z-index: 1; }
-.hero-deco {
-  position: absolute; inset: 0; z-index: 0; opacity: 0.5; pointer-events: none;
-  background-image: radial-gradient(circle at 12% 20%, rgba(255,255,255,0.18) 0 2px, transparent 3px),
-    radial-gradient(circle at 82% 30%, rgba(255,255,255,0.14) 0 2px, transparent 3px),
-    radial-gradient(circle at 28% 78%, rgba(255,255,255,0.12) 0 2px, transparent 3px),
-    radial-gradient(circle at 68% 82%, rgba(255,255,255,0.16) 0 2px, transparent 3px);
-  background-size: 220px 220px, 260px 260px, 300px 300px, 240px 240px;
-}
-.hero h1 { font-size: clamp(1.9rem, 4vw, 3rem); margin: 0 0 0.6rem; color: #fff; letter-spacing: -0.02em; }
-.hero p { max-width: 640px; margin: 0 auto; font-size: 1.05rem; opacity: 0.95; }
-.hero .kicker { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; opacity: 0.92; font-family: var(--font-heading); margin-bottom: 0.4rem; }
-.hero-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin: 1.6rem auto 0; }
-.hstat { background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 0.55rem 1rem; min-width: 84px; backdrop-filter: blur(4px); }
-.hstat-n { display: block; font-family: var(--font-heading); font-weight: 800; font-size: 1.5rem; line-height: 1; }
-.hstat-l { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.9; margin-top: 0.2rem; }
-.progress-wrap { max-width: 420px; margin: 1.5rem auto 0; }
-.progress-bar { height: 10px; background: rgba(255,255,255,0.28); border-radius: 999px; overflow: hidden; }
-.progress-bar > span { display: block; height: 100%; width: 0%; background: #fff; border-radius: 999px; transition: width 0.4s ease; }
-.progress-label { font-size: 0.85rem; margin-top: 0.5rem; font-family: var(--font-mono); opacity: 0.95; }
+.ph { --ph-max: 1216px; }
+.ph .ph-lede a { color: var(--ph-ink); text-decoration: underline; text-underline-offset: 3px; }
+.gl-progress { max-width: 420px; margin: 18px 0 0; }
+.gl-progress .progress-bar { height: 8px; background: var(--border); border-radius: 999px; overflow: hidden; }
+.gl-progress .progress-bar > span { display: block; height: 100%; width: 0%; background: #0F766E; border-radius: 999px; transition: width 0.4s ease; }
+html[data-theme="dark"] .gl-progress .progress-bar > span, body.dark-mode .gl-progress .progress-bar > span { background: #5EEAD4; }
+.gl-progress .progress-label { font: 500 13.5px/1.5 'Inter', Helvetica, Arial, sans-serif; margin-top: 6px; color: var(--color-text-muted, #4B5563); }
 
 section.section { padding: 1.5rem 0 2.5rem; }
 
@@ -444,14 +428,14 @@ body.dark-mode .skip-link, [data-theme="dark"] .skip-link, html.dark .skip-link 
 </div>
 
 <!-- Hero -->
-<section class="hero ib-hero">
-  <div class="hero-deco" aria-hidden="true"></div>
-  <div class="hero-inner">
-    <div class="kicker">ImpactMojo Game Library</div>
-    <h1>Learn development by playing</h1>
-    <p>Free, in-browser games drawn from ImpactMojo's courses: <a href="/Games/">18 strategy simulations</a> plus seven puzzle formats spanning economics, gender, research methods, data, health, climate and governance. No sign-up, no downloads.</p>
-    <div class="hero-stats" id="heroStats"></div>
-    <div class="progress-wrap">
+<section class="ph ph--teal">
+  <div class="ph-in">
+    <span class="ph-bar" aria-hidden="true"></span>
+    <p class="ph-eyebrow">Game Library</p>
+    <h1 class="ph-title">Learn development by playing</h1>
+    <p class="ph-lede">Free, in-browser games drawn from ImpactMojo's courses: <a href="/Games/">18 strategy simulations</a> plus seven puzzle formats across economics, gender, research methods, data, health, climate and governance. No sign-up, no downloads.</p>
+    <p class="ph-meta" id="heroStats"></p>
+    <div class="progress-wrap gl-progress">
       <div class="progress-bar"><span id="progressFill"></span></div>
       <div class="progress-label" id="progressLabel">0 of 0 games completed</div>
     </div>
@@ -1329,7 +1313,7 @@ body.dark-mode .skip-link, [data-theme="dark"] .skip-link, html.dark .skip-link 
     var courses = {}; PUZZLES.forEach(function (p) { courses[p.course] = 1; });
     var stats = [[PUZZLES.length, 'games'], [Object.keys(formats).length, 'formats'], [Object.keys(TRACKS).length, 'tracks']];
     document.getElementById('heroStats').innerHTML = stats.map(function (s) {
-      return '<div class="hstat"><span class="hstat-n">' + s[0] + '</span><span class="hstat-l">' + s[1] + '</span></div>';
+      return '<span><b>' + s[0] + '</b> ' + s[1] + '</span>';
     }).join('');
   }
 
@@ -1478,6 +1462,6 @@ body.dark-mode .skip-link, [data-theme="dark"] .skip-link, html.dark .skip-link 
 <script src="/js/config.js?v=7c56119b"></script>
 <script src="/js/auth.js?v=2ce55597"></script>
 <script src="/js/translate-sarvam.js?v=a15ba5ec" defer></script>
-  <script src="/js/site-chrome.js?v=7f878bc5" defer></script>
+  <script src="/js/site-chrome.js?v=6428a6f7" defer></script>
 </body>
 </html>
