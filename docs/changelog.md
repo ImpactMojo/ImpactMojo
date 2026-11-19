@@ -23,6 +23,16 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **District Lineage Explorer**: type an Indian district and see what it was part of at each census since 1951, when it was carved out, and which districts to add together before comparing two rounds of data. Built on the India State Stories tables.
 - **Data analysis: five problems that reports seldom mention**: a three-minute film on what goes wrong after survey data is collected, from forms that decide what can be recorded to analysis nobody wrote down, with three habits for analysts and three questions for readers.
 
+- **Seven more resources in the Dataverse, from the "beyond the PDF" thread.** The Pantheon (twenty browser games, each built from one classic paper), the digital edition of the Nobel laureates paper, OpenVersions, Can AI Replace the Peer Reviewer? (a living research site), Corporate Ownership Data, Claude Blattman, and the AI Research Feedback skills for building explorable papers. The Dataverse count goes from 328 to 335.
+
+- **A daily spotlight on the Dataverse.** Three entries sit above the filters: up to two recent additions first, then a rotation through the rest, the same three for everyone all day. Entries now carry an `added` date where git history proves one; older entries have none and count as older.
+
+- **The Dataverse's links are checked weekly.** Nothing checked them before. `dataverse-links.yml` tests every external address each Monday, treats only 404, 410 and a missing host as dead (a 403 usually means the site refuses automated clients), and keeps one issue open while anything is dead.
+
+### Fixed
+
+- **Two Dataverse entries pointed at Census India pages that answer 404.** The Sample Registration System entry has its current address, and the Census of India API entry, whose documentation page is gone, now points at the data catalogue and says so (#1397)
+
 ## v10.399.0 - November 15, 2026 (Field Talkies and the Wheel of Learning Transfer)
 
 ### Added
