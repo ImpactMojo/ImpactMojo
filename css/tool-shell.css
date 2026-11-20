@@ -149,4 +149,26 @@ body.ts .btn-primary:hover { background: #075985; }
 .fbi-bad  { --fbi: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m9 9 6 6m0-6-6 6'/%3E%3C/svg%3E"); }
 .fbi-warn { --fbi: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.5 22 20H2z'/%3E%3Cpath d='M12 10v4.5M12 17.2v.1'/%3E%3C/svg%3E"); }
 
+/* ---- One step pill for the Studios that keep their steps in a row ----
+   LogFrame (.step-tab), Sampling Design (.step-pill), Storytelling (.step-btn)
+   and Policy Analysis (.tool-tab) each wrote their own. Same shape, one active
+   state, a green number once a step is done. */
+body.ts .step-tab, body.ts .step-pill, body.ts .step-btn, body.ts .tool-tab {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 14px 6px 8px; margin: 0;
+  font: 600 14px/1.2 'Inter', system-ui, sans-serif; white-space: nowrap;
+  color: var(--ts-mut); background: var(--ts-card); border: 1px solid var(--ts-line); border-radius: 999px;
+  box-shadow: none; cursor: pointer;
+}
+body.ts .step-tab:hover, body.ts .step-pill:hover, body.ts .step-btn:hover, body.ts .tool-tab:hover { color: var(--ts-ink); border-color: var(--ts-acc); }
+body.ts .step-tab.active, body.ts .step-pill.active, body.ts .step-btn.active, body.ts .tool-tab.active {
+  color: #fff; background: #0369A1; border-color: #0369A1; box-shadow: none;
+}
+body.ts .step-tab .num, body.ts .step-pill .num, body.ts .step-btn .step-num {
+  flex: 0 0 auto; width: 24px; height: 24px; display: inline-grid; place-items: center; border-radius: 999px;
+  font: 700 12px/1 'Inter', system-ui, sans-serif; color: var(--ts-mut); background: color-mix(in srgb, var(--ts-mut) 14%, var(--ts-card));
+}
+body.ts .step-tab.active .num, body.ts .step-pill.active .num, body.ts .step-btn.active .step-num { color: #0369A1; background: #fff; }
+body.ts .step-tab.done .num, body.ts .step-pill.done .num, body.ts .step-btn.completed .step-num { color: #fff; background: #0B835B; }
+body.ts .step-btn.completed:not(.active) { color: var(--ts-mut); }
+
 } /* end screen */
