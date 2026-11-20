@@ -9,7 +9,8 @@
  * auto-verified, so this keeps the human "did the money arrive?" check while
  * removing all manual steps.
  *
- * Env: ADMIN_KEY, STATUS_ALERT_EMAIL, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, URL
+ * Env: ADMIN_KEY, STATUS_ALERT_EMAIL, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, URL,
+ *      INSTANT_DELIVERY (optional; "on" turns automatic delivery on)
  */
 import crypto from "node:crypto";
 import { rateLimit, looksLikeJunk } from "../lib/guard.mjs";
@@ -259,6 +260,11 @@ const looksLikeEmail = (v) => typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]
 // from the title this function resolves, never from the price the page sent,
 // because a caller can write any price it likes into the form.
 const HELD_FOR_OWNER = new Set(["evaluationessentialskit"]);
+// Automatic delivery is OFF unless INSTANT_DELIVERY=on. The owner looks at each
+// file before it goes to a buyer (decided 2026-11-20), so every order waits for
+// the "Confirm & deliver" click. The code below is kept for if that changes.
+// Until 2026-11-20 this path could not run at all: see connectBlobs().
+const instantOn = () => process.env.INSTANT_DELIVERY === "on";
 const instantEligible = (title) =>
   !(BUNDLES[title] || BUNDLES_NORM[norm(title)]) && !HELD_FOR_OWNER.has(norm(title)) && Boolean(single(title));
 // PhonePe, Google Pay and bank UTRs all differ; every one seen so far is 10
@@ -305,24 +311,25 @@ async function logMail(to, subject, ok, attempts, detail) {
 // status-alert). Tried twice and every failure is logged with its status, so a
 // refused "Confirm payment" mail leaves a trace instead of looking like an
 // order that never happened.
-async function sendMail(to, subject, html) {
+async function sendMail(to, subject, html, attachments) {
   if (!SERVICE_KEY) { console.log("[submission] mail skipped: no service key"); return false; }
   let lastDetail = "";
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  const tries = attachments && attachments.length ? 1 : 2;
+  for (let attempt = 1; attempt <= tries; attempt++) {
     try {
       const r = await fetch(`${SUPABASE_URL}/functions/v1/status-alert`, {
         method: "POST",
         headers: { Authorization: `Bearer ${SERVICE_KEY}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ to, subject, html }),
+        body: JSON.stringify({ to, subject, html, ...(attachments && attachments.length ? { attachments } : {}) }),
       });
       const j = await r.json().catch(() => ({}));
       if (r.ok && j && j.sent === true) { await logMail(to, subject, true, attempt); return true; }
       lastDetail = r.status + " " + JSON.stringify(j).slice(0, 150);
       console.log("[submission] mail not sent, attempt", attempt, "status", r.status, JSON.stringify(j).slice(0, 200), "subject:", subject);
     } catch (e) { lastDetail = e.message; console.log("[submission] mail failed, attempt", attempt, e.message, "subject:", subject); }
-    if (attempt === 1) await new Promise((res) => setTimeout(res, 1500));
+    if (attempt === 1 && tries > 1) await new Promise((res) => setTimeout(res, 1500));
   }
-  await logMail(to, subject, false, 2, lastDetail);
+  await logMail(to, subject, false, tries, lastDetail);
   return false;
 }
 
@@ -385,7 +392,97 @@ async function storeCopy(form, raw) {
   } catch (e) { console.log("[submission] stored copy failed", e.message); }
 }
 
+
+// ---- Blobs ---------------------------------------------------------------
+// This function is written in Netlify's Lambda-compatible style, and in that
+// style @netlify/blobs works only after connectLambda(event). Nothing called
+// it, so every rate-limit counter threw MissingBlobsEnvironmentError, the guard
+// failed closed, and no automatic delivery or kit receipt could ever go out
+// (found 2026-11-20 from an order that said "instant-ref: unavailable"). The
+// tests swap in an in-memory store, which is why they never saw it.
+async function connectBlobs(event) {
+  if (!event || !event.blobs) return;
+  try {
+    const { connectLambda } = await import("@netlify/blobs");
+    connectLambda(event);
+  } catch (e) { console.log("[submission] blobs not connected:", e && e.message); }
+}
+
+// ---- The files, for the owner to look at before clicking -------------------
+// The owner checks each file before it goes to a buyer, so every product order
+// is followed by a second email carrying the file or files that "Confirm &
+// deliver" would send. It goes after the confirm email, never instead of it: a
+// big upload must not be able to cost the owner the order. Files that would
+// make the message too heavy come as a three-day link, and a file the bucket
+// does not hold is named, which tells the owner before the buyer finds out.
+const ATTACH_MAX_BYTES = 12 * 1024 * 1024;
+const PREVIEW_BUDGET_MS = 5000;
+const LINK_TTL_SEC = 3 * 86400;
+const fmtSize = (n) => (n >= 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB");
+const storageHeaders = () => ({ apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}` });
+const objectUrl = (kind, name) => `${SUPABASE_URL}/storage/v1/object/${kind}/products/${encodeURIComponent(name)}`;
+
+async function inspectFile(name, signal) {
+  const r = await fetch(objectUrl("info", name), { headers: storageHeaders(), signal });
+  if (!r.ok) return { name, missing: true };
+  const j = await r.json().catch(() => ({}));
+  const size = Number(j.size != null ? j.size : j.metadata && j.metadata.size);
+  return { name, size: Number.isFinite(size) ? size : null };
+}
+async function downloadBase64(name, signal) {
+  const r = await fetch(objectUrl("authenticated", name), { headers: storageHeaders(), signal });
+  if (!r.ok) throw new Error("download " + r.status);
+  return Buffer.from(await r.arrayBuffer()).toString("base64");
+}
+async function signedLink(name, signal) {
+  const r = await fetch(objectUrl("sign", name), {
+    method: "POST", signal,
+    headers: { ...storageHeaders(), "Content-Type": "application/json" },
+    body: JSON.stringify({ expiresIn: LINK_TTL_SEC }),
+  });
+  const j = r.ok ? await r.json().catch(() => ({})) : {};
+  return j.signedURL ? `${SUPABASE_URL}/storage/v1${j.signedURL}` : null;
+}
+
+async function sendFilePreview(label, fileKey) {
+  try {
+    const names = String(fileKey || "").split(",").map((n) => n.trim()).filter(Boolean);
+    if (!names.length || !SERVICE_KEY) return;
+    const signal = AbortSignal.timeout(PREVIEW_BUDGET_MS);
+    const info = await Promise.all(names.map((n) => inspectFile(n, signal).catch(() => ({ name: n, unreadable: true }))));
+
+    let used = 0;
+    const toAttach = [], toLink = [], lines = [];
+    for (const f of info) {
+      if (f.missing) lines.push(`${esc(f.name)}: <strong>not found in the products bucket</strong>. The buyer would get nothing for this file.`);
+      else if (f.unreadable) lines.push(`${esc(f.name)}: could not be checked just now.`);
+      else if (f.size != null && used + f.size <= ATTACH_MAX_BYTES) { used += f.size; toAttach.push(f); }
+      else toLink.push(f);
+    }
+    const loaded = await Promise.all(toAttach.map(async (f) => {
+      try { return { ...f, content: await downloadBase64(f.name, signal) }; } catch { return { ...f, failed: true }; }
+    }));
+    const attachments = [];
+    for (const f of loaded) {
+      if (f.failed) toLink.push(f);
+      else { attachments.push({ filename: f.name, content: f.content }); lines.push(`${esc(f.name)} (${fmtSize(f.size)}): attached.`); }
+    }
+    for (const f of toLink) {
+      const u = await signedLink(f.name, signal).catch(() => null);
+      lines.push(u
+        ? `<a href="${esc(u)}">${esc(f.name)}</a>${f.size != null ? " (" + fmtSize(f.size) + ")" : ""}: too large to attach, so this is a link that works for 3 days.`
+        : `${esc(f.name)}: could not be attached or linked just now.`);
+    }
+    const many = names.length > 1;
+    const html = `<p><strong>${esc(label)}</strong></p>
+      <p>${many ? "These are the files" : "This is the file"} that <em>Confirm &amp; deliver</em> in the other email will send to the buyer. Look at ${many ? "them" : "it"} first, then click.</p>
+      <ul>${lines.map((l) => `<li>${l}</li>`).join("")}</ul>`;
+    await sendMail(ADMIN_EMAIL, `Check before you click: ${label}`, html, attachments);
+  } catch (e) { console.log("[submission] file preview failed", e && e.message); }
+}
+
 export const handler = async (event) => {
+  await connectBlobs(event);
   let data, form, ip;
   try { const b = JSON.parse(event.body); data = b.payload.data || {}; form = b.payload.form_name; ip = String(data.ip || b.payload.ip || ""); }
   catch { return { statusCode: 200 }; }
@@ -465,7 +562,7 @@ export const handler = async (event) => {
   let type, key, label, instant = false;
   if (form === "product-order") {
     const title = (data.product || "").replace(/\s*\(₹.*$/, "").trim();
-    instant = instantEligible(title);
+    instant = instantOn() && instantEligible(title);
     const file = fileFor(title);
     if (!file) { await sendMail(ADMIN_EMAIL, `Order needs manual handling: ${data.product}`, `<p>Unknown product "${esc(data.product)}" from ${esc(email)} (UPI ref ${esc(upiRef)}). Deliver manually.</p>`); return { statusCode: 200 }; }
     type = "product"; key = file; label = data.product;
@@ -519,5 +616,6 @@ export const handler = async (event) => {
   }
   const note = heldWhy ? `<p style="font-size:12px;color:#94A3B8">Not sent automatically because ${esc(heldWhy)}.</p>` : "";
   await sendMail(ADMIN_EMAIL, `Confirm payment: ${label}`, html + note);
+  if (type === "product") await sendFilePreview(label, key);
   return { statusCode: 200 };
 };

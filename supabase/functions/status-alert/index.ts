@@ -7,7 +7,8 @@
 // Called server-to-server by netlify/functions/status-probe.mjs:
 //   POST /functions/v1/status-alert
 //   Authorization: Bearer <SERVICE_ROLE_KEY>
-//   { "to": "hello@impactmojo.in", "subject": "...", "html": "..." }
+//   { "to": "hello@impactmojo.in", "subject": "...", "html": "...",
+//     "attachments": [{ "filename": "x.pdf", "content": "<base64>" }] }   // optional
 //
 // Environment:
 //   RESEND_API_KEY            — required for delivery (shared with send-notification)
@@ -40,11 +41,27 @@ serve(async (req) => {
     return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401, headers: corsHeaders });
   }
 
-  let body: { to?: string; subject?: string; html?: string };
+  let body: { to?: string; subject?: string; html?: string; attachments?: unknown };
   try { body = await req.json(); } catch { return new Response(JSON.stringify({ error: "bad json" }), { status: 400, headers: corsHeaders }); }
   const { to, subject, html } = body;
   if (!to || !subject || !html) {
     return new Response(JSON.stringify({ error: "to, subject, html required" }), { status: 400, headers: corsHeaders });
+  }
+
+  // Optional attachments, passed to Resend as given. Resend refuses a message
+  // over 40 MB once encoded, so the caller keeps well under that; this only
+  // checks the shape and a ceiling so a bad call cannot send junk.
+  let attachments: { filename: string; content: string }[] | undefined;
+  if (body.attachments !== undefined) {
+    const a = body.attachments;
+    const ok = Array.isArray(a) && a.length > 0 && a.length <= 10 &&
+      a.every((x) => x && typeof x.filename === "string" && x.filename.length > 0 && x.filename.length <= 200 &&
+        typeof x.content === "string" && x.content.length > 0);
+    const total = ok ? (a as { content: string }[]).reduce((n, x) => n + x.content.length, 0) : 0;
+    if (!ok || total > 30 * 1024 * 1024) {
+      return new Response(JSON.stringify({ error: "attachments must be 1 to 10 items of {filename, content} under 30 MB" }), { status: 400, headers: corsHeaders });
+    }
+    attachments = a as { filename: string; content: string }[];
   }
 
   const resendKey = Deno.env.get("RESEND_API_KEY");
@@ -64,7 +81,7 @@ serve(async (req) => {
     const resp = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: FROM, to: [to], subject, html: wrapped }),
+      body: JSON.stringify({ from: FROM, to: [to], subject, html: wrapped, ...(attachments ? { attachments } : {}) }),
     });
     if (!resp.ok) {
       const txt = await resp.text();
