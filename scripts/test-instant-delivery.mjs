@@ -13,6 +13,9 @@ process.env.ADMIN_KEY = 'test-admin-key';
 process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-service-key';
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 process.env.URL = 'https://www.impactmojo.in';
+// Automatic delivery is off by default (the owner looks at each file first),
+// so this test, which is about that path, switches it on.
+process.env.INSTANT_DELIVERY = 'on';
 
 const guard = await import(new URL('../netlify/lib/guard.mjs', import.meta.url));
 let mem = new Map(), storeDown = false;

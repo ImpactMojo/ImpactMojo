@@ -1307,6 +1307,20 @@ jobs:
       - name: Test the weekly open-items email and its mark-as-handled links
         run: node scripts/test-open-items.mjs
 
+      # The owner looks at each file before it goes to a buyer: automatic
+      # delivery is off by default, every order is followed by an email carrying
+      # the file, and Netlify Blobs is connected. The last needs the real
+      # library (the other order tests use an in-memory store, which is how a
+      # Blobs that could not connect went unseen).
+      - name: Install the one package the Blobs check uses
+        run: npm install --no-save --no-package-lock @netlify/blobs@11.1.7
+
+      - name: Test the owner's file email, automatic delivery off, and the Blobs connection
+        run: node scripts/test-owner-preview.mjs
+
+      - name: Test the status-alert Edge Function's attachments field
+        run: node scripts/test-status-alert-attachments.mjs
+
   judgment-sources:
     name: Judgment source PDFs resolve
     runs-on: ubuntu-latest
