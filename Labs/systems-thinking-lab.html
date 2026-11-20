@@ -345,7 +345,7 @@ body { padding-top: 56px; }
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Systems Thinking & Complexity Studio", "description": "Interactive Systems Thinking & Complexity Studio: map systems, build causal loop diagrams, use the iceberg model and Meadows' leverage points, and manage in complex, dynamic development contexts.", "url": "https://www.impactmojo.in/labs/systems-thinking-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
-<link rel="stylesheet" href="/css/tool-shell.css?v=625f086a">
+<link rel="stylesheet" href="/css/tool-shell.css?v=650dd678">
 </head>
 <body class="ts">
 <a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
@@ -898,7 +898,7 @@ function selectOption(el, isCorrect, group) {
     fb.classList.add('show');
     fb.classList.remove('correct', 'incorrect');
     fb.classList.add(isCorrect ? 'correct' : 'incorrect');
-    fb.innerHTML = (isCorrect ? '✅ Correct. ' : '❌ Not quite. ') + explain(group);
+    fb.innerHTML = (isCorrect ? '<span class=fbi-ok aria-hidden=true></span>Correct. ' : '<span class=fbi-bad aria-hidden=true></span>Not quite. ') + explain(group);
 }
 function explain(group) {
     if (group === 'ice') return 'Recurring events signal an underlying structure. The iceberg model pushes you below the event to patterns, systemic structures and mental models, where durable leverage lives.';
@@ -946,10 +946,10 @@ function checkCLD() {
     var driverCorrect = driver === 'power';
     var fb = document.getElementById('cldFeedback');
     if (loopScore >= 4 && driverCorrect) {
-        fb.innerHTML = '<div class="feedback correct show">✅ Excellent systems mapping. You traced the reinforcing loop (irrigation &rarr; pumping &rarr; depletion &rarr; cost &rarr; debt &rarr; distress) and spotted the power subsidy as the external driver that keeps the loop spinning.</div>';
+        fb.innerHTML = '<div class="feedback correct show"><span class=fbi-ok aria-hidden=true></span>Excellent systems mapping. You traced the reinforcing loop (irrigation &rarr; pumping &rarr; depletion &rarr; cost &rarr; debt &rarr; distress) and spotted the power subsidy as the external driver that keeps the loop spinning.</div>';
         document.getElementById('q3next').disabled = false;
     } else {
-        fb.innerHTML = '<div class="feedback incorrect show">⚠️ Not yet. The reinforcing loop runs: irrigation demand &rarr; pumping &rarr; depletion &rarr; pumping cost &rarr; farmer debt &rarr; distress. The external driver is the power subsidy (a government policy setting, not part of the farmers\' feedback loop). Adjust your selections and try again.</div>';
+        fb.innerHTML = '<div class="feedback incorrect show"><span class=fbi-warn aria-hidden=true></span>Not yet. The reinforcing loop runs: irrigation demand &rarr; pumping &rarr; depletion &rarr; pumping cost &rarr; farmer debt &rarr; distress. The external driver is the power subsidy (a government policy setting, not part of the farmers\' feedback loop). Adjust your selections and try again.</div>';
     }
 }
 
@@ -988,10 +988,10 @@ function checkLoops() {
     loopQuestions.forEach(function(q, qi){ if (loopAnswers[qi] === q.correct) score++; });
     var fb = document.getElementById('loopFeedback');
     if (score >= 3) {
-        fb.innerHTML = '<div class="feedback correct show">✅ Strong loop identification: ' + score + '/4 correct. You can tell reinforcing (self-strengthening), balancing (stabilising) and delayed feedback loops apart.</div>';
+        fb.innerHTML = '<div class="feedback correct show"><span class=fbi-ok aria-hidden=true></span>Strong loop identification: ' + score + '/4 correct. You can tell reinforcing (self-strengthening), balancing (stabilising) and delayed feedback loops apart.</div>';
         document.getElementById('q4next').disabled = false;
     } else {
-        fb.innerHTML = '<div class="feedback incorrect show">⚠️ ' + score + '/4 correct. Reinforcing loops magnify change (virtuous or vicious); balancing loops seek equilibrium; delayed loops have long lags between cause and effect.</div>';
+        fb.innerHTML = '<div class="feedback incorrect show"><span class=fbi-warn aria-hidden=true></span>' + score + '/4 correct. Reinforcing loops magnify change (virtuous or vicious); balancing loops seek equilibrium; delayed loops have long lags between cause and effect.</div>';
     }
 }
 
@@ -1029,10 +1029,10 @@ function checkLeverage() {
     leverageQuestions.forEach(function(q, qi){ if (leverageAnswers[qi] === q.correct) score++; });
     var fb = document.getElementById('leverageFeedback');
     if (score >= 3) {
-        fb.innerHTML = '<div class="feedback correct show">✅ Strong leverage analysis: ' + score + '/4 correct. Tweaking numbers (level 12) is easy but shallow; shifting a paradigm (level 2) is hard but changes the system itself.</div>';
+        fb.innerHTML = '<div class="feedback correct show"><span class=fbi-ok aria-hidden=true></span>Strong leverage analysis: ' + score + '/4 correct. Tweaking numbers (level 12) is easy but shallow; shifting a paradigm (level 2) is hard but changes the system itself.</div>';
         document.getElementById('q5next').disabled = false;
     } else {
-        fb.innerHTML = '<div class="feedback incorrect show">⚠️ ' + score + '/4 correct. Changing numbers (subsidies, budgets) is level 12; changing rules / incentives is level 8; enabling self-organisation is level 4; shifting the mindset / paradigm is level 2.</div>';
+        fb.innerHTML = '<div class="feedback incorrect show"><span class=fbi-warn aria-hidden=true></span>' + score + '/4 correct. Changing numbers (subsidies, budgets) is level 12; changing rules / incentives is level 8; enabling self-organisation is level 4; shifting the mindset / paradigm is level 2.</div>';
     }
 }
 
@@ -1067,10 +1067,10 @@ function checkME() {
     meQuestions.forEach(function(q, qi){ if (meAnswers[qi] === q.correct) score++; });
     var fb = document.getElementById('meFeedback');
     if (score >= 2) {
-        fb.innerHTML = '<div class="feedback correct show">✅ Good complexity-aware thinking: ' + score + '/3 correct. Different complex contexts call for different M&amp;E tools.</div>';
+        fb.innerHTML = '<div class="feedback correct show"><span class=fbi-ok aria-hidden=true></span>Good complexity-aware thinking: ' + score + '/3 correct. Different complex contexts call for different M&amp;E tools.</div>';
         document.getElementById('q6next').disabled = false;
     } else {
-        fb.innerHTML = '<div class="feedback incorrect show">⚠️ ' + score + '/3 correct. Complex, unpredictable contexts need adaptive M&amp;E (outcome harvesting, process tracing, network analysis) rather than rigid logframes or a single RCT.</div>';
+        fb.innerHTML = '<div class="feedback incorrect show"><span class=fbi-warn aria-hidden=true></span>' + score + '/3 correct. Complex, unpredictable contexts need adaptive M&amp;E (outcome harvesting, process tracing, network analysis) rather than rigid logframes or a single RCT.</div>';
     }
 }
 
@@ -1098,10 +1098,10 @@ function checkDesign() {
     });
     var fb = document.getElementById('designFeedback');
     if (score >= 6) {
-        fb.innerHTML = '<div class="feedback correct show">✅ Excellent systems-informed design: ' + score + '/8 aligned. You prioritised multiple hypotheses, employer partnerships, self-organising networks and adaptive monitoring over top-down control.</div>';
+        fb.innerHTML = '<div class="feedback correct show"><span class=fbi-ok aria-hidden=true></span>Excellent systems-informed design: ' + score + '/8 aligned. You prioritised multiple hypotheses, employer partnerships, self-organising networks and adaptive monitoring over top-down control.</div>';
         document.getElementById('q7next').disabled = false;
     } else {
-        fb.innerHTML = '<div class="feedback incorrect show">⚠️ ' + score + '/8 aligned. Systems-informed design means testing multiple approaches, enabling emergence (not controlling), building feedback loops, and partnering with the system (employers, communities).</div>';
+        fb.innerHTML = '<div class="feedback incorrect show"><span class=fbi-warn aria-hidden=true></span>' + score + '/8 aligned. Systems-informed design means testing multiple approaches, enabling emergence (not controlling), building feedback loops, and partnering with the system (employers, communities).</div>';
     }
 }
 
