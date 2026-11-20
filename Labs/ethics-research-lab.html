@@ -347,7 +347,7 @@ body { padding-top: 56px; }
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Ethics & Research Integrity Studio", "description": "Interactive Ethics & Research Integrity Studio: work through ethical dilemmas, design informed-consent protocols, protect participant data under the DPDP Act 2023, examine positionality, and understand IEC ethics review in India and South Asia.", "url": "https://www.impactmojo.in/labs/ethics-research-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
-<link rel="stylesheet" href="/css/tool-shell.css?v=625f086a">
+<link rel="stylesheet" href="/css/tool-shell.css?v=650dd678">
 </head>
 <body class="ts">
 <a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
@@ -866,7 +866,7 @@ function selectOption(el, isCorrect, group) {
     fb.classList.add('show');
     fb.classList.remove('correct', 'incorrect');
     fb.classList.add(isCorrect ? 'correct' : 'incorrect');
-    fb.innerHTML = (isCorrect ? '✅ Correct. ' : '❌ Not quite. ') + explain(group);
+    fb.innerHTML = (isCorrect ? '<span class=fbi-ok aria-hidden=true></span>Correct. ' : '<span class=fbi-bad aria-hidden=true></span>Not quite. ') + explain(group);
 }
 function explain(group) {
     if (group === 'q1') return 'Respect for persons means people decide what happens to their information and images. Publishing identifiable clips for a use the participant never agreed to overrides their autonomy, even if the intention (awareness) seems good.';
@@ -930,11 +930,11 @@ function checkConsent() {
     fb.classList.add('show');
     if (score === consentQuestions.length) {
         fb.classList.remove('incorrect'); fb.classList.add('correct');
-        fb.innerHTML = '✅ Perfect. Valid consent depends on comprehension, voluntariness, and cultural appropriateness; a signature alone is not enough.';
+        fb.innerHTML = '<span class=fbi-ok aria-hidden=true></span>Perfect. Valid consent depends on comprehension, voluntariness, and cultural appropriateness; a signature alone is not enough.';
         document.getElementById('q2next').disabled = false;
     } else {
         fb.classList.remove('correct'); fb.classList.add('incorrect');
-        fb.innerHTML = '⚠️ ' + score + '/' + consentQuestions.length + ' correct. Remember: consent is about the participant’s understanding and freedom to choose, not the researcher’s paperwork. Adjust and re-check.';
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>' + score + '/' + consentQuestions.length + ' correct. Remember: consent is about the participant’s understanding and freedom to choose, not the researcher’s paperwork. Adjust and re-check.';
     }
 }
 
@@ -988,11 +988,11 @@ function checkDilemmas() {
     fb.classList.add('show');
     if (score === 3) {
         fb.classList.remove('incorrect', 'neutral'); fb.classList.add('correct');
-        fb.innerHTML = '✅ Excellent ethical reasoning. You balanced participant welfare, research integrity, and real-world constraints.';
+        fb.innerHTML = '<span class=fbi-ok aria-hidden=true></span>Excellent ethical reasoning. You balanced participant welfare, research integrity, and real-world constraints.';
         document.getElementById('q3next').disabled = false;
     } else {
         fb.classList.remove('correct', 'incorrect'); fb.classList.add('neutral');
-        fb.innerHTML = '⚠️ ' + score + '/3 optimal choices.<br>' + feedback.map(function(f) { return '• ' + f; }).join('<br>');
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>' + score + '/3 optimal choices.<br>' + feedback.map(function(f) { return '• ' + f; }).join('<br>');
         if (score >= 2) document.getElementById('q3next').disabled = false;
     }
 }
@@ -1036,11 +1036,11 @@ function checkPrivacy() {
     fb.classList.add('show');
     if (score >= 5) {
         fb.classList.remove('incorrect'); fb.classList.add('correct');
-        fb.innerHTML = '✅ Strong privacy awareness: ' + score + '/7 correct. This plan carries multiple serious privacy violations.';
+        fb.innerHTML = '<span class=fbi-ok aria-hidden=true></span>Strong privacy awareness: ' + score + '/7 correct. This plan carries multiple serious privacy violations.';
         document.getElementById('q4next').disabled = false;
     } else {
         fb.classList.remove('correct'); fb.classList.add('incorrect');
-        fb.innerHTML = '⚠️ ' + score + '/7 correct. Key issues:<br>' + details.slice(0, 3).map(function(d) { return '• ' + d; }).join('<br>');
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>' + score + '/7 correct. Key issues:<br>' + details.slice(0, 3).map(function(d) { return '• ' + d; }).join('<br>');
     }
 }
 
@@ -1117,11 +1117,11 @@ function checkReview() {
     fb.classList.add('show');
     if (score >= 6) {
         fb.classList.remove('incorrect'); fb.classList.add('correct');
-        fb.innerHTML = '✅ Sharp ethical eye: ' + score + '/8 correct. You distinguished real ethical issues from methodological preferences.';
+        fb.innerHTML = '<span class=fbi-ok aria-hidden=true></span>Sharp ethical eye: ' + score + '/8 correct. You distinguished real ethical issues from methodological preferences.';
         document.getElementById('q6next').disabled = false;
     } else {
         fb.classList.remove('correct'); fb.classList.add('incorrect');
-        fb.innerHTML = '⚠️ ' + score + '/8 correct. Remember: sample size and timeline are methodological choices, not ethical violations.' + (missed.length ? '<br>Missing: ' + missed.slice(0, 2).join('; ') : '');
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>' + score + '/8 correct. Remember: sample size and timeline are methodological choices, not ethical violations.' + (missed.length ? '<br>Missing: ' + missed.slice(0, 2).join('; ') : '');
     }
 }
 

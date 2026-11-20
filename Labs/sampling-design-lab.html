@@ -297,7 +297,7 @@ body.facil-on .facil{display:block}
 </style>
 <link href="/assets/images/favicon.png" rel="icon" type="image/png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Sampling Design Studio", "description": "A free, guided sampling design studio for MEL practitioners in South Asia. Walk from evaluation question to a defensible sampling strategy (SRS, stratified, cluster or multistage) sized with a rigorous engine, a built-in ICC reference library, and a two-level rigor-vs-reality precision model. Explained as you go, with a printable sampling plan.", "url": "https://www.impactmojo.in/labs/sampling-design-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
-<link rel="stylesheet" href="/css/tool-shell.css?v=625f086a">
+<link rel="stylesheet" href="/css/tool-shell.css?v=650dd678">
 </head>
 <body class="ts">
 <a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}</style>
@@ -833,13 +833,25 @@ body.facil-on .facil{display:block}
   // ---- Reference data ----------------------------------------------------
   // Typical, EDITABLE frame sizes for a South-Asian context. These are order-of-
   // magnitude anchors to get people started, never authoritative counts.
+  // Line icons for the scale picker (drawn here, so no emoji and nothing to load).
+  function sI(d) {
+    return '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px">' + d + '</svg>';
+  }
+  var ICON_SCALE = {
+    centre:   sI('<path d="M3 21h18M5 21V9l7-5 7 5v12M9.5 21v-6h5v6"/>'),
+    cluster:  sI('<path d="M3 21v-7l4-3 4 3v7M13 21v-9l4-3 4 3v9M2 21h20"/>'),
+    block:    sI('<path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/>'),
+    district: sI('<path d="M12 21s-6-5.2-6-10a6 6 0 0 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2"/>'),
+    state:    sI('<path d="m3 10 9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/>'),
+    nation:   sI('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>')
+  };
   var SCALES = [
-    {id:'site',    name:'Single site',       sub:'one school / centre / SHG', dispersion:0, icon:'🏫'},
-    {id:'cluster', name:'A few clusters',    sub:'a cluster of villages/schools', dispersion:1, icon:'🏘️'},
-    {id:'block',   name:'Block / mandal',    sub:'sub-district', dispersion:2, icon:'🗺️'},
-    {id:'district',name:'District',          sub:'a full district', dispersion:3, icon:'📍'},
-    {id:'state',   name:'State',             sub:'state-wide programme', dispersion:4, icon:'🏛️'},
-    {id:'nation',  name:'National',          sub:'multi-state / country', dispersion:5, icon:'🇮🇳'}
+    {id:'site',    name:'Single site',       sub:'one school / centre / SHG', dispersion:0, icon:ICON_SCALE.centre},
+    {id:'cluster', name:'A few clusters',    sub:'a cluster of villages/schools', dispersion:1, icon:ICON_SCALE.cluster},
+    {id:'block',   name:'Block / mandal',    sub:'sub-district', dispersion:2, icon:ICON_SCALE.block},
+    {id:'district',name:'District',          sub:'a full district', dispersion:3, icon:ICON_SCALE.district},
+    {id:'state',   name:'State',             sub:'state-wide programme', dispersion:4, icon:ICON_SCALE.state},
+    {id:'nation',  name:'National',          sub:'multi-state / country', dispersion:5, icon:ICON_SCALE.nation}
   ];
   // rough population of the chosen UNIT at each SCALE (editable defaults)
   var POP = {

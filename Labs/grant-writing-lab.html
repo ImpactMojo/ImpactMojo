@@ -331,7 +331,7 @@ body { padding-top: 56px; }
 <link rel="icon" type="image/png" href="/assets/images/favicon.png">
 <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Grant Writing & Proposal Studio", "description": "Interactive Grant Writing & Proposal Studio, turn ideas into fundable proposals: match donors, build a theory of change, write compelling narratives, structure budgets, design M&E indicators, and review proposals like a funder in India and South Asia.", "url": "https://www.impactmojo.in/labs/grant-writing-lab.html", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "provider": {"@type": "Organization", "name": "ImpactMojo", "url": "https://www.impactmojo.in"}}</script>
-<link rel="stylesheet" href="/css/tool-shell.css?v=625f086a">
+<link rel="stylesheet" href="/css/tool-shell.css?v=650dd678">
 </head>
 <body class="ts">
 <a href="#main-content" class="im-skip-link">Skip to content</a><style>.im-skip-link{position:absolute;left:-9999px;top:0;background:#0369A1;color:#fff;padding:8px 16px;z-index:100000;border-radius:0 0 6px 0;font:600 .85rem/1.2 Inter,system-ui,sans-serif;text-decoration:none}.im-skip-link:focus{left:0}
@@ -804,16 +804,16 @@ function checkDonorMatch() {
     fb.className = 'feedback show';
     if (right === correctIds.length && wrong === 0) {
         fb.classList.add('correct');
-        fb.innerHTML = '✅ Excellent match. A domestic water foundation and local CSR are the best fits for a community-led, Maharashtra-focused water project at ~₹50L. Multilaterals and Gates need far larger scale; ICSSR funds academic research; USAID no longer exists as a grant channel.';
+        fb.innerHTML = '<span class=fbi-ok aria-hidden=true></span>Excellent match. A domestic water foundation and local CSR are the best fits for a community-led, Maharashtra-focused water project at ~₹50L. Multilaterals and Gates need far larger scale; ICSSR funds academic research; USAID no longer exists as a grant channel.';
     } else if (right >= 1 && wrong === 0) {
         fb.classList.add('neutral');
-        fb.innerHTML = '⚠️ On the right track, you picked good fits but missed at least one. Both the domestic foundation and local CSR work well here.';
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>On the right track, you picked good fits but missed at least one. Both the domestic foundation and local CSR work well here.';
     } else if (right >= 1) {
         fb.classList.add('neutral');
-        fb.innerHTML = '⚠️ Partly right. You found some good fits but also some mismatches: World Bank and Gates need much larger scale, ICSSR is academic-only, and USAID was dissolved in 2025.';
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>Partly right. You found some good fits but also some mismatches: World Bank and Gates need much larger scale, ICSSR is academic-only, and USAID was dissolved in 2025.';
     } else {
         fb.classList.add('incorrect');
-        fb.innerHTML = '❌ Not quite. For a community-led, Maharashtra-specific project at ₹50L, aim for Indian foundations or local CSR, not multilaterals, academic grants, or a defunct agency.';
+        fb.innerHTML = '<span class=fbi-bad aria-hidden=true></span>Not quite. For a community-led, Maharashtra-specific project at ₹50L, aim for Indian foundations or local CSR, not multilaterals, academic grants, or a defunct agency.';
     }
 }
 
@@ -832,11 +832,11 @@ function checkToC() {
     fb.className = 'feedback show';
     if (score >= 3) {
         fb.classList.add('correct');
-        fb.innerHTML = '✅ Strong theory of change. Your logic flows from specific activities to countable outputs, behaviour-change outcomes, and systemic impact.';
+        fb.innerHTML = '<span class=fbi-ok aria-hidden=true></span>Strong theory of change. Your logic flows from specific activities to countable outputs, behaviour-change outcomes, and systemic impact.';
         document.getElementById('q2next').disabled = false;
     } else {
         fb.classList.add('incorrect');
-        fb.innerHTML = '⚠️ Needs refinement: ' + notes.join('; ') + '. Remember the chain: Activities &rarr; Outputs (countable) &rarr; Outcomes (behaviour change) &rarr; Impact (systemic).';
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>Needs refinement: ' + notes.join('; ') + '. Remember the chain: Activities &rarr; Outputs (countable) &rarr; Outcomes (behaviour change) &rarr; Impact (systemic).';
     }
 }
 
@@ -863,11 +863,11 @@ function checkNarrative() {
     fb.className = 'feedback show';
     if (score >= 5) {
         fb.classList.add('correct');
-        fb.innerHTML = '✅ Sharp editorial eye. This paragraph is a classic case of writing that sounds impressive but says nothing specific: jargon, vagueness, no agent, no evidence.';
+        fb.innerHTML = '<span class=fbi-ok aria-hidden=true></span>Sharp editorial eye. This paragraph is a classic case of writing that sounds impressive but says nothing specific: jargon, vagueness, no agent, no evidence.';
         document.getElementById('q3next').disabled = false;
     } else {
         fb.classList.add('incorrect');
-        fb.innerHTML = '⚠️ ' + score + '/6 correct. The real problems are jargon, vagueness, missing agency, and no evidence. It is neither specific nor merely "too short".';
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>' + score + '/6 correct. The real problems are jargon, vagueness, missing agency, and no evidence. It is neither specific nor merely "too short".';
     }
 }
 
@@ -887,8 +887,8 @@ function updateBudget() {
     });
     var personnelPct = (vals.Personnel / denom) * 100;
     var note = '';
-    if (personnelPct > 80) note = '. ⚠️ Personnel above 80%: looks salary-heavy.';
-    else if (vals.ME === 0) note = '. ⚠️ No M&E line: donors read this as "we don\'t plan to measure results".';
+    if (personnelPct > 80) note = '. <span class=fbi-warn aria-hidden=true></span>Personnel above 80%: looks salary-heavy.';
+    else if (vals.ME === 0) note = '. <span class=fbi-warn aria-hidden=true></span>No M&E line: donors read this as "we don\'t plan to measure results".';
     document.getElementById('budgetBreakdown').innerHTML =
         'Personnel ' + personnelPct.toFixed(1) + '% · M&amp;E ' + ((vals.ME/denom)*100).toFixed(1) + '% · Admin ' + ((vals.Admin/denom)*100).toFixed(1) + '%' + note;
 }
@@ -917,11 +917,11 @@ function checkME() {
     fb.className = 'feedback show';
     if (score >= 4) {
         fb.classList.add('correct');
-        fb.innerHTML = '✅ ' + score + '/5 correct. You can tell inputs (resources) from outputs (countable products), outcomes (behaviour change) and impact (long-term systemic change), essential for a credible M&E plan.';
+        fb.innerHTML = '<span class=fbi-ok aria-hidden=true></span>' + score + '/5 correct. You can tell inputs (resources) from outputs (countable products), outcomes (behaviour change) and impact (long-term systemic change), essential for a credible M&E plan.';
         document.getElementById('q5next').disabled = false;
     } else {
         fb.classList.add('incorrect');
-        fb.innerHTML = '⚠️ ' + score + '/5 correct. Reminder: Inputs = resources, Outputs = countable products, Outcomes = behaviour change, Impact = long-term systemic change.';
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>' + score + '/5 correct. Reminder: Inputs = resources, Outputs = countable products, Outcomes = behaviour change, Impact = long-term systemic change.';
     }
 }
 
@@ -950,11 +950,11 @@ function checkReview() {
     fb.className = 'feedback show';
     if (score >= 6) {
         fb.classList.add('correct');
-        fb.innerHTML = '✅ Excellent review: ' + score + '/8 correct. This excerpt has every classic weakness: vague language, missing data, an activity dump, no budget detail, weak M&E, and hand-wavy sustainability. A reviewer would likely reject it.';
+        fb.innerHTML = '<span class=fbi-ok aria-hidden=true></span>Excellent review: ' + score + '/8 correct. This excerpt has every classic weakness: vague language, missing data, an activity dump, no budget detail, weak M&E, and hand-wavy sustainability. A reviewer would likely reject it.';
         document.getElementById('q6next').disabled = false;
     } else {
         fb.classList.add('incorrect');
-        fb.innerHTML = '⚠️ ' + score + '/8 correct. The excerpt is deliberately weak. Look for missing data, vague activities, no budget breakdown, empty M&E, and aspirational sustainability. The two "positive" options are traps.';
+        fb.innerHTML = '<span class=fbi-warn aria-hidden=true></span>' + score + '/8 correct. The excerpt is deliberately weak. Look for missing data, vague activities, no budget breakdown, empty M&E, and aspirational sustainability. The two "positive" options are traps.';
     }
 }
 
