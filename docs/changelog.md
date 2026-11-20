@@ -23,6 +23,10 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 - **India Persecution Tracker Explorer.** A new Data Room page built on the South Asia Justice Campaign's tracker. It holds 1,472 source-linked records from the four editions (2025, July to September 2025, January to April 2026, May to July 2026), each linked to the report SAJC cites and to the edition it comes from. Filter by edition, section, state and who is named, search the wording and download what you have filtered; see the killings and demolitions SAJC mapped in its 2026 editions; see where the reporting concentrates; and read the state anti-conversion laws. Wording about sexual violence or anyone under 18 is withheld. The Data Room now has 24 explorers.
 - **Thirteen more pages move to the shared page header.** The Game Library, The Long View and its three companion pages, Challenges, Blog, Workshops, Transparency, the Starter Kit, Field Radio, Field Talkies and ImpactLex now open on the same plain header as the rest of the site, in place of the dark gradient banner and gradient headings.
 
+### Changed
+
+- **A shorter footer on every page.** On a phone the footer lists its eight groups of links as rows that open on a tap, so it takes about 720 pixels where it took about 1,800. On a desktop the links sit in eight shorter columns and the footer is about 460 pixels tall where it was about 660. Every link is still there. The long ImpactMojo column is now two (ImpactMojo and Get involved), and Help and legal is now Help and Legal.
+
 ## v10.401.0 - November 16, 2026 (the District Lineage Explorer reaches today)
 
 ### Changed
