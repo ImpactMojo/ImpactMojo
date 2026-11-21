@@ -31,6 +31,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **ImpactLex is a deck of flashcards.** Each term is a card: the front shows the term, what kind of term it is, and whether the entry has been reviewed, has a source or began as a model draft. Turn a card over for the definition and open the full entry for the example, related terms, sources and the record of how it was written. Browse the deck with search, an A to Z row and filters, or switch to Study to go through one large card at a time with previous, next, shuffle and "mark as known", which is kept on your device. The dictionary now carries the same top bar, footer and theme switch as the rest of the site, and the single-term page shows the sources and the review record too.
 
+- **ImpactLex now reads as a dictionary, in the same design as Dev Case Studies and Development Discourses.** Browse shows each term with the kind of term, the first lines of its definition and one line saying whether the entry has been reviewed, whether it records a source and whether a model drafted it. Nothing turns over in Browse. Study keeps the card that turns, one term at a time. The page is set in Source Serif 4 and Inter on a plain paper ground with ruled lines, and the filters are a plain list down the side with counts. The title and the share card now say dictionary.
+
 ## v10.401.0 - November 16, 2026 (the District Lineage Explorer reaches today)
 
 ### Changed

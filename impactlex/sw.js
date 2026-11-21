@@ -8,7 +8,7 @@
  *   - Everything else → network-first with cache fallback
  */
 
-const VERSION = 'impactlex-v5';
+const VERSION = 'impactlex-v6';
 const SHELL_CACHE = `${VERSION}-shell`;
 const DATA_CACHE = `${VERSION}-data`;
 
@@ -22,6 +22,7 @@ const SHELL_URLS = [
   '/impactlex/manifest.webmanifest',
   '/impactlex/data/seed-snapshot.json',
   '/impactlex/data/reviewed.json',
+  '/assets/fonts/source-serif-4-var.woff2',
 ];
 
 self.addEventListener('install', (event) => {
@@ -44,7 +45,7 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
-  if (!url.pathname.startsWith('/impactlex/') && url.pathname !== '/assets/images/ImpactMojo%20Logo.png' && !url.pathname.startsWith('/assets/images/favicon') && !url.pathname.startsWith('/assets/images/apple-touch-icon')) return;
+  if (!url.pathname.startsWith('/impactlex/') && url.pathname !== '/assets/images/ImpactMojo%20Logo.png' && !url.pathname.startsWith('/assets/images/favicon') && !url.pathname.startsWith('/assets/images/apple-touch-icon') && !url.pathname.startsWith('/assets/fonts/source-serif-4')) return;
 
   const cacheName = url.pathname.endsWith('.json') ? DATA_CACHE : SHELL_CACHE;
 
