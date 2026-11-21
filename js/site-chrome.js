@@ -238,28 +238,41 @@
     ['ImpactMojo', [
       ['/about.html', 'About'], ['/walkthrough.html', 'Site walkthrough'], ['/premium.html', 'Membership'], ['/catalog.html', 'Full catalogue'],
       ['/updates#whats-new', 'What&rsquo;s new'], ['/impact-dashboard.html', 'Impact'], ['/testimonials.html', 'Testimonials'],
-      ['/updates#roadmap', 'Roadmap'], ['/community/', 'Community'], ['/partnerships.html', 'Partnerships'],
-      ['/contribute.html', 'Contribute'], ['/support.html', 'Support us'], ['/transparency.html', 'Transparency'], ['/known-issues.html', 'Known issues'],
+      ['/updates#roadmap', 'Roadmap'], ['/transparency.html', 'Transparency'], ['/known-issues.html', 'Known issues']]],
+    ['Get involved', [
+      ['/community/', 'Community'], ['/partnerships.html', 'Partnerships'],
+      ['/contribute.html', 'Contribute'], ['/support.html', 'Support us'],
       ['https://github.com/ImpactMojo/ImpactMojo', 'GitHub']]],
-    ['Help &amp; legal', [
+    ['Help', [
       ['/contact.html', 'Contact'], ['/faq.html', 'FAQ'], ['/sitemap.html', 'Sitemap'],
-      ['/verify-certificate.html', 'Verify a certificate'], ['/privacy-policy.html', 'Privacy'],
-      ['/terms-of-service.html', 'Terms'], ['/refund-policy.html', 'Refunds'], ['/accessibility.html', 'Accessibility'],
+      ['/verify-certificate.html', 'Verify a certificate'], ['/accessibility.html', 'Accessibility']]],
+    ['Legal', [
+      ['/privacy-policy.html', 'Privacy'],
+      ['/terms-of-service.html', 'Terms'], ['/refund-policy.html', 'Refunds'],
       ['/disclaimer.html', 'Disclaimer'], ['/grievance.html', 'Grievance'], ['/data-protection.html', 'Data protection'],
       ['/ai-policy.html', 'AI policy']]]
   ];
-  // grid: wrap each column's links in a <div> (the sheet lays them out in two
-  // columns; the footer lists them straight).
-  function navCols(colClass, grid) {
+  // The footer's columns. Each is a <details> with its heading as the
+  // <summary>: on a phone they are closed and open on a tap, which is what
+  // keeps the footer to about half a screen there (it was 1,808px with every
+  // link listed); from 700px syncFootCols() holds them all open and the
+  // heading reads as a plain heading.
+  function navCols(colClass) {
     return NAV.map(function (col) {
       var links = col[1].map(function (l) {
         var href = /^https?:/.test(l[0]) ? l[0] : SITE + l[0];
-        var dot = grid && freshHrefs().indexOf(normHref(l[0])) !== -1
-          ? '<span class="im-sc-dot" title="Recently updated" aria-label="Recently updated"></span>' : '';
-        return '<a href="' + href + '">' + l[1] + dot + '</a>';
+        return '<a href="' + href + '">' + l[1] + '</a>';
       }).join('');
-      return '<div class="' + colClass + '"><h3>' + col[0] + '</h3>' + (grid ? '<div>' + links + '</div>' : links) + '</div>';
+      return '<details class="' + colClass + '"><summary><h3>' + col[0] + '</h3></summary><div class="im-sc-foot-links">' + links + '</div></details>';
     }).join('');
+  }
+  var FOOT_WIDE = '(min-width:700px)';
+  function syncFootCols(foot, wide) {
+    foot.querySelectorAll('details.im-sc-foot-col').forEach(function (d) {
+      d.open = wide;
+      var sm = d.querySelector('summary');
+      if (wide) sm.setAttribute('tabindex', '-1'); else sm.removeAttribute('tabindex');
+    });
   }
   // The phone Menu sheet. SHEET holds every link in NAV, regrouped so that
   // no screen of the sheet lists more than six rows: a row is either a link
@@ -513,22 +526,39 @@
 '.im-sc-cookie-set:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px}',
 '.im-sc-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#D97706;margin-left:6px;vertical-align:middle}',
 // footer
-'.im-sc-foot{background:var(--sc-bg);border-top:1px solid var(--sc-bd);color:var(--sc-fg);font-family:\'Inter\',system-ui,sans-serif;padding:40px clamp(16px,4vw,32px) 28px;margin-top:48px}',
+'.im-sc-foot{background:var(--sc-bg);border-top:1px solid var(--sc-bd);color:var(--sc-fg);font-family:\'Inter\',system-ui,sans-serif;padding:24px clamp(16px,4vw,32px) 20px;margin-top:48px}',
 'html[data-theme="dark"] .im-sc-foot,html.dark .im-sc-foot{--sc-bg:#0B1120}',
-'.im-sc-foot-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(180px,1.4fr) repeat(6,minmax(0,1fr));gap:28px 28px}',
-'.im-sc-foot-brand{max-width:280px}',
-'@media(max-width:1100px){.im-sc-foot-in{grid-template-columns:repeat(3,minmax(0,1fr))}.im-sc-foot-brand{grid-column:1/-1}}',
-'@media(max-width:600px){.im-sc-foot-in{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}}',
+// Phone first: the brand, then one closed row per column. From 700px four
+// columns, from 1100px the brand on a row of its own above all eight.
+'.im-sc-foot-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:0}',
+'.im-sc-foot-brand{margin-bottom:14px}',
 '.im-sc-foot-brand .im-sc-site{font-size:18px}',
-'.im-sc-foot-brand p{margin:8px 0 0;color:var(--sc-mut);font-size:13px;line-height:1.6}',
-'.im-sc-foot-col h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--sc-mut);margin:0 0 10px;font-weight:700}',
-'.im-sc-foot-col a{display:block;color:var(--sc-fg);text-decoration:none;font-size:13.5px;font-weight:500;padding:4px 0}',
+'.im-sc-foot-brand p{margin:6px 0 0;color:var(--sc-mut);font-size:13px;line-height:1.55}',
+'.im-sc-foot-col h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--sc-mut);margin:0;font-weight:700}',
+'.im-sc-foot-col summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;list-style:none;cursor:pointer;border-top:1px solid var(--sc-bd)}',
+'.im-sc-foot-col summary::-webkit-details-marker{display:none}',
+'.im-sc-foot-col summary::after{content:"";flex:none;width:7px;height:7px;margin-right:4px;border-right:2px solid var(--sc-mut);border-bottom:2px solid var(--sc-mut);transform:rotate(45deg);transition:transform .15s}',
+'.im-sc-foot-col[open] summary::after{transform:rotate(-135deg)}',
+'.im-sc-foot-col summary:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px;border-radius:4px}',
+'.im-sc-foot-col:last-of-type{border-bottom:1px solid var(--sc-bd)}',
+'.im-sc-foot-links{padding:0 0 8px}',
+'.im-sc-foot-col a{display:flex;align-items:center;min-height:40px;color:var(--sc-fg);text-decoration:none;font-size:14px;font-weight:500}',
 '.im-sc-foot-col a:hover{color:var(--sc-ink);text-decoration:underline}',
-'.im-sc-foot-contact{max-width:1200px;margin:26px auto 0;color:var(--sc-mut);font-size:13px;line-height:1.6}',
+'.im-sc-foot-col a:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px;border-radius:4px}',
+'@media(min-width:700px){.im-sc-foot-in{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 24px}.im-sc-foot-brand{grid-column:1/-1;margin-bottom:0}',
+ '.im-sc-foot-col summary{display:block;min-height:0;border-top:0;cursor:default;pointer-events:none}.im-sc-foot-col summary::after{display:none}',
+ '.im-sc-foot-col:last-of-type{border-bottom:0}.im-sc-foot-col h3{margin:0 0 6px}.im-sc-foot-links{padding:0}',
+ '.im-sc-foot-col a{display:block;min-height:0;font-size:13.5px;line-height:24px}}',
+'@media(min-width:700px) and (max-width:768px) and (pointer:coarse){.im-sc-foot-col a{display:flex;min-height:40px}}',
+'@media(min-width:1100px){.im-sc-foot-in{grid-template-columns:minmax(0,1.3fr) repeat(7,minmax(0,1fr));gap:16px 16px}.im-sc-foot-col a{font-size:13px}',
+ '.im-sc-foot-brand{display:flex;align-items:baseline;gap:8px 16px;flex-wrap:wrap}.im-sc-foot-brand p{margin:0}}',
+'@media(prefers-reduced-motion:reduce){.im-sc-foot-col summary::after{transition:none}}',
+'.im-sc-foot-contact{max-width:1200px;margin:18px auto 0;color:var(--sc-mut);font-size:13px;line-height:1.6}',
 '.im-sc-foot-contact a{color:var(--sc-ink);text-decoration:underline}',
 '.im-sc-foot-contact a:hover{text-decoration-thickness:2px}',
-'.im-sc-foot-meta{max-width:1200px;margin:26px auto 0;padding-top:18px;border-top:1px solid var(--sc-bd);color:var(--sc-mut);',
+'.im-sc-foot-meta{max-width:1200px;margin:16px auto 0;padding-top:14px;border-top:1px solid var(--sc-bd);color:var(--sc-mut);',
  'font-size:12px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;align-items:center}',
+'@media(max-width:699px){.im-sc-foot-meta{gap:0 18px;margin-top:10px;padding-top:10px}.im-sc-foot-contact{margin-top:14px}}',
 // Consent notice: one slim strip along the bottom edge, text and buttons on a
 // single line where they fit. It never covers the page with a scrim, and the
 // floating buttons are lifted above it.
@@ -545,7 +575,7 @@
 // Touch targets and form fields on a phone. Footer links were 29px tall and the
 // contact and cookie links 16 to 20px, under the 24px minimum and well under the
 // 44px that thumbs need; a form field under 16px makes iOS zoom the page on focus.
-'@media(max-width:768px){.im-sc-foot-col a{display:flex;align-items:center;min-height:40px}.im-sc-foot-contact a,.im-sc-cookie-set{display:inline-flex;align-items:center;min-height:40px;padding:0 6px}}',
+'@media(max-width:768px){.im-sc-foot-contact a,.im-sc-cookie-set{display:inline-flex;align-items:center;min-height:40px;padding:0 6px}}',
 '@media(max-width:768px) and (pointer:coarse){input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]):not([type=color]):not([type=hidden]),select,textarea{font-size:16px!important}}',
 // The share button waits until the reader has scrolled past the first screen,
 // so nothing but the consent strip covers the opening of a page.
@@ -895,6 +925,14 @@
       '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free forever &middot; &copy; ImpactMojo</span>' +
         '<button type="button" class="im-sc-cookie-set" data-im-cookies>Cookie settings</button>' +
         '<span>Made for South Asian development practitioners</span></div>';
+    // Open on a wide screen, closed on a phone, set before the footer is in
+    // the page so nothing moves. A click on a heading does nothing while wide.
+    var footMq = window.matchMedia ? matchMedia(FOOT_WIDE) : null;
+    syncFootCols(foot, footMq ? footMq.matches : true);
+    if (footMq) footMq.addEventListener('change', function (e) { syncFootCols(foot, e.matches); });
+    foot.addEventListener('click', function (e) {
+      if (footMq && footMq.matches && e.target.closest && e.target.closest('.im-sc-foot-col summary')) e.preventDefault();
+    });
     document.body.appendChild(foot);
     // Cookie settings forgets the stored choice and asks again with the strip.
     foot.querySelector('[data-im-cookies]').addEventListener('click', function () {
