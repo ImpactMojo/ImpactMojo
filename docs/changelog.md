@@ -27,6 +27,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **A shorter footer on every page.** On a phone the footer lists its eight groups of links as rows that open on a tap, so it takes about 720 pixels where it took about 1,800. On a desktop the links sit in eight shorter columns and the footer is about 460 pixels tall where it was about 660. Every link is still there. The long ImpactMojo column is now two (ImpactMojo and Get involved), and Help and legal is now Help and Legal.
 
+- **The footer is shorter again, and the theme switch is back in the top bar.** The footer now shows its eight group headings and opens the links on a click, so it takes about 230 pixels on a computer where it took about 460, and about 530 on a phone where it took about 720. Every link is still there. The top bar has one button for the colour theme beside the Aa button: each press moves from your device setting to light to dark. The three theme choices are also still inside the Aa panel.
+
 ## v10.401.0 - November 16, 2026 (the District Lineage Explorer reaches today)
 
 ### Changed
