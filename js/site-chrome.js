@@ -253,10 +253,11 @@
       ['/ai-policy.html', 'AI policy']]]
   ];
   // The footer's columns. Each is a <details> with its heading as the
-  // <summary>: on a phone they are closed and open on a tap, which is what
-  // keeps the footer to about half a screen there (it was 1,808px with every
-  // link listed); from 700px syncFootCols() holds them all open and the
-  // heading reads as a plain heading.
+  // <summary>, closed at every width (the owner's choice, 21 November 2026:
+  // keep every link, show none until asked). On a phone the headings sit two
+  // across and the one that is open takes the full width. From 700px the
+  // headings are one row and a click on any of them opens or closes all
+  // eight together, so the columns always line up.
   function navCols(colClass) {
     return NAV.map(function (col) {
       var links = col[1].map(function (l) {
@@ -267,12 +268,8 @@
     }).join('');
   }
   var FOOT_WIDE = '(min-width:700px)';
-  function syncFootCols(foot, wide) {
-    foot.querySelectorAll('details.im-sc-foot-col').forEach(function (d) {
-      d.open = wide;
-      var sm = d.querySelector('summary');
-      if (wide) sm.setAttribute('tabindex', '-1'); else sm.removeAttribute('tabindex');
-    });
+  function setFootCols(foot, open) {
+    foot.querySelectorAll('details.im-sc-foot-col').forEach(function (d) { d.open = open; });
   }
   // The phone Menu sheet. SHEET holds every link in NAV, regrouped so that
   // no screen of the sheet lists more than six rows: a row is either a link
@@ -437,7 +434,7 @@
 '.im-sc-search .im-sc-label{flex:1;text-align:left}',
 '.im-sc-kbd{font:500 11.5px/1 Inter,system-ui,sans-serif!important;border:1px solid var(--sc-bd);border-radius:5px;padding:3px 6px;color:var(--sc-mut);background:var(--sc-solid)}',
 '.im-sc-icon{width:36px;height:34px;padding:0;justify-content:center}',
-'.im-sc-setbtn{border-color:var(--sc-bd)}.im-sc-aa{font:700 15px/1 Inter,system-ui,sans-serif!important;letter-spacing:-.3px}',
+'.im-sc-cycle{border-color:var(--sc-bd)}.im-sc-setbtn{border-color:var(--sc-bd)}.im-sc-aa{font:700 15px/1 Inter,system-ui,sans-serif!important;letter-spacing:-.3px}',
 '.im-sc-signup{background:var(--sc-sel);color:var(--sc-sel-ink);font-weight:600}',
 'html body .im-sc .im-sc-signup,html body .im-sc .im-sc-signup:visited{background:var(--sc-sel);color:var(--sc-sel-ink)!important}',
 'html body .im-sc .im-sc-signup:hover{background:var(--sc-sel);color:var(--sc-sel-ink)!important;opacity:.92}',
@@ -530,24 +527,25 @@
 'html[data-theme="dark"] .im-sc-foot,html.dark .im-sc-foot{--sc-bg:#0B1120}',
 // Phone first: the brand, then one closed row per column. From 700px four
 // columns, from 1100px the brand on a row of its own above all eight.
-'.im-sc-foot-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:0}',
+'.im-sc-foot-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}',
+'.im-sc-foot-brand,.im-sc-foot-col[open]{grid-column:1/-1}',
 '.im-sc-foot-brand{margin-bottom:14px}',
 '.im-sc-foot-brand .im-sc-site{font-size:18px}',
 '.im-sc-foot-brand p{margin:6px 0 0;color:var(--sc-mut);font-size:13px;line-height:1.55}',
 '.im-sc-foot-col h3{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--sc-mut);margin:0;font-weight:700}',
-'.im-sc-foot-col summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;list-style:none;cursor:pointer;border-top:1px solid var(--sc-bd)}',
+'.im-sc-foot-col summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px;list-style:none;cursor:pointer;border-top:1px solid var(--sc-bd)}',
 '.im-sc-foot-col summary::-webkit-details-marker{display:none}',
 '.im-sc-foot-col summary::after{content:"";flex:none;width:7px;height:7px;margin-right:4px;border-right:2px solid var(--sc-mut);border-bottom:2px solid var(--sc-mut);transform:rotate(45deg);transition:transform .15s}',
 '.im-sc-foot-col[open] summary::after{transform:rotate(-135deg)}',
 '.im-sc-foot-col summary:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px;border-radius:4px}',
-'.im-sc-foot-col:last-of-type{border-bottom:1px solid var(--sc-bd)}',
+'.im-sc-foot-in{border-bottom:1px solid var(--sc-bd)}',
 '.im-sc-foot-links{padding:0 0 8px}',
 '.im-sc-foot-col a{display:flex;align-items:center;min-height:40px;color:var(--sc-fg);text-decoration:none;font-size:14px;font-weight:500}',
 '.im-sc-foot-col a:hover{color:var(--sc-ink);text-decoration:underline}',
 '.im-sc-foot-col a:focus-visible{outline:2px solid var(--sc-sel);outline-offset:2px;border-radius:4px}',
-'@media(min-width:700px){.im-sc-foot-in{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 24px}.im-sc-foot-brand{grid-column:1/-1;margin-bottom:0}',
- '.im-sc-foot-col summary{display:block;min-height:0;border-top:0;cursor:default;pointer-events:none}.im-sc-foot-col summary::after{display:none}',
- '.im-sc-foot-col:last-of-type{border-bottom:0}.im-sc-foot-col h3{margin:0 0 6px}.im-sc-foot-links{padding:0}',
+'@media(min-width:700px){.im-sc-foot-in{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 24px;border-bottom:0}.im-sc-foot-brand{margin-bottom:0}',
+ '.im-sc-foot-col[open]{grid-column:auto}.im-sc-foot-col summary{justify-content:flex-start;gap:8px;min-height:32px;border-top:0}',
+ '.im-sc-foot-col summary:hover h3{color:var(--sc-fg)}.im-sc-foot-links{padding:2px 0 6px}',
  '.im-sc-foot-col a{display:block;min-height:0;font-size:13.5px;line-height:24px}}',
 '@media(min-width:700px) and (max-width:768px) and (pointer:coarse){.im-sc-foot-col a{display:flex;min-height:40px}}',
 '@media(min-width:1100px){.im-sc-foot-in{grid-template-columns:minmax(0,1.3fr) repeat(7,minmax(0,1fr));gap:16px 16px}.im-sc-foot-col a{font-size:13px}',
@@ -690,7 +688,17 @@
   function syncTheme(mode) {
     var btns = document.querySelectorAll('.im-sc-tbtn');
     for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', btns[i].getAttribute('data-m') === mode ? 'true' : 'false');
+    // The bar's one-icon switch shows the mode in force and names the next one.
+    var c = document.querySelector('[data-im-cycle]');
+    if (c) {
+      var k = CYCLE.indexOf(mode) < 0 ? 0 : CYCLE.indexOf(mode), next = CYCLE[(k + 1) % 3];
+      c.innerHTML = I[CYCLE_ICON[k]];
+      c.setAttribute('aria-label', 'Theme: ' + CYCLE_NAME[k] + '. Switch to ' + CYCLE_NAME[(k + 1) % 3].toLowerCase());
+      c.title = 'Theme: ' + CYCLE_NAME[k];
+      c.setAttribute('data-next', next);
+    }
   }
+  var CYCLE = ['system', 'light', 'dark'], CYCLE_ICON = ['sys', 'sun', 'moon'], CYCLE_NAME = ['System', 'Light', 'Dark'];
   function themeGroup(withText) {
     function b(m, icon, label) {
       return '<button class="im-sc-tbtn" type="button" data-m="' + m + '" title="' + label + '" aria-label="' + label + ' theme">'
@@ -862,6 +870,7 @@
         '<button class="im-sc-btn im-sc-lang im-sc-icon" type="button" aria-label="Language">' + I.globe + '</button>' +
         '<button class="im-sc-btn im-sc-search" type="button" aria-label="Search ' + (mac ? '&#8984;K' : 'Ctrl K') + '">' + I.search + '<span class="im-sc-label">Search</span> ' +
           '<kbd class="im-sc-kbd" aria-hidden="true">' + (mac ? '&#8984;K' : 'Ctrl K') + '</kbd></button>' +
+        '<button class="im-sc-btn im-sc-icon im-sc-cycle" type="button" data-im-cycle></button>' +
         '<div class="im-sc-setwrap">' +
           '<button class="im-sc-btn im-sc-icon im-sc-setbtn" type="button" aria-expanded="false" aria-controls="im-sc-setpanel" aria-label="Accessibility and display" title="Accessibility"><span class="im-sc-aa" aria-hidden="true">Aa</span></button>' +
           '<div class="im-sc-setpanel" id="im-sc-setpanel" role="region" aria-label="Accessibility and display" hidden>' +
@@ -925,13 +934,15 @@
       '<div class="im-sc-foot-meta"><span>CC BY-NC-ND 4.0 &middot; Free forever &middot; &copy; ImpactMojo</span>' +
         '<button type="button" class="im-sc-cookie-set" data-im-cookies>Cookie settings</button>' +
         '<span>Made for South Asian development practitioners</span></div>';
-    // Open on a wide screen, closed on a phone, set before the footer is in
-    // the page so nothing moves. A click on a heading does nothing while wide.
+    // Closed at every width. On a wide screen one click opens or closes all
+    // eight; crossing the breakpoint closes them so the two layouts never mix.
     var footMq = window.matchMedia ? matchMedia(FOOT_WIDE) : null;
-    syncFootCols(foot, footMq ? footMq.matches : true);
-    if (footMq) footMq.addEventListener('change', function (e) { syncFootCols(foot, e.matches); });
+    if (footMq) footMq.addEventListener('change', function () { setFootCols(foot, false); });
     foot.addEventListener('click', function (e) {
-      if (footMq && footMq.matches && e.target.closest && e.target.closest('.im-sc-foot-col summary')) e.preventDefault();
+      var sm = e.target.closest && e.target.closest('.im-sc-foot-col summary');
+      if (!sm || !footMq || !footMq.matches) return;
+      e.preventDefault();
+      setFootCols(foot, !sm.parentNode.open);
     });
     document.body.appendChild(foot);
     // Cookie settings forgets the stored choice and asks again with the strip.
@@ -974,6 +985,8 @@
     document.querySelectorAll('.im-sc-tbtn').forEach(function (b) {
       b.addEventListener('click', function () { applyTheme(b.getAttribute('data-m')); });
     });
+    var cyc = document.querySelector('[data-im-cycle]');
+    if (cyc) cyc.addEventListener('click', function () { applyTheme(cyc.getAttribute('data-next') || 'light'); });
     if (window.matchMedia) matchMedia('(prefers-color-scheme:dark)').addEventListener('change', function () {
       if (currentMode() === 'system') applyTheme('system', true);
     });
