@@ -243,6 +243,8 @@ CREATE TRIGGER create_notif_prefs_on_profile
 -- ============================================================
 -- NOTIFICATION HELPER: Insert notification for a user
 -- Callable from Edge Functions via service role
+-- EXECUTE is revoked from PUBLIC, anon and authenticated in
+-- 20260819110149_revoke_public_execute_on_security_definer_functions.sql
 -- ============================================================
 CREATE OR REPLACE FUNCTION public.notify_user(
     p_user_id UUID,

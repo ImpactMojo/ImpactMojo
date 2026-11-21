@@ -36,3 +36,8 @@ BEGIN
   END IF;
 END;
 $function$;
+
+-- On production the PUBLIC grant was already gone (20260819110149). A fresh
+-- build creates the function here, so repeat the revoke for that case (#1417).
+REVOKE EXECUTE ON FUNCTION public.update_streak(uuid) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.update_streak(uuid) TO authenticated, service_role;

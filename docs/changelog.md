@@ -58,6 +58,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 ### Fixed
 
+- **The database change that stops strangers writing notifications into members' inboxes is now in the repository.** It was applied to the live database on 19 August 2026 and the file was never committed, so the repository still showed the function as open to anyone. The live site was checked on 21 November 2026 and is closed. Reported privately by Viktor Emil Stevanovic of GuardLayer. (#1417)
+
 - **Two Dataverse entries pointed at Census India pages that answer 404.** The Sample Registration System entry has its current address, and the Census of India API entry, whose documentation page is gone, now points at the data catalogue and says so (#1397)
 
 ## v10.399.0 - November 15, 2026 (Field Talkies and the Wheel of Learning Transfer)
