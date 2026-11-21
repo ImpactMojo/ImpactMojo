@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<!-- Bespoke ImpactLex app shell (own header/footer + app.js wiring). Opt out of the
-     site-wide chrome injector: it deletes this page's <header>/<footer>, which app.js's
-     wire() depends on, breaking the glossary load (#709 regression). -->
-<meta name="im-chrome" content="off">
+<!-- ImpactLex takes the shared top bar, footer and theme switch from
+     js/site-chrome.js. That script removes any <header>, <nav> or <footer>
+     the page writes, so nothing app.js binds to may sit inside one. -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Google Analytics -->
@@ -51,8 +50,9 @@
 <link rel="stylesheet" href="/css/fonts.css">
 <link rel="stylesheet" href="/css/site-chrome.css">
 
-<link rel="stylesheet" href="/impactlex/styles.css">
 <link rel="stylesheet" href="/css/plain-hero.css?v=e1dc5645">
+<link rel="stylesheet" href="/impactlex/styles.css">
+<script src="/js/theme.js"></script>
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -73,142 +73,157 @@
 }
 </script>
 </head>
-<body>
+<body data-lex-page="index">
 
 <a href="#main" class="skip-link">Skip to main content</a>
 
-<!-- Paper plane decoration -->
-<svg class="v3-paper-plane" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <path d="M50,150 L150,50 L50,100 L80,130 Z" fill="none" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M80,130 L150,50" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
-  <circle cx="150" cy="50" r="4" fill="#6366F1"/>
-</svg>
-
-<!-- Header -->
-<header class="header">
-  <nav class="nav-container" aria-label="Primary">
-    <a class="logo-container" href="/">
-      <img src="/assets/images/ImpactMojo%20Logo.png" alt="ImpactMojo" width="44" height="44" loading="eager">
-      <div class="logo-text">
-        <div class="logo-main">ImpactLex</div>
-        <div class="logo-tagline">Development Glossary</div>
-      </div>
-    </a>
-    <div class="nav-buttons">
-      <a class="nav-link" href="/catalog.html">Catalog</a>
-      <a class="nav-link" href="/">ImpactMojo</a>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" type="button">
-        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"/>
-          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </button>
-    </div>
-  </nav>
-</header>
-
 <main id="main">
-  <section class="ph ph--teal">
+  <section class="ph ph--sky lx-hero">
     <div class="ph-in">
       <span class="ph-bar" aria-hidden="true"></span>
-      <p class="ph-eyebrow">Glossary</p>
+      <p class="ph-eyebrow">Dictionary</p>
       <h1 class="ph-title">ImpactLex</h1>
-      <p class="ph-lede">A searchable glossary of development terms (acronyms, concepts, formulas, frameworks, and institutions) written for practitioners, grounded in South Asian examples.</p>
-      <p class="ph-meta"><span><b id="stat-terms"></b> terms</span><span><b id="stat-courses">10</b> courses</span><span><b id="stat-formulae"></b> formulae</span><span><b id="stat-cases"></b> case studies</span></p>
+      <p class="ph-lede">The working vocabulary of development, one flashcard per term.</p>
+      <div class="lx-search" role="search">
+        <svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="search-input" placeholder="Search terms or acronyms" autocomplete="off" spellcheck="false" aria-label="Search the dictionary" enterkeyhint="search">
+        <button class="lx-search-clear" id="search-clear" aria-label="Clear search" type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <p class="ph-meta"><span><b data-stat="terms"></b> terms</span><span><b data-stat="courses"></b> courses</span><span><b data-stat="formulae"></b> formulae</span><span><b data-stat="cases"></b> case studies</span></p>
     </div>
   </section>
 
-  <div class="container">
+  <div class="lx-wrap">
 
-    <div class="status-banner" id="status-banner" hidden>
-      <span class="status-dot"></span>
-      <span id="status-text">Loading glossary…</span>
+    <div class="lx-status" id="status-banner" role="status" hidden>
+      <span id="status-text">Loading the dictionary.</span>
     </div>
 
-    <section class="featured" id="featured" hidden>
-      <div class="featured-label">Term of the Day</div>
-      <h2 id="featured-term"></h2>
-      <p id="featured-def"></p>
+    <div class="lx-tools">
+      <div class="lx-modes" role="group" aria-label="How to use the dictionary">
+        <button class="lx-mode" id="mode-browse" data-mode="browse" aria-pressed="true" type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Browse</button>
+        <button class="lx-mode" id="mode-study" data-mode="study" aria-pressed="false" type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="14" height="13" rx="2"/><path d="M7 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/></svg>Study</button>
+      </div>
+      <button class="btn lx-suggest" id="suggest-open" data-suggest type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Suggest a term</button>
+    </div>
+
+    <div class="lx-az" id="az-filters" role="group" aria-label="Jump to a letter"></div>
+
+    <details class="lx-filters" id="filters">
+      <summary><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filters</span><span class="lx-filters-on" id="filters-on"></span><svg class="lx-icon lx-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+      <div class="lx-filters-body">
+        <div>
+          <span class="lx-fgroup-label" id="lbl-cat">Kind of term</span>
+          <div class="filter-group" id="category-filters" role="group" aria-labelledby="lbl-cat"></div>
+        </div>
+        <div>
+          <span class="lx-fgroup-label" id="lbl-course">Course</span>
+          <div class="filter-group" id="course-filters" role="group" aria-labelledby="lbl-course"></div>
+        </div>
+        <div>
+          <span class="lx-fgroup-label" id="lbl-prov">How the entry was written</span>
+          <div class="filter-group" id="provenance-filters" role="group" aria-labelledby="lbl-prov"></div>
+        </div>
+        <div>
+          <span class="lx-fgroup-label" id="lbl-saved">Your cards</span>
+          <div class="filter-group" id="saved-filters" role="group" aria-labelledby="lbl-saved"></div>
+        </div>
+      </div>
+    </details>
+
+    <div class="lx-meta-row">
+      <span id="results-meta" role="status"></span>
+      <button class="btn btn-quiet" id="filters-reset" type="button" hidden>Clear search and filters</button>
+    </div>
+
+    <section class="lx-browse" id="browse-view" aria-label="Browse the cards">
+      <button class="lx-featured" id="featured" type="button" hidden>
+        <span class="lx-featured-label">Term of the day</span>
+        <span class="lx-featured-term" id="featured-term"></span>
+        <span class="lx-featured-def" id="featured-def"></span>
+      </button>
+
+      <div class="lx-grid" id="terms-grid"></div>
+      <div class="lx-more" id="more-wrap" hidden>
+        <button class="btn" id="more-btn" type="button">Show more cards</button>
+      </div>
+      <div class="lx-sentinel" id="more-sentinel" aria-hidden="true"></div>
     </section>
 
-    <div class="search-bar">
-      <div class="search-input-wrap">
-        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        <input
-          type="search"
-          id="search-input"
-          class="search-input"
-          placeholder="Search terms, acronyms, or concepts…"
-          autocomplete="off"
-          spellcheck="false"
-          aria-label="Search glossary"
-        >
-        <button class="search-clear" id="search-clear" aria-label="Clear search" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
+    <section class="lx-study" id="study-view" aria-label="Study the cards" hidden>
+      <div class="st-top">
+        <span class="st-count" id="study-count" role="status"></span>
+        <span class="st-known" id="study-known"></span>
       </div>
+      <div class="st-bar" id="study-bar" role="progressbar" aria-label="Place in the deck" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0"><span></span></div>
+      <div id="study-card"></div>
+      <div class="st-nav" id="study-nav">
+        <button class="btn" id="study-prev" type="button">Previous</button>
+        <button class="btn btn-primary st-flip" id="study-flip" type="button">Turn over</button>
+        <button class="btn" id="study-next" type="button">Next</button>
+        <button class="btn st-mark" id="study-mark" aria-pressed="false" type="button">Mark as known</button>
+      </div>
+      <div class="st-opts" role="group" aria-label="Deck options">
+        <button class="btn btn-sm" id="study-shuffle" aria-pressed="false" type="button">Shuffle</button>
+        <button class="btn btn-sm" id="study-hide-known" aria-pressed="false" type="button">Hide cards I know</button>
+        <button class="btn btn-sm" id="study-reset" type="button">Forget what I know</button>
+      </div>
+      <p class="st-hint">The left and right arrow keys change the card. Space or Enter turns it over. K marks it as known.</p>
+    </section>
+
+    <div class="lx-empty" id="empty-state" hidden>
+      <h2 id="empty-title">No terms match that search</h2>
+      <p id="empty-text">Try another word, clear the filters, or suggest the term so we can add it.</p>
+      <button class="btn" id="empty-reset" type="button">Clear search and filters</button>
+      <button class="btn btn-primary" id="suggest-link" data-suggest type="button">Suggest a term</button>
     </div>
 
-    <div class="filters">
-      <div class="filter-group" id="category-filters" role="group" aria-label="Filter by category"></div>
-      <div class="filter-group" id="course-filters" role="group" aria-label="Filter by course"></div>
-      <div class="filter-group" id="provenance-filters" role="group" aria-label="Filter by how the entry was written"></div>
-    </div>
-
-    <div class="results-meta" id="results-meta" aria-live="polite"></div>
-
-    <div class="terms-grid" id="terms-grid"></div>
-
-    <div class="empty-state" id="empty-state" hidden>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <h3>No terms match that query</h3>
-      <p>Try a different keyword, or <a href="#" id="suggest-link">suggest a term</a> to add to ImpactLex.</p>
-    </div>
+    <section class="lx-about" aria-labelledby="about-h">
+      <h2 id="about-h">How to read a card</h2>
+      <p>The front of each card shows the term, what kind of term it is, and how the entry was written. Turn the card over for the definition, and open the full entry for the example, related terms, sources and the record of who wrote and checked it.</p>
+      <p id="about-counts"></p>
+      <p class="lx-stats-line"><span data-stat="terms"></span> terms, <span data-stat="courses"></span> courses, <span data-stat="formulae"></span> formulae and <span data-stat="cases"></span> case studies.</p>
+      <div class="lx-about-links">
+        <button class="btn btn-primary" id="footer-suggest" data-suggest type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Suggest a term</button>
+        <a href="/docs/impactlex-guide.md">How to use ImpactLex</a>
+        <a href="https://github.com/Varnasr/ImpactLex">Legacy repository</a>
+      </div>
+    </section>
 
   </div>
 </main>
 
-<!-- Term detail modal -->
-<div class="modal-overlay" id="term-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-  <div class="modal">
-    <button class="modal-close" id="modal-close" aria-label="Close" type="button">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+<!-- Full entry -->
+<dialog class="lx-dialog" id="term-modal" aria-labelledby="modal-title">
+  <div class="lx-dialog-in">
+    <button class="modal-close" id="modal-close" aria-label="Close" type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <div class="modal-header">
-      <h2 id="modal-title"></h2>
+      <h2 id="modal-title" tabindex="-1"></h2>
       <div class="acronym" id="modal-acronym"></div>
     </div>
-    <div class="modal-meta" id="modal-meta"></div>
-    <div class="modal-section">
+    <div class="lx-entry-meta" id="modal-meta"></div>
+    <div class="lx-sec modal-section">
       <h3>Definition</h3>
       <p id="modal-definition"></p>
     </div>
-    <div class="modal-section" id="modal-example-section" hidden>
+    <div class="lx-sec modal-section" id="modal-example-section" hidden>
       <h3>Example</h3>
       <div class="example" id="modal-example"></div>
     </div>
-    <div class="modal-section" id="modal-formula-section" hidden>
+    <div class="lx-sec modal-section" id="modal-formula-section" hidden>
       <h3>Formula</h3>
-      <div class="formula-box" id="modal-formula-expr"></div>
+      <div class="formula-box" id="modal-formula-expr" tabindex="0" role="group" aria-label="Formula"></div>
       <p id="modal-formula-exp"></p>
     </div>
-    <div class="modal-section" id="modal-case-section" hidden>
-      <h3>Case Study</h3>
+    <div class="lx-sec modal-section" id="modal-case-section" hidden>
+      <h3>Case study</h3>
       <div class="case-study-box" id="modal-case"></div>
     </div>
-    <div class="modal-section" id="modal-related-section" hidden>
-      <h3>Related Terms</h3>
+    <div class="lx-sec modal-section" id="modal-related-section" hidden>
+      <h3>Related terms</h3>
       <div class="related-list" id="modal-related"></div>
     </div>
-    <div class="modal-section" id="modal-sources-section">
+    <div class="lx-sec modal-section" id="modal-sources-section">
       <h3>Sources</h3>
       <div class="sources-list" id="modal-sources"></div>
     </div>
@@ -217,41 +232,30 @@
          an entry nobody has reviewed, and an entry with no source, both
          look identical to a reviewed and sourced one when the section is
          simply omitted. -->
-    <div class="modal-section" id="modal-provenance-section">
+    <div class="lx-sec modal-section" id="modal-provenance-section">
       <h3>How this entry was written</h3>
       <ul class="provenance-list" id="modal-provenance"></ul>
     </div>
     <div class="modal-actions">
-      <button class="btn" id="modal-bookmark" type="button">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-        <span>Bookmark</span>
-      </button>
-      <button class="btn" id="modal-share" type="button">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        <span>Copy link</span>
-      </button>
-      <button class="btn btn-primary" id="modal-suggest-edit" type="button">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-        <span>Suggest edit</span>
-      </button>
+      <button class="btn" id="modal-bookmark" aria-pressed="false" type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Bookmark</span></button>
+      <button class="btn" id="modal-share" type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span>Copy link</span></button>
+      <button class="btn" id="modal-suggest-edit" type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span>Suggest an edit</span></button>
     </div>
   </div>
-</div>
+</dialog>
 
-<!-- Submit term modal -->
-<div class="modal-overlay" id="submit-modal" role="dialog" aria-modal="true" aria-labelledby="submit-title">
-  <div class="modal">
-    <button class="modal-close" id="submit-close" aria-label="Close" type="button">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+<!-- Suggest a term -->
+<dialog class="lx-dialog" id="submit-modal" aria-labelledby="submit-title">
+  <div class="lx-dialog-in">
+    <button class="modal-close" id="submit-close" aria-label="Close" type="button"><svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <div class="modal-header">
       <h2 id="submit-title">Suggest a term</h2>
-      <div class="acronym">Contributions go to the moderation queue and appear once reviewed.</div>
+      <div class="acronym">Suggestions go to the moderation queue and appear once reviewed.</div>
     </div>
     <form id="submit-form" class="submit-panel">
       <div class="form-group">
         <label for="submit-term">Term</label>
-        <input type="text" id="submit-term" required maxlength="100" placeholder="e.g., Theory of Change">
+        <input type="text" id="submit-term" required maxlength="100" placeholder="For example, Theory of Change">
       </div>
       <div class="form-group">
         <label for="submit-category">Category</label>
@@ -266,69 +270,25 @@
       </div>
       <div class="form-group">
         <label for="submit-definition">Definition</label>
-        <textarea id="submit-definition" required maxlength="2000" placeholder="Practitioner-focused, 80–150 words."></textarea>
-        <div class="form-hint">Write for practitioners, not academics. Explain when and why someone would use this.</div>
+        <textarea id="submit-definition" required maxlength="2000" placeholder="Written for practitioners, 80 to 150 words."></textarea>
+        <div class="form-hint">Write for practitioners. Explain when and why someone would use the term.</div>
       </div>
       <div class="form-group">
         <label for="submit-example">Example (South Asian context preferred)</label>
-        <textarea id="submit-example" maxlength="800" placeholder="e.g., 'NREGA's social audit mechanism…' "></textarea>
+        <textarea id="submit-example" maxlength="800" placeholder="For example, how NREGA social audits work"></textarea>
       </div>
       <div class="form-group">
         <label for="submit-email">Your email (so we can credit you)</label>
-        <input type="email" id="submit-email" placeholder="you@example.org">
+        <input type="email" id="submit-email" placeholder="you@example.org" autocomplete="email">
         <div class="form-hint">Optional. Used only to credit contributors and for moderation questions.</div>
       </div>
-      <div class="modal-actions" style="border: none; padding: 0; margin-top: 0.5rem;">
+      <div class="modal-actions">
         <button type="submit" class="btn btn-primary">Submit for review</button>
         <button type="button" class="btn" id="submit-cancel">Cancel</button>
       </div>
     </form>
   </div>
-</div>
-
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-grid">
-      <div class="footer-section">
-        <h4>About</h4>
-        <ul>
-          <li><a href="/about.html">About ImpactMojo</a></li>
-          <li><a href="/contact.html">Contact</a></li>
-          <li><a href="/community/">Community</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="/terms-of-service">Terms of Service</a></li>
-          <li><a href="/privacy-policy">Privacy Policy</a></li>
-          <li><a href="/accessibility.html">Accessibility</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="/catalog.html">Course Catalog</a></li>
-          <li><a href="/handouts.html">Handouts</a></li>
-          <li><a href="/blog.html">Blog</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>ImpactLex</h4>
-        <ul>
-          <li><a href="#" id="footer-suggest">Suggest a term</a></li>
-          <li><a href="/docs/impactlex-guide.md">How to use</a></li>
-          <li><a href="https://github.com/Varnasr/ImpactLex">Legacy repo</a></li>
-        </ul>
-      </div>
-    </div>
-    <p class="footer-contact">Need help setting out your story, what sets your work apart, the context, the return on investment and the projections? Pinpoint Ventures can help. Write to <a href="mailto:hello@pinpointventures.in?subject=Enquiry%20from%20impactmojo.in">hello@pinpointventures.in</a> or message on <a href="https://wa.me/919871777110?text=Hi%20Pinpoint%20Ventures%2C%20I%20found%20you%20through%20impactmojo.in.%20I%27d%20like%20to%20discuss%20a%20research%20or%20advisory%20engagement." target="_blank" rel="noopener">WhatsApp</a>.</p>
-    <div class="footer-bottom">
-      <p class="footer-copyright">© 2026 ImpactMojo. Made with care in India.</p>
-    </div>
-  </div>
-</footer>
+</dialog>
 
 <!-- Configuration: shared between index.html and review.html -->
 <script src="/impactlex/config.js"></script>

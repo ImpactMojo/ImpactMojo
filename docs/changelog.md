@@ -29,6 +29,8 @@ What's new on ImpactMojo. For the full technical changelog, see [CHANGELOG.md](h
 
 - **The footer is shorter again, and the theme switch is back in the top bar.** The footer now shows its eight group headings and opens the links on a click, so it takes about 230 pixels on a computer where it took about 460, and about 530 on a phone where it took about 720. Every link is still there. The top bar has one button for the colour theme beside the Aa button: each press moves from your device setting to light to dark. The three theme choices are also still inside the Aa panel.
 
+- **ImpactLex is a deck of flashcards.** Each term is a card: the front shows the term, what kind of term it is, and whether the entry has been reviewed, has a source or began as a model draft. Turn a card over for the definition and open the full entry for the example, related terms, sources and the record of how it was written. Browse the deck with search, an A to Z row and filters, or switch to Study to go through one large card at a time with previous, next, shuffle and "mark as known", which is kept on your device. The dictionary now carries the same top bar, footer and theme switch as the rest of the site, and the single-term page shows the sources and the review record too.
+
 ## v10.401.0 - November 16, 2026 (the District Lineage Explorer reaches today)
 
 ### Changed
