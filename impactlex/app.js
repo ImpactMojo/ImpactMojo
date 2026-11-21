@@ -5,11 +5,14 @@
  *   Load seed-snapshot.json and render. The snapshot is the dictionary: it is
  *   edited by pull request, so there is no second copy to fall behind it.
  *
- * The page is a deck of flashcards with two modes:
- *   Browse  a grid of cards, drawn a batch at a time, with search, an A to Z
- *           jump and filters for kind, course and how the entry was written.
- *   Study   one large card at a time from the same filtered set, with
- *           previous, next, shuffle and "mark as known" (kept on this device).
+ * The page is set as a dictionary and has two modes:
+ *   Browse  entries in a ruled grid, drawn a batch at a time: the term, the
+ *           kind of term, the first lines of the definition and one line of
+ *           text saying how the entry was written. Search, an A to Z row and
+ *           filters for kind, course and how the entry was written.
+ *   Study   one sheet at a time from the same filtered set, with the
+ *           definition on the other side: previous, next, shuffle and "mark
+ *           as known" (kept on this device). The only place a card turns.
  *
  * Also here:
  *   - Term of the day (deterministic by date)
@@ -161,15 +164,16 @@
     ].map(([kind, text]) => `<li class="prov-${kind}">${text}</li>`).join('');
   }
 
-  // The short labels on the front of a card. Same facts, fewer words.
-  function provenanceTags(t) {
+  /* The same facts as one quiet line of text under an entry, for example
+     "Reviewed. Source recorded." or "Not yet reviewed. No source recorded.
+     Drafted by a model." Each sentence is read off provenanceOf(). */
+  function provenanceLine(t) {
     const prov = provenanceOf(t);
-    const tags = [
-      prov.reviewed ? ['ok', 'Reviewed'] : ['warn', 'Not yet reviewed'],
-      prov.sourced ? ['ok', 'Has a source'] : ['warn', 'No source'],
-    ];
-    if (prov.aiDrafted) tags.push(['warn', 'Model draft']);
-    return tags.map(([kind, text]) => `<span class="lx-tag lx-tag--${kind}">${text}</span>`).join('');
+    const parts = [prov.reviewed ? 'Reviewed.' : 'Not yet reviewed.'];
+    if (prov.sourced) parts.push(prov.checked ? 'Source recorded and checked.' : 'Source recorded.');
+    else parts.push(prov.checked ? 'No source recorded. Checked against a source.' : 'No source recorded.');
+    if (prov.aiDrafted) parts.push('Drafted by a model.');
+    return parts.join(' ');
   }
 
   /* A source is plain text, optionally ending in an address, which is turned
@@ -219,13 +223,12 @@
   const CAT_PLURAL = { all: 'All', concept: 'Concepts', acronym: 'Acronyms', framework: 'Frameworks', method: 'Methods', formula: 'Formulae', institution: 'Institutions' };
   const CAT_ONE = { concept: 'Concept', acronym: 'Acronym', framework: 'Framework', method: 'Method', formula: 'Formula', institution: 'Institution' };
   const COURSE_LABEL = { SEL: 'SEL', dataviz: 'DataViz', devai: 'DevAI', devecon: 'DevEcon', gandhi: 'Gandhi', gender: 'Gender', law: 'Law', mel: 'MEL', poa: 'PoA', pubpol: 'PubPol' };
-  const catClass = (t) => (CAT_ONE[t.category] ? `fc--${t.category}` : 'fc--concept');
+  const catClass = (t) => (CAT_ONE[t.category] ? `kind-${t.category}` : 'kind-concept');
   const catName = (t) => CAT_ONE[t.category] || String(t.category || 'Term');
   const courseName = (c) => COURSE_LABEL[c] || c;
 
   const ICON = {
     bm: '<svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>',
-    turn: '<svg class="lx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg>',
   };
 
   // ─── Stats ──────────────────────────────────────────────────────────────
@@ -254,7 +257,7 @@
   // ─── Filters ────────────────────────────────────────────────────────────
   function chip(type, value, label, count, active) {
     const n = count == null ? '' : `<span class="count">${count}</span>`;
-    return `<button class="filter-chip" type="button" aria-pressed="${active ? 'true' : 'false'}" data-filter-type="${type}" data-filter-value="${escapeHtml(value)}">${escapeHtml(label)}${n}</button>`;
+    return `<button class="filter-chip" type="button" aria-pressed="${active ? 'true' : 'false'}" data-filter-type="${type}" data-filter-value="${escapeHtml(value)}"><span class="chip-label">${escapeHtml(label)}</span>${n}</button>`;
   }
 
   function renderFilters() {
@@ -309,7 +312,7 @@
     }).join('');
 
     const on = filtersActive();
-    $('filters-on').textContent = on ? `${on} on` : '';
+    $('filters-on').textContent = on ? ` (${on})` : '';
     $('filters-reset').hidden = !(on || f.query);
   }
 
@@ -321,43 +324,45 @@
     refresh();
   }
 
-  // ─── Cards ──────────────────────────────────────────────────────────────
+  // ─── Entries ────────────────────────────────────────────────────────────
   // Every field from the dictionary is escaped, so none of it is trusted markup.
+  function kindLabel(t, cls) {
+    const field = t.seedCategory ? ` <span class="entry-field">${escapeHtml(t.seedCategory)}</span>` : '';
+    return `<span class="entry-kind${cls ? ' ' + cls : ''}">${escapeHtml(catName(t))}${field}</span>`;
+  }
+  function bookmarkBtn(t, cls) {
+    const on = state.bookmarks.has(t.id);
+    return `<button class="entry-bm${cls ? ' ' + cls : ''}" type="button" data-bookmark-id="${escapeHtml(t.id)}" aria-pressed="${on ? 'true' : 'false'}" aria-label="Bookmark ${escapeHtml(t.term)}">${ICON.bm}</button>`;
+  }
+
+  /* A dictionary entry in Browse: the term leads, the kind and field sit
+     above it as a small label, the definition starts underneath and is cut
+     at three lines, and one line says how the entry was written. The title
+     is a link to the term's own page, so it works without this script; with
+     it, the link opens the full entry in place. */
+  function termCard(t) {
+    const id = escapeHtml(t.id);
+    const acr = t.acronym ? ` <span class="entry-acr">${escapeHtml(t.acronym)}</span>` : '';
+    return `
+      <article class="entry ${catClass(t)}" data-entry-id="${id}">
+        <div class="entry-top">${kindLabel(t)}${bookmarkBtn(t)}</div>
+        <h2 class="entry-title"><a href="/impactlex/term.html?id=${encodeURIComponent(t.id)}" data-open-id="${id}">${escapeHtml(t.term)}</a>${acr}</h2>
+        <p class="entry-def">${escapeHtml(t.definition || '')}</p>
+        <p class="entry-status">${provenanceLine(t)}</p>
+      </article>`;
+  }
+
+  // The front of the study sheet: the term alone, so the answer stays hidden.
   function frontHtml(t) {
-    const field = t.seedCategory ? `<span class="fc-field"> · ${escapeHtml(t.seedCategory)}</span>` : '';
     const acr = t.acronym ? `<span class="fc-acr">${escapeHtml(t.acronym)}</span>` : '';
     return `
           <button class="fc-flip" type="button" data-flip aria-expanded="false" aria-controls="fcb-${escapeHtml(t.id)}">
-            <span class="fc-cat">${escapeHtml(catName(t))}${field}</span>
+            ${kindLabel(t, 'fc-cat')}
             <span class="fc-term">${escapeHtml(t.term)}</span>
             ${acr}
-            <span class="fc-prov">${provenanceTags(t)}</span>
-            <span class="fc-hint">${ICON.turn}<span>Turn over for the definition</span></span>
+            <span class="fc-status">${provenanceLine(t)}</span>
+            <span class="fc-hint">Turn over for the definition</span>
           </button>`;
-  }
-  function bookmarkBtn(t) {
-    const on = state.bookmarks.has(t.id);
-    return `<button class="fc-bm" type="button" data-bookmark-id="${escapeHtml(t.id)}" aria-pressed="${on ? 'true' : 'false'}" aria-label="Bookmark ${escapeHtml(t.term)}">${ICON.bm}</button>`;
-  }
-
-  function termCard(t) {
-    const id = escapeHtml(t.id);
-    return `
-      <article class="fc ${catClass(t)}" data-card-id="${id}">
-        <div class="fc-inner">
-          <div class="fc-face fc-front">${frontHtml(t)}
-            ${bookmarkBtn(t)}
-          </div>
-          <div class="fc-face fc-back" id="fcb-${id}" inert>
-            <p class="fc-back-term">${escapeHtml(t.term)}</p>
-            <p class="fc-def">${escapeHtml(t.definition || '')}</p>
-            <div class="fc-back-actions">
-              <button class="btn btn-primary" type="button" data-open-id="${id}">Full entry</button>
-              <button class="btn" type="button" data-flip-back>Turn back</button>
-            </div>
-          </div>
-        </div>
-      </article>`;
   }
 
   // Everything the dictionary holds about a term, as sections. Used on the
@@ -365,9 +370,7 @@
   function entryBody(t, opts) {
     const o = opts || {};
     const out = [];
-    out.push(`<div class="lx-entry-meta"><span class="lx-pill lx-pill--cat">${escapeHtml(catName(t))}</span>${
-      t.seedCategory ? `<span class="lx-pill">${escapeHtml(t.seedCategory)}</span>` : ''}${
-      (t.courses || []).map((c) => `<span class="lx-pill">${escapeHtml(courseName(c))}</span>`).join('')}</div>`);
+    out.push(`<p class="lx-entry-meta">${metaHtml(t)}</p>`);
     out.push(`<div class="lx-sec"><h3>Definition</h3><p>${escapeHtml(t.definition || '')}</p></div>`);
     if (t.example) out.push(`<div class="lx-sec"><h3>Example</h3><div class="example">${escapeHtml(t.example)}</div></div>`);
     if (t.formula) {
@@ -385,6 +388,12 @@
     out.push(`<div class="lx-sec"><h3>Sources</h3><div class="sources-list${hasSources ? '' : ' sources-empty'}">${sourcesHtml(t)}</div></div>`);
     out.push(`<div class="lx-sec"><h3>How this entry was written</h3><ul class="provenance-list">${provenanceLines(t)}</ul></div>`);
     return out.join('');
+  }
+  // Kind, field and courses as one line of text.
+  function metaHtml(t) {
+    return [`<span class="lx-kind">${escapeHtml(catName(t))}</span>`]
+      .concat(t.seedCategory ? [`<span>${escapeHtml(t.seedCategory)}</span>`] : [])
+      .concat((t.courses || []).map((c) => `<span>${escapeHtml(courseName(c))}</span>`)).join('');
   }
   function caseHtml(cs) {
     return `
@@ -415,10 +424,8 @@
     if (btn) btn.setAttribute('aria-expanded', flipped ? 'true' : 'false');
     if (front) front.inert = flipped;
     if (back) back.inert = !flipped;
-    if (card.classList.contains('fc--study')) {
-      const f = $('study-flip');
-      if (f) f.textContent = flipped ? 'Turn back' : 'Turn over';
-    }
+    const f = $('study-flip');
+    if (f) f.textContent = flipped ? 'Turn back' : 'Turn over';
     if (moveFocus) {
       const target = flipped ? card.querySelector('[data-flip-back]') : btn;
       if (target) target.focus({ preventScroll: true });
@@ -435,9 +442,7 @@
 
     if (state.mode === 'study') return renderStudy(terms);
 
-    meta.textContent = terms.length === total
-      ? `All ${total} terms`
-      : `${terms.length} of ${total} terms`;
+    meta.innerHTML = `<strong>${terms.length}</strong> of <strong>${total}</strong> terms`;
 
     empty.hidden = terms.length > 0;
     if (!terms.length) {
@@ -468,7 +473,7 @@
     $('terms-grid').insertAdjacentHTML('beforeend', next.map(termCard).join(''));
     updateMore(terms.length);
     if (fromButton && next.length) {
-      const first = $('terms-grid').querySelector(`[data-card-id="${CSS.escape(next[0].id)}"] [data-flip]`);
+      const first = $('terms-grid').querySelector(`[data-entry-id="${CSS.escape(next[0].id)}"] a`);
       if (first) first.focus({ preventScroll: true });
     }
   }
@@ -480,7 +485,7 @@
     const t = state.terms[seed % state.terms.length];
     $('featured-term').textContent = t.term + (t.acronym ? ` (${t.acronym})` : '');
     $('featured-def').textContent = t.definition;
-    $('featured').hidden = false;
+    $('featured-panel').hidden = false;
     $('featured').setAttribute('data-open-id', t.id);
   }
 
@@ -519,9 +524,7 @@
     buildDeck(list, o.reshuffle);
 
     const total = state.terms.length;
-    $('results-meta').textContent = list.length === total
-      ? `Studying all ${total} terms`
-      : `Studying ${list.length} of ${total} terms`;
+    $('results-meta').innerHTML = `Studying <strong>${list.length}</strong> of <strong>${total}</strong> terms`;
 
     const knownHere = list.filter((t) => state.known.has(t.id)).length;
     $('study-known').textContent = `${knownHere} of ${list.length} marked as known`;
@@ -557,17 +560,17 @@
     const id = escapeHtml(t.id);
     const known = state.known.has(t.id);
     $('study-card').innerHTML = `
-      <article class="fc fc--study ${catClass(t)}${known ? ' is-known' : ''}" data-card-id="${id}">
+      <article class="fc ${catClass(t)}${known ? ' is-known' : ''}" data-card-id="${id}">
         <div class="fc-inner">
           <div class="fc-face fc-front">${frontHtml(t)}
-            ${bookmarkBtn(t)}
+            ${bookmarkBtn(t, 'fc-bm')}
           </div>
           <div class="fc-face fc-back" id="fcb-${id}" inert>
             <div class="st-back-head">
               <h2>${escapeHtml(t.term)}${t.acronym ? ` <span class="fc-acr">${escapeHtml(t.acronym)}</span>` : ''}</h2>
-              <button class="btn btn-sm" type="button" data-flip-back>Turn back</button>
+              <button class="btn" type="button" data-flip-back>Turn back</button>
             </div>
-            <span class="lx-tag lx-tag--ok st-known-mark">You marked this as known</span>
+            <p class="st-known-mark">You marked this as known.</p>
             ${entryBody(t)}
           </div>
         </div>
@@ -633,6 +636,11 @@
     if (window.gtag && !(opts && opts.quiet)) window.gtag('event', 'impactlex_mode', { mode: state.mode });
   }
 
+  function setFiltersOpen(open) {
+    document.body.classList.toggle('lx-filters-open', open);
+    $('filters-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
   // Search or a filter changed: redraw from the top of the set.
   function refresh() {
     state.shown = BATCH;
@@ -692,15 +700,10 @@
     const dlg = $('term-modal');
     if (!dlg.open) state.lastFocus = document.activeElement;
     dlg.className = `lx-dialog ${catClass(t)}`;
-    dlg.style.setProperty('--fc-edge', `var(--lx-edge-${CAT_ONE[t.category] ? t.category : 'concept'})`);
-    dlg.style.setProperty('--fc-ink', `var(--lx-ink-${CAT_ONE[t.category] ? t.category : 'concept'})`);
+    dlg.style.setProperty('--kind', `var(--kind-${CAT_ONE[t.category] ? t.category : 'concept'})`);
     $('modal-title').textContent = t.term;
     $('modal-acronym').textContent = t.acronym || '';
-    $('modal-meta').innerHTML = `
-      <span class="lx-pill lx-pill--cat">${escapeHtml(catName(t))}</span>
-      ${t.seedCategory ? `<span class="lx-pill">${escapeHtml(t.seedCategory)}</span>` : ''}
-      ${(t.courses || []).map((c) => `<span class="lx-pill">${escapeHtml(courseName(c))}</span>`).join('')}
-    `;
+    $('modal-meta').innerHTML = metaHtml(t);
     $('modal-definition').textContent = t.definition || '';
     const exSec = $('modal-example-section');
     if (t.example) { $('modal-example').textContent = t.example; exSec.hidden = false; } else { exSec.hidden = true; }
@@ -917,6 +920,8 @@
     $('mode-browse').addEventListener('click', () => setMode('browse'));
     $('mode-study').addEventListener('click', () => setMode('study'));
     $('filters-reset').addEventListener('click', resetFilters);
+    // On a narrow screen the filters open in place under the results bar.
+    $('filters-toggle').addEventListener('click', () => setFiltersOpen(!document.body.classList.contains('lx-filters-open')));
     $('empty-reset').addEventListener('click', () => {
       if (state.mode === 'study') state.study.hideKnown = false;
       resetFilters();
@@ -967,19 +972,22 @@
       const bm = e.target.closest('[data-bookmark-id]');
       if (bm) { toggleBookmark(bm.dataset.bookmarkId); return; }
       const open = e.target.closest('[data-open-id]');
-      if (open) { openTerm(open.dataset.openId); return; }
+      if (open) {
+        // The title is a real link to the term page. A plain click opens the
+        // entry here; a modified click is left to open a tab as usual.
+        if (open.tagName === 'A') {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+          e.preventDefault();
+        }
+        openTerm(open.dataset.openId);
+        return;
+      }
       const rel = e.target.closest('[data-related-id]');
       if (rel) { openTerm(rel.dataset.relatedId); return; }
       const flip = e.target.closest('[data-flip]');
       if (flip) { setFlipped(flip.closest('.fc'), true, true); return; }
       const flipBack = e.target.closest('[data-flip-back]');
       if (flipBack) { setFlipped(flipBack.closest('.fc'), false, true); return; }
-      // A click on the back of a small card, outside its buttons, turns it back.
-      const back = e.target.closest('.fc-back');
-      if (back && !e.target.closest('a, button, .formula-box') && !back.closest('.fc--study')
-          && !String(window.getSelection && window.getSelection()).trim()) {
-        setFlipped(back.closest('.fc'), false, false);
-      }
     });
 
     // Keys for the study deck. They stay out of the way of typing, of open
@@ -1088,7 +1096,6 @@
     }
     updateStats();
     const termId = readUrl();
-    if (filtersActive()) $('filters').open = true;
     renderFilters();
     renderFeatured();
     setMode(state.mode, { quiet: true });
